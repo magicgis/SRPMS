@@ -1,0 +1,11 @@
+# 新建一个database.properties文件，放在与此文件同级目录
+# 复制此文件内容，并针对性修改
+db.driverClassName = com.mysql.jdbc.Driver
+db.url = jdbc:mysql://lin.xulog.com:3306/workflow
+db.username = root
+db.password = password
+hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+hibernate.show_sql=true
+hibernate.format_sql=true
+hibernate.hbm2ddl=update
+hibernate.encode=UTF-8
