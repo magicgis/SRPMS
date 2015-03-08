@@ -7,7 +7,7 @@ import entity.Staff;
  * DATE:2015/2/2
  * TIME:21:45
  * Created by guofan on 2015/2/2
- * 用户
+ * 账户相关接口
  */
 public interface AccountService {
     /**

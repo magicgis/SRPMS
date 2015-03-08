@@ -9,6 +9,7 @@ import java.util.List;
  * DATE:2015/2/12
  * TIME:0:29
  * Created by guofan on 2015/2/12
+ * 员工信息相关接口
  */
 public interface StaffService {
     /**
