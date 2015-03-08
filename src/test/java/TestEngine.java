@@ -1,4 +1,4 @@
-import engine.SnakerEngineUtils;
+import engine.Engine;
 import org.snaker.engine.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,29 +15,30 @@ import java.util.*;
 public class TestEngine extends AbstractJUnit4SpringContextTests {
 
     @Autowired
-    SnakerEngineUtils snakerEngineUtils;
+    Engine engine;
 
     @org.junit.Test
     public void testEasy() {
         /*部署*/
-        String id = snakerEngineUtils.initFlows();
+        String id = engine.initFlows();
 
         /*启动流程*/
         HashMap<String, Object> args = new HashMap<String, Object>();
         args.put("X-NextTaskActor", "xgfan,actor");
-        List<Task> tasks = snakerEngineUtils.startAndExecute(id, "xgfan", null);
-        snakerEngineUtils.execute(tasks.get(0).getId(), "xgfan", args);
+        Order ord = engine.startInstanceById(id, "xgfan", null);
+        List<Task> tasks = engine.getTaskByOrder(ord.getId());
+        engine.execute(tasks.get(0).getId(), "xgfan", args);
         args.remove("X-NextTaskActor");
         args.put("X-NextTaskActor", "school");
-        tasks = snakerEngineUtils.getUserActiveTask("xgfan");
-        snakerEngineUtils.execute(tasks.get(0).getId(), "xgfan", args);
-        tasks = snakerEngineUtils.getUserActiveTask("actor");
-        snakerEngineUtils.execute(tasks.get(0).getId(), "actor", args);
-        tasks = snakerEngineUtils.getUserActiveTask("School");
+        tasks = engine.getTaskByActor("xgfan");
+        engine.execute(tasks.get(0).getId(), "xgfan", args);
+        tasks = engine.getTaskByActor("actor");
+        engine.execute(tasks.get(0).getId(), "actor", args);
+        tasks = engine.getTaskByActor("School");
         args.remove("X-NextTaskActor");
         args.put("X-NextTaskActor", "xgfan");
         args.put("decByCol", false);
-        snakerEngineUtils.execute(tasks.get(0).getId(),"school",args);
+        engine.execute(tasks.get(0).getId(), "school", args);
     }
 
 }
