@@ -3,11 +3,13 @@
 + Java 7
 + Tomcat 7
 + Mysql 5.6
+
 ----
 + Jersey 2.13
 + Snaker 2.5.1
 + spring 4.1.2.RELEASE
 + hibernate 3.6.10.Final
+
 ----
 采用Maven构建。
 
