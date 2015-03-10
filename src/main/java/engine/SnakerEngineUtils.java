@@ -163,12 +163,13 @@ public class SnakerEngineUtils implements Engine {
     }
 
     @Override
-    public Task createUserTask(String taskId,String user){
-        List<Task> tasks = snakerEngine.task().createNewTask(taskId,0,user);
-        snakerEngine.task().addTaskActor(tasks.get(0).getId(),user);
-//        tasks.get(0).setVariable("X-taskType:takeIn");
-//        snakerEngine.task().updateTask(tasks.get(0));
-        return tasks.get(0);
+    public void stopOrder(String orderId) {
+        snakerEngine.order().cascadeRemove(orderId);
     }
 
+    @Override
+    public List<Object> getChildrenTask(String TaskId) {
+//        TODO
+        return null;
+    }
 }

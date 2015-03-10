@@ -123,11 +123,12 @@ public interface Engine {
     public List<Task> getNewTasks(Order ord);
 
     /**
-     * 添加成员到任务,创建新任务
-     * @param taskId 原有任务ID
-     * @param user 添加的用户
-     * @return 产生的新任务
+     * 终止order
+     * @param orderId
      */
-    public Task createUserTask(String taskId,String user);
+    public void stopOrder(String orderId);
+
+    public List<Object> getChildrenTask(String TaskId);
+
 
 }
