@@ -12,6 +12,8 @@
 
 ----
 采用Maven构建。
+[LIB下载1](http://xu-cdn.qiniudn.com/SRPMSdependency.zip)
+[LIB下载2](http://down.xulog.com/SRPMSdependency.zip)
 
 - - -
 
