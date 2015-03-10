@@ -112,10 +112,32 @@ public class SnakerEngineUtils implements Engine {
         /*设置参与者*/
         args.put("S-ACTOR",operator);
         Map<String,Object> NowMap = new HashMap<String, Object>();
+        Map<String,Object> beforeMap = task.getVariableMap();
         /*把上一轮的map放入*/
-        NowMap.putAll(task.getVariableMap());
+//        beforeMap.remove("S-ACTOR");
+//        beforeMap.remove("DecByCol");
+//        beforeMap.remove("DecByDep");
+//        NowMap.putAll(beforeMap);
+        int flowOrder = 0;
+        for(String key:beforeMap.keySet()){
+//            args.put(key,formParams.getFirst(key));
+            if(beforeMap.get(key)instanceof Map){
+                flowOrder++;
+                NowMap.put(key,beforeMap.get(key));
+            }
+        }
+//        Map<String,Object>tempMap = new HashMap<String,Object>;
+//        args.put("WF-TaskName",);
+        String flowOderStr = "WF-"+Integer.toString(flowOrder)+"-"+task.getTaskName();
         /*把此轮的参数放入*/
-        NowMap.put(task.getTaskName(),args);
+        NowMap.put(flowOderStr,args);
+        /*决策参数需要单独处理*/
+        if(args.containsKey("DecByCol")){
+            NowMap.put("DecByCol",args.get("DecByCol"));
+        }
+        if(args.containsKey("DecByDep")){
+            NowMap.put("DecByDep",args.get("DecByDep"));
+        }
         /*把操作者作为参与者*/
         NowMap.put("S-ACTOR", operator);
 

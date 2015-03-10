@@ -13,7 +13,7 @@
           displayName="院系审核" >
         <transition offset="0,-10" to="decision1" name="c2d1" />
     </task>
-    <decision name="decision1" expr="#decByCol?'d12s':'d12t'" autoExecute="Y" >
+    <decision name="decision1" expr="#DecByCol?'d12s':'d12t'" autoExecute="Y" >
         <transition to="ApprovalBySch" name="d12s"/>
         <transition to="Submission" name="d12t"/>
     </decision>
@@ -21,7 +21,7 @@
           displayName="部门审批" >
         <transition offset="0,-10" to="decision2" name="s2d2" />
     </task>
-    <decision  name="decision2" expr="#decBySch?'d22e':'d22t'" autoExecute="Y" >
+    <decision  name="decision2" expr="#DecByDep?'d22e':'d22t'" autoExecute="Y" >
         <transition offset="0,-10" to="end" name="d22e" />
         <transition offset="0,-10" to="Submission"  g="856,617;847,195" name="d22t" />
     </decision>
