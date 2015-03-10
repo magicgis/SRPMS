@@ -17,6 +17,10 @@ import java.util.Map;
  */
 public interface Engine {
 
+    /**
+     * 初始化，返回流程ID
+     * @return process ID
+     */
     public String initFlows();
 
     /**
@@ -32,7 +36,7 @@ public interface Engine {
     public List<String> getAllProcessId();
 
     /**
-     * 根据流程定义ID，操作人ID，参数列表启动流程实例
+     * 根据流程定义ID，操作人ID，参数列表启动流程实例,并完成第一个任务！
      * @param processId 流程id
      * @param operator 操作者
      * @param args 参数列表

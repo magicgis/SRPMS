@@ -92,19 +92,41 @@ public class SnakerEngineUtils implements Engine {
 
     @Override
     public Order startInstanceById(String processId,String operator,Map<String ,Object> args){
-        return snakerEngine.startInstanceById(processId,operator,args);
+        /*启动*/
+        Order order = snakerEngine.startInstanceById(processId,operator,args);
+        /*获取第一个任务*/
+        List<Task> startTask = snakerEngine.query().getActiveTasks(new QueryFilter().setOrderId(order.getId()));
+        /*分配参与者*/
+        snakerEngine.task().addTaskActor(startTask.get(0).getId(),operator);
+        /*移除多余的参与者*/
+        snakerEngine.task().removeTaskActor(startTask.get(0).getId(), "");
+        return order;
     }
 
     @Override
     public List<Task> execute(String taskId, String operator, Map<String, Object> args) {
-        /*把操作者作为参与者*/
+        /*获取当前任务*/
+        Task task = snakerEngine.query().getTask(taskId);
+        /*获取任务所属order*/
+        String orderId = task.getOrderId();
+        /*设置参与者*/
         args.put("S-ACTOR",operator);
+        Map<String,Object> NowMap = new HashMap<String, Object>();
+        /*把上一轮的map放入*/
+        NowMap.putAll(task.getVariableMap());
+        /*把此轮的参数放入*/
+        NowMap.put(task.getTaskName(),args);
+        /*把操作者作为参与者*/
+        NowMap.put("S-ACTOR", operator);
+
         /*执行任务（不一定会产生新任务）*/
-        List<Task> tasks =  snakerEngine.executeTask(taskId, operator, args);
+        List<Task> tasks =  snakerEngine.executeTask(taskId, operator, NowMap);
         if(tasks.isEmpty()){
             return null;
         }
-        String actorText =(String)args.get("X-NextTaskActor");
+
+        /*获取下一任务参与者*/
+        String actorText =(String)args.get("WF-NextTaskActor");
         String[] actorString = actorText.split(",");
         List<String> actors = new ArrayList<String>();
         for(String u:actorString){
@@ -113,18 +135,16 @@ public class SnakerEngineUtils implements Engine {
                     actors.add(u);
                 }
         }
-        List<Task> Newtasks = new ArrayList<Task>();
-        Newtasks.addAll(tasks);
-        if(actors.size() == 1){
-            snakerEngine.task().addTaskActor(tasks.get(0).getId(),actors.get(0));
-        }else{
-            actors.remove(operator);
-            for(String u:actors){
-                Newtasks.add(createUserTask(tasks.get(0).getId(), u));
-            }
-            snakerEngine.task().addTaskActor(tasks.get(0).getId(),operator);
+        for(int i = 1;i < actors.size();i++){
+            snakerEngine.task().addTaskActor(tasks.get(0).getId(),1,"");
         }
-        return Newtasks;
+        tasks = snakerEngine.query().getActiveTasks(new QueryFilter().setOrderId(orderId));
+        for(Task u:tasks){
+            snakerEngine.task().addTaskActor(u.getId(),actors.get(0));
+            snakerEngine.task().removeTaskActor(u.getId(),"");
+            actors.remove(0);
+        }
+        return tasks;
     }
 
     @Override

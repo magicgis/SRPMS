@@ -24,21 +24,42 @@ public class TestEngine extends AbstractJUnit4SpringContextTests {
 
         /*启动流程*/
         HashMap<String, Object> args = new HashMap<String, Object>();
-        args.put("X-NextTaskActor", "xgfan,actor");
+//        args.put("WF-NextTaskActor", "xgfan");
         Order ord = engine.startInstanceById(id, "xgfan", null);
+
+
         List<Task> tasks = engine.getTaskByOrder(ord.getId());
+        args.put("WF-NextTaskActor", "xgfan,lishi");
+        args.put("申请人", "xgfan");
+        args.put("要求", "无");
         engine.execute(tasks.get(0).getId(), "xgfan", args);
-        args.remove("X-NextTaskActor");
-        args.put("X-NextTaskActor", "school");
+
+
+
+        args = new HashMap<String, Object>();
+        args.put("批复","同意！");
+        args.put("WF-NextTaskActor", "col");
         tasks = engine.getTaskByActor("xgfan");
         engine.execute(tasks.get(0).getId(), "xgfan", args);
-        tasks = engine.getTaskByActor("actor");
-        engine.execute(tasks.get(0).getId(), "actor", args);
-        tasks = engine.getTaskByActor("School");
-        args.remove("X-NextTaskActor");
-        args.put("X-NextTaskActor", "xgfan");
-        args.put("decByCol", false);
-        engine.execute(tasks.get(0).getId(), "school", args);
+
+
+        args = new HashMap<String, Object>();
+        args.put("批复","我也同意！");
+        args.put("WF-NextTaskActor", "col");
+        tasks = engine.getTaskByActor("lishi");
+        engine.execute(tasks.get(0).getId(), "lishi", args);
+
+//        tasks = engine.getTaskByActor("actor");
+//        engine.execute(tasks.get(0).getId(), "actor", args);
+//        tasks = engine.getTaskByActor("School");
+//        args.remove("WF-NextTaskActor");
+//        args.put("WF-NextTaskActor", "xgfan");
+//        args.put("decByCol", false);
+//        engine.execute(tasks.get(0).getId(), "school", args);
+        for(Task u :engine.getTaskByOrder(ord.getId())){
+            System.out.println(u.getVariableMap());
+        }
+//        System.out.println(engine.getTaskByOrder(ord.getId()).get(0).getVariableMap());
     }
 
 }
