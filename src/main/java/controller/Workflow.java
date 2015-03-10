@@ -29,6 +29,13 @@ public class Workflow {
     @Autowired
     Engine engine;
 
+    @GET
+    @Path("/init")
+    @Produces("application/json;charset=UTF-8")
+    public String init(){
+        return engine.initFlows();
+    }
+
     @POST
     @Path("/process")
     @Consumes("application/x-www-form-urlencoded")
