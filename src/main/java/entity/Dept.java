@@ -1,8 +1,14 @@
 package entity;
 
+/**
+ * 部门表
+ */
 public class Dept {
+    /* 部门ID */
 	private String deptid;
-	private String deptname;
+	/* 部门名称 */
+    private String deptname;
+
 	public String getDeptid() {
 		return deptid;
 	}

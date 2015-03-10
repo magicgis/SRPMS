@@ -1,11 +1,20 @@
 package entity;
 
+/**
+ * 期刊论文
+ */
 public class Papermag {
+    /* 论文ID */
 	private String paperid;
+    /* 期刊ID */
 	private String magid;
+    /* 收录类型 */
 	private String coltype;
+    /* 卷期页 */
 	private String voliss;
+    /* 发表起止页码 */
 	private String bgpage;
+    /* 得分 */
 	private String paperscore;
 	public String getPaperid() {
 		return paperid;

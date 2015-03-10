@@ -1,7 +1,12 @@
 package entity;
 
+/**
+ * 单位
+ */
 public class Unit {
+    /* 单位ID */
 	private String unitid;
+    /* 单位名称 */
 	private String unitname;
 	public String getUnitid() {
 		return unitid;

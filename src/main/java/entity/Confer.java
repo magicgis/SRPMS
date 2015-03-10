@@ -1,10 +1,21 @@
 package entity;
 
+/**
+ * DATE:2015/3/11
+ * TIME:01:11
+ * Created by guofan on 2015/3/11
+ * 会议表
+ */
 public class Confer {
+    /* 会议主键 */
 	private String conferid;
-	private String confertype;
-	private String confernm;
-	private String confertime;
+	/* 会议类型 */
+    private String confertype;
+	/* 会议名称 */
+    private String confernm;
+	/* 会议时间 */
+    private String confertime;
+    /* 会议地址 */
 	private String conferaddr;
 	public String getConferid() {
 		return conferid;

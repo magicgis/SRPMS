@@ -1,7 +1,12 @@
 package entity;
 
+/**
+ * 职称
+ */
 public class Rank {
-	private String rankid;
+	/* 职称ID */
+    private String rankid;
+    /* 职称名 */
 	private String ranknm;
 	public String getRankid() {
 		return rankid;

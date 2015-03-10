@@ -1,10 +1,16 @@
 package entity;
 
+/**
+ * 论文
+ */
 public class Paper {
-
+    /* 论文ID */
 	private String paperid;
+    /* 论文名称 */
 	private String papername;
+    /* 发表日期 */
 	private String pubdate;
+    /* TODO Unknown */
 	private Unit unit;
 	public String getPaperid() {
 		return paperid;
