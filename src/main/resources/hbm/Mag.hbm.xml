@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="entity.Mag" table="mag" schema="" catalog="workflow">
+        <id name="magId">
+            <column name="magId" sql-type="char" length="5" not-null="true"/>
+        </id>
+        <property name="magName">
+            <column name="magName" sql-type="varchar" length="100"/>
+        </property>
+        <property name="magSNm">
+            <column name="magSNm" sql-type="varchar" length="50"/>
+        </property>
+        <property name="issn">
+            <column name="issn" sql-type="varchar" length="10"/>
+        </property>
+        <property name="cn">
+            <column name="cn" sql-type="varchar" length="10"/>
+        </property>
+        <property name="magSub">
+            <column name="magSub" sql-type="varchar" length="20"/>
+        </property>
+        <property name="fq">
+            <column name=" fq" sql-type="varchar" length="10"/>
+        </property>
+    </class>
+</hibernate-mapping>

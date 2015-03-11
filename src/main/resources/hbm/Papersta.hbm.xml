@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="entity.Papersta" table="papersta" schema="" catalog="workflow">
+        <composite-id mapped="true" class="entity.PaperstaPK">
+            <key-property name="paperId">
+                <column name="paperId" sql-type="char" length="14" not-null="true"/>
+            </key-property>
+            <key-property name="staId">
+                <column name="staId" sql-type="char" length="10" not-null="true"/>
+            </key-property>
+        </composite-id>
+        <property name="paperRole">
+            <column name="paperRole" sql-type="varchar" length="20"/>
+        </property>
+        <property name="grScore">
+            <column name="grScore" sql-type="int"/>
+        </property>
+    </class>
+</hibernate-mapping>

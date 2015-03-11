@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="entity.Bookawd" table="bookawd" schema="" catalog="workflow">
+        <composite-id mapped="true" class="entity.BookawdPK">
+            <key-property name="bkId">
+                <column name="bkId" sql-type="char" length="12" not-null="true"/>
+            </key-property>
+            <key-property name="awdId">
+                <column name="awdId" sql-type="char" length="4" not-null="true"/>
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

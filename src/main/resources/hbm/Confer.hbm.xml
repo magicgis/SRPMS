@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="entity.Confer" table="confer" schema="" catalog="workflow">
+        <id name="conferId">
+            <column name="conferId" sql-type="char" length="13" not-null="true"/>
+        </id>
+        <property name="conferType">
+            <column name="conferType" sql-type="varchar" length="10"/>
+        </property>
+        <property name="conferNm">
+            <column name="conferNm" sql-type="varchar" length="20"/>
+        </property>
+        <property name="conferTime">
+            <column name="conferTime" sql-type="datetime"/>
+        </property>
+        <property name="conferAddr">
+            <column name="conferAddr" sql-type="varchar" length="50"/>
+        </property>
+    </class>
+</hibernate-mapping>

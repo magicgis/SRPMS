@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="entity.Papermag" table="papermag" schema="" catalog="workflow">
+        <composite-id mapped="true" class="entity.PapermagPK">
+            <key-property name="paperId">
+                <column name="paperId" sql-type="char" length="14" not-null="true"/>
+            </key-property>
+            <key-property name="magId">
+                <column name="magId" sql-type="char" length="5" not-null="true"/>
+            </key-property>
+        </composite-id>
+        <property name="colType">
+            <column name="colType" sql-type="varchar" length="10"/>
+        </property>
+        <property name="volIss">
+            <column name="volIss" sql-type="varchar" length="30"/>
+        </property>
+        <property name="bgPage">
+            <column name="bgPage" sql-type="varchar" length="30"/>
+        </property>
+        <property name="paperScore">
+            <column name="paperScore" sql-type="int"/>
+        </property>
+        <property name="pubDate">
+            <column name="pubDate" sql-type="date"/>
+        </property>
+    </class>
+</hibernate-mapping>

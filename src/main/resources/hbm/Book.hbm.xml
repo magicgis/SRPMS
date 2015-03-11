@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="entity.Book" table="book" schema="" catalog="workflow">
+        <id name="bkId">
+            <column name="bkId" sql-type="char" length="12" not-null="true"/>
+        </id>
+        <property name="bkName">
+            <column name="bkName" sql-type="varchar" length="60"/>
+        </property>
+        <property name="pubDate">
+            <column name="pubDate" sql-type="datetime"/>
+        </property>
+        <property name="publisher">
+            <column name="publisher" sql-type="varchar" length="20"/>
+        </property>
+        <property name="isbn">
+            <column name="ISBN" sql-type="varchar" length="25"/>
+        </property>
+        <property name="scYr">
+            <column name="scYr" sql-type="varchar" length="4"/>
+        </property>
+        <property name="bkType">
+            <column name="bkType" sql-type="varchar" length="16"/>
+        </property>
+        <property name="bkWdNum">
+            <column name="bkWdNum" sql-type="decimal" precision="5" scale="2"/>
+        </property>
+    </class>
+</hibernate-mapping>

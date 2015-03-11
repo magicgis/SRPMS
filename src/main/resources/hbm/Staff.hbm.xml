@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="entity.Staff" table="staff" schema="" catalog="workflow">
+        <id name="staId">
+            <column name="staId" sql-type="char" length="4" not-null="true"/>
+        </id>
+        <property name="staName">
+            <column name="staName" sql-type="varchar" length="10"/>
+        </property>
+        <property name="iDcard">
+            <column name="IDcard" sql-type="char" length="20"/>
+        </property>
+        <property name="edu">
+            <column name="edu" sql-type="varchar" length="4"/>
+        </property>
+        <property name="position">
+            <column name="position" sql-type="varchar" length="10"/>
+        </property>
+        <property name="degree">
+            <column name="degree" sql-type="varchar" length="10"/>
+        </property>
+        <property name="staSNm">
+            <column name="staSNm" sql-type="varchar" length="4"/>
+        </property>
+    </class>
+</hibernate-mapping>
