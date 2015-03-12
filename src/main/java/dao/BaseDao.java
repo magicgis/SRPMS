@@ -6,6 +6,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -18,6 +19,7 @@ import java.util.List;
  * TIME:15:24
  * Created by guofan on 2015/2/13
  */
+@Repository
 public class BaseDao<T> implements BaseInterface<T> {
 
     public Class entityClass;
@@ -85,7 +87,7 @@ public class BaseDao<T> implements BaseInterface<T> {
     }
 
     @Override
-    public T findById(Serializable id) {
+    public T getById(Serializable id) {
         log.debug("BaseDAO Find "+entityClass.getName()+" By Id "+id);
         T res;
         try {
@@ -98,22 +100,29 @@ public class BaseDao<T> implements BaseInterface<T> {
     }
 
     @Override
-    public List<T> findAll() {
+    public List<T> getAll() {
         log.debug("BaseDAO Get All "+entityClass.getName());
         String hql = "from " + getEntityClass().getName();
-        List<T> res;
+        List<T> res = null;
         try{
             res = this.getCurrentSession().createQuery(hql).list();
         }catch (HibernateException hex){
             log.error("BaseDAO Get All "+entityClass.getName()+" Failed",hex);
-            res = null;
         }
         return res;
     }
 
     @Override
-    public List<T> findAll(int page, int row) {
-        return null;
+    public List<T> getAll(int startRow, int num) {
+        log.debug("BaseDAO Get All "+entityClass.getName()+" LIMIT " + startRow + "," + num);
+        String hql = "from " + getEntityClass().getName()+" LIMIT "+ startRow + "," + num;
+        List<T> res = null;
+        try{
+            res = this.getCurrentSession().createQuery(hql).list();
+        }catch (HibernateException hex){
+            log.error("BaseDAO Get All "+entityClass.getName()+" Failed",hex);
+        }
+        return res;
     }
 
 //    @Override

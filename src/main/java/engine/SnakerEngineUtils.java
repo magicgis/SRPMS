@@ -6,8 +6,7 @@ import org.snaker.engine.entity.*;
 import org.snaker.engine.entity.Process;
 import org.snaker.engine.helper.StreamHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Service;
 import java.util.*;
 
 /**
@@ -15,7 +14,7 @@ import java.util.*;
  * TIME:23:04
  * Created by guofan on 2015/1/22
  */
-@Component
+@Service("engine")
 public class SnakerEngineUtils implements Engine {
     @Autowired
     private SnakerEngine snakerEngine;

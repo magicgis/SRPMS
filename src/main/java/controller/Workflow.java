@@ -1,7 +1,6 @@
 package controller;
 
 import engine.Engine;
-import engine.entity.EasyTask;
 import org.snaker.engine.entity.HistoryTask;
 import org.snaker.engine.entity.Order;
 import org.snaker.engine.entity.Task;

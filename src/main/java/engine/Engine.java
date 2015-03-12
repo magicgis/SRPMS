@@ -5,6 +5,7 @@ import org.snaker.engine.access.QueryFilter;
 import org.snaker.engine.entity.*;
 import org.snaker.engine.entity.Process;
 import org.snaker.engine.helper.StreamHelper;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;

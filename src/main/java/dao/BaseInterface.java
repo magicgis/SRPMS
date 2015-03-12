@@ -36,21 +36,21 @@ public interface BaseInterface<T> {
      * @param id 主键id
      * @return  obj
      */
-    abstract T findById(Serializable id);
+    abstract T getById(Serializable id);
 
     /**
      * 无条件查找所有对象
      * @return obj list
      */
-    abstract List<T> findAll();
+    abstract List<T> getAll();
 
     /**
      * TODO
      * 无条件查找所有对象
-     * @param page 第几页
-     * @param row 每页行数
+     * @param startRow 第几页
+     * @param num 每页行数
      * @return HQL
      */
-    abstract List<T> findAll(int page, int row);
+    abstract List<T> getAll(int startRow, int num);
 
 }
