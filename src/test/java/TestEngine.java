@@ -1,3 +1,4 @@
+import dao.AccountDao;
 import engine.Engine;
 import org.snaker.engine.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ public class TestEngine extends AbstractJUnit4SpringContextTests {
 
     @Autowired
     Engine engine;
-//    @Autowired
 
 
 //    @org.junit.Test

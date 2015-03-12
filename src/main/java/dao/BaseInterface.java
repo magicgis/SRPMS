@@ -45,7 +45,6 @@ public interface BaseInterface<T> {
     abstract List<T> getAll();
 
     /**
-     * TODO
      * 无条件查找所有对象
      * @param startRow 第几页
      * @param num 每页行数

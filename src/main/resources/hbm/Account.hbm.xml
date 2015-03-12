@@ -6,11 +6,10 @@
 
     <class name="entity.Account" table="account" schema="" catalog="workflow">
         <id name="id" column="id"/>
-        <property name="staId" column="staId"/>
         <property name="email" column="email"/>
         <property name="pwd" column="pwd"/>
         <property name="privilege" column="privilege"/>
-        <many-to-one name="staff" class="entity.Staff">
+        <many-to-one name="staffByStaId" class="entity.Staff">
             <column name="staId" not-null="true"/>
         </many-to-one>
     </class>

@@ -3,35 +3,26 @@ package entity;
 import java.sql.Date;
 
 /**
- * DATE:2015/3/12
- * TIME:14:20
- * Created by guofan on 2015/3/12
+ * DATE:2015/3/13
+ * TIME:2:23
+ * Created by guofan on 2015/3/13
  */
 public class Papermag {
-    private String paperId;
-    private String magId;
+    private String idpm;
     private String colType;
     private String volIss;
     private String bgPage;
     private Integer paperScore;
     private Date pubDate;
-    private Mag magByMagId;
     private Paper paperByPaperId;
+    private Mag magByMagId;
 
-    public String getPaperId() {
-        return paperId;
+    public String getIdpm() {
+        return idpm;
     }
 
-    public void setPaperId(String paperId) {
-        this.paperId = paperId;
-    }
-
-    public String getMagId() {
-        return magId;
-    }
-
-    public void setMagId(String magId) {
-        this.magId = magId;
+    public void setIdpm(String idpm) {
+        this.idpm = idpm;
     }
 
     public String getColType() {
@@ -83,8 +74,7 @@ public class Papermag {
 
         if (bgPage != null ? !bgPage.equals(papermag.bgPage) : papermag.bgPage != null) return false;
         if (colType != null ? !colType.equals(papermag.colType) : papermag.colType != null) return false;
-        if (magId != null ? !magId.equals(papermag.magId) : papermag.magId != null) return false;
-        if (paperId != null ? !paperId.equals(papermag.paperId) : papermag.paperId != null) return false;
+        if (idpm != null ? !idpm.equals(papermag.idpm) : papermag.idpm != null) return false;
         if (paperScore != null ? !paperScore.equals(papermag.paperScore) : papermag.paperScore != null) return false;
         if (pubDate != null ? !pubDate.equals(papermag.pubDate) : papermag.pubDate != null) return false;
         if (volIss != null ? !volIss.equals(papermag.volIss) : papermag.volIss != null) return false;
@@ -94,8 +84,7 @@ public class Papermag {
 
     @Override
     public int hashCode() {
-        int result = paperId != null ? paperId.hashCode() : 0;
-        result = 31 * result + (magId != null ? magId.hashCode() : 0);
+        int result = idpm != null ? idpm.hashCode() : 0;
         result = 31 * result + (colType != null ? colType.hashCode() : 0);
         result = 31 * result + (volIss != null ? volIss.hashCode() : 0);
         result = 31 * result + (bgPage != null ? bgPage.hashCode() : 0);
@@ -104,19 +93,19 @@ public class Papermag {
         return result;
     }
 
-    public Mag getMagByMagId() {
-        return magByMagId;
-    }
-
-    public void setMagByMagId(Mag magByMagId) {
-        this.magByMagId = magByMagId;
-    }
-
     public Paper getPaperByPaperId() {
         return paperByPaperId;
     }
 
     public void setPaperByPaperId(Paper paperByPaperId) {
         this.paperByPaperId = paperByPaperId;
+    }
+
+    public Mag getMagByMagId() {
+        return magByMagId;
+    }
+
+    public void setMagByMagId(Mag magByMagId) {
+        this.magByMagId = magByMagId;
     }
 }

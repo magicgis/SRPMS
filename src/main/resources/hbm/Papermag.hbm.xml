@@ -5,20 +5,17 @@
 <hibernate-mapping>
 
     <class name="entity.Papermag" table="papermag" schema="" catalog="workflow">
-        <composite-id mapped="true" class="entity.PapermagPK">
-            <key-property name="paperId" column="paperId"/>
-            <key-property name="magId" column="magId"/>
-        </composite-id>
+        <id name="idpm" column="idpm"/>
         <property name="colType" column="colType"/>
         <property name="volIss" column="volIss"/>
         <property name="bgPage" column="bgPage"/>
         <property name="paperScore" column="paperScore"/>
         <property name="pubDate" column="pubDate"/>
-        <many-to-one name="magByMagId" class="entity.Mag">
-            <column name="magId" not-null="true"/>
-        </many-to-one>
         <many-to-one name="paperByPaperId" class="entity.Paper">
             <column name="paperId" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="magByMagId" class="entity.Mag">
+            <column name="magId" not-null="true"/>
         </many-to-one>
     </class>
 </hibernate-mapping>

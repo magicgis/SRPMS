@@ -5,10 +5,7 @@
 <hibernate-mapping>
 
     <class name="entity.Papersta" table="papersta" schema="" catalog="workflow">
-        <composite-id mapped="true" class="entity.PaperstaPK">
-            <key-property name="paperId" column="paperId"/>
-            <key-property name="staId" column="staId"/>
-        </composite-id>
+        <id name="idps" column="idps"/>
         <property name="paperRole" column="paperRole"/>
         <property name="grScore" column="grScore"/>
         <many-to-one name="paperByPaperId" class="entity.Paper">

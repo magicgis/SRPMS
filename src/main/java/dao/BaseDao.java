@@ -115,10 +115,10 @@ public class BaseDao<T> implements BaseInterface<T> {
     @Override
     public List<T> getAll(int startRow, int num) {
         log.debug("BaseDAO Get All "+entityClass.getName()+" LIMIT " + startRow + "," + num);
-        String hql = "from " + getEntityClass().getName()+" LIMIT "+ startRow + "," + num;
+        String hql = "from " + getEntityClass().getName();
         List<T> res = null;
         try{
-            res = this.getCurrentSession().createQuery(hql).list();
+            res = this.getCurrentSession().createQuery(hql).setFirstResult(startRow).setFetchSize(num).list();
         }catch (HibernateException hex){
             log.error("BaseDAO Get All "+entityClass.getName()+" Failed",hex);
         }

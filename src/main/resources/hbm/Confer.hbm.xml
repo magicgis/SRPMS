@@ -10,11 +10,5 @@
         <property name="conferNm" column="conferNm"/>
         <property name="conferTime" column="conferTime"/>
         <property name="conferAddr" column="conferAddr"/>
-        <set name="conferpapersByConferId" inverse="true">
-            <key>
-                <column name="conferId" not-null="true"/>
-            </key>
-            <one-to-many not-found="ignore" class="entity.Conferpaper"/>
-        </set>
     </class>
 </hibernate-mapping>

@@ -5,10 +5,7 @@
 <hibernate-mapping>
 
     <class name="entity.Booksta" table="booksta" schema="" catalog="workflow">
-        <composite-id mapped="true" class="entity.BookstaPK">
-            <key-property name="bkId" column="bkId"/>
-            <key-property name="staId" column="staId"/>
-        </composite-id>
+        <id name="idbs" column="idbs"/>
         <property name="peoWdNum" column="peoWdNum"/>
         <property name="bkcbRole" column="bkcbRole"/>
         <property name="isTx" column="isTx"/>

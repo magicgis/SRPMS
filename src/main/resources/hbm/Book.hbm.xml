@@ -6,7 +6,6 @@
 
     <class name="entity.Book" table="book" schema="" catalog="workflow">
         <id name="bkId" column="bkId"/>
-        <property name="deptId" column="deptId"/>
         <property name="bkName" column="bkName"/>
         <property name="pubDate" column="pubDate"/>
         <property name="publisher" column="publisher"/>
@@ -17,17 +16,5 @@
         <many-to-one name="baseByDeptId" class="entity.Base">
             <column name="deptId"/>
         </many-to-one>
-        <set name="bookawds" inverse="true">
-            <key>
-                <column name="bkId" not-null="true"/>
-            </key>
-            <one-to-many not-found="ignore" class="entity.Bookawd"/>
-        </set>
-        <set name="bookstas" inverse="true">
-            <key>
-                <column name="bkId" not-null="true"/>
-            </key>
-            <one-to-many not-found="ignore" class="entity.Booksta"/>
-        </set>
     </class>
 </hibernate-mapping>

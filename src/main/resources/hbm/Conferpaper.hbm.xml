@@ -5,10 +5,7 @@
 <hibernate-mapping>
 
     <class name="entity.Conferpaper" table="conferpaper" schema="" catalog="workflow">
-        <composite-id mapped="true" class="entity.ConferpaperPK">
-            <key-property name="conferId" column="conferId"/>
-            <key-property name="paperId" column="paperId"/>
-        </composite-id>
+        <id name="idpc" column="idpc"/>
         <property name="cpScore" column="cpScore"/>
         <property name="pubDate" column="pubDate"/>
         <many-to-one name="conferByConferId" class="entity.Confer">

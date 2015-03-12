@@ -1,32 +1,23 @@
 package entity;
 
 /**
- * DATE:2015/3/12
- * TIME:14:20
- * Created by guofan on 2015/3/12
+ * DATE:2015/3/13
+ * TIME:2:23
+ * Created by guofan on 2015/3/13
  */
 public class Papersta {
-    private String paperId;
-    private String staId;
+    private String idps;
     private String paperRole;
     private Integer grScore;
     private Paper paperByPaperId;
     private Staff staffByStaId;
 
-    public String getPaperId() {
-        return paperId;
+    public String getIdps() {
+        return idps;
     }
 
-    public void setPaperId(String paperId) {
-        this.paperId = paperId;
-    }
-
-    public String getStaId() {
-        return staId;
-    }
-
-    public void setStaId(String staId) {
-        this.staId = staId;
+    public void setIdps(String idps) {
+        this.idps = idps;
     }
 
     public String getPaperRole() {
@@ -53,17 +44,15 @@ public class Papersta {
         Papersta papersta = (Papersta) o;
 
         if (grScore != null ? !grScore.equals(papersta.grScore) : papersta.grScore != null) return false;
-        if (paperId != null ? !paperId.equals(papersta.paperId) : papersta.paperId != null) return false;
+        if (idps != null ? !idps.equals(papersta.idps) : papersta.idps != null) return false;
         if (paperRole != null ? !paperRole.equals(papersta.paperRole) : papersta.paperRole != null) return false;
-        if (staId != null ? !staId.equals(papersta.staId) : papersta.staId != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = paperId != null ? paperId.hashCode() : 0;
-        result = 31 * result + (staId != null ? staId.hashCode() : 0);
+        int result = idps != null ? idps.hashCode() : 0;
         result = 31 * result + (paperRole != null ? paperRole.hashCode() : 0);
         result = 31 * result + (grScore != null ? grScore.hashCode() : 0);
         return result;

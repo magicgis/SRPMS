@@ -7,27 +7,8 @@
     <class name="entity.Paper" table="paper" schema="" catalog="workflow">
         <id name="paperId" column="paperId"/>
         <property name="paperName" column="paperName"/>
-        <property name="unit" column="unit"/>
         <many-to-one name="baseByUnit" class="entity.Base">
             <column name="unit"/>
         </many-to-one>
-        <set name="conferpapersByPaperId" inverse="true">
-            <key>
-                <column name="paperId" not-null="true"/>
-            </key>
-            <one-to-many not-found="ignore" class="entity.Conferpaper"/>
-        </set>
-        <set name="papermagsByPaperId" inverse="true">
-            <key>
-                <column name="paperId" not-null="true"/>
-            </key>
-            <one-to-many not-found="ignore" class="entity.Papermag"/>
-        </set>
-        <set name="paperstasByPaperId" inverse="true">
-            <key>
-                <column name="paperId" not-null="true"/>
-            </key>
-            <one-to-many not-found="ignore" class="entity.Papersta"/>
-        </set>
     </class>
 </hibernate-mapping>

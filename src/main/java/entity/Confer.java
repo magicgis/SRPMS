@@ -1,12 +1,11 @@
 package entity;
 
 import java.sql.Timestamp;
-import java.util.Collection;
 
 /**
- * DATE:2015/3/12
- * TIME:14:20
- * Created by guofan on 2015/3/12
+ * DATE:2015/3/13
+ * TIME:2:23
+ * Created by guofan on 2015/3/13
  */
 public class Confer {
     private String conferId;
@@ -14,7 +13,6 @@ public class Confer {
     private String conferNm;
     private Timestamp conferTime;
     private String conferAddr;
-    private Collection<Conferpaper> conferpapersByConferId;
 
     public String getConferId() {
         return conferId;
@@ -80,13 +78,5 @@ public class Confer {
         result = 31 * result + (conferTime != null ? conferTime.hashCode() : 0);
         result = 31 * result + (conferAddr != null ? conferAddr.hashCode() : 0);
         return result;
-    }
-
-    public Collection<Conferpaper> getConferpapersByConferId() {
-        return conferpapersByConferId;
-    }
-
-    public void setConferpapersByConferId(Collection<Conferpaper> conferpapersByConferId) {
-        this.conferpapersByConferId = conferpapersByConferId;
     }
 }

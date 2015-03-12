@@ -8,11 +8,5 @@
         <id name="awdId" column="awdId"/>
         <property name="awdType" column="awdType"/>
         <property name="awdRank" column="awdRank"/>
-        <set name="bookawd" inverse="true">
-            <key>
-                <column name="awdId" not-null="true"/>
-            </key>
-            <one-to-many not-found="ignore" class="entity.Bookawd"/>
-        </set>
     </class>
 </hibernate-mapping>

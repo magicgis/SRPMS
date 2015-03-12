@@ -46,7 +46,7 @@
                 <prop key="jdbc.batch_size">20</prop>
                 <prop key="connection.autocommit">true</prop>
                 <prop key="connection.useUnicode">true</prop>
-                <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306</prop>
+                <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/workflow</prop>
                 <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
             </props>
         </property>
@@ -59,7 +59,20 @@
                 <value>hbm/snaker.taskactor.hbm.xml</value>
                 <value>hbm/snaker.workitem.hbm.xml</value>
                 <value>hbm/snaker.surrogate.hbm.xml</value>
-                <value>classpath:hbm/*.hbm.xml</value>
+
+                <value>hbm/Account.hbm.xml</value>
+                <value>hbm/Award.hbm.xml</value>
+                <value>hbm/Base.hbm.xml</value>
+                <value>hbm/Book.hbm.xml</value>
+                <value>hbm/Bookawd.hbm.xml</value>
+                <value>hbm/Booksta.hbm.xml</value>
+                <value>hbm/Confer.hbm.xml</value>
+                <value>hbm/Conferpaper.hbm.xml</value>
+                <value>hbm/Mag.hbm.xml</value>
+                <value>hbm/Paper.hbm.xml</value>
+                <value>hbm/Papermag.hbm.xml</value>
+                <value>hbm/Papersta.hbm.xml</value>
+                <value>hbm/Staff.hbm.xml</value>
             </list>
         </property>
     </bean>
@@ -159,5 +172,6 @@
 
     <context:component-scan base-package="engine" />
     <context:component-scan base-package="service" />
+    <context:component-scan base-package="dao"/>
     <context:component-scan base-package="controller"/>
 </beans>

@@ -1,23 +1,19 @@
 package entity;
 
-import java.util.Collection;
-
 /**
- * DATE:2015/3/12
- * TIME:14:20
- * Created by guofan on 2015/3/12
+ * DATE:2015/3/13
+ * TIME:2:23
+ * Created by guofan on 2015/3/13
  */
 public class Mag {
     private String magId;
     private String magName;
     private String magSNm;
-    private String gradeId;
     private String issn;
     private String cn;
     private String magSub;
     private String fq;
     private Base baseByGradeId;
-    private Collection<Papermag> papermagsByMagId;
 
     public String getMagId() {
         return magId;
@@ -41,14 +37,6 @@ public class Mag {
 
     public void setMagSNm(String magSNm) {
         this.magSNm = magSNm;
-    }
-
-    public String getGradeId() {
-        return gradeId;
-    }
-
-    public void setGradeId(String gradeId) {
-        this.gradeId = gradeId;
     }
 
     public String getIssn() {
@@ -92,7 +80,6 @@ public class Mag {
 
         if (cn != null ? !cn.equals(mag.cn) : mag.cn != null) return false;
         if (fq != null ? !fq.equals(mag.fq) : mag.fq != null) return false;
-        if (gradeId != null ? !gradeId.equals(mag.gradeId) : mag.gradeId != null) return false;
         if (issn != null ? !issn.equals(mag.issn) : mag.issn != null) return false;
         if (magId != null ? !magId.equals(mag.magId) : mag.magId != null) return false;
         if (magName != null ? !magName.equals(mag.magName) : mag.magName != null) return false;
@@ -107,7 +94,6 @@ public class Mag {
         int result = magId != null ? magId.hashCode() : 0;
         result = 31 * result + (magName != null ? magName.hashCode() : 0);
         result = 31 * result + (magSNm != null ? magSNm.hashCode() : 0);
-        result = 31 * result + (gradeId != null ? gradeId.hashCode() : 0);
         result = 31 * result + (issn != null ? issn.hashCode() : 0);
         result = 31 * result + (cn != null ? cn.hashCode() : 0);
         result = 31 * result + (magSub != null ? magSub.hashCode() : 0);
@@ -121,13 +107,5 @@ public class Mag {
 
     public void setBaseByGradeId(Base baseByGradeId) {
         this.baseByGradeId = baseByGradeId;
-    }
-
-    public Collection<Papermag> getPapermagsByMagId() {
-        return papermagsByMagId;
-    }
-
-    public void setPapermagsByMagId(Collection<Papermag> papermagsByMagId) {
-        this.papermagsByMagId = papermagsByMagId;
     }
 }
