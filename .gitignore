@@ -13,3 +13,6 @@ target/
 # Log #
 logs/
 *.log
+
+# Database Setting #
+database.properties
