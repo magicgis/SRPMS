@@ -6,24 +6,18 @@
 
     <class name="entity.Booksta" table="booksta" schema="" catalog="workflow">
         <composite-id mapped="true" class="entity.BookstaPK">
-            <key-property name="bkId">
-                <column name="bkId" sql-type="char" length="12" not-null="true"/>
-            </key-property>
-            <key-property name="staId">
-                <column name="staId" sql-type="char" length="4" not-null="true"/>
-            </key-property>
+            <key-property name="bkId" column="bkId"/>
+            <key-property name="staId" column="staId"/>
         </composite-id>
-        <property name="peoWdNum">
-            <column name="peoWdNum" sql-type="decimal" precision="4" scale="2"/>
-        </property>
-        <property name="bkcbRole">
-            <column name="bkcbRole" sql-type="varchar" length="20"/>
-        </property>
-        <property name="isTx">
-            <column name="isTx" sql-type="tinyint" not-null="true"/>
-        </property>
-        <property name="bkScore">
-            <column name="bkScore" sql-type="decimal" precision="8" scale="4"/>
-        </property>
+        <property name="peoWdNum" column="peoWdNum"/>
+        <property name="bkcbRole" column="bkcbRole"/>
+        <property name="isTx" column="isTx"/>
+        <property name="bkScore" column="bkScore"/>
+        <many-to-one name="bookByBkId" class="entity.Book">
+            <column name="bkId" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="staffByStaId" class="entity.Staff">
+            <column name="staId" not-null="true"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

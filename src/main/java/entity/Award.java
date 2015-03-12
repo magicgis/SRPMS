@@ -1,14 +1,17 @@
 package entity;
 
+import java.util.Collection;
+
 /**
- * DATE:2015/3/11
- * TIME:23:51
- * Created by guofan on 2015/3/11
+ * DATE:2015/3/12
+ * TIME:14:20
+ * Created by guofan on 2015/3/12
  */
 public class Award {
     private String awdId;
     private String awdType;
     private String awdRank;
+    private Collection<Bookawd> bookawd;
 
     public String getAwdId() {
         return awdId;
@@ -54,5 +57,13 @@ public class Award {
         result = 31 * result + (awdType != null ? awdType.hashCode() : 0);
         result = 31 * result + (awdRank != null ? awdRank.hashCode() : 0);
         return result;
+    }
+
+    public Collection<Bookawd> getBookawd() {
+        return bookawd;
+    }
+
+    public void setBookawd(Collection<Bookawd> bookawdsByAwdId) {
+        this.bookawd = bookawdsByAwdId;
     }
 }

@@ -59,14 +59,9 @@
                 <value>hbm/snaker.taskactor.hbm.xml</value>
                 <value>hbm/snaker.workitem.hbm.xml</value>
                 <value>hbm/snaker.surrogate.hbm.xml</value>
+                <value>classpath:hbm/*.hbm.xml</value>
             </list>
         </property>
-        <property name="packagesToScan">
-            <list>
-                <value>entity</value>
-            </list>
-        </property>
-
     </bean>
     <!--snaker对数据库的访问-->
     <bean id="dbAccess" class="org.snaker.engine.access.hibernate.Hibernate3Access">

@@ -2,14 +2,16 @@ package entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Collection;
 
 /**
- * DATE:2015/3/11
- * TIME:23:51
- * Created by guofan on 2015/3/11
+ * DATE:2015/3/12
+ * TIME:14:20
+ * Created by guofan on 2015/3/12
  */
 public class Book {
     private String bkId;
+    private String deptId;
     private String bkName;
     private Timestamp pubDate;
     private String publisher;
@@ -17,6 +19,9 @@ public class Book {
     private String scYr;
     private String bkType;
     private BigDecimal bkWdNum;
+    private Base baseByDeptId;
+    private Collection<Bookawd> bookawds;
+    private Collection<Booksta> bookstas;
 
     public String getBkId() {
         return bkId;
@@ -24,6 +29,14 @@ public class Book {
 
     public void setBkId(String bkId) {
         this.bkId = bkId;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
     }
 
     public String getBkName() {
@@ -93,6 +106,7 @@ public class Book {
         if (bkName != null ? !bkName.equals(book.bkName) : book.bkName != null) return false;
         if (bkType != null ? !bkType.equals(book.bkType) : book.bkType != null) return false;
         if (bkWdNum != null ? !bkWdNum.equals(book.bkWdNum) : book.bkWdNum != null) return false;
+        if (deptId != null ? !deptId.equals(book.deptId) : book.deptId != null) return false;
         if (isbn != null ? !isbn.equals(book.isbn) : book.isbn != null) return false;
         if (pubDate != null ? !pubDate.equals(book.pubDate) : book.pubDate != null) return false;
         if (publisher != null ? !publisher.equals(book.publisher) : book.publisher != null) return false;
@@ -104,6 +118,7 @@ public class Book {
     @Override
     public int hashCode() {
         int result = bkId != null ? bkId.hashCode() : 0;
+        result = 31 * result + (deptId != null ? deptId.hashCode() : 0);
         result = 31 * result + (bkName != null ? bkName.hashCode() : 0);
         result = 31 * result + (pubDate != null ? pubDate.hashCode() : 0);
         result = 31 * result + (publisher != null ? publisher.hashCode() : 0);
@@ -112,5 +127,29 @@ public class Book {
         result = 31 * result + (bkType != null ? bkType.hashCode() : 0);
         result = 31 * result + (bkWdNum != null ? bkWdNum.hashCode() : 0);
         return result;
+    }
+
+    public Base getBaseByDeptId() {
+        return baseByDeptId;
+    }
+
+    public void setBaseByDeptId(Base baseByDeptId) {
+        this.baseByDeptId = baseByDeptId;
+    }
+
+    public Collection<Bookawd> getBookawds() {
+        return bookawds;
+    }
+
+    public void setBookawds(Collection<Bookawd> bookawdsByBkId) {
+        this.bookawds = bookawdsByBkId;
+    }
+
+    public Collection<Booksta> getBookstas() {
+        return bookstas;
+    }
+
+    public void setBookstas(Collection<Booksta> bookstasByBkId) {
+        this.bookstas = bookstasByBkId;
     }
 }

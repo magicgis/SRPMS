@@ -5,26 +5,38 @@
 <hibernate-mapping>
 
     <class name="entity.Staff" table="staff" schema="" catalog="workflow">
-        <id name="staId">
-            <column name="staId" sql-type="char" length="4" not-null="true"/>
-        </id>
-        <property name="staName">
-            <column name="staName" sql-type="varchar" length="10"/>
-        </property>
-        <property name="iDcard">
-            <column name="IDcard" sql-type="char" length="20"/>
-        </property>
-        <property name="edu">
-            <column name="edu" sql-type="varchar" length="4"/>
-        </property>
-        <property name="position">
-            <column name="position" sql-type="varchar" length="10"/>
-        </property>
-        <property name="degree">
-            <column name="degree" sql-type="varchar" length="10"/>
-        </property>
-        <property name="staSNm">
-            <column name="staSNm" sql-type="varchar" length="4"/>
-        </property>
+        <id name="staId" column="staId"/>
+        <property name="staName" column="staName"/>
+        <property name="deptId" column="deptId"/>
+        <property name="iDcard" column="IDcard"/>
+        <property name="rankId" column="rankId"/>
+        <property name="edu" column="edu"/>
+        <property name="position" column="position"/>
+        <property name="degree" column="degree"/>
+        <property name="staSNm" column="staSNm"/>
+        <many-to-one name="baseByDeptId" class="entity.Base">
+            <column name="deptId"/>
+        </many-to-one>
+        <many-to-one name="baseByRankId" class="entity.Base">
+            <column name="rankId"/>
+        </many-to-one>
+        <set name="accountsByStaId" inverse="true">
+            <key>
+                <column name="staId" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="entity.Account"/>
+        </set>
+        <set name="bookstasByStaId" inverse="true">
+            <key>
+                <column name="staId" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="entity.Booksta"/>
+        </set>
+        <set name="paperstasByStaId" inverse="true">
+            <key>
+                <column name="staId" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="entity.Papersta"/>
+        </set>
     </class>
 </hibernate-mapping>

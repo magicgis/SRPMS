@@ -5,29 +5,29 @@
 <hibernate-mapping>
 
     <class name="entity.Book" table="book" schema="" catalog="workflow">
-        <id name="bkId">
-            <column name="bkId" sql-type="char" length="12" not-null="true"/>
-        </id>
-        <property name="bkName">
-            <column name="bkName" sql-type="varchar" length="60"/>
-        </property>
-        <property name="pubDate">
-            <column name="pubDate" sql-type="datetime"/>
-        </property>
-        <property name="publisher">
-            <column name="publisher" sql-type="varchar" length="20"/>
-        </property>
-        <property name="isbn">
-            <column name="ISBN" sql-type="varchar" length="25"/>
-        </property>
-        <property name="scYr">
-            <column name="scYr" sql-type="varchar" length="4"/>
-        </property>
-        <property name="bkType">
-            <column name="bkType" sql-type="varchar" length="16"/>
-        </property>
-        <property name="bkWdNum">
-            <column name="bkWdNum" sql-type="decimal" precision="5" scale="2"/>
-        </property>
+        <id name="bkId" column="bkId"/>
+        <property name="deptId" column="deptId"/>
+        <property name="bkName" column="bkName"/>
+        <property name="pubDate" column="pubDate"/>
+        <property name="publisher" column="publisher"/>
+        <property name="isbn" column="ISBN"/>
+        <property name="scYr" column="scYr"/>
+        <property name="bkType" column="bkType"/>
+        <property name="bkWdNum" column="bkWdNum"/>
+        <many-to-one name="baseByDeptId" class="entity.Base">
+            <column name="deptId"/>
+        </many-to-one>
+        <set name="bookawds" inverse="true">
+            <key>
+                <column name="bkId" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="entity.Bookawd"/>
+        </set>
+        <set name="bookstas" inverse="true">
+            <key>
+                <column name="bkId" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="entity.Booksta"/>
+        </set>
     </class>
 </hibernate-mapping>

@@ -3,9 +3,9 @@ package entity;
 import java.io.Serializable;
 
 /**
- * DATE:2015/3/11
- * TIME:23:51
- * Created by guofan on 2015/3/11
+ * DATE:2015/3/12
+ * TIME:14:20
+ * Created by guofan on 2015/3/12
  */
 public class PaperstaPK implements Serializable {
     private String paperId;

@@ -6,27 +6,19 @@
 
     <class name="entity.Papermag" table="papermag" schema="" catalog="workflow">
         <composite-id mapped="true" class="entity.PapermagPK">
-            <key-property name="paperId">
-                <column name="paperId" sql-type="char" length="14" not-null="true"/>
-            </key-property>
-            <key-property name="magId">
-                <column name="magId" sql-type="char" length="5" not-null="true"/>
-            </key-property>
+            <key-property name="paperId" column="paperId"/>
+            <key-property name="magId" column="magId"/>
         </composite-id>
-        <property name="colType">
-            <column name="colType" sql-type="varchar" length="10"/>
-        </property>
-        <property name="volIss">
-            <column name="volIss" sql-type="varchar" length="30"/>
-        </property>
-        <property name="bgPage">
-            <column name="bgPage" sql-type="varchar" length="30"/>
-        </property>
-        <property name="paperScore">
-            <column name="paperScore" sql-type="int"/>
-        </property>
-        <property name="pubDate">
-            <column name="pubDate" sql-type="date"/>
-        </property>
+        <property name="colType" column="colType"/>
+        <property name="volIss" column="volIss"/>
+        <property name="bgPage" column="bgPage"/>
+        <property name="paperScore" column="paperScore"/>
+        <property name="pubDate" column="pubDate"/>
+        <many-to-one name="magByMagId" class="entity.Mag">
+            <column name="magId" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="paperByPaperId" class="entity.Paper">
+            <column name="paperId" not-null="true"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

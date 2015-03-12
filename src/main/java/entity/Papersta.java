@@ -1,47 +1,17 @@
 package entity;
 
+/**
+ * DATE:2015/3/12
+ * TIME:14:20
+ * Created by guofan on 2015/3/12
+ */
 public class Papersta {
-
-	private String paperid;
-	private String staid;
-	private String paperrole;
-	private String grscore;
     private String paperId;
     private String staId;
     private String paperRole;
     private Integer grScore;
-
-	public String getPaperid() {
-		return paperid;
-	}
-
-	public void setPaperid(String paperid) {
-		this.paperid = paperid;
-	}
-
-	public String getStaid() {
-		return staid;
-	}
-
-	public void setStaid(String staid) {
-		this.staid = staid;
-	}
-
-	public String getPaperrole() {
-		return paperrole;
-	}
-
-	public void setPaperrole(String paperrole) {
-		this.paperrole = paperrole;
-	}
-
-	public String getGrscore() {
-		return grscore;
-	}
-
-	public void setGrscore(String grscore) {
-		this.grscore = grscore;
-	}
+    private Paper paperByPaperId;
+    private Staff staffByStaId;
 
     public String getPaperId() {
         return paperId;
@@ -97,5 +67,21 @@ public class Papersta {
         result = 31 * result + (paperRole != null ? paperRole.hashCode() : 0);
         result = 31 * result + (grScore != null ? grScore.hashCode() : 0);
         return result;
+    }
+
+    public Paper getPaperByPaperId() {
+        return paperByPaperId;
+    }
+
+    public void setPaperByPaperId(Paper paperByPaperId) {
+        this.paperByPaperId = paperByPaperId;
+    }
+
+    public Staff getStaffByStaId() {
+        return staffByStaId;
+    }
+
+    public void setStaffByStaId(Staff staffByStaId) {
+        this.staffByStaId = staffByStaId;
     }
 }

@@ -5,14 +5,14 @@
 <hibernate-mapping>
 
     <class name="entity.Award" table="award" schema="" catalog="workflow">
-        <id name="awdId">
-            <column name="awdId" sql-type="char" length="4" not-null="true"/>
-        </id>
-        <property name="awdType">
-            <column name="awdType" sql-type="varchar" length="20"/>
-        </property>
-        <property name="awdRank">
-            <column name="awdRank" sql-type="varchar" length="8"/>
-        </property>
+        <id name="awdId" column="awdId"/>
+        <property name="awdType" column="awdType"/>
+        <property name="awdRank" column="awdRank"/>
+        <set name="bookawd" inverse="true">
+            <key>
+                <column name="awdId" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="entity.Bookawd"/>
+        </set>
     </class>
 </hibernate-mapping>

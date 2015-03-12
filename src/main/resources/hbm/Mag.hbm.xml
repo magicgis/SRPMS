@@ -5,26 +5,22 @@
 <hibernate-mapping>
 
     <class name="entity.Mag" table="mag" schema="" catalog="workflow">
-        <id name="magId">
-            <column name="magId" sql-type="char" length="5" not-null="true"/>
-        </id>
-        <property name="magName">
-            <column name="magName" sql-type="varchar" length="100"/>
-        </property>
-        <property name="magSNm">
-            <column name="magSNm" sql-type="varchar" length="50"/>
-        </property>
-        <property name="issn">
-            <column name="issn" sql-type="varchar" length="10"/>
-        </property>
-        <property name="cn">
-            <column name="cn" sql-type="varchar" length="10"/>
-        </property>
-        <property name="magSub">
-            <column name="magSub" sql-type="varchar" length="20"/>
-        </property>
-        <property name="fq">
-            <column name=" fq" sql-type="varchar" length="10"/>
-        </property>
+        <id name="magId" column="magId"/>
+        <property name="magName" column="magName"/>
+        <property name="magSNm" column="magSNm"/>
+        <property name="gradeId" column="gradeId"/>
+        <property name="issn" column="issn"/>
+        <property name="cn" column="cn"/>
+        <property name="magSub" column="magSub"/>
+        <property name="fq" column=" fq"/>
+        <many-to-one name="baseByGradeId" class="entity.Base">
+            <column name="gradeId"/>
+        </many-to-one>
+        <set name="papermagsByMagId" inverse="true">
+            <key>
+                <column name="magId" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="entity.Papermag"/>
+        </set>
     </class>
 </hibernate-mapping>

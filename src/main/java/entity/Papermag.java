@@ -3,21 +3,11 @@ package entity;
 import java.sql.Date;
 
 /**
- * 期刊论文
+ * DATE:2015/3/12
+ * TIME:14:20
+ * Created by guofan on 2015/3/12
  */
 public class Papermag {
-    /* 论文ID */
-	private String paperid;
-    /* 期刊ID */
-	private String magid;
-    /* 收录类型 */
-	private String coltype;
-    /* 卷期页 */
-	private String voliss;
-    /* 发表起止页码 */
-	private String bgpage;
-    /* 得分 */
-	private String paperscore;
     private String paperId;
     private String magId;
     private String colType;
@@ -25,54 +15,8 @@ public class Papermag {
     private String bgPage;
     private Integer paperScore;
     private Date pubDate;
-
-	public String getPaperid() {
-		return paperid;
-	}
-
-	public void setPaperid(String paperid) {
-		this.paperid = paperid;
-	}
-
-	public String getMagid() {
-		return magid;
-	}
-
-	public void setMagid(String magid) {
-		this.magid = magid;
-	}
-
-	public String getColtype() {
-		return coltype;
-	}
-
-	public void setColtype(String coltype) {
-		this.coltype = coltype;
-	}
-
-	public String getVoliss() {
-		return voliss;
-	}
-
-	public void setVoliss(String voliss) {
-		this.voliss = voliss;
-	}
-
-	public String getBgpage() {
-		return bgpage;
-	}
-
-	public void setBgpage(String bgpage) {
-		this.bgpage = bgpage;
-	}
-
-	public String getPaperscore() {
-		return paperscore;
-	}
-
-	public void setPaperscore(String paperscore) {
-		this.paperscore = paperscore;
-	}
+    private Mag magByMagId;
+    private Paper paperByPaperId;
 
     public String getPaperId() {
         return paperId;
@@ -158,5 +102,21 @@ public class Papermag {
         result = 31 * result + (paperScore != null ? paperScore.hashCode() : 0);
         result = 31 * result + (pubDate != null ? pubDate.hashCode() : 0);
         return result;
+    }
+
+    public Mag getMagByMagId() {
+        return magByMagId;
+    }
+
+    public void setMagByMagId(Mag magByMagId) {
+        this.magByMagId = magByMagId;
+    }
+
+    public Paper getPaperByPaperId() {
+        return paperByPaperId;
+    }
+
+    public void setPaperByPaperId(Paper paperByPaperId) {
+        this.paperByPaperId = paperByPaperId;
     }
 }

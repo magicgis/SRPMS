@@ -3,17 +3,19 @@ package entity;
 import java.math.BigDecimal;
 
 /**
- * DATE:2015/3/11
- * TIME:23:51
- * Created by guofan on 2015/3/11
+ * DATE:2015/3/12
+ * TIME:14:20
+ * Created by guofan on 2015/3/12
  */
 public class Booksta {
     private String bkId;
     private String staId;
     private BigDecimal peoWdNum;
     private String bkcbRole;
-    private byte isTx;
+    private Byte isTx;
     private BigDecimal bkScore;
+    private Book bookByBkId;
+    private Staff staffByStaId;
 
     public String getBkId() {
         return bkId;
@@ -47,11 +49,11 @@ public class Booksta {
         this.bkcbRole = bkcbRole;
     }
 
-    public byte getIsTx() {
+    public Byte getIsTx() {
         return isTx;
     }
 
-    public void setIsTx(byte isTx) {
+    public void setIsTx(Byte isTx) {
         this.isTx = isTx;
     }
 
@@ -70,10 +72,10 @@ public class Booksta {
 
         Booksta booksta = (Booksta) o;
 
-        if (isTx != booksta.isTx) return false;
         if (bkId != null ? !bkId.equals(booksta.bkId) : booksta.bkId != null) return false;
         if (bkScore != null ? !bkScore.equals(booksta.bkScore) : booksta.bkScore != null) return false;
         if (bkcbRole != null ? !bkcbRole.equals(booksta.bkcbRole) : booksta.bkcbRole != null) return false;
+        if (isTx != null ? !isTx.equals(booksta.isTx) : booksta.isTx != null) return false;
         if (peoWdNum != null ? !peoWdNum.equals(booksta.peoWdNum) : booksta.peoWdNum != null) return false;
         if (staId != null ? !staId.equals(booksta.staId) : booksta.staId != null) return false;
 
@@ -86,8 +88,24 @@ public class Booksta {
         result = 31 * result + (staId != null ? staId.hashCode() : 0);
         result = 31 * result + (peoWdNum != null ? peoWdNum.hashCode() : 0);
         result = 31 * result + (bkcbRole != null ? bkcbRole.hashCode() : 0);
-        result = 31 * result + (int) isTx;
+        result = 31 * result + (isTx != null ? isTx.hashCode() : 0);
         result = 31 * result + (bkScore != null ? bkScore.hashCode() : 0);
         return result;
+    }
+
+    public Book getBookByBkId() {
+        return bookByBkId;
+    }
+
+    public void setBookByBkId(Book bookByBkId) {
+        this.bookByBkId = bookByBkId;
+    }
+
+    public Staff getStaffByStaId() {
+        return staffByStaId;
+    }
+
+    public void setStaffByStaId(Staff staffByStaId) {
+        this.staffByStaId = staffByStaId;
     }
 }

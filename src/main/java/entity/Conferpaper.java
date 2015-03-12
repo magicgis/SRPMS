@@ -4,43 +4,17 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
- * 会议文章
+ * DATE:2015/3/12
+ * TIME:14:20
+ * Created by guofan on 2015/3/12
  */
 public class Conferpaper {
-    /* 会议外键 */
-	private String conferid;
-    /* 论文外键 */
-	private String paperid;
-    /* cps分数 */
-	private String cpscore;
     private String conferId;
     private String paperId;
     private BigDecimal cpScore;
     private Date pubDate;
-
-	public String getConferid() {
-		return conferid;
-	}
-
-	public void setConferid(String conferid) {
-		this.conferid = conferid;
-	}
-
-	public String getPaperid() {
-		return paperid;
-	}
-
-	public void setPaperid(String paperid) {
-		this.paperid = paperid;
-	}
-
-	public String getCpscore() {
-		return cpscore;
-	}
-
-	public void setCpscore(String cpscore) {
-		this.cpscore = cpscore;
-	}
+    private Confer conferByConferId;
+    private Paper paperByPaperId;
 
     public String getConferId() {
         return conferId;
@@ -96,5 +70,21 @@ public class Conferpaper {
         result = 31 * result + (cpScore != null ? cpScore.hashCode() : 0);
         result = 31 * result + (pubDate != null ? pubDate.hashCode() : 0);
         return result;
+    }
+
+    public Confer getConferByConferId() {
+        return conferByConferId;
+    }
+
+    public void setConferByConferId(Confer conferByConferId) {
+        this.conferByConferId = conferByConferId;
+    }
+
+    public Paper getPaperByPaperId() {
+        return paperByPaperId;
+    }
+
+    public void setPaperByPaperId(Paper paperByPaperId) {
+        this.paperByPaperId = paperByPaperId;
     }
 }

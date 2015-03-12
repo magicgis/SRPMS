@@ -5,17 +5,13 @@
 <hibernate-mapping>
 
     <class name="entity.Account" table="account" schema="" catalog="workflow">
-        <id name="id">
-            <column name="id" sql-type="varchar" not-null="true"/>
-        </id>
-        <property name="staid">
-            <column name="staid" sql-type="char" not-null="true"/>
-        </property>
-        <property name="email">
-            <column name="email" sql-type="varchar" length="30" not-null="true"/>
-        </property>
-        <property name="pwd">
-            <column name="pwd" sql-type="varchar" length="20" not-null="true"/>
-        </property><property name="privilege"><column name="privilege"/></property>
+        <id name="id" column="id"/>
+        <property name="staId" column="staId"/>
+        <property name="email" column="email"/>
+        <property name="pwd" column="pwd"/>
+        <property name="privilege" column="privilege"/>
+        <many-to-one name="staff" class="entity.Staff">
+            <column name="staId" not-null="true"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

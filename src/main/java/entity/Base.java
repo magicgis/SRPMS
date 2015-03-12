@@ -1,9 +1,11 @@
 package entity;
 
+import java.util.Collection;
+
 /**
- * DATE:2015/3/11
- * TIME:23:51
- * Created by guofan on 2015/3/11
+ * DATE:2015/3/12
+ * TIME:14:20
+ * Created by guofan on 2015/3/12
  */
 public class Base {
     private String baseId;
@@ -66,4 +68,5 @@ public class Base {
         result = 31 * result + (value != null ? value.hashCode() : 0);
         return result;
     }
+
 }

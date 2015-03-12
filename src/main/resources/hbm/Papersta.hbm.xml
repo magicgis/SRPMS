@@ -6,18 +6,16 @@
 
     <class name="entity.Papersta" table="papersta" schema="" catalog="workflow">
         <composite-id mapped="true" class="entity.PaperstaPK">
-            <key-property name="paperId">
-                <column name="paperId" sql-type="char" length="14" not-null="true"/>
-            </key-property>
-            <key-property name="staId">
-                <column name="staId" sql-type="char" length="10" not-null="true"/>
-            </key-property>
+            <key-property name="paperId" column="paperId"/>
+            <key-property name="staId" column="staId"/>
         </composite-id>
-        <property name="paperRole">
-            <column name="paperRole" sql-type="varchar" length="20"/>
-        </property>
-        <property name="grScore">
-            <column name="grScore" sql-type="int"/>
-        </property>
+        <property name="paperRole" column="paperRole"/>
+        <property name="grScore" column="grScore"/>
+        <many-to-one name="paperByPaperId" class="entity.Paper">
+            <column name="paperId" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="staffByStaId" class="entity.Staff">
+            <column name="staId" not-null="true"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

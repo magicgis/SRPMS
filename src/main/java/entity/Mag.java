@@ -1,84 +1,23 @@
 package entity;
 
+import java.util.Collection;
+
 /**
- * 期刊表
+ * DATE:2015/3/12
+ * TIME:14:20
+ * Created by guofan on 2015/3/12
  */
 public class Mag {
-    /* 期刊ID */
-	private String magid;
-    /* 期刊名称 */
-	private String magname;
-    /* 期刊期数 */
-	private String magsnm;
-    /* 期刊等级 */
-	private Grade grade;
-    /* ISSN */
-	private String issn;
-    /* 期刊出版社 */
-	private String magsub;
-    /* TODO Unknown*/
-	private String fq;
     private String magId;
     private String magName;
     private String magSNm;
+    private String gradeId;
+    private String issn;
     private String cn;
     private String magSub;
-
-	public String getMagid() {
-		return magid;
-	}
-
-	public void setMagid(String magid) {
-		this.magid = magid;
-	}
-
-	public String getMagname() {
-		return magname;
-	}
-
-	public void setMagname(String magname) {
-		this.magname = magname;
-	}
-
-	public String getMagsnm() {
-		return magsnm;
-	}
-
-	public void setMagsnm(String magsnm) {
-		this.magsnm = magsnm;
-	}
-
-	public String getIssn() {
-		return issn;
-	}
-
-	public void setIssn(String issn) {
-		this.issn = issn;
-	}
-
-	public String getMagsub() {
-		return magsub;
-	}
-
-	public void setMagsub(String magsub) {
-		this.magsub = magsub;
-	}
-
-	public String getFq() {
-		return fq;
-	}
-
-	public void setFq(String fq) {
-		this.fq = fq;
-	}
-
-	public Grade getGrade() {
-		return grade;
-	}
-
-	public void setGrade(Grade grade) {
-		this.grade = grade;
-	}
+    private String fq;
+    private Base baseByGradeId;
+    private Collection<Papermag> papermagsByMagId;
 
     public String getMagId() {
         return magId;
@@ -104,6 +43,22 @@ public class Mag {
         this.magSNm = magSNm;
     }
 
+    public String getGradeId() {
+        return gradeId;
+    }
+
+    public void setGradeId(String gradeId) {
+        this.gradeId = gradeId;
+    }
+
+    public String getIssn() {
+        return issn;
+    }
+
+    public void setIssn(String issn) {
+        this.issn = issn;
+    }
+
     public String getCn() {
         return cn;
     }
@@ -120,6 +75,14 @@ public class Mag {
         this.magSub = magSub;
     }
 
+    public String getFq() {
+        return fq;
+    }
+
+    public void setFq(String fq) {
+        this.fq = fq;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -129,6 +92,7 @@ public class Mag {
 
         if (cn != null ? !cn.equals(mag.cn) : mag.cn != null) return false;
         if (fq != null ? !fq.equals(mag.fq) : mag.fq != null) return false;
+        if (gradeId != null ? !gradeId.equals(mag.gradeId) : mag.gradeId != null) return false;
         if (issn != null ? !issn.equals(mag.issn) : mag.issn != null) return false;
         if (magId != null ? !magId.equals(mag.magId) : mag.magId != null) return false;
         if (magName != null ? !magName.equals(mag.magName) : mag.magName != null) return false;
@@ -143,10 +107,27 @@ public class Mag {
         int result = magId != null ? magId.hashCode() : 0;
         result = 31 * result + (magName != null ? magName.hashCode() : 0);
         result = 31 * result + (magSNm != null ? magSNm.hashCode() : 0);
+        result = 31 * result + (gradeId != null ? gradeId.hashCode() : 0);
         result = 31 * result + (issn != null ? issn.hashCode() : 0);
         result = 31 * result + (cn != null ? cn.hashCode() : 0);
         result = 31 * result + (magSub != null ? magSub.hashCode() : 0);
         result = 31 * result + (fq != null ? fq.hashCode() : 0);
         return result;
+    }
+
+    public Base getBaseByGradeId() {
+        return baseByGradeId;
+    }
+
+    public void setBaseByGradeId(Base baseByGradeId) {
+        this.baseByGradeId = baseByGradeId;
+    }
+
+    public Collection<Papermag> getPapermagsByMagId() {
+        return papermagsByMagId;
+    }
+
+    public void setPapermagsByMagId(Collection<Papermag> papermagsByMagId) {
+        this.papermagsByMagId = papermagsByMagId;
     }
 }

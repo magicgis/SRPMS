@@ -1,17 +1,17 @@
 package entity;
 
 /**
- * DATE:2015/2/4
- * TIME:22:03
- * Created by guofan on 2015/2/4
- * 帐号
+ * DATE:2015/3/12
+ * TIME:14:20
+ * Created by guofan on 2015/3/12
  */
 public class Account {
     private String id;
-    private String staid;
+    private String staId;
     private String email;
     private String pwd;
     private String privilege;
+    private Staff staff;
 
     public String getId() {
         return id;
@@ -21,12 +21,12 @@ public class Account {
         this.id = id;
     }
 
-    public String getStaid() {
-        return staid;
+    public String getStaId() {
+        return staId;
     }
 
-    public void setStaid(String staid) {
-        this.staid = staid;
+    public void setStaId(String staId) {
+        this.staId = staId;
     }
 
     public String getEmail() {
@@ -62,8 +62,9 @@ public class Account {
 
         if (email != null ? !email.equals(account.email) : account.email != null) return false;
         if (id != null ? !id.equals(account.id) : account.id != null) return false;
+        if (privilege != null ? !privilege.equals(account.privilege) : account.privilege != null) return false;
         if (pwd != null ? !pwd.equals(account.pwd) : account.pwd != null) return false;
-        if (staid != null ? !staid.equals(account.staid) : account.staid != null) return false;
+        if (staId != null ? !staId.equals(account.staId) : account.staId != null) return false;
 
         return true;
     }
@@ -71,9 +72,18 @@ public class Account {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (staid != null ? staid.hashCode() : 0);
+        result = 31 * result + (staId != null ? staId.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (pwd != null ? pwd.hashCode() : 0);
+        result = 31 * result + (privilege != null ? privilege.hashCode() : 0);
         return result;
+    }
+
+    public Staff getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Staff staffByStaId) {
+        this.staff = staffByStaId;
     }
 }

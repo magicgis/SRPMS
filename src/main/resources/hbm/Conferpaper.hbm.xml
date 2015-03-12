@@ -6,18 +6,16 @@
 
     <class name="entity.Conferpaper" table="conferpaper" schema="" catalog="workflow">
         <composite-id mapped="true" class="entity.ConferpaperPK">
-            <key-property name="conferId">
-                <column name="conferId" sql-type="char" length="13" not-null="true"/>
-            </key-property>
-            <key-property name="paperId">
-                <column name="paperId" sql-type="char" length="14" not-null="true"/>
-            </key-property>
+            <key-property name="conferId" column="conferId"/>
+            <key-property name="paperId" column="paperId"/>
         </composite-id>
-        <property name="cpScore">
-            <column name="cpScore" sql-type="decimal" precision="4" scale="1"/>
-        </property>
-        <property name="pubDate">
-            <column name="pubDate" sql-type="date"/>
-        </property>
+        <property name="cpScore" column="cpScore"/>
+        <property name="pubDate" column="pubDate"/>
+        <many-to-one name="conferByConferId" class="entity.Confer">
+            <column name="conferId" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="paperByPaperId" class="entity.Paper">
+            <column name="paperId" not-null="true"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

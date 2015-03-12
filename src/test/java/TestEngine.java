@@ -16,8 +16,10 @@ public class TestEngine extends AbstractJUnit4SpringContextTests {
 
     @Autowired
     Engine engine;
+//    @Autowired
 
-    @org.junit.Test
+
+//    @org.junit.Test
     public void testEasy() {
         /*部署*/
         String id = engine.initFlows();
@@ -69,6 +71,11 @@ public class TestEngine extends AbstractJUnit4SpringContextTests {
             System.out.println(u.getVariableMap());
         }
 //        System.out.println(engine.getTaskByOrder(ord.getId()).get(0).getVariableMap());
+    }
+
+    @org.junit.Test
+    public void testDao(){
+
     }
 
 }

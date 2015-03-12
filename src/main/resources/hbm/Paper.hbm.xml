@@ -5,11 +5,29 @@
 <hibernate-mapping>
 
     <class name="entity.Paper" table="paper" schema="" catalog="workflow">
-        <id name="paperId">
-            <column name="paperId" sql-type="char" length="14" not-null="true"/>
-        </id>
-        <property name="paperName">
-            <column name="paperName" sql-type="varchar" length="300"/>
-        </property>
+        <id name="paperId" column="paperId"/>
+        <property name="paperName" column="paperName"/>
+        <property name="unit" column="unit"/>
+        <many-to-one name="baseByUnit" class="entity.Base">
+            <column name="unit"/>
+        </many-to-one>
+        <set name="conferpapersByPaperId" inverse="true">
+            <key>
+                <column name="paperId" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="entity.Conferpaper"/>
+        </set>
+        <set name="papermagsByPaperId" inverse="true">
+            <key>
+                <column name="paperId" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="entity.Papermag"/>
+        </set>
+        <set name="paperstasByPaperId" inverse="true">
+            <key>
+                <column name="paperId" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="entity.Papersta"/>
+        </set>
     </class>
 </hibernate-mapping>
