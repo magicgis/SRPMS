@@ -11,9 +11,14 @@
 + hibernate 3.6.10.Final
 
 ----
-采用Maven构建。
+采用Maven构建  
 [LIB下载1](http://xu-cdn.qiniudn.com/SRPMSdependency.zip)
 [LIB下载2](http://down.xulog.com/SRPMSdependency.zip)
+
+----
+数据库配置  
++ 新建一个database.properties文件，放在`src/main/resources`目录
++ 复制`database.properties.example`里的内容，并根据本机情况进行修改
 
 - - -
 
