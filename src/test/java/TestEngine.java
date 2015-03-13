@@ -75,7 +75,8 @@ public class TestEngine extends AbstractJUnit4SpringContextTests {
 
     @org.junit.Test
     public void testDao(){
-
+//        engine.initFlows();
+        System.out.println(engine.getProcessName("basicProcess_Beta"));
     }
 
 }

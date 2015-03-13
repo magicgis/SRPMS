@@ -60,6 +60,16 @@ public class SnakerEngineUtils implements Engine {
     }
 
     @Override
+    public List<Process> getAllProcess() {
+        return snakerEngine.process().getProcesss(new QueryFilter());
+    }
+
+    @Override
+    public Process getProcessName(String name) {
+        return snakerEngine.process().getProcesss(new QueryFilter().setName(name)).get(0);
+    }
+
+    @Override
     public List<Task> getTaskByOrder(String orderId) {
         return snakerEngine.query().getActiveTasks(new QueryFilter().setOrderId(orderId));
     }

@@ -3,6 +3,7 @@ package dao;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * DATE:2015/2/13
@@ -125,39 +127,58 @@ public class BaseDao<T> implements BaseInterface<T> {
         return res;
     }
 
-//    @Override
-//    public List<T> findByPropertyA(String propertyName, String value) {
-//        log.debug("BaseDAO Find(A) "+propertyName+" From "+entityClass.getName());
+    public Long getAllCount(){
+        String hql = "select count(*) " + getEntityClass().getName();
+        return  ((Number) this.getCurrentSession().createQuery(hql).uniqueResult()).longValue();
+    }
+
+    public List<T> findByPropertyA(String propertyName, String value) {
+        log.debug("BaseDAO Find(A) "+propertyName+" From "+entityClass.getName());
+        List<T> res;
+        String hql = "from " + entityClass.getName() + " where " + propertyName + " = '" + value + "'";
+        try {
+            res = this.getCurrentSession().createQuery(hql).list();
+        }catch (HibernateException hex){
+            log.error("BaseDAO Find(A) "+propertyName+" From "+entityClass.getName()+" Failed",hex);
+            res = null;
+        }
+        return res;
+    }
+
+    public List<T> findByPropertyF(String propertyName, String value) {
+        log.debug("BaseDAO Find(F) "+propertyName+" From "+entityClass.getName());
+        List<T> res;
+        String hql = "from " + entityClass.getName() + " where " + propertyName + " LIKE '%" + value + "%'";
+        try {
+            res = this.getCurrentSession().createQuery(hql).list();
+        }catch (HibernateException hex){
+            log.error("BaseDAO Find(F) "+propertyName+" From "+entityClass.getName()+" Failed",hex);
+            res = null;
+        }
+        return res;
+    }
+
+//    public List<T> findByMap(Map<String, String> params) {
 //        List<T> res;
-//        String hql = "from " + entityClass.getName() + " where " + propertyName + " = '" + value + "'";
-//        try {
-//            res = this.getCurrentSession().createQuery(hql).list();
-//        }catch (HibernateException hex){
-//            log.error("BaseDAO Find(A) "+propertyName+" From "+entityClass.getName()+" Failed",hex);
-//            res = null;
+//        String hql =  "from " + entityClass.getName();
+//        if(params!=null){
+//            hql += " where ";
+//            for(String key:params.keySet()){
+//                hql = hql + " and " + key + " = '" + params.get(key) + "'";
+//            }
 //        }
-//        return res;
-//    }
-//
-//    @Override
-//    public List<T> findByPropertyF(String propertyName, String value) {
-//        log.debug("BaseDAO Find(F) "+propertyName+" From "+entityClass.getName());
-//        List<T> res;
-//        String hql = "from " + entityClass.getName() + " where " + propertyName + " LIKE '%" + value + "%'";
-//        try {
-//            res = this.getCurrentSession().createQuery(hql).list();
-//        }catch (HibernateException hex){
-//            log.error("BaseDAO Find(F) "+propertyName+" From "+entityClass.getName()+" Failed",hex);
-//            res = null;
-//        }
-//        return res;
-//    }
-//
-//    @Override
-//    public List<T> findByMap(HashMap<String, Object> params) {
-//        return null;
 //    }
 
+    public List<T> getByHql(String hql, Map<String, Object> params) {
+        Query query = getCurrentSession().createQuery(hql);
+        if (params != null && !params.isEmpty()) {
+            for (String key : params.keySet()) {
+                query.setParameter(key, params.get(key));
+            }
+        }
+        List<T> l = query.list();
+        return l;
+    }
 
     /**
      * TODO

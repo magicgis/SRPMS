@@ -1,9 +1,8 @@
 package controller;
 
 import engine.Engine;
-import org.snaker.engine.entity.HistoryTask;
-import org.snaker.engine.entity.Order;
-import org.snaker.engine.entity.Task;
+import org.snaker.engine.entity.*;
+import org.snaker.engine.entity.Process;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,6 +34,20 @@ public class Workflow {
         return engine.initFlows();
     }
 
+    @GET
+    @Path("/process/{name}")
+    @Produces("application/json;charset=UTF-8")
+    public String getProcessName(@PathParam("name")String name){
+        return engine.getProcessName(name).getId();
+    }
+
+    @GET
+    @Path("/allProcess")
+    @Produces("application/json;charset=UTF-8")
+    public List<Process> getProcessId(){
+        return engine.getAllProcess();
+    }
+
     @POST
     @Path("/process")
     @Consumes("application/x-www-form-urlencoded")
@@ -49,6 +62,25 @@ public class Workflow {
         String processId = args.get("WF-Process");
         args.remove("WF-Process");
         return engine.startInstanceById(processId,user,(Map)args);
+    }
+
+    @POST
+    @Path("/startAndExecute")
+    @Consumes("application/x-www-form-urlencoded")
+    @Produces("application/json;charset=UTF-8")
+    public List<Task> startProcessAndExecute(MultivaluedMap<String, String> formParams){
+        Map<String,String> args = new HashMap<String, String>();
+        for(String key:formParams.keySet()){
+            args.put(key,formParams.getFirst(key));
+        }
+        String user = args.get("WF-User");
+        args.remove("WF-User");
+        String processId = args.get("WF-Process");
+        args.remove("WF-Process");
+        Order order = engine.startInstanceById(processId,user,null);
+        List<Task> tasks = engine.getTaskByOrder(order.getId());
+//        args.put("WF-TaskId",tasks.get(0).getId());
+        return engine.execute(tasks.get(0).getId(),user,(Map)args);
     }
 
     @POST
@@ -96,7 +128,7 @@ public class Workflow {
     }
 
     @GET
-    @Path("/ord{order}/hisTask")
+        @Path("/ord{order}/hisTask")
     @Produces("application/json;charset=UTF-8")
     public List<HistoryTask> getHisTaskByOrder(@PathParam("order")String orderId){
         return engine.getHisTaskByOrder(orderId);

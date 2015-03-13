@@ -36,6 +36,10 @@ public interface Engine {
      */
     public List<String> getAllProcessId();
 
+    public List<Process> getAllProcess();
+
+    public Process getProcessName(String name);
+
     /**
      * 根据流程定义ID，操作人ID，参数列表启动流程实例,并完成第一个任务！
      * @param processId 流程id
