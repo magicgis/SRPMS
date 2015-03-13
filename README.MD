@@ -1,5 +1,5 @@
 # 科研项目管理系统
-## 系统构架与环境
+#### 系统构架与环境
 + Java 7
 + Tomcat 7
 + Mysql 5.6
@@ -12,36 +12,17 @@
 
 ----
 采用Maven构建  
-[LIB下载1](http://xu-cdn.qiniudn.com/SRPMSdependency.zip)
-[LIB下载2](http://down.xulog.com/SRPMSdependency.zip)
 
 ----
 数据库配置  
-+ 新建一个database.properties文件，放在`src/main/resources`目录
++ 新建一个`database.properties`文件，放在`src/main/resources`目录
 + 复制`database.properties.example`里的内容，并根据本机情况进行修改
 
 - - -
 
-## 代码介绍
-### 工作流引擎相关
-#### 工作流基本设定
-工作流模型为process  
-每次启动一个工作流，我们称之为工作流订单order  
-每个工作流由很多任务节点组成，为task  
-一个工作流模型可以启动无数次，生成无数个工作流订单  
-一个工作流订单有若干个任务节点  
+[API文档](http://doc.xulog.com/srpms/)
 
-#### request参数定义
-| key | value |备注|
-|--------|--------|-------|
-| WF-USER|参与任务的人|用户ID|
-|WF-TaskId|任务ID||
-|WF-Process|流程ID||
-|WF-NextTaskActor|下一任务参与者|用逗号分开|
-|DecByCol|学院决定|boolean|
-|DecByDep|管理部门决定|boolean|
-
-### TODO
+#### TODO
 - [ ] API权限控制
 - [ ] 任务结束触发器
 - [ ] 帐号维护
