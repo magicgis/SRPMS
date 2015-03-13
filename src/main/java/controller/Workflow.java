@@ -60,7 +60,7 @@ public class Workflow {
         String user = args.get("WF-User");
         args.remove("WF-User");
         String processId = args.get("WF-Process");
-        args.remove("WF-Process");
+            args.remove("WF-Process");
         return engine.startInstanceById(processId,user,(Map)args);
     }
 
@@ -94,8 +94,8 @@ public class Workflow {
         }
         String user = args.get("WF-User");
         args.remove("WF-User");
-        String taskId = args.get("WF-TaskId");
-        args.remove("WF-TaskId");
+        String taskId = args.get("WF-Task");
+        args.remove("WF-Task");
         return engine.execute(taskId, user, (Map)args);
     }
 
