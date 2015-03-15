@@ -52,4 +52,10 @@ public interface BaseInterface<T> {
      */
     abstract List<T> getAll(int startRow, int num);
 
+    public Long getAllCount();
+
+    public List<T> findByPropertyA(String propertyName, String value);
+
+    public List<T> findByPropertyF(String propertyName, String value);
+
 }
