@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+      <property name="jdbc.batch_size">20</property>
+      <property name="connection.autocommit">true</property>
+      <property name="format_sql">true</property>
+      <property name="show_sql">false</property>
+      <property name="connection.useUnicode">true</property>
+      <property name="connection.characterEncoding">UTF-8</property>
+
+
+      <mapping resource="hbm/snaker.task.hbm.xml"/>
+      <mapping resource="hbm/snaker.order.hbm.xml"/>
+      <mapping resource="hbm/snaker.ccorder.hbm.xml"/>
+      <mapping resource="hbm/snaker.process.hbm.xml"/>
+      <mapping resource="hbm/snaker.taskactor.hbm.xml"/>
+      <mapping resource="hbm/snaker.workitem.hbm.xml"/>
+      <mapping resource="hbm/snaker.surrogate.hbm.xml"/>
+
+
+      <mapping resource="hbm/Account.hbm.xml"/>
+      <mapping resource="hbm/Award.hbm.xml"/>
+      <mapping resource="hbm/Base.hbm.xml"/>
+      <mapping resource="hbm/Book.hbm.xml"/>
+      <mapping resource="hbm/Bookawd.hbm.xml"/>
+      <mapping resource="hbm/Booksta.hbm.xml"/>
+      <mapping resource="hbm/Confer.hbm.xml"/>
+      <mapping resource="hbm/Conferpaper.hbm.xml"/>
+      <mapping resource="hbm/Mag.hbm.xml"/>
+      <mapping resource="hbm/Paper.hbm.xml"/>
+      <mapping resource="hbm/Papermag.hbm.xml"/>
+      <mapping resource="hbm/Papersta.hbm.xml"/>
+      <mapping resource="hbm/Staff.hbm.xml"/>
+      <mapping resource="hbm/OrderActor.hbm.xml"/>
+      
+      
+      
+  </session-factory>
+</hibernate-configuration>

@@ -1,13 +1,8 @@
 package engine;
 
-import org.snaker.engine.SnakerEngine;
-import org.snaker.engine.access.QueryFilter;
 import org.snaker.engine.entity.*;
 import org.snaker.engine.entity.Process;
-import org.snaker.engine.helper.StreamHelper;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,9 +31,18 @@ public interface Engine {
      */
     public List<String> getAllProcessId();
 
+    /**
+     * 获取所有工作流
+     * @return List<Process>
+     */
     public List<Process> getAllProcess();
 
-    public Process getProcessName(String name);
+    /**
+     * 根据流程名获取流程
+     * @param name 名称
+     * @return Process
+     */
+    public Process getProcessByName(String name);
 
     /**
      * 根据流程定义ID，操作人ID，参数列表启动流程实例,并完成第一个任务！
@@ -69,6 +73,8 @@ public interface Engine {
      * @return order List
      */
     public List<Order> getOrderByActor (String actor);
+
+    public void updateTask(String taskId,Map<String,String> vars);
 
     /**
      * 根据actor获取所参与order(已完成和未完成)
@@ -119,6 +125,14 @@ public interface Engine {
      * @return
      */
     public List<Task> refuse(String taskId, String operator, Map<String, Object> args) ;
+
+    /**
+     * 撤回任务
+     * @param taskId 撤回到的任务ID
+     * @param actor 操作人
+     * @return boolean
+     */
+    public boolean setOrderRestart(String taskId,String actor);
 
     /**
      * 获取order的最新活跃任务

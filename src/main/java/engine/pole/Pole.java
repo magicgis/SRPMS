@@ -1,7 +1,6 @@
 package engine.pole;
 
 import org.snaker.engine.Assignment;
-import org.snaker.engine.AssignmentHandler;
 import org.snaker.engine.core.Execution;
 import org.snaker.engine.model.TaskModel;
 

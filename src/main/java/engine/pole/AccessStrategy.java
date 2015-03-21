@@ -1,6 +1,5 @@
 package engine.pole;
 
-import org.snaker.engine.TaskAccessStrategy;
 import org.snaker.engine.entity.TaskActor;
 import org.snaker.engine.impl.GeneralAccessStrategy;
 
@@ -11,7 +10,7 @@ import java.util.List;
  * TIME:14:59
  * Created by guofan on 2015/1/27
  */
-public class PoleAllowed extends GeneralAccessStrategy {
+public class AccessStrategy extends GeneralAccessStrategy {
     @Override
     public boolean isAllowed(String operator, List<TaskActor> actors) {
 //        System.out.println(operator);

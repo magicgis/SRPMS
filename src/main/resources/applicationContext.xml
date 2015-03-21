@@ -18,7 +18,6 @@
         </property>
     </bean>
 
-
     <!-- 定义数据源 -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="${db.driverClassName}">
@@ -29,62 +28,21 @@
         <property name="username" value="${db.username}"/>
         <property name="password" value="${db.password}"/>
     </bean>
-    <!--sessionFactory 配置-->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="namingStrategy">
-            <bean class="org.hibernate.cfg.ImprovedNamingStrategy" />
-        </property>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
-                <prop key="connection.characterEncoding">${hibernate.encode}</prop>
-                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
-                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl}</prop>
-                <prop key="hibernate.connection.release_mode">after_transaction</prop>
-                <prop key="jdbc.batch_size">20</prop>
-                <prop key="connection.autocommit">true</prop>
-                <prop key="connection.useUnicode">true</prop>
-                <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/workflow</prop>
-                <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
-            </props>
-        </property>
-        <property name="mappingResources">
-            <list>
-                <value>hbm/snaker.task.hbm.xml</value>
-                <value>hbm/snaker.order.hbm.xml</value>
-                <value>hbm/snaker.ccorder.hbm.xml</value>
-                <value>hbm/snaker.process.hbm.xml</value>
-                <value>hbm/snaker.taskactor.hbm.xml</value>
-                <value>hbm/snaker.workitem.hbm.xml</value>
-                <value>hbm/snaker.surrogate.hbm.xml</value>
 
-                <value>hbm/Account.hbm.xml</value>
-                <value>hbm/Award.hbm.xml</value>
-                <value>hbm/Base.hbm.xml</value>
-                <value>hbm/Book.hbm.xml</value>
-                <value>hbm/Bookawd.hbm.xml</value>
-                <value>hbm/Booksta.hbm.xml</value>
-                <value>hbm/Confer.hbm.xml</value>
-                <value>hbm/Conferpaper.hbm.xml</value>
-                <value>hbm/Mag.hbm.xml</value>
-                <value>hbm/Paper.hbm.xml</value>
-                <value>hbm/Papermag.hbm.xml</value>
-                <value>hbm/Papersta.hbm.xml</value>
-                <value>hbm/Staff.hbm.xml</value>
-            </list>
-        </property>
+    <!-- 定义与Hibernate参数 -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
     </bean>
+
     <!--snaker对数据库的访问-->
     <bean id="dbAccess" class="org.snaker.engine.access.hibernate.Hibernate3Access">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-
-
     <!--任务权限配置-->
-    <bean id="access" class="engine.pole.PoleAllowed"/>
+    <bean id="access" class="engine.pole.AccessStrategy"/>
+
 
     <!--缓存配置-->
     <bean id="cacheManager" class="org.snaker.engine.cache.memory.MemoryCacheManager"/>
@@ -127,7 +85,7 @@
 
     <bean class="org.snaker.engine.impl.LogInterceptor"/>
     <bean class="org.snaker.engine.spring.SpelExpression"/>
-    <bean class="org.snaker.engine.impl.SurrogateInterceptor"/>
+    <!--<bean class="org.snaker.engine.impl.SurrogateInterceptor"/>-->
 
     <!--spring事务管理器-->
     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
@@ -156,6 +114,9 @@
             <tx:method name="withdrawTask*" propagation="REQUIRED"/>
             <tx:method name="native*" propagation="REQUIRED"/>
 
+            <tx:method name="execute" propagation="REQUIRED"/>
+            <tx:method name="intercept" propagation="REQUIRED"/>
+
             <tx:method name="get*" propagation="REQUIRED" read-only="true"/>
             <tx:method name="find*" propagation="REQUIRED" read-only="true"/>
             <tx:method name="query*" propagation="REQUIRED" read-only="true"/>
@@ -168,9 +129,16 @@
                       expression="execution(* org.snaker.engine..*.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
     </aop:config>
+    <aop:config>
+        <aop:pointcut id="engineUtils" expression="execution(* engine..*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="engineUtils"/>
+    </aop:config>
     <aop:aspectj-autoproxy proxy-target-class="true" />
 
-    <context:component-scan base-package="engine" />
+    <!--要谨慎使用自动扫描注入，如果工作流拦截器被扫描到之后，会自动成为全局拦截器-->
+    <bean class="engine.SnakerEngineUtils"/>
+    <bean name="orderActorDao" class="engine.OrderActorDao"/>
+    <!--<context:component-scan base-package="engine" />-->
     <context:component-scan base-package="service" />
     <context:component-scan base-package="dao"/>
     <context:component-scan base-package="controller"/>

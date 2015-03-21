@@ -14,8 +14,11 @@ import java.util.*;
  * TIME:23:04
  * Created by guofan on 2015/1/22
  */
-@Service("engine")
+@Service
 public class SnakerEngineUtils implements Engine {
+
+    @Autowired
+    private OrderActorDao orderActorDao;
     @Autowired
     private SnakerEngine snakerEngine;
 
@@ -65,7 +68,7 @@ public class SnakerEngineUtils implements Engine {
     }
 
     @Override
-    public Process getProcessName(String name) {
+    public Process getProcessByName(String name) {
         return snakerEngine.process().getProcesss(new QueryFilter().setName(name)).get(0);
     }
 
@@ -82,6 +85,27 @@ public class SnakerEngineUtils implements Engine {
     @Override
     public List<Order> getOrderByActor(String actor) {
         return snakerEngine.query().getActiveOrders(new QueryFilter().setOperator(actor));
+    }
+
+    @Override
+    public void updateTask(String taskid,Map<String,String> vars) {
+        Task task = snakerEngine.query().getTask(taskid);
+        Map<String,Object> beforeVars = task.getVariableMap();
+        int i = 0;
+        for(String key:beforeVars.keySet()){
+            if(key.startsWith("WF-")){
+                if(i<Integer.valueOf(key.substring(key.indexOf("-"),key.lastIndexOf("-")))){
+                    i = Integer.valueOf(key.substring(key.indexOf("-"),key.lastIndexOf("-")));
+                }
+            }
+        }
+        Map<String,Object> map = new HashMap();
+        map.put("WF-"+Integer.toString(i)+"-"+task.getTaskName(),"a" );
+
+
+        beforeVars.putAll(vars);
+        task.setVariable(beforeVars.toString());
+        snakerEngine.task().updateTask(task);
     }
 
     @Override
@@ -121,22 +145,16 @@ public class SnakerEngineUtils implements Engine {
         /*设置参与者*/
         args.put("S-ACTOR",operator);
         Map<String,Object> NowMap = new HashMap<String, Object>();
+        /*获取前N轮任务所填写Map*/
         Map<String,Object> beforeMap = task.getVariableMap();
-        /*把上一轮的map放入*/
-//        beforeMap.remove("S-ACTOR");
-//        beforeMap.remove("DecByCol");
-//        beforeMap.remove("DecByDep");
-//        NowMap.putAll(beforeMap);
+        /*把上N轮的map放入*/
         int flowOrder = 0;
         for(String key:beforeMap.keySet()){
-//            args.put(key,formParams.getFirst(key));
             if(beforeMap.get(key)instanceof Map){
                 flowOrder++;
                 NowMap.put(key,beforeMap.get(key));
             }
         }
-//        Map<String,Object>tempMap = new HashMap<String,Object>;
-//        args.put("WF-TaskName",);
         String flowOderStr = "WF-"+Integer.toString(flowOrder)+"-"+task.getTaskName();
         /*把此轮的参数放入*/
         NowMap.put(flowOderStr,args);
@@ -146,6 +164,9 @@ public class SnakerEngineUtils implements Engine {
         }
         if(args.containsKey("DecByDep")){
             NowMap.put("DecByDep",args.get("DecByDep"));
+        }
+        if(args.containsKey("IsComplete")){
+            NowMap.put("IsComplete",args.get("IsComplete"));
         }
         /*把操作者作为参与者*/
         NowMap.put("S-ACTOR", operator);
@@ -167,7 +188,7 @@ public class SnakerEngineUtils implements Engine {
                 }
         }
         for(int i = 1;i < actors.size();i++){
-            snakerEngine.task().addTaskActor(tasks.get(0).getId(),1,"");
+            snakerEngine.task().addTaskActor(tasks.get(0).getId(), 1, "");
         }
         tasks = snakerEngine.query().getActiveTasks(new QueryFilter().setOrderId(orderId));
         for(Task u:tasks){
@@ -186,6 +207,17 @@ public class SnakerEngineUtils implements Engine {
     @Override
     public List<Task> refuse(String taskId, String operator, Map<String, Object> args) {
         return snakerEngine.executeAndJumpTask(taskId, operator, args, null);
+    }
+
+    public boolean setOrderRestart(String taskId,String actor){
+        boolean ans = false;
+        Task startTask = snakerEngine.query().getTask(taskId);
+        if(startTask.getOperator().equals(actor)){
+            snakerEngine.task().withdrawTask(taskId,actor);
+            ans = true;
+        }
+        return ans;
+
     }
 
     @Override

@@ -36,16 +36,21 @@ public class Workflow {
 
     @GET
     @Path("/process/{name}")
-    @Produces("application/json;charset=UTF-8")
+//    @Produces("application/json;charset=UTF-8")
+    @Produces("text/plain;charset=UTF-8")
     public String getProcessName(@PathParam("name")String name){
-        return engine.getProcessName(name).getId();
+        return engine.getProcessByName(name).getId();
     }
 
     @GET
     @Path("/allProcess")
     @Produces("application/json;charset=UTF-8")
-    public List<Process> getProcessId(){
-        return engine.getAllProcess();
+    public Map<String,String> getProcessId(){
+        Map<String,String> rs = new HashMap<String, String>();
+        for(Process u:engine.getAllProcess()){
+            rs.put(u.getName(),u.getId());
+        }
+        return rs;
     }
 
     @POST
