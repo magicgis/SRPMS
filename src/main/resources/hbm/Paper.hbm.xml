@@ -5,8 +5,8 @@
 <hibernate-mapping>
 
     <class name="entity.Paper" table="paper" schema="" catalog="workflow">
-        <id name="paperId" column="paperId"/>
-        <property name="paperName" column="paperName"/>
+        <id name="paperId" column="paper_id"/>
+        <property name="paperName" column="paper_name"/>
         <many-to-one name="baseByUnit" class="entity.Base">
             <column name="unit"/>
         </many-to-one>

@@ -5,16 +5,16 @@
 <hibernate-mapping>
 
     <class name="entity.Book" table="book" schema="" catalog="workflow">
-        <id name="bkId" column="bkId"/>
-        <property name="bkName" column="bkName"/>
-        <property name="pubDate" column="pubDate"/>
+        <id name="bkId" column="bk_id"/>
+        <property name="bkName" column="bk_name"/>
+        <property name="pubDate" column="pub_date"/>
         <property name="publisher" column="publisher"/>
         <property name="isbn" column="ISBN"/>
-        <property name="scYr" column="scYr"/>
-        <property name="bkType" column="bkType"/>
-        <property name="bkWdNum" column="bkWdNum"/>
+        <property name="scYr" column="sc_yr"/>
+        <property name="bkType" column="bk_type"/>
+        <property name="bkWdNum" column="bk_wd_num"/>
         <many-to-one name="baseByDeptId" class="entity.Base">
-            <column name="deptId"/>
+            <column name="dept_id"/>
         </many-to-one>
     </class>
 </hibernate-mapping>

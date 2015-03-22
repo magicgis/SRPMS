@@ -6,16 +6,16 @@ package entity;
  * Created by guofan on 2015/3/13
  */
 public class Bookawd {
-    private String idbs;
+    private String idba;
     private Book bookByBkId;
     private Award awardByAwdId;
 
-    public String getIdbs() {
-        return idbs;
+    public String getIdba() {
+        return idba;
     }
 
-    public void setIdbs(String idbs) {
-        this.idbs = idbs;
+    public void setIdba(String idbs) {
+        this.idba = idbs;
     }
 
     @Override
@@ -25,14 +25,14 @@ public class Bookawd {
 
         Bookawd bookawd = (Bookawd) o;
 
-        if (idbs != null ? !idbs.equals(bookawd.idbs) : bookawd.idbs != null) return false;
+        if (idba != null ? !idba.equals(bookawd.idba) : bookawd.idba != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return idbs != null ? idbs.hashCode() : 0;
+        return idba != null ? idba.hashCode() : 0;
     }
 
     public Book getBookByBkId() {

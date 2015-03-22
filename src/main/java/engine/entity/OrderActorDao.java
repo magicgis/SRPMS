@@ -62,8 +62,8 @@ public class OrderActorDao {
     public void deleteAllOrder(String order){
         String hql = "from OrderActor where order = '"+order+"'";
         List<OrderActor> list = this.getCurrentSession().createQuery(hql).list();
-        for(int i = 0;i < list.size();i++){
-            this.getCurrentSession().delete(list.get(i));
+        for (OrderActor aList : list) {
+            this.getCurrentSession().delete(aList);
         }
     }
 }

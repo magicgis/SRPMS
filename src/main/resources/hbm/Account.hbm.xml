@@ -5,12 +5,12 @@
 <hibernate-mapping>
 
     <class name="entity.Account" table="account" schema="" catalog="workflow">
-        <id name="id" column="id"/>
+        <id name="id" column="account_id"/>
         <property name="email" column="email"/>
         <property name="pwd" column="pwd"/>
         <property name="privilege" column="privilege"/>
         <many-to-one name="staffByStaId" class="entity.Staff">
-            <column name="staId" not-null="true"/>
+            <column name="sta_id" not-null="true"/>
         </many-to-one>
     </class>
 </hibernate-mapping>

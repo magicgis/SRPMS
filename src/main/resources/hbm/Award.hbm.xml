@@ -5,8 +5,8 @@
 <hibernate-mapping>
 
     <class name="entity.Award" table="award" schema="" catalog="workflow">
-        <id name="awdId" column="awdId"/>
-        <property name="awdType" column="awdType"/>
-        <property name="awdRank" column="awdRank"/>
+        <id name="awdId" column="awd_id"/>
+        <property name="awdType" column="awd_type"/>
+        <property name="awdRank" column="awd_rank"/>
     </class>
 </hibernate-mapping>

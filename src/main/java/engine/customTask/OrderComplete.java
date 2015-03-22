@@ -1,6 +1,5 @@
 package engine.customTask;
 
-import org.snaker.engine.SnakerInterceptor;
 import org.snaker.engine.core.Execution;
 import org.snaker.engine.handlers.IHandler;
 

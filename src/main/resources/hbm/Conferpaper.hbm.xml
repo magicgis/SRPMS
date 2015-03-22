@@ -5,14 +5,14 @@
 <hibernate-mapping>
 
     <class name="entity.Conferpaper" table="conferpaper" schema="" catalog="workflow">
-        <id name="idpc" column="idpc"/>
-        <property name="cpScore" column="cpScore"/>
-        <property name="pubDate" column="pubDate"/>
+        <id name="idpc" column="cp_id"/>
+        <property name="cpScore" column="cp_score"/>
+        <property name="pubDate" column="pub_date"/>
         <many-to-one name="conferByConferId" class="entity.Confer">
-            <column name="conferId" not-null="true"/>
+            <column name="confer_id" not-null="true"/>
         </many-to-one>
         <many-to-one name="paperByPaperId" class="entity.Paper">
-            <column name="paperId" not-null="true"/>
+            <column name="paper_id" not-null="true"/>
         </many-to-one>
     </class>
 </hibernate-mapping>

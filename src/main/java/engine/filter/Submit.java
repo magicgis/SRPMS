@@ -18,7 +18,7 @@ import java.util.Map;
  * 作用有：给order分类（到底是哪个学院，哪个类别）
  * 把order与actor绑定在一起
  */
-public class SubmitFilter implements SnakerInterceptor {
+public class Submit implements SnakerInterceptor {
     @Override
     public void intercept(Execution execution) {
         /*手工获取DAO*/

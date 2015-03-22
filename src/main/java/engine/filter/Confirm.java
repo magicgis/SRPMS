@@ -20,7 +20,7 @@ import java.util.List;
  * 也负责把部门或者类别管理员与order绑定
  * 只有用户确认之后才会绑定！
  */
-    public class ConfirmFilter implements SnakerInterceptor {
+    public class Confirm implements SnakerInterceptor {
 
     @Override
     public void intercept(Execution execution) {

@@ -5,15 +5,15 @@
 <hibernate-mapping>
 
     <class name="entity.Mag" table="mag" schema="" catalog="workflow">
-        <id name="magId" column="magId"/>
-        <property name="magName" column="magName"/>
+        <id name="magId" column="mag_id"/>
+        <property name="magName" column="mag_name"/>
         <property name="magSNm" column="magSNm"/>
         <property name="issn" column="issn"/>
         <property name="cn" column="cn"/>
-        <property name="magSub" column="magSub"/>
+        <property name="magSub" column="mag_sub"/>
         <property name="fq" column="fq"/>
         <many-to-one name="baseByGradeId" class="entity.Base">
-            <column name="gradeId"/>
+            <column name="grade_id"/>
         </many-to-one>
     </class>
 </hibernate-mapping>

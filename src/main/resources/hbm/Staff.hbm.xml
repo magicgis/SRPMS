@@ -5,18 +5,18 @@
 <hibernate-mapping>
 
     <class name="entity.Staff" table="staff" schema="" catalog="workflow">
-        <id name="staId" column="staId"/>
-        <property name="staName" column="staName"/>
+        <id name="staId" column="sta_id"/>
+        <property name="staName" column="sta_name"/>
         <property name="iDcard" column="IDcard"/>
         <property name="edu" column="edu"/>
         <property name="position" column="position"/>
         <property name="degree" column="degree"/>
         <property name="staSNm" column="staSNm"/>
         <many-to-one name="baseByDeptId" class="entity.Base">
-            <column name="deptId"/>
+            <column name="dept_id"/>
         </many-to-one>
         <many-to-one name="baseByRankId" class="entity.Base">
-            <column name="rankId"/>
+            <column name="rank_id"/>
         </many-to-one>
     </class>
 </hibernate-mapping>

@@ -1,8 +1,8 @@
 <process name="basicProcess_Beta" displayName="基础流程Beta" >
-    <start name="start" >
+    <start name="start" postInterceptors="engine.filter.Start">
         <transition offset="0,-10" to="Submission" name="Starter" />
     </start>
-    <task name="Submission" postInterceptors="engine.filter.SubmitFilter"
+    <task name="Submission" postInterceptors="engine.filter.Submit"
           displayName="填写申请" >
         <transition offset="0,-10" to="SaveOrSubmit" name="t2s"/>
     </task>
@@ -11,7 +11,7 @@
         <transition to="Submission" name="s2s"/>
     </decision>
     <task name="Confirm" displayName="确认提交" performType="ALL" taskType="Major"
-          postInterceptors="engine.filter.ConfirmFilter"  >
+          postInterceptors="engine.filter.Confirm"  >
         <transition to="ApprovalByCol" name="c2c"/>
     </task>
     <task  name="ApprovalByCol"

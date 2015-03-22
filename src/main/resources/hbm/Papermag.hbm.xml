@@ -5,17 +5,17 @@
 <hibernate-mapping>
 
     <class name="entity.Papermag" table="papermag" schema="" catalog="workflow">
-        <id name="idpm" column="idpm"/>
-        <property name="colType" column="colType"/>
-        <property name="volIss" column="volIss"/>
-        <property name="bgPage" column="bgPage"/>
-        <property name="paperScore" column="paperScore"/>
-        <property name="pubDate" column="pubDate"/>
+        <id name="idpm" column="pm_id"/>
+        <property name="colType" column="col_type"/>
+        <property name="volIss" column="vol_iss"/>
+        <property name="bgPage" column="bg_page"/>
+        <property name="paperScore" column="paper_score"/>
+        <property name="pubDate" column="pub_date"/>
         <many-to-one name="paperByPaperId" class="entity.Paper">
-            <column name="paperId" not-null="true"/>
+            <column name="paper_id" not-null="true"/>
         </many-to-one>
         <many-to-one name="magByMagId" class="entity.Mag">
-            <column name="magId" not-null="true"/>
+            <column name="mag_id" not-null="true"/>
         </many-to-one>
     </class>
 </hibernate-mapping>

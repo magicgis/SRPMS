@@ -1,6 +1,5 @@
-import dao.AccountDao;
 import engine.Engine;
-import engine.OrderActorDao;
+import engine.entity.OrderActorDao;
 import org.snaker.engine.SnakerEngine;
 import org.snaker.engine.access.QueryFilter;
 import org.snaker.engine.entity.*;
@@ -44,7 +43,7 @@ private SnakerEngine snakerEngine;
 
 
         args = new HashMap<String, Object>();
-        args.put("WF-NextTaskActor", "xgfan,lishi");
+        args.put("WF-NextTaskActor", "xgfan");
         args.put("申请人", "xgfan");
         args.put("要求", "无");
         args.put("WF-Type","论文");
@@ -63,27 +62,34 @@ private SnakerEngine snakerEngine;
         tasks = engine.getTaskByActor("xgfan");
         engine.execute(tasks.get(0).getId(), "xgfan", args);
 
-        Task newTask = snakerEngine.task().withdrawTask(i,"xgfan");
-        args = new HashMap<String, Object>();
-        args.put("WF-NextTaskActor", "xgfan");
-        args.put("申请人", "xgfan");
-        args.put("要求", "无");
-        args.put("WF-Type","论文");
-        args.put("WF-Col","信息工程");
-        args.put("IsComplete",true);
-        engine.execute(newTask.getId(), "xgfan", args);
+//        Task newTask = snakerEngine.task().withdrawTask(i,"xgfan");
+
+//        args = new HashMap<String, Object>();
+//        args.put("WF-NextTaskActor", "xgfan");
+//        args.put("申请人", "xgfan");
+//        args.put("要求", "无");
+//        args.put("WF-Type","论文");
+//        args.put("WF-Col","信息工程");
+//        args.put("IsComplete",true);
+//        engine.execute(newTask.getId(), "xgfan", args);
 
 //        args = new HashMap<String, Object>();
 //        args.put("批复","我也同意！");
 //        args.put("WF-NextTaskActor", "col");
 //        tasks = engine.getTaskByActor("lishi");
 //        engine.execute(tasks.get(0).getId(), "lishi", args);
-//
-//        args = new HashMap<String, Object>();
-//        args.put("DecByCol",false);
-//        args.put("WF-NextTaskActor", "xgfan");
-//        tasks = engine.getTaskByActor("col");
-//        engine.execute(tasks.get(0).getId(), "col", args);
+
+        args = new HashMap<String, Object>();
+        args.put("DecByCol",true);
+        args.put("WF-NextTaskActor", "admin");
+        tasks = engine.getTaskByActor("col");
+        engine.execute(tasks.get(0).getId(), "col", args);
+
+        args = new HashMap<String, Object>();
+        args.put("DecByDep",true);
+//        args.put("WF-NextTaskActor", "admin");
+        tasks = engine.getTaskByActor("admin");
+        engine.execute(tasks.get(0).getId(), "admin", args);
 
 //        args = new HashMap<String, Object>();
 //        args.put("WF-NextTaskActor", "xgfan");

@@ -5,12 +5,12 @@
 <hibernate-mapping>
 
     <class name="entity.Bookawd" table="bookawd" schema="" catalog="workflow">
-        <id name="idbs" column="idbs"/>
+        <id name="idba" column="ba_id"/>
         <many-to-one name="bookByBkId" class="entity.Book">
-            <column name="bkId" not-null="true"/>
+            <column name="bk_id" not-null="true"/>
         </many-to-one>
         <many-to-one name="awardByAwdId" class="entity.Award">
-            <column name="awdId" not-null="true"/>
+            <column name="awd_id" not-null="true"/>
         </many-to-one>
     </class>
 </hibernate-mapping>

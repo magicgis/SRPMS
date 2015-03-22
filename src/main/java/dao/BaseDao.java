@@ -176,8 +176,7 @@ public class BaseDao<T> implements BaseInterface<T> {
                 query.setParameter(key, params.get(key));
             }
         }
-        List<T> l = query.list();
-        return l;
+        return query.list();
     }
 
     /**

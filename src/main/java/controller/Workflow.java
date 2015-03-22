@@ -36,7 +36,6 @@ public class Workflow {
 
     @GET
     @Path("/process/{name}")
-//    @Produces("application/json;charset=UTF-8")
     @Produces("text/plain;charset=UTF-8")
     public String getProcessName(@PathParam("name")String name){
         return engine.getProcessByName(name).getId();
@@ -73,6 +72,9 @@ public class Workflow {
     @Path("/startAndExecute")
     @Consumes("application/x-www-form-urlencoded")
     @Produces("application/json;charset=UTF-8")
+    /**
+     * @deprecated
+     */
     public List<Task> startProcessAndExecute(MultivaluedMap<String, String> formParams){
         Map<String,String> args = new HashMap<String, String>();
         for(String key:formParams.keySet()){
@@ -84,7 +86,6 @@ public class Workflow {
         args.remove("WF-Process");
         Order order = engine.startInstanceById(processId,user,null);
         List<Task> tasks = engine.getTaskByOrder(order.getId());
-//        args.put("WF-TaskId",tasks.get(0).getId());
         return engine.execute(tasks.get(0).getId(),user,(Map)args);
     }
 

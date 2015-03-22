@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2015-03-21 15:31:40
+Date: 2015-03-22 18:24:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,13 +20,12 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE `account` (
-  `id` varchar(255) NOT NULL,
+  `account_id` varchar(255) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
   `pwd` varchar(255) DEFAULT NULL,
   `privilege` varchar(255) DEFAULT NULL,
   `sta_id` varchar(255) NOT NULL,
-  `staId` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`account_id`),
   KEY `FKB9D38A2DB5A26C8F` (`sta_id`),
   CONSTRAINT `FKB9D38A2DB5A26C8F` FOREIGN KEY (`sta_id`) REFERENCES `staff` (`sta_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -39,10 +38,20 @@ CREATE TABLE `award` (
   `awd_id` varchar(255) NOT NULL,
   `awd_type` varchar(255) DEFAULT NULL,
   `awd_rank` varchar(255) DEFAULT NULL,
-  `awdId` varchar(255) NOT NULL,
-  `awdType` varchar(255) DEFAULT NULL,
-  `awdRank` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`awd_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for base
+-- ----------------------------
+DROP TABLE IF EXISTS `base`;
+CREATE TABLE `base` (
+  `baseId` char(8) NOT NULL,
+  `table` varchar(15) DEFAULT NULL,
+  `keycode` char(4) DEFAULT NULL,
+  `value` varchar(50) DEFAULT NULL,
+  `base_id` varchar(255) NOT NULL,
+  PRIMARY KEY (`baseId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -59,14 +68,9 @@ CREATE TABLE `book` (
   `bk_type` varchar(255) DEFAULT NULL,
   `bk_wd_num` decimal(19,2) DEFAULT NULL,
   `dept_id` varchar(255) DEFAULT NULL,
-  `bkId` varchar(255) NOT NULL,
-  `bkName` varchar(255) DEFAULT NULL,
-  `pubDate` datetime DEFAULT NULL,
-  `scYr` varchar(255) DEFAULT NULL,
-  `bkType` varchar(255) DEFAULT NULL,
-  `bkWdNum` decimal(19,2) DEFAULT NULL,
-  `deptId` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`bk_id`)
+  PRIMARY KEY (`bk_id`),
+  KEY `dept_id` (`dept_id`),
+  CONSTRAINT `book_ibfk_1` FOREIGN KEY (`dept_id`) REFERENCES `base` (`baseId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -74,12 +78,10 @@ CREATE TABLE `book` (
 -- ----------------------------
 DROP TABLE IF EXISTS `bookawd`;
 CREATE TABLE `bookawd` (
-  `idbs` varchar(255) NOT NULL,
+  `ba_id` varchar(255) NOT NULL,
   `bk_id` varchar(255) NOT NULL,
   `awd_id` varchar(255) NOT NULL,
-  `bkId` varchar(255) NOT NULL,
-  `awdId` varchar(255) NOT NULL,
-  PRIMARY KEY (`idbs`),
+  PRIMARY KEY (`ba_id`),
   KEY `FK3DAEB65961A8C7E` (`awd_id`),
   KEY `FK3DAEB654F330F05` (`bk_id`),
   CONSTRAINT `FK3DAEB654F330F05` FOREIGN KEY (`bk_id`) REFERENCES `book` (`bk_id`),
@@ -91,20 +93,14 @@ CREATE TABLE `bookawd` (
 -- ----------------------------
 DROP TABLE IF EXISTS `booksta`;
 CREATE TABLE `booksta` (
-  `idbs` varchar(255) NOT NULL,
+  `bs_id` varchar(255) NOT NULL,
   `peo_wd_num` decimal(19,2) DEFAULT NULL,
   `bkcb_role` varchar(255) DEFAULT NULL,
   `is_tx` tinyint(4) DEFAULT NULL,
   `bk_score` decimal(19,2) DEFAULT NULL,
   `bk_id` varchar(255) NOT NULL,
   `sta_id` varchar(255) NOT NULL,
-  `peoWdNum` decimal(19,2) DEFAULT NULL,
-  `bkcbRole` varchar(255) DEFAULT NULL,
-  `isTx` tinyint(4) DEFAULT NULL,
-  `bkScore` decimal(19,2) DEFAULT NULL,
-  `bkId` varchar(255) NOT NULL,
-  `staId` varchar(255) NOT NULL,
-  PRIMARY KEY (`idbs`),
+  PRIMARY KEY (`bs_id`),
   KEY `FK3DB2E97B5A26C8F` (`sta_id`),
   KEY `FK3DB2E974F330F05` (`bk_id`),
   CONSTRAINT `FK3DB2E974F330F05` FOREIGN KEY (`bk_id`) REFERENCES `book` (`bk_id`),
@@ -121,11 +117,6 @@ CREATE TABLE `confer` (
   `confer_nm` varchar(255) DEFAULT NULL,
   `confer_time` datetime DEFAULT NULL,
   `confer_addr` varchar(255) DEFAULT NULL,
-  `conferId` varchar(255) NOT NULL,
-  `conferType` varchar(255) DEFAULT NULL,
-  `conferNm` varchar(255) DEFAULT NULL,
-  `conferTime` datetime DEFAULT NULL,
-  `conferAddr` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`confer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -134,16 +125,12 @@ CREATE TABLE `confer` (
 -- ----------------------------
 DROP TABLE IF EXISTS `conferpaper`;
 CREATE TABLE `conferpaper` (
-  `idpc` varchar(255) NOT NULL,
+  `cp_id` varchar(255) NOT NULL,
   `cp_score` decimal(19,2) DEFAULT NULL,
   `pub_date` date DEFAULT NULL,
   `confer_id` varchar(255) NOT NULL,
   `paper_id` varchar(255) NOT NULL,
-  `cpScore` decimal(19,2) DEFAULT NULL,
-  `pubDate` date DEFAULT NULL,
-  `conferId` varchar(255) NOT NULL,
-  `paperId` varchar(255) NOT NULL,
-  PRIMARY KEY (`idpc`),
+  PRIMARY KEY (`cp_id`),
   KEY `FK411EA95B2D45A04F` (`paper_id`),
   KEY `FK411EA95B24144CA5` (`confer_id`),
   CONSTRAINT `FK411EA95B24144CA5` FOREIGN KEY (`confer_id`) REFERENCES `confer` (`confer_id`),
@@ -163,11 +150,9 @@ CREATE TABLE `mag` (
   `mag_sub` varchar(255) DEFAULT NULL,
   `fq` varchar(255) DEFAULT NULL,
   `grade_id` varchar(255) DEFAULT NULL,
-  `magId` varchar(255) NOT NULL,
-  `magName` varchar(255) DEFAULT NULL,
-  `magSub` varchar(255) DEFAULT NULL,
-  `gradeId` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`mag_id`)
+  PRIMARY KEY (`mag_id`),
+  KEY `grade_id` (`grade_id`),
+  CONSTRAINT `mag_ibfk_1` FOREIGN KEY (`grade_id`) REFERENCES `base` (`baseId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -176,11 +161,11 @@ CREATE TABLE `mag` (
 DROP TABLE IF EXISTS `ordactor`;
 CREATE TABLE `ordactor` (
   `idoa` varchar(255) NOT NULL,
-  `idorder` varchar(255) NOT NULL,
-  `idactor` varchar(255) NOT NULL,
-  `role` int(255) NOT NULL,
+  `order_id` varchar(255) NOT NULL,
+  `actor_id` varchar(255) NOT NULL,
+  `role` int(11) NOT NULL,
   PRIMARY KEY (`idoa`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for paper
@@ -190,9 +175,9 @@ CREATE TABLE `paper` (
   `paper_id` varchar(255) NOT NULL,
   `paper_name` varchar(255) DEFAULT NULL,
   `unit` varchar(255) DEFAULT NULL,
-  `paperId` varchar(255) NOT NULL,
-  `paperName` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`paper_id`)
+  PRIMARY KEY (`paper_id`),
+  KEY `unit` (`unit`),
+  CONSTRAINT `paper_ibfk_1` FOREIGN KEY (`unit`) REFERENCES `base` (`baseId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -200,7 +185,7 @@ CREATE TABLE `paper` (
 -- ----------------------------
 DROP TABLE IF EXISTS `papermag`;
 CREATE TABLE `papermag` (
-  `idpm` varchar(255) NOT NULL,
+  `pm_id` varchar(255) NOT NULL,
   `col_type` varchar(255) DEFAULT NULL,
   `vol_iss` varchar(255) DEFAULT NULL,
   `bg_page` varchar(255) DEFAULT NULL,
@@ -208,14 +193,7 @@ CREATE TABLE `papermag` (
   `pub_date` date DEFAULT NULL,
   `paper_id` varchar(255) NOT NULL,
   `mag_id` varchar(255) NOT NULL,
-  `colType` varchar(255) DEFAULT NULL,
-  `volIss` varchar(255) DEFAULT NULL,
-  `bgPage` varchar(255) DEFAULT NULL,
-  `paperScore` int(11) DEFAULT NULL,
-  `pubDate` date DEFAULT NULL,
-  `paperId` varchar(255) NOT NULL,
-  `magId` varchar(255) NOT NULL,
-  PRIMARY KEY (`idpm`),
+  PRIMARY KEY (`pm_id`),
   KEY `FK42A398476710B82F` (`mag_id`),
   KEY `FK42A398472D45A04F` (`paper_id`),
   CONSTRAINT `FK42A398472D45A04F` FOREIGN KEY (`paper_id`) REFERENCES `paper` (`paper_id`),
@@ -227,16 +205,12 @@ CREATE TABLE `papermag` (
 -- ----------------------------
 DROP TABLE IF EXISTS `papersta`;
 CREATE TABLE `papersta` (
-  `idps` varchar(255) NOT NULL,
+  `ps_id` varchar(255) NOT NULL,
   `paper_role` varchar(255) DEFAULT NULL,
   `gr_score` int(11) DEFAULT NULL,
   `paper_id` varchar(255) NOT NULL,
   `sta_id` varchar(255) NOT NULL,
-  `paperRole` varchar(255) DEFAULT NULL,
-  `grScore` int(11) DEFAULT NULL,
-  `paperId` varchar(255) NOT NULL,
-  `staId` varchar(255) NOT NULL,
-  PRIMARY KEY (`idps`),
+  PRIMARY KEY (`ps_id`),
   KEY `FK42A3B114B5A26C8F` (`sta_id`),
   KEY `FK42A3B1142D45A04F` (`paper_id`),
   CONSTRAINT `FK42A3B1142D45A04F` FOREIGN KEY (`paper_id`) REFERENCES `paper` (`paper_id`),
@@ -257,11 +231,10 @@ CREATE TABLE `staff` (
   `stasnm` varchar(255) DEFAULT NULL,
   `dept_id` varchar(255) DEFAULT NULL,
   `rank_id` varchar(255) DEFAULT NULL,
-  `staId` varchar(255) NOT NULL,
-  `staName` varchar(255) DEFAULT NULL,
-  `deptId` varchar(255) DEFAULT NULL,
-  `rankId` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`sta_id`)
+  PRIMARY KEY (`sta_id`),
+  KEY `dept_id` (`dept_id`),
+  CONSTRAINT `staff_ibfk_1` FOREIGN KEY (`dept_id`) REFERENCES `base` (`baseId`),
+  CONSTRAINT `staff_ibfk_2` FOREIGN KEY (`dept_id`) REFERENCES `base` (`baseId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

@@ -5,14 +5,14 @@
 <hibernate-mapping>
 
     <class name="entity.Papersta" table="papersta" schema="" catalog="workflow">
-        <id name="idps" column="idps"/>
-        <property name="paperRole" column="paperRole"/>
-        <property name="grScore" column="grScore"/>
+        <id name="idps" column="ps_id"/>
+        <property name="paperRole" column="paper_role"/>
+        <property name="grScore" column="gr_score"/>
         <many-to-one name="paperByPaperId" class="entity.Paper">
-            <column name="paperId" not-null="true"/>
+            <column name="paper_id" not-null="true"/>
         </many-to-one>
         <many-to-one name="staffByStaId" class="entity.Staff">
-            <column name="staId" not-null="true"/>
+            <column name="sta_id" not-null="true"/>
         </many-to-one>
     </class>
 </hibernate-mapping>

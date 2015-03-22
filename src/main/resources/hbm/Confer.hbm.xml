@@ -5,10 +5,10 @@
 <hibernate-mapping>
 
     <class name="entity.Confer" table="confer" schema="" catalog="workflow">
-        <id name="conferId" column="conferId"/>
-        <property name="conferType" column="conferType"/>
-        <property name="conferNm" column="conferNm"/>
-        <property name="conferTime" column="conferTime"/>
-        <property name="conferAddr" column="conferAddr"/>
+        <id name="conferId" column="confer_id"/>
+        <property name="conferType" column="confer_type"/>
+        <property name="conferNm" column="confer_nm"/>
+        <property name="conferTime" column="confer_time"/>
+        <property name="conferAddr" column="confer_addr"/>
     </class>
 </hibernate-mapping>
