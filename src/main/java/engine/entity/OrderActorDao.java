@@ -60,10 +60,21 @@ public class OrderActorDao {
     }
 
     public void deleteAllOrder(String order){
-        String hql = "from OrderActor where order = '"+order+"'";
-        List<OrderActor> list = this.getCurrentSession().createQuery(hql).list();
+        List<OrderActor> list = getByOrder(order);
         for (OrderActor aList : list) {
             this.getCurrentSession().delete(aList);
         }
+    }
+
+    public List<OrderActor> getByOrder(String order){
+        String hql = "from OrderActor where order = '"+order+"'";
+        List<OrderActor> list = this.getCurrentSession().createQuery(hql).list();
+        return list;
+    }
+
+    public List<OrderActor> getByActor(String actor){
+        String hql = "from OrderActor where actor = '"+actor+"'";
+        List<OrderActor> list = this.getCurrentSession().createQuery(hql).list();
+        return list;
     }
 }

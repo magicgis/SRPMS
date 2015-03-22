@@ -17,6 +17,13 @@ public class Start implements SnakerInterceptor {
     public void intercept(Execution execution) {
         BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/applicationContext.xml");
         OrderActorDao orderActorDao =(OrderActorDao) factory.getBean("orderActorDao");
-        String actor = "" ;
+        String actor = execution.getOperator();
+        String creator = execution.getOrder().getCreator();
+        String order = execution.getOrder().getId();
+        if(actor.equals(creator)){
+            if(!orderActorDao.areTheyAlreadyIn(order,actor)){
+                orderActorDao.save(order,actor,1);
+            }
+        }
     }
 }
