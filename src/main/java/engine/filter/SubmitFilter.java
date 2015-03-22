@@ -1,6 +1,6 @@
 package engine.filter;
 
-import engine.OrderActorDao;
+import engine.entity.OrderActorDao;
 import org.snaker.engine.SnakerInterceptor;
 import org.snaker.engine.core.Execution;
 import org.snaker.engine.entity.Order;

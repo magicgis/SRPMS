@@ -30,6 +30,6 @@
         <transition offset="0,-10" to="end" name="d22e" />
         <transition offset="0,-10" to="Submission"  g="856,617;847,195" name="d22t" />
     </decision>
-    <end name="end" >
+    <end name="end"  postInterceptors="engine.filter.Complete">
     </end>
 </process>

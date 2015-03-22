@@ -137,7 +137,7 @@
 
     <!--要谨慎使用自动扫描注入，如果工作流拦截器被扫描到之后，会自动成为全局拦截器-->
     <bean class="engine.SnakerEngineUtils"/>
-    <bean name="orderActorDao" class="engine.OrderActorDao"/>
+    <bean name="orderActorDao" class="engine.entity.OrderActorDao"/>
     <!--<context:component-scan base-package="engine" />-->
     <context:component-scan base-package="service" />
     <context:component-scan base-package="dao"/>

@@ -45,7 +45,7 @@ public interface Engine {
     public Process getProcessByName(String name);
 
     /**
-     * 根据流程定义ID，操作人ID，参数列表启动流程实例,并完成第一个任务！
+     * 根据流程定义ID，操作人ID，参数列表启动流程实例！
      * @param processId 流程id
      * @param operator 操作者
      * @param args 参数列表
@@ -74,6 +74,12 @@ public interface Engine {
      */
     public List<Order> getOrderByActor (String actor);
 
+    /**
+     * 貌似是更新task
+     * @param taskId
+     * @param vars
+     * @deprecated
+     */
     public void updateTask(String taskId,Map<String,String> vars);
 
     /**

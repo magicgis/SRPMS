@@ -1,5 +1,6 @@
-package engine;
+package engine.entity;
 
+import engine.entity.OrderActor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,13 +1,12 @@
 package engine.filter;
 
-import engine.OrderActorDao;
+import engine.entity.OrderActorDao;
 import org.snaker.engine.SnakerInterceptor;
 import org.snaker.engine.access.QueryFilter;
 import org.snaker.engine.core.Execution;
 import org.snaker.engine.entity.Task;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Component;
 
 
 import java.util.List;
@@ -21,8 +20,7 @@ import java.util.List;
  * 也负责把部门或者类别管理员与order绑定
  * 只有用户确认之后才会绑定！
  */
-@Component
-public class ConfirmFilter implements SnakerInterceptor {
+    public class ConfirmFilter implements SnakerInterceptor {
 
     @Override
     public void intercept(Execution execution) {
