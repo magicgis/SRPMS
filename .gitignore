@@ -13,6 +13,8 @@ target/
 # Log #
 logs/
 *.log
+# 测试文件 #
+src/test/
 
 # Database Setting #
 database.properties
