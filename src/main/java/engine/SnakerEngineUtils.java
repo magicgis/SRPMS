@@ -1,5 +1,6 @@
 package engine;
 
+import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
 import org.snaker.engine.SnakerEngine;
 import org.snaker.engine.access.QueryFilter;
@@ -32,38 +33,6 @@ public class SnakerEngineUtils implements Engine {
     }
 
     @Override
-    public List<String> getAllProcessName(){
-        /*查找所有的工作流*/
-        List<Process> list = snakerEngine.process().getProcesss(new QueryFilter());
-        List<String> names = new ArrayList<String>();
-        /*每一个进程 process*/
-        for(Process entity:list){
-            if(names.contains(entity.getName())){
-                continue;
-            }else{
-                names.add(entity.getName());
-            }
-        }
-        return names;
-    }
-
-    @Override
-    public List<String> getAllProcessId(){
-        /*查找所有的工作流*/
-        List<Process> list = snakerEngine.process().getProcesss(new QueryFilter());
-        List<String> ids = new ArrayList<String>();
-        /*每一个进程 process*/
-        for(Process entity:list){
-            if(ids.contains(entity.getId())){
-                continue;
-            }else{
-                ids.add(entity.getId());
-            }
-        }
-        return ids;
-    }
-
-    @Override
     public List<Process> getAllProcess() {
         return snakerEngine.process().getProcesss(new QueryFilter());
     }
@@ -84,35 +53,35 @@ public class SnakerEngineUtils implements Engine {
     }
 
     @Override
+    public List<OrderActor> getAllOrderByActor(String actor) {
+        return orderActorDao.getByActor(actor);
+    }
+
+    @Override
     public List<Order> getOrderByActor(String actor) {
         return snakerEngine.query().getActiveOrders(new QueryFilter().setOperator(actor));
     }
 
-    @Override
-    public void updateTask(String taskid,Map<String,String> vars) {
-        Task task = snakerEngine.query().getTask(taskid);
-        Map<String,Object> beforeVars = task.getVariableMap();
-        int i = 0;
-        for(String key:beforeVars.keySet()){
-            if(key.startsWith("WF-")){
-                if(i<Integer.valueOf(key.substring(key.indexOf("-"),key.lastIndexOf("-")))){
-                    i = Integer.valueOf(key.substring(key.indexOf("-"),key.lastIndexOf("-")));
-                }
-            }
-        }
-        Map<String,Object> map = new HashMap();
-        map.put("WF-"+Integer.toString(i)+"-"+task.getTaskName(),"a" );
-
-
-        beforeVars.putAll(vars);
-        task.setVariable(beforeVars.toString());
-        snakerEngine.task().updateTask(task);
-    }
-
-    @Override
-    public List<HistoryOrder> getAllOrderByActor(String actor) {
-        return snakerEngine.query().getHistoryOrders(new QueryFilter().setOperator(actor));
-    }
+    //    @Override
+//    public void updateTask(String taskid,Map<String,String> vars) {
+//        Task task = snakerEngine.query().getTask(taskid);
+//        Map<String,Object> beforeVars = task.getVariableMap();
+//        int i = 0;
+//        for(String key:beforeVars.keySet()){
+//            if(key.startsWith("WF-")){
+//                if(i<Integer.valueOf(key.substring(key.indexOf("-"),key.lastIndexOf("-")))){
+//                    i = Integer.valueOf(key.substring(key.indexOf("-"),key.lastIndexOf("-")));
+//                }
+//            }
+//        }
+//        Map<String,Object> map = new HashMap();
+//        map.put("WF-"+Integer.toString(i)+"-"+task.getTaskName(),"a" );
+//
+//
+//        beforeVars.putAll(vars);
+//        task.setVariable(beforeVars.toString());
+//        snakerEngine.task().updateTask(task);
+//    }
 
     @Override
     public List<Task> getTaskByActor(String actor) {
@@ -131,9 +100,9 @@ public class SnakerEngineUtils implements Engine {
         /*获取第一个任务*/
         List<Task> startTask = snakerEngine.query().getActiveTasks(new QueryFilter().setOrderId(order.getId()));
         /*分配参与者*/
-        snakerEngine.task().addTaskActor(startTask.get(0).getId(),operator);
-        /*移除多余的参与者*/
-        snakerEngine.task().removeTaskActor(startTask.get(0).getId(), "");
+//        snakerEngine.task().addTaskActor(startTask.get(0).getId(),operator);
+//        /*移除多余的参与者*/
+//        snakerEngine.task().removeTaskActor(startTask.get(0).getId(), "");
         return order;
     }
 
@@ -156,9 +125,10 @@ public class SnakerEngineUtils implements Engine {
                 NowMap.put(key,beforeMap.get(key));
             }
         }
-        String flowOderStr = "WF-"+Integer.toString(flowOrder)+"-"+task.getTaskName();
+        String flowOderStr = "WF"+Integer.toString(flowOrder)+task.getTaskName();
         /*把此轮的参数放入*/
         NowMap.put(flowOderStr,args);
+        NowMap.put("S-ACTOR",operator);
         /*决策参数需要单独处理*/
         if(args.containsKey("DecByCol")){
             NowMap.put("DecByCol",args.get("DecByCol"));
@@ -169,33 +139,29 @@ public class SnakerEngineUtils implements Engine {
         if(args.containsKey("IsComplete")){
             NowMap.put("IsComplete",args.get("IsComplete"));
         }
-        /*把操作者作为参与者*/
-        NowMap.put("S-ACTOR", operator);
 
         /*执行任务（不一定会产生新任务）*/
-        List<Task> tasks =  snakerEngine.executeTask(taskId, operator, NowMap);
+        List<Task> tasks =  snakerEngine.executeTask(taskId, operator,NowMap);
         if(tasks.isEmpty()){
             return null;
         }
-
-        /*获取下一任务参与者*/
-        String actorText =(String)args.get("WF-NextTaskActor");
-        String[] actorString = actorText.split(",");
-        List<String> actors = new ArrayList<String>();
-        for(String u:actorString){
-            if (!u.equals(" "))
-                if (!u.equals("")) {
+         /*如果存在下一任务参与者*/
+        if(args.containsKey("WF-Actor")){
+            String[] actorString = args.get("WF-Actor").toString().split(",");
+            List<String> actors = new ArrayList<String>();
+            for(String u:actorString){
+                if (!u.equals(" ")&&!u.equals(""))
                     actors.add(u);
-                }
-        }
-        for(int i = 1;i < actors.size();i++){
-            snakerEngine.task().addTaskActor(tasks.get(0).getId(), 1, "");
-        }
-        tasks = snakerEngine.query().getActiveTasks(new QueryFilter().setOrderId(orderId));
-        for(Task u:tasks){
-            snakerEngine.task().addTaskActor(u.getId(),actors.get(0));
-            snakerEngine.task().removeTaskActor(u.getId(),"");
-            actors.remove(0);
+            }
+            for(int i = 1;i < actors.size();i++){
+                snakerEngine.task().addTaskActor(tasks.get(0).getId(), 1, "");
+            }
+            tasks = snakerEngine.query().getActiveTasks(new QueryFilter().setOrderId(orderId));
+            for(Task u:tasks){
+                snakerEngine.task().addTaskActor(u.getId(),actors.get(0));
+                snakerEngine.task().removeTaskActor(u.getId(),"");
+                actors.remove(0);
+            }
         }
         return tasks;
     }
@@ -222,11 +188,6 @@ public class SnakerEngineUtils implements Engine {
     }
 
     @Override
-    public List<Task> getNewTasks(Order ord){
-        return snakerEngine.query().getActiveTasks(new QueryFilter().setOrderId(ord.getId()));
-    }
-
-    @Override
     public void stopOrder(String orderId) {
         snakerEngine.order().cascadeRemove(orderId);
     }
@@ -235,5 +196,15 @@ public class SnakerEngineUtils implements Engine {
     public List<Object> getChildrenTask(String TaskId) {
 //        TODO
         return null;
+    }
+
+    @Override
+    public Order getOrder(String id) {
+        return snakerEngine.query().getOrder(id);
+    }
+
+    @Override
+    public Task getTask(String id) {
+        return snakerEngine.query().getTask(id);
     }
 }

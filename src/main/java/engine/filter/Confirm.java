@@ -35,12 +35,13 @@ import java.util.List;
         String actor = execution.getOperator();
         String order = execution.getOrder().getId();
         String creator = execution.getOrder().getCreator();
+        String type = orderActorDao.getByOrder(order).get(0).getType();
         if(!orderActorDao.areTheyAlreadyIn(order,actor)){
             /*负责人为1，参与者为0*/
             if(creator.equals(actor)) {
-                orderActorDao.save(order, actor, 1);
+                orderActorDao.save(order, actor, 1,type);
             }else{
-                orderActorDao.save(order,actor,0);
+                orderActorDao.save(order,actor,0,type);
             }
         }
         /*获取任务完成之后产生的后续任务*/

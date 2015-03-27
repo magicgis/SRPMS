@@ -45,12 +45,13 @@ public class OrderActorDao {
         return ans;
     }
 
-    public void save(String order,String actor,int role){
+    public void save(String order,String actor,int role,String type){
         OrderActor OA = new OrderActor();
         OA.setActor(actor);
         OA.setOrder(order);
         OA.setIdoa(actor + "-" + order);
         OA.setRole(role);
+        OA.setType(type);
         save(OA);
     }
 
@@ -76,5 +77,16 @@ public class OrderActorDao {
         String hql = "from OrderActor where actor = '"+actor+"'";
         List<OrderActor> list = this.getCurrentSession().createQuery(hql).list();
         return list;
+    }
+
+    public String getMajorActorByOrder(String order){
+        String hql = "from OrderActor where order = '"+order+"' and role = " + "1";
+        List<OrderActor> list = this.getCurrentSession().createQuery(hql).list();
+        return list.get(0).toString();
+    }
+
+    public List<OrderActor> getOrderByActorAndPole(String actor,int role){
+        String hql = "from OrderActor where actor = '"+actor+"' and role = " + Integer.toString(role);
+        return this.getCurrentSession().createQuery(hql).list();
     }
 }

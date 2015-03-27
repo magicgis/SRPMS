@@ -1,8 +1,11 @@
 package engine.pole;
 
+import engine.entity.OrderActor;
+import engine.entity.OrderActorDao;
 import org.snaker.engine.Assignment;
 import org.snaker.engine.core.Execution;
 import org.snaker.engine.model.TaskModel;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * DATE:2015/1/24
@@ -17,14 +20,15 @@ public class Pole extends Assignment {
 //        System.out.println(model.getAssignee());
 //        System.out.println(execution.ge());
 //        System.out.println(execution.)
-        if(model.getName().equals("Submission")||model.getName().equals("Confirm")) {
-            return "teacher";
-        }else if (model.getName().equals("ApprovalByCol")){
+        if (model.getName().equals("ApprovalByCol")){
+            /*TODO 根据order里的变量来分配任务*/
             return "college";
         }else if(model.getName().equals("ApprovalBySch")){
+            /*TODO 根据order里的变量来分配任务*/
             return "school";
         }else{
-            return null;
+            /*一般情况下，我们都将任务分配给order的创造者*/
+            return execution.getOrder().getCreator();
         }
 //        return execution.getOperator();
     }

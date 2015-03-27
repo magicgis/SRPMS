@@ -1,5 +1,6 @@
 package engine;
 
+import engine.entity.OrderActor;
 import org.snaker.engine.entity.*;
 import org.snaker.engine.entity.Process;
 
@@ -15,21 +16,10 @@ public interface Engine {
 
     /**
      * 初始化，返回流程ID
+     * Only For Test!!!
      * @return process ID
      */
     public String initFlows();
-
-    /**
-     * 返回所有的工作流的名称
-     * @return String List
-     */
-    public List<String> getAllProcessName();
-
-    /**
-     * 返回所有的工作流的ID
-     * @return String List
-     */
-    public List<String> getAllProcessId();
 
     /**
      * 获取所有工作流
@@ -68,26 +58,18 @@ public interface Engine {
     public List<HistoryTask> getHisTaskByOrder(String orderId);
 
     /**
-     * 根据actor获取参与order(未完成)
+     * 根据actor获取参与order关系
+     * @param actor 参与者
+     * @return OrderActor List
+     */
+    public List<OrderActor> getAllOrderByActor (String actor);
+
+    /**
+     * 根据actor获取主导order
      * @param actor 参与者
      * @return order List
      */
     public List<Order> getOrderByActor (String actor);
-
-    /**
-     * 貌似是更新task
-     * @param taskId
-     * @param vars
-     * @deprecated
-     */
-    public void updateTask(String taskId,Map<String,String> vars);
-
-    /**
-     * 根据actor获取所参与order(已完成和未完成)
-     * @param actor 参与者
-     * @return order List
-     */
-    public List<HistoryOrder> getAllOrderByActor(String actor);
 
     /**
      * 获取用户当前任务
@@ -104,7 +86,7 @@ public interface Engine {
     public List<HistoryTask> getHisTaskByActor(String actor);
 
     /**
-     * 执行任务,并生成下一任务
+     * 执行任务
      * @param taskId 任务id
      * @param operator 操作者
      * @param args 参数
@@ -141,19 +123,16 @@ public interface Engine {
     public boolean setOrderRestart(String taskId,String actor);
 
     /**
-     * 获取order的最新活跃任务
-     * @param ord order
-     * @return List<Task>
-     */
-    public List<Task> getNewTasks(Order ord);
-
-    /**
      * 终止order
      * @param orderId
      */
     public void stopOrder(String orderId);
 
     public List<Object> getChildrenTask(String TaskId);
+
+    public Order getOrder(String id);
+
+    public Task getTask(String id);
 
 
 }

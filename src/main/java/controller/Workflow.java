@@ -1,6 +1,8 @@
 package controller;
 
 import engine.Engine;
+import engine.entity.OrderActor;
+import engine.entity.OrderActorDao;
 import org.snaker.engine.entity.*;
 import org.snaker.engine.entity.Process;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,7 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * DATE:2015/3/8
@@ -26,12 +26,19 @@ public class Workflow {
     ServletContext context;
     @Autowired
     Engine engine;
+    @Autowired
+    OrderActorDao orderActorDao;
 
     @GET
     @Path("/init")
-    @Produces("application/json;charset=UTF-8")
+    @Produces("text/plain;charset=UTF-8")
     public String init(){
-        return engine.initFlows();
+        List<Process> list = engine.getAllProcess();
+        if(list==null||list.size()==0) {
+            return engine.initFlows();
+        }else{
+            return list.get(0).getId();
+        }
     }
 
     @GET
@@ -53,7 +60,7 @@ public class Workflow {
     }
 
     @POST
-    @Path("/process")
+    @Path("/start")
     @Consumes("application/x-www-form-urlencoded")
     @Produces("application/json;charset=UTF-8")
     public Order startProcess(MultivaluedMap<String, String> formParams){
@@ -63,30 +70,12 @@ public class Workflow {
         }
         String user = args.get("WF-User");
         args.remove("WF-User");
-        String processId = args.get("WF-Process");
-            args.remove("WF-Process");
-        return engine.startInstanceById(processId,user,(Map)args);
-    }
-
-    @POST
-    @Path("/startAndExecute")
-    @Consumes("application/x-www-form-urlencoded")
-    @Produces("application/json;charset=UTF-8")
-    /**
-     * @deprecated
-     */
-    public List<Task> startProcessAndExecute(MultivaluedMap<String, String> formParams){
-        Map<String,String> args = new HashMap<String, String>();
-        for(String key:formParams.keySet()){
-            args.put(key,formParams.getFirst(key));
-        }
-        String user = args.get("WF-User");
-        args.remove("WF-User");
-        String processId = args.get("WF-Process");
+        String processName = args.get("WF-Process");
+        String processId = engine.getProcessByName(processName).getId();
         args.remove("WF-Process");
-        Order order = engine.startInstanceById(processId,user,null);
-        List<Task> tasks = engine.getTaskByOrder(order.getId());
-        return engine.execute(tasks.get(0).getId(),user,(Map)args);
+        /*由于目前仍不能根据用户获取所属学院*/
+        args.put("WF-Col","信息工程学院");
+        return engine.startInstanceById(processId,user,(Map)args);
     }
 
     @POST
@@ -102,13 +91,21 @@ public class Workflow {
         args.remove("WF-User");
         String taskId = args.get("WF-Task");
         args.remove("WF-Task");
-        return engine.execute(taskId, user, (Map)args);
+        List<Task> ans = new ArrayList<Task>();
+        List<Task> tasks =  engine.execute(taskId, user, (Map)args);
+        if(tasks==null||tasks.size()==0) {
+            return null;
+        }
+        for(Task u:tasks){
+            u.setModel(null);
+        }
+        return tasks;
     }
 
     @GET
     @Path("/{user}/task")
     @Produces("application/json;charset=UTF-8")
-    public List<Task> getTask(@PathParam("user")String user){
+    public List<Task>  getTask(@PathParam("user")String user){
         return engine.getTaskByActor(user);
     }
 
@@ -120,10 +117,34 @@ public class Workflow {
     }
 
     @GET
-    @Path("/{user}/order")
+    @Path("/{user}/order/major")
     @Produces("application/json;charset=UTF-8")
-    public List<Order> getOrder(@PathParam("user")String user){
+    public List<Order> getMajorOrder(@PathParam("user")String user){
         return engine.getOrderByActor(user);
+    }
+
+    @GET
+    @Path("/{user}/order/others")
+    @Produces("application/json;charset=UTF-8")
+    public List<Order> getOtherOrder(@PathParam("user")String user){
+        List<OrderActor> list = orderActorDao.getOrderByActorAndPole(user, 0);
+        List<Order> ans = new ArrayList<Order>();
+        for(OrderActor u:list){
+            ans.add(engine.getOrder(u.getOrder()));
+        }
+        return ans;
+    }
+
+    @GET
+    @Path("/{user}/order/all")
+    @Produces("application/json;charset=UTF-8")
+    public List<Order> getAllOrder(@PathParam("user")String user){
+        List<OrderActor> list = orderActorDao.getByActor(user);
+        List<Order> ans = new ArrayList<Order>();
+        for(OrderActor u:list){
+            ans.add(engine.getOrder(u.getOrder()));
+        }
+        return ans;
     }
 
     @GET
@@ -134,11 +155,48 @@ public class Workflow {
     }
 
     @GET
-        @Path("/ord{order}/hisTask")
+    @Path("/ord{order}/hisTask")
     @Produces("application/json;charset=UTF-8")
     public List<HistoryTask> getHisTaskByOrder(@PathParam("order")String orderId){
         return engine.getHisTaskByOrder(orderId);
     }
 
+    @POST
+    @Path("/submit")
+    public boolean SubmitAll(@FormParam("WF-User")String user){
+        List<Order>list = engine.getOrderByActor(user);
+        for(Order u:list){
+            List<Task> tasks = engine.getTaskByOrder(u.getId());
+            if(tasks.size()!=1||!tasks.get(0).getTaskName().equals("Submit")){
+                return false;
+            }
+        }
+        Map<String,Object> args = new HashMap<String, Object>();
+        args.put("WF-Memo","Submit By Program");
+        for(Order u:list){
+            List<Task> tasks = engine.getTaskByOrder(u.getId());
+            engine.execute(tasks.get(0).getId(),user,args);
+        }
+        return true;
+    }
 
+    List<Map<String,Object>> getView(List<Task> tasks){
+        List<Map<String,Object>> ans = new ArrayList<Map<String, Object>>();
+        for(Task u:tasks) {
+            Map<String, Object> arg = u.getVariableMap();
+            int latestNum = 0;
+            for (String key : arg.keySet()) {
+                if (key.matches("WF\\d+Submission")) {
+                    int n = Integer.valueOf(key.substring(key.indexOf('-') + 1, key.lastIndexOf('-')));
+                    if (latestNum < n) {
+                        latestNum = n;
+                    }
+                }
+            }
+            String latestKey = "WF"+latestNum+"Submission";
+        ans.add((Map) arg.get(latestKey));
+        }
+//        Map<String,Object> subArg =(Map) arg.get(latestKey);
+        return ans;
+    }
 }

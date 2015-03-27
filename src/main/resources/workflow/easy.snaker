@@ -2,20 +2,22 @@
     <start name="start" postInterceptors="engine.filter.Start">
         <transition offset="0,-10" to="Submission" name="Starter" />
     </start>
-    <task name="Submission" postInterceptors="engine.filter.Submit"
-          displayName="填写申请" >
-        <transition offset="0,-10" to="SaveOrSubmit" name="t2s"/>
+    <task name="Submission"  displayName="填写申请"
+          postInterceptors="engine.filter.Submit" assignmentHandler="engine.pole.Pole">
+        <transition offset="0,-10" to="SaveOrSubmit" name="t2save"/>
     </task>
-    <decision name="SaveOrSubmit" expr="#IsComplete?'s2c':'s2s'" autoExecute="Y">
-        <transition to="Confirm" name="s2c"/>
-        <transition to="Submission" name="s2s"/>
+    <decision name="SaveOrSubmit" expr="#IsComplete?'s2confirm':'s2submission'" autoExecute="Y">
+        <transition to="Confirm" name="s2confirm"/>
+        <transition to="Submission" name="s2submission"/>
     </decision>
-    <task name="Confirm" displayName="确认提交" performType="ALL" taskType="Major"
-          postInterceptors="engine.filter.Confirm"  >
-        <transition to="ApprovalByCol" name="c2c"/>
+    <task name="Confirm" displayName="确认" performType="ALL" taskType="Major"
+          postInterceptors="engine.filter.Confirm" >
+        <transition to="Submit" name="c2submit"/>
     </task>
-    <task  name="ApprovalByCol"
-          displayName="院系审核" >
+    <task name="Submit" displayName="提交" performType="ALL" taskType="Major" assignmentHandler="engine.pole.Pole">
+        <transition to="ApprovalByCol" name="s2approval"/>
+    </task>
+    <task  name="ApprovalByCol" displayName="院系审核" assignmentHandler="engine.pole.Pole">
         <transition offset="0,-10" to="decision1" name="c2d1" />
     </task>
     <decision name="decision1" expr="#DecByCol?'d12s':'d12t'" autoExecute="Y" >
@@ -23,13 +25,13 @@
         <transition to="Submission" name="d12t"/>
     </decision>
     <task name="ApprovalBySch"
-          displayName="部门审批" >
+          displayName="部门审批" assignmentHandler="engine.pole.Pole">
         <transition offset="0,-10" to="decision2" name="s2d2" />
     </task>
     <decision  name="decision2" expr="#DecByDep?'d22e':'d22t'" autoExecute="Y" >
         <transition offset="0,-10" to="end" name="d22e" />
         <transition offset="0,-10" to="Submission"  g="856,617;847,195" name="d22t" />
     </decision>
-    <end name="end"  postInterceptors="engine.filter.Complete">
+    <end name="end" postInterceptors="engine.filter.Complete">
     </end>
 </process>

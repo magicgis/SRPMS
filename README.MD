@@ -19,6 +19,11 @@
 + 复制`database.properties.example`里的内容，并根据本机情况进行修改
 
 - - -
+其他文件
++ PostMan测试文件放在`Other`
++ SQL脚本也放在`Other`
+
+- - -
 
 [API文档](http://doc.xulog.com/srpms/)
 

@@ -9,6 +9,7 @@ public class OrderActor {
     private String idoa;
     private String actor;
     private String order;
+    private String type;
     private Integer role;
 
 
@@ -44,6 +45,14 @@ public class OrderActor {
         this.idoa = idoa;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,18 +62,20 @@ public class OrderActor {
 
         if (actor != null ? !actor.equals(that.actor) : that.actor != null) return false;
         if (idoa != null ? !idoa.equals(that.idoa) : that.idoa != null) return false;
-        if (role != null ? !role.equals(that.role) : that.role != null) return false;
         if (order != null ? !order.equals(that.order) : that.order != null) return false;
+        if (role != null ? !role.equals(that.role) : that.role != null) return false;
+        if (type != null ? !type.equals(that.type) : that.type != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = actor != null ? actor.hashCode() : 0;
+        int result = idoa != null ? idoa.hashCode() : 0;
+        result = 31 * result + (actor != null ? actor.hashCode() : 0);
         result = 31 * result + (order != null ? order.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
-        result = 31 * result + (idoa != null ? idoa.hashCode() : 0);
         return result;
     }
 }

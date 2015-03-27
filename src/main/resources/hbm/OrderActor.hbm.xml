@@ -14,6 +14,9 @@
         <property name="actor">
             <column name="actor_id" sql-type="varchar" not-null="true"/>
         </property>
+        <property name="type">
+            <column name="type" sql-type="varchar"/>
+        </property>
         <property name="role">
             <column name="role" sql-type="int" not-null="true"/>
         </property>
