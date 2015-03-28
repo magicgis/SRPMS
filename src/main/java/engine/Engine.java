@@ -19,20 +19,20 @@ public interface Engine {
      * Only For Test!!!
      * @return process ID
      */
-    public String initFlows();
+    String initFlows();
 
     /**
      * 获取所有工作流
      * @return List<Process>
      */
-    public List<Process> getAllProcess();
+    List<Process> getAllProcess();
 
     /**
      * 根据流程名获取流程
      * @param name 名称
      * @return Process
      */
-    public Process getProcessByName(String name);
+    Process getProcessByName(String name);
 
     /**
      * 根据流程定义ID，操作人ID，参数列表启动流程实例！
@@ -41,49 +41,49 @@ public interface Engine {
      * @param args 参数列表
      * @return 流程工作单实体类
      */
-    public Order startInstanceById(String processId,String operator,Map<String ,Object> args);
+    Order startInstanceById(String processId, String operator, Map<String, Object> args);
 
     /**
      * 根据orderId获取活跃任务
      * @param orderId orderId
      * @return 该order的所有活跃任务
      */
-    public List<Task> getTaskByOrder(String orderId);
+    List<Task> getTaskByOrder(String orderId);
 
     /**
      * 根据orderId获取历史任务
      * @param orderId orderId
      * @return 该order的所有历史任务
      */
-    public List<HistoryTask> getHisTaskByOrder(String orderId);
+    List<HistoryTask> getHisTaskByOrder(String orderId);
 
     /**
      * 根据actor获取参与order关系
      * @param actor 参与者
      * @return OrderActor List
      */
-    public List<OrderActor> getAllOrderByActor (String actor);
+    List<OrderActor> getAllOrderByActor(String actor);
 
     /**
      * 根据actor获取主导order
      * @param actor 参与者
      * @return order List
      */
-    public List<Order> getOrderByActor (String actor);
+    List<Order> getOrderByActor(String actor);
 
     /**
      * 获取用户当前任务
      * @param actor 参与者
      * @return task list
      */
-    public List<Task> getTaskByActor(String actor);
+    List<Task> getTaskByActor(String actor);
 
     /**
      * 获取用户已完成任务
      * @param actor 参与者
      * @return task list
      */
-    public List<HistoryTask> getHisTaskByActor(String actor);
+    List<HistoryTask> getHisTaskByActor(String actor);
 
     /**
      * 执行任务
@@ -92,7 +92,7 @@ public interface Engine {
      * @param args 参数
      * @return List<Task>
      */
-    public List<Task> execute(String taskId, String operator, Map<String, Object> args) ;
+    List<Task> execute(String taskId, String operator, Map<String, Object> args) ;
 
     /**
      * 根据任务主键ID，操作人ID，参数列表执行任务，并且根据nodeName跳转到任意节点
@@ -103,7 +103,7 @@ public interface Engine {
      * @param nodeName 节点
      * @return
      */
-    public List<Task> executeAndJump(String taskId, String operator, Map<String, Object> args,String nodeName) ;
+    List<Task> executeAndJump(String taskId, String operator, Map<String, Object> args, String nodeName) ;
 
     /**
      * 跳转上一步
@@ -112,7 +112,7 @@ public interface Engine {
      * @param args
      * @return
      */
-    public List<Task> refuse(String taskId, String operator, Map<String, Object> args) ;
+    List<Task> refuse(String taskId, String operator, Map<String, Object> args) ;
 
     /**
      * 撤回任务
@@ -120,19 +120,19 @@ public interface Engine {
      * @param actor 操作人
      * @return boolean
      */
-    public boolean setOrderRestart(String taskId,String actor);
+    boolean setOrderRestart(String taskId, String actor);
 
     /**
      * 终止order
      * @param orderId
      */
-    public void stopOrder(String orderId);
+    void stopOrder(String orderId);
 
-    public List<Object> getChildrenTask(String TaskId);
+    List<Object> getChildrenTask(String TaskId);
 
-    public Order getOrder(String id);
+    Order getOrder(String id);
 
-    public Task getTask(String id);
+    Task getTask(String id);
 
 
 }

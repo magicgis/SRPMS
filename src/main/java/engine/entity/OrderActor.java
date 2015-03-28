@@ -60,13 +60,8 @@ public class OrderActor {
 
         OrderActor that = (OrderActor) o;
 
-        if (actor != null ? !actor.equals(that.actor) : that.actor != null) return false;
-        if (idoa != null ? !idoa.equals(that.idoa) : that.idoa != null) return false;
-        if (order != null ? !order.equals(that.order) : that.order != null) return false;
-        if (role != null ? !role.equals(that.role) : that.role != null) return false;
-        if (type != null ? !type.equals(that.type) : that.type != null) return false;
+        return !(actor != null ? !actor.equals(that.actor) : that.actor != null) && !(idoa != null ? !idoa.equals(that.idoa) : that.idoa != null) && !(order != null ? !order.equals(that.order) : that.order != null) && !(role != null ? !role.equals(that.role) : that.role != null) && !(type != null ? !type.equals(that.type) : that.type != null);
 
-        return true;
     }
 
     @Override

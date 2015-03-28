@@ -1,11 +1,8 @@
 package engine.pole;
 
-import engine.entity.OrderActor;
-import engine.entity.OrderActorDao;
 import org.snaker.engine.Assignment;
 import org.snaker.engine.core.Execution;
 import org.snaker.engine.model.TaskModel;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * DATE:2015/1/24

@@ -98,7 +98,7 @@ public class SnakerEngineUtils implements Engine {
         /*启动*/
         Order order = snakerEngine.startInstanceById(processId,operator,args);
         /*获取第一个任务*/
-        List<Task> startTask = snakerEngine.query().getActiveTasks(new QueryFilter().setOrderId(order.getId()));
+        snakerEngine.query().getActiveTasks(new QueryFilter().setOrderId(order.getId()));
         /*分配参与者*/
 //        snakerEngine.task().addTaskActor(startTask.get(0).getId(),operator);
 //        /*移除多余的参与者*/

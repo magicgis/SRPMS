@@ -14,6 +14,7 @@ import java.util.List;
  * Created by guofan on 2015/3/20
  */
 @Repository
+@SuppressWarnings({"unused","unchecked"})
 public class OrderActorDao {
 
     private SessionFactory sessionFactory;
@@ -69,14 +70,12 @@ public class OrderActorDao {
 
     public List<OrderActor> getByOrder(String order){
         String hql = "from OrderActor where order = '"+order+"'";
-        List<OrderActor> list = this.getCurrentSession().createQuery(hql).list();
-        return list;
+        return this.getCurrentSession().createQuery(hql).list();
     }
 
     public List<OrderActor> getByActor(String actor){
         String hql = "from OrderActor where actor = '"+actor+"'";
-        List<OrderActor> list = this.getCurrentSession().createQuery(hql).list();
-        return list;
+        return this.getCurrentSession().createQuery(hql).list();
     }
 
     public String getMajorActorByOrder(String order){
