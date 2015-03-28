@@ -5,8 +5,8 @@
 <hibernate-mapping>
 
     <class name="entity.Base" table="base" schema="" catalog="workflow">
-        <id name="baseId" column="baseId"/>
-        <property name="table" column="table"/>
+        <id name="baseId" column="base_id"/>
+        <property name="table" column="table_name"/>
         <property name="keycode" column="keycode"/>
         <property name="value" column="value"/>
     </class>
