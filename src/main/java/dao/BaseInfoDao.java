@@ -8,4 +8,5 @@ import entity.Base;
  * Created by guofan on 2015/3/29
  */
 public interface BaseInfoDao extends BaseInterface<Base> {
+
 }

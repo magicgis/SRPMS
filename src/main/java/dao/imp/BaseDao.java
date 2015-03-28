@@ -23,7 +23,8 @@ import java.util.Map;
  * Created by guofan on 2015/2/13
  */
 @Repository
-public class BaseDao<T> implements BaseInterface<T> {
+@SuppressWarnings({"unused","unchecked"})
+public abstract class BaseDao<T> implements BaseInterface<T> {
 
     public Class entityClass;
     private SessionFactory sessionFactory;
@@ -96,7 +97,7 @@ public class BaseDao<T> implements BaseInterface<T> {
         try {
             res = (T)this.getCurrentSession().get(entityClass, id);
         } catch (HibernateException hex) {
-            log.debug("BaseDAO Find " + entityClass.getName() + " By Id " + id + " Failed",hex);
+            log.debug("BaseDAO Find " + entityClass.getName() + " By Id " + id + " Failed", hex);
             res = null;
         }
         return res;
@@ -133,10 +134,15 @@ public class BaseDao<T> implements BaseInterface<T> {
         return  ((Number) this.getCurrentSession().createQuery(hql).uniqueResult()).longValue();
     }
 
-    public List<T> findByPropertyA(String propertyName, String value) {
+    public List<T> findByPropertyA(String propertyName, Object value) {
         log.debug("BaseDAO Find(A) "+propertyName+" From "+entityClass.getName());
         List<T> res;
-        String hql = "from " + entityClass.getName() + " where " + propertyName + " = '" + value + "'";
+        String hql;
+        if(value instanceof String) {
+            hql = "from " + entityClass.getName() + " where " + propertyName + " = '" + value + "'";
+        } else{
+            hql = "from " + entityClass.getName() + " where " + propertyName + " = " + value;
+        }
         try {
             res = this.getCurrentSession().createQuery(hql).list();
         }catch (HibernateException hex){
@@ -159,17 +165,36 @@ public class BaseDao<T> implements BaseInterface<T> {
         return res;
     }
 
-//    public List<T> findByMap(Map<String, String> params) {
-//        List<T> res;
-//        String hql =  "from " + entityClass.getName();
-//        if(params!=null){
-//            hql += " where ";
-//            for(String key:params.keySet()){
-//                hql = hql + " and " + key + " = '" + params.get(key) + "'";
-//            }
-//        }
-//    }
+    @Override
+    public  List<T> findByMapAcc(HashMap<String, Object> args){
+        String hql = findByMapA(args);
+        return this.getCurrentSession().createQuery(hql).list();
+    }
 
+    @Override
+    public  List<T> findByMapAcc(HashMap<String, Object> args,int start,int num){
+        String hql = findByMapA(args,start,num);
+        return this.getCurrentSession().createQuery(hql).list();
+    }
+
+    @Override
+    public  List<T> findByMapFuz(HashMap<String, Object> args){
+        String hql = findByMapF(args);
+        return this.getCurrentSession().createQuery(hql).list();
+    }
+
+    @Override
+    public  List<T> findByMapFuz(HashMap<String, Object> args,int start,int num){
+        String hql = findByMapF(args,start,num);
+        return this.getCurrentSession().createQuery(hql).list();
+    }
+
+    /**
+     * 忘记是干嘛的了
+     * @param hql hql语句
+     * @param params 参数
+     * @return list
+     */
     public List<T> getByHql(String hql, Map<String, Object> params) {
         Query query = getCurrentSession().createQuery(hql);
         if (params != null && !params.isEmpty()) {
@@ -181,83 +206,102 @@ public class BaseDao<T> implements BaseInterface<T> {
     }
 
     /**
-     * TODO
      * 生成无条件查找所有对象的语句
      * @return HQL
      */
     protected String findAllHql() {
-        return null;
+        return "from "+entityClass.getName();
     }
 
     /**
-     * TODO
      * 生成无条件查找所有对象的语句
-     * @param page 第几页
-     * @param row 每页行数
+     * @param start 起始行
+     * @param num 数量
      * @return HQL
      */
-    protected String findAllHql(int page, int row) {
-        return null;
+    protected String findAllHql(int start, int num) {
+        return "from "+entityClass.getName()+" limit "+start+","+num;
     }
 
     /**
-     * TODO
      * 根据属性名和属性值生成组合<bold>精确</bold>查询语句
      * @param params key-value
      * @return HQL
      */
     protected String findByMapA(HashMap<String, Object> params) {
-        return null;
+        String hql = "from "+entityClass.getName();
+        String where = "";
+        for (String s : params.keySet()) {
+            if(params.get(s) instanceof String){
+                where = where + s + " = " + "'" + params.get(s) + "' and ";
+            }else{
+                where = where + s + " = " + params.get(s) + " and ";
+            }
+        }
+        if(where.length()>0){
+            hql = hql + " where " + where.substring(0,where.length()-5);
+        }
+        return hql;
     }
 
     /**
-     * TODO
      * 根据属性名和属性值生成组合<bold>精确</bold>查询语句
      * @param params key-value
-     * @param page 第几页
-     * @param row 每页行数
+     * @param start 起始行
+     * @param num 数量
      * @return HQL
      */
-    protected String findByMapA(HashMap<String, Object> params, int page, int row) {
-        return null;
+    protected String findByMapA(HashMap<String, Object> params, int start, int num) {
+        String hql = findByMapA(params);
+        hql = hql + " LIMIT " + start + "," + num;
+        return hql;
     }
 
     /**
-     * TODO
      * 根据属性名和属性值生成组合<bold>模糊</bold>查询语句
      * @param params key-value
      * @return HQL
      */
     protected String findByMapF(HashMap<String, Object> params) {
-        return null;
+        String hql = "from "+entityClass.getName();
+        String where = "";
+        for (String s : params.keySet()) {
+            if(params.get(s) instanceof String){
+                where = where + s + " LIKE " + "'%" + params.get(s) + "%' and ";
+            }
+        }
+        if(where.length()>0){
+            hql = hql + " where " + where.substring(0,where.length()-5);
+        }
+        return hql;
     }
 
     /**
-     * TODO
      * 根据属性名和属性值生成组合<bold>模糊</bold>查询语句
      * @param params key-value
-     * @param page 第几页
-     * @param row 每页行数
+     * @param start 起始行
+     * @param num 数量
      * @return HQL
      */
-    protected String findByMapF(HashMap<String, Object> params, int page, int row) {
-        return null;
+    protected String findByMapF(HashMap<String, Object> params, int start, int num) {
+        String hql = findByMapF(params);
+        hql = hql + " LIMIT " + start + "," + num;
+        return hql;
     }
 
     /**
-     * TODO
      * 执行sql语句
-     * @return
+     * @return list
      */
-    protected List<T> executeSql(String HQL) {
-        return null;
+    protected List<T> executeSql(String hql) {
+        return this.getCurrentSession().createQuery(hql).list();
     }
 
     /**
      * TODO
      * 计算语句查询总量
-     * @param HQL
-     * @return
+     * @param HQL hql 语句
+     * @return list
      */
     protected Long countBySql(String HQL) {
         return null;

@@ -1,6 +1,7 @@
 package dao;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -8,10 +9,12 @@ import java.util.List;
  * TIME:16:20
  * Created by guofan on 2015/2/13
  */
+@SuppressWarnings("unused")
 public interface BaseInterface<T> {
 
     /**
      * 添加
+     *
      * @param obj 实例对象
      * @return boolean
      */
@@ -19,6 +22,7 @@ public interface BaseInterface<T> {
 
     /**
      * 删除
+     *
      * @param obj 实例对象
      * @return boolean
      */
@@ -26,36 +30,95 @@ public interface BaseInterface<T> {
 
     /**
      * 更新
+     *
      * @param obj 实例对象
      * @return boolean
      */
-    abstract boolean update(T obj);
+    boolean update(T obj);
 
     /**
      * 根据主键查找
+     *
      * @param id 主键id
-     * @return  obj
+     * @return obj
      */
-    abstract T getById(Serializable id);
+    T getById(Serializable id);
 
     /**
      * 无条件查找所有对象
+     *
      * @return obj list
      */
-    abstract List<T> getAll();
+    List<T> getAll();
 
     /**
      * 无条件查找所有对象
-     * @param startRow 第几页
-     * @param num 每页行数
+     *
+     * @param startRow 起始行
+     * @param num      行数
      * @return HQL
      */
-    abstract List<T> getAll(int startRow, int num);
+    List<T> getAll(int startRow, int num);
 
-    public Long getAllCount();
+    /**
+     * 表里到底有多少内容
+     *
+     * @return long
+     */
+    Long getAllCount();
 
-    public List<T> findByPropertyA(String propertyName, String value);
+    /**
+     * 精确查找
+     *
+     * @param propertyName 属性名
+     * @param value        属性值
+     * @return list
+     */
+    List<T> findByPropertyA(String propertyName, Object value);
 
-    public List<T> findByPropertyF(String propertyName, String value);
+    /**
+     * 模糊查找
+     *
+     * @param propertyName 属性名
+     * @param value        属性值
+     * @return list
+     */
+    List<T> findByPropertyF(String propertyName, String value);
+
+    /**
+     * 精确查找
+     *
+     * @param args HASHMAP
+     * @return list
+     */
+    List<T> findByMapAcc(HashMap<String, Object> args);
+
+    /**
+     * 精确查找，带分页
+     *
+     * @param args  HASHMAP
+     * @param start 起始行
+     * @param num   数量
+     * @return list
+     */
+    List<T> findByMapAcc(HashMap<String, Object> args, int start, int num);
+
+    /**
+     * 模糊查找
+     *
+     * @param args HASHMAP
+     * @return list
+     */
+    List<T> findByMapFuz(HashMap<String, Object> args);
+
+    /**
+     * 模糊查找，带分页
+     *
+     * @param args  HASHMAP
+     * @param start 起始行
+     * @param num   数量
+     * @return list
+     */
+    List<T> findByMapFuz(HashMap<String, Object> args, int start, int num);
 
 }
