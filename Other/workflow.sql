@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2015-03-22 18:24:40
+Date: 2015-03-29 00:51:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -46,12 +46,11 @@ CREATE TABLE `award` (
 -- ----------------------------
 DROP TABLE IF EXISTS `base`;
 CREATE TABLE `base` (
-  `baseId` char(8) NOT NULL,
-  `table` varchar(15) DEFAULT NULL,
+  `base_id` char(8) NOT NULL,
+  `table_name` varchar(15) DEFAULT NULL,
   `keycode` char(4) DEFAULT NULL,
   `value` varchar(50) DEFAULT NULL,
-  `base_id` varchar(255) NOT NULL,
-  PRIMARY KEY (`baseId`)
+  PRIMARY KEY (`base_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -70,7 +69,7 @@ CREATE TABLE `book` (
   `dept_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`bk_id`),
   KEY `dept_id` (`dept_id`),
-  CONSTRAINT `book_ibfk_1` FOREIGN KEY (`dept_id`) REFERENCES `base` (`baseId`)
+  CONSTRAINT `book_ibfk_1` FOREIGN KEY (`dept_id`) REFERENCES `base` (`base_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -152,7 +151,7 @@ CREATE TABLE `mag` (
   `grade_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`mag_id`),
   KEY `grade_id` (`grade_id`),
-  CONSTRAINT `mag_ibfk_1` FOREIGN KEY (`grade_id`) REFERENCES `base` (`baseId`)
+  CONSTRAINT `mag_ibfk_1` FOREIGN KEY (`grade_id`) REFERENCES `base` (`base_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -163,6 +162,7 @@ CREATE TABLE `ordactor` (
   `idoa` varchar(255) NOT NULL,
   `order_id` varchar(255) NOT NULL,
   `actor_id` varchar(255) NOT NULL,
+  `type` varchar(255) DEFAULT NULL,
   `role` int(11) NOT NULL,
   PRIMARY KEY (`idoa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -177,7 +177,7 @@ CREATE TABLE `paper` (
   `unit` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`paper_id`),
   KEY `unit` (`unit`),
-  CONSTRAINT `paper_ibfk_1` FOREIGN KEY (`unit`) REFERENCES `base` (`baseId`)
+  CONSTRAINT `paper_ibfk_1` FOREIGN KEY (`unit`) REFERENCES `base` (`base_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -233,8 +233,8 @@ CREATE TABLE `staff` (
   `rank_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`sta_id`),
   KEY `dept_id` (`dept_id`),
-  CONSTRAINT `staff_ibfk_1` FOREIGN KEY (`dept_id`) REFERENCES `base` (`baseId`),
-  CONSTRAINT `staff_ibfk_2` FOREIGN KEY (`dept_id`) REFERENCES `base` (`baseId`)
+  CONSTRAINT `staff_ibfk_1` FOREIGN KEY (`dept_id`) REFERENCES `base` (`base_id`),
+  CONSTRAINT `staff_ibfk_2` FOREIGN KEY (`dept_id`) REFERENCES `base` (`base_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
