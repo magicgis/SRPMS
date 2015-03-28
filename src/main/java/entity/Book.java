@@ -90,16 +90,8 @@ public class Book {
 
         Book book = (Book) o;
 
-        if (bkId != null ? !bkId.equals(book.bkId) : book.bkId != null) return false;
-        if (bkName != null ? !bkName.equals(book.bkName) : book.bkName != null) return false;
-        if (bkType != null ? !bkType.equals(book.bkType) : book.bkType != null) return false;
-        if (bkWdNum != null ? !bkWdNum.equals(book.bkWdNum) : book.bkWdNum != null) return false;
-        if (isbn != null ? !isbn.equals(book.isbn) : book.isbn != null) return false;
-        if (pubDate != null ? !pubDate.equals(book.pubDate) : book.pubDate != null) return false;
-        if (publisher != null ? !publisher.equals(book.publisher) : book.publisher != null) return false;
-        if (scYr != null ? !scYr.equals(book.scYr) : book.scYr != null) return false;
+        return !(bkId != null ? !bkId.equals(book.bkId) : book.bkId != null) && !(bkName != null ? !bkName.equals(book.bkName) : book.bkName != null) && !(bkType != null ? !bkType.equals(book.bkType) : book.bkType != null) && !(bkWdNum != null ? !bkWdNum.equals(book.bkWdNum) : book.bkWdNum != null) && !(isbn != null ? !isbn.equals(book.isbn) : book.isbn != null) && !(pubDate != null ? !pubDate.equals(book.pubDate) : book.pubDate != null) && !(publisher != null ? !publisher.equals(book.publisher) : book.publisher != null) && !(scYr != null ? !scYr.equals(book.scYr) : book.scYr != null);
 
-        return true;
     }
 
     @Override

@@ -79,15 +79,8 @@ public class Staff {
 
         Staff staff = (Staff) o;
 
-        if (degree != null ? !degree.equals(staff.degree) : staff.degree != null) return false;
-        if (edu != null ? !edu.equals(staff.edu) : staff.edu != null) return false;
-        if (iDcard != null ? !iDcard.equals(staff.iDcard) : staff.iDcard != null) return false;
-        if (position != null ? !position.equals(staff.position) : staff.position != null) return false;
-        if (staId != null ? !staId.equals(staff.staId) : staff.staId != null) return false;
-        if (staName != null ? !staName.equals(staff.staName) : staff.staName != null) return false;
-        if (staSNm != null ? !staSNm.equals(staff.staSNm) : staff.staSNm != null) return false;
+        return !(degree != null ? !degree.equals(staff.degree) : staff.degree != null) && !(edu != null ? !edu.equals(staff.edu) : staff.edu != null) && !(iDcard != null ? !iDcard.equals(staff.iDcard) : staff.iDcard != null) && !(position != null ? !position.equals(staff.position) : staff.position != null) && !(staId != null ? !staId.equals(staff.staId) : staff.staId != null) && !(staName != null ? !staName.equals(staff.staName) : staff.staName != null) && !(staSNm != null ? !staSNm.equals(staff.staSNm) : staff.staSNm != null);
 
-        return true;
     }
 
     @Override

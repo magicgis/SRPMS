@@ -78,15 +78,8 @@ public class Mag {
 
         Mag mag = (Mag) o;
 
-        if (cn != null ? !cn.equals(mag.cn) : mag.cn != null) return false;
-        if (fq != null ? !fq.equals(mag.fq) : mag.fq != null) return false;
-        if (issn != null ? !issn.equals(mag.issn) : mag.issn != null) return false;
-        if (magId != null ? !magId.equals(mag.magId) : mag.magId != null) return false;
-        if (magName != null ? !magName.equals(mag.magName) : mag.magName != null) return false;
-        if (magSNm != null ? !magSNm.equals(mag.magSNm) : mag.magSNm != null) return false;
-        if (magSub != null ? !magSub.equals(mag.magSub) : mag.magSub != null) return false;
+        return !(cn != null ? !cn.equals(mag.cn) : mag.cn != null) && !(fq != null ? !fq.equals(mag.fq) : mag.fq != null) && !(issn != null ? !issn.equals(mag.issn) : mag.issn != null) && !(magId != null ? !magId.equals(mag.magId) : mag.magId != null) && !(magName != null ? !magName.equals(mag.magName) : mag.magName != null) && !(magSNm != null ? !magSNm.equals(mag.magSNm) : mag.magSNm != null) && !(magSub != null ? !magSub.equals(mag.magSub) : mag.magSub != null);
 
-        return true;
     }
 
     @Override

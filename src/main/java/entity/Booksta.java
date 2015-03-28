@@ -63,13 +63,8 @@ public class Booksta {
 
         Booksta booksta = (Booksta) o;
 
-        if (bkScore != null ? !bkScore.equals(booksta.bkScore) : booksta.bkScore != null) return false;
-        if (bkcbRole != null ? !bkcbRole.equals(booksta.bkcbRole) : booksta.bkcbRole != null) return false;
-        if (idbs != null ? !idbs.equals(booksta.idbs) : booksta.idbs != null) return false;
-        if (isTx != null ? !isTx.equals(booksta.isTx) : booksta.isTx != null) return false;
-        if (peoWdNum != null ? !peoWdNum.equals(booksta.peoWdNum) : booksta.peoWdNum != null) return false;
+        return !(bkScore != null ? !bkScore.equals(booksta.bkScore) : booksta.bkScore != null) && !(bkcbRole != null ? !bkcbRole.equals(booksta.bkcbRole) : booksta.bkcbRole != null) && !(idbs != null ? !idbs.equals(booksta.idbs) : booksta.idbs != null) && !(isTx != null ? !isTx.equals(booksta.isTx) : booksta.isTx != null) && !(peoWdNum != null ? !peoWdNum.equals(booksta.peoWdNum) : booksta.peoWdNum != null);
 
-        return true;
     }
 
     @Override

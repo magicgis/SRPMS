@@ -61,13 +61,8 @@ public class Confer {
 
         Confer confer = (Confer) o;
 
-        if (conferAddr != null ? !conferAddr.equals(confer.conferAddr) : confer.conferAddr != null) return false;
-        if (conferId != null ? !conferId.equals(confer.conferId) : confer.conferId != null) return false;
-        if (conferNm != null ? !conferNm.equals(confer.conferNm) : confer.conferNm != null) return false;
-        if (conferTime != null ? !conferTime.equals(confer.conferTime) : confer.conferTime != null) return false;
-        if (conferType != null ? !conferType.equals(confer.conferType) : confer.conferType != null) return false;
+        return !(conferAddr != null ? !conferAddr.equals(confer.conferAddr) : confer.conferAddr != null) && !(conferId != null ? !conferId.equals(confer.conferId) : confer.conferId != null) && !(conferNm != null ? !conferNm.equals(confer.conferNm) : confer.conferNm != null) && !(conferTime != null ? !conferTime.equals(confer.conferTime) : confer.conferTime != null) && !(conferType != null ? !conferType.equals(confer.conferType) : confer.conferType != null);
 
-        return true;
     }
 
     @Override

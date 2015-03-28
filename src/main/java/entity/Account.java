@@ -51,12 +51,8 @@ public class Account {
 
         Account account = (Account) o;
 
-        if (email != null ? !email.equals(account.email) : account.email != null) return false;
-        if (id != null ? !id.equals(account.id) : account.id != null) return false;
-        if (privilege != null ? !privilege.equals(account.privilege) : account.privilege != null) return false;
-        if (pwd != null ? !pwd.equals(account.pwd) : account.pwd != null) return false;
+        return !(email != null ? !email.equals(account.email) : account.email != null) && !(id != null ? !id.equals(account.id) : account.id != null) && !(privilege != null ? !privilege.equals(account.privilege) : account.privilege != null) && !(pwd != null ? !pwd.equals(account.pwd) : account.pwd != null);
 
-        return true;
     }
 
     @Override

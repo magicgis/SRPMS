@@ -25,9 +25,8 @@ public class Bookawd {
 
         Bookawd bookawd = (Bookawd) o;
 
-        if (idba != null ? !idba.equals(bookawd.idba) : bookawd.idba != null) return false;
+        return !(idba != null ? !idba.equals(bookawd.idba) : bookawd.idba != null);
 
-        return true;
     }
 
     @Override

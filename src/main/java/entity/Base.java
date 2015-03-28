@@ -50,12 +50,8 @@ public class Base {
 
         Base base = (Base) o;
 
-        if (baseId != null ? !baseId.equals(base.baseId) : base.baseId != null) return false;
-        if (keycode != null ? !keycode.equals(base.keycode) : base.keycode != null) return false;
-        if (table != null ? !table.equals(base.table) : base.table != null) return false;
-        if (value != null ? !value.equals(base.value) : base.value != null) return false;
+        return !(baseId != null ? !baseId.equals(base.baseId) : base.baseId != null) && !(keycode != null ? !keycode.equals(base.keycode) : base.keycode != null) && !(table != null ? !table.equals(base.table) : base.table != null) && !(value != null ? !value.equals(base.value) : base.value != null);
 
-        return true;
     }
 
     @Override

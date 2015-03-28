@@ -46,11 +46,8 @@ public class Conferpaper {
 
         Conferpaper that = (Conferpaper) o;
 
-        if (cpScore != null ? !cpScore.equals(that.cpScore) : that.cpScore != null) return false;
-        if (idpc != null ? !idpc.equals(that.idpc) : that.idpc != null) return false;
-        if (pubDate != null ? !pubDate.equals(that.pubDate) : that.pubDate != null) return false;
+        return !(cpScore != null ? !cpScore.equals(that.cpScore) : that.cpScore != null) && !(idpc != null ? !idpc.equals(that.idpc) : that.idpc != null) && !(pubDate != null ? !pubDate.equals(that.pubDate) : that.pubDate != null);
 
-        return true;
     }
 
     @Override

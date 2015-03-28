@@ -41,11 +41,8 @@ public class Award {
 
         Award award = (Award) o;
 
-        if (awdId != null ? !awdId.equals(award.awdId) : award.awdId != null) return false;
-        if (awdRank != null ? !awdRank.equals(award.awdRank) : award.awdRank != null) return false;
-        if (awdType != null ? !awdType.equals(award.awdType) : award.awdType != null) return false;
+        return !(awdId != null ? !awdId.equals(award.awdId) : award.awdId != null) && !(awdRank != null ? !awdRank.equals(award.awdRank) : award.awdRank != null) && !(awdType != null ? !awdType.equals(award.awdType) : award.awdType != null);
 
-        return true;
     }
 
     @Override

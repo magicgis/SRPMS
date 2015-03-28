@@ -33,10 +33,8 @@ public class Paper {
 
         Paper paper = (Paper) o;
 
-        if (paperId != null ? !paperId.equals(paper.paperId) : paper.paperId != null) return false;
-        if (paperName != null ? !paperName.equals(paper.paperName) : paper.paperName != null) return false;
+        return !(paperId != null ? !paperId.equals(paper.paperId) : paper.paperId != null) && !(paperName != null ? !paperName.equals(paper.paperName) : paper.paperName != null);
 
-        return true;
     }
 
     @Override

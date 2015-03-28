@@ -43,11 +43,8 @@ public class Papersta {
 
         Papersta papersta = (Papersta) o;
 
-        if (grScore != null ? !grScore.equals(papersta.grScore) : papersta.grScore != null) return false;
-        if (idps != null ? !idps.equals(papersta.idps) : papersta.idps != null) return false;
-        if (paperRole != null ? !paperRole.equals(papersta.paperRole) : papersta.paperRole != null) return false;
+        return !(grScore != null ? !grScore.equals(papersta.grScore) : papersta.grScore != null) && !(idps != null ? !idps.equals(papersta.idps) : papersta.idps != null) && !(paperRole != null ? !paperRole.equals(papersta.paperRole) : papersta.paperRole != null);
 
-        return true;
     }
 
     @Override

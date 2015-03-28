@@ -72,14 +72,8 @@ public class Papermag {
 
         Papermag papermag = (Papermag) o;
 
-        if (bgPage != null ? !bgPage.equals(papermag.bgPage) : papermag.bgPage != null) return false;
-        if (colType != null ? !colType.equals(papermag.colType) : papermag.colType != null) return false;
-        if (idpm != null ? !idpm.equals(papermag.idpm) : papermag.idpm != null) return false;
-        if (paperScore != null ? !paperScore.equals(papermag.paperScore) : papermag.paperScore != null) return false;
-        if (pubDate != null ? !pubDate.equals(papermag.pubDate) : papermag.pubDate != null) return false;
-        if (volIss != null ? !volIss.equals(papermag.volIss) : papermag.volIss != null) return false;
+        return !(bgPage != null ? !bgPage.equals(papermag.bgPage) : papermag.bgPage != null) && !(colType != null ? !colType.equals(papermag.colType) : papermag.colType != null) && !(idpm != null ? !idpm.equals(papermag.idpm) : papermag.idpm != null) && !(paperScore != null ? !paperScore.equals(papermag.paperScore) : papermag.paperScore != null) && !(pubDate != null ? !pubDate.equals(papermag.pubDate) : papermag.pubDate != null) && !(volIss != null ? !volIss.equals(papermag.volIss) : papermag.volIss != null);
 
-        return true;
     }
 
     @Override
