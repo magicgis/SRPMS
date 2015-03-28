@@ -1,7 +1,6 @@
 package dao.imp;
 
 import dao.AccountDao;
-import dao.BaseDao;
 import entity.Account;
 
 /**
