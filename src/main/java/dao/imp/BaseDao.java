@@ -118,11 +118,14 @@ public abstract class BaseDao<T> implements BaseInterface<T> {
 
     @Override
     public List<T> getAll(int startRow, int num) {
-        log.debug("BaseDAO Get All "+entityClass.getName()+" LIMIT " + startRow + "," + num);
+        log.debug("BaseDAO Get All "+entityClass.getName());
         String hql = "from " + getEntityClass().getName();
         List<T> res = null;
         try{
-            res = this.getCurrentSession().createQuery(hql).setFirstResult(startRow).setFetchSize(num).list();
+            Query sql = this.getCurrentSession().createQuery(hql);
+            sql.setFirstResult(startRow);
+            sql.setMaxResults(num);
+            res = sql.list();
         }catch (HibernateException hex){
             log.error("BaseDAO Get All "+entityClass.getName()+" Failed",hex);
         }
@@ -217,16 +220,6 @@ public abstract class BaseDao<T> implements BaseInterface<T> {
      */
     protected String findAllHql() {
         return "from "+entityClass.getName();
-    }
-
-    /**
-     * 生成无条件查找所有对象的语句
-     * @param start 起始行
-     * @param num 数量
-     * @return HQL
-     */
-    protected String findAllHql(int start, int num) {
-        return "from "+entityClass.getName()+" limit "+start+","+num;
     }
 
     /**
