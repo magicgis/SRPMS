@@ -84,7 +84,7 @@ public abstract class BaseDao<T> implements BaseInterface<T> {
         try {
             this.getCurrentSession().update(obj);
         } catch (HibernateException hex) {
-            log.error("Update "+entityClass.getName()+" Failed",hex);
+            log.error("Update " + entityClass.getName() + " Failed", hex);
             result = false;
         }
         return result;
@@ -173,8 +173,11 @@ public abstract class BaseDao<T> implements BaseInterface<T> {
 
     @Override
     public  List<T> findByMapAcc(HashMap<String, Object> args,int start,int num){
-        String hql = findByMapA(args,start,num);
-        return this.getCurrentSession().createQuery(hql).list();
+        String hql = findByMapA(args);
+        Query ans = this.getCurrentSession().createQuery(hql);
+        ans.setFirstResult(start);
+        ans.setMaxResults(num);
+        return ans.list();
     }
 
     @Override
@@ -185,8 +188,11 @@ public abstract class BaseDao<T> implements BaseInterface<T> {
 
     @Override
     public  List<T> findByMapFuz(HashMap<String, Object> args,int start,int num){
-        String hql = findByMapF(args,start,num);
-        return this.getCurrentSession().createQuery(hql).list();
+        String hql = findByMapF(args);
+        Query ans = this.getCurrentSession().createQuery(hql);
+        ans.setFirstResult(start);
+        ans.setMaxResults(num);
+        return ans.list();
     }
 
     /**
@@ -244,18 +250,6 @@ public abstract class BaseDao<T> implements BaseInterface<T> {
         return hql;
     }
 
-    /**
-     * 根据属性名和属性值生成组合<bold>精确</bold>查询语句
-     * @param params key-value
-     * @param start 起始行
-     * @param num 数量
-     * @return HQL
-     */
-    protected String findByMapA(HashMap<String, Object> params, int start, int num) {
-        String hql = findByMapA(params);
-        hql = hql + " LIMIT " + start + "," + num;
-        return hql;
-    }
 
     /**
      * 根据属性名和属性值生成组合<bold>模糊</bold>查询语句
@@ -276,18 +270,7 @@ public abstract class BaseDao<T> implements BaseInterface<T> {
         return hql;
     }
 
-    /**
-     * 根据属性名和属性值生成组合<bold>模糊</bold>查询语句
-     * @param params key-value
-     * @param start 起始行
-     * @param num 数量
-     * @return HQL
-     */
-    protected String findByMapF(HashMap<String, Object> params, int start, int num) {
-        String hql = findByMapF(params);
-        hql = hql + " LIMIT " + start + "," + num;
-        return hql;
-    }
+
 
     /**
      * 执行sql语句
