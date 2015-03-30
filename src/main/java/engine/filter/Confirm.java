@@ -30,7 +30,7 @@ import java.util.List;
         * 唯有手动getBean才能正常注入
         * PS：注入用多了，都不会普通调用了！
         * */
-        BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/applicationContext.xml");
+        BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/application*.xml");
         OrderActorDao orderActorDao =(OrderActorDao) factory.getBean("orderActorDao");
         String actor = execution.getOperator();
         String order = execution.getOrder().getId();

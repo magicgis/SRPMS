@@ -68,13 +68,13 @@ public class Workflow {
         for(String key:formParams.keySet()){
             args.put(key,formParams.getFirst(key));
         }
-        String user = args.get("WF-User");
-        args.remove("WF-User");
-        String processName = args.get("WF-Process");
+        String user = args.get("WF_User");
+        args.remove("WF_User");
+        String processName = args.get("WF_Process");
         String processId = engine.getProcessByName(processName).getId();
-        args.remove("WF-Process");
+        args.remove("WF_Process");
         /*由于目前仍不能根据用户获取所属学院*/
-        args.put("WF-Col","信息工程学院");
+        args.put("WF_Col","信息工程学院");
         return engine.startInstanceById(processId,user,(Map)args);
     }
 
@@ -87,12 +87,12 @@ public class Workflow {
         for(String key:formParams.keySet()){
             args.put(key,formParams.getFirst(key));
         }
-        String user = args.get("WF-User");
-        args.remove("WF-User");
-        String taskId = args.get("WF-Task");
-        args.remove("WF-Task");
+        String user = args.get("WF_User");
+        args.remove("WF_User");
+        String taskId = args.get("WF_Task");
+        args.remove("WF_Task");
         List<Task> ans = new ArrayList<Task>();
-        List<Task> tasks =  engine.execute(taskId, user, (Map)args);
+        List<Task> tasks =  engine.execute(taskId, user, (Map) args);
         if(tasks==null||tasks.size()==0) {
             return null;
         }
@@ -161,9 +161,16 @@ public class Workflow {
         return engine.getHisTaskByOrder(orderId);
     }
 
+    @GET
+    @Path("/{user}/confirmTask")
+    @Produces("application/json;charset=UTF-8")
+    public List<Task> getConfirmTask(@PathParam("user")String user){
+        return engine.getConfirmTask(user);
+    }
+
     @POST
     @Path("/submit")
-    public boolean SubmitAll(@FormParam("WF-User")String user){
+    public boolean SubmitAll(@FormParam("WF_User")String user){
         List<Order>list = engine.getOrderByActor(user);
         for(Order u:list){
             List<Task> tasks = engine.getTaskByOrder(u.getId());
@@ -172,31 +179,11 @@ public class Workflow {
             }
         }
         Map<String,Object> args = new HashMap<String, Object>();
-        args.put("WF-Memo","Submit By Program");
+        args.put("WF_Memo","Submit By Program");
         for(Order u:list){
             List<Task> tasks = engine.getTaskByOrder(u.getId());
-            engine.execute(tasks.get(0).getId(),user,args);
+            engine.execute(tasks.get(0).getId(), user, args);
         }
         return true;
-    }
-
-    List<Map<String,Object>> getView(List<Task> tasks){
-        List<Map<String,Object>> ans = new ArrayList<Map<String, Object>>();
-        for(Task u:tasks) {
-            Map<String, Object> arg = u.getVariableMap();
-            int latestNum = 0;
-            for (String key : arg.keySet()) {
-                if (key.matches("WF\\d+Submission")) {
-                    int n = Integer.valueOf(key.substring(key.indexOf('-') + 1, key.lastIndexOf('-')));
-                    if (latestNum < n) {
-                        latestNum = n;
-                    }
-                }
-            }
-            String latestKey = "WF"+latestNum+"Submission";
-        ans.add((Map) arg.get(latestKey));
-        }
-//        Map<String,Object> subArg =(Map) arg.get(latestKey);
-        return ans;
     }
 }

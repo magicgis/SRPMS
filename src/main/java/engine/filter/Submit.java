@@ -2,12 +2,15 @@ package engine.filter;
 
 import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
+import engine.utils.Tool;
 import org.snaker.engine.SnakerInterceptor;
 import org.snaker.engine.core.Execution;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * DATE:2015/3/21
@@ -20,7 +23,7 @@ public class Submit implements SnakerInterceptor {
     @Override
     public void intercept(Execution execution) {
         /*手工获取DAO*/
-        BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/applicationContext.xml");
+        BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/application*.xml");
         OrderActorDao orderActorDao =(OrderActorDao) factory.getBean("orderActorDao");
         String actor = execution.getOperator();
         String order = execution.getOrder().getId();
@@ -35,34 +38,24 @@ public class Submit implements SnakerInterceptor {
                 orderActorDao.save(order,actor,1,type);
             }
         }
+        /*取出原有数据*/
+        Map<String,Object> args = execution.getOrder().getVariableMap();
+        /*清空原有数据*/
+        execution.getOrder().setVariable(new HashMap<String, Object>().toString());
+        execution.getEngine().order().updateOrder(execution.getOrder());
 
-        /*-----------分割线-----------*/
-        /*所产生的新任务的arg*/
-//        Map<String,Object> taskArgs = execution.getArgs();
-//        int latestNum = 0;
-//        for(String key:taskArgs.keySet()){
-//            if(key.matches("WF\\d+Submission")){
-//                int n = Integer.valueOf(key.substring(2, key.lastIndexOf('S')));
-//                if(latestNum<n){
-//                    latestNum=n;
-//                }
-//            }
-//        }
-//        String latestKey = "WF"+latestNum+"Submission";
-//        Map<String,Object> subArg =(Map) taskArgs.get(latestKey);
-//        /*移除该order的部分全局变量*/
-//        Order oldOrder = execution.getOrder();
-//        Map<String,Object> oldArgs = oldOrder.getVariableMap();
-//        oldArgs.remove("WF-Col");
-//        oldOrder.setVariable(oldArgs.toString());
-//        execution.getEngine().order().updateOrder(oldOrder);
-//        /*如果表单填写完毕,就加上部分全局变量*/
-//        if(execution.getArgs().get("IsComplete").equals(true)){
-//            Map<String,Object> args = new HashMap<String,Object>();
-//            args.putAll(oldArgs);
-//            args.put("WF-Col",subArg.get("WF-Col"));
-//            oldOrder.setVariable(args.toString());
-//            execution.getEngine().order().updateOrder(oldOrder);
-//        }
+        Map<String,Object> params = execution.getArgs();
+        String latestKey = Tool.getLatestArgs(params);
+        args.put("Details", params.get(latestKey));
+
+        /*如果表单填写完毕,就加上部分全局变量*/
+        String status = (String) execution.getArgs().get("IsComplete");
+        if(Boolean.valueOf(status).equals(true)){
+            args.put("Status","Saved");
+        }else{
+            args.put("Status","Unsaved");
+        }
+        execution.getEngine().order().addVariable(order, args);
+
     }
 }

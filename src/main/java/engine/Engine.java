@@ -128,11 +128,24 @@ public interface Engine {
      */
     void stopOrder(String orderId);
 
+
     List<Object> getChildrenTask(String TaskId);
 
+    /**
+     * 顾名思义
+     * @param id id
+     * @return Order
+     */
     Order getOrder(String id);
 
+    /**
+     * 顾名思义
+     * @param id id
+     * @return Task
+     */
     Task getTask(String id);
+
+    List<Task> getConfirmTask(String actor);
 
 
 }

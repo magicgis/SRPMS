@@ -125,7 +125,7 @@ public class SnakerEngineUtils implements Engine {
                 NowMap.put(key,beforeMap.get(key));
             }
         }
-        String flowOderStr = "WF"+Integer.toString(flowOrder)+task.getTaskName();
+        String flowOderStr = "WF_"+Integer.toString(flowOrder)+"_"+task.getTaskName();
         /*把此轮的参数放入*/
         NowMap.put(flowOderStr,args);
         NowMap.put("S-ACTOR",operator);
@@ -146,8 +146,8 @@ public class SnakerEngineUtils implements Engine {
             return null;
         }
          /*如果存在下一任务参与者*/
-        if(args.containsKey("WF-Actor")){
-            String[] actorString = args.get("WF-Actor").toString().split(",");
+        if(args.containsKey("WF_Actor")){
+            String[] actorString = args.get("WF_Actor").toString().split(",");
             List<String> actors = new ArrayList<String>();
             for(String u:actorString){
                 if (!u.equals(" ")&&!u.equals(""))
@@ -206,5 +206,21 @@ public class SnakerEngineUtils implements Engine {
     @Override
     public Task getTask(String id) {
         return snakerEngine.query().getTask(id);
+    }
+
+    @Override
+    public List<Task> getConfirmTask(String actor) {
+        List<Task> allTask = getTaskByActor(actor);
+        List<OrderActor> relationship = orderActorDao.getByActor(actor);
+        List<Order> allOrder = new ArrayList<Order>();
+        for (OrderActor orderActor : relationship) {
+            allOrder.add(snakerEngine.query().getOrder(orderActor.getOrder()));
+        }
+        for (Task task : allTask) {
+            if(allOrder.contains(snakerEngine.query().getOrder(task.getOrderId()))){
+                allTask.remove(task);
+            }
+        }
+        return allTask;
     }
 }

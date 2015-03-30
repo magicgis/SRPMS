@@ -19,7 +19,7 @@ public class Start implements SnakerInterceptor {
 
     @Override
     public void intercept(Execution execution) {
-        BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/applicationContext.xml");
+        BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/application*.xml");
         OrderActorDao orderActorDao =(OrderActorDao) factory.getBean("orderActorDao");
 //        SnakerEngine engine = factory.getBean("snakerEngine");
         String actor = execution.getOperator();
@@ -27,13 +27,14 @@ public class Start implements SnakerInterceptor {
         String order = execution.getOrder().getId();
         if(actor.equals(creator)){
             if(!orderActorDao.areTheyAlreadyIn(order,actor)){
-                String type = (String)execution.getArgs().get("WF-Type");
-                String col = (String)execution.getArgs().get("WF-Col");
+                String type = (String)execution.getArgs().get("WF_Type");
+                String col = (String)execution.getArgs().get("WF_Col");
                 orderActorDao.save(order,actor,1,type);
                 Order oldOrder = execution.getOrder();
                 Map<String,Object> args = new HashMap<String,Object>();
-                args.put("WF-Type",type);
-                args.put("WF-Col",col);
+                args.put("WF_Type",type);
+                args.put("WF_Col",col);
+                args.put("Status","Blank");
                 execution.getEngine().order().addVariable(oldOrder.getId(),args);
             }
         }
