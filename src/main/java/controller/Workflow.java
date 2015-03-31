@@ -98,6 +98,10 @@ public class Workflow {
         }
         for(Task u:tasks){
             u.setModel(null);
+            if(u.getTaskName().equals("Confirm")&&engine.isYourTask(u.getId(), user)){
+                engine.execute(u.getId(), user, new HashMap<String, Object>());
+//                tasks.remove(u);
+            }
         }
         return tasks;
     }
@@ -185,5 +189,11 @@ public class Workflow {
             engine.execute(tasks.get(0).getId(), user, args);
         }
         return true;
+    }
+
+    @POST
+    @Path("/getBack")
+    public boolean getBack(@FormParam("WF_User")String user,@FormParam("WF_Order")String order){
+        return engine.setOrderRestart(order,user);
     }
 }

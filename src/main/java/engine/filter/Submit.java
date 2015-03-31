@@ -51,9 +51,9 @@ public class Submit implements SnakerInterceptor {
         /*如果表单填写完毕,就加上部分全局变量*/
         String status = (String) execution.getArgs().get("IsComplete");
         if(Boolean.valueOf(status).equals(true)){
-            args.put("Status","Saved");
+            args.put("Status","Complete");
         }else{
-            args.put("Status","Unsaved");
+            args.put("Status","Uncomplete");
         }
         execution.getEngine().order().addVariable(order, args);
 

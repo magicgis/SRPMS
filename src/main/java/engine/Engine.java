@@ -116,11 +116,11 @@ public interface Engine {
 
     /**
      * 撤回任务
-     * @param taskId 撤回到的任务ID
+     * @param orderId 撤回的orderId
      * @param actor 操作人
      * @return boolean
      */
-    boolean setOrderRestart(String taskId, String actor);
+    boolean setOrderRestart(String orderId, String actor);
 
     /**
      * 终止order
@@ -146,6 +146,8 @@ public interface Engine {
     Task getTask(String id);
 
     List<Task> getConfirmTask(String actor);
+
+    Boolean isYourTask(String task,String actor);
 
 
 }
