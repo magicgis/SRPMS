@@ -92,40 +92,28 @@ public class SnakerEngineUtils implements Engine {
         String orderId = task.getOrderId();
         /*设置参与者*/
         args.put("S-ACTOR",operator);
-        Map<String,Object> NowMap = new HashMap<String, Object>();
-        /*获取前N轮任务所填写Map*/
-        Map<String,Object> beforeMap = task.getVariableMap();
-        /*把上N轮的map放入*/
+        /*获取order的arg*/
+        Map<String,Object> orderArg = snakerEngine.query().getOrder(orderId).getVariableMap();
+        /*获取Order里面的顺序*/
         int flowOrder = 0;
-        if(beforeMap.containsKey("Details")){
-            beforeMap.remove("Details");
-        }
-        for(String key:beforeMap.keySet()){
-            if(beforeMap.get(key)instanceof Map){
+        for(String key:orderArg.keySet()){
+            if(orderArg.get(key)instanceof Map&&key.startsWith("WF")){
                 flowOrder++;
-                NowMap.put(key,beforeMap.get(key));
             }
         }
         String flowOderStr = "WF_"+Integer.toString(flowOrder)+"_"+task.getTaskName();
-        /*把此轮的参数放入*/
-        NowMap.put(flowOderStr,args);
-        NowMap.put("S-ACTOR",operator);
-        /*决策参数需要单独处理*/
-        if(args.containsKey("DecByCol")){
-            NowMap.put("DecByCol",args.get("DecByCol"));
-        }
-        if(args.containsKey("DecByDep")){
-            NowMap.put("DecByDep",args.get("DecByDep"));
-        }
-        if(args.containsKey("IsComplete")){
-            NowMap.put("IsComplete",args.get("IsComplete"));
-        }
+        Map<String,Object> temp  = new HashMap<String, Object>();
+        temp.put(flowOderStr,args);
+
+        /*把此轮的参数放入Order*/
+        snakerEngine.order().addVariable(orderId,temp);
 
         /*执行任务（不一定会产生新任务）*/
-        List<Task> tasks =  snakerEngine.executeTask(taskId, operator,NowMap);
+        List<Task> tasks =  snakerEngine.executeTask(taskId,operator,args);
         if(tasks.isEmpty()){
             return null;
         }
+
          /*如果存在下一任务参与者*/
         if(args.containsKey("WF_Actor")&&args.containsKey("IsComplete")){
             if(!Boolean.valueOf((String) args.get("IsComplete")))

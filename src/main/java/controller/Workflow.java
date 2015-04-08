@@ -173,7 +173,8 @@ public class Workflow {
     }
 
     @POST
-    @Path("/submit")
+    @Path("/submitAll")
+    @Produces("text/plain;charset=UTF-8")
     public boolean SubmitAll(@FormParam("WF_User")String user){
         List<Order>list = engine.getOrderByActor(user);
         for(Order u:list){

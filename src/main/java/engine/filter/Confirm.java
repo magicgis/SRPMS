@@ -1,5 +1,6 @@
 package engine.filter;
 
+import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
 import org.snaker.engine.SnakerInterceptor;
 import org.snaker.engine.access.QueryFilter;
@@ -9,7 +10,9 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * DATE:2015/3/20
@@ -45,11 +48,15 @@ import java.util.List;
             }
         }
         /*获取任务完成之后产生的后续任务*/
-        List<Task> tasks = execution.getEngine().query().getActiveTasks(new QueryFilter().setOrderId(order));
+//        List<Task> tasks = execution.getEngine().query().getActiveTasks(new QueryFilter().setOrderId(order));
         /*如果任务是递交学院审批，那么就可以把学院与管理部门与order绑定了*/
-        if(tasks.size()==1&&tasks.get(0).getTaskName().equals("ApprovalByCol")){
-//            System.out.println("FXXK");
-            //TODO 将学院与管理部门与order绑定！
-        }
+//        if(tasks.size()==1&&tasks.get(0).getTaskName().equals("Submit")){
+////            System.out.println("FXXK");
+//            //TODO 将学院与管理部门与order绑定！
+//            Map<String,Object> args = new HashMap<String, Object>();
+//            args.put("Status","WaitForCol");
+//            execution.getEngine().order().addVariable(order, args);
+//            orderActorDao.save(order,"col",2,type);
+//        }
     }
 }
