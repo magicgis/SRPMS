@@ -19,10 +19,10 @@ public class Pole extends Assignment {
 //        System.out.println(execution.)
         if (model.getName().equals("ApprovalByCol")){
             /*TODO 根据order里的变量来分配任务*/
-            return "college";
+            return "col";
         }else if(model.getName().equals("ApprovalBySch")){
             /*TODO 根据order里的变量来分配任务*/
-            return "school";
+            return "dep";
         }else{
             /*一般情况下，我们都将任务分配给order的创造者*/
             return execution.getOrder().getCreator();

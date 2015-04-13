@@ -153,8 +153,8 @@ public class SnakerEngineUtils implements Engine {
     }
 
     @Override
-    public List<Task> executeAndJump(String taskId, String operator, Map<String, Object> args,String nodeName) {
-        return snakerEngine.executeAndJumpTask(taskId, operator, args, nodeName);
+    public List<Task> executeAndJump(String taskId, String operator, Map<String, Object > args, String nodeName){
+            return snakerEngine.executeAndJumpTask(taskId, operator, args, nodeName);
     }
 
     @Override
@@ -166,11 +166,32 @@ public class SnakerEngineUtils implements Engine {
         boolean ans = false;
         String taskId = "";
         List<HistoryTask> hisTask = snakerEngine.query().getHistoryTasks(new QueryFilter().setOrderId(orderId));
+        Task nowTask = snakerEngine.query().getActiveTasks(new QueryFilter().setOrderId(orderId)).get(0);
         String time = "";
         long realTime = 0;
+        /**
+         * 这儿有个特殊情况，就是都确认了，
+         * 需要先撤回到确认任务
+         * 再撤回到填表任务
+         */
+        if(nowTask.getTaskName().equals("Submit")){
+            for (HistoryTask his : hisTask) {
+                if(his.getTaskName().equals("Confirm")){
+//                    System.out.println(his.getCreateTime());
+                    time = his.getCreateTime().replace("-","").replace(" ", "").replace(":","");
+                    if(realTime<Long.valueOf(time)){
+                        realTime = Long.valueOf(time);
+                        taskId = his.getId();
+                    }
+                }
+            }
+            snakerEngine.task().withdrawTask(taskId, actor);
+        }
+        time = "";
+        realTime = 0;
         for (HistoryTask his : hisTask) {
             if(his.getTaskName().equals("Submission")){
-                System.out.println(his.getCreateTime());
+//                System.out.println(his.getCreateTime());
                 time = his.getCreateTime().replace("-","").replace(" ", "").replace(":","");
                 if(realTime<Long.valueOf(time)){
                     realTime = Long.valueOf(time);
@@ -179,7 +200,10 @@ public class SnakerEngineUtils implements Engine {
             }
         }
         if(taskId!=null){
-            snakerEngine.task().withdrawTask(taskId,actor);
+            snakerEngine.task().withdrawTask(taskId, actor);
+            HashMap<String,Object> status = new HashMap<String, Object>();
+            status.put("Status","Uncomplete");
+            snakerEngine.order().addVariable(orderId,status);
             ans = true;
         }
         return ans;
@@ -188,6 +212,8 @@ public class SnakerEngineUtils implements Engine {
     @Override
     public void stopOrder(String orderId) {
         snakerEngine.order().cascadeRemove(orderId);
+        orderActorDao.deleteAllOrder(orderId);
+//        snakerEngine.order().cascadeRemove();
     }
 
     @Override

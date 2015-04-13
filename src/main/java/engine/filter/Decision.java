@@ -29,14 +29,27 @@ public class Decision implements SnakerInterceptor {
         Map<String,Object> args = new HashMap<String, Object>();
         List<Task> tasks = execution.getEngine().query().getActiveTasks(new QueryFilter().setOrderId(order));
         Map<String,Object> dec = execution.getArgs();
+        boolean flag = false;
         if(dec.containsKey("DecByCol")){
-            if(Boolean.valueOf((String) dec.get("DecByCol"))){
+            if(dec.get("DecByCol") instanceof String) {
+                flag = Boolean.valueOf(dec.get("DecByCol").toString());
+            }else{
+                flag = (Boolean) dec.get("DecByCol");
+            }
+            if(flag){
+                orderActorDao.save(order,"dep",3,type);
                 args.put("Status", "WaitForDep");
             }else{
                 args.put("Status","RefuseByCol");
             }
+
         }else if(dec.containsKey("DecByDep")){
-            if(Boolean.valueOf((String) dec.get("DecByDep"))){
+            if(dec.get("DecByDep") instanceof String) {
+                flag = Boolean.valueOf(dec.get("DecByDep").toString());
+            }else{
+                flag = (Boolean) dec.get("DecByDep");
+            }
+            if(flag){
                 args.put("Status", "AllCompelete");
             }else{
                 args.put("Status","RefuseByDep");

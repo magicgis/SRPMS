@@ -14,6 +14,7 @@ public class RestConfig extends ResourceConfig {
     public RestConfig() {
         register(RequestContextFilter.class);
         register(JacksonFeature.class);
+//        register(AuthorizationRequestFilter.class);
         packages("controller");
     }
 }

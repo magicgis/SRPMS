@@ -3,8 +3,10 @@ package controller;
 import engine.Engine;
 import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
-import org.snaker.engine.entity.*;
+import org.snaker.engine.entity.HistoryTask;
+import org.snaker.engine.entity.Order;
 import org.snaker.engine.entity.Process;
+import org.snaker.engine.entity.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,7 +14,10 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * DATE:2015/3/8
@@ -61,7 +66,7 @@ public class Workflow {
 
     @POST
     @Path("/start")
-    @Consumes("application/x-www-form-urlencoded")
+    @Consumes("application/x-www-form-urlencoded;charset=UTF-8")
     @Produces("application/json;charset=UTF-8")
     public Order startProcess(MultivaluedMap<String, String> formParams){
         Map<String,String> args = new HashMap<String, String>();
@@ -71,6 +76,21 @@ public class Workflow {
         String user = args.get("WF_User");
         args.remove("WF_User");
         String processName = args.get("WF_Process");
+        String processId = engine.getProcessByName(processName).getId();
+        args.remove("WF_Process");
+        /*由于目前仍不能根据用户获取所属学院*/
+        args.put("WF_Col","信息工程学院");
+        return engine.startInstanceById(processId,user,(Map)args);
+    }
+
+    @POST
+    @Path("/start")
+    @Consumes("application/json")
+    @Produces("application/json;charset=UTF-8")
+    public Order startProcess_beta(HashMap<String,Object> args){
+        String user = (String) args.get("WF_User");
+        args.remove("WF_User");
+        String processName = (String) args.get("WF_Process");
         String processId = engine.getProcessByName(processName).getId();
         args.remove("WF_Process");
         /*由于目前仍不能根据用户获取所属学院*/
@@ -91,6 +111,38 @@ public class Workflow {
         args.remove("WF_User");
         String taskId = args.get("WF_Task");
         args.remove("WF_Task");
+        List<Task> ans = new ArrayList<Task>();
+        List<Task> tasks =  engine.execute(taskId, user, (Map) args);
+        if(tasks==null||tasks.size()==0) {
+            return null;
+        }
+        for(Task u:tasks){
+            u.setModel(null);
+            if(u.getTaskName().equals("Confirm")&&engine.isYourTask(u.getId(), user)){
+                engine.execute(u.getId(), user, new HashMap<String, Object>());
+//                tasks.remove(u);
+            }
+        }
+        return tasks;
+    }
+
+    @POST
+    @Path("/execute")
+    @Consumes("application/json;charset=UTF-8")
+    @Produces("application/json;charset=UTF-8")
+    public List<Task> execute_beta(HashMap<String,Object> args){
+        String user = (String) args.get("WF_User");
+        args.remove("WF_User");
+        String taskId = (String) args.get("WF_Task");
+        args.remove("WF_Task");
+        if (args.containsKey("actors")) {
+            List<Map<String, Object>> actors = (List<Map<String, Object>>) args.get("actors");
+            String as = "";
+            for (Map<String, Object> u : actors) {
+                as = as + u.get("actor") + ",";
+            }
+            args.put("WF_Actor",as);
+        }
         List<Task> ans = new ArrayList<Task>();
         List<Task> tasks =  engine.execute(taskId, user, (Map) args);
         if(tasks==null||tasks.size()==0) {
@@ -194,7 +246,24 @@ public class Workflow {
 
     @POST
     @Path("/getBack")
+    @Consumes("application/x-www-form-urlencoded")
     public boolean getBack(@FormParam("WF_User")String user,@FormParam("WF_Order")String order){
         return engine.setOrderRestart(order,user);
     }
+
+    @POST
+    @Path("/getBack")
+    @Consumes("application/json;charset=UTF-8")
+    public boolean getBack_beta(HashMap<String,String>args){
+        return engine.setOrderRestart(args.get("order"),args.get("user"));
+    }
+
+    @DELETE
+    @Path("/ord{order}")
+    public void deleteOrder(@PathParam("order") String order){
+//        Order ord = engine.getOrder(order);
+        //todo 此处实际上还是需要做个判断的
+        engine.stopOrder(order);
+    }
+
 }

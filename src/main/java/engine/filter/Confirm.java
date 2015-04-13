@@ -18,9 +18,8 @@ import java.util.Map;
  * DATE:2015/3/20
  * TIME:23:36
  * Created by guofan on 2015/3/20
- * 这是确认提交的拦截器
+ * 这是点击确认的拦截器
  * 负责把actor与order绑定
- * 也负责把部门或者类别管理员与order绑定
  * 只有用户确认之后才会绑定！
  */
     public class Confirm implements SnakerInterceptor {
@@ -48,15 +47,15 @@ import java.util.Map;
             }
         }
         /*获取任务完成之后产生的后续任务*/
-//        List<Task> tasks = execution.getEngine().query().getActiveTasks(new QueryFilter().setOrderId(order));
+        List<Task> tasks = execution.getEngine().query().getActiveTasks(new QueryFilter().setOrderId(order));
         /*如果任务是递交学院审批，那么就可以把学院与管理部门与order绑定了*/
-//        if(tasks.size()==1&&tasks.get(0).getTaskName().equals("Submit")){
+        if(tasks.size()==1&&tasks.get(0).getTaskName().equals("Submit")){
 ////            System.out.println("FXXK");
 //            //TODO 将学院与管理部门与order绑定！
-//            Map<String,Object> args = new HashMap<String, Object>();
-//            args.put("Status","WaitForCol");
-//            execution.getEngine().order().addVariable(order, args);
+            Map<String,Object> args = new HashMap<String, Object>();
+            args.put("Status","WaitForSubmit");
+            execution.getEngine().order().addVariable(order, args);
 //            orderActorDao.save(order,"col",2,type);
-//        }
+        }
     }
 }

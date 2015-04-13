@@ -10,17 +10,19 @@
       <property name="show_sql">false</property>
       <property name="connection.useUnicode">true</property>
       <property name="connection.characterEncoding">UTF-8</property>
+      <!--<property name="hbm2ddl.auto">create</property>-->
 
 
-      <mapping resource="hbm/snaker.task.hbm.xml"/>
-      <mapping resource="hbm/snaker.order.hbm.xml"/>
+
+
       <mapping resource="hbm/snaker.ccorder.hbm.xml"/>
       <mapping resource="hbm/snaker.process.hbm.xml"/>
       <mapping resource="hbm/snaker.taskactor.hbm.xml"/>
       <mapping resource="hbm/snaker.workitem.hbm.xml"/>
       <mapping resource="hbm/snaker.surrogate.hbm.xml"/>
 
-
+      <mapping resource="hbm/order_beta.hbm.xml"/>
+      <mapping resource="hbm/task_beta.hbm.xml"/>
       <mapping resource="hbm/Account.hbm.xml"/>
       <mapping resource="hbm/Award.hbm.xml"/>
       <mapping resource="hbm/Base.hbm.xml"/>
