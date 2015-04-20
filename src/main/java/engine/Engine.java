@@ -71,6 +71,8 @@ public interface Engine {
      */
     List<Order> getOrderByActor(String actor);
 
+    List<Order> getOrderByTypeAndActor(String actor,String type);
+
     /**
      * 获取用户当前任务
      * @param actor 参与者

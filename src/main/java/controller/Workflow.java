@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static util.ToFrontEnd.getSubMap;
+
 /**
  * DATE:2015/3/8
  * TIME:19:14
@@ -135,6 +137,11 @@ public class Workflow {
         args.remove("WF_User");
         String taskId = (String) args.get("WF_Task");
         args.remove("WF_Task");
+        for(String key:args.keySet()){
+            if(args.get(key).equals("")){
+                args.remove(key);
+            }
+        }
         if (args.containsKey("actors")) {
             List<Map<String, Object>> actors = (List<Map<String, Object>>) args.get("actors");
             String as = "";
@@ -172,36 +179,32 @@ public class Workflow {
         return engine.getHisTaskByActor(user);
     }
 
-    @GET
-    @Path("/{user}/order/major")
-    @Produces("application/json;charset=UTF-8")
-    public List<Order> getMajorOrder(@PathParam("user")String user){
-        return engine.getOrderByActor(user);
-    }
 
     @GET
-    @Path("/{user}/order/others")
+    @Path("/order/{user}/{type}/{member}")
     @Produces("application/json;charset=UTF-8")
-    public List<Order> getOtherOrder(@PathParam("user")String user){
-        List<OrderActor> list = orderActorDao.getOrderByActorAndPole(user, 0);
+    public Map getOrder(@PathParam("user")String user,
+                              @PathParam("type")String type,
+                              @PathParam("member")String member,
+                              @QueryParam("limit")Integer limit,
+                              @QueryParam("offset")Integer offset){
+        Integer role = null;
+        if(member.equals("1st")){
+            role = 1;
+        }else if(member.equals("2nd")){
+            role = 0;
+        }
+        if(type.equals("all")){
+            type = null;
+        }
+        List<OrderActor> list = orderActorDao.getByAll(user, type, role);
         List<Order> ans = new ArrayList<Order>();
         for(OrderActor u:list){
             ans.add(engine.getOrder(u.getOrder()));
         }
-        return ans;
+        return getSubMap(ans,limit,offset);
     }
 
-    @GET
-    @Path("/{user}/order/all")
-    @Produces("application/json;charset=UTF-8")
-    public List<Order> getAllOrder(@PathParam("user")String user){
-        List<OrderActor> list = orderActorDao.getByActor(user);
-        List<Order> ans = new ArrayList<Order>();
-        for(OrderActor u:list){
-            ans.add(engine.getOrder(u.getOrder()));
-        }
-        return ans;
-    }
 
     @GET
     @Path("/ord{order}/task")

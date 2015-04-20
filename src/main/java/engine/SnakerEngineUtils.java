@@ -75,13 +75,30 @@ public class SnakerEngineUtils implements Engine {
     }
 
     @Override
+    public List<Order> getOrderByTypeAndActor(String actor, String type) {
+        return null;
+    }
+
+    @Override
     public List<HistoryTask> getHisTaskByActor(String actor) {
         return snakerEngine.query().getHistoryTasks(new QueryFilter().setOperator(actor));
     }
 
     @Override
     public Order startInstanceById(String processId,String operator,Map<String ,Object> args){
-        return  snakerEngine.startInstanceById(processId, operator, args);
+        Order ord =   snakerEngine.startInstanceById(processId, operator, args);
+        String order = ord.getId();
+            if(!orderActorDao.areTheyAlreadyIn(order,operator)){
+                String type = (String)args.get("WF_Type");
+                String col = (String)args.get("WF_Col");
+                orderActorDao.save(order,operator,1,type);
+                Map<String,Object> arg = new HashMap<String,Object>();
+                args.put("WF_Type",type);
+                args.put("WF_Col",col);
+                args.put("Status","Blank");
+                snakerEngine.order().addVariable(order,args);
+            }
+        return ord;
     }
 
     @Override

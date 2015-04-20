@@ -19,7 +19,8 @@ public class Start implements SnakerInterceptor {
 
     @Override
     public void intercept(Execution execution) {
-        BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/application*.xml");
+        BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/applicationContext.xml",
+        "classpath:/applicationContext-snaker.xml");
         OrderActorDao orderActorDao =(OrderActorDao) factory.getBean("orderActorDao");
 //        SnakerEngine engine = factory.getBean("snakerEngine");
         String actor = execution.getOperator();
