@@ -137,11 +137,6 @@ public class Workflow {
         args.remove("WF_User");
         String taskId = (String) args.get("WF_Task");
         args.remove("WF_Task");
-        for(String key:args.keySet()){
-            if(args.get(key).equals("")){
-                args.remove(key);
-            }
-        }
         if (args.containsKey("actors")) {
             List<Map<String, Object>> actors = (List<Map<String, Object>>) args.get("actors");
             String as = "";
