@@ -1,29 +1,139 @@
 package entity;
 
+import javax.persistence.*;
+import java.util.Collection;
+
 /**
- * DATE:2015/3/13
- * TIME:2:23
- * Created by guofan on 2015/3/13
+ * Created by guofan on 2015/5/6.
  */
+@Entity
 public class Paper {
-    private String paperId;
-    private String paperName;
-    private Base baseByUnit;
+    private String id;
+    private String name;
+    private String colType;
+    private String vol;
+    private String iss;
+    private String bgPage;
+    private String pubDate;
+    private Byte paperType;
+    private Integer score;
+    private Integer numWord;
+    private String memo;
+    private Collection<Data> datasById;
+    private Confer conferByConferId;
+    private Mag magByMagId;
+    private Newspaper newspaperByNewsId;
+    private BaseInfo baseInfoByUnitId;
+    private Collection<StaRef> staRefsById;
 
-    public String getPaperId() {
-        return paperId;
+    @Id
+    @Column(name = "id")
+    public String getId() {
+        return id;
     }
 
-    public void setPaperId(String paperId) {
-        this.paperId = paperId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getPaperName() {
-        return paperName;
+    @Basic
+    @Column(name = "name")
+    public String getName() {
+        return name;
     }
 
-    public void setPaperName(String paperName) {
-        this.paperName = paperName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Basic
+    @Column(name = "col_type")
+    public String getColType() {
+        return colType;
+    }
+
+    public void setColType(String colType) {
+        this.colType = colType;
+    }
+
+    @Basic
+    @Column(name = "vol")
+    public String getVol() {
+        return vol;
+    }
+
+    public void setVol(String vol) {
+        this.vol = vol;
+    }
+
+    @Basic
+    @Column(name = "iss")
+    public String getIss() {
+        return iss;
+    }
+
+    public void setIss(String iss) {
+        this.iss = iss;
+    }
+
+    @Basic
+    @Column(name = "bg_page")
+    public String getBgPage() {
+        return bgPage;
+    }
+
+    public void setBgPage(String bgPage) {
+        this.bgPage = bgPage;
+    }
+
+    @Basic
+    @Column(name = "pub_date")
+    public String getPubDate() {
+        return pubDate;
+    }
+
+    public void setPubDate(String pubDate) {
+        this.pubDate = pubDate;
+    }
+
+    @Basic
+    @Column(name = "paper_type")
+    public Byte getPaperType() {
+        return paperType;
+    }
+
+    public void setPaperType(Byte paperType) {
+        this.paperType = paperType;
+    }
+
+    @Basic
+    @Column(name = "score")
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    @Basic
+    @Column(name = "num_word")
+    public Integer getNumWord() {
+        return numWord;
+    }
+
+    public void setNumWord(Integer numWord) {
+        this.numWord = numWord;
+    }
+
+    @Basic
+    @Column(name = "memo")
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 
     @Override
@@ -33,22 +143,92 @@ public class Paper {
 
         Paper paper = (Paper) o;
 
-        return !(paperId != null ? !paperId.equals(paper.paperId) : paper.paperId != null) && !(paperName != null ? !paperName.equals(paper.paperName) : paper.paperName != null);
+        if (id != null ? !id.equals(paper.id) : paper.id != null) return false;
+        if (name != null ? !name.equals(paper.name) : paper.name != null) return false;
+        if (colType != null ? !colType.equals(paper.colType) : paper.colType != null) return false;
+        if (vol != null ? !vol.equals(paper.vol) : paper.vol != null) return false;
+        if (iss != null ? !iss.equals(paper.iss) : paper.iss != null) return false;
+        if (bgPage != null ? !bgPage.equals(paper.bgPage) : paper.bgPage != null) return false;
+        if (pubDate != null ? !pubDate.equals(paper.pubDate) : paper.pubDate != null) return false;
+        if (paperType != null ? !paperType.equals(paper.paperType) : paper.paperType != null) return false;
+        if (score != null ? !score.equals(paper.score) : paper.score != null) return false;
+        if (numWord != null ? !numWord.equals(paper.numWord) : paper.numWord != null) return false;
+        if (memo != null ? !memo.equals(paper.memo) : paper.memo != null) return false;
 
+        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = paperId != null ? paperId.hashCode() : 0;
-        result = 31 * result + (paperName != null ? paperName.hashCode() : 0);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (colType != null ? colType.hashCode() : 0);
+        result = 31 * result + (vol != null ? vol.hashCode() : 0);
+        result = 31 * result + (iss != null ? iss.hashCode() : 0);
+        result = 31 * result + (bgPage != null ? bgPage.hashCode() : 0);
+        result = 31 * result + (pubDate != null ? pubDate.hashCode() : 0);
+        result = 31 * result + (paperType != null ? paperType.hashCode() : 0);
+        result = 31 * result + (score != null ? score.hashCode() : 0);
+        result = 31 * result + (numWord != null ? numWord.hashCode() : 0);
+        result = 31 * result + (memo != null ? memo.hashCode() : 0);
         return result;
     }
 
-    public Base getBaseByUnit() {
-        return baseByUnit;
+    @OneToMany(mappedBy = "paperByPaperId")
+    public Collection<Data> getDatasById() {
+        return datasById;
     }
 
-    public void setBaseByUnit(Base baseByUnit) {
-        this.baseByUnit = baseByUnit;
+    public void setDatasById(Collection<Data> datasById) {
+        this.datasById = datasById;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "confer_id", referencedColumnName = "id")
+    public Confer getConferByConferId() {
+        return conferByConferId;
+    }
+
+    public void setConferByConferId(Confer conferByConferId) {
+        this.conferByConferId = conferByConferId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "mag_id", referencedColumnName = "id")
+    public Mag getMagByMagId() {
+        return magByMagId;
+    }
+
+    public void setMagByMagId(Mag magByMagId) {
+        this.magByMagId = magByMagId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "news_id", referencedColumnName = "id")
+    public Newspaper getNewspaperByNewsId() {
+        return newspaperByNewsId;
+    }
+
+    public void setNewspaperByNewsId(Newspaper newspaperByNewsId) {
+        this.newspaperByNewsId = newspaperByNewsId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "unit_id", referencedColumnName = "id")
+    public BaseInfo getBaseInfoByUnitId() {
+        return baseInfoByUnitId;
+    }
+
+    public void setBaseInfoByUnitId(BaseInfo baseInfoByUnitId) {
+        this.baseInfoByUnitId = baseInfoByUnitId;
+    }
+
+    @OneToMany(mappedBy = "paperByPaperId")
+    public Collection<StaRef> getStaRefsById() {
+        return staRefsById;
+    }
+
+    public void setStaRefsById(Collection<StaRef> staRefsById) {
+        this.staRefsById = staRefsById;
     }
 }

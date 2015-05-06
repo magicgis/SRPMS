@@ -1,40 +1,52 @@
 package entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Collection;
 
 /**
- * DATE:2015/3/13
- * TIME:2:23
- * Created by guofan on 2015/3/13
+ * Created by guofan on 2015/5/6.
  */
+@Entity
 public class Book {
-    private String bkId;
-    private String bkName;
+    private String id;
+    private String name;
     private Timestamp pubDate;
     private String publisher;
     private String isbn;
     private String scYr;
-    private String bkType;
-    private BigDecimal bkWdNum;
-    private Base baseByDeptId;
+    private String type;
+    private BigDecimal wdNum;
+    private String awdType;
+    private String awdRank;
+    private String memo;
+    private BaseInfo baseInfoByDeptId;
+    private Collection<BookSta> bookStasById;
+    private Collection<Data> datasById;
 
-    public String getBkId() {
-        return bkId;
+    @Id
+    @Column(name = "id")
+    public String getId() {
+        return id;
     }
 
-    public void setBkId(String bkId) {
-        this.bkId = bkId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getBkName() {
-        return bkName;
+    @Basic
+    @Column(name = "name")
+    public String getName() {
+        return name;
     }
 
-    public void setBkName(String bkName) {
-        this.bkName = bkName;
+    public void setName(String name) {
+        this.name = name;
     }
 
+    @Basic
+    @Column(name = "pub_date")
     public Timestamp getPubDate() {
         return pubDate;
     }
@@ -43,6 +55,8 @@ public class Book {
         this.pubDate = pubDate;
     }
 
+    @Basic
+    @Column(name = "publisher")
     public String getPublisher() {
         return publisher;
     }
@@ -51,6 +65,8 @@ public class Book {
         this.publisher = publisher;
     }
 
+    @Basic
+    @Column(name = "isbn")
     public String getIsbn() {
         return isbn;
     }
@@ -59,6 +75,8 @@ public class Book {
         this.isbn = isbn;
     }
 
+    @Basic
+    @Column(name = "sc_yr")
     public String getScYr() {
         return scYr;
     }
@@ -67,20 +85,54 @@ public class Book {
         this.scYr = scYr;
     }
 
-    public String getBkType() {
-        return bkType;
+    @Basic
+    @Column(name = "type")
+    public String getType() {
+        return type;
     }
 
-    public void setBkType(String bkType) {
-        this.bkType = bkType;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public BigDecimal getBkWdNum() {
-        return bkWdNum;
+    @Basic
+    @Column(name = "wd_num")
+    public BigDecimal getWdNum() {
+        return wdNum;
     }
 
-    public void setBkWdNum(BigDecimal bkWdNum) {
-        this.bkWdNum = bkWdNum;
+    public void setWdNum(BigDecimal wdNum) {
+        this.wdNum = wdNum;
+    }
+
+    @Basic
+    @Column(name = "awd_type")
+    public String getAwdType() {
+        return awdType;
+    }
+
+    public void setAwdType(String awdType) {
+        this.awdType = awdType;
+    }
+
+    @Basic
+    @Column(name = "awd_rank")
+    public String getAwdRank() {
+        return awdRank;
+    }
+
+    public void setAwdRank(String awdRank) {
+        this.awdRank = awdRank;
+    }
+
+    @Basic
+    @Column(name = "memo")
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 
     @Override
@@ -90,28 +142,62 @@ public class Book {
 
         Book book = (Book) o;
 
-        return !(bkId != null ? !bkId.equals(book.bkId) : book.bkId != null) && !(bkName != null ? !bkName.equals(book.bkName) : book.bkName != null) && !(bkType != null ? !bkType.equals(book.bkType) : book.bkType != null) && !(bkWdNum != null ? !bkWdNum.equals(book.bkWdNum) : book.bkWdNum != null) && !(isbn != null ? !isbn.equals(book.isbn) : book.isbn != null) && !(pubDate != null ? !pubDate.equals(book.pubDate) : book.pubDate != null) && !(publisher != null ? !publisher.equals(book.publisher) : book.publisher != null) && !(scYr != null ? !scYr.equals(book.scYr) : book.scYr != null);
+        if (id != null ? !id.equals(book.id) : book.id != null) return false;
+        if (name != null ? !name.equals(book.name) : book.name != null) return false;
+        if (pubDate != null ? !pubDate.equals(book.pubDate) : book.pubDate != null) return false;
+        if (publisher != null ? !publisher.equals(book.publisher) : book.publisher != null) return false;
+        if (isbn != null ? !isbn.equals(book.isbn) : book.isbn != null) return false;
+        if (scYr != null ? !scYr.equals(book.scYr) : book.scYr != null) return false;
+        if (type != null ? !type.equals(book.type) : book.type != null) return false;
+        if (wdNum != null ? !wdNum.equals(book.wdNum) : book.wdNum != null) return false;
+        if (awdType != null ? !awdType.equals(book.awdType) : book.awdType != null) return false;
+        if (awdRank != null ? !awdRank.equals(book.awdRank) : book.awdRank != null) return false;
+        if (memo != null ? !memo.equals(book.memo) : book.memo != null) return false;
 
+        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = bkId != null ? bkId.hashCode() : 0;
-        result = 31 * result + (bkName != null ? bkName.hashCode() : 0);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (pubDate != null ? pubDate.hashCode() : 0);
         result = 31 * result + (publisher != null ? publisher.hashCode() : 0);
         result = 31 * result + (isbn != null ? isbn.hashCode() : 0);
         result = 31 * result + (scYr != null ? scYr.hashCode() : 0);
-        result = 31 * result + (bkType != null ? bkType.hashCode() : 0);
-        result = 31 * result + (bkWdNum != null ? bkWdNum.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (wdNum != null ? wdNum.hashCode() : 0);
+        result = 31 * result + (awdType != null ? awdType.hashCode() : 0);
+        result = 31 * result + (awdRank != null ? awdRank.hashCode() : 0);
+        result = 31 * result + (memo != null ? memo.hashCode() : 0);
         return result;
     }
 
-    public Base getBaseByDeptId() {
-        return baseByDeptId;
+    @ManyToOne
+    @JoinColumn(name = "dept_id", referencedColumnName = "id")
+    public BaseInfo getBaseInfoByDeptId() {
+        return baseInfoByDeptId;
     }
 
-    public void setBaseByDeptId(Base baseByDeptId) {
-        this.baseByDeptId = baseByDeptId;
+    public void setBaseInfoByDeptId(BaseInfo baseInfoByDeptId) {
+        this.baseInfoByDeptId = baseInfoByDeptId;
+    }
+
+    @OneToMany(mappedBy = "bookByBkId")
+    public Collection<BookSta> getBookStasById() {
+        return bookStasById;
+    }
+
+    public void setBookStasById(Collection<BookSta> bookStasById) {
+        this.bookStasById = bookStasById;
+    }
+
+    @OneToMany(mappedBy = "bookByBkId")
+    public Collection<Data> getDatasById() {
+        return datasById;
+    }
+
+    public void setDatasById(Collection<Data> datasById) {
+        this.datasById = datasById;
     }
 }

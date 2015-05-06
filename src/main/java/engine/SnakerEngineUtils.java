@@ -38,53 +38,43 @@ public class SnakerEngineUtils implements Engine {
         return snakerEngine;
     }
 
-    @Override
     public List<Process> getAllProcess() {
         return snakerEngine.process().getProcesss(new QueryFilter());
     }
 
-    @Override
     public Process getProcessByName(String name) {
         return snakerEngine.process().getProcesss(new QueryFilter().setName(name)).get(0);
     }
 
-    @Override
     public List<Task> getTaskByOrder(String orderId) {
         return snakerEngine.query().getActiveTasks(new QueryFilter().setOrderId(orderId));
     }
 
-    @Override
     public List<HistoryTask> getHisTaskByOrder(String orderId) {
         return snakerEngine.query().getHistoryTasks(new QueryFilter().setOrderId(orderId));
     }
 
-    @Override
     public List<OrderActor> getAllOrderByActor(String actor) {
         return orderActorDao.getByActor(actor);
     }
 
-    @Override
     public List<Order> getOrderByActor(String actor) {
         return snakerEngine.query().getActiveOrders(new QueryFilter().setOperator(actor));
     }
 
 
-    @Override
     public List<Task> getTaskByActor(String actor) {
         return snakerEngine.query().getActiveTasks(new QueryFilter().setOperator(actor));
     }
 
-    @Override
     public List<Order> getOrderByTypeAndActor(String actor, String type) {
         return null;
     }
 
-    @Override
     public List<HistoryTask> getHisTaskByActor(String actor) {
         return snakerEngine.query().getHistoryTasks(new QueryFilter().setOperator(actor));
     }
 
-    @Override
     public Order startInstanceById(String processId,String operator,Map<String ,Object> args){
         Order ord =   snakerEngine.startInstanceById(processId, operator, args);
         String order = ord.getId();
@@ -101,7 +91,6 @@ public class SnakerEngineUtils implements Engine {
         return ord;
     }
 
-    @Override
     public List<Task> execute(String taskId, String operator, Map<String, Object> args) {
         /*获取当前任务*/
         Task task = snakerEngine.query().getTask(taskId);
@@ -169,12 +158,10 @@ public class SnakerEngineUtils implements Engine {
         return tasks;
     }
 
-    @Override
     public List<Task> executeAndJump(String taskId, String operator, Map<String, Object > args, String nodeName){
             return snakerEngine.executeAndJumpTask(taskId, operator, args, nodeName);
     }
 
-    @Override
     public List<Task> refuse(String taskId, String operator, Map<String, Object> args) {
         return snakerEngine.executeAndJumpTask(taskId, operator, args, null);
     }
@@ -226,30 +213,25 @@ public class SnakerEngineUtils implements Engine {
         return ans;
     }
 
-    @Override
     public void stopOrder(String orderId) {
         snakerEngine.order().cascadeRemove(orderId);
         orderActorDao.deleteAllOrder(orderId);
 //        snakerEngine.order().cascadeRemove();
     }
 
-    @Override
     public List<Object> getChildrenTask(String TaskId) {
 //        TODO
         return null;
     }
 
-    @Override
     public Order getOrder(String id) {
         return snakerEngine.query().getOrder(id);
     }
 
-    @Override
     public Task getTask(String id) {
         return snakerEngine.query().getTask(id);
     }
 
-    @Override
     public List<Task> getConfirmTask(String actor) {
         List<Task> allTask = getTaskByActor(actor);
         List<Task> ans = new ArrayList<Task>();

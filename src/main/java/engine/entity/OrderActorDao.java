@@ -1,7 +1,5 @@
 package engine.entity;
 
-import dao.imp.BaseDao;
-import engine.entity.OrderActor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

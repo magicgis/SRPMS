@@ -1,5 +1,6 @@
 package entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
@@ -7,23 +8,29 @@ import java.math.BigDecimal;
  * TIME:2:23
  * Created by guofan on 2015/3/13
  */
-public class Booksta {
-    private String idbs;
+@Entity
+@Table(name = "book_sta", schema = "", catalog = "srpms")
+public class BookSta {
+    private String id;
     private BigDecimal peoWdNum;
-    private String bkcbRole;
-    private Byte isTx;
-    private BigDecimal bkScore;
+    private String cbRole;
+    private Byte istx;
+    private BigDecimal grScore;
     private Book bookByBkId;
     private Staff staffByStaId;
 
-    public String getIdbs() {
-        return idbs;
+    @Id
+    @Column(name = "id")
+    public String getId() {
+        return id;
     }
 
-    public void setIdbs(String idbs) {
-        this.idbs = idbs;
+    public void setId(String id) {
+        this.id = id;
     }
 
+    @Basic
+    @Column(name = "peo_wd_num")
     public BigDecimal getPeoWdNum() {
         return peoWdNum;
     }
@@ -32,28 +39,34 @@ public class Booksta {
         this.peoWdNum = peoWdNum;
     }
 
-    public String getBkcbRole() {
-        return bkcbRole;
+    @Basic
+    @Column(name = "cb_role")
+    public String getCbRole() {
+        return cbRole;
     }
 
-    public void setBkcbRole(String bkcbRole) {
-        this.bkcbRole = bkcbRole;
+    public void setCbRole(String cbRole) {
+        this.cbRole = cbRole;
     }
 
-    public Byte getIsTx() {
-        return isTx;
+    @Basic
+    @Column(name = "istx")
+    public Byte getIstx() {
+        return istx;
     }
 
-    public void setIsTx(Byte isTx) {
-        this.isTx = isTx;
+    public void setIstx(Byte istx) {
+        this.istx = istx;
     }
 
-    public BigDecimal getBkScore() {
-        return bkScore;
+    @Basic
+    @Column(name = "gr_score")
+    public BigDecimal getGrScore() {
+        return grScore;
     }
 
-    public void setBkScore(BigDecimal bkScore) {
-        this.bkScore = bkScore;
+    public void setGrScore(BigDecimal grScore) {
+        this.grScore = grScore;
     }
 
     @Override
@@ -61,22 +74,29 @@ public class Booksta {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Booksta booksta = (Booksta) o;
+        BookSta bookSta = (BookSta) o;
 
-        return !(bkScore != null ? !bkScore.equals(booksta.bkScore) : booksta.bkScore != null) && !(bkcbRole != null ? !bkcbRole.equals(booksta.bkcbRole) : booksta.bkcbRole != null) && !(idbs != null ? !idbs.equals(booksta.idbs) : booksta.idbs != null) && !(isTx != null ? !isTx.equals(booksta.isTx) : booksta.isTx != null) && !(peoWdNum != null ? !peoWdNum.equals(booksta.peoWdNum) : booksta.peoWdNum != null);
+        if (id != null ? !id.equals(bookSta.id) : bookSta.id != null) return false;
+        if (peoWdNum != null ? !peoWdNum.equals(bookSta.peoWdNum) : bookSta.peoWdNum != null) return false;
+        if (cbRole != null ? !cbRole.equals(bookSta.cbRole) : bookSta.cbRole != null) return false;
+        if (istx != null ? !istx.equals(bookSta.istx) : bookSta.istx != null) return false;
+        if (grScore != null ? !grScore.equals(bookSta.grScore) : bookSta.grScore != null) return false;
 
+        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = idbs != null ? idbs.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (peoWdNum != null ? peoWdNum.hashCode() : 0);
-        result = 31 * result + (bkcbRole != null ? bkcbRole.hashCode() : 0);
-        result = 31 * result + (isTx != null ? isTx.hashCode() : 0);
-        result = 31 * result + (bkScore != null ? bkScore.hashCode() : 0);
+        result = 31 * result + (cbRole != null ? cbRole.hashCode() : 0);
+        result = 31 * result + (istx != null ? istx.hashCode() : 0);
+        result = 31 * result + (grScore != null ? grScore.hashCode() : 0);
         return result;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "bk_id", referencedColumnName = "id")
     public Book getBookByBkId() {
         return bookByBkId;
     }
@@ -85,6 +105,8 @@ public class Booksta {
         this.bookByBkId = bookByBkId;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "sta_id", referencedColumnName = "id")
     public Staff getStaffByStaId() {
         return staffByStaId;
     }

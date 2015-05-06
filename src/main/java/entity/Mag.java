@@ -1,44 +1,57 @@
 package entity;
 
+import javax.persistence.*;
+import java.util.Collection;
+
 /**
- * DATE:2015/3/13
- * TIME:2:23
- * Created by guofan on 2015/3/13
+ * Created by guofan on 2015/5/6.
  */
+@Entity
 public class Mag {
-    private String magId;
-    private String magName;
-    private String magSNm;
+    private String id;
+    private String name;
+    private String snm;
     private String issn;
     private String cn;
-    private String magSub;
-    private String fq;
-    private Base baseByGradeId;
+    private String sub;
+    private String type;
+    private String status;
+    private String memo;
+    private BaseInfo baseInfoByGradeId;
+    private Collection<Paper> papersById;
 
-    public String getMagId() {
-        return magId;
+    @Id
+    @Column(name = "id")
+    public String getId() {
+        return id;
     }
 
-    public void setMagId(String magId) {
-        this.magId = magId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getMagName() {
-        return magName;
+    @Basic
+    @Column(name = "name")
+    public String getName() {
+        return name;
     }
 
-    public void setMagName(String magName) {
-        this.magName = magName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getMagSNm() {
-        return magSNm;
+    @Basic
+    @Column(name = "snm")
+    public String getSnm() {
+        return snm;
     }
 
-    public void setMagSNm(String magSNm) {
-        this.magSNm = magSNm;
+    public void setSnm(String snm) {
+        this.snm = snm;
     }
 
+    @Basic
+    @Column(name = "issn")
     public String getIssn() {
         return issn;
     }
@@ -47,6 +60,8 @@ public class Mag {
         this.issn = issn;
     }
 
+    @Basic
+    @Column(name = "cn")
     public String getCn() {
         return cn;
     }
@@ -55,20 +70,44 @@ public class Mag {
         this.cn = cn;
     }
 
-    public String getMagSub() {
-        return magSub;
+    @Basic
+    @Column(name = "sub")
+    public String getSub() {
+        return sub;
     }
 
-    public void setMagSub(String magSub) {
-        this.magSub = magSub;
+    public void setSub(String sub) {
+        this.sub = sub;
     }
 
-    public String getFq() {
-        return fq;
+    @Basic
+    @Column(name = "type")
+    public String getType() {
+        return type;
     }
 
-    public void setFq(String fq) {
-        this.fq = fq;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @Basic
+    @Column(name = "status")
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Basic
+    @Column(name = "memo")
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 
     @Override
@@ -78,27 +117,49 @@ public class Mag {
 
         Mag mag = (Mag) o;
 
-        return !(cn != null ? !cn.equals(mag.cn) : mag.cn != null) && !(fq != null ? !fq.equals(mag.fq) : mag.fq != null) && !(issn != null ? !issn.equals(mag.issn) : mag.issn != null) && !(magId != null ? !magId.equals(mag.magId) : mag.magId != null) && !(magName != null ? !magName.equals(mag.magName) : mag.magName != null) && !(magSNm != null ? !magSNm.equals(mag.magSNm) : mag.magSNm != null) && !(magSub != null ? !magSub.equals(mag.magSub) : mag.magSub != null);
+        if (id != null ? !id.equals(mag.id) : mag.id != null) return false;
+        if (name != null ? !name.equals(mag.name) : mag.name != null) return false;
+        if (snm != null ? !snm.equals(mag.snm) : mag.snm != null) return false;
+        if (issn != null ? !issn.equals(mag.issn) : mag.issn != null) return false;
+        if (cn != null ? !cn.equals(mag.cn) : mag.cn != null) return false;
+        if (sub != null ? !sub.equals(mag.sub) : mag.sub != null) return false;
+        if (type != null ? !type.equals(mag.type) : mag.type != null) return false;
+        if (status != null ? !status.equals(mag.status) : mag.status != null) return false;
+        if (memo != null ? !memo.equals(mag.memo) : mag.memo != null) return false;
 
+        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = magId != null ? magId.hashCode() : 0;
-        result = 31 * result + (magName != null ? magName.hashCode() : 0);
-        result = 31 * result + (magSNm != null ? magSNm.hashCode() : 0);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (snm != null ? snm.hashCode() : 0);
         result = 31 * result + (issn != null ? issn.hashCode() : 0);
         result = 31 * result + (cn != null ? cn.hashCode() : 0);
-        result = 31 * result + (magSub != null ? magSub.hashCode() : 0);
-        result = 31 * result + (fq != null ? fq.hashCode() : 0);
+        result = 31 * result + (sub != null ? sub.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (memo != null ? memo.hashCode() : 0);
         return result;
     }
 
-    public Base getBaseByGradeId() {
-        return baseByGradeId;
+    @ManyToOne
+    @JoinColumn(name = "grade_id", referencedColumnName = "id")
+    public BaseInfo getBaseInfoByGradeId() {
+        return baseInfoByGradeId;
     }
 
-    public void setBaseByGradeId(Base baseByGradeId) {
-        this.baseByGradeId = baseByGradeId;
+    public void setBaseInfoByGradeId(BaseInfo baseInfoByGradeId) {
+        this.baseInfoByGradeId = baseInfoByGradeId;
+    }
+
+    @OneToMany(mappedBy = "magByMagId")
+    public Collection<Paper> getPapersById() {
+        return papersById;
+    }
+
+    public void setPapersById(Collection<Paper> papersById) {
+        this.papersById = papersById;
     }
 }

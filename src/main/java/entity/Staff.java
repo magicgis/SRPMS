@@ -1,45 +1,55 @@
 package entity;
 
+import javax.persistence.*;
+
 /**
- * DATE:2015/3/13
- * TIME:2:23
- * Created by guofan on 2015/3/13
+ * Created by guofan on 2015/5/6.
  */
+@Entity
 public class Staff {
-    private String staId;
-    private String staName;
-    private String iDcard;
+    private String id;
+    private String name;
+    private String idCard;
     private String edu;
     private String position;
     private String degree;
-    private String staSNm;
-    private Base baseByDeptId;
-    private Base baseByRankId;
+    private String staSnm;
+    private String memo;
+    private BaseInfo baseInfoByDeptId;
+    private BaseInfo baseInfoByRankId;
 
-    public String getStaId() {
-        return staId;
+    @Id
+    @Column(name = "id")
+    public String getId() {
+        return id;
     }
 
-    public void setStaId(String staId) {
-        this.staId = staId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getStaName() {
-        return staName;
+    @Basic
+    @Column(name = "name")
+    public String getName() {
+        return name;
     }
 
-    public void setStaName(String staName) {
-        this.staName = staName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getiDcard() {
-        return iDcard;
+    @Basic
+    @Column(name = "id_card")
+    public String getIdCard() {
+        return idCard;
     }
 
-    public void setiDcard(String iDcard) {
-        this.iDcard = iDcard;
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
+    @Basic
+    @Column(name = "edu")
     public String getEdu() {
         return edu;
     }
@@ -48,6 +58,8 @@ public class Staff {
         this.edu = edu;
     }
 
+    @Basic
+    @Column(name = "position")
     public String getPosition() {
         return position;
     }
@@ -56,6 +68,8 @@ public class Staff {
         this.position = position;
     }
 
+    @Basic
+    @Column(name = "degree")
     public String getDegree() {
         return degree;
     }
@@ -64,12 +78,24 @@ public class Staff {
         this.degree = degree;
     }
 
-    public String getStaSNm() {
-        return staSNm;
+    @Basic
+    @Column(name = "sta_snm")
+    public String getStaSnm() {
+        return staSnm;
     }
 
-    public void setStaSNm(String staSNm) {
-        this.staSNm = staSNm;
+    public void setStaSnm(String staSnm) {
+        this.staSnm = staSnm;
+    }
+
+    @Basic
+    @Column(name = "memo")
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 
     @Override
@@ -79,35 +105,48 @@ public class Staff {
 
         Staff staff = (Staff) o;
 
-        return !(degree != null ? !degree.equals(staff.degree) : staff.degree != null) && !(edu != null ? !edu.equals(staff.edu) : staff.edu != null) && !(iDcard != null ? !iDcard.equals(staff.iDcard) : staff.iDcard != null) && !(position != null ? !position.equals(staff.position) : staff.position != null) && !(staId != null ? !staId.equals(staff.staId) : staff.staId != null) && !(staName != null ? !staName.equals(staff.staName) : staff.staName != null) && !(staSNm != null ? !staSNm.equals(staff.staSNm) : staff.staSNm != null);
+        if (id != null ? !id.equals(staff.id) : staff.id != null) return false;
+        if (name != null ? !name.equals(staff.name) : staff.name != null) return false;
+        if (idCard != null ? !idCard.equals(staff.idCard) : staff.idCard != null) return false;
+        if (edu != null ? !edu.equals(staff.edu) : staff.edu != null) return false;
+        if (position != null ? !position.equals(staff.position) : staff.position != null) return false;
+        if (degree != null ? !degree.equals(staff.degree) : staff.degree != null) return false;
+        if (staSnm != null ? !staSnm.equals(staff.staSnm) : staff.staSnm != null) return false;
+        if (memo != null ? !memo.equals(staff.memo) : staff.memo != null) return false;
 
+        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = staId != null ? staId.hashCode() : 0;
-        result = 31 * result + (staName != null ? staName.hashCode() : 0);
-        result = 31 * result + (iDcard != null ? iDcard.hashCode() : 0);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (idCard != null ? idCard.hashCode() : 0);
         result = 31 * result + (edu != null ? edu.hashCode() : 0);
         result = 31 * result + (position != null ? position.hashCode() : 0);
         result = 31 * result + (degree != null ? degree.hashCode() : 0);
-        result = 31 * result + (staSNm != null ? staSNm.hashCode() : 0);
+        result = 31 * result + (staSnm != null ? staSnm.hashCode() : 0);
+        result = 31 * result + (memo != null ? memo.hashCode() : 0);
         return result;
     }
 
-    public Base getBaseByDeptId() {
-        return baseByDeptId;
+    @ManyToOne
+    @JoinColumn(name = "dept_id", referencedColumnName = "id")
+    public BaseInfo getBaseInfoByDeptId() {
+        return baseInfoByDeptId;
     }
 
-    public void setBaseByDeptId(Base baseByDeptId) {
-        this.baseByDeptId = baseByDeptId;
+    public void setBaseInfoByDeptId(BaseInfo baseInfoByDeptId) {
+        this.baseInfoByDeptId = baseInfoByDeptId;
     }
 
-    public Base getBaseByRankId() {
-        return baseByRankId;
+    @ManyToOne
+    @JoinColumn(name = "rank_id", referencedColumnName = "id")
+    public BaseInfo getBaseInfoByRankId() {
+        return baseInfoByRankId;
     }
 
-    public void setBaseByRankId(Base baseByRankId) {
-        this.baseByRankId = baseByRankId;
+    public void setBaseInfoByRankId(BaseInfo baseInfoByRankId) {
+        this.baseInfoByRankId = baseInfoByRankId;
     }
 }

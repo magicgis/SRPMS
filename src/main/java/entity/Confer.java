@@ -1,57 +1,80 @@
 package entity;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 
 /**
- * DATE:2015/3/13
- * TIME:2:23
- * Created by guofan on 2015/3/13
+ * Created by guofan on 2015/5/6.
  */
+@Entity
 public class Confer {
-    private String conferId;
-    private String conferType;
-    private String conferNm;
-    private Timestamp conferTime;
-    private String conferAddr;
+    private String id;
+    private String type;
+    private String name;
+    private Timestamp time;
+    private String addr;
+    private String memo;
+    private Collection<Paper> papersById;
 
-    public String getConferId() {
-        return conferId;
+    @Id
+    @Column(name = "id")
+    public String getId() {
+        return id;
     }
 
-    public void setConferId(String conferId) {
-        this.conferId = conferId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getConferType() {
-        return conferType;
+    @Basic
+    @Column(name = "type")
+    public String getType() {
+        return type;
     }
 
-    public void setConferType(String conferType) {
-        this.conferType = conferType;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getConferNm() {
-        return conferNm;
+    @Basic
+    @Column(name = "name")
+    public String getName() {
+        return name;
     }
 
-    public void setConferNm(String conferNm) {
-        this.conferNm = conferNm;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Timestamp getConferTime() {
-        return conferTime;
+    @Basic
+    @Column(name = "time")
+    public Timestamp getTime() {
+        return time;
     }
 
-    public void setConferTime(Timestamp conferTime) {
-        this.conferTime = conferTime;
+    public void setTime(Timestamp time) {
+        this.time = time;
     }
 
-    public String getConferAddr() {
-        return conferAddr;
+    @Basic
+    @Column(name = "addr")
+    public String getAddr() {
+        return addr;
     }
 
-    public void setConferAddr(String conferAddr) {
-        this.conferAddr = conferAddr;
+    public void setAddr(String addr) {
+        this.addr = addr;
+    }
+
+    @Basic
+    @Column(name = "memo")
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 
     @Override
@@ -61,17 +84,33 @@ public class Confer {
 
         Confer confer = (Confer) o;
 
-        return !(conferAddr != null ? !conferAddr.equals(confer.conferAddr) : confer.conferAddr != null) && !(conferId != null ? !conferId.equals(confer.conferId) : confer.conferId != null) && !(conferNm != null ? !conferNm.equals(confer.conferNm) : confer.conferNm != null) && !(conferTime != null ? !conferTime.equals(confer.conferTime) : confer.conferTime != null) && !(conferType != null ? !conferType.equals(confer.conferType) : confer.conferType != null);
+        if (id != null ? !id.equals(confer.id) : confer.id != null) return false;
+        if (type != null ? !type.equals(confer.type) : confer.type != null) return false;
+        if (name != null ? !name.equals(confer.name) : confer.name != null) return false;
+        if (time != null ? !time.equals(confer.time) : confer.time != null) return false;
+        if (addr != null ? !addr.equals(confer.addr) : confer.addr != null) return false;
+        if (memo != null ? !memo.equals(confer.memo) : confer.memo != null) return false;
 
+        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = conferId != null ? conferId.hashCode() : 0;
-        result = 31 * result + (conferType != null ? conferType.hashCode() : 0);
-        result = 31 * result + (conferNm != null ? conferNm.hashCode() : 0);
-        result = 31 * result + (conferTime != null ? conferTime.hashCode() : 0);
-        result = 31 * result + (conferAddr != null ? conferAddr.hashCode() : 0);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (time != null ? time.hashCode() : 0);
+        result = 31 * result + (addr != null ? addr.hashCode() : 0);
+        result = 31 * result + (memo != null ? memo.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "conferByConferId")
+    public Collection<Paper> getPapersById() {
+        return papersById;
+    }
+
+    public void setPapersById(Collection<Paper> papersById) {
+        this.papersById = papersById;
     }
 }
