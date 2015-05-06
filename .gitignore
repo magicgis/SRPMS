@@ -1,7 +1,7 @@
 # Maven #
 target/
 
-# IDEA #
+# Intellij #
 .idea/
 *.iml
 
@@ -13,8 +13,12 @@ target/
 # Log #
 logs/
 *.log
-# 测试文件 #
+
+# Test #
 src/test/
+
+# Pthon #
+*.py
 
 # Database Setting #
 database.properties
