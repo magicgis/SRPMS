@@ -12,7 +12,7 @@ public class StaRef {
     private String id;
     private BigDecimal score;
     private String role;
-    private String tableName;
+    private String flag;
     private Achievement achievementByAchId;
     private Appar apparByApparId;
     private Food foodByFdId;
@@ -53,13 +53,13 @@ public class StaRef {
     }
 
     @Basic
-    @Column(name = "table_name")
-    public String getTableName() {
-        return tableName;
+    @Column(name = "flag")
+    public String getFlag() {
+        return flag;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
+    public void setFlag(String tableName) {
+        this.flag = tableName;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class StaRef {
         if (id != null ? !id.equals(staRef.id) : staRef.id != null) return false;
         if (score != null ? !score.equals(staRef.score) : staRef.score != null) return false;
         if (role != null ? !role.equals(staRef.role) : staRef.role != null) return false;
-        if (tableName != null ? !tableName.equals(staRef.tableName) : staRef.tableName != null) return false;
+        if (flag != null ? !flag.equals(staRef.flag) : staRef.flag != null) return false;
 
         return true;
     }
@@ -82,7 +82,7 @@ public class StaRef {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (score != null ? score.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
-        result = 31 * result + (tableName != null ? tableName.hashCode() : 0);
+        result = 31 * result + (flag != null ? flag.hashCode() : 0);
         return result;
     }
 

@@ -1,10 +1,9 @@
 package api;
 
-import entity.User;
+import entity.Staff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-import service.UserService;
-
+import service.StaffService;
 
 import javax.ws.rs.*;
 import java.util.HashMap;
@@ -14,23 +13,23 @@ import java.util.Map;
 import static util.ToFrontEnd.getSubMap;
 
 /**
- * Created by guofan on 2015/5/6.
+ * Created by guofan on 2015/5/7.
  */
-@Path("/user")
+@Path("/staff")
 @RestController
-public class UserApi {
+public class StaffApi {
     @Autowired
-    UserService userService;
+    StaffService staffService;
 
     /**
-     * 获取所有的帐号信息
+     * 所有员工信息（非User)
      *
-     * @param limit  每页数量
-     * @param offset 偏移值
-     * @param search 关键字
-     * @param sort   排序关键字
-     * @param ord    升序或者降序
-     * @return 所有帐号信息
+     * @param limit  每页数量（分页用）
+     * @param offset 偏移量（分页用）
+     * @param search 搜索关键字
+     * @param sort   排序
+     * @param ord    升序还是降序
+     * @return 所有员工信息
      */
     @GET
     @Path("/all")
@@ -40,13 +39,13 @@ public class UserApi {
                       @QueryParam("search") String search,
                       @QueryParam("sort") String sort,
                       @QueryParam("order") String ord) {
-        return getSubMap(userService.search(search, sort, ord), limit, offset);
+        return getSubMap(staffService.search(search, sort, ord), limit, offset);
     }
 
     /**
-     * 新增帐号
+     * 新增员工
      *
-     * @param args 新增的帐号信息
+     * @param args 新增员工json
      * @return TorF
      */
     @POST
@@ -56,34 +55,46 @@ public class UserApi {
         return false;//todo
     }
 
+
     /**
-     * 修改
+     * 修改员工信息
      *
-     * @param id
-     * @param args
-     * @return
+     * @param id   主键
+     * @param args 修改后的员工json
+     * @return TorF
      */
     @PUT
     @Path("/{id}")
     @Consumes("application/json;charset=UTF-8")
     public boolean update(@PathParam("id") String id, HashMap<String, Object> args) {
+        Staff temp = staffService.getById(id);
+
         return false;//todo
     }
 
+    /**
+     * 删除员工信息
+     *
+     * @param id 主键
+     * @return TorF
+     */
     @DELETE
     @Path("/{id}")
     @Consumes("application/json;charset=UTF-8")
     public boolean delete(@PathParam("id") String id) {
-        User temp = userService.getById(id);
-        temp.setStatus(0);
-        return userService.update(temp);
+        return false;//todo
     }
 
+    /**
+     * 获取员工信息
+     *
+     * @param id 主键
+     * @return 员工信息
+     */
     @GET
     @Path("/{id}")
     @Consumes("application/json;charset=UTF-8")
-    public User getById(@PathParam("id") String id) {
-        return userService.getById(id);
+    public Staff getById(@PathParam("id") String id) {
+        return staffService.getById(id);
     }
-
 }

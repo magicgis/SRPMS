@@ -11,7 +11,7 @@ public class User {
     private String email;
     private String pwd;
     private String privilege;
-    private String status;
+    private Integer status;
     private Staff staffByStaId;
 
     @Id
@@ -56,11 +56,11 @@ public class User {
 
     @Basic
     @Column(name = "status")
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

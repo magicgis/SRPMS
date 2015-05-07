@@ -24,5 +24,5 @@ public interface BaseService<T> {
 
     T getById(Serializable id);
 
-//    List<T> search(String keyword, String sort, String order);
+    List<T> search(String keyword, String sort, String order);
 }

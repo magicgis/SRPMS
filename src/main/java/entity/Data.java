@@ -9,6 +9,7 @@ import javax.persistence.*;
 public class Data {
     private String id;
     private String path;
+    private String flag;
     private Achievement achievementByAchId;
     private Appar apparByApparId;
     private Book bookByBkId;
@@ -35,6 +36,16 @@ public class Data {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    @Basic
+    @Column(name = "flag")
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 
     @Override

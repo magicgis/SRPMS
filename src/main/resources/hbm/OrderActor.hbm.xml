@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="engine.entity.OrderActor" table="ordactor" schema="" catalog="workflow">
+    <class name="engine.entity.OrderActor" table="ordactor" schema="" catalog="srpms">
         <id name="idoa">
             <column name="idoa" sql-type="varchar" not-null="true"/>
         </id>
