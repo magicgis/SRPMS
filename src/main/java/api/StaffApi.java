@@ -7,10 +7,9 @@ import service.StaffService;
 
 import javax.ws.rs.*;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static util.ToFrontEnd.getSubMap;
+import static util.Trans.getSubMap;
 
 /**
  * Created by guofan on 2015/5/7.

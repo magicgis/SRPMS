@@ -1,5 +1,6 @@
 package util;
 
+import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,7 @@ import java.util.Map;
  * TIME:21:02
  * Created by guofan on 2015/4/20
  */
-public class ToFrontEnd {
+public class Trans {
     /**
      * 分页
      * @param list 原有列表
@@ -32,4 +33,17 @@ public class ToFrontEnd {
         }
         return ans;
     }
+
+    public static String MD5(String args) throws Exception {
+        String original = args;
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(original.getBytes());
+        byte[] digest = md.digest();
+        StringBuffer sb = new StringBuffer();
+        for (byte b : digest) {
+            sb.append(String.format("%02x", b & 0xff));
+        }
+        return sb.toString();
+    }
+
 }

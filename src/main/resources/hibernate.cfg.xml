@@ -1,64 +1,65 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE hibernate-configuration PUBLIC
-    "-//Hibernate/Hibernate Configuration DTD//EN"
-    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-  <session-factory>
-      <property name="jdbc.batch_size">20</property>
-      <property name="connection.autocommit">true</property>
-      <property name="format_sql">true</property>
-      <property name="show_sql">false</property>
-      <property name="connection.useUnicode">true</property>
-      <property name="connection.characterEncoding">UTF-8</property>
-      <!--<property name="connection.url">jdbc:mysql://localhost:3306/srpms</property>-->
-      <!--<property name="connection.driver_class">com.mysql.jdbc.Driver</property>-->
-      <!--<property name="hbm2ddl.auto">create</property>-->
+    <session-factory>
+        <property name="jdbc.batch_size">20</property>
+        <property name="connection.autocommit">true</property>
+        <property name="format_sql">true</property>
+        <property name="show_sql">false</property>
+        <property name="connection.useUnicode">true</property>
+        <property name="connection.characterEncoding">UTF-8</property>
+        <!--<property name="connection.url">jdbc:mysql://localhost:3306/srpms</property>-->
+        <!--<property name="connection.driver_class">com.mysql.jdbc.Driver</property>-->
+        <!--<property name="hbm2ddl.auto">create</property>-->
 
 
 
+        <mapping resource="hbm/snaker.ccorder.hbm.xml"/>
+        <mapping resource="hbm/snaker.process.hbm.xml"/>
+        <mapping resource="hbm/snaker.taskactor.hbm.xml"/>
+        <mapping resource="hbm/snaker.workitem.hbm.xml"/>
+        <mapping resource="hbm/snaker.surrogate.hbm.xml"/>
+        <mapping resource="hbm/WFOrderBeta.hbm.xml"/>
+        <mapping resource="hbm/WFTaskBeta.hbm.xml"/>
+        <mapping resource="hbm/OrderActor.hbm.xml"/>
 
-      <mapping resource="hbm/snaker.ccorder.hbm.xml"/>
-      <mapping resource="hbm/snaker.process.hbm.xml"/>
-      <mapping resource="hbm/snaker.taskactor.hbm.xml"/>
-      <mapping resource="hbm/snaker.workitem.hbm.xml"/>
-      <mapping resource="hbm/snaker.surrogate.hbm.xml"/>
-      <mapping resource="hbm/WFOrderBeta.hbm.xml"/>
-      <mapping resource="hbm/WFTaskBeta.hbm.xml"/>
-      <mapping resource="hbm/OrderActor.hbm.xml"/>
+        <mapping class="entity.AchUnit"/>
+        <mapping class="entity.Achievement"/>
+        <mapping class="entity.Appar"/>
+        <mapping class="entity.ApparUnit"/>
+        <mapping class="entity.BaseInfo"/>
+        <mapping class="entity.Baseach"/>
+        <mapping class="entity.Basebk"/>
+        <mapping class="entity.Basepaper"/>
+        <mapping class="entity.Basepat"/>
+        <mapping class="entity.Baseproj"/>
+        <mapping class="entity.Book"/>
+        <mapping class="entity.BookSta"/>
+        <mapping class="entity.Confer"/>
+        <mapping class="entity.Data"/>
+        <mapping class="entity.Food"/>
+        <mapping class="entity.FoodUnit"/>
+        <mapping class="entity.Mag"/>
+        <mapping class="entity.Med"/>
+        <mapping class="entity.MedUnit"/>
+        <mapping class="entity.Newspaper"/>
+        <mapping class="entity.Other"/>
+        <mapping class="entity.OtherUnit"/>
+        <mapping class="entity.Paper"/>
+        <mapping class="entity.PatUnit"/>
+        <mapping class="entity.Patent"/>
+        <mapping class="entity.ProjMoney"/>
+        <mapping class="entity.ProjSta"/>
+        <mapping class="entity.ProjUnit"/>
+        <mapping class="entity.Project"/>
+        <mapping class="entity.StaRef"/>
+        <mapping class="entity.Staff"/>
+        <mapping class="entity.User"/>
+        <mapping class="entity.security.Permission"/>
+        <mapping class="entity.security.Role"/>
+        <mapping class="entity.security.Url"/>
 
-      <mapping class="entity.AchUnit"/>
-      <mapping class="entity.Achievement"/>
-      <mapping class="entity.Appar"/>
-      <mapping class="entity.ApparUnit"/>
-      <mapping class="entity.BaseInfo"/>
-      <mapping class="entity.Baseach"/>
-      <mapping class="entity.Basebk"/>
-      <mapping class="entity.Basepaper"/>
-      <mapping class="entity.Basepat"/>
-      <mapping class="entity.Baseproj"/>
-      <mapping class="entity.Book"/>
-      <mapping class="entity.BookSta"/>
-      <mapping class="entity.Confer"/>
-      <mapping class="entity.Data"/>
-      <mapping class="entity.Food"/>
-      <mapping class="entity.FoodUnit"/>
-      <mapping class="entity.Mag"/>
-      <mapping class="entity.Med"/>
-      <mapping class="entity.MedUnit"/>
-      <mapping class="entity.Newspaper"/>
-      <mapping class="entity.Other"/>
-      <mapping class="entity.OtherUnit"/>
-      <mapping class="entity.Paper"/>
-      <mapping class="entity.PatUnit"/>
-      <mapping class="entity.Patent"/>
-      <mapping class="entity.ProjMoney"/>
-      <mapping class="entity.ProjSta"/>
-      <mapping class="entity.ProjUnit"/>
-      <mapping class="entity.Project"/>
-      <mapping class="entity.StaRef"/>
-      <mapping class="entity.Staff"/>
-      <mapping class="entity.User"/>
-
-
-  </session-factory>
+    </session-factory>
 </hibernate-configuration>

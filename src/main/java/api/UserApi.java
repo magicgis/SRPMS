@@ -4,14 +4,16 @@ import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import service.UserService;
+import util.CrunchifyInMemoryCache;
 
 
 import javax.ws.rs.*;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static util.ToFrontEnd.getSubMap;
+import static util.Args.TokenUser;
+import static util.Trans.MD5;
+import static util.Trans.getSubMap;
 
 /**
  * Created by guofan on 2015/5/6.
@@ -40,6 +42,9 @@ public class UserApi {
                       @QueryParam("search") String search,
                       @QueryParam("sort") String sort,
                       @QueryParam("order") String ord) {
+        if (sort != null) {
+            sort = sort.replace('_', '.');
+        }
         return getSubMap(userService.search(search, sort, ord), limit, offset);
     }
 
@@ -84,6 +89,31 @@ public class UserApi {
     @Consumes("application/json;charset=UTF-8")
     public User getById(@PathParam("id") String id) {
         return userService.getById(id);
+    }
+
+    @POST
+    @Path("/login")
+    @Consumes("application/json;charset=UTF-8")
+    public String login(Map<String, String> args) {
+        String staId = args.get("username");
+        String pwd = args.get("password");
+        User u = userService.getUser(staId, pwd);
+        if (u == null) {
+            return null;
+        } else {
+            Long time = System.currentTimeMillis() / 1000;
+            String token = null;
+            try {
+                token = MD5(staId + pwd + String.valueOf(time));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (null == TokenUser) {
+                TokenUser = new CrunchifyInMemoryCache<>(3600, 300, 3000);
+            }
+            TokenUser.put(token, u);
+            return token;
+        }
     }
 
 }

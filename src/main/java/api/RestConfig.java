@@ -1,5 +1,6 @@
 package api;
 
+import api.filter.All;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.spring.scope.RequestContextFilter;
@@ -14,6 +15,7 @@ public class RestConfig extends ResourceConfig {
     public RestConfig() {
         register(RequestContextFilter.class);
         register(JacksonFeature.class);
+        register(All.class);
         packages("api");
     }
 }

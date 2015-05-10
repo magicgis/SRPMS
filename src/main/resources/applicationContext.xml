@@ -62,13 +62,12 @@
         </tx:attributes>
     </tx:advice>
 
-    <!--
-    之前无法通过junit进行DAO测试，原因是线程安全，需要配置AOP
-    一般将AOP配置在Service层，但是本次测试，先将AOP放在DAO层
-    -->
+
     <aop:config>
-        <aop:pointcut id="shitDao" expression="execution(* service.imp..*.*(..))"/>
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="shitDao"/>
+        <aop:pointcut id="service" expression="execution(* service.imp..*.*(..))"/>
+        <aop:pointcut id="security" expression="execution(* service.security.imp..*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="service"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="security"/>
     </aop:config>
     <aop:aspectj-autoproxy proxy-target-class="true" />
 
