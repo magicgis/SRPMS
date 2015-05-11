@@ -8,7 +8,6 @@ import service.UserService;
 import org.springframework.stereotype.Service;
 import util.CrunchifyInMemoryCache;
 
-import static util.Args.CACHE;
 
 import java.util.ArrayList;
 import java.util.HashMap;

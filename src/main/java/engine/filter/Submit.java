@@ -38,19 +38,7 @@ public class Submit implements SnakerInterceptor {
                 orderActorDao.save(order,actor,1,type);
             }
         }
-        /*取出原有数据*/
         Map<String,Object> args = new HashMap<String, Object>();
-        /*清空原有数据*/
-//        execution.getOrder().setVariable("{}");
-//        execution.getEngine().order().updateOrder(execution.getOrder());
-
-//        Map<String,Object> params = execution.getArgs();
-//        String latestKey = Tool.getLatestArgs(params);
-//        if(args.containsKey("Details")){
-//            args.remove("Details");
-//        }
-//        args.put("Details", params.get(latestKey));
-
         /*如果表单填写完毕,就加上部分全局变量*/
         String status = (String) execution.getArgs().get("IsComplete");
         if(Boolean.valueOf(status).equals(true)){

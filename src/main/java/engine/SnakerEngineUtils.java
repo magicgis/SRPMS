@@ -30,12 +30,8 @@ public class SnakerEngineUtils implements Engine {
     @Autowired
     private SnakerEngine snakerEngine;
 
-    public String initFlows(){
+    public String initFlows() {
         return snakerEngine.process().deploy(StreamHelper.getStreamFromClasspath("workflow/easy.snaker"));
-    }
-
-    public SnakerEngine getSnakerEngine(){
-        return snakerEngine;
     }
 
     public List<Process> getAllProcess() {
@@ -75,20 +71,8 @@ public class SnakerEngineUtils implements Engine {
         return snakerEngine.query().getHistoryTasks(new QueryFilter().setOperator(actor));
     }
 
-    public Order startInstanceById(String processId,String operator,Map<String ,Object> args){
-        Order ord =   snakerEngine.startInstanceById(processId, operator, args);
-        String order = ord.getId();
-            if(!orderActorDao.areTheyAlreadyIn(order,operator)){
-                String type = (String)args.get("WF_Type");
-                String col = (String)args.get("WF_Col");
-                orderActorDao.save(order,operator,1,type);
-                Map<String,Object> arg = new HashMap<String,Object>();
-                args.put("WF_Type",type);
-                args.put("WF_Col",col);
-                args.put("Status","Blank");
-                snakerEngine.order().addVariable(order,args);
-            }
-        return ord;
+    public Order startInstanceById(String processId, String operator, Map<String, Object> args) {
+        return snakerEngine.startInstanceById(processId, operator, args);
     }
 
     public List<Task> execute(String taskId, String operator, Map<String, Object> args) {
@@ -97,49 +81,49 @@ public class SnakerEngineUtils implements Engine {
         /*获取任务所属order*/
         String orderId = task.getOrderId();
         /*设置参与者*/
-        args.put("S-ACTOR",operator);
+        args.put("S-ACTOR", operator);
         /*获取order的arg*/
-        Map<String,Object> orderArg = snakerEngine.query().getOrder(orderId).getVariableMap();
+        Map<String, Object> orderArg = snakerEngine.query().getOrder(orderId).getVariableMap();
         /*获取Order里面的顺序*/
         int flowOrder = 0;
-        for(String key:orderArg.keySet()){
-            if(orderArg.get(key)instanceof Map&&key.startsWith("WF")){
+        for (String key : orderArg.keySet()) {
+            if (orderArg.get(key) instanceof Map && key.startsWith("WF")) {
                 flowOrder++;
             }
         }
-        String flowOderStr = "WF_"+Integer.toString(flowOrder)+"_"+task.getTaskName();
-        Map<String,Object> temp  = new HashMap<String, Object>();
-        temp.put(flowOderStr,args);
+        String flowOderStr = "WF_" + Integer.toString(flowOrder) + "_" + task.getTaskName();
+        Map<String, Object> temp = new HashMap<String, Object>();
+        temp.put(flowOderStr, args);
 
         /*把此轮的参数放入Order*/
-        snakerEngine.order().addVariable(orderId,temp);
+        snakerEngine.order().addVariable(orderId, temp);
 
         /*执行任务（不一定会产生新任务）*/
-        List<Task> tasks =  snakerEngine.executeTask(taskId,operator,args);
-        if(tasks.isEmpty()){
+        List<Task> tasks = snakerEngine.executeTask(taskId, operator, args);
+        if (tasks.isEmpty()) {
             return null;
         }
 
          /*如果存在下一任务参与者*/
-        if(args.containsKey("WF_Actor")&&args.containsKey("IsComplete")){
-            if(!Boolean.valueOf((String) args.get("IsComplete")))
+        if (args.containsKey("WF_Actor") && args.containsKey("IsComplete")) {
+            if (!Boolean.valueOf((String) args.get("IsComplete")))
                 return tasks;
             String[] actorString = args.get("WF_Actor").toString().split(",");
             List<String> actors = new ArrayList<String>();
-            for(String u:actorString){
-                if (!u.equals(" ")&&!u.equals(""))
+            for (String u : actorString) {
+                if (!u.equals(" ") && !u.equals(""))
                     actors.add(u);
             }
-            for(int i = 1;i < actors.size();i++){
+            for (int i = 1; i < actors.size(); i++) {
                 snakerEngine.task().addTaskActor(tasks.get(0).getId(), 1, "");
             }
             tasks = snakerEngine.query().getActiveTasks(new QueryFilter().setOrderId(orderId));
-            for(Task u:tasks){
-                if(u.getActorIds()[0].equals(actors.get(0))){
+            for (Task u : tasks) {
+                if (u.getActorIds()[0].equals(actors.get(0))) {
                     continue;
                 }
-                snakerEngine.task().addTaskActor(u.getId(),actors.get(0));
-                snakerEngine.task().removeTaskActor(u.getId(),"");
+                snakerEngine.task().addTaskActor(u.getId(), actors.get(0));
+                snakerEngine.task().removeTaskActor(u.getId(), "");
                 actors.remove(0);
             }
         }
@@ -158,15 +142,15 @@ public class SnakerEngineUtils implements Engine {
         return tasks;
     }
 
-    public List<Task> executeAndJump(String taskId, String operator, Map<String, Object > args, String nodeName){
-            return snakerEngine.executeAndJumpTask(taskId, operator, args, nodeName);
+    public List<Task> executeAndJump(String taskId, String operator, Map<String, Object> args, String nodeName) {
+        return snakerEngine.executeAndJumpTask(taskId, operator, args, nodeName);
     }
 
     public List<Task> refuse(String taskId, String operator, Map<String, Object> args) {
         return snakerEngine.executeAndJumpTask(taskId, operator, args, null);
     }
 
-    public boolean setOrderRestart(String orderId,String actor){
+    public boolean setOrderRestart(String orderId, String actor) {
         boolean ans = false;
         String taskId = "";
         List<HistoryTask> hisTask = snakerEngine.query().getHistoryTasks(new QueryFilter().setOrderId(orderId));
@@ -178,12 +162,12 @@ public class SnakerEngineUtils implements Engine {
          * 需要先撤回到确认任务
          * 再撤回到填表任务
          */
-        if(nowTask.getTaskName().equals("Submit")){
+        if (nowTask.getTaskName().equals("Submit")) {
             for (HistoryTask his : hisTask) {
-                if(his.getTaskName().equals("Confirm")){
+                if (his.getTaskName().equals("Confirm")) {
 //                    System.out.println(his.getCreateTime());
-                    time = his.getCreateTime().replace("-","").replace(" ", "").replace(":","");
-                    if(realTime<Long.valueOf(time)){
+                    time = his.getCreateTime().replace("-", "").replace(" ", "").replace(":", "");
+                    if (realTime < Long.valueOf(time)) {
                         realTime = Long.valueOf(time);
                         taskId = his.getId();
                     }
@@ -194,20 +178,20 @@ public class SnakerEngineUtils implements Engine {
         time = "";
         realTime = 0;
         for (HistoryTask his : hisTask) {
-            if(his.getTaskName().equals("Submission")){
+            if (his.getTaskName().equals("Submission")) {
 //                System.out.println(his.getCreateTime());
-                time = his.getCreateTime().replace("-","").replace(" ", "").replace(":","");
-                if(realTime<Long.valueOf(time)){
+                time = his.getCreateTime().replace("-", "").replace(" ", "").replace(":", "");
+                if (realTime < Long.valueOf(time)) {
                     realTime = Long.valueOf(time);
                     taskId = his.getId();
                 }
             }
         }
-        if(taskId!=null){
+        if (taskId != null) {
             snakerEngine.task().withdrawTask(taskId, actor);
-            HashMap<String,Object> status = new HashMap<String, Object>();
-            status.put("Status","Uncomplete");
-            snakerEngine.order().addVariable(orderId,status);
+            HashMap<String, Object> status = new HashMap<String, Object>();
+            status.put("Status", "Uncomplete");
+            snakerEngine.order().addVariable(orderId, status);
             ans = true;
         }
         return ans;
@@ -237,7 +221,7 @@ public class SnakerEngineUtils implements Engine {
         List<Task> ans = new ArrayList<Task>();
         if (allTask != null && allTask.size() != 0) {
             for (Task task : allTask) {
-                if(task.getTaskName().equals("Confirm")) {
+                if (task.getTaskName().equals("Confirm")) {
                     ans.add(task);
                 }
             }
@@ -245,10 +229,10 @@ public class SnakerEngineUtils implements Engine {
         return ans;
     }
 
-    public Boolean isYourTask(String task,String actor){
-        List<Task>tasks = snakerEngine.query().getActiveTasks(new QueryFilter().setOperator(actor));
+    public Boolean isYourTask(String task, String actor) {
+        List<Task> tasks = snakerEngine.query().getActiveTasks(new QueryFilter().setOperator(actor));
         for (Task task1 : tasks) {
-            if(task1.getId().equals(task))
+            if (task1.getId().equals(task))
                 return true;
         }
         return false;

@@ -1,0 +1,16 @@
+<process name="basicProcess_Beta" displayName="添加新期刊">
+    <start name="start">
+        <transition offset="0,-10" to="Submission" name="Starter"/>
+    </start>
+
+    <task name="Submission" displayName="填写申请" assignmentHandler="engine.pole.Pole">
+        <transition offset="0,-10" to="" name="Submission2Approval"/>
+    </task>
+
+    <task name="Approval" displayName="部门审批" assignmentHandler="engine.pole.Pole">
+        <transition offset="0,-10" to="decision2" name="end"/>
+    </task>
+
+    <end name="end">
+    </end>
+</process>

@@ -31,9 +31,13 @@ import java.util.Map;
         * 而在ApplicationContext.xml中配置会自动成为全局拦截器
         * 唯有手动getBean才能正常注入
         * PS：注入用多了，都不会普通调用了！
+        * 再次更新：为什么要用注入？
+        * 所以本次更新去掉注入，直接调用DAO
+        * 再再更新：艹，不能new
         * */
         BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/application*.xml");
         OrderActorDao orderActorDao =(OrderActorDao) factory.getBean("orderActorDao");
+//        OrderActorDao orderActorDao = new OrderActorDao();
         String actor = execution.getOperator();
         String order = execution.getOrder().getId();
         String creator = execution.getOrder().getCreator();
