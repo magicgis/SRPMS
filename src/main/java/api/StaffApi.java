@@ -1,5 +1,6 @@
 package api;
 
+import entity.BaseInfo;
 import entity.Staff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,7 +10,9 @@ import javax.ws.rs.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import static util.Trans.moveOneToAnother;
 import static util.Trans.getSubMap;
+import static util.Trans.map2Obj;
 
 /**
  * Created by guofan on 2015/5/7.
@@ -67,8 +70,19 @@ public class StaffApi {
     @Consumes("application/json;charset=UTF-8")
     public boolean update(@PathParam("id") String id, HashMap<String, Object> args) {
         Staff temp = staffService.getById(id);
-
-        return false;//todo
+        try {
+            Staff y = (Staff) map2Obj(args, Staff.class);
+            BaseInfo dep = y.getBaseInfoByDeptId();
+            BaseInfo rank = y.getBaseInfoByRankId();
+            temp.setBaseInfoByRankId((BaseInfo) moveOneToAnother(rank, temp.getBaseInfoByRankId()));
+            temp.setBaseInfoByDeptId((BaseInfo) moveOneToAnother(dep, temp.getBaseInfoByDeptId()));
+            y.setBaseInfoByDeptId(null);
+            y.setBaseInfoByRankId(null);
+            temp = (Staff) moveOneToAnother(y, temp);
+        } catch (Exception y) {
+            y.printStackTrace();
+        }
+        return staffService.update(temp);
     }
 
     /**

@@ -1,19 +1,23 @@
 package api;
 
+import entity.Staff;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
+import service.StaffService;
 import service.UserService;
 import util.CrunchifyInMemoryCache;
 
 
 import javax.ws.rs.*;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import static util.Args.TokenUser;
 import static util.Trans.MD5;
 import static util.Trans.getSubMap;
+import static util.Trans.map2Obj;
 
 /**
  * Created by guofan on 2015/5/6.
@@ -23,6 +27,8 @@ import static util.Trans.getSubMap;
 public class UserApi {
     @Autowired
     UserService userService;
+    @Autowired
+    StaffService staffService;
 
     /**
      * 获取所有的帐号信息
@@ -58,6 +64,13 @@ public class UserApi {
     @Path("/new")
     @Consumes("application/json;charset=UTF-8")
     public boolean add(HashMap<String, Object> args) {
+        try {
+            Staff y = (Staff) map2Obj(args, Staff.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return false;//todo
     }
 
@@ -72,6 +85,11 @@ public class UserApi {
     @Path("/{id}")
     @Consumes("application/json;charset=UTF-8")
     public boolean update(@PathParam("id") String id, HashMap<String, Object> args) {
+        User user = userService.getById(id);
+        for (String s : args.keySet()) {
+            args.put(s.replace('_', '.'), args.get(s));
+            args.remove(s);
+        }
         return false;//todo
     }
 

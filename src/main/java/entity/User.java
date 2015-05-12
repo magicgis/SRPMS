@@ -1,5 +1,7 @@
 package entity;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -9,6 +11,7 @@ import javax.persistence.*;
 public class User {
     private String id;
     private String email;
+    @JsonIgnore
     private String pwd;
     private String privilege;
     private Integer status;

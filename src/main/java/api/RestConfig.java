@@ -5,6 +5,11 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.spring.scope.RequestContextFilter;
 
+import javax.ws.rs.ApplicationPath;
+
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.glassfish.jersey.server.ResourceConfig;
+
 /**
  * DATE:2015/1/22
  * TIME:21:59
@@ -15,6 +20,7 @@ public class RestConfig extends ResourceConfig {
     public RestConfig() {
         register(RequestContextFilter.class);
         register(JacksonFeature.class);
+        register(MultiPartFeature.class);
 //        register(All.class);
         packages("api");
     }

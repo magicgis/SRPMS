@@ -32,9 +32,8 @@ public class All implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        uriInfo.getMatchedTemplates();
+        /*请求Path模板*/
         List<UriTemplate> matchedTemplates = uriInfo.getMatchedTemplates();
-        /*请求模板*/
         StringBuilder path = new StringBuilder();
         for (int i = matchedTemplates.size() - 1; i >= 0; i--) {
             path.append(matchedTemplates.get(i).getTemplate());
@@ -45,36 +44,44 @@ public class All implements ContainerRequestFilter {
         /*获取token*/
         String token = requestContext.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (TokenUser == null) {
+            /*创建<Token,User>缓存*/
             TokenUser = new CrunchifyInMemoryCache<>(3600, 300, 3000);
         }
+        /*如果已经登陆*/
         if (TokenUser.get(token) != null) {
-            if (TokenUser != null) {
-                User loginUser = TokenUser.get(token);
-                String role = loginUser.getPrivilege();
-                Permission x = new Permission();
-                if (PermissionCache == null) {
-                    PermissionCache = new CrunchifyInMemoryCache<>(0, 0, 3000);
-                    permissionService.loadIntoCache();
-                }
-                Boolean flag = PermissionCache.get(role + "-" + path + "-" + type);
-                if (flag == null || flag == false) {
-                    requestContext.abortWith(Response
-                            .status(Response.Status.UNAUTHORIZED)
-                            .entity("User cannot access the resource.")
-                            .build());
-                }
+            /*获取用户以及其权限*/
+            User loginUser = TokenUser.get(token);
+            String role = loginUser.getPrivilege();
+            Permission x = new Permission();
+            if (PermissionCache == null) {
+                /*创建权限缓存，并从表导入*/
+                PermissionCache = new CrunchifyInMemoryCache<>(0, 0, 3000);
+                permissionService.loadIntoCache();
+            }
+            /*在缓存内寻找用户的权限*/
+            Boolean flag = PermissionCache.get(role + "-" + path + "-" + type);
+            /*如果未找到（未设置权限）或者无权限*/
+//            if (flag == null || flag == false) {
+//                /*打断，返回401*/
+//                requestContext.abortWith(Response
+//                        .status(Response.Status.UNAUTHORIZED)
+//                        .entity("User cannot access the resource.")
+//                        .build());
+//            }else{
+//                /*正常通行*/
+//            }
+        /*如果未登陆*/
+        } else {
+            /*登陆api属于特殊放行的特例*/
+            if (path.toString().trim().equals("/user/login")) {
+                /*正常通行*/
             } else {
-                TokenUser = new CrunchifyInMemoryCache<>(3600, 300, 3000);
+                /*打断，返回401*/
                 requestContext.abortWith(Response
                         .status(Response.Status.UNAUTHORIZED)
                         .entity("User cannot access the resource.")
                         .build());
             }
-        } else {
-            requestContext.abortWith(Response
-                    .status(Response.Status.UNAUTHORIZED)
-                    .entity("User cannot access the resource.")
-                    .build());
         }
     }
 }

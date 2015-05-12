@@ -1,6 +1,9 @@
 package api.filter;
 
-import com.sun.jersey.core.util.ReaderWriter;
+//import com.sun.jersey.core.util.ReaderWriter;
+//import com.sun.jersey.core.util.ReaderWriter;
+
+import org.glassfish.jersey.message.internal.ReaderWriter;
 import org.glassfish.jersey.server.ContainerException;
 
 import javax.ws.rs.container.ContainerRequestContext;
