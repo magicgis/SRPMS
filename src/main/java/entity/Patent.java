@@ -21,7 +21,6 @@ public class Patent {
     private String patStatus;
     private String endfill;
     private String memo;
-    private Collection<Data> datasById;
     private Collection<PatUnit> patUnitsById;
     private BaseInfo baseInfoByDeptId;
     private Collection<StaRef> staRefsById;
@@ -186,14 +185,6 @@ public class Patent {
         return result;
     }
 
-    @OneToMany(mappedBy = "patentByPatentId")
-    public Collection<Data> getDatasById() {
-        return datasById;
-    }
-
-    public void setDatasById(Collection<Data> datasById) {
-        this.datasById = datasById;
-    }
 
     @OneToMany(mappedBy = "patentByPatId")
     public Collection<PatUnit> getPatUnitsById() {

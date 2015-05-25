@@ -12,7 +12,9 @@ import util.CrunchifyInMemoryCache;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.List;
 
@@ -61,15 +63,15 @@ public class All implements ContainerRequestFilter {
             /*在缓存内寻找用户的权限*/
             Boolean flag = PermissionCache.get(role + "-" + path + "-" + type);
             /*如果未找到（未设置权限）或者无权限*/
-//            if (flag == null || flag == false) {
-//                /*打断，返回401*/
+            if (flag == null || flag == false) {
+                /*打断，返回401*/
 //                requestContext.abortWith(Response
 //                        .status(Response.Status.UNAUTHORIZED)
 //                        .entity("User cannot access the resource.")
 //                        .build());
-//            }else{
-//                /*正常通行*/
-//            }
+            }else{
+                /*正常通行*/
+            }
         /*如果未登陆*/
         } else {
             /*登陆api属于特殊放行的特例*/

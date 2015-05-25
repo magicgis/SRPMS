@@ -1,5 +1,7 @@
 package entity;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -18,6 +20,7 @@ public class Mag {
     private String status;
     private String memo;
     private BaseInfo baseInfoByGradeId;
+    @JsonIgnore
     private Collection<Paper> papersById;
 
     @Id

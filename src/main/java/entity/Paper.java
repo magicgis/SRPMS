@@ -19,7 +19,6 @@ public class Paper {
     private Integer score;
     private Integer numWord;
     private String memo;
-    private Collection<Data> datasById;
     private Confer conferByConferId;
     private Mag magByMagId;
     private Newspaper newspaperByNewsId;
@@ -174,14 +173,6 @@ public class Paper {
         return result;
     }
 
-    @OneToMany(mappedBy = "paperByPaperId")
-    public Collection<Data> getDatasById() {
-        return datasById;
-    }
-
-    public void setDatasById(Collection<Data> datasById) {
-        this.datasById = datasById;
-    }
 
     @ManyToOne
     @JoinColumn(name = "confer_id", referencedColumnName = "id")

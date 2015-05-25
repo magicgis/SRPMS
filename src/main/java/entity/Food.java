@@ -12,7 +12,6 @@ public class Food {
     private String name;
     private String prodNo;
     private String memo;
-    private Collection<Data> datasById;
     private Collection<FoodUnit> foodUnitsById;
     private Collection<StaRef> staRefsById;
 
@@ -80,14 +79,6 @@ public class Food {
         return result;
     }
 
-    @OneToMany(mappedBy = "foodByFdId")
-    public Collection<Data> getDatasById() {
-        return datasById;
-    }
-
-    public void setDatasById(Collection<Data> datasById) {
-        this.datasById = datasById;
-    }
 
     @OneToMany(mappedBy = "foodByFdId")
     public Collection<FoodUnit> getFoodUnitsById() {

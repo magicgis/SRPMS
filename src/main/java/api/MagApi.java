@@ -103,14 +103,22 @@ public class MagApi {
      */
     @GET
     @Path("/list")
-    public List<String> getAllMagList() {
-        List<Mag> temp = magService.getAll();
+    public List<String> getAllMag(@QueryParam("query") String query) {
+        List<Mag> temp = magService.search(query, null, null);
         List<String> ans = new ArrayList<>();
         for (Mag mag : temp) {
             ans.add(mag.getName());
         }
         return ans;
     }
+//    public List<String> getAllMagList() {
+//        List<Mag> temp = magService.getAll();
+//        List<String> ans = new ArrayList<>();
+//        for (Mag mag : temp) {
+//            ans.add(mag.getName());
+//        }
+//        return ans;
+//    }
 
     /**
      * 获取所有的期刊信息JSON

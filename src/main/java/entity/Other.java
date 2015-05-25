@@ -12,7 +12,6 @@ public class Other {
     private String name;
     private String prodNo;
     private String memo;
-    private Collection<Data> datasById;
     private Collection<OtherUnit> otherUnitsById;
     private Collection<StaRef> staRefsById;
 
@@ -80,14 +79,6 @@ public class Other {
         return result;
     }
 
-    @OneToMany(mappedBy = "otherByOtherId")
-    public Collection<Data> getDatasById() {
-        return datasById;
-    }
-
-    public void setDatasById(Collection<Data> datasById) {
-        this.datasById = datasById;
-    }
 
     @OneToMany(mappedBy = "otherByOtherId")
     public Collection<OtherUnit> getOtherUnitsById() {

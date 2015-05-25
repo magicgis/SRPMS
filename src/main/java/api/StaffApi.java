@@ -10,9 +10,7 @@ import javax.ws.rs.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static util.Trans.moveOneToAnother;
-import static util.Trans.getSubMap;
-import static util.Trans.map2Obj;
+import static util.Trans.*;
 
 /**
  * Created by guofan on 2015/5/7.

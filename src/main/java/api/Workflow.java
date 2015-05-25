@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.ServletContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MultivaluedMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +27,7 @@ import static util.Trans.getSubMap;
  */
 @Path("/workflow")
 @RestController
+@SuppressWarnings({"unchecked", "unused"})
 public class Workflow {
     @Context
     ServletContext context;
@@ -82,30 +82,6 @@ public class Workflow {
         return rs;
     }
 
-    /**
-     * 启动流程
-     *
-     * @param formParams 表单
-     * @return 生成的order
-     */
-    @POST
-    @Path("/start")
-    @Consumes("application/x-www-form-urlencoded;charset=UTF-8")
-    @Produces("application/json;charset=UTF-8")
-    public Order startProcess(MultivaluedMap<String, String> formParams) {
-        Map<String, String> args = new HashMap<String, String>();
-        for (String key : formParams.keySet()) {
-            args.put(key, formParams.getFirst(key));
-        }
-        String user = args.get("WF_User");
-        args.remove("WF_User");
-        String processName = args.get("WF_Process");
-        String processId = engine.getProcessByName(processName).getId();
-        args.remove("WF_Process");
-        /*由于目前仍不能根据用户获取所属学院*/
-        args.put("WF_Col", "信息工程学院");
-        return engine.startInstanceById(processId, user, (Map) args);
-    }
 
     /**
      * 启动流程
@@ -125,42 +101,9 @@ public class Workflow {
         args.remove("WF_Process");
         /*由于目前仍不能根据用户获取所属学院*/
         args.put("WF_Col", "信息工程学院");
-        return engine.startInstanceById(processId, user, (Map) args);
+        return engine.startInstanceById(processId, user, args);
     }
 
-    /**
-     * 执行任务
-     *
-     * @param formParams 表单
-     * @return 后续任务（实际无用）
-     */
-    @POST
-    @Path("/execute")
-    @Consumes("application/x-www-form-urlencoded")
-    @Produces("application/json;charset=UTF-8")
-    public List<Task> execute(MultivaluedMap<String, String> formParams) {
-        Map<String, String> args = new HashMap<String, String>();
-        for (String key : formParams.keySet()) {
-            args.put(key, formParams.getFirst(key));
-        }
-        String user = args.get("WF_User");
-        args.remove("WF_User");
-        String taskId = args.get("WF_Task");
-        args.remove("WF_Task");
-        List<Task> ans = new ArrayList<Task>();
-        List<Task> tasks = engine.execute(taskId, user, (Map) args);
-        if (tasks == null || tasks.size() == 0) {
-            return null;
-        }
-        for (Task u : tasks) {
-            u.setModel(null);
-            if (u.getTaskName().equals("Confirm") && engine.isYourTask(u.getId(), user)) {
-                engine.execute(u.getId(), user, new HashMap<String, Object>());
-//                tasks.remove(u);
-            }
-        }
-        return tasks;
-    }
 
     /**
      * 执行任务
@@ -179,9 +122,13 @@ public class Workflow {
         args.remove("WF_Task");
         if (args.containsKey("actors")) {
             List<Map<String, Object>> actors = (List<Map<String, Object>>) args.get("actors");
+            List<String> aList = new ArrayList<>();
             String as = "";
             for (Map<String, Object> u : actors) {
-                as = as + u.get("actor") + ",";
+                if (!aList.contains((String) u.get("id"))) {
+                    aList.add((String) u.get("id"));
+                    as = as + u.get("id") + ",";
+                }
             }
             args.put("WF_Actor", as);
         }

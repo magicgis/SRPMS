@@ -23,7 +23,6 @@ public class Book {
     private String memo;
     private BaseInfo baseInfoByDeptId;
     private Collection<BookSta> bookStasById;
-    private Collection<Data> datasById;
 
     @Id
     @Column(name = "id")
@@ -192,12 +191,5 @@ public class Book {
         this.bookStasById = bookStasById;
     }
 
-    @OneToMany(mappedBy = "bookByBkId")
-    public Collection<Data> getDatasById() {
-        return datasById;
-    }
 
-    public void setDatasById(Collection<Data> datasById) {
-        this.datasById = datasById;
-    }
 }

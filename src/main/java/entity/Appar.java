@@ -14,7 +14,6 @@ public class Appar {
     private String prodNo;
     private String memo;
     private Collection<ApparUnit> apparUnitsById;
-    private Collection<Data> datasById;
     private Collection<StaRef> staRefsById;
 
     @Id
@@ -102,14 +101,6 @@ public class Appar {
         this.apparUnitsById = apparUnitsById;
     }
 
-    @OneToMany(mappedBy = "apparByApparId")
-    public Collection<Data> getDatasById() {
-        return datasById;
-    }
-
-    public void setDatasById(Collection<Data> datasById) {
-        this.datasById = datasById;
-    }
 
     @OneToMany(mappedBy = "apparByApparId")
     public Collection<StaRef> getStaRefsById() {

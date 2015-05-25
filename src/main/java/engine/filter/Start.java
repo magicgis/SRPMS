@@ -1,14 +1,11 @@
 package engine.filter;
 
 import engine.entity.OrderActorDao;
-import engine.utils.AOService;
 import org.snaker.engine.SnakerInterceptor;
 import org.snaker.engine.core.Execution;
 import org.snaker.engine.entity.Order;
 import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +16,6 @@ import java.util.Map;
  * Created by guofan on 2015/3/22
  * 用户新增order的拦截器
  */
-@Service
 public class Start implements SnakerInterceptor {
 
 

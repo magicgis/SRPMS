@@ -1,27 +1,30 @@
 package api;
 
+import entity.Data;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import service.DataService;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
 import javax.servlet.ServletContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.*;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by guofan on 4/24/2015.
  */
 @Path("/file")
 public class Attachment {
-//    @Context
-//    ServletContext context;
+    @Context
+    ServletContext context;
+    @Autowired
+    DataService dataService;
 
     @POST
     @Path("/upload")
@@ -41,16 +44,19 @@ public class Attachment {
         if (!upload.exists()) {
             upload.mkdir();
         }
-        /*上传到的位置，此处不应该信任传来的文件名 TODO*/
-        File uploadedFileLocation = new File(upload, fileDetail.getFileName());
-        // save it
+        String fileName = fileDetail.getFileName();
+        /*必要时需要对后缀名进行拦截*/
+        String end = fileName.substring(fileName.lastIndexOf('.'), fileName.length());
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        String finalFileName = df.format(new Date()) + "-" + String.valueOf(System.currentTimeMillis()%1000)+end;
+        File uploadedFileLocation = new File(upload, finalFileName);
+        String fileId = null;
         if (writeToFile(uploadedInputStream, uploadedFileLocation)) {
-            //把保存的信息和上传的人，以及各种关联起来。
+            Data up = new Data();
+            up.setPath(finalFileName);
+            fileId = (String) dataService.add(up);
         }
-        String output = "File uploaded to : " + uploadedFileLocation.toString();
-        System.out.println(uploadedFileLocation.getAbsolutePath());
-
-        return Response.status(200).entity(output).build();
+        return Response.status(200).entity(fileId).build();
     }
 
     // save uploaded file to new location
@@ -90,8 +96,9 @@ public class Attachment {
         /*upload文件夹*/
         File upload = new File(web_inf, "upload");
         /*只是一个示范*/
-        File file = new File(upload, "t.sql");
-        return Response.ok(file).header("Content-Disposition", "attachment;filename=" + "t.sql").build();
+        String fileName = dataService.getById(id).getPath();
+        File file = new File(upload, fileName);
+        return Response.ok(file).header("Content-Disposition", "attachment;filename=" + fileName).build();
     }
 
 }

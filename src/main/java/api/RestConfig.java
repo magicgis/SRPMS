@@ -2,13 +2,9 @@ package api;
 
 import api.filter.All;
 import org.glassfish.jersey.jackson.JacksonFeature;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.server.spring.scope.RequestContextFilter;
-
-import javax.ws.rs.ApplicationPath;
-
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.spring.scope.RequestContextFilter;
 
 /**
  * DATE:2015/1/22
@@ -21,7 +17,7 @@ public class RestConfig extends ResourceConfig {
         register(RequestContextFilter.class);
         register(JacksonFeature.class);
         register(MultiPartFeature.class);
-//        register(All.class);
+        register(All.class);
         packages("api");
     }
 }

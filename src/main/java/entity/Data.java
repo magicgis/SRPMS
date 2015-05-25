@@ -1,5 +1,7 @@
 package entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 /**
@@ -9,16 +11,10 @@ import javax.persistence.*;
 public class Data {
     private String id;
     private String path;
-    private String flag;
-    private Achievement achievementByAchId;
-    private Appar apparByApparId;
-    private Book bookByBkId;
-    private Food foodByFdId;
-    private Other otherByOtherId;
-    private Paper paperByPaperId;
-    private Patent patentByPatentId;
 
     @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "id")
     public String getId() {
         return id;
@@ -38,15 +34,6 @@ public class Data {
         this.path = path;
     }
 
-    @Basic
-    @Column(name = "flag")
-    public String getFlag() {
-        return flag;
-    }
-
-    public void setFlag(String flag) {
-        this.flag = flag;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -68,73 +55,5 @@ public class Data {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "ach_id", referencedColumnName = "id")
-    public Achievement getAchievementByAchId() {
-        return achievementByAchId;
-    }
 
-    public void setAchievementByAchId(Achievement achievementByAchId) {
-        this.achievementByAchId = achievementByAchId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "appar_id", referencedColumnName = "id")
-    public Appar getApparByApparId() {
-        return apparByApparId;
-    }
-
-    public void setApparByApparId(Appar apparByApparId) {
-        this.apparByApparId = apparByApparId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "bk_id", referencedColumnName = "id")
-    public Book getBookByBkId() {
-        return bookByBkId;
-    }
-
-    public void setBookByBkId(Book bookByBkId) {
-        this.bookByBkId = bookByBkId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "fd_id", referencedColumnName = "id")
-    public Food getFoodByFdId() {
-        return foodByFdId;
-    }
-
-    public void setFoodByFdId(Food foodByFdId) {
-        this.foodByFdId = foodByFdId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "other_id", referencedColumnName = "id")
-    public Other getOtherByOtherId() {
-        return otherByOtherId;
-    }
-
-    public void setOtherByOtherId(Other otherByOtherId) {
-        this.otherByOtherId = otherByOtherId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "paper_id", referencedColumnName = "id")
-    public Paper getPaperByPaperId() {
-        return paperByPaperId;
-    }
-
-    public void setPaperByPaperId(Paper paperByPaperId) {
-        this.paperByPaperId = paperByPaperId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "patent_id", referencedColumnName = "id")
-    public Patent getPatentByPatentId() {
-        return patentByPatentId;
-    }
-
-    public void setPatentByPatentId(Patent patentByPatentId) {
-        this.patentByPatentId = patentByPatentId;
-    }
 }

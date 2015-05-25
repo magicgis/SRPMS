@@ -29,7 +29,6 @@ public class Achievement {
     private String memo;
     private Collection<AchUnit> achUnitsById;
     private BaseInfo baseInfoByDeptId;
-    private Collection<Data> datasById;
     private Collection<StaRef> staRefsById;
 
     @Id
@@ -283,15 +282,6 @@ public class Achievement {
 
     public void setBaseInfoByDeptId(BaseInfo baseInfoByDeptId) {
         this.baseInfoByDeptId = baseInfoByDeptId;
-    }
-
-    @OneToMany(mappedBy = "achievementByAchId")
-    public Collection<Data> getDatasById() {
-        return datasById;
-    }
-
-    public void setDatasById(Collection<Data> datasById) {
-        this.datasById = datasById;
     }
 
     @OneToMany(mappedBy = "achievementByAchId")
