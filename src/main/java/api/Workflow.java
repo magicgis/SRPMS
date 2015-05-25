@@ -123,14 +123,17 @@ public class Workflow {
         if (args.containsKey("actors")) {
             List<Map<String, Object>> actors = (List<Map<String, Object>>) args.get("actors");
             List<String> aList = new ArrayList<>();
-            String as = "";
+            StringBuffer as = new StringBuffer();
+            StringBuffer actosStr = new StringBuffer();
             for (Map<String, Object> u : actors) {
                 if (!aList.contains((String) u.get("id"))) {
                     aList.add((String) u.get("id"));
-                    as = as + u.get("id") + ",";
+                    as.append(u.get("id")).append(",");
+                    actosStr.append(u.get("actor"));
                 }
             }
             args.put("WF_Actor", as);
+            args.put("ActorList", actosStr);
         }
         List<Task> ans = new ArrayList<Task>();
         List<Task> tasks = engine.execute(taskId, user, (Map) args);
