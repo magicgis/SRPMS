@@ -1,15 +1,13 @@
 package entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
  * Created by guofan on 2015/5/6.
  */
 @Entity
+@Table(name = "basebk", schema = "", catalog = "srpms")
 public class Basebk {
     private String id;
     private String type;

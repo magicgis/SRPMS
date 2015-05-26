@@ -75,7 +75,7 @@ public class Workflow {
     @Path("/allProcess")
     @Produces("application/json;charset=UTF-8")
     public Map<String, String> getProcessId() {
-        Map<String, String> rs = new HashMap<String, String>();
+        Map<String, String> rs = new HashMap<>();
         for (Process u : engine.getAllProcess()) {
             rs.put(u.getName(), u.getId());
         }
@@ -126,16 +126,18 @@ public class Workflow {
             StringBuffer as = new StringBuffer();
             StringBuffer actosStr = new StringBuffer();
             for (Map<String, Object> u : actors) {
-                if (!aList.contains((String) u.get("id"))) {
-                    aList.add((String) u.get("id"));
-                    as.append(u.get("id")).append(",");
-                    actosStr.append(u.get("actor"));
+                String aId = (String) u.get("id");
+                if (aList.contains(aId)) {
+                    continue;
                 }
+                aList.add(aId);
+                as.append(aId).append(",");
+                actosStr.append(u.get("actor"));
             }
             args.put("WF_Actor", as);
             args.put("ActorList", actosStr);
         }
-        List<Task> ans = new ArrayList<Task>();
+        List<Task> ans = new ArrayList<>();
         List<Task> tasks = engine.execute(taskId, user, (Map) args);
         if (tasks == null || tasks.size() == 0) {
             return null;
@@ -205,7 +207,7 @@ public class Workflow {
             type = null;
         }
         List<OrderActor> list = orderActorDao.getByAll(user, type, role);
-        List<Order> ans = new ArrayList<Order>();
+        List<Order> ans = new ArrayList<>();
         for (OrderActor u : list) {
             ans.add(engine.getOrder(u.getOrder()));
         }
@@ -269,7 +271,7 @@ public class Workflow {
                 return false;
             }
         }
-        Map<String, Object> args = new HashMap<String, Object>();
+        Map<String, Object> args = new HashMap<>();
         args.put("WF_Memo", "Submit By Program");
         for (Order u : list) {
             List<Task> tasks = engine.getTaskByOrder(u.getId());

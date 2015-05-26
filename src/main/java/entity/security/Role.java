@@ -7,6 +7,7 @@ import java.util.Collection;
  * Created by guofan on 2015/5/9.
  */
 @Entity
+@Table(name = "role", schema = "", catalog = "srpms")
 public class Role {
     private String role;
     private String define;

@@ -9,6 +9,7 @@ import java.util.Collection;
  * Created by guofan on 2015/5/6.
  */
 @Entity
+@Table(name = "book", schema = "", catalog = "srpms")
 public class Book {
     private String id;
     private String name;

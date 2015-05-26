@@ -1,14 +1,12 @@
 package entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by guofan on 2015/5/6.
  */
 @Entity
+@Table(name = "baseproj", schema = "", catalog = "srpms")
 public class Baseproj {
     private String id;
     private String projType;

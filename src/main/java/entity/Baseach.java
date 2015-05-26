@@ -1,14 +1,12 @@
 package entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by guofan on 2015/5/6.
  */
 @Entity
+@Table(name = "baseach", schema = "", catalog = "srpms")
 public class Baseach {
     private String id;
     private String awdProp;

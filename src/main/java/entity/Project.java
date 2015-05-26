@@ -3,6 +3,7 @@ package entity;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.sql.Date;
 
@@ -10,6 +11,7 @@ import java.sql.Date;
  * Created by guofan on 2015/5/6.
  */
 @Entity
+@Table(name = "project", schema = "", catalog = "srpms")
 public class Project {
     private String id;
 

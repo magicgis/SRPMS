@@ -8,6 +8,7 @@ import javax.persistence.*;
  * Created by guofan on 2015/5/6.
  */
 @Entity
+@Table(name = "data", schema = "", catalog = "srpms")
 public class Data {
     private String id;
     private String path;

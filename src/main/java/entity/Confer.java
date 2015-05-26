@@ -8,6 +8,7 @@ import java.util.Collection;
  * Created by guofan on 2015/5/6.
  */
 @Entity
+@Table(name = "confer", schema = "", catalog = "srpms")
 public class Confer {
     private String id;
     private String type;

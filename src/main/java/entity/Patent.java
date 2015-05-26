@@ -8,6 +8,7 @@ import java.util.Collection;
  * Created by guofan on 2015/5/6.
  */
 @Entity
+@Table(name = "patent", schema = "", catalog = "srpms")
 public class Patent {
     private String id;
     private String name;
