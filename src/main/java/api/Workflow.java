@@ -258,16 +258,43 @@ public class Workflow {
      * @return TorF
      */
     @POST
-    @Path("/submitAll")
+    @Path("/submitByTeacher")
     @Produces("text/plain;charset=UTF-8")
-    public boolean SubmitAll(@FormParam("WF_User") String user) {
+    public boolean teacherSubmit(@FormParam("WF_User") String user) {
         List<Order> list = engine.getOrderByActor(user);
         List<String> teacherFlag = Arrays.asList(new String[]{"Submission", "Confirm"});
-//        List<String> colFlag = Arrays.asList(new String[]{"Submission","Confirm","SubmitByTeacher","ApprovalByCol"});
         for (Order u : list) {
             List<Task> tasks = engine.getTaskByOrder(u.getId());
             String taskName = tasks.get(0).getTaskName();
             if (tasks.size() != 1 || teacherFlag.contains(taskName)) {
+                return false;
+            }
+        }
+        Map<String, Object> args = new HashMap<>();
+        args.put("WF_Memo", "Submit By Program");
+        for (Order u : list) {
+            List<Task> tasks = engine.getTaskByOrder(u.getId());
+            engine.execute(tasks.get(0).getId(), user, args);
+        }
+        return true;
+    }
+
+    /**
+     * 统一提交
+     *
+     * @param user 用户
+     * @return TorF
+     */
+    @POST
+    @Path("/submitByCol")
+    @Produces("text/plain;charset=UTF-8")
+    public boolean colSubmit(@FormParam("WF_User") String user) {
+        List<Order> list = engine.getOrderByActor(user);
+        List<String> colFlag = Arrays.asList(new String[]{"Submission", "Confirm", "SubmitByTeacher", "ApprovalByCol"});
+        for (Order u : list) {
+            List<Task> tasks = engine.getTaskByOrder(u.getId());
+            String taskName = tasks.get(0).getTaskName();
+            if (tasks.size() != 1 || colFlag.contains(taskName)) {
                 return false;
             }
         }
