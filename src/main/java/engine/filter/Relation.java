@@ -92,6 +92,11 @@ public class Relation implements SnakerInterceptor {
                         orderActorDao.save(order, actor, 0, type);
                     }
                 }
+                if (nextFlag.equals("Submit")) {
+                    Map<String, Object> args = new HashMap<String, Object>();
+                    args.put("Status", "WaitForSubmit");
+                    execution.getEngine().order().addVariable(order, args);
+                }
                 return;
             }
 
