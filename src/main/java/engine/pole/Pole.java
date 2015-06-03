@@ -17,10 +17,11 @@ public class Pole extends Assignment {
 //        System.out.println(model.getAssignee());
 //        System.out.println(execution.ge());
 //        System.out.println(execution.)
-        if (model.getName().equals("ApprovalByCol")){
+        String taskName = model.getName();
+        if (taskName.equals("ApprovalByCol") || taskName.equals("SubmitByCol")) {
             /*TODO 根据order里的变量来分配任务*/
             return "col";
-        }else if(model.getName().equals("ApprovalBySch")){
+        } else if (model.getName().equals("ApprovalByDep")) {
             /*TODO 根据order里的变量来分配任务*/
             return "dep";
         }else{

@@ -1,4 +1,4 @@
-package engine.filter;
+package engine.older;
 
 import engine.entity.OrderActorDao;
 import org.snaker.engine.SnakerInterceptor;
@@ -20,7 +20,8 @@ import java.util.Map;
 public class AllReadey implements SnakerInterceptor {
     @Override
     public void intercept(Execution execution) {
-        BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/application*.xml");
+        BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/applicationContext.xml",
+                "classpath:/applicationContext-snaker.xml");
         OrderActorDao orderActorDao =(OrderActorDao) factory.getBean("orderActorDao");
         String actor = execution.getOperator();
         String order = execution.getOrder().getId();

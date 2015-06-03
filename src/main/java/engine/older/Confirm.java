@@ -1,6 +1,5 @@
-package engine.filter;
+package engine.older;
 
-import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
 import org.snaker.engine.SnakerInterceptor;
 import org.snaker.engine.access.QueryFilter;
@@ -8,7 +7,6 @@ import org.snaker.engine.core.Execution;
 import org.snaker.engine.entity.Task;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +33,8 @@ import java.util.Map;
         * 所以本次更新去掉注入，直接调用DAO
         * 再再更新：艹，不能new
         * */
-        BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/application*.xml");
+        BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/applicationContext.xml",
+                "classpath:/applicationContext-snaker.xml");
         OrderActorDao orderActorDao =(OrderActorDao) factory.getBean("orderActorDao");
 //        OrderActorDao orderActorDao = new OrderActorDao();
         String actor = execution.getOperator();

@@ -1,4 +1,4 @@
-package engine.filter;
+package engine.older;
 
 import engine.entity.OrderActorDao;
 import org.snaker.engine.SnakerInterceptor;
@@ -20,39 +20,40 @@ import java.util.Map;
 public class Decision implements SnakerInterceptor {
     @Override
     public void intercept(Execution execution) {
-        BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/application*.xml");
-        OrderActorDao orderActorDao =(OrderActorDao) factory.getBean("orderActorDao");
+        BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/applicationContext.xml",
+                "classpath:/applicationContext-snaker.xml");
+        OrderActorDao orderActorDao = (OrderActorDao) factory.getBean("orderActorDao");
         String actor = execution.getOperator();
         String order = execution.getOrder().getId();
         String creator = execution.getOrder().getCreator();
         String type = orderActorDao.getByOrder(order).get(0).getType();
-        Map<String,Object> args = new HashMap<String, Object>();
+        Map<String, Object> args = new HashMap<String, Object>();
         List<Task> tasks = execution.getEngine().query().getActiveTasks(new QueryFilter().setOrderId(order));
-        Map<String,Object> dec = execution.getArgs();
+        Map<String, Object> dec = execution.getArgs();
         boolean flag = false;
-        if(dec.containsKey("DecByCol")){
-            if(dec.get("DecByCol") instanceof String) {
+        if (dec.containsKey("DecByCol")) {
+            if (dec.get("DecByCol") instanceof String) {
                 flag = Boolean.valueOf(dec.get("DecByCol").toString());
-            }else{
+            } else {
                 flag = (Boolean) dec.get("DecByCol");
             }
-            if(flag){
-                orderActorDao.save(order,"dep",3,type);
+            if (flag) {
+                orderActorDao.save(order, "dep", 3, type);
                 args.put("Status", "WaitForDep");
-            }else{
-                args.put("Status","RefuseByCol");
+            } else {
+                args.put("Status", "RefuseByCol");
             }
 
-        }else if(dec.containsKey("DecByDep")){
-            if(dec.get("DecByDep") instanceof String) {
+        } else if (dec.containsKey("DecByDep")) {
+            if (dec.get("DecByDep") instanceof String) {
                 flag = Boolean.valueOf(dec.get("DecByDep").toString());
-            }else{
+            } else {
                 flag = (Boolean) dec.get("DecByDep");
             }
-            if(flag){
+            if (flag) {
                 args.put("Status", "AllCompelete");
-            }else{
-                args.put("Status","RefuseByDep");
+            } else {
+                args.put("Status", "RefuseByDep");
             }
         }
 //        if(tasks.size()==1&&tasks.get(0).getTaskName().equals("Submission")){

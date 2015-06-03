@@ -1,8 +1,7 @@
-package engine.filter;
+package engine.older;
 
 import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
-import engine.utils.Tool;
 import org.snaker.engine.SnakerInterceptor;
 import org.snaker.engine.core.Execution;
 import org.springframework.beans.factory.BeanFactory;
@@ -23,7 +22,8 @@ public class Submit implements SnakerInterceptor {
     @Override
     public void intercept(Execution execution) {
         /*手工获取DAO*/
-        BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/application*.xml");
+        BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/applicationContext.xml",
+                "classpath:/applicationContext-snaker.xml");
         OrderActorDao orderActorDao =(OrderActorDao) factory.getBean("orderActorDao");
         String actor = execution.getOperator();
         String order = execution.getOrder().getId();
