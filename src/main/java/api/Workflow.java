@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.ServletContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static util.Trans.getSubMap;
 
@@ -265,9 +262,12 @@ public class Workflow {
     @Produces("text/plain;charset=UTF-8")
     public boolean SubmitAll(@FormParam("WF_User") String user) {
         List<Order> list = engine.getOrderByActor(user);
+        List<String> teacherFlag = Arrays.asList(new String[]{"Submission", "Confirm"});
+//        List<String> colFlag = Arrays.asList(new String[]{"Submission","Confirm","SubmitByTeacher","ApprovalByCol"});
         for (Order u : list) {
             List<Task> tasks = engine.getTaskByOrder(u.getId());
-            if (tasks.size() != 1 || !tasks.get(0).getTaskName().equals("Submit")) {
+            String taskName = tasks.get(0).getTaskName();
+            if (tasks.size() != 1 || teacherFlag.contains(taskName)) {
                 return false;
             }
         }
@@ -278,20 +278,6 @@ public class Workflow {
             engine.execute(tasks.get(0).getId(), user, args);
         }
         return true;
-    }
-
-    /**
-     * 撤回order
-     *
-     * @param user  用户
-     * @param order orderId
-     * @return 是否撤回成功
-     */
-    @POST
-    @Path("/getBack")
-    @Consumes("application/x-www-form-urlencoded")
-    public boolean getBack(@FormParam("WF_User") String user, @FormParam("WF_Order") String order) {
-        return engine.setOrderRestart(order, user);
     }
 
     /**

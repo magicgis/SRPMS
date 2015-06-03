@@ -1,6 +1,5 @@
 package api;
 
-import entity.BaseInfo;
 import entity.Staff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,9 +7,10 @@ import service.StaffService;
 
 import javax.ws.rs.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import static util.Trans.*;
+import static util.Trans.getSubMap;
 
 /**
  * Created by guofan on 2015/5/7.
@@ -68,18 +68,8 @@ public class StaffApi {
     @Consumes("application/json;charset=UTF-8")
     public boolean update(@PathParam("id") String id, HashMap<String, Object> args) {
         Staff temp = staffService.getById(id);
-        try {
-            Staff y = (Staff) map2Obj(args, Staff.class);
-            BaseInfo dep = y.getBaseInfoByDeptId();
-            BaseInfo rank = y.getBaseInfoByRankId();
-            temp.setBaseInfoByRankId((BaseInfo) moveOneToAnother(rank, temp.getBaseInfoByRankId()));
-            temp.setBaseInfoByDeptId((BaseInfo) moveOneToAnother(dep, temp.getBaseInfoByDeptId()));
-            y.setBaseInfoByDeptId(null);
-            y.setBaseInfoByRankId(null);
-            temp = (Staff) moveOneToAnother(y, temp);
-        } catch (Exception y) {
-            y.printStackTrace();
-        }
+//        temp.setEdu();
+//        Staff y = (Staff) map2Obj(args, Staff.class);
         return staffService.update(temp);
     }
 
@@ -108,4 +98,12 @@ public class StaffApi {
     public Staff getById(@PathParam("id") String id) {
         return staffService.getById(id);
     }
+
+    @GET
+    @Path("/json")
+    @Consumes("application/json;charset=UTF-8")
+    public List<Staff> getAllStaff(@QueryParam("query") String query) {
+        return staffService.search(query, null, null);
+    }
+
 }
