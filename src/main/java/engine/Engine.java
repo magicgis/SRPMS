@@ -1,8 +1,10 @@
 package engine;
 
 import engine.entity.OrderActor;
-import org.snaker.engine.entity.*;
+import org.snaker.engine.entity.HistoryTask;
+import org.snaker.engine.entity.Order;
 import org.snaker.engine.entity.Process;
+import org.snaker.engine.entity.Task;
 
 import java.util.List;
 import java.util.Map;
@@ -70,6 +72,14 @@ public interface Engine {
      * @return order List
      */
     List<Order> getOrderByActor(String actor);
+
+    /**
+     * 获取学院任务
+     *
+     * @param actor 学院id
+     * @return order List
+     */
+    List<Order> getColOrder(String actor);
 
     List<Order> getOrderByTypeAndActor(String actor,String type);
 

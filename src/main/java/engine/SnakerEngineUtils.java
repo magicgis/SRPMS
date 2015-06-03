@@ -58,6 +58,14 @@ public class SnakerEngineUtils implements Engine {
         return snakerEngine.query().getActiveOrders(new QueryFilter().setOperator(actor));
     }
 
+    public List<Order> getColOrder(String actor) {
+        List<OrderActor> temp = orderActorDao.getByActor(actor);
+        List<Order> ans = new ArrayList<>();
+        for (OrderActor u : temp) {
+            ans.add(snakerEngine.query().getOrder(u.getOrder()));
+        }
+        return ans;
+    }
 
     public List<Task> getTaskByActor(String actor) {
         return snakerEngine.query().getActiveTasks(new QueryFilter().setOperator(actor));

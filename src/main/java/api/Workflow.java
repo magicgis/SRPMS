@@ -289,7 +289,7 @@ public class Workflow {
     @Path("/submitByCol")
     @Produces("text/plain;charset=UTF-8")
     public boolean colSubmit(@FormParam("WF_User") String user) {
-        List<Order> list = engine.getOrderByActor(user);
+        List<Order> list = engine.getColOrder(user);
         List<String> colFlag = Arrays.asList(new String[]{"Submission", "Confirm", "SubmitByTeacher", "ApprovalByCol"});
         for (Order u : list) {
             List<Task> tasks = engine.getTaskByOrder(u.getId());
