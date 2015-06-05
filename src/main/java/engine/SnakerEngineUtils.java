@@ -170,7 +170,7 @@ public class SnakerEngineUtils implements Engine {
          * 需要先撤回到确认任务
          * 再撤回到填表任务
          */
-        if (nowTask.getTaskName().equals("Submit")) {
+        if (nowTask.getTaskName().equals("SubmitByTeacher")) {
             for (HistoryTask his : hisTask) {
                 if (his.getTaskName().equals("Confirm")) {
 //                    System.out.println(his.getCreateTime());
