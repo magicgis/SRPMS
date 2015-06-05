@@ -48,7 +48,7 @@ public class Attachment {
         /*必要时需要对后缀名进行拦截*/
         String end = fileName.substring(fileName.lastIndexOf('.'), fileName.length());
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        String finalFileName = df.format(new Date()) + "-" + String.valueOf(System.currentTimeMillis()%1000)+end;
+        String finalFileName = df.format(new Date()) + "-" + String.valueOf(System.currentTimeMillis() % 1000) + end;
         File uploadedFileLocation = new File(upload, finalFileName);
         String fileId = null;
         if (writeToFile(uploadedInputStream, uploadedFileLocation)) {
@@ -83,8 +83,7 @@ public class Attachment {
     }
 
     @GET
-    @Path("/download/{id}")
-//    @Produces({"application/vnd.ms-word"})
+    @Path("/{id}")
     public Response downloadFile(@PathParam("id") String id) {
         /*获取class路径*/
         URL path = Thread.currentThread().getContextClassLoader().getResource("");
@@ -99,6 +98,29 @@ public class Attachment {
         String fileName = dataService.getById(id).getPath();
         File file = new File(upload, fileName);
         return Response.ok(file).header("Content-Disposition", "attachment;filename=" + fileName).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public boolean deleteFile(@PathParam("id") String id) {
+        /*todo 这儿需要对用户的判断*/
+        /*获取class路径*/
+        URL path = Thread.currentThread().getContextClassLoader().getResource("");
+        File classes = new File(path.getPath());
+        /*上一级目录*/
+        File web_inf = classes.getParentFile();
+        /*webapp目录，即根目录*/
+        File webapp = web_inf.getParentFile();
+        /*upload文件夹*/
+        File upload = new File(web_inf, "upload");
+        Data data = dataService.getById(id);
+        String fileName = data.getPath();
+        File file = new File(upload, fileName);
+        if (file.exists()) {
+            return dataService.delete(data) && file.delete();
+        } else {
+            return false;
+        }
     }
 
 }
