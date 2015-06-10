@@ -1,22 +1,19 @@
 package entity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Collection;
 
 /**
- * Created by guofan on 2015/5/6.
+ * Created by guofan on 2015/6/10.
  */
 @Entity
-@Table(name = "confer", schema = "", catalog = "srpms")
 public class Confer {
     private String id;
     private String type;
     private String name;
-    private Timestamp time;
+    private String time;
     private String addr;
     private String memo;
-    private Collection<Paper> papersById;
+    private Standard cStandard;
 
     @Id
     @Column(name = "id")
@@ -50,11 +47,11 @@ public class Confer {
 
     @Basic
     @Column(name = "time")
-    public Timestamp getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -106,12 +103,13 @@ public class Confer {
         return result;
     }
 
-    @OneToMany(mappedBy = "conferByConferId")
-    public Collection<Paper> getPapersById() {
-        return papersById;
+    @ManyToOne
+    @JoinColumn(name = "standard", referencedColumnName = "id")
+    public Standard getCStandard() {
+        return cStandard;
     }
 
-    public void setPapersById(Collection<Paper> papersById) {
-        this.papersById = papersById;
+    public void setCStandard(Standard cStandard) {
+        this.cStandard = cStandard;
     }
 }

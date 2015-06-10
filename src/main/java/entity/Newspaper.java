@@ -1,19 +1,17 @@
 package entity;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 /**
- * Created by guofan on 2015/5/6.
+ * Created by guofan on 2015/6/10.
  */
 @Entity
-@Table(name = "newspaper", schema = "", catalog = "srpms")
 public class Newspaper {
     private String id;
     private String name;
     private String period;
     private String memo;
-    private Collection<Paper> papersById;
+    private Standard nStandard;
 
     @Id
     @Column(name = "id")
@@ -79,12 +77,13 @@ public class Newspaper {
         return result;
     }
 
-    @OneToMany(mappedBy = "newspaperByNewsId")
-    public Collection<Paper> getPapersById() {
-        return papersById;
+    @ManyToOne
+    @JoinColumn(name = "standard", referencedColumnName = "id")
+    public Standard getNStandard() {
+        return nStandard;
     }
 
-    public void setPapersById(Collection<Paper> papersById) {
-        this.papersById = papersById;
+    public void setNStandard(Standard nStandard) {
+        this.nStandard = nStandard;
     }
 }

@@ -1,22 +1,18 @@
 package entity;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 import javax.persistence.*;
 
 /**
- * Created by guofan on 2015/5/6.
+ * Created by guofan on 2015/6/10.
  */
 @Entity
-@Table(name = "user", schema = "", catalog = "srpms")
 public class User {
     private String id;
     private String email;
-    @JsonIgnore
     private String pwd;
     private String privilege;
     private Integer status;
-    private Staff staffByStaId;
+    private Staff uStaff;
 
     @Id
     @Column(name = "id")
@@ -96,11 +92,11 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "sta_id", referencedColumnName = "id")
-    public Staff getStaffByStaId() {
-        return staffByStaId;
+    public Staff getUStaff() {
+        return uStaff;
     }
 
-    public void setStaffByStaId(Staff staffByStaId) {
-        this.staffByStaId = staffByStaId;
+    public void setUStaff(Staff uStaff) {
+        this.uStaff = uStaff;
     }
 }

@@ -82,7 +82,7 @@ public class UserApi {
     @Consumes("application/json;charset=UTF-8")
     public boolean update(@PathParam("id") String id, HashMap<String, Object> args) {
         User user = userService.getById(id);
-        Staff staff = user.getStaffByStaId();
+        Staff staff = user.getUStaff();
         HashMap<String, Object> map = (HashMap<String, Object>) nestMap(args);
         user = (User) putMapOnObj(user, User.class, map);
         staff = (Staff) putMapOnObj(staff, Staff.class, (Map<String, Object>) map.get("staffByStaId"));

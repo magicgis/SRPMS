@@ -3,10 +3,9 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by guofan on 2015/5/6.
+ * Created by guofan on 2015/6/10.
  */
 @Entity
-@Table(name = "staff", schema = "", catalog = "srpms")
 public class Staff {
     private String id;
     private String name;
@@ -16,8 +15,9 @@ public class Staff {
     private String degree;
     private String staSnm;
     private String memo;
-    private BaseInfo baseInfoByDeptId;
-    private BaseInfo baseInfoByRankId;
+    private BaseInfo sDept;
+    private BaseInfo sRank;
+    private BaseInfo sCol;
 
     @Id
     @Column(name = "id")
@@ -132,22 +132,32 @@ public class Staff {
     }
 
     @ManyToOne
-    @JoinColumn(name = "dept_id", referencedColumnName = "id")
-    public BaseInfo getBaseInfoByDeptId() {
-        return baseInfoByDeptId;
+    @JoinColumn(name = "dept", referencedColumnName = "id")
+    public BaseInfo getSDept() {
+        return sDept;
     }
 
-    public void setBaseInfoByDeptId(BaseInfo baseInfoByDeptId) {
-        this.baseInfoByDeptId = baseInfoByDeptId;
+    public void setSDept(BaseInfo sDept) {
+        this.sDept = sDept;
     }
 
     @ManyToOne
-    @JoinColumn(name = "rank_id", referencedColumnName = "id")
-    public BaseInfo getBaseInfoByRankId() {
-        return baseInfoByRankId;
+    @JoinColumn(name = "rank", referencedColumnName = "id")
+    public BaseInfo getSRank() {
+        return sRank;
     }
 
-    public void setBaseInfoByRankId(BaseInfo baseInfoByRankId) {
-        this.baseInfoByRankId = baseInfoByRankId;
+    public void setSRank(BaseInfo sRank) {
+        this.sRank = sRank;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "col", referencedColumnName = "id")
+    public BaseInfo getSCol() {
+        return sCol;
+    }
+
+    public void setSCol(BaseInfo sCol) {
+        this.sCol = sCol;
     }
 }
