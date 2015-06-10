@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -204,13 +203,13 @@ public class BaseDaoImp<T> implements BaseDao<T> {
     }
 
     @Override
-    public List<T> findByArrayFuz(ArrayList<String> keys, String keyword, String sort, String order) {
+    public List<T> findByArrayFuz(List<String> keys, String keyword, String sort, String order) {
         String hql = "from " + entityClass.getName();
         String where = "";
-        for (String s : keys) {
-            where = where + s + " LIKE " + "'%" + keyword + "%' OR ";
-        }
-        if (where.length() > 0 && keyword != null) {
+        if (keyword != null && !keyword.equals("")) {
+            for (String s : keys) {
+                where = where + s + " LIKE " + "'%" + keyword + "%' OR ";
+            }
             hql = hql + " where " + where.substring(0, where.length() - 4);
         }
         if (sort != null) {

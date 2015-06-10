@@ -1,7 +1,6 @@
 package dao;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -94,7 +93,7 @@ public interface BaseDao<T> {
      */
     List<T> findByMapAcc(HashMap<String, Object> args);
 
-    List<T> findByArrayFuz(ArrayList<String> keys, String keyword, String sort, String order);
+    List<T> findByArrayFuz(List<String> keys, String keyword, String sort, String order);
 
     /**
      * 精确查找，带分页
