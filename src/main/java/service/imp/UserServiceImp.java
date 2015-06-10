@@ -1,13 +1,10 @@
 package service.imp;
 
-import com.sun.prism.impl.ps.CachingEllipseRep;
 import dao.UserDao;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import service.UserService;
 import org.springframework.stereotype.Service;
-import util.CrunchifyInMemoryCache;
-
+import service.UserService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,10 +20,10 @@ public class UserServiceImp extends BaseServiceImp<User> implements UserService 
     @Override
     public List<User> search(String keyword, String sort, String order) {
         ArrayList<String> keys = new ArrayList<>();
-        keys.add("staffByStaId.name");
-        keys.add("staffByStaId.id");
-        keys.add("staffByStaId.baseInfoByDeptId.value");
-        keys.add("staffByStaId.degree");
+        keys.add("uStaff.name");
+        keys.add("uStaff.id");
+        keys.add("uStaff.sDept.value");
+        keys.add("uStaff.degree");
         return userDao.findByArrayFuz(keys, keyword, sort, order);
     }
 
