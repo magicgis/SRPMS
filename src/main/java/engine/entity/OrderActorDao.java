@@ -108,7 +108,7 @@ public class OrderActorDao {
     public String getMajorActorByOrder(String order){
         String hql = "from OrderActor where order = '"+order+"' and role = " + "1";
         List<OrderActor> list = this.getCurrentSession().createQuery(hql).list();
-        return list.get(0).toString();
+        return list.get(0).getActor();
     }
 
 

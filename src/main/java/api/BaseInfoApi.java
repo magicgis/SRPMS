@@ -22,7 +22,6 @@ public class BaseInfoApi {
     BaseInfoService baseInfoService;
 
     /**
-     * 获取所有的帐号信息
      *
      * @param limit
      * @param offset
