@@ -19,18 +19,12 @@
 + 复制`database.properties.example`里的内容，并根据本机情况进行修改
 
 - - -
-其他文件
-+ PostMan测试文件放在`Other`
-+ SQL脚本也放在`Other`
 
-- - -
-
-[API文档](http://doc.xulog.com/srpms/)
 
 #### TODO
-- [ ] API权限控制
+- [√] API权限控制
 - [ ] 任务结束触发器
 - [ ] 帐号维护
-- [ ] 个人信息维护
+- [√] 个人信息维护
 - [ ] 数据导入导出
 - [ ] etc
