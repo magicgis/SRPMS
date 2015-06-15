@@ -74,8 +74,8 @@ public class All implements ContainerRequestFilter {
             }
         /*如果未登陆*/
         } else {
-            /*登陆api属于特殊放行的特例*/
-            if (path.toString().trim().equals("/user/login")) {
+            /*登陆api属于特殊放行的特例,下载由于前台原因，临时放行*/
+            if (path.toString().trim().equals("/user/login") || path.toString().equals("/file/{id}")) {
                 /*正常通行*/
             } else {
                 /*打断，返回401*/
