@@ -247,8 +247,10 @@ public class Workflow {
     @GET
     @Path("/{user}/confirmTask")
     @Produces("application/json;charset=UTF-8")
-    public List<Task> getConfirmTask(@PathParam("user") String user) {
-        return engine.getConfirmTask(user);
+    public Map getConfirmTask(@PathParam("user") String user,
+                              @QueryParam("limit") Integer limit,
+                              @QueryParam("offset") Integer offset) {
+        return getSubMap(engine.getConfirmTask(user), limit, offset);
     }
 
     /**
