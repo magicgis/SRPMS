@@ -6,6 +6,7 @@ import javax.persistence.*;
  * Created by guofan on 2015/6/10.
  */
 @Entity
+@Table(name = "paper", schema = "", catalog = "srpms")
 public class Paper {
     private String id;
     private Byte paperType;

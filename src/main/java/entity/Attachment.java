@@ -8,6 +8,7 @@ import javax.persistence.*;
  * Created by guofan on 2015/6/10.
  */
 @Entity
+@Table(name = "attachment", schema = "", catalog = "srpms")
 public class Attachment {
     private String id;
     private String user;

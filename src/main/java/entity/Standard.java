@@ -1,14 +1,12 @@
 package entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by guofan on 2015/6/10.
  */
 @Entity
+@Table(name = "standard", schema = "", catalog = "srpms")
 public class Standard {
     private String id;
     private String type;
