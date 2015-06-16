@@ -44,4 +44,13 @@ public class UserServiceImp extends BaseServiceImp<User> implements UserService 
             return temp.get(0);
         }
     }
+
+    @Override
+    public boolean editpasswd(User user, String pwd) {
+        if (user == null) {
+            return false;
+        }
+        user.setPwd(MD5(user.getId() + pwd));
+        return userDao.update(user);
+    }
 }

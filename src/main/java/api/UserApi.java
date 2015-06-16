@@ -162,4 +162,23 @@ public class UserApi {
         }
         return TokenUser.get(token);
     }
+
+    /**
+     * 修改密码
+     * <oldPwd,旧密码>
+     * <newPwd,新密码>
+     * <user,userId>
+     *
+     * @param args json
+     * @return T/F
+     */
+    @PUT
+    @Path("/password")
+    @Produces("application/json;charset=UTF-8")
+    public boolean editPasswd(HashMap<String, String> args) {
+        String old = args.get("oldPwd");
+        String now = args.get("newPwd");
+        String userId = args.get("user");
+        return userService.editpasswd(userService.getUser(userId, old), now);
+    }
 }
