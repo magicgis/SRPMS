@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 /**
@@ -46,9 +47,15 @@ public class Trans<T> {
      * @return
      * @throws Exception
      */
-    public static String MD5(String args) throws Exception {
+    public static String MD5(String args) {
         String original = args;
-        MessageDigest md = MessageDigest.getInstance("MD5");
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
         md.update(original.getBytes());
         byte[] digest = md.digest();
         StringBuffer sb = new StringBuffer();

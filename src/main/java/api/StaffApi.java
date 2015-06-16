@@ -1,15 +1,18 @@
 package api;
 
 import entity.Staff;
+import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import service.StaffService;
+import service.UserService;
 
 import javax.ws.rs.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static util.Trans.MD5;
 import static util.Trans.getSubMap;
 
 /**
@@ -20,6 +23,8 @@ import static util.Trans.getSubMap;
 public class StaffApi {
     @Autowired
     StaffService staffService;
+    @Autowired
+    UserService userService;
 
     /**
      * 所有员工信息（非User)
@@ -53,6 +58,78 @@ public class StaffApi {
     @Consumes("application/json;charset=UTF-8")
     public boolean add(HashMap<String, Object> args) {
         return false;//todo
+    }
+
+
+    /**
+     * 启用员工帐号，帐号为工号，密码为工号
+     *
+     * @param id 员工ID
+     * @return T/F
+     */
+    @POST
+    @Path("/enable/{id}")
+    @Consumes("application/json;charset=UTF-8")
+    public boolean enableStaff(@PathParam("id") String id) {
+        Staff staff = staffService.getById(id);
+        if (staff.getUser() == null) {
+            User user = new User();
+            user.setId(staff.getId());
+            try {
+                user.setPwd(MD5(user.getId() + user.getId()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //TODO 设置权限
+            user.setPrivilege(null);
+            user.setUStaff(staff);
+            user.setStatus(1);
+            return userService.save(user);
+        } else {
+            User user = staff.getUser();
+            user.setStatus(1);
+            return userService.update(user);
+        }
+    }
+
+    /**
+     * 重置密码，密码为其工号
+     *
+     * @param id 员工工号
+     * @return T/F
+     */
+    @PUT
+    @Path("/reset/{id}")
+    @Consumes("application/json;charset=UTF-8")
+    public boolean resetStaff(@PathParam("id") String id) {
+        Staff staff = staffService.getById(id);
+        if (staff != null && staff.getUser() != null) {
+            User user = staff.getUser();
+            String pwd = MD5(user.getId() + user.getId());
+            user.setPwd(pwd);
+            return userService.update(user);
+        }
+        return false;
+    }
+
+    /**
+     * 禁用员工帐号
+     *
+     * @param id 员工工号
+     * @return T/F
+     */
+    @POST
+    @Path("/disable/{id}")
+    @Consumes("application/json;charset=UTF-8")
+    public boolean disableStaff(@PathParam("id") String id) {
+        Staff staff = staffService.getById(id);
+        if (staff.getUser() == null) {
+            return false;
+        } else {
+            User user = staff.getUser();
+            user.setStatus(0);
+            return userService.update(user);
+        }
     }
 
 
