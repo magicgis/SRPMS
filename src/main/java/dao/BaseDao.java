@@ -16,7 +16,7 @@ public interface BaseDao<T> {
      */
     boolean save(T obj);
 
-    public Serializable add(T obj);
+    Serializable add(T obj);
 
     /**
      * 删除
