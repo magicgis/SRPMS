@@ -11,8 +11,8 @@ public class Standard {
     private String id;
     private String type;
     private String info;
-    private Integer maxNum;
-    private int value;
+    private String limit;
+    private Integer value;
 
     @Id
     @Column(name = "id")
@@ -45,13 +45,13 @@ public class Standard {
     }
 
     @Basic
-    @Column(name = "max_num")
-    public Integer getMaxNum() {
-        return maxNum;
+    @Column(name = "limit")
+    public String getLimit() {
+        return limit;
     }
 
-    public void setMaxNum(Integer maxNum) {
-        this.maxNum = maxNum;
+    public void setLimit(String limit) {
+        this.limit = limit;
     }
 
     @Basic
@@ -75,7 +75,7 @@ public class Standard {
         if (id != null ? !id.equals(standard.id) : standard.id != null) return false;
         if (type != null ? !type.equals(standard.type) : standard.type != null) return false;
         if (info != null ? !info.equals(standard.info) : standard.info != null) return false;
-        if (maxNum != null ? !maxNum.equals(standard.maxNum) : standard.maxNum != null) return false;
+        if (limit != null ? !limit.equals(standard.limit) : standard.limit != null) return false;
 
         return true;
     }
@@ -85,7 +85,7 @@ public class Standard {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (info != null ? info.hashCode() : 0);
-        result = 31 * result + (maxNum != null ? maxNum.hashCode() : 0);
+        result = 31 * result + (limit != null ? limit.hashCode() : 0);
         result = 31 * result + value;
         return result;
     }
