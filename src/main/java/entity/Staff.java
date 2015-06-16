@@ -1,5 +1,9 @@
 package entity;
 
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 
 /**
@@ -7,6 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "staff", schema = "", catalog = "srpms")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class Staff {
     private String id;
     private String name;
@@ -19,6 +24,7 @@ public class Staff {
     private BaseInfo sDept;
     private BaseInfo sRank;
     private BaseInfo sCol;
+    private User user;
 
     @Id
     @Column(name = "id")
@@ -115,8 +121,11 @@ public class Staff {
         if (degree != null ? !degree.equals(staff.degree) : staff.degree != null) return false;
         if (staSnm != null ? !staSnm.equals(staff.staSnm) : staff.staSnm != null) return false;
         if (memo != null ? !memo.equals(staff.memo) : staff.memo != null) return false;
+        if (sDept != null ? !sDept.equals(staff.sDept) : staff.sDept != null) return false;
+        if (sRank != null ? !sRank.equals(staff.sRank) : staff.sRank != null) return false;
+        if (sCol != null ? !sCol.equals(staff.sCol) : staff.sCol != null) return false;
+        return !(user != null ? !user.equals(staff.user) : staff.user != null);
 
-        return true;
     }
 
     @Override
@@ -129,6 +138,10 @@ public class Staff {
         result = 31 * result + (degree != null ? degree.hashCode() : 0);
         result = 31 * result + (staSnm != null ? staSnm.hashCode() : 0);
         result = 31 * result + (memo != null ? memo.hashCode() : 0);
+        result = 31 * result + (sDept != null ? sDept.hashCode() : 0);
+        result = 31 * result + (sRank != null ? sRank.hashCode() : 0);
+        result = 31 * result + (sCol != null ? sCol.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
     }
 
@@ -160,5 +173,14 @@ public class Staff {
 
     public void setSCol(BaseInfo sCol) {
         this.sCol = sCol;
+    }
+
+    @OneToOne(mappedBy = "UStaff")
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

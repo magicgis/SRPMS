@@ -1,5 +1,9 @@
 package entity;
 
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 
 /**
@@ -7,6 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "user", schema = "", catalog = "srpms")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class User {
     private String id;
     private String email;
@@ -91,8 +96,8 @@ public class User {
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "sta_id", referencedColumnName = "id")
+    @OneToOne
+    @JoinColumn(name = "sta_id", referencedColumnName = "id", unique = true)
     public Staff getUStaff() {
         return uStaff;
     }
