@@ -3,7 +3,6 @@ package api;
 import engine.Engine;
 import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
-import io.swagger.annotations.Api;
 import org.snaker.engine.entity.HistoryTask;
 import org.snaker.engine.entity.Order;
 import org.snaker.engine.entity.Process;
@@ -24,7 +23,6 @@ import static util.Trans.getSubMap;
  * Created by guofan on 2015/3/8
  */
 @Path("/workflow")
-@Api(value = "/workflow", description = "工作流操作")
 @RestController
 @SuppressWarnings({"unchecked", "unused"})
 public class Workflow {
