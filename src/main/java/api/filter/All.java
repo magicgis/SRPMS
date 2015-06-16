@@ -45,8 +45,10 @@ public class All implements ContainerRequestFilter {
         urlService.addUrl(path.toString(), type, null);
         /*获取token*/
         String token = requestContext.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-        if(token.equals("IAMX")){
-            return;
+        if (token != null) {
+            if (token.equals("IAMX")) {
+                return;
+            }
         }
         if (TokenUser == null) {
             /*创建<Token,User>缓存*/
@@ -78,7 +80,8 @@ public class All implements ContainerRequestFilter {
         /*如果未登陆*/
         } else {
             /*登陆api属于特殊放行的特例,下载由于前台原因，临时放行*/
-            if (path.toString().trim().equals("/user/login") || path.toString().equals("/file/{id}")) {
+            String url = path.toString().trim();
+            if (url.equals("/user/login") || url.equals("/file/{id}") || url.equals("//swagger.json")) {
                 /*正常通行*/
             } else {
                 /*打断，返回401*/
