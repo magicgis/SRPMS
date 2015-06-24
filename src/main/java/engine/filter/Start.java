@@ -1,14 +1,14 @@
-package engine.older;
+package engine.filter;
 
 import engine.entity.OrderActorDao;
 import org.snaker.engine.SnakerInterceptor;
 import org.snaker.engine.core.Execution;
 import org.snaker.engine.entity.Order;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static util.StaticFactory.getBean;
 
 /**
  * DATE:2015/3/22
@@ -21,14 +21,7 @@ public class Start implements SnakerInterceptor {
 
     @Override
     public void intercept(Execution execution) {
-//        Long startTime = System.currentTimeMillis();
-        BeanFactory factory = new ClassPathXmlApplicationContext("classpath:/applicationContext.xml",
-        "classpath:/applicationContext-snaker.xml");
-        OrderActorDao orderActorDao =(OrderActorDao) factory.getBean("orderActorDao");
-//        OrderActorDao orderActorDao = AOService.getDao();
-//        Long endTime = System.currentTimeMillis();
-//        System.out.println(endTime-startTime);
-//        SnakerEngine engine = factory.getBean("snakerEngine");
+        OrderActorDao orderActorDao = (OrderActorDao) getBean("orderActorDao");
         String actor = execution.getOperator();
         Order order = execution.getOrder();
         String type = (String) execution.getArgs().get("WF_Type");

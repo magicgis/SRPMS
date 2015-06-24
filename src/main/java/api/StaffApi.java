@@ -2,7 +2,6 @@ package api;
 
 import entity.Staff;
 import entity.User;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import service.StaffService;
@@ -21,7 +20,6 @@ import static util.Trans.getSubMap;
  */
 @Path("/staff")
 @RestController
-@Api(value = "/staff", description = "staff crud")
 public class StaffApi {
     @Autowired
     StaffService staffService;
