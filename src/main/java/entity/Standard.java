@@ -11,7 +11,8 @@ public class Standard {
     private String id;
     private String type;
     private String info;
-    private String limit;
+    private Integer min;
+    private Integer max;
     private Integer value;
 
     @Id
@@ -45,22 +46,32 @@ public class Standard {
     }
 
     @Basic
-    @Column(name = "limit")
-    public String getLimit() {
-        return limit;
+    @Column(name = "max")
+    public Integer getMax() {
+        return max;
     }
 
-    public void setLimit(String limit) {
-        this.limit = limit;
+    public void setMax(Integer max) {
+        this.max = max;
+    }
+
+    @Basic
+    @Column(name = "min")
+    public Integer getMin() {
+        return min;
+    }
+
+    public void setMin(Integer min) {
+        this.min = min;
     }
 
     @Basic
     @Column(name = "value")
-    public int getValue() {
+    public Integer getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 
@@ -71,13 +82,13 @@ public class Standard {
 
         Standard standard = (Standard) o;
 
-        if (value != standard.value) return false;
         if (id != null ? !id.equals(standard.id) : standard.id != null) return false;
         if (type != null ? !type.equals(standard.type) : standard.type != null) return false;
         if (info != null ? !info.equals(standard.info) : standard.info != null) return false;
-        if (limit != null ? !limit.equals(standard.limit) : standard.limit != null) return false;
+        if (min != null ? !min.equals(standard.min) : standard.min != null) return false;
+        if (max != null ? !max.equals(standard.max) : standard.max != null) return false;
+        return !(value != null ? !value.equals(standard.value) : standard.value != null);
 
-        return true;
     }
 
     @Override
@@ -85,8 +96,9 @@ public class Standard {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (info != null ? info.hashCode() : 0);
-        result = 31 * result + (limit != null ? limit.hashCode() : 0);
-        result = 31 * result + value;
+        result = 31 * result + (min != null ? min.hashCode() : 0);
+        result = 31 * result + (max != null ? max.hashCode() : 0);
+        result = 31 * result + (value != null ? value.hashCode() : 0);
         return result;
     }
 }
