@@ -1,6 +1,5 @@
 package api;
 
-import entity.Staff;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static util.Args.TokenUser;
-import static util.Trans.*;
+import static util.Trans.MD5;
+import static util.Trans.getSubMap;
 
 /**
  * Created by guofan on 2015/5/6.
@@ -60,13 +60,6 @@ public class UserApi {
     @Path("/new")
     @Consumes("application/json;charset=UTF-8")
     public boolean add(HashMap<String, Object> args) {
-        try {
-            Staff y = (Staff) map2Obj(args, Staff.class);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         return false;//todo
     }
 
@@ -81,14 +74,7 @@ public class UserApi {
     @Path("/{id}")
     @Consumes("application/json;charset=UTF-8")
     public boolean update(@PathParam("id") String id, HashMap<String, Object> args) {
-        User user = userService.getById(id);
-        Staff staff = user.getUStaff();
-        HashMap<String, Object> map = (HashMap<String, Object>) nestMap(args);
-        user = (User) putMapOnObj(user, User.class, map);
-        staff = (Staff) putMapOnObj(staff, Staff.class, (Map<String, Object>) map.get("staffByStaId"));
-//        System.out.println(staff);
-        staffService.update(staff);
-        return userService.update(user);//todo
+        return false;//todo
     }
 
     /**
@@ -101,13 +87,6 @@ public class UserApi {
     @Path("/{userId}/{staffId}")
     @Consumes("application/json;charset=UTF-8")
     public boolean update(@PathParam("userId") String userId, @PathParam("staffId") String staffId, HashMap<String, Object> args) {
-        User user = userService.getById(userId);
-        Staff staff = staffService.getById(staffId);
-        HashMap<String, Object> map = (HashMap<String, Object>) nestMap(args);
-        user = (User) putMapOnObj(user, User.class, map);
-        staff = (Staff) putMapOnObj(staff, Staff.class, (Map<String, Object>) map.get("staffByStaId"));
-        System.out.println(staff);
-//        user.
         return false;//todo
     }
 

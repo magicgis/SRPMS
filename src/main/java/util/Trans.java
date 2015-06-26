@@ -1,10 +1,7 @@
 package util;
 
-import org.codehaus.jackson.map.ObjectMapper;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -72,21 +69,23 @@ public class Trans<T> {
      * @return 返回对象存在的属性值
      * @throws Exception
      */
-    public static Object moveOneToAnother(Object obj, Object newObj) throws Exception {
-        Class userClass = Class.forName(obj.toString().split("@")[0]);//加载类
+    public static Object moveOneToAnother(Class userClass, Object obj, Object newObj) {
         Field[] fields = userClass.getDeclaredFields();//获得对象方法集合
         String fdname;
         Method getter;
         Method setter;
-        for (Field field : fields) {// 遍历该数组
-            fdname = field.getName();// 得到字段名，
-            getter = userClass.getMethod("get" + change(fdname));// 根据字段名找到对应的get方法，null表示无参数
-            Object name = getter.invoke(obj);// 调用该字段的get方法
-            if (name != null && name instanceof String) {
-                setter = userClass.getMethod("set" + change(fdname), String.class);
-                setter.invoke(newObj, name.toString());
-//                System.out.println(name);
+        try {
+            for (Field field : fields) {// 遍历该数组
+                fdname = field.getName();// 得到字段名，
+                getter = userClass.getMethod("get" + changeMethodName(fdname));// 根据字段名找到对应的get方法，null表示无参数
+                Object name = getter.invoke(obj);// 调用该字段的get方法
+                if (name != null) {
+                    setter = userClass.getMethod("set" + changeMethodName(fdname), name.getClass());
+                    setter.invoke(newObj, name);
+                }
             }
+        } catch (Exception e) {
+            return null;
         }
         return newObj;
     }
@@ -97,38 +96,36 @@ public class Trans<T> {
      * 会自动跳过嵌套的map部分
      *
      * @param obj 需要赋值对象
-     * @param cls obj的类名
      * @param map map
      * @Object 赋值之后的obj
      */
-    public static Object putMapOnObj(Object obj, Class cls, Map<String, Object> map) {
+    public static Boolean putMapOnObj(Object obj, Map<String, Object> map) {
+        Class cls = obj.getClass();
+        map = nestMap(map);
+        /*获取所有Function*/
         Method[] methods = cls.getMethods();
-        String fdname = null;
+        String fdname;
         for (Method method : methods) {
             int len = method.getName().length();
-            fdname = method.getName().startsWith("set") ? change(method.getName().substring(3,len)) : null;
+            fdname = method.getName().startsWith("set") ? changeMethodName(method.getName().substring(3, len)) : null;
             if (fdname != null && map.containsKey(fdname)) {
                 try {
                     if (!(map.get(fdname) instanceof Map)) {
                         method.invoke(obj, map.get(fdname));
                     }
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                    continue;
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                    continue;
+                } catch (Exception e) {
+                    return false;
                 }
             }
         }
-        return obj;
+        return true;
     }
 
     /**
      * @param src 源字符串
      * @return 字符串，将src的第一个字母转换为小写，src为空时返回null
      */
-    public static String change(String src) {
+    public static String changeMethodName(String src) {
         if (src != null) {
             StringBuffer sb = new StringBuffer(src);
             sb.setCharAt(0, Character.toLowerCase(sb.charAt(0)));
@@ -175,21 +172,6 @@ public class Trans<T> {
         map.put(flag, subMap);
         /*递归*/
         return nestMap(map);
-    }
-
-
-    /**
-     * map转为object
-     *
-     * @param map       map
-     * @param className 类名
-     * @return object
-     * @throws IOException 不知道什么错误
-     */
-    public static Object map2Obj(Map map, Class className) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        String x = mapper.writeValueAsString(map);
-        return mapper.readValue(x, className);
     }
 
 }

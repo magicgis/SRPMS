@@ -4,6 +4,7 @@ import entity.Staff;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
+import service.BaseInfoService;
 import service.StaffService;
 import service.UserService;
 
@@ -12,8 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static util.Trans.MD5;
-import static util.Trans.getSubMap;
+import static util.Trans.*;
 
 /**
  * Created by guofan on 2015/5/7.
@@ -25,6 +25,8 @@ public class StaffApi {
     StaffService staffService;
     @Autowired
     UserService userService;
+    @Autowired
+    BaseInfoService baseInfoService;
 
     /**
      * 所有员工信息（非User)
@@ -144,10 +146,20 @@ public class StaffApi {
     @Path("/{id}")
     @Consumes("application/json;charset=UTF-8")
     public boolean update(@PathParam("id") String id, HashMap<String, Object> args) {
-        Staff temp = staffService.getById(id);
-//        temp.setEdu();
-//        Staff y = (Staff) map2Obj(args, Staff.class);
-        return staffService.update(temp);
+        /*旧的*/
+        Staff staff = staffService.getById(id);
+        HashMap<String, Object> first = new HashMap<>(args);
+        if (putMapOnObj(staff, args)) {
+            try {
+                staff.setSCol(baseInfoService.getById(first.get("sCol.id").toString()));
+                staff.setSDept(baseInfoService.getById(first.get("sDept.id").toString()));
+                staff.setSRank(baseInfoService.getById(first.get("sRank.id").toString()));
+            } catch (NullPointerException e) {
+                return false;
+            }
+            return staffService.update(staff);
+        }
+        return false;
     }
 
     /**
