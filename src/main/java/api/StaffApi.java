@@ -151,9 +151,9 @@ public class StaffApi {
         HashMap<String, Object> first = new HashMap<>(args);
         if (putMapOnObj(staff, args)) {
             try {
-                staff.setSCol(baseInfoService.getById(first.get("sCol.id").toString()));
-                staff.setSDept(baseInfoService.getById(first.get("sDept.id").toString()));
-                staff.setSRank(baseInfoService.getById(first.get("sRank.id").toString()));
+                staff.setSCol(baseInfoService.getById(first.get("scol.id").toString()));
+                staff.setSDept(baseInfoService.getById(first.get("sdept.id").toString()));
+                staff.setSRank(baseInfoService.getById(first.get("srank.id").toString()));
             } catch (NullPointerException e) {
                 return false;
             }

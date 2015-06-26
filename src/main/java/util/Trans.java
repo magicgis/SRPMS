@@ -12,7 +12,7 @@ import java.util.*;
  * TIME:21:02
  * Created by guofan on 2015/4/20
  */
-public class Trans<T> {
+public class Trans {
     /**
      * 分页
      *
