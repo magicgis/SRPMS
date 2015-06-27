@@ -1,6 +1,9 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.Map;
+
+import static util.Trans.str2Map;
 
 /**
  * Created by guofan on 2015/6/10.
@@ -14,6 +17,7 @@ public class Standard {
     private Integer min;
     private Integer max;
     private Integer value;
+    private Map infoMap;
 
     @Id
     @Column(name = "id")
@@ -73,6 +77,15 @@ public class Standard {
 
     public void setValue(Integer value) {
         this.value = value;
+    }
+
+    @Transient
+    public Map getInfoMap() {
+        return str2Map(getInfo());
+    }
+
+    public void setInfoMap(Map infoMap) {
+        this.info = infoMap.toString();
     }
 
     @Override

@@ -174,4 +174,43 @@ public class Trans {
         return nestMap(map);
     }
 
+    public static Map<String, Object> str2Map(String str) {
+        /*以下两个均为正则表达式*/
+        String x = str.replaceAll("\\{\"", "{,\"").replaceAll("\\}", ",}");
+        /*分割用的对,和:进行分割*/
+        String[] temp = x.split("(?<=\"):(?=(\"|\\{))|(?<=(\"|\\}|\\{)),(?=(\"|\\}))");
+        List list = new ArrayList();
+        int i = 0;
+        List<Integer> l = new ArrayList<>();
+        for (String s : temp) {
+            list.add(s.replace("\"", ""));
+            if (s.equals("{")) {
+            /*添加下标*/
+                l.add(list.size() - 1);
+            } else if (s.equals("}")) {
+            /*找出最后一个{的下标*/
+                int lastNum = l.get(l.size() - 1);
+            /*切割*/
+                List map = new ArrayList();
+                map.addAll(list.subList(lastNum, list.size()));
+            /*删除到上一个{之前*/
+                while (list.size() > lastNum) {
+                    list.remove(lastNum);
+                }
+                list.add(list2Map(map));
+                l.remove(l.size() - 1);
+            }
+        }
+        Map<String, Object> ans = (Map<String, Object>) list.get(0);
+        return ans;
+    }
+
+    public static Map<String, Object> list2Map(List list) {
+        Map<String, Object> ans = new HashMap<>();
+        for (int i = 1; i < list.size() - 1; i += 2) {
+            ans.put(list.get(i).toString(), list.get(i + 1));
+        }
+        return ans;
+    }
+
 }
