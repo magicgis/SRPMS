@@ -1,5 +1,7 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Map;
 
@@ -13,6 +15,7 @@ import static util.Trans.str2Map;
 public class Standard {
     private String id;
     private String type;
+    @JsonIgnore
     private String info;
     private Integer min;
     private Integer max;
