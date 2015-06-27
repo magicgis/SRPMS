@@ -2,7 +2,7 @@
     <start name="start" postInterceptors="engine.filter.Start">
         <transition offset="0,-10" to="Submission" name="Starter"/>
     </start>
-    <task name="Submission" displayName="填写申请" assignmentHandler="engine.pole.Pole"
+    <task name="Submission" displayName="填写申请" assignmentHandler="engine.role.role"
           postInterceptors="engine.filter.Submission">
         <transition offset="0,-10" to="SaveOrSubmit" name="t2save"/>
     </task>
@@ -15,10 +15,10 @@
         <transition to="SubmitByTeacher" name="c2submit"/>
     </task>
     <task name="SubmitByTeacher" displayName="统一提交" performType="ALL" taskType="Major"
-          assignmentHandler="engine.pole.Pole" postInterceptors="engine.filter.SubmitByTeacher">
+          assignmentHandler="engine.role.role" postInterceptors="engine.filter.SubmitByTeacher">
         <transition to="ApprovalByCol" name="s2approval"/>
     </task>
-    <task name="ApprovalByCol" displayName="院系审核" assignmentHandler="engine.pole.Pole"
+    <task name="ApprovalByCol" displayName="院系审核" assignmentHandler="engine.role.role"
           postInterceptors="engine.filter.Decision">
         <transition offset="0,-10" to="decision1" name="c2d1"/>
     </task>
@@ -27,10 +27,10 @@
         <transition to="Submission" name="d12t"/>
     </decision>
     <task name="SubmitByCol" displayName="院系提交" performType="ALL" taskType="Major"
-          assignmentHandler="engine.pole.Pole" postInterceptors="engine.filter.SubmitByCol">
+          assignmentHandler="engine.role.role" postInterceptors="engine.filter.SubmitByCol">
         <transition to="ApprovalByDep" name="s2approval"/>
     </task>
-    <task name="ApprovalByDep" displayName="部门审批" assignmentHandler="engine.pole.Pole"
+    <task name="ApprovalByDep" displayName="部门审批" assignmentHandler="engine.role.role"
           postInterceptors="engine.filter.Decision">
         <transition offset="0,-10" to="decision2" name="s2d2"/>
     </task>

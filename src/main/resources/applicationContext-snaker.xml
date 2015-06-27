@@ -10,7 +10,7 @@
     </bean>
 
     <!--任务权限配置-->
-    <bean id="access" class="engine.pole.AccessStrategy"/>
+    <bean id="access" class="engine.role.AccessStrategy"/>
 
     <!--缓存配置-->
     <bean id="cacheManager" class="org.snaker.engine.cache.memory.MemoryCacheManager"/>

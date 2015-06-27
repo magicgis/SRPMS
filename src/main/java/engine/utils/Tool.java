@@ -8,7 +8,7 @@ import java.util.Map;
  * Created by guofan on 2015/3/30
  */
 public class Tool {
-    public static String getLatestArgs(Map<String,Object>args){
+    public static String getLatestArgs(Map<String, Object> args) {
         int latestNum = 0;
         for (String key : args.keySet()) {
             if (key.matches("WF_\\d+_Submission")) {
@@ -18,6 +18,6 @@ public class Tool {
                 }
             }
         }
-        return "WF_"+latestNum+"_Submission";
+        return "WF_" + latestNum + "_Submission";
     }
 }

@@ -36,7 +36,7 @@ public class Workflow {
     /**
      * 初始化部署
      *
-     * @return process ID
+     * @return status
      */
     @GET
     @Path("/init")
@@ -44,9 +44,9 @@ public class Workflow {
     public String init() {
         List<Process> list = engine.getAllProcess();
         if (list == null || list.size() == 0) {
-            return engine.initFlows();
+            return "NONE";
         } else {
-            return list.get(0).getId();
+            return "DONE";
         }
     }
 
@@ -263,8 +263,8 @@ public class Workflow {
     @Path("/submitByTeacher")
     @Produces("text/plain;charset=UTF-8")
     public boolean teacherSubmit(@FormParam("WF_User") String user) {
-        List<Order> list = engine.getOrderByActor(user);
-        List<String> teacherFlag = Arrays.asList(new String[]{"Submission", "Confirm"});
+        List<Order> list = engine.getMainOrderByActor(user);
+        List<String> teacherFlag = Arrays.asList("Submission", "Confirm");
         for (Order u : list) {
             List<Task> tasks = engine.getTaskByOrder(u.getId());
             String taskName = tasks.get(0).getTaskName();
@@ -291,8 +291,8 @@ public class Workflow {
     @Path("/submitByCol")
     @Produces("text/plain;charset=UTF-8")
     public boolean colSubmit(@FormParam("WF_User") String user) {
-        List<Order> list = engine.getColOrder(user);
-        List<String> colFlag = Arrays.asList(new String[]{"Submission", "Confirm", "SubmitByTeacher", "ApprovalByCol"});
+        List<Order> list = engine.getAllOrderByActor(user);
+        List<String> colFlag = Arrays.asList("Submission", "Confirm", "SubmitByTeacher", "ApprovalByCol");
         for (Order u : list) {
             List<Task> tasks = engine.getTaskByOrder(u.getId());
             String taskName = tasks.get(0).getTaskName();
@@ -339,6 +339,18 @@ public class Workflow {
             return false;
         }
         return true;
+    }
+
+    /**
+     * 获取所有的新期刊的order
+     *
+     * @return 分页 order List
+     */
+    @GET
+    @Path("/allMagOrder")
+    public Map getAllMagOrder(@QueryParam("limit") Integer limit,
+                              @QueryParam("offset") Integer offset) {
+        return getSubMap(engine.getOrderByProcee("newMag"), limit, offset);
     }
 
 }

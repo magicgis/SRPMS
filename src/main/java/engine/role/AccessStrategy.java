@@ -1,4 +1,4 @@
-package engine.pole;
+package engine.role;
 
 import org.snaker.engine.entity.TaskActor;
 import org.snaker.engine.impl.GeneralAccessStrategy;

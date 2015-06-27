@@ -30,8 +30,9 @@ public class SnakerEngineUtils implements Engine {
     @Autowired
     private SnakerEngine snakerEngine;
 
-    public String initFlows() {
-        return snakerEngine.process().deploy(StreamHelper.getStreamFromClasspath("workflow/easy.snaker"));
+    public void initFlows() {
+        snakerEngine.process().deploy(StreamHelper.getStreamFromClasspath("workflow/easy.snaker"));
+        snakerEngine.process().deploy(StreamHelper.getStreamFromClasspath("workflow/mag.snaker"));
     }
 
     public List<Process> getAllProcess() {
@@ -50,29 +51,29 @@ public class SnakerEngineUtils implements Engine {
         return snakerEngine.query().getHistoryTasks(new QueryFilter().setOrderId(orderId));
     }
 
-    public List<OrderActor> getAllOrderByActor(String actor) {
-        return orderActorDao.getByActor(actor);
+    public List<Order> getAllOrderByActor(String actor) {
+        return getOrderByActorAndRole(actor, null);
     }
 
-    public List<Order> getOrderByActor(String actor) {
-        return snakerEngine.query().getActiveOrders(new QueryFilter().setOperator(actor));
+    public List<Order> getMainOrderByActor(String actor) {
+        return getOrderByActorAndRole(actor, 1);
     }
 
-    public List<Order> getColOrder(String actor) {
-        List<OrderActor> temp = orderActorDao.getByActor(actor);
-        List<Order> ans = new ArrayList<>();
-        for (OrderActor u : temp) {
-            ans.add(snakerEngine.query().getOrder(u.getOrder()));
-        }
-        return ans;
+    public List<Order> getSecOrderByActor(String actor) {
+        return getOrderByActorAndRole(actor, 0);
     }
 
     public List<Task> getTaskByActor(String actor) {
         return snakerEngine.query().getActiveTasks(new QueryFilter().setOperator(actor));
     }
 
-    public List<Order> getOrderByTypeAndActor(String actor, String type) {
-        return null;
+    public List<Order> getOrderByActorAndRole(String actor, Integer role) {
+        List<OrderActor> temp = orderActorDao.getOrderByActorAndPole(actor, role);
+        List<Order> ans = new ArrayList<>();
+        for (OrderActor orderActor : temp) {
+            ans.add(getOrder(orderActor.getOrder()));
+        }
+        return ans;
     }
 
     public List<HistoryTask> getHisTaskByActor(String actor) {
@@ -150,9 +151,6 @@ public class SnakerEngineUtils implements Engine {
         return tasks;
     }
 
-    public List<Task> executeAndJump(String taskId, String operator, Map<String, Object> args, String nodeName) {
-        return snakerEngine.executeAndJumpTask(taskId, operator, args, nodeName);
-    }
 
     public List<Task> refuse(String taskId, String operator, Map<String, Object> args) {
         return snakerEngine.executeAndJumpTask(taskId, operator, args, null);
@@ -208,12 +206,6 @@ public class SnakerEngineUtils implements Engine {
     public void stopOrder(String orderId) {
         snakerEngine.order().cascadeRemove(orderId);
         orderActorDao.deleteAllOrder(orderId);
-//        snakerEngine.order().cascadeRemove();
-    }
-
-    public List<Object> getChildrenTask(String TaskId) {
-//        TODO
-        return null;
     }
 
     public Order getOrder(String id) {
@@ -244,5 +236,10 @@ public class SnakerEngineUtils implements Engine {
                 return true;
         }
         return false;
+    }
+
+    public List<Order> getOrderByProcee(String processName) {
+        String id = getProcessByName(processName).getId();
+        return snakerEngine.query().getActiveOrders(new QueryFilter().setProcessId(id));
     }
 }
