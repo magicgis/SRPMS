@@ -74,10 +74,7 @@ public class UserApi {
     @Consumes("application/json;charset=UTF-8")
     public boolean update(@PathParam("id") String id, HashMap<String, Object> args) {
         User user = userService.getById(id);
-        if (putMapOnObj(user, args)) {
-            return userService.update(user);
-        }
-        return false;
+        return putMapOnObj(user, args) && userService.update(user);
     }
 
 
@@ -104,7 +101,7 @@ public class UserApi {
         String staId = args.get("username");
         String pwd = args.get("password");
         User u = userService.getUser(staId, pwd);
-        if (u == null) {
+        if (u == null || u.getStatus() == null || u.getStatus() == 0) {
             return null;
         } else {
             Long time = System.currentTimeMillis() / 1000;
