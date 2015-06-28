@@ -25,7 +25,9 @@ public class Start implements SnakerInterceptor {
         String actor = execution.getOperator();
         Order order = execution.getOrder();
         String type = (String) execution.getArgs().get("WF_Type");
-        String col = (String) execution.getArgs().get("WF_Col");
+//        String col = (String) execution.getArgs().get("WF_Col");
+//        todo
+        String col = "信息工程学院";
         orderActorDao.save(order.getId(), actor, 1, type);
         Map<String, Object> args = new HashMap<String, Object>();
         args.put("WF_Type", type);

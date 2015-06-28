@@ -97,8 +97,6 @@ public class Workflow {
         String processName = (String) args.get("WF_Process");
         String processId = engine.getProcessByName(processName).getId();
         args.remove("WF_Process");
-        /*由于目前仍不能根据用户获取所属学院*/
-        args.put("WF_Col", "信息工程学院");
         return engine.startInstanceById(processId, user, args);
     }
 
@@ -349,6 +347,7 @@ public class Workflow {
      */
     @GET
     @Path("/allMagOrder")
+    @Produces("application/json;charset=UTF-8")
     public Map getAllMagOrder(@QueryParam("limit") Integer limit,
                               @QueryParam("offset") Integer offset) {
         return getSubMap(engine.getOrderByProcee("newMag"), limit, offset);
