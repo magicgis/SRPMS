@@ -18,6 +18,7 @@ public class MagServiceImp extends BaseServiceImp<Mag> implements MagService {
     public List<Mag> search(String keyword, String sort, String order) {
         ArrayList<String> keys = new ArrayList<>();
         keys.add("name");
+        keys.add("standard.value");
         return magDao.findByArrayFuz(keys, keyword, sort, order);
     }
 }

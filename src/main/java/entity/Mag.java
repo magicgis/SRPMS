@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by guofan on 2015/6/10.
  */
 @Entity
-@Table(name = "mag", schema = "", catalog = "srpms")
+@Table(name = "mag")
 public class Mag {
     private String id;
     private String name;
@@ -17,7 +17,7 @@ public class Mag {
     private String type;
     private String status;
     private String memo;
-    private Standard mStandard;
+    private Standard standard;
 
     @Id
     @Column(name = "id")
@@ -145,11 +145,11 @@ public class Mag {
 
     @ManyToOne
     @JoinColumn(name = "standard", referencedColumnName = "id")
-    public Standard getMStandard() {
-        return mStandard;
+    public Standard getStandard() {
+        return standard;
     }
 
-    public void setMStandard(Standard mStandard) {
-        this.mStandard = mStandard;
+    public void setStandard(Standard standard) {
+        this.standard = standard;
     }
 }

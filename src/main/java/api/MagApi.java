@@ -127,7 +127,8 @@ public class MagApi {
      */
     @GET
     @Path("/json")
-    public List<Mag> getAllMagJson() {
-        return magService.getAll();
+    @Produces("application/json;charset=UTF-8")
+    public List<Mag> getAllMagJson(@QueryParam("query") String query) {
+        return magService.search(query, null, null);
     }
 }

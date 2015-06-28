@@ -7,13 +7,13 @@ import java.util.Collection;
  * Created by guofan on 2015/5/9.
  */
 @Entity
-@Table(name = "url", schema = "", catalog = "srpms")
+@Table(name = "url")
 public class Url {
     private String id;
     private String url;
     private String type;
     private String define;
-    private Collection<Permission> permissionsById;
+    private Collection<Permission> permissions;
 
     @Id
     @Column(name = "id")
@@ -79,12 +79,12 @@ public class Url {
         return result;
     }
 
-    @OneToMany(mappedBy = "urlByUrlId")
-    public Collection<Permission> getPermissionsById() {
-        return permissionsById;
+    @OneToMany(mappedBy = "url")
+    public Collection<Permission> getPermissions() {
+        return permissions;
     }
 
-    public void setPermissionsById(Collection<Permission> permissionsById) {
-        this.permissionsById = permissionsById;
+    public void setPermissions(Collection<Permission> permissions) {
+        this.permissions = permissions;
     }
 }

@@ -11,7 +11,7 @@ import static util.Trans.str2Map;
  * Created by guofan on 2015/6/10.
  */
 @Entity
-@Table(name = "standard", schema = "", catalog = "srpms")
+@Table(name = "standard")
 public class Standard {
     private String id;
     private String type;

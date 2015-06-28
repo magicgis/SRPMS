@@ -12,10 +12,9 @@ import service.imp.BaseServiceImp;
 import service.security.PermissionService;
 import util.CrunchifyInMemoryCache;
 
-import static util.Args.PermissionCache;
-
-import java.util.HashMap;
 import java.util.List;
+
+import static util.Args.PermissionCache;
 
 /**
  * Created by guofan on 2015/5/9.
@@ -44,8 +43,8 @@ public class PermissionServiceImp extends BaseServiceImp<Permission> implements 
             PermissionCache.empty();
         }
         for (Permission permission : temp) {
-            Role role = permission.getRoleByRoleId();
-            Url url = permission.getUrlByUrlId();
+            Role role = permission.getRole();
+            Url url = permission.getUrl();
             PermissionCache.put(role.getRole() + "-" + url.getUrl() + "-" + url.getType(), permission.getIsPermit());
         }
     }
@@ -54,8 +53,8 @@ public class PermissionServiceImp extends BaseServiceImp<Permission> implements 
         Role role = roleDao.getById(roleStr);
         Url url = urlDao.getById(urlId);
         Permission permission = new Permission();
-        permission.setRoleByRoleId(role);
-        permission.setUrlByUrlId(url);
+        permission.setRole(role);
+        permission.setUrl(url);
         permission.setIsPermit(permit);
         return permissionDao.save(permission);
     }

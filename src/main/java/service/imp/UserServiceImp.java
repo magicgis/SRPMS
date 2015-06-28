@@ -20,10 +20,10 @@ public class UserServiceImp extends BaseServiceImp<User> implements UserService 
     @Override
     public List<User> search(String keyword, String sort, String order) {
         ArrayList<String> keys = new ArrayList<>();
-        keys.add("uStaff.name");
-        keys.add("uStaff.id");
-        keys.add("uStaff.sDept.value");
-        keys.add("uStaff.degree");
+        keys.add("staff.name");
+        keys.add("staff.id");
+        keys.add("staff.dept.value");
+        keys.add("staff.degree");
         return userDao.findByArrayFuz(keys, keyword, sort, order);
     }
 

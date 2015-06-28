@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by guofan on 2015/6/10.
  */
 @Entity
-@Table(name = "confer", schema = "", catalog = "srpms")
+@Table(name = "confer")
 public class Confer {
     private String id;
     private String type;
@@ -14,7 +14,7 @@ public class Confer {
     private String time;
     private String addr;
     private String memo;
-    private Standard cStandard;
+    private Standard standard;
 
     @Id
     @Column(name = "id")
@@ -106,11 +106,11 @@ public class Confer {
 
     @ManyToOne
     @JoinColumn(name = "standard", referencedColumnName = "id")
-    public Standard getCStandard() {
-        return cStandard;
+    public Standard getStandard() {
+        return standard;
     }
 
-    public void setCStandard(Standard cStandard) {
-        this.cStandard = cStandard;
+    public void setStandard(Standard standard) {
+        this.standard = standard;
     }
 }

@@ -7,11 +7,11 @@ import java.util.Collection;
  * Created by guofan on 2015/5/9.
  */
 @Entity
-@Table(name = "role", schema = "", catalog = "srpms")
+@Table(name = "role")
 public class Role {
     private String role;
     private String define;
-    private Collection<Permission> permissionsByRole;
+    private Collection<Permission> permissions;
 
     @Id
     @Column(name = "role")
@@ -53,12 +53,12 @@ public class Role {
         return result;
     }
 
-    @OneToMany(mappedBy = "roleByRoleId")
-    public Collection<Permission> getPermissionsByRole() {
-        return permissionsByRole;
+    @OneToMany(mappedBy = "role")
+    public Collection<Permission> getPermissions() {
+        return permissions;
     }
 
-    public void setPermissionsByRole(Collection<Permission> permissionsByRole) {
-        this.permissionsByRole = permissionsByRole;
+    public void setPermissions(Collection<Permission> permissions) {
+        this.permissions = permissions;
     }
 }

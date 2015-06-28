@@ -11,8 +11,8 @@ import javax.persistence.*;
 @Table(name = "permission", schema = "", catalog = "srpms")
 public class Permission {
     private String id;
-    private Role roleByRoleId;
-    private Url urlByUrlId;
+    private Role role;
+    private Url url;
     private Boolean isPermit;
 
     @Id
@@ -59,21 +59,21 @@ public class Permission {
 
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "role")
-    public Role getRoleByRoleId() {
-        return roleByRoleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleByRoleId(Role roleByRoleId) {
-        this.roleByRoleId = roleByRoleId;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @ManyToOne
     @JoinColumn(name = "url_id", referencedColumnName = "id")
-    public Url getUrlByUrlId() {
-        return urlByUrlId;
+    public Url getUrl() {
+        return url;
     }
 
-    public void setUrlByUrlId(Url urlByUrlId) {
-        this.urlByUrlId = urlByUrlId;
+    public void setUrl(Url url) {
+        this.url = url;
     }
 }

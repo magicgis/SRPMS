@@ -6,13 +6,13 @@ import javax.persistence.*;
  * Created by guofan on 2015/6/10.
  */
 @Entity
-@Table(name = "newspaper", schema = "", catalog = "srpms")
+@Table(name = "newspaper")
 public class Newspaper {
     private String id;
     private String name;
     private String period;
     private String memo;
-    private Standard nStandard;
+    private Standard standard;
 
     @Id
     @Column(name = "id")
@@ -80,11 +80,11 @@ public class Newspaper {
 
     @ManyToOne
     @JoinColumn(name = "standard", referencedColumnName = "id")
-    public Standard getNStandard() {
-        return nStandard;
+    public Standard getStandard() {
+        return standard;
     }
 
-    public void setNStandard(Standard nStandard) {
-        this.nStandard = nStandard;
+    public void setStandard(Standard standard) {
+        this.standard = standard;
     }
 }

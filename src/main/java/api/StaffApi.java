@@ -84,7 +84,7 @@ public class StaffApi {
             }
             //TODO 设置权限
             user.setPrivilege(null);
-            user.setUStaff(staff);
+            user.setStaff(staff);
             user.setStatus(1);
             return userService.save(user);
         } else {
@@ -151,9 +151,9 @@ public class StaffApi {
         HashMap<String, Object> first = new HashMap<>(args);
         if (putMapOnObj(staff, args)) {
             try {
-                staff.setSCol(baseInfoService.getById(first.get("scol.id").toString()));
-                staff.setSDept(baseInfoService.getById(first.get("sdept.id").toString()));
-                staff.setSRank(baseInfoService.getById(first.get("srank.id").toString()));
+                staff.setCol(baseInfoService.getById(first.get("col.id").toString()));
+                staff.setDept(baseInfoService.getById(first.get("dept.id").toString()));
+                staff.setRank(baseInfoService.getById(first.get("rank.id").toString()));
             } catch (NullPointerException e) {
                 return false;
             }

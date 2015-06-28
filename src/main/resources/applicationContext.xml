@@ -64,8 +64,8 @@
 
 
     <aop:config>
-        <aop:pointcut id="service" expression="execution(* service.imp..*.*(..))"/>
-        <aop:pointcut id="security" expression="execution(* service.security.imp..*.*(..))"/>
+        <aop:pointcut id="service" expression="execution(* service..*.*(..))"/>
+        <aop:pointcut id="security" expression="execution(* service.security..*.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="service"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="security"/>
     </aop:config>

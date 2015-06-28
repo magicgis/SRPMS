@@ -11,7 +11,7 @@ import javax.persistence.*;
  * Created by guofan on 2015/6/10.
  */
 @Entity
-@Table(name = "user", schema = "", catalog = "srpms")
+@Table(name = "user")
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class User {
     private String id;
@@ -20,7 +20,7 @@ public class User {
     private String pwd;
     private String privilege;
     private Integer status;
-    private Staff uStaff;
+    private Staff staff;
 
     @Id
     @Column(name = "id")
@@ -100,11 +100,11 @@ public class User {
 
     @OneToOne
     @JoinColumn(name = "sta_id", referencedColumnName = "id", unique = true)
-    public Staff getUStaff() {
-        return uStaff;
+    public Staff getStaff() {
+        return staff;
     }
 
-    public void setUStaff(Staff uStaff) {
-        this.uStaff = uStaff;
+    public void setStaff(Staff staff) {
+        this.staff = staff;
     }
 }

@@ -10,7 +10,7 @@ import javax.persistence.*;
  * Created by guofan on 2015/6/10.
  */
 @Entity
-@Table(name = "staff", schema = "", catalog = "srpms")
+@Table(name = "staff")
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class Staff {
     private String id;
@@ -21,9 +21,9 @@ public class Staff {
     private String degree;
     private String staSnm;
     private String memo;
-    private BaseInfo sDept;
-    private BaseInfo sRank;
-    private BaseInfo sCol;
+    private BaseInfo dept;
+    private BaseInfo rank;
+    private BaseInfo col;
     private User user;
 
     @Id
@@ -121,9 +121,9 @@ public class Staff {
         if (degree != null ? !degree.equals(staff.degree) : staff.degree != null) return false;
         if (staSnm != null ? !staSnm.equals(staff.staSnm) : staff.staSnm != null) return false;
         if (memo != null ? !memo.equals(staff.memo) : staff.memo != null) return false;
-        if (sDept != null ? !sDept.equals(staff.sDept) : staff.sDept != null) return false;
-        if (sRank != null ? !sRank.equals(staff.sRank) : staff.sRank != null) return false;
-        if (sCol != null ? !sCol.equals(staff.sCol) : staff.sCol != null) return false;
+        if (dept != null ? !dept.equals(staff.dept) : staff.dept != null) return false;
+        if (rank != null ? !rank.equals(staff.rank) : staff.rank != null) return false;
+        if (col != null ? !col.equals(staff.col) : staff.col != null) return false;
         return !(user != null ? !user.equals(staff.user) : staff.user != null);
 
     }
@@ -138,44 +138,45 @@ public class Staff {
         result = 31 * result + (degree != null ? degree.hashCode() : 0);
         result = 31 * result + (staSnm != null ? staSnm.hashCode() : 0);
         result = 31 * result + (memo != null ? memo.hashCode() : 0);
-        result = 31 * result + (sDept != null ? sDept.hashCode() : 0);
-        result = 31 * result + (sRank != null ? sRank.hashCode() : 0);
-        result = 31 * result + (sCol != null ? sCol.hashCode() : 0);
+        result = 31 * result + (dept != null ? dept.hashCode() : 0);
+        result = 31 * result + (rank != null ? rank.hashCode() : 0);
+        result = 31 * result + (col != null ? col.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
     }
 
     @ManyToOne
     @JoinColumn(name = "dept", referencedColumnName = "id")
-    public BaseInfo getSDept() {
-        return sDept;
+    public BaseInfo getDept() {
+        return dept;
     }
 
-    public void setSDept(BaseInfo sDept) {
-        this.sDept = sDept;
+    public void setDept(BaseInfo dept) {
+        this.dept = dept;
     }
 
     @ManyToOne
     @JoinColumn(name = "rank", referencedColumnName = "id")
-    public BaseInfo getSRank() {
-        return sRank;
+    public BaseInfo getRank() {
+        return rank;
     }
 
-    public void setSRank(BaseInfo sRank) {
-        this.sRank = sRank;
+    public void setRank(BaseInfo rank) {
+        this.rank = rank;
     }
 
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "col", referencedColumnName = "id")
-    public BaseInfo getSCol() {
-        return sCol;
+    public BaseInfo getCol() {
+        return col;
     }
 
-    public void setSCol(BaseInfo sCol) {
-        this.sCol = sCol;
+    public void setCol(BaseInfo col) {
+        this.col = col;
     }
 
-    @OneToOne(mappedBy = "UStaff")
+    @OneToOne(mappedBy = "staff")
     public User getUser() {
         return user;
     }

@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by guofan on 2015/6/10.
  */
 @Entity
-@Table(name = "paper", schema = "", catalog = "srpms")
+@Table(name = "paper")
 public class Paper {
     private String id;
     private Byte paperType;
@@ -19,9 +19,9 @@ public class Paper {
     private Integer numWord;
     private String memo;
     private String attachment;
-    private Mag pMag;
-    private Confer pConfer;
-    private Newspaper pNewspaper;
+    private Mag mag;
+    private Confer confer;
+    private Newspaper newspaper;
 
     @Id
     @Column(name = "id")
@@ -173,31 +173,31 @@ public class Paper {
 
     @ManyToOne
     @JoinColumn(name = "mag", referencedColumnName = "id")
-    public Mag getPMag() {
-        return pMag;
+    public Mag getMag() {
+        return mag;
     }
 
-    public void setPMag(Mag magByMag) {
-        this.pMag = magByMag;
+    public void setMag(Mag mag) {
+        this.mag = mag;
     }
 
     @ManyToOne
     @JoinColumn(name = "confer", referencedColumnName = "id")
-    public Confer getPConfer() {
-        return pConfer;
+    public Confer getConfer() {
+        return confer;
     }
 
-    public void setPConfer(Confer conferByConfer) {
-        this.pConfer = conferByConfer;
+    public void setConfer(Confer confer) {
+        this.confer = confer;
     }
 
     @ManyToOne
     @JoinColumn(name = "newspaper", referencedColumnName = "id")
-    public Newspaper getPNewspaper() {
-        return pNewspaper;
+    public Newspaper getNewspaper() {
+        return newspaper;
     }
 
-    public void setPNewspaper(Newspaper pNewspaper) {
-        this.pNewspaper = pNewspaper;
+    public void setNewspaper(Newspaper newspaper) {
+        this.newspaper = newspaper;
     }
 }
