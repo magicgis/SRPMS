@@ -36,10 +36,10 @@ public class RestConfig extends ResourceConfig {
                 /*获取class路径*/
         URL path = Thread.currentThread().getContextClassLoader().getResource("");
         File classes = new File(path.getPath());
-                /*上一级目录*/
-        File web_inf = classes.getParentFile();
+                /*上一级目录 其实放在了与webapp同级目录*/
+        File tomcat = classes.getParentFile().getParentFile().getParentFile();
                 /*upload文件夹*/
-        StrorePath = new File(web_inf, "upload");
+        StrorePath = new File(tomcat, "upload");
         if (!StrorePath.exists()) {
             StrorePath.mkdir();
         }
