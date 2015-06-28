@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import service.StaffService;
 import service.UserService;
-import util.CrunchifyInMemoryCache;
 
 import javax.ws.rs.*;
 import java.util.HashMap;
@@ -111,9 +110,6 @@ public class UserApi {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            if (null == TokenUser) {
-                TokenUser = new CrunchifyInMemoryCache<>(3600, 300, 3000);
-            }
             TokenUser.put(token, u);
             return token;
         }
@@ -123,10 +119,6 @@ public class UserApi {
     @Path("/current")
     @Produces("application/json;charset=UTF-8")
     public User getCurrentUser(@HeaderParam("Authorization") String token) {
-        if (null == TokenUser) {
-            TokenUser = new CrunchifyInMemoryCache<>(3600, 300, 3000);
-            return null;
-        }
         return TokenUser.get(token);
     }
 

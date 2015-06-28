@@ -11,8 +11,13 @@ public class StaticFactory {
 
     public static Object getBean(String bean) {
         if (beanFactory == null) {
-            beanFactory = new ClassPathXmlApplicationContext("classpath:/applicationContext.xml", "classpath:/applicationContext-snaker.xml");
+            init();
         }
         return beanFactory.getBean(bean);
+    }
+
+    public static void init() {
+        beanFactory = new ClassPathXmlApplicationContext("classpath:/applicationContext.xml",
+                "classpath:/applicationContext-snaker.xml");
     }
 }

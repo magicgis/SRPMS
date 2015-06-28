@@ -13,9 +13,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static util.Args.StrorePath;
 
 /**
  * Created by guofan on 4/24/2015.
@@ -34,24 +35,12 @@ public class AttachmentApi {
     public Response uploadFile(
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail) {
-        /*获取class路径*/
-        URL path = Thread.currentThread().getContextClassLoader().getResource("");
-        File classes = new File(path.getPath());
-        /*上一级目录*/
-        File web_inf = classes.getParentFile();
-        /*webapp目录，即根目录*/
-        File webapp = web_inf.getParentFile();
-        /*upload文件夹*/
-        File upload = new File(web_inf, "upload");
-        if (!upload.exists()) {
-            upload.mkdir();
-        }
         String fileName = fileDetail.getFileName();
         /*必要时需要对后缀名进行拦截*/
         String end = fileName.substring(fileName.lastIndexOf('.'), fileName.length());
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         String finalFileName = df.format(new Date()) + "-" + String.valueOf(System.currentTimeMillis() % 1000) + end;
-        File uploadedFileLocation = new File(upload, finalFileName);
+        File uploadedFileLocation = new File(StrorePath, finalFileName);
         String fileId = null;
         if (writeToFile(uploadedInputStream, uploadedFileLocation)) {
             Attachment up = new Attachment();
@@ -87,18 +76,9 @@ public class AttachmentApi {
     @GET
     @Path("/{id}")
     public Response downloadFile(@PathParam("id") String id) {
-        /*获取class路径*/
-        URL path = Thread.currentThread().getContextClassLoader().getResource("");
-        File classes = new File(path.getPath());
-        /*上一级目录*/
-        File web_inf = classes.getParentFile();
-        /*webapp目录，即根目录*/
-        File webapp = web_inf.getParentFile();
-        /*upload文件夹*/
-        File upload = new File(web_inf, "upload");
         /*只是一个示范*/
         String fileName = attachmentService.getById(id).getPath();
-        File file = new File(upload, fileName);
+        File file = new File(StrorePath, fileName);
         return Response.ok(file).header("Content-Disposition", "attachment;filename=" + fileName).build();
     }
 
@@ -106,18 +86,9 @@ public class AttachmentApi {
     @Path("/{id}")
     public boolean deleteFile(@PathParam("id") String id) {
         /*todo 这儿需要对用户的判断*/
-        /*获取class路径*/
-        URL path = Thread.currentThread().getContextClassLoader().getResource("");
-        File classes = new File(path.getPath());
-        /*上一级目录*/
-        File web_inf = classes.getParentFile();
-        /*webapp目录，即根目录*/
-        File webapp = web_inf.getParentFile();
-        /*upload文件夹*/
-        File upload = new File(web_inf, "upload");
         Attachment data = attachmentService.getById(id);
         String fileName = data.getPath();
-        File file = new File(upload, fileName);
+        File file = new File(StrorePath, fileName);
         if (file.exists()) {
             return attachmentService.delete(data) && file.delete();
         } else {

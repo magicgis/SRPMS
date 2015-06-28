@@ -50,10 +50,6 @@ public class All implements ContainerRequestFilter {
                 return;
             }
         }
-        if (TokenUser == null) {
-            /*创建<Token,User>缓存*/
-            TokenUser = new CrunchifyInMemoryCache<>(3600, 300, 3000);
-        }
         /*如果已经登陆*/
         if (TokenUser.get(token) != null) {
             /*获取用户以及其权限*/
