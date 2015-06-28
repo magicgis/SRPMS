@@ -42,6 +42,7 @@ public class Workflow {
     @Path("/init")
     @Produces("text/plain;charset=UTF-8")
     public String init() {
+        engine.initFlows();
         List<Process> list = engine.getAllProcess();
         if (list == null || list.size() == 0) {
             return "NONE";
@@ -129,7 +130,7 @@ public class Workflow {
                 }
                 aList.add(aId);
                 as.append(aId).append(",");
-                actosStr.append(u.get("actor"));
+                actosStr.append(u.get("actor")).append(",");
             }
             args.put("WF_Actor", as);
             args.put("ActorList", actosStr);
