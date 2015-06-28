@@ -6,8 +6,7 @@ import entity.security.Permission;
 import org.glassfish.jersey.server.ExtendedUriInfo;
 import org.glassfish.jersey.uri.UriTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import service.security.PermissionService;
-import service.security.UrlService;
+import service.security.SecurityService;
 import util.CrunchifyInMemoryCache;
 
 import javax.ws.rs.container.ContainerRequestContext;
@@ -26,9 +25,7 @@ import static util.Args.TokenUser;
  */
 public class All implements ContainerRequestFilter {
     @Autowired
-    UrlService urlService;
-    @Autowired
-    PermissionService permissionService;
+    SecurityService securityService;
     @Context
     private ExtendedUriInfo uriInfo;
 
@@ -42,7 +39,7 @@ public class All implements ContainerRequestFilter {
         }
         /*请求类型*/
         String type = requestContext.getMethod();
-        urlService.addUrl(path.toString(), type, null);
+        securityService.addUrl(path.toString(), type, null);
         /*获取token*/
         String token = requestContext.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (token != null) {
@@ -59,7 +56,7 @@ public class All implements ContainerRequestFilter {
             if (PermissionCache == null) {
                 /*创建权限缓存，并从表导入*/
                 PermissionCache = new CrunchifyInMemoryCache<>(0, 0, 3000);
-                permissionService.loadIntoCache();
+                securityService.loadIntoCache();
             }
             /*在缓存内寻找用户的权限*/
             Boolean flag = PermissionCache.get(role + "-" + path + "-" + type);
