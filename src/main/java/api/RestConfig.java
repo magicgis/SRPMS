@@ -37,7 +37,7 @@ public class RestConfig extends ResourceConfig {
         URL path = Thread.currentThread().getContextClassLoader().getResource("");
         File classes = new File(path.getPath());
                 /*上一级目录 其实放在了与webapp同级目录*/
-        File tomcat = classes.getParentFile().getParentFile().getParentFile();
+        File tomcat = classes.getParentFile().getParentFile().getParentFile().getParentFile();
                 /*upload文件夹*/
         StrorePath = new File(tomcat, "upload");
         if (!StrorePath.exists()) {
