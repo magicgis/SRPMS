@@ -7,6 +7,7 @@ import entity.security.Permission;
 import entity.security.Role;
 import entity.security.Url;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import service.security.SecurityService;
 import util.CrunchifyInMemoryCache;
 
@@ -18,6 +19,7 @@ import static util.Args.PermissionCache;
 /**
  * Created by guofan on 2015/6/29.
  */
+@Service
 public class SecurityServiceImp implements SecurityService {
 
     @Autowired
