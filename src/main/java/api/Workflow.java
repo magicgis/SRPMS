@@ -9,6 +9,7 @@ import org.snaker.engine.entity.Process;
 import org.snaker.engine.entity.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
+import service.StandardService;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.*;
@@ -32,6 +33,8 @@ public class Workflow {
     Engine engine;
     @Autowired
     OrderActorDao orderActorDao;
+    @Autowired
+    StandardService standardService;
 
     /**
      * 初始化部署
@@ -111,7 +114,7 @@ public class Workflow {
     @Path("/execute")
     @Consumes("application/json;charset=UTF-8")
     @Produces("application/json;charset=UTF-8")
-    public List<Task> execute_beta(HashMap<String, Object> args) {
+    public Object execute_beta(HashMap<String, Object> args) {
         String user = (String) args.get("WF_User");
         args.remove("WF_User");
         String taskId = (String) args.get("WF_Task");
@@ -122,19 +125,36 @@ public class Workflow {
             StringBuffer as = new StringBuffer();
             StringBuffer actosStr = new StringBuffer();
             for (Map<String, Object> u : actors) {
-                String aId = (String) u.get("id");
+                String aId = (String) u.get("staff.id");
                 if (aList.contains(aId)) {
                     continue;
                 }
                 aList.add(aId);
                 as.append(aId).append(",");
-                actosStr.append(u.get("actor")).append(",");
+                actosStr.append(u.get("staff.name")).append(",");
             }
             args.put("WF_Actor", as);
             args.put("ActorList", actosStr);
         }
         List<Task> ans = new ArrayList<>();
-        List<Task> tasks = engine.execute(taskId, user, (Map) args);
+        /*获取当前task*/
+        Task task = engine.getTask(taskId);
+        /*可能会产生的task列表*/
+        List<Task> tasks;
+        if (task.getTaskName().equals("SaveOrSubmit")) {
+        /*获取当前order*/
+            Order order = engine.getOrder(task.getOrderId());
+            Map re = standardService.confirmChecking(order);
+            if ((boolean) re.get("valid")) {
+                tasks = engine.execute(taskId, user, new HashMap<String, Object>());
+            }
+            else {
+                return re;
+            }
+        }
+        else {
+            tasks = engine.execute(taskId, user, (Map) args);
+        }
         if (tasks == null || tasks.size() == 0) {
             return null;
         }
@@ -146,6 +166,17 @@ public class Workflow {
             }
         }
         return tasks;
+    }
+
+
+    @POST
+    @Path("/getScore")
+    @Consumes("application/json;charset=UTF-8")
+    @Produces("application/json;charset=UTF-8")
+    public Object getScore(HashMap<String, Object> args) {
+        String taskId = (String) args.get("WF_Task");
+        Order x = engine.getOrder(engine.getTask(taskId).getOrderId());
+        return standardService.scoreCalculation(x, args);
     }
 
     /**
