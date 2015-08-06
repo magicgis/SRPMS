@@ -141,12 +141,12 @@ public class Workflow {
         Task task = engine.getTask(taskId);
         /*可能会产生的task列表*/
         List<Task> tasks;
-        if (task.getTaskName().equals("SaveOrSubmit")) {
+        if (task.getTaskName().equals("Submission") && "true".equals((String) args.get("IsComplete"))) {
         /*获取当前order*/
             Order order = engine.getOrder(task.getOrderId());
-            Map re = standardService.confirmChecking(order);
+            Map re = standardService.confirmChecking(order, args);
             if ((boolean) re.get("valid")) {
-                tasks = engine.execute(taskId, user, new HashMap<String, Object>());
+                tasks = engine.execute(taskId, user, (Map) args);
             }
             else {
                 return re;
