@@ -15,7 +15,6 @@
         <!--<property name="hbm2ddl.auto">create</property>-->
 
 
-
         <mapping resource="hbm/snaker.ccorder.hbm.xml"/>
         <mapping resource="hbm/snaker.process.hbm.xml"/>
         <mapping resource="hbm/snaker.taskactor.hbm.xml"/>
@@ -35,6 +34,8 @@
         <mapping class="entity.Standard"/>
         <mapping class="entity.StaRef"/>
         <mapping class="entity.User"/>
+        <mapping class="entity.ProjectMoney"/>
+        <mapping class="entity.Project"/>
         <mapping class="entity.security.Permission"/>
         <mapping class="entity.security.Role"/>
         <mapping class="entity.security.Url"/>
