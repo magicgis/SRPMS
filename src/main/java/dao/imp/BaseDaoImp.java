@@ -1,8 +1,8 @@
 package dao.imp;
 
 import dao.BaseDao;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -22,7 +22,7 @@ import java.util.Map;
 public class BaseDaoImp<T> implements BaseDao<T> {
     public Class entityClass;
     private SessionFactory sessionFactory;
-    private static final Log log = LogFactory.getLog(BaseDao.class);
+    private static final Logger log = LogManager.getLogger(BaseDao.class);
 
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {

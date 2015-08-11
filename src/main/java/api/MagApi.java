@@ -91,7 +91,7 @@ public class MagApi {
      */
     @GET
     @Path("/{id}")
-    @Consumes("application/json;charset=UTF-8")
+    @Produces("application/json;charset=UTF-8")
     public Mag getById(@PathParam("id") String id) {
         return magService.getById(id);
     }
