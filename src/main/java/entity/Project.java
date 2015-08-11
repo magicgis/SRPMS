@@ -1,7 +1,7 @@
 package entity;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * Created by guofan on 2015/8/12.
@@ -24,7 +24,7 @@ public class Project {
     private Integer step;
     private String money;
     private String attachment;
-    private Set<ProjectMoney> projectMoneys;
+    private Collection<ProjectMoney> projectMoneys;
     private BaseInfo dept;
     private Standard standard;
 
@@ -230,12 +230,12 @@ public class Project {
         return result;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
-    public Set<ProjectMoney> getProjectMoneys() {
+    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
+    public Collection<ProjectMoney> getProjectMoneys() {
         return projectMoneys;
     }
 
-    public void setProjectMoneys(Set<ProjectMoney> projectMoneys) {
+    public void setProjectMoneys(Collection<ProjectMoney> projectMoneys) {
         this.projectMoneys = projectMoneys;
     }
 
