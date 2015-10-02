@@ -104,16 +104,29 @@
                         </div>
                         <!-- /.login-box -->
 
-                        <div id="forgot-box" class="forgot-box widget-box no-border col-xs-4">
+                        <div id="forgot-box" class="forgot-box widget-box no-border">
                             <div class="widget-body">
                                 <div class="widget-main">
+                                    <h4 class="header red lighter bigger">
+                                        <i class="ace-icon fa fa-key"></i>
+                                        温馨提示：
+                                    </h4>
+
+                                    <div class="space-6"></div>
+                                    <p>
+
+                                    </p>
+
                                     <form>
                                         <fieldset>
                                             <label class="block clearfix">
-                                                <b>温馨提示：</b>
-
-                                                <h3>请联系学院，申请密码重置</h3>
+                                                <span class="block input-icon input-icon-right">
+                                                 <h3>请联系学院，申请密码重置</h3>
+                                            </span>
                                             </label>
+
+                                            <div class="clearfix">
+                                            </div>
                                         </fieldset>
                                     </form>
                                 </div>
@@ -125,21 +138,45 @@
                                         <i class="ace-icon fa fa-arrow-right"></i>
                                     </a>
                                 </div>
-                            </div>
-                            <!-- /.widget-body -->
-                        </div>
-                        <!-- /.forgot-box -->
+                            </div><!-- /.widget-body -->
+                        </div><!-- /.forgot-box -->
 
-                        <div id="signup-box" class="signup-box widget-box no-border col-xs-4">
+                        <div id="signup-box" class="signup-box widget-box no-border">
                             <div class="widget-body">
                                 <div class="widget-main">
-                                    <b>温馨提示：</b>
+                                    <h4 class="header green lighter bigger">
+                                        <i class="ace-icon fa fa-users blue"></i>
+                                        温馨提示：
+                                    </h4>
+
+                                    <div class="space-6"></div>
+                                    <p> </p>
 
                                     <form>
                                         <fieldset>
                                             <label class="block clearfix">
-                                                <h3>请联系学校，为您注册一个账号！</h3>
+                                             <span class="block input-icon input-icon-right">
+
+                                             </span>
                                             </label>
+
+                                            <label class="block clearfix">
+                                                <span class="block input-icon input-icon-right">
+
+                                                </span>
+                                            </label>
+
+                                            <label class="block">
+                                                 <span class="lbl">
+                                                     <h3>请联系学校，为您注册一个账号！</h3>
+                                                 </span>
+                                            </label>
+
+                                            <div class="space-24"></div>
+
+                                            <div class="clearfix">
+
+                                            </div>
                                         </fieldset>
                                     </form>
                                 </div>
@@ -147,13 +184,12 @@
                                 <div class="toolbar center">
                                     <a href="#" data-target="#login-box" class="back-to-login-link">
                                         <i class="ace-icon fa fa-arrow-left"></i>
-                                        返回
+                                        返&nbsp;&nbsp;回
                                     </a>
                                 </div>
-                            </div>
-                            <!-- /.widget-body -->
+                            </div><!-- /.widget-body -->
+                        </div><!-- /.signup-box -->
 
-                        </div>
                         <!-- /.signup-box -->
                     </div>
                     <!-- /.position-relative -->
