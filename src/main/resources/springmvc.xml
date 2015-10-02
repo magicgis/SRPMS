@@ -31,6 +31,7 @@
             <mvc:mapping path="/*"/>
             <mvc:exclude-mapping path="/login"/>
             <mvc:exclude-mapping path="/"/>
+            <mvc:exclude-mapping path="/edit/*"/>
             <bean class="ctrl.SecurityFilter"/>
         </mvc:interceptor>
     </mvc:interceptors>
