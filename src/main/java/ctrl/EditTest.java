@@ -18,8 +18,13 @@ public class EditTest {
 
 
     @RequestMapping(value = {"/patent"}, method = RequestMethod.GET)
-    public String magazineEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    public String patentEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         return "patentEdit";
+    }
+
+    @RequestMapping(value = {"/project"}, method = RequestMethod.GET)
+    public String projectEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        return "projectEdit";
     }
 
 }
