@@ -10,6 +10,7 @@ public class OrderActor {
     private String actor;
     private String order;
     private String type;
+    private Integer status;
     private Integer role;
 
 
@@ -51,6 +52,14 @@ public class OrderActor {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     @Override

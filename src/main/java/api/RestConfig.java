@@ -1,6 +1,5 @@
 package api;
 
-import api.filter.All;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -25,7 +24,7 @@ public class RestConfig extends ResourceConfig {
         register(RequestContextFilter.class);
         register(JacksonFeature.class);
         register(MultiPartFeature.class);
-        register(All.class);
+//        register(All.class);
         packages("api");
         /*可以在这儿初始化大部分需要初始化的对象*/
 

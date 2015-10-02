@@ -38,6 +38,6 @@
         <transition offset="0,-10" to="end" name="d22e"/>
         <transition offset="0,-10" to="ApprovalByCol" g="856,617;847,195" name="d22c"/>
     </decision>
-    <end name="end" postInterceptors="engine.filter.Complete">
+    <end name="end"  preInterceptors="engine.filter.Complete">
     </end>
 </process>

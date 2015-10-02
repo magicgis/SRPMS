@@ -3,6 +3,7 @@ package util;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.map.LRUMap;
 
+import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Map;
 /**
  * Created by guofan on 2015/5/9.
  */
+@Singleton
 public class CrunchifyInMemoryCache<K, T> {
     private long timeToLive;
     private LRUMap crunchifyCacheMap;

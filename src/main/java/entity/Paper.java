@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "paper")
 public class Paper {
     private String id;
-    private Byte paperType;
+    private String paperType;
     private String name;
     private String vol;
     private String iss;
@@ -35,11 +35,11 @@ public class Paper {
 
     @Basic
     @Column(name = "paper_type")
-    public Byte getPaperType() {
+    public String getPaperType() {
         return paperType;
     }
 
-    public void setPaperType(Byte paperType) {
+    public void setPaperType(String paperType) {
         this.paperType = paperType;
     }
 
@@ -150,9 +150,8 @@ public class Paper {
         if (score != null ? !score.equals(paper.score) : paper.score != null) return false;
         if (numWord != null ? !numWord.equals(paper.numWord) : paper.numWord != null) return false;
         if (memo != null ? !memo.equals(paper.memo) : paper.memo != null) return false;
-        if (attachment != null ? !attachment.equals(paper.attachment) : paper.attachment != null) return false;
+        return !(attachment != null ? !attachment.equals(paper.attachment) : paper.attachment != null);
 
-        return true;
     }
 
     @Override

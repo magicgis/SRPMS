@@ -20,10 +20,10 @@ public class role extends Assignment {
         String taskName = model.getName();
         if (taskName.equals("ApprovalByCol") || taskName.equals("SubmitByCol")) {
             /*TODO 根据order里的变量来分配任务*/
-            return "col";
+            return "10002";
         } else if (model.getName().equals("ApprovalByDep")) {
             /*TODO 根据order里的变量来分配任务*/
-            return "dep";
+            return "10003";
         } else {
             /*一般情况下，我们都将任务分配给order的创造者*/
             return execution.getOrder().getCreator();

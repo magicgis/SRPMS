@@ -38,7 +38,7 @@ public class OrderActorDao {
 
     OrderActor get(String order, String actor) {
         OrderActor ans = null;
-        String hql = "from OrderActor where actor = '" + actor + "' and order = '" + order + "'";
+        String hql = "from OrderActor where actor = '" + actor + "' and order = '" + order + "' and status = 1";
         List<OrderActor> list = this.getCurrentSession().createQuery(hql).list();
         if (list != null && list.size() != 0) {
             ans = list.get(0);
@@ -53,6 +53,7 @@ public class OrderActorDao {
         OA.setIdoa(actor + "-" + order);
         OA.setRole(role);
         OA.setType(type);
+        OA.setStatus(1);
         save(OA);
     }
 
@@ -69,17 +70,17 @@ public class OrderActorDao {
     }
 
     public List<OrderActor> getByOrder(String order) {
-        String hql = "from OrderActor where order = '" + order + "'";
+        String hql = "from OrderActor where order = '" + order + "' and status = 1";
         return this.getCurrentSession().createQuery(hql).list();
     }
 
     public List<OrderActor> getByActor(String actor) {
-        String hql = "from OrderActor where actor = '" + actor + "'";
+        String hql = "from OrderActor where actor = '" + actor + "' and status = 1";
         return this.getCurrentSession().createQuery(hql).list();
     }
 
     public List<OrderActor> getByActorAndType(String actor, String type) {
-        String hql = "from OrderActor where actor = '" + actor + "' and  type = ''" + type + "'";
+        String hql = "from OrderActor where actor = '" + actor + "' and  type = ''" + type + "' and status = 1";
         return this.getCurrentSession().createQuery(hql).list();
     }
 
@@ -101,12 +102,13 @@ public class OrderActorDao {
                 hql = hql + s + " and ";
             }
             hql = hql.substring(0, hql.length() - 5);
+            hql += " and status = 1";
         }
         return this.getCurrentSession().createQuery(hql).list();
     }
 
     public String getMajorActorByOrder(String order) {
-        String hql = "from OrderActor where order = '" + order + "' and role = " + "1";
+        String hql = "from OrderActor where order = '" + order + "' and role = 1 and status = 1";
         List<OrderActor> list = this.getCurrentSession().createQuery(hql).list();
         return list.get(0).getActor();
     }
@@ -116,7 +118,11 @@ public class OrderActorDao {
         if (role == null) {
             return getByActor(actor);
         }
-        String hql = "from OrderActor where actor = '" + actor + "' and role = " + Integer.toString(role);
+        String hql = "from OrderActor where actor = '" + actor + "' and role = " + Integer.toString(role) + " and status = 1";
         return this.getCurrentSession().createQuery(hql).list();
+    }
+
+    public void update(OrderActor orderActor) {
+        getCurrentSession().update(orderActor);
     }
 }

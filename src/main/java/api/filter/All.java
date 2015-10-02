@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import service.security.SecurityService;
 import util.CrunchifyInMemoryCache;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Context;
@@ -28,11 +29,14 @@ public class All implements ContainerRequestFilter {
     SecurityService securityService;
     @Context
     private ExtendedUriInfo uriInfo;
+    @Context
+    HttpServletRequest webRequest;
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         /*请求Path模板*/
         List<UriTemplate> matchedTemplates = uriInfo.getMatchedTemplates();
+        User wtf = (User) webRequest.getSession().getAttribute("user");
         StringBuilder path = new StringBuilder();
         for (int i = matchedTemplates.size() - 1; i >= 0; i--) {
             path.append(matchedTemplates.get(i).getTemplate());

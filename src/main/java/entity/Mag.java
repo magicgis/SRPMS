@@ -1,5 +1,7 @@
 package entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 /**
@@ -20,6 +22,8 @@ public class Mag {
     private Standard standard;
 
     @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "id")
     public String getId() {
         return id;
@@ -124,9 +128,8 @@ public class Mag {
         if (sub != null ? !sub.equals(mag.sub) : mag.sub != null) return false;
         if (type != null ? !type.equals(mag.type) : mag.type != null) return false;
         if (status != null ? !status.equals(mag.status) : mag.status != null) return false;
-        if (memo != null ? !memo.equals(mag.memo) : mag.memo != null) return false;
+        return !(memo != null ? !memo.equals(mag.memo) : mag.memo != null);
 
-        return true;
     }
 
     @Override

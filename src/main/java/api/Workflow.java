@@ -8,6 +8,7 @@ import org.snaker.engine.entity.Order;
 import org.snaker.engine.entity.Process;
 import org.snaker.engine.entity.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import service.StandardService;
 
@@ -49,7 +50,8 @@ public class Workflow {
         List<Process> list = engine.getAllProcess();
         if (list == null || list.size() == 0) {
             return "NONE";
-        } else {
+        }
+        else {
             return "DONE";
         }
     }
@@ -141,7 +143,7 @@ public class Workflow {
         Task task = engine.getTask(taskId);
         /*可能会产生的task列表*/
         List<Task> tasks;
-        if (task.getTaskName().equals("Submission") && "true".equals((String) args.get("IsComplete"))) {
+        if (task.getTaskName().equals("Submission") && "true".equals(args.get("IsComplete"))) {
         /*获取当前order*/
             Order order = engine.getOrder(task.getOrderId());
             Map re = standardService.confirmChecking(order, args);
@@ -227,7 +229,8 @@ public class Workflow {
         Integer role = null;
         if (member.equals("1st")) {
             role = 1;
-        } else if (member.equals("2nd")) {
+        }
+        else if (member.equals("2nd")) {
             role = 0;
         }
         if (type.equals("all")) {
@@ -241,6 +244,16 @@ public class Workflow {
         return getSubMap(ans, limit, offset);
     }
 
+
+    @POST
+    @Path("/proj")
+    @Consumes("application/json;charset=UTF-8")
+    public String startProject(@RequestParam("staff") String staff, @QueryParam("project") String project) {
+
+        String processId = engine.getProcessByName("basicProcess_Beta").getId();
+        engine.startInstanceById(processId, staff, new HashMap<String, Object>());
+        return null;
+    }
 
     /**
      * 获取order的最新任务

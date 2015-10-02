@@ -9,7 +9,6 @@ import org.snaker.engine.entity.Order;
 import service.StaffService;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static util.StaticFactory.getBean;
@@ -29,8 +28,10 @@ public class Start implements SnakerInterceptor {
         String actor = execution.getOperator();
         Order order = execution.getOrder();
         String type = (String) execution.getArgs().get("WF_Type");
+
         StaffService staffService = (StaffService) getBean(StaffService.class);
-        List<Staff> x = staffService.getAll();
+//        UserService userService = (UserService) getBean(UserService.class);
+
         Staff staff = staffService.getById(actor);
         BaseInfo col = staff.getCol();
         orderActorDao.save(order.getId(), actor, 1, type);

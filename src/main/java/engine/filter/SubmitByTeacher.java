@@ -31,7 +31,7 @@ public class SubmitByTeacher implements SnakerInterceptor {
             Map<String, Object> args = new HashMap<String, Object>();
             args.put("Status", "WaitForCol");
             execution.getEngine().order().addVariable(order, args);
-            orderActorDao.save(order, "col", 2, type);
+            orderActorDao.save(order, "10002", 2, type);
         }
     }
 }

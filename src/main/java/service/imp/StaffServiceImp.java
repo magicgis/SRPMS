@@ -18,7 +18,9 @@ public class StaffServiceImp extends BaseServiceImp<Staff> implements StaffServi
     public List<Staff> search(String keyword, String sort, String order) {
         ArrayList<String> keys = new ArrayList<>();
         keys.add("id");
+        keys.add("name");
         keys.add("position");
+        keys.add("col.value");
         keys.add("dept.value");
         return staffDao.findByArrayFuz(keys, keyword, sort, order);
     }

@@ -21,27 +21,34 @@ public class Decision implements SnakerInterceptor {
         if (dec.containsKey("DecByCol")) {
             if (dec.get("DecByCol") instanceof String) {
                 flag = Boolean.valueOf(dec.get("DecByCol").toString());
-            } else {
+            }
+            else {
                 flag = (Boolean) dec.get("DecByCol");
             }
             if (flag) {
-                args.put("Status", "WaitForDep");
-            } else {
+                args.put("Status", "WaitForCollegeSubmit");
+            }
+            else {
                 args.put("Status", "RefuseByCol");
             }
-
-        } else if (dec.containsKey("DecByDep")) {
+            execution.getEngine().order().addVariable(order, args);
+        }
+        else if (dec.containsKey("DecByDep")) {
             if (dec.get("DecByDep") instanceof String) {
                 flag = Boolean.valueOf(dec.get("DecByDep").toString());
-            } else {
+            }
+            else {
                 flag = (Boolean) dec.get("DecByDep");
             }
             if (flag) {
-                args.put("Status", "AllCompelete");
-            } else {
+                //莫名奇妙，不能在这儿处理数据
+                // do nothing
+            }
+            else {
                 args.put("Status", "RefuseByDep");
+                execution.getEngine().order().addVariable(order, args);
             }
         }
-        execution.getEngine().order().addVariable(order, args);
+
     }
 }

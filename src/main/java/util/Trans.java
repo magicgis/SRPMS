@@ -29,7 +29,8 @@ public class Trans {
         if (limit + offset > size) {
             ans.put("rows", list.subList(offset, size));
             ans.put("total", Integer.toString(size));
-        } else {
+        }
+        else {
             offset = offset > size ? size : offset;
             ans.put("rows", list.subList(offset, size > (limit + offset) ? (limit + offset) : size));
             ans.put("total", Integer.toString(size));
@@ -130,7 +131,8 @@ public class Trans {
             StringBuffer sb = new StringBuffer(src);
             sb.setCharAt(0, Character.toLowerCase(sb.charAt(0)));
             return sb.toString();
-        } else {
+        }
+        else {
             return null;
         }
     }
@@ -187,7 +189,8 @@ public class Trans {
             if (s.equals("{")) {
             /*添加下标*/
                 l.add(list.size() - 1);
-            } else if (s.equals("}")) {
+            }
+            else if (s.equals("}")) {
             /*找出最后一个{的下标*/
                 int lastNum = l.get(l.size() - 1);
             /*切割*/
