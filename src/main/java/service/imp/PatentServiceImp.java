@@ -1,9 +1,12 @@
 package service.imp;
 
+import dao.PatentDao;
 import entity.Patent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.PatentService;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -11,8 +14,12 @@ import java.util.List;
  */
 @Service
 public class PatentServiceImp extends BaseServiceImp<Patent> implements PatentService {
+    @Autowired
+    PatentDao patentDao;
+
     @Override
     public List<Patent> search(String keyword, String sort, String order) {
-        return null;
+        List<String> keys = Arrays.asList("name", "patentNo", "patentPubNo");
+        return patentDao.findByArrayFuz(keys, keyword, sort, order);
     }
 }
