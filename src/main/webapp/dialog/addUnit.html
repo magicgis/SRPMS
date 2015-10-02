@@ -1,0 +1,77 @@
+<script>
+    $(function() {
+        $('#unit').selectize({
+            valueField: 'value',
+            labelField: 'value',
+            searchField: 'value',
+            persist: false,
+            options: [],
+            create: true,
+            maxItem: 1,
+            preload:true,
+            load: function(query, callback) {
+                $.ajax({
+                    url: '../api/baseinfo/单位',
+                    type: 'GET',
+                    dataType: 'json',
+                    error: function() {
+                        callback();
+                    },
+                    success: function(res) {
+                        callback(res);
+                    }
+                });
+            }
+        });
+    });
+    function isFull() {
+        console.log($('#rank').val());
+        if ($('#unit').val()=="" || $('#rank').val()=="") {
+            return false;
+        }
+        return true;
+    }
+</script>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel-body">
+            <!--<div class="row">-->
+            <div class="col-lg-12">
+                <form id="unitInfo">
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-md-10">
+                            <label class="col-sm-2 control-label no-padding-right"
+                                   for="unit">单位</label>
+
+                            <div class="col-sm-10">
+                                <select class="form-control col-xs-10"
+                                        id="unit" name="unit"></select>
+                                    <span class="help-inline col-xs-12">
+                                        <span class="middle">*输入后，鼠标单击或回车选择</span>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-md-10">
+                            <label class="col-sm-2 control-label no-padding-right"
+                                   for="rank">排名</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" id="rank" name="rank"
+                                       placeholder=""
+                                       class="form-control col-xs-10"
+                                       onkeyup="this.value=value.replace(/[^\d]/g,'')"
+                                       onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"/>
+                                    <span class="help-inline col-xs-12">
+                                        <span class="middle">*请输入数字，该排名代表此单位在科研工作中的排名位置</span>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--</div>-->
+        </div>
+    </div>
+</div>

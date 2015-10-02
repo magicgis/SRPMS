@@ -1,0 +1,74 @@
+<script src="../assets/js/bootstrap-datepicker.min.js"></script>
+<script src="../assets/js/moment.min.js"></script>
+<script src="../assets/js/daterangepicker.min.js"></script>
+<link rel="stylesheet" href="../assets/css/datepicker.min.css"/>
+<link rel="stylesheet" href="../assets/css/bootstrap-timepicker.min.css"/>
+<link rel="stylesheet" href="../assets/css/daterangepicker.min.css"/>
+<link rel="stylesheet" href="../assets/css/bootstrap-datetimepicker.min.css"/>
+<script>
+    function isFull() {
+        if ($('#to_acct_time').val() == "" || $('#to_acct_mny').val() == "" || $('#out_mny').val() == "") {
+            return false;
+        }
+        return true;
+    }
+</script>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel-body">
+            <div class="col-lg-12">
+                <form id="unitInfo">
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-md-10">
+                            <label class="col-sm-2 control-label no-padding-right"
+                                   for="to_acct_time">到账时间</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control col-xs-10 date-picker"
+                                       id="to_acct_time" name="to_acct_time"
+                                       data-date-format="yyyy-mm-dd"/>
+                                    <span class="help-inline col-xs-12">
+                                        <span class="middle">*请选择具体时间</span>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-md-10">
+                            <label class="col-sm-2 control-label no-padding-right"
+                                   for="to_acct_mny">到账金额</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" id="to_acct_mny" name="to_acct_mny"
+                                       placeholder=""
+                                       class="form-control col-xs-10"
+                                       onkeyup="this.value=value.replace(/[^\d]/g,'')"
+                                       onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"/>
+                                    <span class="help-inline col-xs-12">
+                                        <span class="middle">*请输入具体数字</span>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-md-10">
+                            <label class="col-sm-2 control-label no-padding-right"
+                                   for="out_mny">外拨金额</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" id="out_mny" name="out_mny"
+                                       placeholder=""
+                                       class="form-control col-xs-10"
+                                       onkeyup="this.value=value.replace(/[^\d]/g,'')"
+                                       onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"/>
+                                    <span class="help-inline col-xs-12">
+                                        <span class="middle">*请输入具体数字</span>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
