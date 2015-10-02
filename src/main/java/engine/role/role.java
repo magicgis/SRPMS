@@ -21,10 +21,15 @@ public class role extends Assignment {
         if (taskName.equals("ApprovalByCol") || taskName.equals("SubmitByCol")) {
             /*TODO 根据order里的变量来分配任务*/
             return "10002";
-        } else if (model.getName().equals("ApprovalByDep")) {
+        }
+        else if (model.getName().equals("ApprovalByDep")) {
             /*TODO 根据order里的变量来分配任务*/
             return "10003";
-        } else {
+        }
+        else if (execution.getArgs().containsKey("Main-Teacher")) {
+            return execution.getArgs().get("Main-Teacher");
+        }
+        else {
             /*一般情况下，我们都将任务分配给order的创造者*/
             return execution.getOrder().getCreator();
         }

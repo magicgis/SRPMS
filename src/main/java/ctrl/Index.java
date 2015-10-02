@@ -88,6 +88,14 @@ public class Index {
         return "patent";
     }
 
+    @RequestMapping(value = {"patent/{orderId}"}, method = RequestMethod.GET)
+    public String patentEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                             @PathVariable("orderId") String orderId) {
+        List<Task> task = engine.getTaskByOrder(orderId);
+        model.addAttribute(task.get(0));
+        return "patentEdit";
+    }
+
     @RequestMapping(value = {"project"}, method = RequestMethod.GET)
     public String project(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         return "project";

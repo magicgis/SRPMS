@@ -32,7 +32,7 @@ public class SnakerEngineUtils implements Engine {
 
     public void initFlows() {
         snakerEngine.process().deploy(StreamHelper.getStreamFromClasspath("workflow/easy.snaker"));
-        snakerEngine.process().deploy(StreamHelper.getStreamFromClasspath("workflow/mag.snaker"));
+//        snakerEngine.process().deploy(StreamHelper.getStreamFromClasspath("workflow/mag.snaker"));
     }
 
     public List<Process> getAllProcess() {

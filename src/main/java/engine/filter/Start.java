@@ -34,7 +34,12 @@ public class Start implements SnakerInterceptor {
 
         Staff staff = staffService.getById(actor);
         BaseInfo col = staff.getCol();
-        orderActorDao.save(order.getId(), actor, 1, type);
+        if (!execution.getArgs().containsKey("Main-Teacher")) {
+            orderActorDao.save(order.getId(), actor, 1, type);
+        }
+        else {
+            orderActorDao.save(order.getId(), (String) execution.getArgs().get("Main-Teacher"), 1, type);
+        }
         Map<String, Object> args = new HashMap<String, Object>();
         args.put("WF_Type", type);
         args.put("WF_Col", col.getValue());
