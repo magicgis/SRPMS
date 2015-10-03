@@ -74,7 +74,7 @@
                         <div class="widget-box transparent " style="opacity: 1;" id="projTable-box">
                             <div class="widget-body">
                                 <table id="ProjectTable"
-                                <%--data-toolbar="#tProjectToolbar"--%>
+                                data-toolbar="#tProjectToolbar"
                                        data-search="true"
                                        data-show-columns="true"
                                        data-show-refresh="true"
@@ -84,93 +84,22 @@
                                        data-single-select="true"
                                        data-click-to-select="true">
                                 </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12" id="info_alert"></div>
-                    <div class="col-xs-12">
-                        <div class="widget-box transparent ui-sortable-handle collapsed" style="opacity: 1;"
-                             id="proj-box">
-                            <div class="widget-body">
-                                <div class="row">
-                                    <jsp:include page="public/projectForm.jsp"/>
-
-                                    <c:choose>
-                                        <c:when test="${sessionScope.level == '1'}">
-                                            <div id="formBtn" class="col-xs-12 clearfix">
-                                                <div class="pull-left">
-                                                        <%--<button class="btn btn-primary" type="button" id="DiffAdd">--%>
-                                                        <%--<i class="ace-icon fa fa-trash  bigger-100"></i>--%>
-                                                        <%--差异申请--%>
-                                                        <%--</button>--%>
-                                                        <%--<button class="btn btn-danger   " type="button" id="del">--%>
-                                                        <%--<i class="ace-icon fa fa-trash  bigger-100"></i>--%>
-                                                        <%--删除--%>
-                                                        <%--</button>--%>
-                                                        <%--&nbsp; &nbsp; &nbsp;--%>
-                                                        <%--<button class="btn btn-danger  " type="button" id="orderBack">--%>
-                                                        <%--<i class="ace-icon fa  fa-repeat bigger-100"></i>--%>
-                                                        <%--撤回--%>
-                                                        <%--</button>--%>
-                                                </div>
-                                                <div class="pull-right">
-                                                    <button class="btn btn-success" type="button" id="confirm">
-                                                        <i class="ace-icon fa fa-check bigger-110"></i>
-                                                        确认
-                                                    </button>
-
-                                                        <%--<button class="btn btn-info" type="button" id="save">--%>
-                                                        <%--<i class="ace-icon fa fa-save bigger-110"></i>--%>
-                                                        <%--保存--%>
-                                                        <%--</button>--%>
-                                                        <%--&lt;%&ndash;&nbsp; &nbsp; &nbsp;&ndash;%&gt;--%>
-                                                    <button class="btn btn-primary" type="button" id="back">
-                                                        <i class="ace-icon fa fa-reply  bigger-110"></i>
-                                                        返回
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </c:when>
-                                        <c:when test="${sessionScope.level == '2'}">
-                                            <div id="formBtn" class="col-xs-12">
-                                                <div class="col-md-offset-7 col-md-8">
-                                                        <%--<button class="btn btn-primary" type="button" id="previous">--%>
-                                                        <%--<i class="ace-icon fa fa-arrow-left bigger-110"></i>--%>
-                                                        <%--上一条--%>
-                                                        <%--</button>--%>
-                                                        <%--&nbsp; &nbsp; &nbsp;--%>
-                                                    <button class="btn btn-success" type="button" id="Approve">
-                                                        <i class="ace-icon fa fa-check bigger-110"></i>
-                                                        通过
-                                                    </button>
-                                                    &nbsp; &nbsp; &nbsp;
-                                                    <button class="btn" type="button" id="back">
-                                                        <i class="ace-icon fa fa-reply  bigger-110"></i>
-                                                        返回
-                                                    </button>
-                                                    &nbsp; &nbsp; &nbsp;
-                                                    <button class="btn btn-danger" type="button" id="Refuse">
-                                                        <i class="ace-icon fa fa-remove bigger-110"></i>
-                                                        驳回
-                                                    </button>
-                                                    &nbsp; &nbsp; &nbsp;
-                                                    <button class="btn btn-primary" type="button" id="next">
-                                                        下一条
-                                                        <i class="ace-icon fa fa-arrow-right bigger-110"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </c:when>
-                                        <c:when test="${sessionScope.level == '3'}">
-
-                                        </c:when>
-                                    </c:choose>
-
+                                <div id="tProjectToolbar">
+                                  <c:choose>
+                                    <c:when test="${sessionScope.level == '3'}">
+                                     <button id="addProject" class="btn btn-primary">
+                                        <i class="fa fa-plus"></i>添加项目
+                                     </button>
+                                     <button id="submit" class="btn btn-success">
+                                        <i class="fa fa-check"></i> 统一提交
+                                     </button>
+                                    </c:when>
+                                  </c:choose>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-xs-12" id="info_alert"></div>
                 </div>
             </div>
         </div>
@@ -200,7 +129,6 @@
         <script src="<c:url value="/js/school/project.js"/>"></script>
     </c:when>
 </c:choose>
-
 <script type="text/javascript">
     jQuery(function ($) {
         $('.date-picker').datepicker({
@@ -210,7 +138,6 @@
             $(this).prev().focus();
         });
     });
-
 </script>
 </body>
 </html>
