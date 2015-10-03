@@ -4,14 +4,15 @@
 var actorTemp =[];
 var unitTemp =[];
 var filesData = {};
-//所有的论文
-var allUrl = '/api/workflow/order/' + userName + '/patent/all';
+//所有的专利
+//var allUrl = '/api/workflow/order/' + userName + '/patent/all';
 //当前url
-var url = allUrl;
+//var url = allUrl;
 
 $(function () {
+
     $('#PatentTable').bootstrapTable({
-        url:'/api/workflow/order/'+userName+'/patent/all', //todo
+        url:'/api/workflow/order/'+userName+'/patent/all',
         sidePagination:"server",
         columns: [{
             radio:true
@@ -40,6 +41,7 @@ $(function () {
         }],
         responseHandler: tableTrans
     });
+
     $('#actorTable').bootstrapTable({
         columns: [
             {
@@ -135,94 +137,12 @@ $(function () {
         }
     });
     $('#reply').hide();
-    //showTableSchool(url);
-    upToLoadFile();
 });
-//监听 点击table
-$('#PatentTable').on('click-row.bs.table', function (e, row, $element) {
-    $('form input').val(null);
-    unitTemp = [];
-    actorTemp = [];
-    var orderId = row["id"];
-    var status = row["Status"];
-    if (row['parentTaskId'] = !null) {
-        var taskId = row['id'];
-        $('#WF_Task').val(taskId);
-    }
-    var $patType = $('#patType').selectize();
-    var $dept = $('#dept').selectize();
-    if (status == "Blank" || status == "Uncomplete") {
-        editableForm();
-        enableSelectize($patType);
-        enableSelectize($dept);
-        showEdit();
-        workflow.latestTask(orderId).success(function (currentTask) {
-            var taskId = currentTask[0]['id'];
-            $('#WF_Task').val(taskId);
-            $('#reply').hide();
-        });
-    }else{
-        uneditableForm();
-        disableSelectize($patType);
-        disableSelectize($dept);
-        showApproval();
-    }
-    DisplayForm($patType, row['patent.standard.id'], 0);
-    DisplayForm($dept, row['dept.id'], 0);
-    $("#showSum").html("");
-    //单位信息
-    if(row['units'] != null) {
-        unitTemp = row['units'];
-    }
-    $('#unitTable').bootstrapTable("load", unitTemp);
-    //成员信息
-    if (row['actors'] != null) {
-        actorTemp = row['actors'];
-    }
-    $("#actorTable").bootstrapTable('load', actorTemp);
-    //输入框信息
-    $('#patent').autofill(row, {
-        findbyname: true,
-        restrict: false
-    });
-    // 文件信息
-    showFiles(row["filesData"]);
-    showForm();
-    $('#getScore').hide();
-});
+
 //监听 点击新建
 $("#add").click(function(){
     start();
 });
-//监听 点击保存
-$("#save").click(function(){
-    save();
-});
-//监听 点击确认
-$("#confirm").click(function(){
-    confirm();
-});
-//监听 点击返回
-$("#back").click(function(){
-    showTableSchool(url);
-});
-//监听  删除
-$("#del").click(function(){
-    delOrder();
-});
-//监听 添加单位
-$('#addUnit').click(function () {
-    addUnit();
-});
-//监听 点击通过
-$("#Approve").click(function () {
-    approve();
-});
-//监听 点击驳回
-$("#Refuse").click(function () {
-    refuse();
-});
-
 
 /*
  * 新建
@@ -336,7 +256,7 @@ function addActor() {
         },
         title: "成员信息",
         data: {
-            'pageToLoad': '../public/addActor.html'
+            'pageToLoad': '/dialog/addActor.html'
         },
         closeByBackdrop: false,
         buttons: [{
@@ -373,7 +293,7 @@ function editActor(row, index) {
         },
         title: "成员信息",
         data: {
-            'pageToLoad': '../public/addActor.html'
+            'pageToLoad': '/dialog/addActor.html'
         },
         closeByBackdrop: false,
         buttons: [{
@@ -433,7 +353,7 @@ function addUnit() {
         },
         title: "参与单位信息",
         data: {
-            'pageToLoad': '../public/addUnit.html'
+            'pageToLoad': '/dialog/addUnit.html'
         },
         closeByBackdrop: false,
         buttons: [{
@@ -467,7 +387,7 @@ function editUnit(row, index) {
         },
         title: "成员信息",
         data: {
-            'pageToLoad': '../public/addUnit.html'
+            'pageToLoad': '/dialog/addUnit.html'
         },
         closeByBackdrop: false,
         buttons: [{
@@ -549,6 +469,84 @@ function refuse(){
 }
 
 
-/**
- * 附件
- */
+//监听 点击保存
+//$("#save").click(function(){
+//    save();
+//});
+//监听 点击确认
+//$("#confirm").click(function(){
+//    confirm();
+//});
+//监听 点击返回
+//$("#back").click(function(){
+//    showTableSchool(url);
+//});
+////监听  删除
+//$("#del").click(function(){
+//    delOrder();
+//});
+////监听 添加单位
+//$('#addUnit').click(function () {
+//    addUnit();
+//});
+////监听 点击通过
+//$("#Approve").click(function () {
+//    approve();
+//});
+////监听 点击驳回
+//$("#Refuse").click(function () {
+//    refuse();
+//});
+
+//监听 点击table
+//$('#PatentTable').on('click-row.bs.table', function (e, row, $element) {
+//    $('form input').val(null);
+//    unitTemp = [];
+//    actorTemp = [];
+//    var orderId = row["id"];
+//    var status = row["Status"];
+//    if (row['parentTaskId'] = !null) {
+//        var taskId = row['id'];
+//        $('#WF_Task').val(taskId);
+//    }
+//    var $patType = $('#patType').selectize();
+//    var $dept = $('#dept').selectize();
+//    if (status == "Blank" || status == "Uncomplete") {
+//        editableForm();
+//        enableSelectize($patType);
+//        enableSelectize($dept);
+//        showEdit();
+//        workflow.latestTask(orderId).success(function (currentTask) {
+//            var taskId = currentTask[0]['id'];
+//            $('#WF_Task').val(taskId);
+//            $('#reply').hide();
+//        });
+//    }else{
+//        uneditableForm();
+//        disableSelectize($patType);
+//        disableSelectize($dept);
+//        showApproval();
+//    }
+//    DisplayForm($patType, row['patent.standard.id'], 0);
+//    DisplayForm($dept, row['dept.id'], 0);
+//    $("#showSum").html("");
+//    //单位信息
+//    if(row['units'] != null) {
+//        unitTemp = row['units'];
+//    }
+//    $('#unitTable').bootstrapTable("load", unitTemp);
+//    //成员信息
+//    if (row['actors'] != null) {
+//        actorTemp = row['actors'];
+//    }
+//    $("#actorTable").bootstrapTable('load', actorTemp);
+//    //输入框信息
+//    $('#patent').autofill(row, {
+//        findbyname: true,
+//        restrict: false
+//    });
+//    // 文件信息
+//    showFiles(row["filesData"]);
+//    showForm();
+//    $('#getScore').hide();
+//});

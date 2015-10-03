@@ -1,12 +1,9 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: zheng
-  Date: 2015/4/22
-  Time: 1:16
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,43 +88,24 @@
                                        data-click-to-select="true">
                                 </table>
                                 <div id="tPatentToolbar">
-                                    <button id="add" class="btn btn-primary">
-                                        <i class="fa fa-plus"></i> 添加专利
-                                    </button>
-                                    <button id="submit" class="btn btn-success">
-                                        <i class="fa fa-check"></i> 统一提交
-                                    </button>
+
+                                    <c:choose>
+                                        <c:when test="${sessionScope.level == '1'}">
+                                            <button id="submit" class="btn btn-success">
+                                                <i class="fa fa-check"></i> 统一提交
+                                            </button>
+                                        </c:when>
+                                        <c:when test="${sessionScope.level == '3'}">
+                                            <button id="add" class="btn btn-primary">
+                                                <i class="fa fa-plus"></i> 添加专利
+                                            </button>
+                                        </c:when>
+                                    </c:choose>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12" id="info_alert"></div>
-                    <div class="col-xs-12">
-                        <div class="widget-box transparent ui-sortable-handle collapsed" style="opacity: 1;"
-                             id="patent-box">
-                            <div class="widget-body">
-                                <div class="row">
-                                    <jsp:include page="public/patentForm.jsp"/>
-                                    <div id="formBtn" class="col-xs-12 clearfix">
-                                        <div class="pull-right">
-                                            <button class="btn btn-info btn-sm" type="button" id="back">
-                                                <i class="ace-icon fa fa-reply  bigger-110"></i>
-                                                返回
-                                            </button>
-                                            <button class="tabOrdBtn btn btn-success btn-sm" type="button" id="confirm">
-                                                <i class="ace-icon fa fa-check bigger-110"></i>
-                                                确认
-                                            </button>
-                                            <button class="tabOrdBtn btn btn-primary btn-sm" type="button" id="save">
-                                                <i class="ace-icon fa fa-save bigger-110"></i>
-                                                保存
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -146,10 +124,10 @@
         <script src="<c:url value="/js/teacher/patent.js"/>"></script>
     </c:when>
     <c:when test="${sessionScope.level == '2'}">
-
+        <script src="<c:url value="/js/college/patent.js"/>"></script>
     </c:when>
     <c:when test="${sessionScope.level == '3'}">
-
+        <script src="<c:url value="/js/school/patent.js"/>"></script>
     </c:when>
 </c:choose>
 

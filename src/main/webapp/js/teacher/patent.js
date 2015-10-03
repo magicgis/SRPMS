@@ -5,9 +5,10 @@ var unitTemp = [];
 var actorTemp = [];
 var filesData = {};
 //所有的专利
-var allUrl = '/api/workflow/order/' + userName + '/patent/all';
+//var allUrl = '/api/workflow/order/' + userName + '/patent/all';
 //当前url
-var url = allUrl;
+//var url = allUrl;
+
 $(function () {
     $('#PatentTable').bootstrapTable({
         url: '/api/workflow/order/' + userName + '/patent/all',
@@ -134,169 +135,13 @@ $(function () {
         }
     });
     $('#reply').hide();
-    upToLoadFile();
-});
-//以下仅为测试
-$('#PatentTable').on('click-row.bs.table', function (e, row, $element) {
-    $('form input').val(null);
-    unitTemp = [];
-    actorTemp = [];
-    var orderId = row["id"];
-    var status = row["Status"];
-    if (row['parentTaskId'] = !null) {
-        var taskId = row['id'];
-        $('#WF_Task').val(taskId);
-    }
-    var $patType = $('#patType').selectize();
-    if (status == "Blank" || status == "Uncomplete") {
-        editableForm();
-        enableSelectize($patType);
-        $('#confirm').show();
-        $('#save').show();
-        $('#del').show();
-        workflow.latestTask(orderId).success(function (currentTask) {
-            var taskId = currentTask[0]['id'];
-            $('#WF_Task').val(taskId);
-            $('#reply').hide();
-        });
-    }else{
-        uneditableForm();
-        disableSelectize($patType);
-        $('#del').hide();
-        $('#confirm').hide();
-        $('#save').hide();
-    }
-    //总分
-    var  score = row['pscore'];
-    if(score == undefined || score == null || score =="") {
-        $("#showSum").html("");
-    }else {
-        $("#showSum").html("可分配总分："+score+"分");
-    }
-    DisplayForm($patType, row['patent.standard.id'], 0);
-    DisplayForm($('#dept').selectize(), row['dept.id'], 0);
-    //单位信息
-    if(row['units'] != null) {
-        unitTemp = row['units'];
-    }
-    $('#unitTable').bootstrapTable("load", unitTemp);
-    //成员信息
-    if (row['actors'] != null) {
-        actorTemp = row['actors'];
-    }
-    $("#actorTable").bootstrapTable('load', actorTemp);
-    //输入框信息
-    $('#patent').autofill(row, {
-        findbyname: true,
-        restrict: false
-    });
-    // 文件信息
-    showFiles(row["filesData"]);
-    showForm();
 });
 
-// 以下才是教师真正的js
-//监听 点击专利表
-//$('#PatentTable').on('click-row.bs.table', function (e, row, $element) {
-//    $('form input').val(null);
-//    actorTemp = [];
-//    unitTemp = [];
-//    var orderId = row["id"];
-//    var status = row["Status"];
-//    if (row['parentTaskId'] = !null) {
-//        var taskId = row['id'];
-//        $('#WF_Task').val(taskId);
-//    }
-//    uneditableForm();
-//    disableSelectize($("#patType").selectize());
-//    if (status == "" || status.indexOf('Refuse') >= 0) { // todo
-//        showEdit();
-//        workflow.latestTask(orderId).success(function(currentTask){
-//            var taskId = currentTask[0]['id'];
-//            $('#WF_Task').val(taskId);
-//            if (status.indexOf('Refuse') >= 0) {
-//                $('#reply').show();
-//                $('#reply-display').show();
-//                var reply = $('#reply-display').children('p');
-//                var who = $('#reply-display').children('small');
-//                reply.empty();
-//                who.empty();
-//                if (status.indexOf("Col") >= 0) {
-//                    reply.append(currentTask[0]['variableMap']['replyByCol']);
-//                    who.append("学院批复");
-//                } else {
-//                    reply.append(currentTask[0]['variableMap']['replyByDep']);
-//                    who.append("管理部门批复");
-//                }
-//            } else {
-//                $('#reply').hide();
-//            }
-//        });
-//    } else {
-//        $('#confirm').hide();
-//        $('#save').hide();
-//    }
-//    //总分
-//    var  score = row['score'];
-//    if(score == undefined || score == null || score =="") {
-//        $("#showSum").html("");
-//    }else {
-//        $("#showSum").html("总分："+score+"分");
-//    }
-//    //成员信息
-//    if (row['actors'] != null) {
-//        actorTemp = row['actors'];
-//    }
-//    $("#actorTable").bootstrapTable('load', actorTemp);
-//    //单位信息
-//    if(row['units'] !== null) {
-//        unitTemp = row['units'];
-//    }
-//    $('#unitTable').bootstrapTable("load", unitTemp);
-//    //输入框信息
-//    $('#patent').autofill(row, {
-//        findbyname: true,
-//        restrict: false
-//    });
-//    $('#dept').val( row['dept.value'] );
-//    $('#patType').val( row['patent.standard.value'] );
-//    // 文件信息
-//    showFiles(row["filesData"]);
-//    showForm();
-//});
-//监听 点击保存
-$("#save").click(function(){
-    save();
-});
-//监听 点击确认
-$("#confirm").click(function(){
-    confirm();
-});
-//监听 点击返回
-$("#back").click(function(){
-    //showTable();
-    showTableSchool(url);
-});
 /*统一提交*/
 $("#submit").click(function(){
     submitAll();
 });
-//监听 添加单位
-$('#addUnit').click(function () {
-    addUnit();
-});
-//监听 添加成员
-$('#addActor').click(function () {
-    addActor();
-});
-//监听 分配分数
-$('#getScore').click(function () {
-    getScore();
-});
-//监听  删除
-//$("#del").click(function(){
-//    delOrder();
-//});
+
 /*
  * 保存
  *
@@ -306,7 +151,7 @@ function save(){
     var jsonData = getFormData('patent');
     workflow.execute(userName,'',jsonData).success(function(){
         afterSuccess("保存成功！");
-        showTableSchool(url);
+        window.location.href="/patent";
     });
 }
 /*
@@ -334,13 +179,13 @@ function confirm(){
                     if("valid" in data){
                         if(data["valid"] == true){
                             afterSuccess("确认成功！");
-                            showTableSchool(url);
+                            window.location.href="/patent";
                         }else {
                             errorMsg(data["msg"]);
                         }
                     }else{
                         afterSuccess("确认成功！");
-                        showTableSchool(url);
+                        window.location.href="/patent";
                     }
                 });
             }
@@ -355,78 +200,7 @@ function submitAll(){
     var submitData='WF_User='+userName;
     workflow.submitByTeacher(submitData).success(function(){
         afterSuccess("提交成功");
-        showTableSchool(url);
-    });
-}
-/**
- * 添加单位
- */
-function addUnit() {
-    BootstrapDialog.show({
-        type: BootstrapDialog.TYPE_PRIMARY,
-        message: function (dialog) {
-            var $message = $('<div></div>');
-            var pageToLoad = dialog.getData('pageToLoad');
-            $message.load(pageToLoad);
-            return $message;
-        },
-        title: "参与单位信息",
-        data: {
-            'pageToLoad': '../public/addUnit.html'
-        },
-        closeByBackdrop: false,
-        buttons: [{
-            id: 'btn-ok',
-            icon: 'glyphicon glyphicon-check',
-            label: '添加',
-            cssClass: 'btn-info',
-            autospin: false,
-            action: function (dialogRef) {
-                if (!isFull()) {
-                    messageModal('请将信息填写完整。');
-                    return;
-                }
-                subUnitInfo(null);
-                dialogRef.close();
-            }
-        }]
-    });
-}
-/**
- * 添加成员
- */
-function addActor() {
-    BootstrapDialog.show({
-        type: BootstrapDialog.TYPE_PRIMARY,
-        message: function (dialog) {
-            var $message = $('<div></div>');
-            var pageToLoad = dialog.getData('pageToLoad');
-            $message.load(pageToLoad);
-            return $message;
-        },
-        title: "成员信息",
-        data: {
-            'pageToLoad': '../public/addActor.html'
-        },
-        closeByBackdrop: false,
-        buttons: [{
-            id: 'btn-oknm',
-            icon: 'glyphicon glyphicon-check',
-            label: '添加',
-            cssClass: 'btn-info',
-            autospin: false,
-            action: function (dialogRef) {
-                if (!isFull()) {
-                    messageModal('请将信息填写完整。');
-                    return;
-                }
-                subActorInfo(null, 1);
-                dialogRef.close();
-            }
-        }],
-        onshown: function () {
-            fillRoles(patentRoles);
-        }
+        window.location.href="/patent";
     });
 }
 /**
@@ -443,7 +217,7 @@ function editActor(row, index){
         },
         title: "成员信息",
         data: {
-            'pageToLoad': '../public/addActor.html'
+            'pageToLoad': '/dialog/addActor.html'
         },
         closeByBackdrop: false,
         buttons: [{
@@ -528,75 +302,215 @@ function getScore() {
     });
 }
 
+//编辑单位
+//function editUnit(row, index) {
+//    BootstrapDialog.show({
+//        type: BootstrapDialog.TYPE_PRIMARY,
+//        message: function (dialog) {
+//            var $message = $('<div></div>');
+//            var pageToLoad = dialog.getData('pageToLoad');
+//            $message.load(pageToLoad);
+//            return $message;
+//        },
+//        title: "成员信息",
+//        data: {
+//            'pageToLoad': '../public/addUnit.html'
+//        },
+//        closeByBackdrop: false,
+//        buttons: [{
+//            id: 'btn-ok',
+//            icon: 'glyphicon glyphicon-check',
+//            label: '保存',
+//            cssClass: 'btn-info',
+//            autospin: false,
+//            action: function (dialogRef) {
+//                if (!isFull()) {
+//                    messageModal('请将单位信息填写完整。');
+//                    return;
+//                }
+//                subUnitInfo(index);
+//                dialogRef.close();
+//            }
+//        }],
+//        onshown: function () {
+//            var $unit = $("#unit").selectize();
+//            //填充单位
+//            DisplayForm($unit, row["unit"], 1);
+//            //填充其他
+//            $('#unitInfo').autofill(row, {
+//                findbyname: true,
+//                restrict: false
+//            });
+//        }
+//    });
+//}
+//监听 点击专利表
+//$('#PatentTable').on('click-row.bs.table', function (e, row, $element) {
+//    $('form input').val(null);
+//    actorTemp = [];
+//    unitTemp = [];
+//    var orderId = row["id"];
+//    var status = row["Status"];
+//    if (row['parentTaskId'] = !null) {
+//        var taskId = row['id'];
+//        $('#WF_Task').val(taskId);
+//    }
+//    uneditableForm();
+//    disableSelectize($("#patType").selectize());
+//    if (status == "" || status.indexOf('Refuse') >= 0) { // todo
+//        showEdit();
+//        workflow.latestTask(orderId).success(function(currentTask){
+//            var taskId = currentTask[0]['id'];
+//            $('#WF_Task').val(taskId);
+//            if (status.indexOf('Refuse') >= 0) {
+//                $('#reply').show();
+//                $('#reply-display').show();
+//                var reply = $('#reply-display').children('p');
+//                var who = $('#reply-display').children('small');
+//                reply.empty();
+//                who.empty();
+//                if (status.indexOf("Col") >= 0) {
+//                    reply.append(currentTask[0]['variableMap']['replyByCol']);
+//                    who.append("学院批复");
+//                } else {
+//                    reply.append(currentTask[0]['variableMap']['replyByDep']);
+//                    who.append("管理部门批复");
+//                }
+//            } else {
+//                $('#reply').hide();
+//            }
+//        });
+//    } else {
+//        $('#confirm').hide();
+//        $('#save').hide();
+//    }
+//    //总分
+//    var  score = row['score'];
+//    if(score == undefined || score == null || score =="") {
+//        $("#showSum").html("");
+//    }else {
+//        $("#showSum").html("总分："+score+"分");
+//    }
+//    //成员信息
+//    if (row['actors'] != null) {
+//        actorTemp = row['actors'];
+//    }
+//    $("#actorTable").bootstrapTable('load', actorTemp);
+//    //单位信息
+//    if(row['units'] !== null) {
+//        unitTemp = row['units'];
+//    }
+//    $('#unitTable').bootstrapTable("load", unitTemp);
+//    //输入框信息
+//    $('#patent').autofill(row, {
+//        findbyname: true,
+//        restrict: false
+//    });
+//    $('#dept').val( row['dept.value'] );
+//    $('#patType').val( row['patent.standard.value'] );
+//    // 文件信息
+//    showFiles(row["filesData"]);
+//    showForm();
+//});
+//监听 点击保存
+//$("#save").click(function(){
+//    save();
+//});
+//监听 点击确认
+//$("#confirm").click(function(){
+//    confirm();
+//});
+//监听 点击返回
+//$("#back").click(function(){
+//    //showTable();
+//    showTableSchool(url);
+//});
+
+////监听 添加单位
+//$('#addUnit').click(function () {
+//    addUnit();
+//});
+////监听 添加成员
+//$('#addActor').click(function () {
+//    addActor();
+//});
+////监听 分配分数
+//$('#getScore').click(function () {
+//    getScore();
+//});
+//监听  删除
+//$("#del").click(function(){
+//    delOrder();
+//});
 
 /**
- * 本文件为测试修改的地方
- * 1. patType不是选择框
- * 2. 所有的showTableSchool改为showTable
- * 3. 此处的新建功能
- * 4. 监听PatentTable的点击动作
+ * 添加单位
  */
-//方便测试规则，会删掉的
-$("#add").click(function(){
-    start();
-});
-
-function start(){
-    $('form input').val(null);
-    $('#downFiles').empty();
-    actorTemp = [];
-    unitTemp = [];
-    filesData = {};
-    workflow.startOrder(userName,"basicProcess_Beta","patent").success(function(data){
-        afterSuccess("新建成功！");
-        showForm();
-        var orderId = data["id"];
-        $('#WF_Order').val(orderId);
-        workflow.latestTask(orderId).success(function (currentTask) {
-            var taskId = currentTask[0]['id'];
-            $('#WF_Task').val(taskId);
-        });
-    });
-}
-//编辑单位
-function editUnit(row, index) {
-    BootstrapDialog.show({
-        type: BootstrapDialog.TYPE_PRIMARY,
-        message: function (dialog) {
-            var $message = $('<div></div>');
-            var pageToLoad = dialog.getData('pageToLoad');
-            $message.load(pageToLoad);
-            return $message;
-        },
-        title: "成员信息",
-        data: {
-            'pageToLoad': '../public/addUnit.html'
-        },
-        closeByBackdrop: false,
-        buttons: [{
-            id: 'btn-ok',
-            icon: 'glyphicon glyphicon-check',
-            label: '保存',
-            cssClass: 'btn-info',
-            autospin: false,
-            action: function (dialogRef) {
-                if (!isFull()) {
-                    messageModal('请将单位信息填写完整。');
-                    return;
-                }
-                subUnitInfo(index);
-                dialogRef.close();
-            }
-        }],
-        onshown: function () {
-            var $unit = $("#unit").selectize();
-            //填充单位
-            DisplayForm($unit, row["unit"], 1);
-            //填充其他
-            $('#unitInfo').autofill(row, {
-                findbyname: true,
-                restrict: false
-            });
-        }
-    });
-}
+//function addUnit() {
+//    BootstrapDialog.show({
+//        type: BootstrapDialog.TYPE_PRIMARY,
+//        message: function (dialog) {
+//            var $message = $('<div></div>');
+//            var pageToLoad = dialog.getData('pageToLoad');
+//            $message.load(pageToLoad);
+//            return $message;
+//        },
+//        title: "参与单位信息",
+//        data: {
+//            'pageToLoad': '/dialog/addUnit.html'
+//        },
+//        closeByBackdrop: false,
+//        buttons: [{
+//            id: 'btn-ok',
+//            icon: 'glyphicon glyphicon-check',
+//            label: '添加',
+//            cssClass: 'btn-info',
+//            autospin: false,
+//            action: function (dialogRef) {
+//                if (!isFull()) {
+//                    messageModal('请将信息填写完整。');
+//                    return;
+//                }
+//                subUnitInfo(null);
+//                dialogRef.close();
+//            }
+//        }]
+//    });
+//}
+/**
+ * 添加成员
+ */
+//function addActor() {
+//    BootstrapDialog.show({
+//        type: BootstrapDialog.TYPE_PRIMARY,
+//        message: function (dialog) {
+//            var $message = $('<div></div>');
+//            var pageToLoad = dialog.getData('pageToLoad');
+//            $message.load(pageToLoad);
+//            return $message;
+//        },
+//        title: "成员信息",
+//        data: {
+//            'pageToLoad': '../public/addActor.html'
+//        },
+//        closeByBackdrop: false,
+//        buttons: [{
+//            id: 'btn-oknm',
+//            icon: 'glyphicon glyphicon-check',
+//            label: '添加',
+//            cssClass: 'btn-info',
+//            autospin: false,
+//            action: function (dialogRef) {
+//                if (!isFull()) {
+//                    messageModal('请将信息填写完整。');
+//                    return;
+//                }
+//                subActorInfo(null, 1);
+//                dialogRef.close();
+//            }
+//        }],
+//        onshown: function () {
+//            fillRoles(patentRoles);
+//        }
+//    });
+//}
