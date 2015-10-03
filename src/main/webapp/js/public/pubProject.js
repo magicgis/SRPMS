@@ -30,6 +30,7 @@ var optionsMenu = {
 var $actorTable = $('#actorTable');
 var actorTemp = [];
 var unitTemp = [];
+var fundTemp = [];
 // 将对话框里的值加载进成员表
 function subActorInfo(index, flag) {
     var id = $('#actor').val();
@@ -190,14 +191,6 @@ function actorTran(value, row) {
         return;
 }
 /*********************表单||表格的动作和行为****************/
-//是否联合项目||显示单位表格
-function firstOrOther() {
-    if ($('#attr').val() == '联合项目') {
-        $('#unitInfo').show();
-    } else {
-        $('#unitInfo').hide();
-    }
-}
 //显示详情
 function showForm() {
     $('#projTable-box').addClass('collapsed');
@@ -226,7 +219,7 @@ function uneditableForm() {
     $('#addActor').attr("disabled", "disabled");
     $('#addUnit').attr("disabled", "disabled");
     $('#addFund').attr("disabled", "disabled");
-    //$('#fundTable').bootstrapTable('hideColumn', 'operate');
+    $('#fundTable').bootstrapTable('hideColumn', 'operate');
     $('#actorTable').bootstrapTable('hideColumn', 'operate');
     $('#unitTable').bootstrapTable('hideColumn', 'operate');
 }
@@ -314,57 +307,70 @@ function getFundsData() {
     var fundTemp = $("#fundTable").bootstrapTable('getData');
     return fundTemp;
 }
-/**********************************************************************************************************************/
-/******************************************************修改分界线*******************************************************/
-/******************************************************修改分界线*******************************************************/
-/**********************************************************************************************************************/
-//启用或禁用
-function disableOrEnable(index, row, value) {
-    //测试区
-    if (row['user.status'] == 1) {
-        return [
-            '<label><input class="UserEnableChange ace ace-switch ace-switch-7" type="checkbox" ' +
-            'checked name="switch-field-1"><span class="lbl"></span></label>'
-        ].join('');
+//监听 点击项目表
+$('#ProjectTable').on('click-row.bs.table', function (e, row, $element) {
+    var orderId = row["id"];
+    window.location.href = '/project/' + orderId;
+});
+/*************************日期||项目属性*********************************/
+function firstOrOther() {
+    if ($('#attr').val() == '联合项目') {
+        $('#unitInfo').show();
     } else {
-        return [
-            '<label><input class="UserDisableChange ace ace-switch ace-switch-7" type="checkbox" ' +
-            'name="switch-field-1"><span class="lbl"></span></label>'
-        ].join('');
+        $('#unitInfo').hide();
     }
 }
-//启用或禁用 操作
-window.operateEvents = {
-    //测试
-    'change .UserEnableChange': function (e, value, row, index) {
-        var ableType = 'disable';
-        var TipInfo = '已禁用';
-        disableOrEnableUser(row['id'], ableType, TipInfo);
-    },
-    'change .UserDisableChange': function (e, value, row, index) {
-        $('#UserTable').bootstrapTable('resetView', {'clickToSelect': false});
-        var ableType = 'enable';
-        var TipInfo = '已起用';
-        disableOrEnableUser(row['id'], ableType, TipInfo);
-    }
-};
-function disableOrEnableUser(id, ableType, TipInfo) {
-    //alert("请选择项目负责人");
-    $.ajax({
-        type: 'POST',
-        url: '../api/staff/' + ableType + '/' + id,
-        contentType: 'application/json;charset=UTF-8',
-        success: function (result) {
-            if (result.errmsg) {
-                //失败提示
-                failInfo('操作失败！');
-                return;
-            } else {
-                showTable();
-            }
-        }
-    });
-}
+/**********************************************************************************************************************/
+/******************************************************修改分界线*******************************************************/
+/******************************************************修改分界线*******************************************************/
+/**********************************************************************************************************************/
+////启用或禁用
+//function disableOrEnable(index, row, value) {
+//    //测试区
+//    if (row['user.status'] == 1) {
+//        return [
+//            '<label><input class="UserEnableChange ace ace-switch ace-switch-7" type="checkbox" ' +
+//            'checked name="switch-field-1"><span class="lbl"></span></label>'
+//        ].join('');
+//    } else {
+//        return [
+//            '<label><input class="UserDisableChange ace ace-switch ace-switch-7" type="checkbox" ' +
+//            'name="switch-field-1"><span class="lbl"></span></label>'
+//        ].join('');
+//    }
+//}
+////启用或禁用 操作
+//window.operateEvents = {
+//    //测试
+//    'change .UserEnableChange': function (e, value, row, index) {
+//        var ableType = 'disable';
+//        var TipInfo = '已禁用';
+//        disableOrEnableUser(row['id'], ableType, TipInfo);
+//    },
+//    'change .UserDisableChange': function (e, value, row, index) {
+//        $('#UserTable').bootstrapTable('resetView', {'clickToSelect': false});
+//        var ableType = 'enable';
+//        var TipInfo = '已起用';
+//        disableOrEnableUser(row['id'], ableType, TipInfo);
+//    }
+//};
+//function disableOrEnableUser(id, ableType, TipInfo) {
+//    //alert("请选择项目负责人");
+//    $.ajax({
+//        type: 'POST',
+//        url: '../api/staff/' + ableType + '/' + id,
+//        contentType: 'application/json;charset=UTF-8',
+//        success: function (result) {
+//            if (result.errmsg) {
+//                //失败提示
+//                failInfo('操作失败！');
+//                return;
+//            } else {
+//                showTable();
+//            }
+//        }
+//    });
+//}
 //function typeTran(value,row){
 //    var type={
 //        'philosophy':'自然科学',
@@ -383,18 +389,6 @@ function disableOrEnableUser(id, ableType, TipInfo) {
 //
 //}
 //
-//function rateUnitTran(value,row){
-//    var rateUnit = {
-//        '01':'国家科技部',
-//        '02':'国家自然科学基金委员会',
-//        '03':'国家中医药管理局',
-//        '04':'教育部',
-//        '05':'其他部委'
-//    };
-//    return rateUnit[value];
-//
-//}
-
 
 
 
