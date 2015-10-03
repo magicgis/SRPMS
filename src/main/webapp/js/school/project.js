@@ -51,7 +51,7 @@ $(function () {
 });
 
 /*添加新项目
-* */
+ * */
 $("#addProject").click(function () {
     startNewProject();
 });

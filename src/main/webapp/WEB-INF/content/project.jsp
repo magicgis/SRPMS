@@ -74,7 +74,7 @@
                         <div class="widget-box transparent " style="opacity: 1;" id="projTable-box">
                             <div class="widget-body">
                                 <table id="ProjectTable"
-                                data-toolbar="#tProjectToolbar"
+                                       data-toolbar="#tProjectToolbar"
                                        data-search="true"
                                        data-show-columns="true"
                                        data-show-refresh="true"
@@ -85,16 +85,16 @@
                                        data-click-to-select="true">
                                 </table>
                                 <div id="tProjectToolbar">
-                                  <c:choose>
-                                    <c:when test="${sessionScope.level == '3'}">
-                                     <button id="addProject" class="btn btn-primary">
-                                        <i class="fa fa-plus"></i>添加项目
-                                     </button>
-                                     <button id="submit" class="btn btn-success">
-                                        <i class="fa fa-check"></i> 统一提交
-                                     </button>
-                                    </c:when>
-                                  </c:choose>
+                                    <c:choose>
+                                        <c:when test="${sessionScope.level == '3'}">
+                                            <button id="addProject" class="btn btn-primary">
+                                                <i class="fa fa-plus"></i>添加项目
+                                            </button>
+                                            <button id="submit" class="btn btn-success">
+                                                <i class="fa fa-check"></i> 统一提交
+                                            </button>
+                                        </c:when>
+                                    </c:choose>
                                 </div>
                             </div>
                         </div>

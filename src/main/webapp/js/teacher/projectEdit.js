@@ -1,7 +1,7 @@
 /**
  * Created by zheng on 2015/10/3.
  */
-$(function(){
+$(function () {
     $('#actorTable').bootstrapTable({
         columns: [
             {
@@ -93,7 +93,7 @@ $(function(){
     $('#reply').hide();
     $('#unitInfo').hide();
 });
-function confirm(){
+function confirm() {
     $('#IsComplete').val(true);
     var jsonData = getFormData("project");
     BootstrapDialog.confirm({

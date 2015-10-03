@@ -392,7 +392,7 @@
                             <div class="pull-right">
                                 <c:choose>
                                     <c:when test="${sessionScope.level == '1'}">
-                                        <button class="confirm btn btn-success btn-sm teacher" type="button">
+                                        <button class="confirm btn btn-success teacher" type="button">
                                             <i class="ace-icon fa fa-check bigger-110"></i>
                                             确认
                                         </button>
@@ -492,11 +492,15 @@
         $('#upload').hide();
     }
 
-    if(status == "Blank" || status == "Uncomplete"){//根据项目信息完成状态显示不同功能按钮
+    if (status == "Blank" || status == "Uncomplete") {//根据项目信息完成状态显示不同功能按钮
         $('.school').show();
-        $('.save').hide();$('.orderBack').hide();$('.del').hide();
-    }else{
-        $('.save').show();$('.orderBack').show();$('.del').show();
+        $('.save').hide();
+        $('.orderBack').hide();
+        $('.del').hide();
+    } else {
+        $('.save').show();
+        $('.orderBack').show();
+        $('.del').show();
         $('.school').hide();
     }
     allSections();//选择框
@@ -546,10 +550,10 @@
     $(".del").click(function () {
         delOrder();
     });
-    $(".Approve").click(function(){
+    $(".Approve").click(function () {
         Approve();
     })
-    $(".Refuse").click(function(){
+    $(".Refuse").click(function () {
         Refuse();
     })
 </script>

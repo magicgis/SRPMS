@@ -1,7 +1,7 @@
 /**
  * Created by zheng on 2015/10/2.
  */
-$(function(){
+$(function () {
     $('#actorTable').bootstrapTable({
         columns: [
             {
@@ -59,7 +59,7 @@ $(function(){
         }, {
             field: 'out_mny',
             title: '外拨金额',
-           // editable: true,
+            // editable: true,
             sortable: true,
             footerFormatter: "totalEFundFormatter"
         }, {
@@ -141,19 +141,19 @@ function delOrder() {
         }
     });
 }
-function Approve(){
+function Approve() {
     var approveInfo = Object();
-    approveInfo["DecByDep"]=true;
-    approveInfo["replyByDep"]=$('#reply-box').val();
-    workflow.execute('col',$('#WF_Task').val(),approveInfo).success(function(){
+    approveInfo["DecByDep"] = true;
+    approveInfo["replyByDep"] = $('#reply-box').val();
+    workflow.execute('col', $('#WF_Task').val(), approveInfo).success(function () {
         showTable();
     });
 }
-function Refuse(){
+function Refuse() {
     var refuseAwardInfo = Object();
-    refuseAwardInfo["DecByCol"]=false;
-    refuseAwardInfo["replyByCol"]=$('#reply-box').val();
-    workflow.execute('col',$('#WF_Task').val(),refuseAwardInfo).success(function(){
+    refuseAwardInfo["DecByCol"] = false;
+    refuseAwardInfo["replyByCol"] = $('#reply-box').val();
+    workflow.execute('col', $('#WF_Task').val(), refuseAwardInfo).success(function () {
         showTable();
     });
 }
@@ -285,9 +285,7 @@ function editActor(row, index) {
         }
     });
 }
-/**
- * 计算分数
- */
+/*计算分数*/
 function getScore() {
     var jsonData = getFormData("project");
     //console.log(jsonData);
@@ -416,7 +414,7 @@ function addFund() {
     });
 }
 //编辑金额
-function  editFund(row, index) {
+function editFund(row, index) {
     BootstrapDialog.show({
         type: BootstrapDialog.TYPE_PRIMARY,
         message: function (dialog) {

@@ -98,7 +98,6 @@ $(function(){
     $('.addUnit').hide();
 });
 
-
 //监听 添加金额信息
 $('.addFund').hide();
 function Approve(){

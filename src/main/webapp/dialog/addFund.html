@@ -1,12 +1,13 @@
+<jsp:include page="../public/topbar.jsp"/>
 <script>
-//    jQuery(function ($) {
-//        $('.date-picker').datepicker({
-//            autoclose: true,
-//            todayHighlight: true
-//        }).next().on(ace.click_event, function () {
-//            $(this).prev().focus();
-//        });
-//    });
+    jQuery(function ($) {
+        $('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+    });
     function isFull() {
         if ($('#to_acct_time').val() == "" || $('#to_acct_mny').val() == "" || $('#out_mny').val() == "") {
             return false;

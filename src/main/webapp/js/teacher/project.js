@@ -41,7 +41,7 @@ $(function () {
             title: '状态',
             sortable: true,
             formatter: 'statusTran'
-        } , {
+        }, {
             field: 'operator',
             align: 'center',
             title: '操作',
@@ -147,101 +147,101 @@ $(function () {
  * */
 
 /* $('#ProjectTable').on('click-row.bs.table', function (e, row, $element) {
-    uneditableForm();
-    //复选框不能用
-    selectEnable(0);
-    $('form input').val(null);
-    actorTemp = [];
-    fundTemp = [];
-    unitTemp = [];
-    var orderId = row["id"];
-    $("#WF_Order").val(orderId);
-    if (row['parentTaskId'] != null) {
-        var taskId = row['id'];
-        $('#WF_Task').val(taskId);
-    }
-    var status = row["Status"];
-    if (status == "Blank" || status == "Uncomplete" || status.indexOf('Refuse') >= 0) {
-       // editableForm();
-        //复选框能用
-      //  selectEnable(1);
-        $('#confirm').show();
-        $('#save').show();
-        $('#orderBack').hide();
-        $('#del').show();
-        workflow.latestTask(orderId).success(function (currentTask) {
-            var taskId = currentTask[0]['id'];
-            $('#WF_Task').val(taskId);
-            if (status.indexOf('Refuse') >= 0) {
-                $('#reply').show();
-                $('#reply-display').show();
-                var reply = $('#reply-display').children('p');
-                var who = $('#reply-display').children('small');
-                reply.empty();
-                who.empty();
-                if (status.indexOf("Col") >= 0) {
-                    reply.append(currentTask[0]['variableMap']['replyByCol']);
-                    who.append("学院批复");
-                } else {
-                    reply.append(currentTask[0]['variableMap']['replyByDep']);
-                    who.append("管理部门批复");
-                }
-            } else {
-                $('#reply').hide();
-            }
-        });
-    } else {
-        uneditableForm();
-        //复选框不能用
-        selectEnable(0);
-        $('#del').hide();
-        if (status == 'Complete' || status == 'WaitForSubmit') {
-            $('#orderBack').show();
-        } else {
-            $('#orderBack').hide();
-        }
-        $('#confirm').hide();
-        $('#save').hide();
-    }
-    //总分
-    var score = row['score'];
-    if (score == undefined || score == null || score == "") {
-        $("#showSum").html("");
-    } else {
-        $("#showSum").html("总分：" + score + "分");
-    }
-    if (row['actors'] != null) {
-        actorTemp = row['actors'];
-    }
-    $("#actorTable").bootstrapTable('load', actorTemp);
-    if (row['funds'] != null) {
-        fundTemp = row['funds'];
-    }
-    $("#fundTable").bootstrapTable('load', fundTemp);
-    //if (row['units'] != null) {unitTemp = row['units'];}
-    $('#project').autofill(row, {
-        findbyname: true,
-        restrict: false
-    });
-    $.each(optionsMenu, function (key, value) {
-        DisplayForm($('#' + value).selectize(), row[value], 0);
-    });
-    //console.log(row["dept"]);
-    // addOptionSelectize($magId, [{'id' : magId, 'name' : row['mag.name']}]);
-    DisplayForm($('#dept').selectize(), row["dept"], 0);
-    if (row['attr'] == "联合项目") {
-        if (row['units'] != null) {
-            unitTemp = row['units'];
-        }
-        $('#unitTable').bootstrapTable("load", unitTemp);
-        $('#unitInfo').show();
-    } else {
-        $('#unitInfo').hide();
-    }
-    showFiles(row["filesData"]);
-    showForm();
-    $('#fundTable').bootstrapTable('showColumn', 'operate');
-});*/
+ uneditableForm();
+ //复选框不能用
+ selectEnable(0);
+ $('form input').val(null);
+ actorTemp = [];
+ fundTemp = [];
+ unitTemp = [];
+ var orderId = row["id"];
+ $("#WF_Order").val(orderId);
+ if (row['parentTaskId'] != null) {
+ var taskId = row['id'];
+ $('#WF_Task').val(taskId);
+ }
+ var status = row["Status"];
+ if (status == "Blank" || status == "Uncomplete" || status.indexOf('Refuse') >= 0) {
+ // editableForm();
+ //复选框能用
+ //  selectEnable(1);
+ $('#confirm').show();
+ $('#save').show();
+ $('#orderBack').hide();
+ $('#del').show();
+ workflow.latestTask(orderId).success(function (currentTask) {
+ var taskId = currentTask[0]['id'];
+ $('#WF_Task').val(taskId);
+ if (status.indexOf('Refuse') >= 0) {
+ $('#reply').show();
+ $('#reply-display').show();
+ var reply = $('#reply-display').children('p');
+ var who = $('#reply-display').children('small');
+ reply.empty();
+ who.empty();
+ if (status.indexOf("Col") >= 0) {
+ reply.append(currentTask[0]['variableMap']['replyByCol']);
+ who.append("学院批复");
+ } else {
+ reply.append(currentTask[0]['variableMap']['replyByDep']);
+ who.append("管理部门批复");
+ }
+ } else {
+ $('#reply').hide();
+ }
+ });
+ } else {
+ uneditableForm();
+ //复选框不能用
+ selectEnable(0);
+ $('#del').hide();
+ if (status == 'Complete' || status == 'WaitForSubmit') {
+ $('#orderBack').show();
+ } else {
+ $('#orderBack').hide();
+ }
+ $('#confirm').hide();
+ $('#save').hide();
+ }
+ //总分
+ var score = row['score'];
+ if (score == undefined || score == null || score == "") {
+ $("#showSum").html("");
+ } else {
+ $("#showSum").html("总分：" + score + "分");
+ }
+ if (row['actors'] != null) {
+ actorTemp = row['actors'];
+ }
+ $("#actorTable").bootstrapTable('load', actorTemp);
+ if (row['funds'] != null) {
+ fundTemp = row['funds'];
+ }
+ $("#fundTable").bootstrapTable('load', fundTemp);
+ //if (row['units'] != null) {unitTemp = row['units'];}
+ $('#project').autofill(row, {
+ findbyname: true,
+ restrict: false
+ });
+ $.each(optionsMenu, function (key, value) {
+ DisplayForm($('#' + value).selectize(), row[value], 0);
+ });
+ //console.log(row["dept"]);
+ // addOptionSelectize($magId, [{'id' : magId, 'name' : row['mag.name']}]);
+ DisplayForm($('#dept').selectize(), row["dept"], 0);
+ if (row['attr'] == "联合项目") {
+ if (row['units'] != null) {
+ unitTemp = row['units'];
+ }
+ $('#unitTable').bootstrapTable("load", unitTemp);
+ $('#unitInfo').show();
+ } else {
+ $('#unitInfo').hide();
+ }
+ showFiles(row["filesData"]);
+ showForm();
+ $('#fundTable').bootstrapTable('showColumn', 'operate');
+ });*/
 //是否为第一单位
 $('#attr').change(function () {
     firstOrOther();
