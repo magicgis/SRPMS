@@ -1,5 +1,6 @@
 package ctrl;
 
+import org.snaker.engine.entity.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +20,13 @@ public class EditTest {
 
     @RequestMapping(value = {"/patent"}, method = RequestMethod.GET)
     public String patentEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        model.addAttribute(new Task());
         return "patentEdit";
     }
 
     @RequestMapping(value = {"/project"}, method = RequestMethod.GET)
     public String projectEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        model.addAttribute(new Task());
         return "projectEdit";
     }
 
