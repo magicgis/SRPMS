@@ -311,35 +311,20 @@
 
 <c:choose>
     <c:when test="${sessionScope.level == '1'}">
-        <script src="<c:url value="/js/teacher/patent.js"/>"></script>
+        <script src="<c:url value="/js/teacher/patentEdit.js"/>"></script>
     </c:when>
     <c:when test="${sessionScope.level == '2'}">
-        <script src="<c:url value="/js/college/patent.js"/>"></script>
+        <script src="<c:url value="/js/college/patentEdit.js"/>"></script>
     </c:when>
     <c:when test="${sessionScope.level == '3'}">
-        <script src="<c:url value="/js/school/patent.js"/>"></script>
+        <script src="<c:url value="/js/school/patentEdit.js"/>"></script>
     </c:when>
 </c:choose>
 
 </body>
 
-<script src='<c:url value="/js/school/patentEdit.js"/>'></script>
 
 <script>
-
-    var status = '${task.taskName}';
-    var test = "${sessionScope.level}";
-    if (status == 'ApprovalByDep' || status == '') {// todo 不可输入时的状态
-        $('input').attr('disabled', 'disabled');
-        // todo 禁用上传按钮
-    }
-    if (test == '3') {      //当前用户是学校
-        if (status == '') { // todo 学校在审批
-            showApproval();
-        }else if (status == '') { // todo 学校在填写
-            showEdit();
-        }
-    }
 
     upToLoadFile();
     //真不容易

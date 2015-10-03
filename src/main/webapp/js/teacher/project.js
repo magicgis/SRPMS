@@ -41,19 +41,11 @@ $(function () {
             title: '状态',
             sortable: true,
             formatter: 'statusTran'
-        } ,
-        //    {
-        //    field: 'operator',
-        //    align: 'center',
-        //    title: '操作',
-        //    formatter: view
-        //},
-            {
+        } , {
             field: 'operator',
             align: 'center',
-            title: '项目操作',
-            formatter: disableOrEnable,
-            events: operateEvents
+            title: '操作',
+            formatter: view
         }],
         responseHandler: tableTrans
     });

@@ -2,9 +2,7 @@
  * Created by zheng on 2015/4/21.
  */
 var actorTemp =[];
-
 var fundTemp = [];
-
 var unitTemp = [];
 $(function(){
     $('#ProjectTable').bootstrapTable({
@@ -46,6 +44,11 @@ $(function(){
             title:'状态',
             sortable:true,
             formatter:'statusTran'
+        },{
+            field: 'operator',
+            align: 'center',
+            title: '操作',
+            formatter: view
         }],
         responseHandler:tableTrans
     });

@@ -134,8 +134,6 @@
 <script type="text/javascript">
     jQuery(function ($) {
 
-        //datepicker plugin
-        //link
         $('.date-picker').datepicker({
             autoclose: true,
             todayHighlight: true
