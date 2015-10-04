@@ -26,8 +26,8 @@ public class role extends Assignment {
             /*TODO 根据order里的变量来分配任务*/
             return "10003";
         }
-        else if (execution.getArgs().containsKey("Main-Teacher")) {
-            return execution.getArgs().get("Main-Teacher");
+        else if (execution.getArgs().containsKey("Main-Actor")) {
+            return execution.getArgs().get("Main-Actor");
         }
         else {
             /*一般情况下，我们都将任务分配给order的创造者*/

@@ -1,4 +1,4 @@
-<%--<jsp:useBean id="ObjectMapper" scope="application" class="com.fasterxml.jackson.databind.ObjectMapper"/>--%>
+<jsp:useBean id="ObjectMapper" scope="application" class="com.fasterxml.jackson.databind.ObjectMapper"/>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -56,7 +56,7 @@
                 <ul class="breadcrumb">
                     <li>
                         <i class="ace-icon fa fa-home home-icon"></i>
-                        <a href="'allSRInfo.jsp'/>">Home</a>
+                        <a href="<c:url value="/allSRInfo"/>">Home</a>
                     </li>
                     <li class="active">专利</li>
                 </ul>
@@ -71,12 +71,13 @@
 
                                 <form id="patent" class="form-horizontal" role="form">
                                     <div hidden="hidden">
-                                        <input type="text" name="WF_Order" id="WF_Order"/>
-                                        <input type="text" name="WF_Task" id="WF_Task"/>
-                                        <input type="text" name="IsComplete" id="IsComplete"/>
-                                        <input type="text" name="pscore" id="score"/>
-                                        <input type="text" name="dept.value" id="deptValue"/>
-                                        <input type="text" name="patent.standard.value" id="patTypeValue"/>
+                                        <%--<input type="text" name="WF_Order" id="WF_Order"/>--%>
+                                        <%--<input type="text" name="WF_Task" id="WF_Task"/>--%>
+                                        <%--<input type="text" name="IsComplete" id="IsComplete"/>--%>
+                                        <%--<input type="text" name="pscore" id="score"/>--%>
+                                        <%--<input type="text" name="dept.value" id="deptValue"/>--%>
+                                        <%--<input type="text" name="patent.standard.value" id="patTypeValue"/>--%>
+                                        <input type="text" name="id" id="patentId" value="${patent.id}"/>
                                     </div>
                                     <div id="patentInfo" class="col-xs-12 col-md-6 widget-container-col ui-sortable">
                                         <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
@@ -89,10 +90,11 @@
                                                         <div class="form-group col-xs-12">
                                                             <label class="col-sm-2 control-label no-padding-left"
                                                                    for="name">专利名称</label>
+
                                                             <div class="col-sm-9">
                                                                 <input id="name" name="name"
                                                                        type="text" class="form-control col-xs-12"
-                                                                       placeholder="请选择"/>
+                                                                       placeholder="请选择" value="${patent.name}"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -100,6 +102,7 @@
                                                         <div class="form-group col-xs-12 col-sm-6">
                                                             <label class="col-sm-4 control-label no-padding-left"
                                                                    for="dept">所属部门</label>
+
                                                             <div class="col-sm-8">
                                                                 <input id="dept" name="dept.id"
                                                                        type="text" class="form-control col-xs-12"
@@ -109,9 +112,11 @@
                                                         <div class="form-group col-xs-12 col-sm-6">
                                                             <label class="col-sm-4 control-label no-padding-left"
                                                                    for="patentNo">专利号</label>
+
                                                             <div class="col-sm-8">
                                                                 <input id="patentNo" name="patentNo"
-                                                                       type="text" class="col-xs-12" placeholder="" />
+                                                                       type="text" class="col-xs-12" placeholder=""
+                                                                       value="${patent.patentNo}"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -119,16 +124,19 @@
                                                         <div class="form-group col-xs-12 col-sm-6">
                                                             <label class="col-sm-4 control-label no-padding-left"
                                                                    for="patentPubNo">公开号</label>
+
                                                             <div class="col-sm-8">
                                                                 <input id="patentPubNo" name="patentPubNo"
-                                                                       type="text" class="col-xs-12" placeholder=""/>
+                                                                       type="text" class="col-xs-12" placeholder=""
+                                                                       value="${patent.patentPubNo}"/>
                                                             </div>
                                                         </div>
                                                         <div class="form-group col-xs-12 col-sm-6">
                                                             <label class="col-sm-4 control-label no-padding-left"
                                                                    for="patType">专利类型</label>
+
                                                             <div class="col-sm-8">
-                                                                <input id="patType" name="patent.standard.id"
+                                                                <input id="patType" name="standard.id"
                                                                        type="text" class="form-control col-xs-12"
                                                                        placeholder="请选择"/>
                                                             </div>
@@ -137,63 +145,26 @@
                                                     <div class="row">
                                                         <div class="form-group col-xs-12 col-sm-6">
                                                             <label class="col-sm-4 control-label no-padding-left"
-                                                                   for="state">专利状态</label>
-                                                            <div class="col-sm-8">
-                                                                <input name="state" id="state"
-                                                                       type="text" class="form-control col-xs-12"
-                                                                       placeholder=""/>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group col-xs-12 col-sm-6">
-                                                            <label class="col-sm-4 control-label no-padding-left"
-                                                                   for="endfillDate">终止填写时间</label>
-                                                            <div class="col-sm-8">
-                                                                <input id="endfillDate" name="endfillDate"
-                                                                       type="text" class="form-control col-xs-12 date-picker"
-                                                                       data-date-format="yyyy-mm-dd"/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="form-group col-xs-12 col-sm-6">
-                                                            <label class="col-sm-4 control-label no-padding-left"
                                                                    for="apprDate">获批时间</label>
+
                                                             <div class="col-sm-8">
                                                                 <input id="apprDate" name="apprDate"
-                                                                       type="text" class="form-control col-xs-12 date-picker"
-                                                                       data-date-format="yyyy-mm-dd"/>
+                                                                       type="text"
+                                                                       class="form-control col-xs-12 date-picker"
+                                                                       data-date-format="yyyy-mm-dd"
+                                                                       value="${patent.apprDate}"/>
                                                             </div>
                                                         </div>
                                                         <div class="form-group col-xs-12 col-sm-6">
                                                             <label class="col-sm-4 control-label no-padding-left"
                                                                    for="pubDate">公告时间</label>
+
                                                             <div class="col-sm-8">
                                                                 <input id="pubDate" name="pubDate"
-                                                                       type="text" class="form-control col-xs-12 date-picker"
-                                                                       data-date-format="yyyy-mm-dd"/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-xs-12">
-                                                            <div class="col-xs-12 widget-container-col ui-sortable" id="fileHead">
-                                                                <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
-                                                                    <div class="widget-header">
-                                                                        <h4 class="widget-title">附件信息</h4>
-
-                                                                        <div class="widget-toolbar no-border">
-                                                                            <div id="upload">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="widget-body">
-                                                                        <div class="widget-main">
-                                                                            <div class="dd" id="nestable">
-                                                                                <ol class="dd-list" id="downFiles"></ol>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                                       type="text"
+                                                                       class="form-control col-xs-12 date-picker"
+                                                                       data-date-format="yyyy-mm-dd"
+                                                                       value="${patent.pubDate}"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -202,10 +173,12 @@
                                         </div>
                                     </div>
                                 </form>
+
                                 <div class="col-xs-12 col-md-6">
 
                                     <div id="actorInfo" class="col-xs-12 widget-container-col ui-sortable">
-                                        <div class="widget-box transparent ui-sortable-handle col-xs-12" style="opacity: 1;">
+                                        <div class="widget-box transparent ui-sortable-handle col-xs-12"
+                                             style="opacity: 1;">
                                             <div class="widget-header" id="actorInfoHeader">
                                                 <h4 class="widget-title">参与人员</h4>
                                                 <span id="showSum" style="font-size: 15px"></span>
@@ -214,8 +187,10 @@
                                                 <div class="widget-main">
                                                     <div class="row">
                                                         <div id="actorToolbar">
-                                                                    <a data-toggle="modal" id="addActor" class="btn btn-primary btn-sm">添加成员</a>
-                                                                    <a data-toggle="modal" id="getScore" class="btn btn-primary btn-sm">计算分数</a>
+                                                            <a data-toggle="modal" id="addActor"
+                                                               class="btn btn-primary btn-sm">添加成员</a>
+                                                            <a data-toggle="modal" id="getScore"
+                                                               class="btn btn-primary btn-sm">计算分数</a>
 
                                                         </div>
                                                         <table id="actorTable"
@@ -239,8 +214,10 @@
                                                 <div class="widget-main">
                                                     <div class="row">
                                                         <div id="unitToolbar">
-                                                                    <a id="addUnit" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> 添加单位</a>
-                                                                    <a id="editUnit" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-pencil"></i> 编辑单位</a>
+                                                            <a id="addUnit" class="btn btn-primary btn-sm"><i
+                                                                    class="glyphicon glyphicon-plus"></i> 添加单位</a>
+                                                            <a id="editUnit" class="btn btn-primary btn-sm"><i
+                                                                    class="glyphicon glyphicon-pencil"></i> 编辑单位</a>
                                                         </div>
                                                         <table id="unitTable"
                                                                data-toolbar="#unitToolbar"
@@ -252,7 +229,29 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="col-xs-12 widget-container-col ui-sortable"
+                                         id="fileHead">
+                                        <div class="widget-box transparent ui-sortable-handle"
+                                             style="opacity: 1;">
+                                            <div class="widget-header">
+                                                <h4 class="widget-title">附件信息</h4>
 
+                                                <div class="widget-toolbar no-border">
+                                                    <div id="upload">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="widget-body">
+                                                <div class="widget-main">
+                                                    <div class="dd" id="nestable">
+                                                        <ol class="dd-list" id="downFiles"></ol>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-xs-12">
                                     <div class="widget-body">
                                         <div class="row">
@@ -265,11 +264,13 @@
                                                 </div>
                                                 <div class="pull-right">
                                                     <span class="onEdit">
-                                                        <button class="tabOrdBtn btn btn-success btn-sm confirm" type="button">
+                                                        <button class="tabOrdBtn btn btn-success btn-sm confirm"
+                                                                type="button">
                                                             <i class="ace-icon fa fa-check bigger-110"></i>
                                                             确认
                                                         </button>
-                                                        <button class="tabOrdBtn btn btn-primary btn-sm save" type="button">
+                                                        <button class="tabOrdBtn btn btn-primary btn-sm save"
+                                                                type="button">
                                                             <i class="ace-icon fa fa-save bigger-110"></i>
                                                             保存
                                                         </button>
@@ -326,9 +327,28 @@
 
 <script>
 
+    jQuery(function ($) {
+
+        $('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
+    });
+
+    // todo 取出实体内的额外信息，附件信息也应该在其中。
+    var all = '${ObjectMapper.writeValueAsString(patent.argMap)}';
+    console.log(all);
+
+    //todo 取出部门信息，可同理取出专利类型
+    var dept = '${ObjectMapper.writeValueAsString(patent.dept)}';
+    console.log(dept);
+
     upToLoadFile();
-    //真不容易
     <%--var filesData = ${ObjectMapper.writeValueAsString(task.variableMap.get("filesData"))};--%>
+    //todo
+    var filesData;
 
     if (filesData == null) {
         filesData = {};

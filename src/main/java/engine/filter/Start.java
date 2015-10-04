@@ -25,26 +25,30 @@ public class Start implements SnakerInterceptor {
     @Override
     public void intercept(Execution execution) {
         OrderActorDao orderActorDao = (OrderActorDao) getBean("orderActorDao");
-        String actor = execution.getOperator();
         Order order = execution.getOrder();
         String type = (String) execution.getArgs().get("WF_Type");
 
+        //以员工表为准
         StaffService staffService = (StaffService) getBean(StaffService.class);
-//        UserService userService = (UserService) getBean(UserService.class);
 
-        Staff staff = staffService.getById(actor);
-        BaseInfo col = staff.getCol();
-        if (!execution.getArgs().containsKey("Main-Teacher")) {
-            orderActorDao.save(order.getId(), actor, 1, type);
+        Map<String, Object> args = new HashMap<String, Object>();
+        Staff staff;
+        BaseInfo col;
+        //员工发起与学校发起的区别在于负责人。
+        if (!execution.getArgs().containsKey("Main-Actor")) {
+            String actor = execution.getOperator();
+            staff = staffService.getById(actor);
         }
         else {
-            orderActorDao.save(order.getId(), (String) execution.getArgs().get("Main-Teacher"), 1, type);
+            staff = staffService.getById((String) execution.getArgs().get("Main-Actor"));
         }
-        Map<String, Object> args = new HashMap<String, Object>();
-        args.put("WF_Type", type);
+        col = staff.getCol();
+        orderActorDao.save(order.getId(), staff.getId(), 1, type);
         args.put("WF_Col", col.getValue());
         args.put("WF_Col_Id", col.getId());
+        args.put("WF_Type", type);
         args.put("Status", "Blank");
+
         execution.getEngine().order().addVariable(order.getId(), args);
     }
 }

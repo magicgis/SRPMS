@@ -1,6 +1,14 @@
 package entity;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by guofan on 2015/10/2.
@@ -18,10 +26,13 @@ public class Patent {
     private String state;
     private Integer score;
     private String arg;
+    private String process;
     private BaseInfo dept;
     private Standard standard;
 
     @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "id")
     public String getId() {
         return id;
@@ -121,6 +132,39 @@ public class Patent {
         this.arg = arg;
     }
 
+    @Transient
+    public Map getArgMap() {
+        JsonFactory factory = new JsonFactory();
+        ObjectMapper mapper = new ObjectMapper(factory);
+        TypeReference<HashMap<String, Object>> typeRef
+                = new TypeReference<HashMap<String, Object>>() {
+        };
+        try {
+            return mapper.readValue(getArg(), typeRef);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void setArgMap(Map infoMap) {
+        try {
+            this.arg = new ObjectMapper().writeValueAsString(infoMap);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Basic
+    @Column(name = "process")
+    public String getProcess() {
+        return process;
+    }
+
+    public void setProcess(String process) {
+        this.process = process;
+    }
+
     @ManyToOne
     @JoinColumn(name = "dept", referencedColumnName = "id")
     public BaseInfo getDept() {
@@ -159,6 +203,7 @@ public class Patent {
         if (state != null ? !state.equals(patent.state) : patent.state != null) return false;
         if (score != null ? !score.equals(patent.score) : patent.score != null) return false;
         if (arg != null ? !arg.equals(patent.arg) : patent.arg != null) return false;
+        if (process != null ? !process.equals(patent.process) : patent.process != null) return false;
         if (dept != null ? !dept.equals(patent.dept) : patent.dept != null) return false;
         return !(standard != null ? !standard.equals(patent.standard) : patent.standard != null);
 
@@ -176,6 +221,7 @@ public class Patent {
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (score != null ? score.hashCode() : 0);
         result = 31 * result + (arg != null ? arg.hashCode() : 0);
+        result = 31 * result + (process != null ? process.hashCode() : 0);
         result = 31 * result + (dept != null ? dept.hashCode() : 0);
         result = 31 * result + (standard != null ? standard.hashCode() : 0);
         return result;

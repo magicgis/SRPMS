@@ -18,11 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 public class EditTest {
 
 
-    @RequestMapping(value = {"/patent"}, method = RequestMethod.GET)
-    public String patentEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        model.addAttribute(new Task());
-        return "patentEdit";
-    }
+//    @RequestMapping(value = {"/patent"}, method = RequestMethod.GET)
+//    public String patentEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+//        model.addAttribute(new Task());
+//        return "patentEdit";
+//    }
 
     @RequestMapping(value = {"/project"}, method = RequestMethod.GET)
     public String projectEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {

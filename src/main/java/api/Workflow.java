@@ -3,6 +3,8 @@ package api;
 import engine.Engine;
 import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
+import entity.Patent;
+import entity.Staff;
 import org.snaker.engine.entity.HistoryTask;
 import org.snaker.engine.entity.Order;
 import org.snaker.engine.entity.Process;
@@ -10,11 +12,14 @@ import org.snaker.engine.entity.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import service.PatentService;
+import service.StaffService;
 import service.StandardService;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import java.io.Serializable;
 import java.util.*;
 
 import static util.Trans.getSubMap;
@@ -36,6 +41,10 @@ public class Workflow {
     OrderActorDao orderActorDao;
     @Autowired
     StandardService standardService;
+    @Autowired
+    PatentService patentService;
+    @Autowired
+    StaffService StaffService;
 
     /**
      * 初始化部署
@@ -89,20 +98,34 @@ public class Workflow {
     /**
      * 启动流程
      *
-     * @param args json格式的参数
      * @return 生成的order
      */
     @POST
     @Path("/start")
-    @Consumes("application/json")
     @Produces("application/json;charset=UTF-8")
-    public Order startProcess_beta(HashMap<String, Object> args) {
-        String user = (String) args.get("WF_User");
-        args.remove("WF_User");
-        String processName = (String) args.get("WF_Process");
+    public Order startProcess_beta(@FormParam("WF_User") String staff,
+                                   @FormParam("WF_Process") String processName,
+                                   @FormParam("WF_Type") String type) {
         String processId = engine.getProcessByName(processName).getId();
-        args.remove("WF_Process");
-        return engine.startInstanceById(processId, user, args);
+        return engine.startInstanceById(processId, staff, type);
+    }
+
+    @POST
+    @Path("/start/{type}/{entityId}")
+    @Produces("application/json;charset=UTF-8")
+    public Order startFxxkProcess(@PathParam("type") String type, @PathParam("entityId") String entityId) {
+        HashMap<String, Object> args = new HashMap<>();
+        Staff staff = null;
+        if ("patent".equals(type)) {
+            Patent patent = patentService.getById(entityId);
+            args = (HashMap<String, Object>) patent.getArgMap();
+            staff = StaffService.getById((Serializable) args.get("Main-Actor"));
+            args.put("WF_Type", "patent");
+            args.put("entity", entityId);
+        }
+
+        String processId = engine.getProcessByName("basicProcess_Beta").getId();
+        return engine.startInstanceById(processId, staff.getId(), args);
     }
 
 

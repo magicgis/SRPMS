@@ -22,4 +22,9 @@ public class PatentServiceImp extends BaseServiceImp<Patent> implements PatentSe
         List<String> keys = Arrays.asList("name", "patentNo", "patentPubNo");
         return patentDao.findByArrayFuz(keys, keyword, sort, order);
     }
+
+    @Override
+    public List<Patent> getAllUnStart() {
+        return patentDao.findByPropertyA("process", "0");
+    }
 }

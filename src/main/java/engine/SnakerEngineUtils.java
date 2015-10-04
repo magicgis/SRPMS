@@ -84,6 +84,13 @@ public class SnakerEngineUtils implements Engine {
         return snakerEngine.startInstanceById(processId, operator, args);
     }
 
+    @Override
+    public Order startInstanceById(String processId, String operator, String type) {
+        HashMap args = new HashMap();
+        args.put("WF_Type", type);
+        return snakerEngine.startInstanceById(processId, operator, args);
+    }
+
     public List<Task> execute(String taskId, String operator, Map<String, Object> args) {
         /*获取当前任务*/
         Task task = snakerEngine.query().getTask(taskId);

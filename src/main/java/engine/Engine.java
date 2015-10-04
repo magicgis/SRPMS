@@ -48,6 +48,8 @@ public interface Engine {
      */
     Order startInstanceById(String processId, String operator, Map<String, Object> args);
 
+    Order startInstanceById(String processId, String operator, String type);
+
     /**
      * 根据orderId获取活跃任务
      *

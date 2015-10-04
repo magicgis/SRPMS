@@ -2,8 +2,8 @@
  * Created by huyuanyuan555 on 2015/10/2.
  */
 
-var actorTemp =[];
-var unitTemp=[];
+var actorTemp = [];
+var unitTemp = [];
 $(function () {
     $('#actorTable').bootstrapTable({
         columns: [
@@ -74,8 +74,8 @@ $(function () {
             {"id": "1024", "value": "中国发明专利"},
             {"id": "1025", "value": "外观专利"},
             {"id": "1026", "value": "实用专利"}],
-        onChange: function(result) {
-            $('#patTypeValue').val( this.getItem(result)["context"]["innerHTML"] );
+        onChange: function (result) {
+            $('#patTypeValue').val(this.getItem(result)["context"]["innerHTML"]);
         }
     });
     $('#dept').selectize({
@@ -96,8 +96,8 @@ $(function () {
                 }
             });
         },
-        onChange: function(result) {
-            $('#deptValue').val( this.getItem(result)["context"]["innerHTML"] );
+        onChange: function (result) {
+            $('#deptValue').val(this.getItem(result)["context"]["innerHTML"]);
         }
     });
 });
@@ -107,19 +107,37 @@ $(function () {
  * 保存
  *
  * */
-function save(){
-    $('#IsComplete').val(false);
-    var jsonData = getFormData('patent');
-    workflow.execute(userName,'',jsonData).success(function(){
-        afterSuccess("保存成功！");
-        window.location.href="/patent";
-    });
+function save() {
+    var id = $('#patentId').val();
+    var s = $('#patent').serialize();
+    $.ajax({
+        url: '/api/patent/patent',
+        data: $('#patent').serialize(),
+        type: 'POST',
+        dataType: 'text',
+        success: function (data) {
+            var send = new Object();
+            send['actors'] = $('#actorTable').bootstrapTable("getData", false);
+            send['units'] = $('#unitTable').bootstrapTable("getData", false);
+            //todo 这儿还应该放上附件信息，主用户信息Main-Actor
+            $.ajax({
+                type: 'put',
+                url: '/api/patent/' + data,
+                data: JSON.stringify(send),
+                dataType: 'json',
+                contentType: 'application/json;charset=UTF-8',
+                success: function (res) {
+
+                }
+            })
+        }
+    })
 }
 /*
  * 确认
  *
  * */
-function confirm(){
+function confirm() {
     $('#IsComplete').val(true);
     var jsonData = getFormData('patent');
     BootstrapDialog.confirm({
@@ -137,16 +155,16 @@ function confirm(){
              */
             if (result) {
                 workflow.execute(userName, $('#WF_Task').val(), jsonData).success(function (data) {
-                    if("valid" in data){
-                        if(data["valid"] == true){
+                    if ("valid" in data) {
+                        if (data["valid"] == true) {
                             afterSuccess("确认成功！");
-                            window.location.href="/patent";
-                        }else {
+                            window.location.href = "/patent";
+                        } else {
                             errorMsg(data["msg"]);
                         }
-                    }else{
+                    } else {
                         afterSuccess("确认成功！");
-                        window.location.href="/patent";
+                        window.location.href = "/patent";
                     }
                 });
             }
@@ -157,7 +175,7 @@ function confirm(){
  * 删除
  *
  * */
-function delOrder(){
+function delOrder() {
     var order = $("#WF_Order").val();
     BootstrapDialog.confirm({
         title: '提示！',
@@ -172,7 +190,7 @@ function delOrder(){
             if (result) {
                 workflow.delOrder(order).success(function () {
                     afterSuccess("删除成功！");
-                    window.location.href="/patent";
+                    window.location.href = "/patent";
                 });
             }
         }
@@ -262,7 +280,7 @@ function editActor(row, index) {
             var $actor = $("#actor").selectize();
             var $role = $("#role").selectize();
             var $units = $("#units").selectize();
-            addOptionSelectize($actor, [{'id' : row["staff.id"], 'name' : row["staff.name"],"col":{"value":""}}]);
+            addOptionSelectize($actor, [{'id': row["staff.id"], 'name': row["staff.name"], "col": {"value": ""}}]);
             $actor[0].selectize.setValue(row["staff.id"]);
             //填充角色
             DisplayForm($role, row["role"], 0);
@@ -357,10 +375,10 @@ function editUnit(row, index) {
 /**
  * 通过
  */
-function approve(){
+function approve() {
     var approveInfo = Object();
-    approveInfo["DecByDep"]=true;
-    approveInfo["replyByDep"]=$('#reply-box').val();
+    approveInfo["DecByDep"] = true;
+    approveInfo["replyByDep"] = $('#reply-box').val();
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '你确认通过吗?',
@@ -372,8 +390,8 @@ function approve(){
         btnOKClass: 'btn-ok',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep',$('#WF_Task').val(),approveInfo).success(function(){
-                    window.location.href="/patent";
+                workflow.execute('dep', $('#WF_Task').val(), approveInfo).success(function () {
+                    window.location.href = "/patent";
                 });
             }
         }
@@ -382,10 +400,10 @@ function approve(){
 /**
  * 驳回
  */
-function refuse(){
+function refuse() {
     var refuseAwardInfo = Object();
-    refuseAwardInfo["DecByDep"]=false;
-    refuseAwardInfo["replyByDep"]=$('#reply-box').val();
+    refuseAwardInfo["DecByDep"] = false;
+    refuseAwardInfo["replyByDep"] = $('#reply-box').val();
     BootstrapDialog.confirm({
         title: '警告！',
         message: '你确定驳回吗?',
@@ -397,8 +415,8 @@ function refuse(){
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep',$('#WF_Task').val(),refuseAwardInfo).success(function(){
-                    window.location.href="/patent";
+                workflow.execute('dep', $('#WF_Task').val(), refuseAwardInfo).success(function () {
+                    window.location.href = "/patent";
                 });
             }
         }

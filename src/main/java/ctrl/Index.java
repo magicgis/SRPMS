@@ -1,6 +1,7 @@
 package ctrl;
 
 import engine.Engine;
+import entity.Patent;
 import entity.User;
 import org.snaker.engine.entity.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import service.PatentService;
 import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +31,8 @@ public class Index {
     UserService userService;
     @Autowired
     Engine engine;
+    @Autowired
+    PatentService patentService;
 
     @RequestMapping(value = {"login", ""}, method = RequestMethod.GET)
     public String index(Model model, RedirectAttributes redirectAttributes) {
@@ -88,11 +92,17 @@ public class Index {
         return "patent";
     }
 
-    @RequestMapping(value = {"patent/{orderId}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"patent/new"}, method = RequestMethod.GET)
+    public String newPatent(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        model.addAttribute(new Patent());
+        return "patentEdit";
+    }
+
+    @RequestMapping(value = {"patent/{patentId}"}, method = RequestMethod.GET)
     public String patentEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
-                             @PathVariable("orderId") String orderId) {
-        List<Task> task = engine.getTaskByOrder(orderId);
-        model.addAttribute(task.get(0));
+                             @PathVariable("patentId") String patentId) {
+        Patent patent = patentService.getById(patentId);
+        model.addAttribute(patent);
         return "patentEdit";
     }
 

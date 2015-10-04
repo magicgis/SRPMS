@@ -1,6 +1,6 @@
-var paperRoles = [{"role":"第一作者"},{"role":"通讯作者"},{"role":"第二作者"}
-        ,{"role":"第三作者"},{"role":"第四作者"},{"role":"其他"}];
-var patentRoles = [{"role":"第一专利权人"},{"role":"知识产权所有人"}];
+var paperRoles = [{"role": "第一作者"}, {"role": "通讯作者"}, {"role": "第二作者"}
+    , {"role": "第三作者"}, {"role": "第四作者"}, {"role": "其他"}];
+var patentRoles = [{"role": "第一专利权人"}, {"role": "知识产权所有人"}];
 
 /**--------------------------工作流公共方法------------------**/
 var workflow = window.workflow || {};
@@ -9,10 +9,10 @@ var workflow = window.workflow || {};
  * @param order orderId
  * @returns {*}
  */
-workflow.delOrder =  function(order) {
+workflow.delOrder = function (order) {
     return $.ajax({
-        type:'DELETE',
-        url:'/api/workflow/ord'+order
+        type: 'DELETE',
+        url: '/api/workflow/ord' + order
     })
 };
 
@@ -24,17 +24,16 @@ workflow.delOrder =  function(order) {
  * @param type 流程类型
  * @returns {*}
  */
-workflow.startOrder = function(user,processName,type){
-    var sendData = Object();
-    sendData['WF_User'] = user;
-    sendData['WF_Process'] = processName;
-    sendData['WF_Type'] = type;
+workflow.startOrder = function (user, processName, type) {
     return $.ajax({
-        type:'post',
-        url:'/api/workflow/start',
-        data:JSON.stringify(sendData),
-        dataType : 'json',
-        contentType:'application/json;charset=UTF-8'
+        type: 'post',
+        url: '/api/workflow/start',
+        data: {
+            WF_User: user,
+            WF_Process: processName,
+            WF_Type: type
+        },
+        dataType: 'json'
     });
 };
 /**
@@ -43,16 +42,16 @@ workflow.startOrder = function(user,processName,type){
  * @param order orderId
  * @returns {*}
  */
-workflow.getBack = function(user,order){
+workflow.getBack = function (user, order) {
     var sendData = Object();
     sendData['order'] = order;
     sendData['user'] = user;
     return $.ajax({
-        type:'post',
-        url:'/api/workflow/getBack',
-        data:JSON.stringify(sendData),
-        dataType : 'json',
-        contentType:'application/json;charset=UTF-8'
+        type: 'post',
+        url: '/api/workflow/getBack',
+        data: JSON.stringify(sendData),
+        dataType: 'json',
+        contentType: 'application/json;charset=UTF-8'
     })
 };
 /**
@@ -62,17 +61,17 @@ workflow.getBack = function(user,order){
  * @param args 参数（js object）
  * @returns {*}
  */
-workflow.execute = function(user,task,args){
+workflow.execute = function (user, task, args) {
     var data = Object();
     data['WF_User'] = user;
     data['WF_Task'] = task;
     jQuery.extend(data, args);
     return $.ajax({
-        type:'POST',
-        url:'/api/workflow/execute',
-        data:JSON.stringify(data),
-        dataType : 'json',
-        contentType:'application/json;charset=UTF-8'
+        type: 'POST',
+        url: '/api/workflow/execute',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        contentType: 'application/json;charset=UTF-8'
     });
 };
 /**
@@ -80,10 +79,10 @@ workflow.execute = function(user,task,args){
  * @param order orderId
  * @returns {*}
  */
-workflow.latestTask = function(order){
+workflow.latestTask = function (order) {
     return $.ajax({
-        type:'get',
-        url:'/api/workflow/ord' + order + '/task',
+        type: 'get',
+        url: '/api/workflow/ord' + order + '/task',
         dataType: "json"
     });
 };
@@ -92,13 +91,13 @@ workflow.latestTask = function(order){
  * @param WF_User
  * @returns boolean
  */
-workflow.submitByTeacher = function(submitData){
+workflow.submitByTeacher = function (submitData) {
     return $.ajax({
-        type:'post',
-        async:true,
-        url:'/api/workflow/submitByTeacher',
-        data:submitData,
-        contentType:'application/x-www-form-urlencoded;charset=UTF-8'
+        type: 'post',
+        async: true,
+        url: '/api/workflow/submitByTeacher',
+        data: submitData,
+        contentType: 'application/x-www-form-urlencoded;charset=UTF-8'
     });
 };
 
@@ -107,12 +106,12 @@ workflow.submitByTeacher = function(submitData){
  * @param WF_User
  * @returns boolean
  */
-workflow.submitByCol = function(submitData){
+workflow.submitByCol = function (submitData) {
     return $.ajax({
-        type:'post',
-        url:'/api/workflow/submitByCol',
-        data:submitData,
-        contentType:'application/x-www-form-urlencoded;charset=UTF-8'
+        type: 'post',
+        url: '/api/workflow/submitByCol',
+        data: submitData,
+        contentType: 'application/x-www-form-urlencoded;charset=UTF-8'
     });
 };
 /**
@@ -120,12 +119,12 @@ workflow.submitByCol = function(submitData){
  * @param args
  * @returns {*}
  */
-workflow.getScore = function(args){
+workflow.getScore = function (args) {
     return $.ajax({
-        type:'POST',
-        url:'/api/workflow/getScore',
-        data:JSON.stringify(args),
-        contentType:'application/json;charset=UTF-8'
+        type: 'POST',
+        url: '/api/workflow/getScore',
+        data: JSON.stringify(args),
+        contentType: 'application/json;charset=UTF-8'
     });
 };
 
@@ -139,68 +138,69 @@ workflow.getScore = function(args){
 function tableTrans(res) {
     //res = res["rows"];
     /*var ans = res;*/
-    if(res["rows"]==undefined||res["rows"]==null){
-        var respon=res;
-    }else{
-        respon=res["rows"]
-    };
-    $.each(respon,function(index,value){
+    if (res["rows"] == undefined || res["rows"] == null) {
+        var respon = res;
+    } else {
+        respon = res["rows"]
+    }
+    ;
+    $.each(respon, function (index, value) {
         /*取出variableMap*/
-        var maps=value['variableMap'];
+        var maps = value['variableMap'];
         /*把string放入*/
-        for(var key in maps) {
-            if (typeof(maps[key]) == 'string'||typeof(maps[key]) == 'object') {
+        for (var key in maps) {
+            if (typeof(maps[key]) == 'string' || typeof(maps[key]) == 'object') {
                 respon[index][key] = maps[key];
             }
         }
         /*拿出最新的args*/
-        if(maps['Status']!=null||maps['Status']!=undefined){
-            if(maps['Status']!='Blank'){
-                var temp=maps[getSubmission(maps)];
+        if (maps['Status'] != null || maps['Status'] != undefined) {
+            if (maps['Status'] != 'Blank') {
+                var temp = maps[getSubmission(maps)];
                 /*瞎写都能生效……*/
-                $.each(temp,function(key,value){
-                    respon[index][key]=temp[key];
+                $.each(temp, function (key, value) {
+                    respon[index][key] = temp[key];
                 });
-                if(temp['filesData']!=null||temp['filesData']!=undefined){
-                    respon[index]['filesData']=temp['filesData'];
+                if (temp['filesData'] != null || temp['filesData'] != undefined) {
+                    respon[index]['filesData'] = temp['filesData'];
                 }
             }
         }
     });
-    if(res["rows"]==undefined||res["rows"]==null){
+    if (res["rows"] == undefined || res["rows"] == null) {
         return respon;
-    }else{
-        res["rows"]=respon;
+    } else {
+        res["rows"] = respon;
         return res;
     }
 }
 
-function getSubmission(pData){
+function getSubmission(pData) {
     var max = 0;
-    var keyStr="";
-    for(var key in pData){
+    var keyStr = "";
+    for (var key in pData) {
         var partn = new RegExp('WF_\\d+_Submission');
-        if(partn.test(key)){
-            var keyValue=key.substring(3,key.length-11);
-            if(parseInt(max) < parseInt(keyValue)){
+        if (partn.test(key)) {
+            var keyValue = key.substring(3, key.length - 11);
+            if (parseInt(max) < parseInt(keyValue)) {
                 max = keyValue;
             }
         }
-        keyStr="WF_"+max+"_Submission";
+        keyStr = "WF_" + max + "_Submission";
     }
     return keyStr;
 }
 
-function messageModal(message){
+function messageModal(message) {
     BootstrapDialog.show({
-        title:'通知',
-        type:BootstrapDialog.TYPE_INFO,
+        title: '通知',
+        type: BootstrapDialog.TYPE_INFO,
         message: message
     });
 }
 
 function getFormData(type) {
-    var jsonData = $("#"+type).serializeJSON();
+    var jsonData = $("#" + type).serializeJSON();
     $.each(jsonData, function (key, value) {
         if (isNull(value)) {
             delete jsonData[key];
@@ -210,7 +210,7 @@ function getFormData(type) {
         jsonData['filesData'] = filesData;
     }
     jsonData["actors"] = getActorsData();
-    jsonData["units"]  = getUnitsData();
+    jsonData["units"] = getUnitsData();
     jsonData["WF_User"] = userName;
     return jsonData;
 }
@@ -313,17 +313,16 @@ function getFormData(type) {
 
 
 /**--------------------------拓展公共方法------------------**/
-Array.prototype.remove=function(dx)
-{
-    if(isNaN(dx)||dx>this.length){return false;}
-    for(var i=0,n=0;i<this.length;i++)
-    {
-        if(this[i]!=this[dx])
-        {
-            this[n++]=this[i]
+Array.prototype.remove = function (dx) {
+    if (isNaN(dx) || dx > this.length) {
+        return false;
+    }
+    for (var i = 0, n = 0; i < this.length; i++) {
+        if (this[i] != this[dx]) {
+            this[n++] = this[i]
         }
     }
-    this.length-=1
+    this.length -= 1
 };
 
 /**--------------------------附件公共方法------------------**/
@@ -465,14 +464,14 @@ function showFiles(data) {
  * 禁用selectize选择框
  * @param $type
  */
-function disableSelectize($type){
+function disableSelectize($type) {
     $type[0].selectize.disable();
 }
 /**
  * 解除selectize的禁用
  * @param $type
  */
-function enableSelectize($type){
+function enableSelectize($type) {
     $type[0].selectize.enable();
 }
 /**
@@ -480,14 +479,14 @@ function enableSelectize($type){
  * @param $type
  * @param data
  */
-function addOptionSelectize($type, data){
+function addOptionSelectize($type, data) {
     $type[0].selectize.addOption(data);
 }
 /**
  * 清楚selectize选项
  * @param $type
  */
-function clearOptionsSelectize($type){
+function clearOptionsSelectize($type) {
     $type[0].selectize.clearOptions();
 }
 /**
@@ -519,7 +518,7 @@ function isInt(str) {
         return (!isNaN(parseInt(str, 10)) || parseInt(str, 10).length == str.length);
     }
 }
-function isNull(str){
+function isNull(str) {
     return (str == '' || str == undefined || str == null);
 }
 
@@ -547,25 +546,25 @@ function afterSuccess(msg) {
 var checktime;
 var count = 0;
 var time;
-function errorMsg(msg){
+function errorMsg(msg) {
     $("#getScore").attr("disabled", "disabled");
     $('#msg_alert').empty();
     $('<div class="alert alert-block alert-danger" id="msg_info"></div>').appendTo('#msg_alert');
     $('<button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times">' +
         '</i></button><i class="glyphicon glyphicon-info-sign" id="msg_icon"></i>').appendTo('#msg_info');
-    var tip = " 提示："+msg;
+    var tip = " 提示：" + msg;
     $('#msg_icon').append(tip);
-    checktime = setTimeout(function(){
-        if(count>10) {
+    checktime = setTimeout(function () {
+        if (count > 10) {
             clearClick();
         }
     }, 12000);
-    time = setInterval(function(){
-        $("#msg_icon").text(tip+"("+(10-count)+")");
-        count ++;
+    time = setInterval(function () {
+        $("#msg_icon").text(tip + "(" + (10 - count) + ")");
+        count++;
     }, 1000);
 }
-function clearClick(){
+function clearClick() {
     $('#msg_alert').empty();
     count = 0;
     window.clearInterval(time);  //结束setInterval循环

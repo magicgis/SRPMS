@@ -36,6 +36,7 @@
         <mapping class="entity.User"/>
         <mapping class="entity.ProjectMoney"/>
         <mapping class="entity.Project"/>
+        <mapping class="entity.Patent"/>
         <mapping class="entity.security.Permission"/>
         <mapping class="entity.security.Role"/>
         <mapping class="entity.security.Url"/>
