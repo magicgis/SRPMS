@@ -26,7 +26,7 @@ var optionsMenu = {
     '3': 'attr',
     '4': 'rateUnit',
     '5': 'rateSrc',
-    '6': 'is_appr',
+    '6': 'isAppr',
     '7': 'isAwdProj'
 };
 var $actorTable = $('#actorTable');
