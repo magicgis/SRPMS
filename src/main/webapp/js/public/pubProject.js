@@ -16,8 +16,8 @@ var allSelections =
         {"3": [{"attr": "子课题"}, {"attr": "联合项目"}, {"attr": "独立项目"}, {"attr": ""}, {"attr": ""}]},
         {"4": [{"rateUnit": "国家科技部"}, {"rateUnit": "国家自然科学基金委员会"}, {"rateUnit": "国家中医药管理局"}, {"rateUnit": "教育部"}, {"rateUnit": "其他部委"}]},
         {"5": [{"rateSrc": "“973”计划A类资助"}, {"rateSrc": "“973”计划B类资助"}, {"rateSrc": "“973”计划C类资助"}, {"rateSrc": "“863”计划"}, {"rateSrc": "国家重大科技专项"}]},
-        {"6": [{"is_appr": "1"}, {"is_appr": "0"}]},
-        {"7": [{"isAwdProj": "1"}, {"isAwdProj": "0"}]}
+        {"6": [{"isAppr": "是"}, {"isAppr": "是"}]},
+        {"7": [{"isAwdProj": "是"}, {"isAwdProj": "否"}]}
     ];
 //项目表单中的复选框
 var optionsMenu = {
@@ -244,9 +244,8 @@ function allSections() {
     });
     //selectUniversal("rank",2);
     $('#dept').selectize({
-        valueField: 'value',
+        valueField: 'id',
         labelField: 'value',
-        searchField: 'value',
         delimiter: ',',
         persist: false,
         options: [],
@@ -265,6 +264,9 @@ function allSections() {
                     callback(res);
                 }
             });
+        },
+        onChange: function (result) {
+            $('#deptValue').val(this.getItem(result)["context"]["innerHTML"]);
         }
     });
 }

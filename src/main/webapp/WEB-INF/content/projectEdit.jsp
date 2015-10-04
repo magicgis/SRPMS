@@ -66,6 +66,7 @@
                             <%--<input type="text" name="WF_Order" id="WF_Order" value="${task.orderId}"/>--%>
                             <%--<input type="text" name="IsComplete" id="IsComplete"/>--%>
                             <%--<input type="text" name="score" id="score"/>--%>
+                            <input type="text" name="standard.id" id="standardId" value="${patent.stand.id}"/>
                             <input type="text" name="id" id="projectId" value="${patent.id}"/>
                         </div>
                         <div id="projInfo" class="col-xs-12 col-md-7 widget-container-col ui-sortable">
@@ -136,9 +137,8 @@
 
                                                 <div class="col-sm-8">
                                                     <div class="col-sm-13">
-                                                        <input class="form-control" id="dept"
-                                                               type="text" name="dept"
-                                                               value=""
+                                                        <input id="dept" name="dept.id"
+                                                               type="text" class="form-control col-xs-12"
                                                                placeholder="请选择"/>
                                                     </div>
                                                 </div>
