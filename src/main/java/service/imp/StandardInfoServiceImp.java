@@ -1,10 +1,12 @@
 package service.imp;
 
+import dao.StandardDao;
 import entity.Standard;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.StandardInfoService;
 
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -12,8 +14,17 @@ import java.util.List;
  */
 @Service
 public class StandardInfoServiceImp extends BaseServiceImp<Standard> implements StandardInfoService {
+    @Autowired
+    StandardDao standardDao;
+
     @Override
     public List<Standard> search(String keyword, String sort, String order) {
-        return new LinkedList<>();
+        List<String> keys = Arrays.asList("type", "id", "info");
+        return standardDao.findByArrayFuz(keys, keyword, sort, order);
+    }
+
+    @Override
+    public List<Standard> getByType(String type) {
+        return standardDao.findByPropertyA("type", type);
     }
 }
