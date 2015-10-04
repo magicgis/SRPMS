@@ -50,26 +50,12 @@ $(function () {
     });
 });
 
-/*添加新项目
- * */
-$("#addProject").click(function () {
-    startNewProject();
+//监听 点击新建
+$("#add").click(function () {
+    window.location.href = '/project/new';
 });
-/*统一提交*/
-$(".submit").click(function () {
-    submitProjectInfo();
+
+$('#ProjectTable').on('click-row.bs.table', function (e, row, $element) {
+    var orderId = row["id"];
+    window.location.href = '/project/' + orderId;
 });
-//添加新项目的行为函数
-function startNewProject() {
-    workflow.startOrder(userName, "basicProcess_Beta", "project").success(function (data) {
-        afterSuccess("新建成功！");
-        $('#ProjectTable').bootstrapTable('refresh');
-    });
-}
-function submitProjectInfo() {
-    var submitData = 'WF_User=' + userName;
-    workflow.submitByTeacher(submitData).success(function () {
-        afterSuccess("提交成功");
-        showTable();
-    })
-}

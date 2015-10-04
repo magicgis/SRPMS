@@ -87,7 +87,7 @@
                                 <div id="tProjectToolbar">
                                     <c:choose>
                                         <c:when test="${sessionScope.level == '3'}">
-                                            <button id="addProject" class="btn btn-primary">
+                                            <button id="add" class="btn btn-primary">
                                                 <i class="fa fa-plus"></i>添加项目
                                             </button>
                                             <button id="submit" class="btn btn-success">

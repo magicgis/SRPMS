@@ -7,6 +7,8 @@
  * 6表示是否获奖
  * @type {Array}
  */
+var Main_Actor;
+var Main_ActorName;
 var allSelections =
     [
         {"1": [{"type": "自然科学"}, {"type": "哲学与社会科学"}, {"type": "教育教学改革"}, {"type": ""}, {"type": ""}]},
@@ -14,8 +16,8 @@ var allSelections =
         {"3": [{"attr": "子课题"}, {"attr": "联合项目"}, {"attr": "独立项目"}, {"attr": ""}, {"attr": ""}]},
         {"4": [{"rateUnit": "国家科技部"}, {"rateUnit": "国家自然科学基金委员会"}, {"rateUnit": "国家中医药管理局"}, {"rateUnit": "教育部"}, {"rateUnit": "其他部委"}]},
         {"5": [{"rateSrc": "“973”计划A类资助"}, {"rateSrc": "“973”计划B类资助"}, {"rateSrc": "“973”计划C类资助"}, {"rateSrc": "“863”计划"}, {"rateSrc": "国家重大科技专项"}]},
-        {"6": [{"is_appr": "是"}, {"is_appr": "否"}]},
-        {"7": [{"isAwdProj": "是"}, {"isAwdProj": "否"}]}
+        {"6": [{"is_appr": "1"}, {"is_appr": "0"}]},
+        {"7": [{"isAwdProj": "1"}, {"isAwdProj": "0"}]}
     ];
 //项目表单中的复选框
 var optionsMenu = {
@@ -44,6 +46,10 @@ function subActorInfo(index, flag) {
     $.each(units, function (i, value) {
         actorTemp.push({"staff.id": id, "rank": rank, "staff.name": actor, "role": role, "score": mark, "unit": value});
     });
+    if(rank == '1' || rank == 1){
+        Main_Actor = id;
+        Main_ActorName = actor;
+    }
     if (flag) {  // 增加一行
         $('#actorTable').bootstrapTable("load", actorTemp);
     } else {    // 替换一行
@@ -131,9 +137,9 @@ function totalUnitFormatter(data) {
     return "共" + data.length + "个";
 }
 function subFundInfo(index) {
-    var to_acct_time = $('#to_acct_time').val();
-    var to_acct_mny = $('#to_acct_mny').val();
-    var out_mny = $('#out_mny').val();
+    var to_acct_time = $('#time').val();
+    var to_acct_mny = $('#mny').val();
+    var out_mny = $('#outMny').val();
     fundTemp.push({"to_acct_time": to_acct_time, "to_acct_mny": to_acct_mny, "out_mny": out_mny});
     if (index == null) {  // 增加一行
         $('#fundTable').bootstrapTable("load", fundTemp);
@@ -191,38 +197,38 @@ function actorTran(value, row) {
         return;
 }
 /*********************表单||表格的动作和行为****************/
-//显示详情
-function showForm() {
-    $('#projTable-box').addClass('collapsed');
-    $('#proj-box').removeClass('collapsed');
-}
-//显示总览
-function showTable() {
-    clearSelect();
-    clearOptionsSelectize($("#dept").selectize());
-    $('#ProjectTable').bootstrapTable('refresh', {silent: true});
-    $('#projTable-box').removeClass('collapsed');
-    $('#proj-box').addClass('collapsed');
-}
-//可编辑
-function editableForm() {
-    $('form input').removeAttr("disabled", "disabled");
-    $('form select').removeAttr("disabled", "disabled");
-    $('#fundTable').bootstrapTable('showColumn', 'operate');
-    $('#actorTable').bootstrapTable('showColumn', 'operate');
-    $('#unitTable').bootstrapTable('showColumn', 'operate');
-}
-//不可编辑
-function uneditableForm() {
-    $('form input').attr("disabled", "disabled");
-    $('form select').attr("disabled", "disabled");
-    $('#addActor').attr("disabled", "disabled");
-    $('#addUnit').attr("disabled", "disabled");
-    $('#addFund').attr("disabled", "disabled");
-    $('#fundTable').bootstrapTable('hideColumn', 'operate');
-    $('#actorTable').bootstrapTable('hideColumn', 'operate');
-    $('#unitTable').bootstrapTable('hideColumn', 'operate');
-}
+////显示详情
+//function showForm() {
+//    $('#projTable-box').addClass('collapsed');
+//    $('#proj-box').removeClass('collapsed');
+//}
+////显示总览
+//function showTable() {
+//    clearSelect();
+//    clearOptionsSelectize($("#dept").selectize());
+//    $('#ProjectTable').bootstrapTable('refresh', {silent: true});
+//    $('#projTable-box').removeClass('collapsed');
+//    $('#proj-box').addClass('collapsed');
+//}
+////可编辑
+//function editableForm() {
+//    $('form input').removeAttr("disabled", "disabled");
+//    $('form select').removeAttr("disabled", "disabled");
+//    $('#fundTable').bootstrapTable('showColumn', 'operate');
+//    $('#actorTable').bootstrapTable('showColumn', 'operate');
+//    $('#unitTable').bootstrapTable('showColumn', 'operate');
+//}
+////不可编辑
+//function uneditableForm() {
+//    $('form input').attr("disabled", "disabled");
+//    $('form select').attr("disabled", "disabled");
+//    $('#addActor').attr("disabled", "disabled");
+//    $('#addUnit').attr("disabled", "disabled");
+//    $('#addFund').attr("disabled", "disabled");
+//    $('#fundTable').bootstrapTable('hideColumn', 'operate');
+//    $('#actorTable').bootstrapTable('hideColumn', 'operate');
+//    $('#unitTable').bootstrapTable('hideColumn', 'operate');
+//}
 function view(index, row, value) {
     {
         return [
@@ -307,12 +313,7 @@ function getFundsData() {
     var fundTemp = $("#fundTable").bootstrapTable('getData');
     return fundTemp;
 }
-//监听 点击项目表
-$('#ProjectTable').on('click-row.bs.table', function (e, row, $element) {
-    var orderId = row["id"];
-    window.location.href = '/project/' + orderId;
-});
-/*************************日期||项目属性*********************************/
+/*************************项目属性*********************************/
 function firstOrOther() {
     if ($('#attr').val() == '联合项目') {
         $('#unitInfo').show();

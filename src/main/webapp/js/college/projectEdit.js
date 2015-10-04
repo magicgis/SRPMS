@@ -46,18 +46,18 @@ $(function(){
     //一点小问题，应该马上就能解决
     $('#fundTable').bootstrapTable({
         columns: [{
-            field: 'to_acct_time',
+            field: 'time',
             title: '到账时间',
             //editable: true,
             sortable: true
         }, {
-            field: 'to_acct_mny',
+            field: 'mny',
             title: '到账金额',
             //editable: true,
             sortable: true,
             footerFormatter: "totalFundsFormatter"
         }, {
-            field: 'out_mny',
+            field: 'outMny',
             title: '外拨金额',
             // editable: true,
             sortable: true,

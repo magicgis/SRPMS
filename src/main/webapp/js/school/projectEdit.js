@@ -43,21 +43,20 @@ $(function () {
             }],
         data: actorTemp
     });
-    //一点小问题，应该马上就能解决
     $('#fundTable').bootstrapTable({
         columns: [{
-            field: 'to_acct_time',
+            field: 'time',
             title: '到账时间',
             //editable: true,
             sortable: true
         }, {
-            field: 'to_acct_mny',
+            field: 'mny',
             title: '到账金额',
             //editable: true,
             sortable: true,
             footerFormatter: "totalFundsFormatter"
         }, {
-            field: 'out_mny',
+            field: 'outMny',
             title: '外拨金额',
             // editable: true,
             sortable: true,
@@ -90,19 +89,77 @@ $(function () {
         }],
         data: unitTemp
     });
-    $('#reply-box').hide();
-    $('#reply').hide();
-    $('#unitInfo').hide();
-    $('.getScore').hide();
+    //$('#reply-box').hide();
+    //$('#reply').hide();
+    //$('#unitInfo').hide();
+    //$('.getScore').hide();
 });
 
-/**与项目信息有关的 保存||提交||撤回||删除||提交所有**/
+/**与项目信息有关的 保存||确认||撤回||删除||提交所有**/
 function save() {
-    $('#IsComplete').val(false);
-    var jsonData = getFormData("project");
-    workflow.execute(userName, '', jsonData).success(function () {
-        afterSuccess("保存成功！");
-        showTable();
+    var id = $('#projectId').val();
+    console.log($('#project').serialize());
+    $.ajax({
+        url: '/api/project/project',
+        data: $('#project').serialize(),
+        type: 'POST',
+        success: function (data) {
+            var send = new Object();
+            send['actors'] = $("#actorTable").bootstrapTable('getData', false);
+            send['fund'] = $("#fundTable").bootstrapTable('getData', false);
+            if ($('#attr').val() == '联合项目') {
+                send['units'] = $("#unitTable").bootstrapTable('getData', false)
+            }
+            send['Main-Actor'] = Main_Actor;
+            send['Main-ActorName'] = Main_ActorName;
+            console.log(send);
+            //todo 这儿还应该放上附件信息，主用户信息Main-Actor
+            $.ajax({
+                type: 'put',
+                url: '/api/project/' + data,
+                data: JSON.stringify(send),
+                dataType: 'json',
+                contentType: 'application/json;charset=UTF-8',
+                success: function (res) {
+
+                }
+            })
+        }
+
+    })
+}
+function confirm() {
+    $('#IsComplete').val(true);
+    var jsonData = getFormData('project');
+    BootstrapDialog.confirm({
+        title: '确认信息',
+        message: '确认?',
+        type: BootstrapDialog.TYPE_INFO,
+        closable: true,
+        draggable: true,
+        btnCancelLabel: '取消',
+        btnOKLabel: '确认',
+        btnOKClass: 'btn-ok',
+        callback: function (result) {
+            /**
+             * userName,taskId,status
+             */
+            if (result) {
+                workflow.execute(userName, $('#WF_Task').val(), jsonData).success(function (data) {
+                    if ("valid" in data) {
+                        if (data["valid"] == true) {
+                            afterSuccess("确认成功！");
+                            window.location.href = "/project";
+                        } else {
+                            errorMsg(data["msg"]);
+                        }
+                    } else {
+                        afterSuccess("确认成功！");
+                        window.location.href = "/project";
+                    }
+                });
+            }
+        }
     });
 }
 function orderBack() {
@@ -117,11 +174,12 @@ function orderBack() {
         $('#del').show();
     });
 }
-
+/*
+ * 删除
+ *
+ * */
 function delOrder() {
-    //var row = $('#ProjectTable').bootstrapTable('getSelections')[0];
-    var order = $("#WF_Order").val();
-    //var order = row['id'];
+    var order = $("#projectId").val();
     BootstrapDialog.confirm({
         title: '提示！',
         message: '你确定要删除该项吗?',
@@ -135,7 +193,7 @@ function delOrder() {
             if (result) {
                 workflow.delOrder(order).success(function () {
                     afterSuccess("删除成功！");
-                    //showTable();
+                    window.location.href = "/project";
                 });
             }
         }
@@ -145,16 +203,47 @@ function Approve() {
     var approveInfo = Object();
     approveInfo["DecByDep"] = true;
     approveInfo["replyByDep"] = $('#reply-box').val();
-    workflow.execute('col', $('#WF_Task').val(), approveInfo).success(function () {
-        showTable();
+    BootstrapDialog.confirm({
+        title: '确认信息',
+        message: '你确认通过吗?',
+        type: BootstrapDialog.TYPE_SUCCESS,
+        closable: true,
+        draggable: true,
+        btnCancelLabel: '取消!',
+        btnOKLabel: '确认!',
+        btnOKClass: 'btn-ok',
+        callback: function (result) {
+            if (result) {
+                workflow.execute('dep', $('#WF_Task').val(), approveInfo).success(function () {
+                    window.location.href = "/project";
+                });
+            }
+        }
     });
 }
+/**
+ * 驳回
+ */
 function Refuse() {
     var refuseAwardInfo = Object();
-    refuseAwardInfo["DecByCol"] = false;
-    refuseAwardInfo["replyByCol"] = $('#reply-box').val();
-    workflow.execute('col', $('#WF_Task').val(), refuseAwardInfo).success(function () {
-        showTable();
+    refuseAwardInfo["DecByDep"] = false;
+    refuseAwardInfo["replyByDep"] = $('#reply-box').val();
+    BootstrapDialog.confirm({
+        title: '警告！',
+        message: '你确定驳回吗?',
+        type: BootstrapDialog.TYPE_WARNING,
+        closable: true,
+        draggable: true,
+        btnCancelLabel: '取消',
+        btnOKLabel: '确定',
+        btnOKClass: 'btn-warning',
+        callback: function (result) {
+            if (result) {
+                workflow.execute('dep', $('#WF_Task').val(), refuseAwardInfo).success(function () {
+                    window.location.href = "/project";
+                });
+            }
+        }
     });
 }
 /*******************************有关成员的操作***************************/
@@ -193,7 +282,7 @@ function addActor() {
             }
         }],
         onshown: function () {
-            fillRoles(2);
+            fillRoles(projectRoles);
         }
     });
 }
@@ -245,7 +334,7 @@ function editActor(row, index) {
             }
         }],
         onshown: function () {
-            fillRoles(1);
+            fillRoles(projectRoles);
             //填充名字
             var $actor = $("#actor").selectize();
             $actor[0].selectize.addOption([{'id': row["staff.id"], 'name': row["staff.name"], "col": {"value": ""}}]);

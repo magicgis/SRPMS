@@ -61,10 +61,12 @@
                 <div class="row">
                     <form id="project" class="form-horizontal" role="form">
                         <div hidden="hidden">
+                            <input type="text" name="dept.value" id="deptValue" value="${patent.dept.value}"/>
                             <input type="text" name="WF_Task" id="WF_Task" value="${task.id}"/>
-                            <input type="text" name="WF_Order" id="WF_Order" value="${task.orderId}"/>
-                            <input type="text" name="IsComplete" id="IsComplete"/>
-                            <input type="text" name="score" id="score"/>
+                            <%--<input type="text" name="WF_Order" id="WF_Order" value="${task.orderId}"/>--%>
+                            <%--<input type="text" name="IsComplete" id="IsComplete"/>--%>
+                            <%--<input type="text" name="score" id="score"/>--%>
+                            <input type="text" name="id" id="projectId" value="${patent.id}"/>
                         </div>
                         <div id="projInfo" class="col-xs-12 col-md-7 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
@@ -81,7 +83,7 @@
 
                                                 <div class="col-sm-8">
                                                     <input type="text" id="code" name="code"
-                                                           value="${task.variableMap.get("code")}"
+                                                           value=""
                                                            placeholder="" class="col-xs-12"/>
                                                 </div>
                                             </div>
@@ -92,7 +94,7 @@
 
                                                 <div class="col-sm-8">
                                                     <input type="text" id="name" name="name"
-                                                           value="${task.variableMap.get("name")}"
+                                                           value=""
                                                            placeholder="" class="col-xs-12"/>
                                                 </div>
                                             </div>
@@ -107,7 +109,7 @@
                                                     <div class="col-sm-13">
                                                         <input class="form-control" id="type"
                                                                type="text" name="type"
-                                                               value="${task.variableMap.get("type")}"
+                                                               value=""
                                                                placeholder="请选择"/>
                                                     </div>
                                                 </div>
@@ -121,7 +123,7 @@
                                                     <div class="col-sm-13">
                                                         <input class="form-control" id="rank"
                                                                type="text" name="rank"
-                                                               value="${task.variableMap.get("rank")}"
+                                                               value=""
                                                                placeholder="请选择"/>
                                                     </div>
                                                 </div>
@@ -136,7 +138,7 @@
                                                     <div class="col-sm-13">
                                                         <input class="form-control" id="dept"
                                                                type="text" name="dept"
-                                                               value="${task.variableMap.get("dept")}"
+                                                               value=""
                                                                placeholder="请选择"/>
                                                     </div>
                                                 </div>
@@ -150,7 +152,7 @@
                                                     <div class="col-sm-13">
                                                         <input class="form-control" id="attr"
                                                                type="text" name="attr"
-                                                               value="${task.variableMap.get("attr")}"
+                                                               value=""
                                                                placeholder="请选择"/>
                                                     </div>
 
@@ -168,7 +170,7 @@
                                                     <div class="col-sm-13">
                                                         <input class="form-control" id="rateUnit"
                                                                type="text" name="rateUnit"
-                                                               value="${task.variableMap.get("rateUnit")}"
+                                                               value=""
                                                                placeholder="请选择"/>
                                                     </div>
 
@@ -183,7 +185,7 @@
                                                     <div class="col-sm-13">
                                                         <input class="form-control" id="rateSrc"
                                                                type="text" name="rateSrc"
-                                                               value="${task.variableMap.get("rateSrc")}"
+                                                               value=""
                                                                placeholder="请选择"/>
                                                     </div>
                                                 </div>
@@ -197,20 +199,20 @@
 
                                                 <div class="col-sm-8">
                                                     <input class="form-control date-picker" id="planSolTime"
-                                                           type="text" name="plan_time"
-                                                           value="${task.variableMap.get("plan_time")}"
+                                                           type="text" name="planDate"
+                                                           value=""
                                                            data-date-format="yyyy-mm-dd"/>
                                                 </div>
                                             </div>
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
-                                                       for="is_appr">获得立项</label>
+                                                       for="isAppr">获得立项</label>
 
                                                 <div class="col-sm-8">
                                                     <div class="col-sm-13">
-                                                        <input class="form-control" id="is_appr"
-                                                               type="text" name="is_appr"
-                                                               value="${task.variableMap.get("is_appr")}"
+                                                        <input class="form-control" id="isAppr"
+                                                               type="text" name="isAppr"
+                                                               value=""
                                                                placeholder="请选择"/>
                                                     </div>
 
@@ -226,8 +228,8 @@
 
                                                 <div class="col-sm-8">
                                                     <input class="form-control date-picker" id="appr_time"
-                                                           type="text" name="appr_time"
-                                                           value="${task.variableMap.get("appr_time")}"
+                                                           type="text" name="apprDate"
+                                                           value=""
                                                            data-date-format="yyyy-mm-dd"/>
                                                 </div>
                                             </div>
@@ -237,8 +239,8 @@
 
                                                 <div class="col-sm-8">
                                                     <input class="form-control date-picker" id="real_time"
-                                                           type="text" name="real_time"
-                                                           value="${task.variableMap.get("real_time")}"
+                                                           type="text" name="realDate"
+                                                           value=""
                                                            data-date-format="yyyy-mm-dd"/>
                                                 </div>
                                             </div>
@@ -256,7 +258,7 @@
                                                     <div class="col-sm-13">
                                                         <input class="form-control" id="isAwdProj"
                                                                type="text" name="isAwdProj"
-                                                               value="${task.variableMap.get("isAwdProj")}"
+                                                               value=""
                                                                placeholder="请选择"/>
                                                     </div>
 
@@ -389,52 +391,89 @@
 
                     <div class="row">
                         <div id="formBtn" class="col-xs-12 clearfix">
+                            <div class="pull-left onEdit">
+                                <button class="btn btn-danger del" type="button">
+                                    <i class="ace-icon fa fa-trash  bigger-100"></i>
+                                    删除
+                                </button>
+                                &nbsp;
+                                <button class="btn btn-danger orderBack" type="button">
+                                    <i class="ace-icon fa  fa-repeat bigger-100"></i>
+                                    撤回
+                                </button>
+                            </div>
                             <div class="pull-right">
-                                <c:choose>
-                                    <c:when test="${sessionScope.level == '1'}">
-                                        <button class="confirm btn btn-success teacher" type="button">
-                                            <i class="ace-icon fa fa-check bigger-110"></i>
-                                            确认
-                                        </button>
-                                    </c:when>
-                                    <c:when test="${sessionScope.level == '2'}">
-                                        <button class="btn btn-success Approve" type="button">
-                                            <i class="ace-icon fa fa-check bigger-110"></i>
-                                            通过
-                                        </button>
-                                        &nbsp;
-                                        <button class="btn btn-danger Refuse" type="button">
-                                            <i class="ace-icon fa fa-remove bigger-110"></i>
-                                            驳回
-                                        </button>
-                                        &nbsp;
-                                    </c:when>
-                                    <c:when test="${sessionScope.level == '3'}">
-                                        <button class="btn btn-danger del" type="button">
-                                            <i class="ace-icon fa fa-trash  bigger-100"></i>
-                                            删除
-                                        </button>
-                                        &nbsp;
-                                        <button class="btn btn-danger orderBack" type="button">
-                                            <i class="ace-icon fa  fa-repeat bigger-100"></i>
-                                            撤回
-                                        </button>
-                                        &nbsp;
-                                        <button class="btn btn-info save" type="button">
-                                            <i class="ace-icon fa fa-save bigger-110"></i>
-                                            保存
-                                        </button>
-                                        <button class="btn btn-success Approve school hidden" type="button">
-                                            <i class="ace-icon fa fa-check bigger-110"></i>
-                                            通过
-                                        </button>
-                                        &nbsp;
-                                        <button class="btn btn-danger Refuse school hidden" type="button">
-                                            <i class="ace-icon fa fa-remove bigger-110"></i>
-                                            驳回
-                                        </button>
-                                    </c:when>
-                                </c:choose>
+                                <span class="onEdit">
+                                    <button class="confirm btn btn-success" type="button">
+                                        <i class="ace-icon fa fa-check bigger-110"></i>
+                                        确认
+                                    </button>
+                                    &nbsp;
+                                    <button class="btn btn-info save" type="button">
+                                        <i class="ace-icon fa fa-save bigger-110"></i>
+                                        保存
+                                    </button>
+                                </span>
+                                <span class="onApprove">
+                                    <button class="btn btn-success Approve" type="button">
+                                        <i class="ace-icon fa fa-check bigger-110"></i>
+                                        通过
+                                    </button>
+                                    &nbsp;
+                                    <button class="btn btn-danger Refuse" type="button">
+                                        <i class="ace-icon fa fa-remove bigger-110"></i>
+                                        驳回
+                                    </button>
+                                </span>
+                                <%--<c:choose>--%>
+                                <%--<c:when test="${sessionScope.level == '1'}">--%>
+                                <%--<button class="confirm btn btn-success teacher" type="button">--%>
+                                <%--<i class="ace-icon fa fa-check bigger-110"></i>--%>
+                                <%--确认--%>
+                                <%--</button>--%>
+                                <%--</c:when>--%>
+                                <%--<c:when test="${sessionScope.level == '2'}">--%>
+                                <%--<button class="btn btn-success Approve" type="button">--%>
+                                <%--<i class="ace-icon fa fa-check bigger-110"></i>--%>
+                                <%--通过--%>
+                                <%--</button>--%>
+                                <%--&nbsp;--%>
+                                <%--<button class="btn btn-danger Refuse" type="button">--%>
+                                <%--<i class="ace-icon fa fa-remove bigger-110"></i>--%>
+                                <%--驳回--%>
+                                <%--</button>--%>
+                                <%--&nbsp;--%>
+                                <%--</c:when>--%>
+                                <%--<c:when test="${sessionScope.level == '3'}">--%>
+                                <%--<button class="btn btn-danger del" type="button">--%>
+                                <%--<i class="ace-icon fa fa-trash  bigger-100"></i>--%>
+                                <%--删除--%>
+                                <%--</button>--%>
+                                <%--&nbsp;--%>
+                                <%--<button class="btn btn-danger orderBack" type="button">--%>
+                                <%--<i class="ace-icon fa  fa-repeat bigger-100"></i>--%>
+                                <%--撤回--%>
+                                <%--</button>--%>
+                                <%--&nbsp;--%>
+                                <%--<button class="btn btn-info save" type="button">--%>
+                                <%--<i class="ace-icon fa fa-save bigger-110"></i>--%>
+                                <%--保存--%>
+                                <%--</button>--%>
+                                <%--<button class="btn btn-success Approve school hidden" type="button">--%>
+                                <%--<i class="ace-icon fa fa-check bigger-110"></i>--%>
+                                <%--通过--%>
+                                <%--</button>--%>
+                                <%--&nbsp;--%>
+                                <%--<button class="btn btn-danger Refuse school hidden" type="button">--%>
+                                <%--<i class="ace-icon fa fa-remove bigger-110"></i>--%>
+                                <%--驳回--%>
+                                <%--</button>--%>
+                                <%--<button class="confirm btn btn-success" type="button">--%>
+                                <%--<i class="ace-icon fa fa-check bigger-110"></i>--%>
+                                <%--确认--%>
+                                <%--</button>--%>
+                                <%--</c:when>--%>
+                                <%--</c:choose>--%>
                                 <button class="btn btn-success back" type="button">
                                     <i class="ace-icon fa fa-reply  bigger-110"></i>
                                     返回
@@ -483,32 +522,43 @@
         });
     });
 
-    var status = '${task.taskName}';
+    <%--var status = '${task.taskName}';--%>
 
-    if (status == 'ApprovalByDep') {
-        $('input').attr('disabled', 'disabled');
-        $('.teacher').hide();
-        // todo 禁用上传按钮
-        $('#upload').hide();
-    }
+    <%--if (status == 'ApprovalByDep') {--%>
+    <%--$('input').attr('disabled', 'disabled');--%>
+    <%--$('.teacher').hide();--%>
+    <%--//  禁用上传按钮--%>
+    <%--$('#upload').hide();--%>
+    <%--}--%>
 
-    if (status == "Blank" || status == "Uncomplete") {//根据项目信息完成状态显示不同功能按钮
-        $('.school').show();
-        $('.save').hide();
-        $('.orderBack').hide();
-        $('.del').hide();
-    } else {
-        $('.save').show();
-        $('.orderBack').show();
-        $('.del').show();
-        $('.school').hide();
-    }
+    <%--if (status == "Blank" || status == "Uncomplete") {//根据项目信息完成状态显示不同功能按钮--%>
+    <%--$('.school').show();--%>
+    <%--$('.save').hide();--%>
+    <%--$('.orderBack').hide();--%>
+    <%--$('.del').hide();--%>
+    <%--} else {--%>
+    <%--$('.save').show();--%>
+    <%--$('.orderBack').show();--%>
+    <%--$('.del').show();--%>
+    <%--$('.school').hide();--%>
+    <%--}--%>
+    // todo 取出实体内的额外信息，附件信息也应该在其中。
+    var all = '${ObjectMapper.writeValueAsString(project.argMap)}';
+    //todo 取出部门信息，可同理取出专利类型
+    var dept = '${ObjectMapper.writeValueAsString(project.dept)}';
+//    if (all!='') {
+//        all = jQuery.parseJSON(all);
+//        filesData = all['filesData'];
+//        actorTemp = all['actors'];
+//        fundTemp = all['fund'];
+//        unitTemp = all['units'];
+//    }
+    dept = jQuery.parseJSON(dept);
     allSections();//选择框
     upToLoadFile();//文件上传
     firstOrOther();//是否是联合单位
     //真不容易
-    var filesData = ${ObjectMapper.writeValueAsString(task.variableMap.get("filesData"))};
-
+    var filesData;
     if (filesData == null) {
         filesData = {};
     }
