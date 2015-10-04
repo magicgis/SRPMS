@@ -2,6 +2,7 @@ package ctrl;
 
 import engine.Engine;
 import entity.Patent;
+import entity.Project;
 import entity.User;
 import org.snaker.engine.entity.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.PatentService;
+import service.ProjectService;
 import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +35,8 @@ public class Index {
     Engine engine;
     @Autowired
     PatentService patentService;
+    @Autowired
+    ProjectService projectService;
 
     @RequestMapping(value = {"login", ""}, method = RequestMethod.GET)
     public String index(Model model, RedirectAttributes redirectAttributes) {
@@ -109,6 +113,20 @@ public class Index {
     @RequestMapping(value = {"project"}, method = RequestMethod.GET)
     public String project(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         return "project";
+    }
+
+    @RequestMapping(value = {"project/new"}, method = RequestMethod.GET)
+    public String newProject(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        model.addAttribute(new Project());
+        return "projectEdit";
+    }
+
+    @RequestMapping(value = {"project/{projectId}"}, method = RequestMethod.GET)
+    public String projectEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                              @PathVariable("projectId") String projectId) {
+        Project project = projectService.getById(projectId);
+        model.addAttribute(project);
+        return "projectEdit";
     }
 
     @RequestMapping(value = {"newOthers"}, method = RequestMethod.GET)

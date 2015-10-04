@@ -1,7 +1,15 @@
 package entity;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by guofan on 2015/8/12.
@@ -15,7 +23,7 @@ public class Project {
     private String type;
     private String rank;
     private String attr;
-    private Byte isAppr;
+    private Integer isAppr;
     private String unit;
     private Integer score;
     private String apprDate;
@@ -24,11 +32,15 @@ public class Project {
     private Integer step;
     private String money;
     private String attachment;
+    private String process;
+    private String arg;
     private Collection<ProjectMoney> projectMoneys;
     private BaseInfo dept;
     private Standard standard;
 
     @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "id")
     public String getId() {
         return id;
@@ -90,11 +102,11 @@ public class Project {
 
     @Basic
     @Column(name = "is_appr")
-    public Byte getIsAppr() {
+    public Integer getIsAppr() {
         return isAppr;
     }
 
-    public void setIsAppr(Byte isAppr) {
+    public void setIsAppr(Integer isAppr) {
         this.isAppr = isAppr;
     }
 
@@ -169,6 +181,16 @@ public class Project {
     }
 
     @Basic
+    @Column(name = "process")
+    public String getProcess() {
+        return process;
+    }
+
+    public void setProcess(String process) {
+        this.process = process;
+    }
+
+    @Basic
     @Column(name = "attachment")
     public String getAttachment() {
         return attachment;
@@ -178,31 +200,66 @@ public class Project {
         this.attachment = attachment;
     }
 
+    @Basic
+    @Column(name = "arg")
+    public String getArg() {
+        return arg;
+    }
+
+    public void setArg(String arg) {
+        this.arg = arg;
+    }
+
+    @Transient
+    public Map getArgMap() {
+        JsonFactory factory = new JsonFactory();
+        ObjectMapper mapper = new ObjectMapper(factory);
+        TypeReference<HashMap<String, Object>> typeRef
+                = new TypeReference<HashMap<String, Object>>() {
+        };
+        try {
+            return mapper.readValue(getArg(), typeRef);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void setArgMap(Map infoMap) {
+        try {
+            this.arg = new ObjectMapper().writeValueAsString(infoMap);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
-        if(this == o) return true;
-        if(o == null || getClass() != o.getClass()) return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Project project = (Project) o;
 
-        if(id != null ? !id.equals(project.id) : project.id != null) return false;
-        if(code != null ? !code.equals(project.code) : project.code != null) return false;
-        if(name != null ? !name.equals(project.name) : project.name != null) return false;
-        if(type != null ? !type.equals(project.type) : project.type != null) return false;
-        if(rank != null ? !rank.equals(project.rank) : project.rank != null) return false;
-        if(attr != null ? !attr.equals(project.attr) : project.attr != null) return false;
-        if(isAppr != null ? !isAppr.equals(project.isAppr) : project.isAppr != null) return false;
-        if(unit != null ? !unit.equals(project.unit) : project.unit != null) return false;
-        if(score != null ? !score.equals(project.score) : project.score != null) return false;
-        if(apprDate != null ? !apprDate.equals(project.apprDate) : project.apprDate != null) return false;
-        if(planDate != null ? !planDate.equals(project.planDate) : project.planDate != null) return false;
-        if(realDate != null ? !realDate.equals(project.realDate) : project.realDate != null) return false;
-        if(step != null ? !step.equals(project.step) : project.step != null) return false;
-        if(money != null ? !money.equals(project.money) : project.money != null) return false;
-        if(attachment != null ? !attachment.equals(project.attachment) : project.attachment != null) return false;
-        if(projectMoneys != null ? !projectMoneys.equals(project.projectMoneys) : project.projectMoneys != null)
+        if (id != null ? !id.equals(project.id) : project.id != null) return false;
+        if (code != null ? !code.equals(project.code) : project.code != null) return false;
+        if (name != null ? !name.equals(project.name) : project.name != null) return false;
+        if (type != null ? !type.equals(project.type) : project.type != null) return false;
+        if (rank != null ? !rank.equals(project.rank) : project.rank != null) return false;
+        if (attr != null ? !attr.equals(project.attr) : project.attr != null) return false;
+        if (isAppr != null ? !isAppr.equals(project.isAppr) : project.isAppr != null) return false;
+        if (unit != null ? !unit.equals(project.unit) : project.unit != null) return false;
+        if (score != null ? !score.equals(project.score) : project.score != null) return false;
+        if (apprDate != null ? !apprDate.equals(project.apprDate) : project.apprDate != null) return false;
+        if (planDate != null ? !planDate.equals(project.planDate) : project.planDate != null) return false;
+        if (realDate != null ? !realDate.equals(project.realDate) : project.realDate != null) return false;
+        if (step != null ? !step.equals(project.step) : project.step != null) return false;
+        if (money != null ? !money.equals(project.money) : project.money != null) return false;
+        if (attachment != null ? !attachment.equals(project.attachment) : project.attachment != null) return false;
+        if (process != null ? !process.equals(project.process) : project.process != null) return false;
+        if (arg != null ? !arg.equals(project.arg) : project.arg != null) return false;
+        if (projectMoneys != null ? !projectMoneys.equals(project.projectMoneys) : project.projectMoneys != null)
             return false;
-        if(dept != null ? !dept.equals(project.dept) : project.dept != null) return false;
+        if (dept != null ? !dept.equals(project.dept) : project.dept != null) return false;
         return !(standard != null ? !standard.equals(project.standard) : project.standard != null);
 
     }
@@ -224,6 +281,8 @@ public class Project {
         result = 31 * result + (step != null ? step.hashCode() : 0);
         result = 31 * result + (money != null ? money.hashCode() : 0);
         result = 31 * result + (attachment != null ? attachment.hashCode() : 0);
+        result = 31 * result + (process != null ? process.hashCode() : 0);
+        result = 31 * result + (arg != null ? arg.hashCode() : 0);
         result = 31 * result + (projectMoneys != null ? projectMoneys.hashCode() : 0);
         result = 31 * result + (dept != null ? dept.hashCode() : 0);
         result = 31 * result + (standard != null ? standard.hashCode() : 0);

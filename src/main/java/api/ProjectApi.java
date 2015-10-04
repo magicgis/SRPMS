@@ -1,15 +1,22 @@
 package api;
 
+import entity.Project;
 import entity.StaRef;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
+import service.BaseInfoService;
 import service.ProjectService;
 import service.StaRefService;
+import service.StandardInfoService;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MultivaluedMap;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static util.Trans.putMapOnObj;
 
 /**
  * Created by guofan on 2015/8/29.
@@ -22,6 +29,10 @@ public class ProjectApi {
     ProjectService projectService;
     @Autowired
     StaRefService staRefService;
+    @Autowired
+    StandardInfoService standardInfoService;
+    @Autowired
+    BaseInfoService baseInfoService;
 
     @GET
     @Path("/all")
@@ -52,10 +63,31 @@ public class ProjectApi {
     }
 
     @POST
-    @Path("/new")
-    @Consumes("application/json;charset=UTF-8")
-    public boolean add(HashMap<String, Object> args) {
-        return false;//todo
+    @Path("/project")
+    public Serializable add(MultivaluedMap args) {
+        HashMap<String, Object> x = new HashMap<>();
+        for (Object key : args.keySet()) {
+            x.put((String) key, args.getFirst(key));
+        }
+        Project project;
+        if ("".equals(args.getFirst("id"))) {
+            project = new Project();
+            project.setProcess("0");//表示刚填表
+        }
+        else {
+            project = projectService.getById((Serializable) args.getFirst("id"));
+        }
+        putMapOnObj(project, x);
+        project.setStandard(standardInfoService.getById((Serializable) args.getFirst("standard.id")));
+        project.setDept(baseInfoService.getById((Serializable) args.getFirst("dept.id")));
+        if ("".equals(project.getId())) {
+            project.setId(null);
+            return projectService.add(project);
+        }
+        else {
+            projectService.update(project);
+            return project.getId();
+        }
     }
 
     @PUT
