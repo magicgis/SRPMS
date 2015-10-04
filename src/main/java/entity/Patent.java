@@ -123,7 +123,7 @@ public class Patent {
     }
 
     @Basic
-    @Column(name = "arg")
+    @Column(name = "arg", length = 3000)
     public String getArg() {
         return arg;
     }
@@ -134,12 +134,16 @@ public class Patent {
 
     @Transient
     public Map getArgMap() {
+        if (this.arg == null) {
+            return new HashMap();
+        }
         JsonFactory factory = new JsonFactory();
         ObjectMapper mapper = new ObjectMapper(factory);
         TypeReference<HashMap<String, Object>> typeRef
                 = new TypeReference<HashMap<String, Object>>() {
         };
         try {
+
             return mapper.readValue(getArg(), typeRef);
         } catch (Exception e) {
             e.printStackTrace();
