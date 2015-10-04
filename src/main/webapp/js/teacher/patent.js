@@ -1,9 +1,6 @@
 /**
  * Created by zheng on 2015/4/22.
  */
-var unitTemp = [];
-var actorTemp = [];
-var filesData = {};
 //所有的专利
 //var allUrl = '/api/workflow/order/' + userName + '/patent/all';
 //当前url

@@ -16,7 +16,7 @@
 
     <meta name="description" content="Dynamic tables and grids using jqGrid plugin"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-
+    <title>专利信息</title>
     <jsp:include page="public/jsHeader.jsp"/>
     <style>
         td.bs-checkbox {
@@ -75,7 +75,7 @@
                                         <%--<input type="text" name="WF_Task" id="WF_Task"/>--%>
                                         <%--<input type="text" name="IsComplete" id="IsComplete"/>--%>
                                         <%--<input type="text" name="pscore" id="score"/>--%>
-                                        <%--<input type="text" name="dept.value" id="deptValue"/>--%>
+                                        <input type="text" name="dept.value" id="deptValue" value="${patent.dept.value}"/>
                                         <%--<input type="text" name="patent.standard.value" id="patTypeValue"/>--%>
                                         <input type="text" name="id" id="patentId" value="${patent.id}"/>
                                     </div>
@@ -171,7 +171,30 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="col-xs-12 widget-container-col ui-sortable"
+                                             id="fileHead">
+                                            <div class="widget-box transparent ui-sortable-handle"
+                                                 style="opacity: 1;">
+                                                <div class="widget-header">
+                                                    <h4 class="widget-title">附件信息</h4>
+
+                                                    <div class="widget-toolbar no-border">
+                                                        <div id="upload">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="widget-body">
+                                                    <div class="widget-main">
+                                                        <div class="dd" id="nestable">
+                                                            <ol class="dd-list" id="downFiles"></ol>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </form>
 
                                 <div class="col-xs-12 col-md-6">
@@ -216,8 +239,6 @@
                                                         <div id="unitToolbar">
                                                             <a id="addUnit" class="btn btn-primary btn-sm"><i
                                                                     class="glyphicon glyphicon-plus"></i> 添加单位</a>
-                                                            <a id="editUnit" class="btn btn-primary btn-sm"><i
-                                                                    class="glyphicon glyphicon-pencil"></i> 编辑单位</a>
                                                         </div>
                                                         <table id="unitTable"
                                                                data-toolbar="#unitToolbar"
@@ -229,29 +250,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-6">
-                                    <div class="col-xs-12 widget-container-col ui-sortable"
-                                         id="fileHead">
-                                        <div class="widget-box transparent ui-sortable-handle"
-                                             style="opacity: 1;">
-                                            <div class="widget-header">
-                                                <h4 class="widget-title">附件信息</h4>
 
-                                                <div class="widget-toolbar no-border">
-                                                    <div id="upload">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="widget-body">
-                                                <div class="widget-main">
-                                                    <div class="dd" id="nestable">
-                                                        <ol class="dd-list" id="downFiles"></ol>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-xs-12">
                                     <div class="widget-body">
                                         <div class="row">
@@ -263,16 +262,20 @@
                                                     </button>
                                                 </div>
                                                 <div class="pull-right">
+                                                    <button class="tabOrdBtn btn btn-danger btn-sm back" type="button">
+                                                        <i class="ace-icon fa fa-reply  bigger-110"></i>
+                                                        返回
+                                                    </button>
                                                     <span class="onEdit">
-                                                        <button class="tabOrdBtn btn btn-success btn-sm confirm"
-                                                                type="button">
-                                                            <i class="ace-icon fa fa-check bigger-110"></i>
-                                                            确认
-                                                        </button>
                                                         <button class="tabOrdBtn btn btn-primary btn-sm save"
                                                                 type="button">
                                                             <i class="ace-icon fa fa-save bigger-110"></i>
                                                             保存
+                                                        </button>
+                                                        <button class="tabOrdBtn btn btn-success btn-sm confirm"
+                                                                type="button">
+                                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                                            确认
                                                         </button>
                                                     </span>
                                                     <span class="onApproval">
@@ -336,25 +339,29 @@
             $(this).prev().focus();
         });
     });
-
-    // todo 取出实体内的额外信息，附件信息也应该在其中。
+    // 成员，单位，文件
     var all = '${ObjectMapper.writeValueAsString(patent.argMap)}';
-    console.log(all);
-
-    //todo 取出部门信息，可同理取出专利类型
-    var dept = '${ObjectMapper.writeValueAsString(patent.dept)}';
-    console.log(dept);
-
+    var filesData = {};
+    var actorTemp = [];
+    var unitTemp = [];
+    if( !isNull(all)){
+        all = jQuery.parseJSON(all);
+        filesData = all['filesData'];
+        actorTemp = all['actors'];
+        unitTemp = all['units'];
+    }
     upToLoadFile();
-    <%--var filesData = ${ObjectMapper.writeValueAsString(task.variableMap.get("filesData"))};--%>
-    //todo
-    var filesData;
 
     if (filesData == null) {
         filesData = {};
     }
-
     scanFiles(filesData);
+
+    //选择框
+    var dept = '${ObjectMapper.writeValueAsString(patent.dept)}';
+    var standardId = '${ObjectMapper.writeValueAsString(patent.standard)}';
+    dept = jQuery.parseJSON(dept);
+
 
     //监听 确认
     $(".confirm").click(function () {

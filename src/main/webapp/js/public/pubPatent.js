@@ -17,6 +17,10 @@ function subActorInfo(index,flag) {
     $.each(units, function (i, value) {
         actorTemp.push({"staff.id": id, "rank": rank, "staff.name": actor, "role": role, "score": mark, "unit": value});
     });
+    if(rank == '1' || rank == 1){
+        Main_Actor = id;
+        Main_ActorName = actor;
+    }
     if(flag) {  // 增加一行
         $('#actorTable').bootstrapTable("load", actorTemp);
     } else {    // 替换一行

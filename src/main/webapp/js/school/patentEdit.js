@@ -4,6 +4,9 @@
 
 var actorTemp = [];
 var unitTemp = [];
+var Main_Actor;
+var Main_ActorName;
+
 $(function () {
     $('#actorTable').bootstrapTable({
         columns: [
@@ -100,6 +103,13 @@ $(function () {
             $('#deptValue').val(this.getItem(result)["context"]["innerHTML"]);
         }
     });
+
+    //console.log([dept]);
+
+    //addOptionSelectize($('#dept').selectize(), [dept]);
+    //DisplayForm($('#dept').selectize(), dept['id'], 0);
+    //DisplayForm($('#patType').selectize(), standardId, 0);
+
 });
 
 
@@ -117,8 +127,11 @@ function save() {
         dataType: 'text',
         success: function (data) {
             var send = new Object();
-            send['actors'] = $('#actorTable').bootstrapTable("getData", false);
-            send['units'] = $('#unitTable').bootstrapTable("getData", false);
+            send['actors'] = getActorsData();
+            send['units'] = getUnitsData();
+            send['filesData'] = filesData;
+            send['Main-Actor'] = Main_Actor;
+            send['Main-ActorName'] = Main_ActorName;
             //todo 这儿还应该放上附件信息，主用户信息Main-Actor
             $.ajax({
                 type: 'put',
@@ -127,7 +140,7 @@ function save() {
                 dataType: 'json',
                 contentType: 'application/json;charset=UTF-8',
                 success: function (res) {
-
+                    history.go(-1);
                 }
             })
         }
