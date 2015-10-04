@@ -14,7 +14,7 @@ import static util.Trans.getSubMap;
 /**
  * Created by guofan on 2015/10/4.
  */
-@Path("/baseinfo")
+@Path("/standard")
 @RestController
 public class StandardApi {
     @Autowired
