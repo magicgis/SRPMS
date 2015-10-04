@@ -33,6 +33,7 @@ var $actorTable = $('#actorTable');
 var actorTemp = [];
 var unitTemp = [];
 var fundTemp = [];
+
 // 将对话框里的值加载进成员表
 function subActorInfo(index, flag) {
     var id = $('#actor').val();
@@ -46,7 +47,7 @@ function subActorInfo(index, flag) {
     $.each(units, function (i, value) {
         actorTemp.push({"staff.id": id, "rank": rank, "staff.name": actor, "role": role, "score": mark, "unit": value});
     });
-    if(rank == '1' || rank == 1){
+    if (rank == '1' || rank == 1) {
         Main_Actor = id;
         Main_ActorName = actor;
     }
