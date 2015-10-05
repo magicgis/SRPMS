@@ -1,17 +1,67 @@
 /**
  * Created by Administrator on 2015/10/3.
  */
+
+var flag = true;
+
 $(function () {
     //todo 在教师界面的argMap，基本等同于order中的arg，
     //todo 存在Status,WF_Col,WF_Col_Id等等，基本是前台上一次放什么进去，第二次就能以同样的方式拿到
-    //TODO 不可编辑
     //todo 还需要判断order的状态来 判断是否能算分与分配分数
-    uneditableForm();
 
-    $('#reply').hide();
+    uneditableForm();
+    disableSelectize($('#dept').selectize());
+    disableSelectize($('#patType').selectize());
+    hideUnitOperate();
+    init();
+
+    $('#upload').hide();
+    $('.onApproval').hide();
 
 });
 
+function init() {
+    var status = all['Status'];
+    if( !(status=='Blank' || status=='Uncomplete' || status.indexOf('Refuse') >= 0)) {
+        hideActorOperate();
+        $('#getScore').hide();
+        $('.save').hide();
+        if(status == 'Complete' && all['Main-Actor']!=userName) {
+            $('.confirm').show();
+        }else{
+            $('.confirm').hide();
+        }
+        $('#reply').hide();
+    }else if (status.indexOf('Refuse') >= 0) {
+        $('#reply').show();
+        $('#reply-display').show();
+        var reply = $('#reply-display').children('p');
+        var who = $('#reply-display').children('small');
+        reply.empty();
+        who.empty();
+        if (status.indexOf("Col") >= 0) {
+            reply.append(replyByCol);
+            who.append("学院批复");
+        } else {
+            $('.confirm').hide();
+            $('.save').hide();
+            reply.append(replyByDep);
+            who.append("管理部门批复");
+        }
+    } else {
+        $('#reply').hide();
+    }
+}
+
+function getActors() {
+    var keyStr = getSubmission(all);
+    if(keyStr == "") {
+        actorTemp = all['actors'];
+    }
+    else {
+        actorTemp = all[keyStr]['actors'];
+    }
+}
 
 /*
  * 保存
@@ -20,20 +70,26 @@ $(function () {
  *  todo 保存就是isComplete为false，确认就是isComplete为true
  * */
 function save() {
-    $('#IsComplete').val(false);
-    var jsonData = getFormData('patent');
-    workflow.execute(userName, '', jsonData).success(function () {
+    var send = new Object();
+    send['IsComplete'] = 'false';
+    send['actors'] = getActorsData();
+    workflow.execute(userName, taskId, send).success(function () {
         afterSuccess("保存成功！");
         window.location.href = "/patent";
     });
+    console.log(send);
 }
 /*
  * 确认
  *
  * */
 function confirm() {
-    $('#IsComplete').val(true);
-    var jsonData = getFormData('patent');
+    var status = all['Status'];
+    var send = new Object();
+    if(status == 'Uncomplete'){
+        send['IsComplete'] = 'true';
+        send['actors'] = getActorsData();
+    }
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '确认?',
@@ -48,17 +104,17 @@ function confirm() {
              * userName,taskId,status
              */
             if (result) {
-                workflow.execute(userName, $('#WF_Task').val(), jsonData).success(function (data) {
+                workflow.execute(userName, taskId, send).success(function (data) {
                     if ("valid" in data) {
                         if (data["valid"] == true) {
                             afterSuccess("确认成功！");
-                            window.location.href = "/patent";
+                            //window.location.href = "/patent";
                         } else {
                             errorMsg(data["msg"]);
                         }
                     } else {
                         afterSuccess("确认成功！");
-                        window.location.href = "/patent";
+                        //window.location.href = "/patent";
                     }
                 });
             }

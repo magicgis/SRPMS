@@ -39,6 +39,7 @@ $(function () {
         }],
         responseHandler: tableTrans
     });
+    $('#upload').hide();
 });
 
 /*统一提交*/

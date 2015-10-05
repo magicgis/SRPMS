@@ -2,8 +2,6 @@
  * Created by huyuanyuan555 on 2015/10/2.
  */
 
-var Main_Actor;
-var Main_ActorName;
 
 $(function () {
     //TODO
@@ -16,76 +14,82 @@ $(function () {
 
 });
 
+function getActors() {
+    actorTemp = all['actors'];
+}
 
 /*
  * 保存
  *
  * */
-function save() {
-    $.ajax({
+function saveStep1() {
+    return $.ajax({
         url: '/api/patent/patent',
         data: $('#patent').serialize(),
         type: 'POST',
-        dataType: 'text',
-        success: function (data) {
-            var send = new Object();
-            //避免新建的时候多次点击保存多次新建
-            $('#patentId').val(data);
-            send['actors'] = getActorsData();
-            send['units'] = getUnitsData();
-            send['filesData'] = filesData;
-            send['Main-Actor'] = Main_Actor;
-            send['Main-ActorName'] = Main_ActorName;
-            $.ajax({
-                type: 'put',
-                url: '/api/patent/' + data,
-                data: JSON.stringify(send),
-                dataType: 'json',
-                contentType: 'application/json;charset=UTF-8',
-                success: function (res) {
-                    history.go(-1);
-                }
-            })
-        }
+        dataType: 'text'
     })
+}
+function saveStep2(data) {
+    var send = new Object();
+    //避免新建的时候多次点击保存多次新建
+    $('#patentId').val(data);
+    send['actors'] = getActorsData();
+    send['units'] = getUnitsData();
+    send['filesData'] = filesData;
+    send['Main-Actor'] = Main_Actor;
+    send['Main-ActorName'] = Main_ActorName;
+    console.log(send);
+    return $.ajax({
+        type: 'put',
+        url: '/api/patent/' + data,
+        data: JSON.stringify(send),
+        dataType: 'json',
+        contentType: 'application/json;charset=UTF-8'
+    })
+}
+
+function save() {
+    saveStep1().success(function(data) {
+
+        saveStep2(data).success(function (res) {
+            //history.go(-1);
+        })
+    });
 }
 /*
  * 确认
  *
  * */
 function confirm() {
-    //TODO 这儿需要先调用save()将信息保存一次
-    BootstrapDialog.confirm({
-        title: '是否启动流程',
-        message: '确认?',
-        type: BootstrapDialog.TYPE_INFO,
-        closable: true,
-        draggable: true,
-        btnCancelLabel: '取消',
-        btnOKLabel: '确认',
-        btnOKClass: 'btn-ok',
-        callback: function (result) {
-            /**
-             * userName,taskId,status
-             */
-            if (result) {
-                workflow.startEntityOrder("patent", $('#patentId').val()).success(function (data) {
-                    console.log(data);
-                    //if ("valid" in data) {
-                    //    if (data["valid"] == true) {
-                    //        afterSuccess("确认成功！");
-                    //        window.location.href = "/patent";
-                    //    } else {
-                    //        errorMsg(data["msg"]);
-                    //    }
-                    //} else {
-                    //    afterSuccess("确认成功！");
-                    //    window.location.href = "/patent";
-                    //}
-                });
-            }
-        }
+    //这儿需要先调用save()将信息保存一次
+    saveStep1().success(function(data) {
+
+        saveStep2(data).success(function (res) {
+
+            BootstrapDialog.confirm({
+                title: '是否启动流程',
+                message: '确认?',
+                type: BootstrapDialog.TYPE_INFO,
+                closable: true,
+                draggable: true,
+                btnCancelLabel: '取消',
+                btnOKLabel: '确认',
+                btnOKClass: 'btn-ok',
+                callback: function (result) {
+                    /**
+                     * userName,taskId,status
+                     */
+                    if (result) {
+                        workflow.startEntityOrder("patent", $('#patentId').val()).success(function (data) {
+                            history.go(-1);
+                        });
+                    }
+                }
+            });
+        })
     });
+
 }
 /*
  * 删除

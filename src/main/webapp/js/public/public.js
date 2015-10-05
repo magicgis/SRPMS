@@ -185,17 +185,19 @@ function tableTrans(res) {
 }
 
 function getSubmission(pData) {
-    var max = 0;
+    var max;
     var keyStr = "";
     for (var key in pData) {
         var partn = new RegExp('WF_\\d+_Submission');
         if (partn.test(key)) {
             var keyValue = key.substring(3, key.length - 11);
-            if (parseInt(max) < parseInt(keyValue)) {
+            if (parseInt(max) < parseInt(keyValue)||max == undefined) {
                 max = keyValue;
             }
         }
-        keyStr = "WF_" + max + "_Submission";
+        if(max!=undefined) {
+            keyStr = "WF_" + max + "_Submission";
+        }
     }
     return keyStr;
 }
@@ -528,7 +530,7 @@ function isInt(str) {
     }
 }
 function isNull(str) {
-    return (str == '' || str == undefined || str == null || str == '{}' || str == {});
+    return (str == '' || str == undefined || str == null || str == '{}' || str == {} || jQuery.isEmptyObject(str));
 }
 
 /**--------------------------提示信息公共方法------------------**/

@@ -144,14 +144,16 @@ function uneditableForm(){
     $('form input').attr("disabled", "disabled");
     $('form select').attr("disabled", "disabled");
     $('#addDiff').attr("disabled", "disabled");
-    $('#addActor').hide();
-    $('#addUnit').hide();
-    $('#getScore').hide();
+    //$('#addActor').hide();
+    //$('#addUnit').hide();
     $('.delFiles').hide();
+}
+function hideActorOperate() {
     $('#actorTable').bootstrapTable('hideColumn', 'operate');
+}
+function hideUnitOperate() {
     $('#unitTable').bootstrapTable('hideColumn', 'operate');
 }
-
 /*
  * 获取人员信息
  *

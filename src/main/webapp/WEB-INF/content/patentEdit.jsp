@@ -182,8 +182,10 @@
                                                     <h4 class="widget-title">附件信息</h4>
 
                                                     <div class="widget-toolbar no-border">
-                                                        <div id="upload">
-                                                        </div>
+                                                        <c:if test="${sessionScope.level == '3'}">
+                                                            <div id="upload">
+                                                            </div>
+                                                        </c:if>
                                                     </div>
                                                 </div>
                                                 <div class="widget-body">
@@ -212,17 +214,24 @@
                                                 <div class="widget-main">
                                                     <div class="row">
                                                         <div id="actorToolbar">
-                                                            <a data-toggle="modal" id="addActor"
-                                                               class="btn btn-primary btn-sm">添加成员</a>
-                                                            <a data-toggle="modal" id="getScore"
-                                                               class="btn btn-primary btn-sm">计算分数</a>
-
+                                                            <c:choose>
+                                                                <c:when test="${sessionScope.level == '3'}">
+                                                                    <a data-toggle="modal" id="addActor"
+                                                                       class="btn btn-primary btn-sm">添加成员</a>
+                                                                </c:when>
+                                                                <c:when test="${sessionScope.level == '1'}">
+                                                                    <a data-toggle="modal" id="getScore"
+                                                                       class="btn btn-primary btn-sm">计算分数</a>
+                                                                </c:when>
+                                                            </c:choose>
                                                         </div>
                                                         <table id="actorTable"
                                                                data-toolbar="#actorToolbar"
                                                                data-show-footer="true"
-                                                               data-show-columns="true"
-                                                               data-show-toggle="true"></table>
+                                                               data-show-columns="false"
+                                                               data-show-toggle="false">
+
+                                                        </table>
                                                     </div>
                                                 </div>
                                             </div>
@@ -239,8 +248,11 @@
                                                 <div class="widget-main">
                                                     <div class="row">
                                                         <div id="unitToolbar">
-                                                            <a id="addUnit" class="btn btn-primary btn-sm"><i
-                                                                    class="glyphicon glyphicon-plus"></i> 添加单位</a>
+                                                            <c:if test="${sessionScope.level == '3'}">
+                                                                <a id="addUnit" class="btn btn-primary btn-sm">
+                                                                        <%--<i class="glyphicon glyphicon-plus"></i> --%>
+                                                                    添加单位</a>
+                                                            </c:if>
                                                         </div>
                                                         <table id="unitTable"
                                                                data-toolbar="#unitToolbar"
@@ -251,29 +263,56 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div id="reply" class="col-xs-12 widget-container-col ui-sortable">
+                                        <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
+                                            <div class="widget-header">
+                                                <h4 class="widget-title">批复</h4>
+                                            </div>
+                                            <div class="widget-body">
+                                                <div class="widget-main">
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <textarea class="form-control" id="reply-box"></textarea>
+                                                            <blockquote class="pull-left" id="reply-display" hidden="hidden">
+                                                                <p></p>
+                                                                <small class="pull-right">
+                                                                </small>
+                                                            </blockquote>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
+
 
                                 <div class="col-xs-12">
                                     <div class="widget-body">
                                         <div class="row">
                                             <div id="formBtn" class="col-xs-12 clearfix">
                                                 <div class="pull-left onEdit">
-                                                    <button class="tabOrdBtn btn btn-danger btn-sm del" type="button">
-                                                        <i class="ace-icon fa fa-trash  bigger-110"></i>
-                                                        删除
-                                                    </button>
+
+                                                    <c:if test="${sessionScope.level == '3'}">
+                                                        <button class="tabOrdBtn btn btn-danger btn-sm del" type="button">
+                                                            <i class="ace-icon fa fa-trash  bigger-110"></i>
+                                                            删除
+                                                        </button>
+                                                    </c:if>
                                                 </div>
                                                 <div class="pull-right">
                                                     <button class="tabOrdBtn btn btn-danger btn-sm back" type="button">
                                                         <i class="ace-icon fa fa-reply  bigger-110"></i>
                                                         返回
-                                                    </button>
+                                                    </button>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <span class="onEdit">
                                                         <button class="tabOrdBtn btn btn-primary btn-sm save"
                                                                 type="button">
                                                             <i class="ace-icon fa fa-save bigger-110"></i>
                                                             保存
-                                                        </button>
+                                                        </button>&nbsp;&nbsp;&nbsp;&nbsp;
                                                         <button class="tabOrdBtn btn btn-success btn-sm confirm"
                                                                 type="button">
                                                             <i class="ace-icon fa fa-check bigger-110"></i>
@@ -284,7 +323,7 @@
                                                         <button class="btn btn-success btn-sm approve" type="button">
                                                             <i class="ace-icon fa fa-check bigger-110"></i>
                                                             通过
-                                                        </button>
+                                                        </button>&nbsp;&nbsp;&nbsp;&nbsp;
                                                         <button class="btn btn-danger btn-sm refuse" type="button">
                                                             <i class="ace-icon fa fa-remove bigger-110"></i>
                                                             驳回
@@ -312,23 +351,46 @@
 
 
 </body>
-<script src='<c:url value="/js/public/public.js"/>'></script>
-
 <script>
+
     var actorTemp = [];
     var unitTemp = [];
+    var Main_Actor;
+    var Main_ActorName;
+    var filesData = {};
+    var replyByCol, replyByDep;
 
+</script>
+<script src='<c:url value="/js/public/public.js"/>'></script>
+<script src='<c:url value="/js/public/pubPatent.js"/>'></script>
+<c:choose>
+    <c:when test="${sessionScope.level == '1'}">
+        <script src="<c:url value="/js/teacher/patentEdit.js"/>"></script>
+    </c:when>
+    <c:when test="${sessionScope.level == '2'}">
+        <script src="<c:url value="/js/college/patentEdit.js"/>"></script>
+    </c:when>
+    <c:when test="${sessionScope.level == '3'}">
+        <script src="<c:url value="/js/school/patentEdit.js"/>"></script>
+    </c:when>
+</c:choose>
+
+<script>
 
     // 成员，单位，文件
-    var all = '${ObjectMapper.writeValueAsString(patent.argMap)}';
-    console.log(all);
-    var filesData = {};
+    var all = ${ObjectMapper.writeValueAsString(patent.argMap)};
+    var taskId = '${taskId}';
+    var taskName = '${taskName}';
+    console.log(${ObjectMapper.writeValueAsString(patent)});
     if (!isNull(all)) {
-        all = jQuery.parseJSON(all);
         filesData = all['filesData'];
-        actorTemp = all['actors'];
         unitTemp = all['units'];
+        Main_Actor = all['Main-Actor'];
+        Main_ActorName = all['Main-ActorName'];
+        replyByCol = all['replyByCol'];
+        replyByDep = all['replyByDep'];
     }
+    getActors();
     upToLoadFile();
 
     if (filesData == null) {
@@ -486,16 +548,4 @@
     });
 </script>
 <!-- /.main-container -->
-<script src='<c:url value="/js/public/pubPatent.js"/>'></script>
-<c:choose>
-    <c:when test="${sessionScope.level == '1'}">
-        <script src="<c:url value="/js/teacher/patentEdit.js"/>"></script>
-    </c:when>
-    <c:when test="${sessionScope.level == '2'}">
-        <script src="<c:url value="/js/college/patentEdit.js"/>"></script>
-    </c:when>
-    <c:when test="${sessionScope.level == '3'}">
-        <script src="<c:url value="/js/school/patentEdit.js"/>"></script>
-    </c:when>
-</c:choose>
 </html>
