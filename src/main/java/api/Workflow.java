@@ -121,7 +121,9 @@ public class Workflow {
             args = (HashMap<String, Object>) patent.getArgMap();
             staff = StaffService.getById((Serializable) args.get("Main-Actor"));
             args.put("WF_Type", "patent");
-            args.put("entity", entityId);
+            args.put("WF_Entity", entityId);
+            patent.setProcess("1");
+            patentService.update(patent);
         }
 
         String processId = engine.getProcessByName("basicProcess_Beta").getId();

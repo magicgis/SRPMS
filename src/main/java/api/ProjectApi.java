@@ -94,7 +94,9 @@ public class ProjectApi {
     @Path("/{id}")
     @Consumes("application/json;charset=UTF-8")
     public boolean update(@PathParam("id") String id, HashMap<String, Object> args) {
-        return false;//todo
+        Project project = projectService.getById(id);
+        project.setArgMap(args);
+        return projectService.update(project);
     }
 
     @DELETE
