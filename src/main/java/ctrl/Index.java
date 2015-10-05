@@ -115,7 +115,7 @@ public class Index {
     public String OrderEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
                             @PathVariable("orderId") String orderId) {
         Order order = engine.getOrder(orderId);
-        engine.getTaskByOrder(orderId);
+        Task task = engine.getTaskByOrder(orderId).get(0);
         String type = (String) order.getVariableMap().get("WF_Type");
         String entityId = (String) order.getVariableMap().get("WF_Entity");
         switch (type) {
@@ -123,11 +123,15 @@ public class Index {
                 Patent patent = patentService.getById(entityId);
                 patent.setArgMap(order.getVariableMap());
                 model.addAttribute(patent);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
                 return "patentEdit";
             case "project":
                 Project project = projectService.getById(entityId);
                 project.setArgMap(order.getVariableMap());
                 model.addAttribute(project);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
                 return "projectEdit";
             default:
                 return "redirect:allSRInfo";
@@ -146,11 +150,15 @@ public class Index {
                 Patent patent = patentService.getById(entityId);
                 patent.setArgMap(order.getVariableMap());
                 model.addAttribute(patent);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
                 return "patentEdit";
             case "project":
                 Project project = projectService.getById(entityId);
                 project.setArgMap(order.getVariableMap());
                 model.addAttribute(project);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
                 return "projectEdit";
             default:
                 return "redirect:allSRInfo";
