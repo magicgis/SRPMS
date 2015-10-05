@@ -129,6 +129,7 @@ public class Workflow {
                 args.put("WF_Entity", entityId);
                 patent.setProcess("1");
                 patentService.update(patent);
+                break;
             case "project":
                 Project project = projectService.getById(entityId);
                 args = (HashMap<String, Object>) project.getArgMap();
@@ -137,6 +138,7 @@ public class Workflow {
                 args.put("WF_Entity", entityId);
                 project.setProcess("1");
                 projectService.update(project);
+                break;
         }
 
         String processId = engine.getProcessByName("basicProcess_Beta").getId();
