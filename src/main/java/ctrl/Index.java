@@ -1,6 +1,7 @@
 package ctrl;
 
 import engine.Engine;
+import entity.Paper;
 import entity.Patent;
 import entity.Project;
 import entity.User;
@@ -61,6 +62,12 @@ public class Index {
 
     @RequestMapping(value = {"paper"}, method = RequestMethod.GET)
     public String paper(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        return "paper";
+    }
+
+    @RequestMapping(value = {"paper/new"}, method = RequestMethod.GET)
+    public String newPaper(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        model.addAttribute(new Paper());
         return "paper";
     }
 
@@ -133,6 +140,9 @@ public class Index {
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "projectEdit";
+            case "paper":
+                model.addAttribute(task);
+                return "paperEdit";
             default:
                 return "redirect:allSRInfo";
         }
