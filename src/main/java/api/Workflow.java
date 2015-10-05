@@ -4,6 +4,7 @@ import engine.Engine;
 import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
 import entity.Patent;
+import entity.Project;
 import entity.Staff;
 import org.snaker.engine.entity.HistoryTask;
 import org.snaker.engine.entity.Order;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import service.PatentService;
+import service.ProjectService;
 import service.StaffService;
 import service.StandardService;
 
@@ -45,6 +47,8 @@ public class Workflow {
     PatentService patentService;
     @Autowired
     StaffService StaffService;
+    @Autowired
+    ProjectService projectService;
 
     /**
      * 初始化部署
@@ -116,14 +120,23 @@ public class Workflow {
     public Order startFxxkProcess(@PathParam("type") String type, @PathParam("entityId") String entityId) {
         HashMap<String, Object> args = new HashMap<>();
         Staff staff = null;
-        if ("patent".equals(type)) {
-            Patent patent = patentService.getById(entityId);
-            args = (HashMap<String, Object>) patent.getArgMap();
-            staff = StaffService.getById((Serializable) args.get("Main-Actor"));
-            args.put("WF_Type", "patent");
-            args.put("WF_Entity", entityId);
-            patent.setProcess("1");
-            patentService.update(patent);
+        switch (type) {
+            case "patent":
+                Patent patent = patentService.getById(entityId);
+                args = (HashMap<String, Object>) patent.getArgMap();
+                staff = StaffService.getById((Serializable) args.get("Main-Actor"));
+                args.put("WF_Type", "patent");
+                args.put("WF_Entity", entityId);
+                patent.setProcess("1");
+                patentService.update(patent);
+            case "project":
+                Project project = projectService.getById(entityId);
+                args = (HashMap<String, Object>) project.getArgMap();
+                staff = StaffService.getById((Serializable) args.get("Main-Actor"));
+                args.put("WF_Type", "project");
+                args.put("WF_Entity", entityId);
+                project.setProcess("1");
+                projectService.update(project);
         }
 
         String processId = engine.getProcessByName("basicProcess_Beta").getId();
