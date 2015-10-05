@@ -112,9 +112,33 @@ public class Index {
     }
 
     @RequestMapping(value = {"order/{orderId}"}, method = RequestMethod.GET)
-    public String patentOrderEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
-                                  @PathVariable("orderId") String orderId) {
+    public String OrderEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                            @PathVariable("orderId") String orderId) {
         Order order = engine.getOrder(orderId);
+        engine.getTaskByOrder(orderId);
+        String type = (String) order.getVariableMap().get("WF_Type");
+        String entityId = (String) order.getVariableMap().get("WF_Entity");
+        switch (type) {
+            case "patent":
+                Patent patent = patentService.getById(entityId);
+                patent.setArgMap(order.getVariableMap());
+                model.addAttribute(patent);
+                return "patentEdit";
+            case "project":
+                Project project = projectService.getById(entityId);
+                project.setArgMap(order.getVariableMap());
+                model.addAttribute(project);
+                return "projectEdit";
+            default:
+                return "redirect:allSRInfo";
+        }
+    }
+
+    @RequestMapping(value = {"task/{taskId}"}, method = RequestMethod.GET)
+    public String taskEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                           @PathVariable("taskId") String taskId) {
+        Task task = engine.getTask(taskId);
+        Order order = engine.getOrder(task.getOrderId());
         String type = (String) order.getVariableMap().get("WF_Type");
         String entityId = (String) order.getVariableMap().get("WF_Entity");
         switch (type) {

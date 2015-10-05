@@ -64,7 +64,7 @@
                 <ul class="breadcrumb">
                     <li>
                         <i class="ace-icon fa fa-home home-icon"></i>
-                        <a href="/allSRInfo">Home</a>
+                        <a href="<c:url value="/allSRInfo"/>">Home</a>
                     </li>
                     <li class="active">专利</li>
                 </ul>

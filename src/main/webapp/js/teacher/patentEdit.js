@@ -2,7 +2,8 @@
  * Created by Administrator on 2015/10/3.
  */
 $(function () {
-
+    //todo 在教师界面的argMap，基本等同于order中的arg，
+    //todo 存在Status,WF_Col,WF_Col_Id等等，基本是前台上一次放什么进去，第二次就能以同样的方式拿到
     //TODO 不可编辑
     //todo 还需要判断order的状态来 判断是否能算分与分配分数
     uneditableForm();

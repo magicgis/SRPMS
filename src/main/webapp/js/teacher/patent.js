@@ -60,5 +60,5 @@ function submitAll() {
 
 $('#PatentTable').on('click-row.bs.table', function (e, row, $element) {
     var orderId = row["id"];
-    window.location.href = '/patentOrder/' + orderId;
+    window.location.href = '/order/' + orderId;
 });
