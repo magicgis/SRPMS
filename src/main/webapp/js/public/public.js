@@ -36,6 +36,15 @@ workflow.startOrder = function (user, processName, type) {
         dataType: 'json'
     });
 };
+
+workflow.startEntityOrder = function (type, entityId) {
+    return $.ajax({
+        type: 'post',
+        url: '/api/workflow/start/' + type + "/" + entityId,
+        dataType: 'json'
+    });
+};
+
 /**
  * 撤回order
  * @param user 用户
@@ -519,7 +528,7 @@ function isInt(str) {
     }
 }
 function isNull(str) {
-    return (str == '' || str == undefined || str == null);
+    return (str == '' || str == undefined || str == null || str == '{}' || str == {});
 }
 
 /**--------------------------提示信息公共方法------------------**/
@@ -595,3 +604,13 @@ function statusTran(value, row) {
         }
     }
 }
+
+jQuery(function ($) {
+
+    $('.date-picker').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    }).next().on(ace.click_event, function () {
+        $(this).prev().focus();
+    });
+});

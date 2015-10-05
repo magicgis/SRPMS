@@ -8,10 +8,11 @@
 
 $(function () {
 
-    // todo  需要根据实际进行修改
+    // todo  需要根据实际进行修改 important
     $('#PatentTable').bootstrapTable({
         url: '/api/patent/all',
         sidePagination: "server",
+        flat: true,
         columns: [{
             radio: true
         }, {
@@ -28,14 +29,13 @@ $(function () {
             title: '专利状态',
             sortable: true
         }, {
-            field: 'ActorList',
-            title: '参与者',
-            sortable: true
+            field: 'argMap.Main-ActorName',
+            title: '负责人'
         }, {
-            field: 'Status',
-            title: '状态',
+            field: 'process',
+            title: '流程状态',
             sortable: true,
-            formatter: 'statusTran'
+            formatter: 'processTran'
         }]
     });
 
@@ -50,3 +50,13 @@ $('#PatentTable').on('click-row.bs.table', function (e, row, $element) {
     var orderId = row["id"];
     window.location.href = '/patent/' + orderId;
 });
+
+
+function processTran(arg) {
+    var t = {
+        "0": "未启动",
+        "1": "流程中",
+        "9": "已结束"
+    };
+    return t[arg];
+}

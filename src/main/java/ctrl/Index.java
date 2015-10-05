@@ -4,6 +4,7 @@ import engine.Engine;
 import entity.Patent;
 import entity.Project;
 import entity.User;
+import org.snaker.engine.entity.Order;
 import org.snaker.engine.entity.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -108,6 +109,28 @@ public class Index {
         Patent patent = patentService.getById(patentId);
         model.addAttribute(patent);
         return "patentEdit";
+    }
+
+    @RequestMapping(value = {"order/{orderId}"}, method = RequestMethod.GET)
+    public String patentOrderEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                                  @PathVariable("orderId") String orderId) {
+        Order order = engine.getOrder(orderId);
+        String type = (String) order.getVariableMap().get("WF_Type");
+        String entityId = (String) order.getVariableMap().get("WF_Entity");
+        switch (type) {
+            case "patent":
+                Patent patent = patentService.getById(entityId);
+                patent.setArgMap(order.getVariableMap());
+                model.addAttribute(patent);
+                return "patentEdit";
+            case "project":
+                Project project = projectService.getById(entityId);
+                project.setArgMap(order.getVariableMap());
+                model.addAttribute(project);
+                return "projectEdit";
+            default:
+                return "redirect:allSRInfo";
+        }
     }
 
     @RequestMapping(value = {"project"}, method = RequestMethod.GET)

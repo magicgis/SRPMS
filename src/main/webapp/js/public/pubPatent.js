@@ -1,9 +1,7 @@
 /**
  * Created by zheng on 2015/4/22.
  */
-var $actorTable = $('#actorTable');
-var actorTemp = [];
-var unitTemp = [];
+
 // 将对话框里的值加载进成员表
 function subActorInfo(index,flag) {
     var id = $('#actor').val();

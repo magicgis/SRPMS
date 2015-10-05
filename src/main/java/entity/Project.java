@@ -201,7 +201,7 @@ public class Project {
     }
 
     @Basic
-    @Column(name = "arg")
+    @Column(name = "arg", length = 3000)
     public String getArg() {
         return arg;
     }

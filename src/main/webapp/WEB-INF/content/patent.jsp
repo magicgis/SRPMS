@@ -131,18 +131,6 @@
     </c:when>
 </c:choose>
 
-<script type="text/javascript">
-    jQuery(function ($) {
-
-        $('.date-picker').datepicker({
-            autoclose: true,
-            todayHighlight: true
-        }).next().on(ace.click_event, function () {
-            $(this).prev().focus();
-        });
-    });
-
-</script>
 </body>
 </html>
 

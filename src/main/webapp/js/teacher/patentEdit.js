@@ -1,66 +1,10 @@
 /**
  * Created by Administrator on 2015/10/3.
  */
-$(function() {
+$(function () {
 
-    $('#actorTable').bootstrapTable({
-        columns: [
-            {
-                field: 'staff.id',
-                title: '工号',
-                sortable: true,
-                visible: false
-            }, {
-                field: 'rank',
-                title: '排名',
-                sortable: true,
-                footerFormatter: "totalNameFormatter"
-            }, {
-                field: 'staff.name',
-                title: '成员',
-                sortable: true
-            }, {
-                field: 'role',
-                title: '角色',
-                sortable: true
-            }, {
-                field: 'score',
-                title: '分数',
-                sortable: true,
-                footerFormatter: "totalMarksFormatter"
-            }, {
-                field: 'unit',
-                title: '归属单位',
-                sortable: true
-            }, {
-                field: 'operate',
-                title: '操作',
-                sortable: true,
-                formatter: "operateFormatter",
-                events: "operateEvents"
-            }],
-        data: actorTemp
-    });
-    $('#unitTable').bootstrapTable({
-        columns: [{
-            field:'rank',
-            title:'排名',
-            sortable:true,
-            footerFormatter:"totalUnitFormatter"
-        },{
-            field:'unit',
-            title:'单位名称',
-            sortable:true
-        },{
-            field: 'operate',
-            title: '操作',
-            sortable: false,
-            formatter: "operateFormatterUnit",
-            events: "operateEventsUnit"
-        }],
-        data: unitTemp
-    });
-
+    //TODO 不可编辑
+    //todo 还需要判断order的状态来 判断是否能算分与分配分数
     uneditableForm();
 
     $('#reply').hide();
@@ -70,21 +14,23 @@ $(function() {
 
 /*
  * 保存
- *
+ *  TODO 教师端的保存处理机制和论文大体一样
+ *  todo 区别在于：1，无需实体信息，即表格部分不需要，只需要table里的人与单位
+ *  todo 保存就是isComplete为false，确认就是isComplete为true
  * */
-function save(){
+function save() {
     $('#IsComplete').val(false);
     var jsonData = getFormData('patent');
-    workflow.execute(userName,'',jsonData).success(function(){
+    workflow.execute(userName, '', jsonData).success(function () {
         afterSuccess("保存成功！");
-        window.location.href="/patent";
+        window.location.href = "/patent";
     });
 }
 /*
  * 确认
  *
  * */
-function confirm(){
+function confirm() {
     $('#IsComplete').val(true);
     var jsonData = getFormData('patent');
     BootstrapDialog.confirm({
@@ -102,16 +48,16 @@ function confirm(){
              */
             if (result) {
                 workflow.execute(userName, $('#WF_Task').val(), jsonData).success(function (data) {
-                    if("valid" in data){
-                        if(data["valid"] == true){
+                    if ("valid" in data) {
+                        if (data["valid"] == true) {
                             afterSuccess("确认成功！");
-                            window.location.href="/patent";
-                        }else {
+                            window.location.href = "/patent";
+                        } else {
                             errorMsg(data["msg"]);
                         }
-                    }else{
+                    } else {
                         afterSuccess("确认成功！");
-                        window.location.href="/patent";
+                        window.location.href = "/patent";
                     }
                 });
             }
@@ -122,7 +68,7 @@ function confirm(){
 /**
  * 编辑成员
  */
-function editActor(row, index){
+function editActor(row, index) {
     BootstrapDialog.show({
         type: BootstrapDialog.TYPE_PRIMARY,
         message: function (dialog) {
@@ -165,7 +111,7 @@ function editActor(row, index){
             var $actor = $("#actor").selectize();
             var $role = $("#role").selectize();
             var $units = $("#units").selectize();
-            addOptionSelectize($actor, [{'id' : row["staff.id"], 'name' : row["staff.name"],"col":{"value":""}}]);
+            addOptionSelectize($actor, [{'id': row["staff.id"], 'name': row["staff.name"], "col": {"value": ""}}]);
             $actor[0].selectize.setValue(row["staff.id"]);
             //填充角色
             DisplayForm($role, row["role"], 0);
@@ -182,14 +128,14 @@ function editActor(row, index){
             $("#rank").attr("disabled", "disabled");
             $(".editableModal").show();
             //是否可编辑
-            if(flag) {//可编辑
+            if (flag) {//可编辑
                 $("#btn-ok").removeAttr("disabled").show();
                 $("#marks").removeAttr("disabled");
             } else {  //不可编辑
                 $("#btn-ok").attr("disabled", "disabled").hide();
                 $("#marks").attr("disabled", "disabled");
             }
-            if(row["staff.id"] == "9998" || row["staff.id"] == "9999"){
+            if (row["staff.id"] == "9998" || row["staff.id"] == "9999") {
                 $("#marks").attr("disabled", "disabled");
             }
         }
@@ -201,15 +147,15 @@ function editActor(row, index){
  */
 function getScore() {
     var jsonData = getFormData('paper');
-    workflow.getScore(jsonData).success(function(data) {
-        if(data["valid"] == false) { // 检验不合格
+    workflow.getScore(jsonData).success(function (data) {
+        if (data["valid"] == false) { // 检验不合格
             errorMsg(data["msg"]);
             flag = true;
-        }else if(data["hasSum"] == false) { // 后台分配分数
+        } else if (data["hasSum"] == false) { // 后台分配分数
             $("#actorTable").bootstrapTable('load', data["actors"]);
             flag = false;
             errorMsg(data["msg"]);
-        }else if(data["hasSum"] == true) {  // 给总分，负责人分配分数
+        } else if (data["hasSum"] == true) {  // 给总分，负责人分配分数
             $("#score").val(data["sum"]);
             $("#showSum").html("总分：" + data["sum"] + "分");
             errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);

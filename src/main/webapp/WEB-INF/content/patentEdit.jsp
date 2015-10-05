@@ -71,11 +71,13 @@
 
                                 <form id="patent" class="form-horizontal" role="form">
                                     <div hidden="hidden">
+                                        <%--todo 根据需求来添加相应的隐藏输入框--%>
                                         <%--<input type="text" name="WF_Order" id="WF_Order"/>--%>
                                         <%--<input type="text" name="WF_Task" id="WF_Task"/>--%>
                                         <%--<input type="text" name="IsComplete" id="IsComplete"/>--%>
                                         <%--<input type="text" name="pscore" id="score"/>--%>
-                                        <input type="text" name="dept.value" id="deptValue" value="${patent.dept.value}"/>
+                                        <input type="text" name="dept.value" id="deptValue"
+                                               value="${patent.dept.value}"/>
                                         <%--<input type="text" name="patent.standard.value" id="patTypeValue"/>--%>
                                         <input type="text" name="id" id="patentId" value="${patent.id}"/>
                                     </div>
@@ -309,42 +311,19 @@
 </a>
 
 
-<!-- /.main-container -->
-<script src='<c:url value="/js/public/pubPatent.js"/>'></script>
+</body>
 <script src='<c:url value="/js/public/public.js"/>'></script>
 
-<c:choose>
-    <c:when test="${sessionScope.level == '1'}">
-        <script src="<c:url value="/js/teacher/patentEdit.js"/>"></script>
-    </c:when>
-    <c:when test="${sessionScope.level == '2'}">
-        <script src="<c:url value="/js/college/patentEdit.js"/>"></script>
-    </c:when>
-    <c:when test="${sessionScope.level == '3'}">
-        <script src="<c:url value="/js/school/patentEdit.js"/>"></script>
-    </c:when>
-</c:choose>
-
-</body>
-
-
 <script>
-
-    jQuery(function ($) {
-
-        $('.date-picker').datepicker({
-            autoclose: true,
-            todayHighlight: true
-        }).next().on(ace.click_event, function () {
-            $(this).prev().focus();
-        });
-    });
-    // 成员，单位，文件
-    var all = '${ObjectMapper.writeValueAsString(patent.argMap)}';
-    var filesData = {};
     var actorTemp = [];
     var unitTemp = [];
-    if( !isNull(all)){
+
+
+    // 成员，单位，文件
+    var all = '${ObjectMapper.writeValueAsString(patent.argMap)}';
+    console.log(all);
+    var filesData = {};
+    if (!isNull(all)) {
         all = jQuery.parseJSON(all);
         filesData = all['filesData'];
         actorTemp = all['actors'];
@@ -361,6 +340,104 @@
     var dept = '${ObjectMapper.writeValueAsString(patent.dept)}';
     var standardId = '${ObjectMapper.writeValueAsString(patent.standard)}';
     dept = jQuery.parseJSON(dept);
+
+
+    $('#actorTable').bootstrapTable({
+        columns: [
+            {
+                field: 'staff.id',
+                title: '工号',
+                sortable: true,
+                visible: false
+            }, {
+                field: 'rank',
+                title: '排名',
+                sortable: true,
+                footerFormatter: "totalNameFormatter"
+            }, {
+                field: 'staff.name',
+                title: '成员',
+                sortable: true
+            }, {
+                field: 'role',
+                title: '角色',
+                sortable: true
+            }, {
+                field: 'score',
+                title: '分数',
+                sortable: true,
+                footerFormatter: "totalMarksFormatter"
+            }, {
+                field: 'unit',
+                title: '归属单位',
+                sortable: true
+            }, {
+                field: 'operate',
+                title: '操作',
+                sortable: true,
+                formatter: "operateFormatter",
+                events: "operateEvents"
+            }],
+        data: actorTemp
+    });
+    $('#unitTable').bootstrapTable({
+        columns: [{
+            field: 'rank',
+            title: '排名',
+            editable: false,
+            sortable: true,
+            footerFormatter: "totalUnitFormatter"
+        }, {
+            field: 'unit',
+            title: '单位名称',
+            editable: false,
+            sortable: true
+        }, {
+            field: 'operate',
+            title: '操作',
+            sortable: false,
+            formatter: "operateFormatterUnit",
+            events: "operateEventsUnit"
+        }],
+        data: unitTemp
+    });
+
+    $('#patType').selectize({ //todo
+        valueField: 'id',
+        labelField: 'value',
+        maxItems: 1,
+        //todo 需要换成真实数据
+        options: [
+            {"id": "1023", "value": "国际发明专利"},
+            {"id": "1024", "value": "中国发明专利"},
+            {"id": "1025", "value": "外观专利"},
+            {"id": "1026", "value": "实用专利"}],
+        onChange: function (result) {
+            $('#patTypeValue').val(this.getItem(result)["context"]["innerHTML"]);
+        }
+    });
+    $('#dept').selectize({
+        valueField: 'id',
+        labelField: 'value',
+        maxItems: 1,
+        preload: true,
+        load: function (query, callback) {
+            $.ajax({
+                url: '../api/baseinfo/院系',
+                type: 'GET',
+                dataType: 'json',
+                error: function () {
+                    callback();
+                },
+                success: function (res) {
+                    callback(res);
+                }
+            });
+        },
+        onChange: function (result) {
+            $('#deptValue').val(this.getItem(result)["context"]["innerHTML"]);
+        }
+    });
 
 
     //监听 确认
@@ -408,4 +485,17 @@
         getScore();
     });
 </script>
+<!-- /.main-container -->
+<script src='<c:url value="/js/public/pubPatent.js"/>'></script>
+<c:choose>
+    <c:when test="${sessionScope.level == '1'}">
+        <script src="<c:url value="/js/teacher/patentEdit.js"/>"></script>
+    </c:when>
+    <c:when test="${sessionScope.level == '2'}">
+        <script src="<c:url value="/js/college/patentEdit.js"/>"></script>
+    </c:when>
+    <c:when test="${sessionScope.level == '3'}">
+        <script src="<c:url value="/js/school/patentEdit.js"/>"></script>
+    </c:when>
+</c:choose>
 </html>

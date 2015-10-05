@@ -2,107 +2,11 @@
  * Created by huyuanyuan555 on 2015/10/2.
  */
 
-var actorTemp = [];
-var unitTemp = [];
 var Main_Actor;
 var Main_ActorName;
 
 $(function () {
-    $('#actorTable').bootstrapTable({
-        columns: [
-            {
-                field: 'staff.id',
-                title: '工号',
-                sortable: true,
-                visible: false
-            }, {
-                field: 'rank',
-                title: '排名',
-                sortable: true,
-                footerFormatter: "totalNameFormatter"
-            }, {
-                field: 'staff.name',
-                title: '成员',
-                sortable: true
-            }, {
-                field: 'role',
-                title: '角色',
-                sortable: true
-            }, {
-                field: 'score',
-                title: '分数',
-                sortable: true,
-                footerFormatter: "totalMarksFormatter"
-            }, {
-                field: 'unit',
-                title: '归属单位',
-                sortable: true
-            }, {
-                field: 'operate',
-                title: '操作',
-                sortable: true,
-                formatter: "operateFormatter",
-                events: "operateEvents"
-            }],
-        data: actorTemp
-    });
-    $('#unitTable').bootstrapTable({
-        columns: [{
-            field: 'rank',
-            title: '排名',
-            editable: false,
-            sortable: true,
-            footerFormatter: "totalUnitFormatter"
-        }, {
-            field: 'unit',
-            title: '单位名称',
-            editable: false,
-            sortable: true
-        }, {
-            field: 'operate',
-            title: '操作',
-            sortable: false,
-            formatter: "operateFormatterUnit",
-            events: "operateEventsUnit"
-        }],
-        data: unitTemp
-    });
-
-    $('#patType').selectize({ //todo
-        valueField: 'id',
-        labelField: 'value',
-        maxItems: 1,
-        options: [
-            {"id": "1023", "value": "国际发明专利"},
-            {"id": "1024", "value": "中国发明专利"},
-            {"id": "1025", "value": "外观专利"},
-            {"id": "1026", "value": "实用专利"}],
-        onChange: function (result) {
-            $('#patTypeValue').val(this.getItem(result)["context"]["innerHTML"]);
-        }
-    });
-    $('#dept').selectize({
-        valueField: 'id',
-        labelField: 'value',
-        maxItems: 1,
-        preload: true,
-        load: function (query, callback) {
-            $.ajax({
-                url: '../api/baseinfo/院系',
-                type: 'GET',
-                dataType: 'json',
-                error: function () {
-                    callback();
-                },
-                success: function (res) {
-                    callback(res);
-                }
-            });
-        },
-        onChange: function (result) {
-            $('#deptValue').val(this.getItem(result)["context"]["innerHTML"]);
-        }
-    });
+    //TODO
 
     //console.log([dept]);
 
@@ -118,8 +22,6 @@ $(function () {
  *
  * */
 function save() {
-    var id = $('#patentId').val();
-    var s = $('#patent').serialize();
     $.ajax({
         url: '/api/patent/patent',
         data: $('#patent').serialize(),
@@ -127,12 +29,13 @@ function save() {
         dataType: 'text',
         success: function (data) {
             var send = new Object();
+            //避免新建的时候多次点击保存多次新建
+            $('#patentId').val(data);
             send['actors'] = getActorsData();
             send['units'] = getUnitsData();
             send['filesData'] = filesData;
             send['Main-Actor'] = Main_Actor;
             send['Main-ActorName'] = Main_ActorName;
-            //todo 这儿还应该放上附件信息，主用户信息Main-Actor
             $.ajax({
                 type: 'put',
                 url: '/api/patent/' + data,
@@ -151,10 +54,9 @@ function save() {
  *
  * */
 function confirm() {
-    $('#IsComplete').val(true);
-    var jsonData = getFormData('patent');
+    //TODO 这儿需要先调用save()将信息保存一次
     BootstrapDialog.confirm({
-        title: '确认信息',
+        title: '是否启动流程',
         message: '确认?',
         type: BootstrapDialog.TYPE_INFO,
         closable: true,
@@ -167,18 +69,19 @@ function confirm() {
              * userName,taskId,status
              */
             if (result) {
-                workflow.execute(userName, $('#WF_Task').val(), jsonData).success(function (data) {
-                    if ("valid" in data) {
-                        if (data["valid"] == true) {
-                            afterSuccess("确认成功！");
-                            window.location.href = "/patent";
-                        } else {
-                            errorMsg(data["msg"]);
-                        }
-                    } else {
-                        afterSuccess("确认成功！");
-                        window.location.href = "/patent";
-                    }
+                workflow.startEntityOrder("patent", $('#patentId').val()).success(function (data) {
+                    console.log(data);
+                    //if ("valid" in data) {
+                    //    if (data["valid"] == true) {
+                    //        afterSuccess("确认成功！");
+                    //        window.location.href = "/patent";
+                    //    } else {
+                    //        errorMsg(data["msg"]);
+                    //    }
+                    //} else {
+                    //    afterSuccess("确认成功！");
+                    //    window.location.href = "/patent";
+                    //}
                 });
             }
         }
