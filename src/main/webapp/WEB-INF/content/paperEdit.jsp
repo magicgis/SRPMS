@@ -547,35 +547,35 @@
     $('#confirmC').hide();
     paperType();
 
-    var task = ${ObjectMapper.writeValueAsString(task)};
-    var args = task['variableMap'];
+    var entity = ${ObjectMapper.writeValueAsString(order)};
+    var args = entity['variableMap'];
     var latestInfo = args['WF_Latest'];
+    var taskId = '${taskId}';
+    var orderId = entity['id'];
+    var status = args['Status'];
+    var paperType = latestInfo["type"];
 
     console.log(args);
     console.log(latestInfo);
+    console.log(taskId);
+    console.log(paperType);
 
-    //监听 点击论文表
-    if (task != null || !$.isEmptyObject(task)) {
+    if (entity != null || !$.isEmptyObject(entity)) {
         //清空
         $('form input').val();
 
         actorTemp = [];
         //获取orderId与taskId
-        var orderId = task["orderId"];
+
         $("#WF_Order").val(orderId);
-        var taskId = task['id'];
         $('#WF_Task').val(taskId);
 
-        //获取任务状态
-        var status = args['Status'];
 
-        console.log(status);
         //  期刊选择
         var $magId = $("#magId").selectize();
         //  论文类型
         var $paperType = $("#type").selectize();
-        //  论文类型
-        var paperType = args["type"];
+
 
         DisplayForm($paperType, paperType, 0);
 
@@ -660,21 +660,21 @@
         magOrConfer();
 
         //显示总分
-        var score = task['variableMap']['WF_Latest']['score'];
+        var score = latestInfo['score'];
         if (score == undefined || score == null || score == "") {
             $("#showSum").html("");
         } else {
             $("#showSum").html("可分配总分：" + score + "分");
         }
         //成员信息
-        if (task['variableMap']['WF_Latest']['actors'] != null) {
-            actorTemp = task['variableMap']['WF_Latest']['actors'];
+        if (latestInfo['actors'] != null) {
+            actorTemp = latestInfo['actors'];
         }
         $("#actorTable").bootstrapTable('load', actorTemp);
         // 会议论文收录类型
-        DisplayForm($("#conferType").selectize(), task['variableMap']['WF_Latest']["confer.standard.id"], 0);
+        DisplayForm($("#conferType").selectize(), latestInfo["confer.standard.id"], 0);
         // 报刊等级
-        DisplayForm($("#newsType").selectize(), task['variableMap']['WF_Latest']["newspaper.standard.id"], 0);
+        DisplayForm($("#newsType").selectize(), latestInfo["newspaper.standard.id"], 0);
         // 填充表单
         $('#paper').autofill(latestInfo, {
             findbyname: true,

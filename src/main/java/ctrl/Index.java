@@ -141,7 +141,9 @@ public class Index {
                 model.addAttribute("taskName", task.getTaskName());
                 return "projectEdit";
             case "paper":
-                model.addAttribute(task);
+                model.addAttribute(order);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
                 return "paperEdit";
             default:
                 return "redirect:allSRInfo";
@@ -170,6 +172,11 @@ public class Index {
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "projectEdit";
+            case "paper":
+                model.addAttribute(order);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "paperEdit";
             default:
                 return "redirect:allSRInfo";
         }

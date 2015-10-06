@@ -118,31 +118,52 @@ public class Workflow {
     @Path("/start/{type}/{entityId}")
     @Produces("application/json;charset=UTF-8")
     public Order startFxxkProcess(@PathParam("type") String type, @PathParam("entityId") String entityId) {
-        HashMap<String, Object> args = new HashMap<>();
-        Staff staff = null;
+        HashMap<String, Object> args;
+        HashMap entityInfo;
+        Staff staff;
+        String processId = engine.getProcessByName("basicProcess_Beta").getId();
+        Order order = null;
+
         switch (type) {
             case "patent":
+                //找到实体
                 Patent patent = patentService.getById(entityId);
+                //取出信息
                 args = (HashMap<String, Object>) patent.getArgMap();
+                entityInfo = (HashMap) args.clone();
+                //从信息找到负责人
                 staff = StaffService.getById((Serializable) args.get("Main-Actor"));
+
                 args.put("WF_Type", "patent");
                 args.put("WF_Entity", entityId);
+
+                order = engine.startInstanceById(processId, staff.getId(), args);
+
+                entityInfo.put("WF_OrderId", order.getId());
+                patent.setArgMap(entityInfo);
                 patent.setProcess("1");
                 patentService.update(patent);
                 break;
+
             case "project":
                 Project project = projectService.getById(entityId);
                 args = (HashMap<String, Object>) project.getArgMap();
+                entityInfo = (HashMap) args.clone();
                 staff = StaffService.getById((Serializable) args.get("Main-Actor"));
+
                 args.put("WF_Type", "project");
                 args.put("WF_Entity", entityId);
+
+                order = engine.startInstanceById(processId, staff.getId(), args);
+
+                entityInfo.put("WF_OrderId", order.getId());
+                project.setArgMap(entityInfo);
                 project.setProcess("1");
                 projectService.update(project);
                 break;
         }
+        return order;
 
-        String processId = engine.getProcessByName("basicProcess_Beta").getId();
-        return engine.startInstanceById(processId, staff.getId(), args);
     }
 
 
