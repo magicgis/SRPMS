@@ -61,6 +61,9 @@ $("#add").click(function () {
 
 $('#ProjectTable').on('click-row.bs.table', function (e, row, $element) {
     var orderId = row["id"];
+    //window.onload('/project/' + orderId,function(){
+    //
+    //});
     window.location.href = '/project/' + orderId;
 });
 function processTran(arg) {

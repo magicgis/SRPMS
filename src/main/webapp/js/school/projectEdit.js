@@ -440,14 +440,14 @@ function saveStep2(data) {
     //避免新建的时候多次点击保存多次新建
     $('#projectId').val(data);
     send['actors'] = getActorsData();
-    if($('#attr').val() == '联合项目'){
-        send['units'] = getUnitsData();
-    }
-    console.log($('#attr').val());
     send['fund'] = getFundsData();
+    send['deptValue']=deptValue;
     send['filesData'] = filesData;
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
+    if($('#attr').val() == '联合项目'){
+        send['units'] = getUnitsData();
+    }
     return $.ajax({
         type: 'put',
         url: '/api/project/' + data,

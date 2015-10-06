@@ -3,6 +3,7 @@
  */
 $(function(){
     init();
+    uneditableForm();
     $('#reply-box').show();
     $('#reply').show();
     $('#upload').hide();

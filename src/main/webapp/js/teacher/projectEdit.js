@@ -9,12 +9,16 @@ $(function () {
     $('#reply-box').hide();
     $('#reply').hide();
     $('#unitInfo').hide();
+    hideUnitOperate();
+    $('#upload').hide();
+    $('.onApproval').hide();
+    init();
 });
 function init() {
     var status = all['Status'];
     if( !(status=='Blank' || status=='Uncomplete' || status.indexOf('Refuse') >= 0)) {
         hideActorOperate();
-        $('#getScore').hide();
+        $('.getScore').hide();
         $('.save').hide();
         if(status == 'Complete' && all['Main-Actor']!=userName) {
             $('.confirm').show();

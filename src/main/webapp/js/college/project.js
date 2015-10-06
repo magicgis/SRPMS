@@ -1,10 +1,6 @@
 /**
  * Created by zheng on 2015/4/21.
  */
-//var actorTemp = [];
-//var fundTemp = [];
-//var unitTemp = [];
-//var filesData = {};
 $(function () {
     $('#ProjectTable').bootstrapTable({
         url: '/api/workflow/order/' + userName + '/project/all',

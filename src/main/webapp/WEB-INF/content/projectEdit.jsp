@@ -63,6 +63,7 @@
                             <%--<input type="text" name="WF_Order" id="WF_Order" value="${task.orderId}"/>--%>
                             <%--<input type="text" name="IsComplete" id="IsComplete"/>--%>
                             <%--<input type="text" name="score" id="score"/>--%>
+                            <%--<input type="text" name="dept.value" id="deptValue" value="${patent.dept.value}"/>--%>
                             <input type="text" name="standard.id" id="standardId"/>
                             <input type="text" name="id" value="${project.id}"/>
                         </div>
@@ -204,10 +205,11 @@
 
                                                 <div class="col-sm-8">
                                                     <div class="col-sm-13">
-                                                        <input class="form-control" id="isAppr"
-                                                               type="text" name="isAppr"
-                                                               value=""
-                                                               placeholder="请选择"/>
+                                                        <select class="form-control" id="isAppr" value="${project.isAppr}">
+                                                            <option value=""></option>
+                                                            <option value="1">是</option>
+                                                            <option value="0">否</option>
+                                                        </select>
                                                     </div>
 
                                                 </div>
@@ -248,9 +250,12 @@
 
                                                 <div class="col-sm-8">
                                                     <div class="col-sm-13">
-                                                        <input class="form-control" id="isAwdProj"
-                                                               type="text" name="isAwdProj"
-                                                               placeholder="请选择"/>
+                                                        <select class="form-control" id="isAwdProj"
+                                                                placeholder="请选择">
+                                                            <option value=""></option>
+                                                            <option value="1">是</option>
+                                                            <option value="0">否</option>
+                                                        </select>
                                                     </div>
 
                                                 </div>
@@ -512,29 +517,19 @@
             $(this).prev().focus();
         });
     });
+    allSections();//选择框
+    upToLoadFile();//文件上传
+    firstOrOther();//是否是联合单位
     // 成员，单位，文件
     // todo 取出实体内的额外信息，附件信息也应该在其中。
     var entity = ${ObjectMapper.writeValueAsString(project)};
-    console.log(entity);
     var all = ${ObjectMapper.writeValueAsString(project.argMap)};
-    console.log(all);
     //todo 取出部门信息，可同理取出专利类型
     var dept = '${ObjectMapper.writeValueAsString(project.dept)}';
 
     var taskId = '${taskId}';
     var taskName = '${taskName}';
-
-//    if (!isNull(all)) {
-//        filesData = all['filesData'];
-//        unitTemp = all['units'];
-//        Main_Actor = all['Main-Actor'];
-//        Main_ActorName = all['Main-ActorName'];
-//        replyByCol = all['replyByCol'];
-//        replyByDep = all['replyByDep'];
-//    }
-    allSections();//选择框
-    upToLoadFile();//文件上传
-    firstOrOther();//是否是联合单位
+    fullUpInfo(all,entity);//tian chong
     //真不容易
     var filesData;
     if (filesData == null) {
@@ -542,9 +537,9 @@
     }
     scanFiles(filesData);
     //选择框
-    <%--var dept = '${ObjectMapper.writeValueAsString(patent.dept)}';--%>
-    <%--var standardId = '${ObjectMapper.writeValueAsString(patent.standard)}';--%>
-    <%--dept = jQuery.parseJSON(dept);--%>
+    var dept = '${ObjectMapper.writeValueAsString(patent.dept)}';
+    var standardId = '${ObjectMapper.writeValueAsString(patent.standard)}';
+    dept = jQuery.parseJSON(dept);
     $('#actorTable').bootstrapTable({
         columns: [
             {
