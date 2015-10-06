@@ -163,6 +163,7 @@ function addActor() {
             }
         }],
         onshown: function () {
+            console.log(projectRoles);
             fillRoles(projectRoles);
         }
     });
@@ -442,11 +443,11 @@ function saveStep2(data) {
     if($('#attr').val() == '联合项目'){
         send['units'] = getUnitsData();
     }
+    console.log($('#attr').val());
     send['fund'] = getFundsData();
     send['filesData'] = filesData;
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
-    console.log(send);
     return $.ajax({
         type: 'put',
         url: '/api/project/' + data,
