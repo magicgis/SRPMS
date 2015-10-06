@@ -3,7 +3,7 @@
  */
 $(function () {
     $('#ProjectTable').bootstrapTable({
-        url: '/api/workflow/order/' + userName + '/project/all',
+        url: '/api/project/all',
         sidePagination: "server",
         columns: [{
             radio: true
@@ -45,8 +45,12 @@ $(function () {
             align: 'center',
             title: '操作',
             formatter: view
-        }],
-        responseHandler: tableTrans
+        }, {
+            field: 'process',
+            title: '流程状态',
+            sortable: true,
+            formatter: 'processTran'
+        }]
     });
 });
 
@@ -59,3 +63,11 @@ $('#ProjectTable').on('click-row.bs.table', function (e, row, $element) {
     var orderId = row["id"];
     window.location.href = '/project/' + orderId;
 });
+function processTran(arg) {
+    var t = {
+        "0": "未启动",
+        "1": "流程中",
+        "9": "已结束"
+    };
+    return t[arg];
+}

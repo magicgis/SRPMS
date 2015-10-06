@@ -306,6 +306,10 @@ function submitProjectInfo() {
         window.location.href="/project";
     })
 }
+$('#ProjectTable').on('click-row.bs.table', function (e, row, $element) {
+    var orderId = row["id"];
+    window.location.href = '/order/' + orderId;
+});
 ///**
 // * 差异申请
 // * */

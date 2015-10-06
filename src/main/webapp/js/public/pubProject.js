@@ -9,6 +9,10 @@
  */
 var Main_Actor;
 var Main_ActorName;
+var $actorTable = $('#actorTable');
+var actorTemp = [];
+var unitTemp = [];
+var fundTemp = [];
 var allSelections =
     [
         {"1": [{"type": "自然科学"}, {"type": "哲学与社会科学"}, {"type": "教育教学改革"}, {"type": ""}, {"type": ""}]},
@@ -16,7 +20,7 @@ var allSelections =
         {"3": [{"attr": "子课题"}, {"attr": "联合项目"}, {"attr": "独立项目"}, {"attr": ""}, {"attr": ""}]},
         {"4": [{"rateUnit": "国家科技部"}, {"rateUnit": "国家自然科学基金委员会"}, {"rateUnit": "国家中医药管理局"}, {"rateUnit": "教育部"}, {"rateUnit": "其他部委"}]},
         {"5": [{"rateSrc": "“973”计划A类资助"}, {"rateSrc": "“973”计划B类资助"}, {"rateSrc": "“973”计划C类资助"}, {"rateSrc": "“863”计划"}, {"rateSrc": "国家重大科技专项"}]},
-        {"6": [{"isAppr": "是"}, {"isAppr": "是"}]},
+        {"6": [{"isAppr": "是"}, {"isAppr": "否"}]},
         {"7": [{"isAwdProj": "是"}, {"isAwdProj": "否"}]}
     ];
 //项目表单中的复选框
@@ -29,11 +33,6 @@ var optionsMenu = {
     '6': 'isAppr',
     '7': 'isAwdProj'
 };
-var $actorTable = $('#actorTable');
-var actorTemp = [];
-var unitTemp = [];
-var fundTemp = [];
-
 // 将对话框里的值加载进成员表
 function subActorInfo(index, flag) {
     var id = $('#actor').val();
@@ -198,6 +197,21 @@ function actorTran(value, row) {
         return;
 }
 /*********************表单||表格的动作和行为****************/
+//表单不可编辑
+function uneditableForm(){
+    $('form input').attr("disabled", "disabled");
+    $('form select').attr("disabled", "disabled");
+    //$('#addDiff').attr("disabled", "disabled");
+    //$('#addActor').hide();
+    //$('#addUnit').hide();
+    $('.delFiles').hide();
+}
+function hideActorOperate() {
+    $('#actorTable').bootstrapTable('hideColumn', 'operate');
+}
+function hideUnitOperate() {
+    $('#unitTable').bootstrapTable('hideColumn', 'operate');
+}
 ////显示详情
 //function showForm() {
 //    $('#projTable-box').addClass('collapsed');
