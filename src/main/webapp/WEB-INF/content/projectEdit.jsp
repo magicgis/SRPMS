@@ -58,13 +58,13 @@
                 <div class="row">
                     <form id="project" class="form-horizontal" role="form">
                         <div hidden="hidden">
-                            <input type="text" name="dept.value" id="deptValue" value="${patent.dept.value}"/>
+                            <input type="text" name="dept.value" id="deptValue" value=""/>
                             <%--<input type="text" name="WF_Task" id="WF_Task" value="${task.id}"/>--%>
                             <%--<input type="text" name="WF_Order" id="WF_Order" value="${task.orderId}"/>--%>
                             <%--<input type="text" name="IsComplete" id="IsComplete"/>--%>
                             <%--<input type="text" name="score" id="score"/>--%>
                             <input type="text" name="standard.id" id="standardId"/>
-                            <input type="text" name="id"/>
+                            <input type="text" name="id" value="${project.id}"/>
                         </div>
                         <div id="projInfo" class="col-xs-12 col-md-7 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
@@ -81,8 +81,7 @@
 
                                                 <div class="col-sm-8">
                                                     <input type="text" id="code" name="code"
-                                                           value=""
-                                                           placeholder="" class="col-xs-12"/>
+                                                           placeholder="" class="col-xs-12" value="${project.code}"/>
                                                 </div>
                                             </div>
 
@@ -92,8 +91,7 @@
 
                                                 <div class="col-sm-8">
                                                     <input type="text" id="name" name="name"
-                                                           value=""
-                                                           placeholder="" class="col-xs-12"/>
+                                                           placeholder="" class="col-xs-12" value="${project.name}"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -197,8 +195,7 @@
                                                 <div class="col-sm-8">
                                                     <input class="form-control date-picker" id="planSolTime"
                                                            type="text" name="planDate"
-                                                           value=""
-                                                           data-date-format="yyyy-mm-dd"/>
+                                                           data-date-format="yyyy-mm-dd" value="${project.planDate}"/>
                                                 </div>
                                             </div>
                                             <div class="form-group col-xs-12 col-sm-6">
@@ -226,8 +223,7 @@
                                                 <div class="col-sm-8">
                                                     <input class="form-control date-picker" id="appr_time"
                                                            type="text" name="apprDate"
-                                                           value=""
-                                                           data-date-format="yyyy-mm-dd"/>
+                                                           data-date-format="yyyy-mm-dd" value="${project.apprDate}" />
                                                 </div>
                                             </div>
                                             <div class="form-group col-xs-12 col-sm-6">
@@ -237,8 +233,7 @@
                                                 <div class="col-sm-8">
                                                     <input class="form-control date-picker" id="real_time"
                                                            type="text" name="realDate"
-                                                           value=""
-                                                           data-date-format="yyyy-mm-dd"/>
+                                                           data-date-format="yyyy-mm-dd"  value="${project.realDate}" />
                                                 </div>
                                             </div>
                                         </div>
@@ -255,7 +250,6 @@
                                                     <div class="col-sm-13">
                                                         <input class="form-control" id="isAwdProj"
                                                                type="text" name="isAwdProj"
-                                                               value=""
                                                                placeholder="请选择"/>
                                                     </div>
 
@@ -520,11 +514,16 @@
     });
     // 成员，单位，文件
     // todo 取出实体内的额外信息，附件信息也应该在其中。
-    var all = '${ObjectMapper.writeValueAsString(project.argMap)}';
+    var entity = ${ObjectMapper.writeValueAsString(project)};
+    console.log(entity);
+    var all = ${ObjectMapper.writeValueAsString(project.argMap)};
+    console.log(all);
     //todo 取出部门信息，可同理取出专利类型
     var dept = '${ObjectMapper.writeValueAsString(project.dept)}';
+
     var taskId = '${taskId}';
     var taskName = '${taskName}';
+
 //    if (!isNull(all)) {
 //        filesData = all['filesData'];
 //        unitTemp = all['units'];
