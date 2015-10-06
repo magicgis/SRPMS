@@ -47,7 +47,7 @@ function addItem() {
         },
         title: "成员信息",
         data: {
-            'pageToLoad': '../school/form/baseInfo.html'
+            'pageToLoad': '/dialog/baseInfo.html'
         },
         buttons: [{
             id: 'btn-add',
@@ -95,7 +95,7 @@ function editItem() {
         },
         title: "成员信息",
         data: {
-            'pageToLoad': '../school/form/baseInfo.html'
+            'pageToLoad': '/dialog/baseInfo.html'
         },
         buttons: [{
             id: 'btn-edit',
