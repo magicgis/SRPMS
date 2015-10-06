@@ -3,7 +3,7 @@
  */
 $(function () {
     $('#ProjectTable').bootstrapTable({
-        url: '/api/workflow/order/' + userName + '/project/all',
+        url: '/api/project/all',
         sidePagination: "server",
         columns: [{
             radio: true
@@ -50,8 +50,7 @@ $(function () {
             title: '流程状态',
             sortable: true,
             formatter: 'processTran'
-        }],
-        responseHandler: tableTrans
+        }]
     });
 });
 
