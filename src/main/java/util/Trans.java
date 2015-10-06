@@ -115,7 +115,7 @@ public class Trans {
                         method.invoke(obj, map.get(fdname));
                     }
                 } catch (Exception e) {
-                    return false;
+                    continue;
                 }
             }
         }
@@ -165,7 +165,7 @@ public class Trans {
         Map<String, Object> subMap = new HashMap<>();
         /*第二次遍历，将最深层次变为map*/
         for (String v : keys) {
-            if (v.startsWith(flag+".")) {
+            if (v.startsWith(flag + ".")) {
                 subMap.put(v.substring(flag.length() + 1, v.length()), map.get(v));
                 map.remove(v);
             }
