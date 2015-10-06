@@ -96,6 +96,21 @@
                                             </button>
                                         </c:when>
                                         <c:when test="${sessionScope.level == '3'}">
+                                            <div class="btn-group">
+                                                <button class="btn btn-primary dropdown-toggle"
+                                                        data-toggle="dropdown">
+                                                    查看选项
+                                                    <span class="ace-icon fa fa-caret-down icon-on-right"></span>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-left">
+                                                    <li>
+                                                        <a href="#" id="all">全部专利</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" id="approve">待审批专利</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                             <button id="add" class="btn btn-primary">
                                                 <i class="fa fa-plus"></i> 添加专利
                                             </button>
@@ -127,6 +142,7 @@
         <script src="<c:url value="/js/college/patent.js"/>"></script>
     </c:when>
     <c:when test="${sessionScope.level == '3'}">
+        <script src="<c:url value="/js/school/patent.js"/>"></script>
         <script src="<c:url value="/js/school/patent.js"/>"></script>
     </c:when>
 </c:choose>

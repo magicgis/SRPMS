@@ -13,13 +13,6 @@ function typeTran(value, row) {
         return;
     }
 }
-// 成员翻译
-function actorTran(value,row){
-    if(value!=undefined && value!=null && value!="")
-        return value.substring(0,value.length-1);
-    else
-        return;
-}
 // 显示Mag、Confer还是newsPaper
 function magOrConfer() {
     if ($('#type').val() == "conferPaper") {

@@ -17,16 +17,16 @@ var selectDefferent = {
     "appraise": ""
 };
 var wfTypeTans = {
-    "project": "",
-    "patent": "",
+    "project": "项目",
+    "patent": "专利",
     "paper": "论文",
-    "newOther": "",
-    "newMedicine": "",
-    "instrument": "",
-    "food": "",
-    "change": "",
-    "award": "",
-    "appraise": ""
+    "newOther": "其他新产品",
+    "newMedicine": "新药",
+    "instrument": "新器械",
+    "food": "新食品",
+    "change": "差异",
+    "award": "成果获奖",
+    "appraise": "成果鉴定"
 };
 /**
  *查看/编辑样式

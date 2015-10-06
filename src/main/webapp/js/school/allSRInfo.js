@@ -20,7 +20,8 @@ $(function () {
         }, {
             field: 'ActorList',
             title: '人员',
-            sortable: true
+            sortable: true,
+            formatter: 'actorTran'
         }/*,{
          field:'searchName',
          title:'科研名称',
@@ -47,45 +48,45 @@ $(function () {
     });
     /* $('#tableOrd').hide();*/
 });
-$('#allSRInfoTable').on('click-row.bs.table', function (e, row) {
-    var wfType = row['WF_Type'];
-    var taskId = row['id'];
-    for (var key in selectDefferent) {
-        if (key == wfType) {
-            $("#confirmForm").empty();
-            var url = selectDefferent[key];
-            showForm();
-            $("#confirmForm").load(url, function () {
-                $('#WF_Task').val(taskId);
-                $('form input').val(null);
-                uneditableForm();
-                if (row['actors'] != null) {
-                    actorTemp = row['actors'];
-                } else {
-                    actorTemp =[];
-                }
-                /*显示成员表*/
-                scanActorTable();
-                showFiles(row["filesData"]); //显示文件信息
-                $('#' + wfType).autofill(row, {
-                    findbyname: true,
-                    restrict: false
-                });
-
-                magOrConfer();
-                $("#actorTable").bootstrapTable('load', actorTemp);
-                $('#addDiff').hide();
-                $('#reply').hide();
-                $('#getScore').hide();
-                if (wfType == 'paper') {
-                    paperType();
-                    $('#magId').val(row['mag.name']);
-                }
-                //showForm();
-            });
-        }
-    }
-});
+//$('#allSRInfoTable').on('click-row.bs.table', function (e, row) {
+//    var wfType = row['WF_Type'];
+//    var taskId = row['id'];
+//    for (var key in selectDefferent) {
+//        if (key == wfType) {
+//            $("#confirmForm").empty();
+//            var url = selectDefferent[key];
+//            showForm();
+//            $("#confirmForm").load(url, function () {
+//                $('#WF_Task').val(taskId);
+//                $('form input').val(null);
+//                uneditableForm();
+//                if (row['actors'] != null) {
+//                    actorTemp = row['actors'];
+//                } else {
+//                    actorTemp =[];
+//                }
+//                /*显示成员表*/
+//                scanActorTable();
+//                showFiles(row["filesData"]); //显示文件信息
+//                $('#' + wfType).autofill(row, {
+//                    findbyname: true,
+//                    restrict: false
+//                });
+//
+//                magOrConfer();
+//                $("#actorTable").bootstrapTable('load', actorTemp);
+//                $('#addDiff').hide();
+//                $('#reply').hide();
+//                $('#getScore').hide();
+//                if (wfType == 'paper') {
+//                    paperType();
+//                    $('#magId').val(row['mag.name']);
+//                }
+//                //showForm();
+//            });
+//        }
+//    }
+//});
 //监听 点击返回
 $("#back").click(function () {
     showTable();

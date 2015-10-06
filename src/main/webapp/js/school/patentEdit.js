@@ -3,20 +3,53 @@
  */
 
 
+
 $(function () {
     //TODO
+    $('#reply').hide();
 
-    //console.log([dept]);
-
-    //addOptionSelectize($('#dept').selectize(), [dept]);
-    //DisplayForm($('#dept').selectize(), dept['id'], 0);
-    //DisplayForm($('#patType').selectize(), standardId, 0);
+    init();
 
 });
 
-function getActors() {
-    actorTemp = all['actors'];
+
+
+function init() {
+    var status = all['Status'];
+    if (order['process'] == '1' || order['process'] == '9') {
+        $('.onEdit').hide();
+        $('#upload').hide();
+        $('#addActor').hide();
+        $('#addUnit').hide();
+        disableSelectize($('#dept').selectize());
+        disableSelectize($('#patType').selectize());
+        uneditableForm();
+        hideActorOperate();
+        hideUnitOperate();
+        // 实体中不能审批，order中才可以。实体中没有status，所以这样判断
+        if ( !isNull(status) && status.indexOf('refuse')>=0) {
+            $('#reply').show();
+            $('#reply-display').show();
+            var reply = $('#reply-display').children('p');
+            var who = $('#reply-display').children('small');
+            reply.empty();
+            who.empty();
+            if (status.indexOf("WaitForDep") >= 0) { // 学院通过了
+                reply.append(replyByCol);
+                who.append("学院批复");
+                $('.onApproval').show();
+            } else {
+                $('.onApproval').hide();
+                $('#reply').hide();
+            }
+        }else{
+            $('.onApproval').hide();
+        }
+    } else if (order['process'] == null || order['process'] == '0') { // 刚刚新增或未启动
+        $('.onApproval').hide();
+    }
 }
+
 
 /*
  * 保存
@@ -82,7 +115,7 @@ function confirm() {
                      */
                     if (result) {
                         workflow.startEntityOrder("patent", $('#patentId').val()).success(function (data) {
-                            history.go(-1);
+                            //history.go(-1);
                         });
                     }
                 }
@@ -110,7 +143,7 @@ function delOrder() {
             if (result) {
                 workflow.delOrder(order).success(function () {
                     afterSuccess("删除成功！");
-                    window.location.href = "/patent";
+                    //window.location.href = "/patent";
                 });
             }
         }
@@ -311,7 +344,7 @@ function approve() {
         callback: function (result) {
             if (result) {
                 workflow.execute('dep', $('#WF_Task').val(), approveInfo).success(function () {
-                    window.location.href = "/patent";
+                    //window.location.href = "/patent";
                 });
             }
         }
@@ -336,7 +369,7 @@ function refuse() {
         callback: function (result) {
             if (result) {
                 workflow.execute('dep', $('#WF_Task').val(), refuseAwardInfo).success(function () {
-                    window.location.href = "/patent";
+                    //window.location.href = "/patent";
                 });
             }
         }

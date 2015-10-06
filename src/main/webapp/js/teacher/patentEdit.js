@@ -5,9 +5,9 @@
 var flag = true;
 
 $(function () {
-    //todo 在教师界面的argMap，基本等同于order中的arg，
-    //todo 存在Status,WF_Col,WF_Col_Id等等，基本是前台上一次放什么进去，第二次就能以同样的方式拿到
-    //todo 还需要判断order的状态来 判断是否能算分与分配分数
+    // 在教师界面的argMap，基本等同于order中的arg，
+    // 存在Status,WF_Col,WF_Col_Id等等，基本是前台上一次放什么进去，第二次就能以同样的方式拿到
+    // 还需要判断order的状态来 判断是否能算分与分配分数
 
     uneditableForm();
     disableSelectize($('#dept').selectize());
@@ -53,21 +53,11 @@ function init() {
     }
 }
 
-function getActors() {
-    var keyStr = getSubmission(all);
-    if(keyStr == "") {
-        actorTemp = all['actors'];
-    }
-    else {
-        actorTemp = all[keyStr]['actors'];
-    }
-}
-
 /*
  * 保存
- *  TODO 教师端的保存处理机制和论文大体一样
- *  todo 区别在于：1，无需实体信息，即表格部分不需要，只需要table里的人与单位
- *  todo 保存就是isComplete为false，确认就是isComplete为true
+ *   教师端的保存处理机制和论文大体一样
+ *   区别在于：1，无需实体信息，即表格部分不需要，只需要table里的人
+ *   保存就是isComplete为false，确认就是isComplete为true
  * */
 function save() {
     var send = new Object();

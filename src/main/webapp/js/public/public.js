@@ -202,6 +202,42 @@ function getSubmission(pData) {
     return keyStr;
 }
 
+
+/**
+ * 公共方法 对任务的完成状态进行翻译
+ * @param value
+ * @return String
+ * */
+function statusTran(value, row) {
+    //定义一个条件数组函数  所有状态项
+    var termArray = {
+        'Blank': '待填写',
+        'Uncomplete': '已保存',
+        'Complete': '等待他人确认',
+        'ApprovedByCol': '待学院统一提交',
+        'WaitForSubmit': '待统一提交',
+        'WaitForCol': '学院审核中',
+        'WaitForCollegeSubmit': '待学院统一提交',
+        'WaitForDep': '管理部门审核中',
+        'RefuseByDep': '管理部门驳回，待学院审核',
+        'RefuseByCol': '学院驳回，待修改'
+    };
+    for (var key in termArray) {
+        if (value == key) {
+            return termArray[key];
+        }
+    }
+}
+
+// 成员翻译
+function actorTran(value,row){
+    if(value!=undefined && value!=null && value!="")
+        return value.substring(0,value.length-1);
+    else
+        return;
+}
+
+// 简单消息弹框
 function messageModal(message) {
     BootstrapDialog.show({
         title: '通知',
@@ -209,7 +245,7 @@ function messageModal(message) {
         message: message
     });
 }
-
+// 获取编辑页面的数据
 function getFormData(type) {
     var jsonData = $("#" + type).serializeJSON();
     $.each(jsonData, function (key, value) {
@@ -225,102 +261,6 @@ function getFormData(type) {
     jsonData["WF_User"] = userName;
     return jsonData;
 }
-
-/**--------------------------成员表公共方法------------------**/
-//// 将对话框里的值加载进成员表
-//function subActorInfo(index,flag) {
-//    var id = $('#actor').val();
-//    var actor = $('#actor').text();
-//    var marks = $('#marks').val();
-//    var units = $('#units').val();
-//    var role = $('#role').val();
-//    var rank = $('#rank').val();
-//    var mark = (marks == "" ? '0.00' : (marks / units.length).toFixed(2));
-//    $.each(units, function (i, value) {
-//        actorTemp.push({"staff.id": id, "rank": rank, "staff.name": actor, "role": role, "score": mark, "unit": value});
-//    });
-//    if(flag) {  // 增加一行
-//        $('#actorTable').bootstrapTable("load", actorTemp);
-//    } else {    // 替换一行
-//        actorTemp.remove(index);
-//        $('#actorTable').bootstrapTable('load',actorTemp);
-//    }
-//}
-//
-//window.operateEvents = {
-//    'click .removeActor': function (e, value, row, index) {
-//        $('#actorTable').bootstrapTable('remove', {
-//            field: 'staff.id',
-//            values: [row["staff.id"]]
-//        });
-//    },
-//    'click .editActor': function (e, value, row, index) {
-//        editActor(row, index);
-//    }
-//};
-//// 操作
-//function operateFormatter(value, row, index) {
-//    return [
-//        '<a class="editActor" href="javascript:void(0)" title="edit" >',
-//        '<i class="ace-icon fa fa-pencil bigger-110"></i>',
-//        '</a>&nbsp;&nbsp;&nbsp;',
-//        '<a class="removeActor" href="javascript:void(0)" title="Remove" >',
-//        '<i class="glyphicon glyphicon-remove"></i>',
-//        '</a>'
-//    ].join('');
-//}
-//// 总人数
-//function totalNameFormatter(data) {
-//    return "共" + data.length + "人";
-//}
-//// 总分
-//function totalMarksFormatter(data) {
-//    var total = 0;
-//    $.each(data, function (i, row) {
-//        if(row.score !== null && row.score !== undefined && row.score !=="") {
-//            total += +(row.score.toString().substring(0));
-//        }
-//    });
-//    return '共' + total.toFixed(0) + "分";
-//}
-
-
-/**--------------------------单位表公共方法------------------**/
-////将对话框里的值加载进单位表
-//function subUnitInfo() {
-//    var unit = $('#unit').val();
-//    var rank = $('#rank').val();
-//    unitTemp.push({"rank": rank, "unit": unit});
-//    console.log(unitTemp);
-//    $('#unitTable').bootstrapTable('load',unitTemp);
-//}
-//
-//window.operateEventsUnit = {
-//    'click .removeUnit': function (e, value, row, index) {
-//        $('#unitTable').bootstrapTable('remove', {
-//            field: 'unit',
-//            values: [row["unit"]]
-//        });
-//    },
-//    'click .editUnit': function (e, value, row, index) {
-//        editUnit(row, index);
-//    }
-//};
-//// 操作
-//function operateFormatterUnit(value, row, index) {
-//    return [
-//        '<a class="editUnit" href="javascript:void(0)" title="edit" >',
-//        '<i class="ace-icon fa fa-pencil bigger-110"></i>',
-//        '</a>&nbsp;&nbsp;&nbsp;',
-//        '<a class="removeUnit" href="javascript:void(0)" title="Remove" >',
-//        '<i class="glyphicon glyphicon-remove"></i>',
-//        '</a>'
-//    ].join('');
-//}
-//// 总个数
-//function totalUnitFormatter(data) {
-//    return "共" + data.length + "个";
-//}
 
 
 /**--------------------------拓展公共方法------------------**/
@@ -582,30 +522,6 @@ function clearClick() {
     window.clearInterval(checktime);
     $("#getScore").removeAttr("disabled");
 }
-/**
- * 公共方法 对任务的完成状态进行翻译
- * @param value
- * @return String
- * */
-function statusTran(value, row) {
-    //定义一个条件数组函数  所有状态项
-    var termArray = {
-        'Blank': '待填写',
-        'Uncomplete': '已保存',
-        'Complete': '等待他人确认',
-        'ApprovedByCol': '待学院统一提交',
-        'WaitForSubmit': '待统一提交',
-        'WaitForCol': '学院审核中',
-        'WaitForDep': '管理部门审核中',
-        'RefuseByDep': '管理部门驳回，待学院审核',
-        'RefuseByCol': '学院驳回，待修改'
-    };
-    for (var key in termArray) {
-        if (value == key) {
-            return termArray[key];
-        }
-    }
-}
 
 jQuery(function ($) {
 
@@ -616,3 +532,101 @@ jQuery(function ($) {
         $(this).prev().focus();
     });
 });
+
+
+
+/**--------------------------成员表公共方法------------------**/
+//// 将对话框里的值加载进成员表
+//function subActorInfo(index,flag) {
+//    var id = $('#actor').val();
+//    var actor = $('#actor').text();
+//    var marks = $('#marks').val();
+//    var units = $('#units').val();
+//    var role = $('#role').val();
+//    var rank = $('#rank').val();
+//    var mark = (marks == "" ? '0.00' : (marks / units.length).toFixed(2));
+//    $.each(units, function (i, value) {
+//        actorTemp.push({"staff.id": id, "rank": rank, "staff.name": actor, "role": role, "score": mark, "unit": value});
+//    });
+//    if(flag) {  // 增加一行
+//        $('#actorTable').bootstrapTable("load", actorTemp);
+//    } else {    // 替换一行
+//        actorTemp.remove(index);
+//        $('#actorTable').bootstrapTable('load',actorTemp);
+//    }
+//}
+//
+//window.operateEvents = {
+//    'click .removeActor': function (e, value, row, index) {
+//        $('#actorTable').bootstrapTable('remove', {
+//            field: 'staff.id',
+//            values: [row["staff.id"]]
+//        });
+//    },
+//    'click .editActor': function (e, value, row, index) {
+//        editActor(row, index);
+//    }
+//};
+//// 操作
+//function operateFormatter(value, row, index) {
+//    return [
+//        '<a class="editActor" href="javascript:void(0)" title="edit" >',
+//        '<i class="ace-icon fa fa-pencil bigger-110"></i>',
+//        '</a>&nbsp;&nbsp;&nbsp;',
+//        '<a class="removeActor" href="javascript:void(0)" title="Remove" >',
+//        '<i class="glyphicon glyphicon-remove"></i>',
+//        '</a>'
+//    ].join('');
+//}
+//// 总人数
+//function totalNameFormatter(data) {
+//    return "共" + data.length + "人";
+//}
+//// 总分
+//function totalMarksFormatter(data) {
+//    var total = 0;
+//    $.each(data, function (i, row) {
+//        if(row.score !== null && row.score !== undefined && row.score !=="") {
+//            total += +(row.score.toString().substring(0));
+//        }
+//    });
+//    return '共' + total.toFixed(0) + "分";
+//}
+
+
+/**--------------------------单位表公共方法------------------**/
+////将对话框里的值加载进单位表
+//function subUnitInfo() {
+//    var unit = $('#unit').val();
+//    var rank = $('#rank').val();
+//    unitTemp.push({"rank": rank, "unit": unit});
+//    console.log(unitTemp);
+//    $('#unitTable').bootstrapTable('load',unitTemp);
+//}
+//
+//window.operateEventsUnit = {
+//    'click .removeUnit': function (e, value, row, index) {
+//        $('#unitTable').bootstrapTable('remove', {
+//            field: 'unit',
+//            values: [row["unit"]]
+//        });
+//    },
+//    'click .editUnit': function (e, value, row, index) {
+//        editUnit(row, index);
+//    }
+//};
+//// 操作
+//function operateFormatterUnit(value, row, index) {
+//    return [
+//        '<a class="editUnit" href="javascript:void(0)" title="edit" >',
+//        '<i class="ace-icon fa fa-pencil bigger-110"></i>',
+//        '</a>&nbsp;&nbsp;&nbsp;',
+//        '<a class="removeUnit" href="javascript:void(0)" title="Remove" >',
+//        '<i class="glyphicon glyphicon-remove"></i>',
+//        '</a>'
+//    ].join('');
+//}
+//// 总个数
+//function totalUnitFormatter(data) {
+//    return "共" + data.length + "个";
+//}

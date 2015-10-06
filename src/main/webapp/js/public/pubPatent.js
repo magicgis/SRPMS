@@ -186,3 +186,16 @@ function showEdit() {
     $('.onEdit').show();
     $('.onApproval').hide();
 }
+
+// 编辑页面获得成员信息
+function getActors() {
+    var keyStr = getSubmission(all);
+    if(isNull(all['actors'])) { // 新建的
+        actorTemp = [];
+    }else if(keyStr == "") {
+        actorTemp = all['actors'];
+    }
+    else {
+        actorTemp = all[keyStr]['actors'];
+    }
+}

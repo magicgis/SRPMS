@@ -76,8 +76,8 @@
                                         <%--<input type="text" name="WF_Task" id="WF_Task"/>--%>
                                         <%--<input type="text" name="IsComplete" id="IsComplete"/>--%>
                                         <%--<input type="text" name="pscore" id="score"/>--%>
-                                        <input type="text" name="dept.value" id="deptValue"
-                                               value="${patent.dept.value}"/>
+                                        <%--<input type="text" name="dept.value" id="deptValue"--%>
+                                               <%--value="${patent.dept.value}"/>--%>
                                         <%--<input type="text" name="patent.standard.value" id="patTypeValue"/>--%>
                                         <input type="text" name="id" id="patentId" value="${patent.id}"/>
                                     </div>
@@ -108,6 +108,7 @@
                                                             <div class="col-sm-8">
                                                                 <input id="dept" name="dept.id"
                                                                        type="text" class="form-control col-xs-12"
+                                                                       value="${patent.dept.value}"
                                                                        placeholder="请选择"/>
                                                             </div>
                                                         </div>
@@ -306,13 +307,13 @@
                                                     <button class="tabOrdBtn btn btn-danger btn-sm back" type="button">
                                                         <i class="ace-icon fa fa-reply  bigger-110"></i>
                                                         返回
-                                                    </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </button>&nbsp;&nbsp;&nbsp;&nbsp;　　　　
                                                     <span class="onEdit">
                                                         <button class="tabOrdBtn btn btn-primary btn-sm save"
                                                                 type="button">
                                                             <i class="ace-icon fa fa-save bigger-110"></i>
                                                             保存
-                                                        </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        </button>&nbsp;&nbsp;&nbsp;&nbsp;　　　　
                                                         <button class="tabOrdBtn btn btn-success btn-sm confirm"
                                                                 type="button">
                                                             <i class="ace-icon fa fa-check bigger-110"></i>
@@ -323,8 +324,8 @@
                                                         <button class="btn btn-success btn-sm approve" type="button">
                                                             <i class="ace-icon fa fa-check bigger-110"></i>
                                                             通过
-                                                        </button>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <button class="btn btn-danger btn-sm refuse" type="button">
+                                                        </button>&nbsp;&nbsp;&nbsp;&nbsp;　　　　
+                                                        <button class="btn btn-warning btn-sm refuse" type="button">
                                                             <i class="ace-icon fa fa-remove bigger-110"></i>
                                                             驳回
                                                         </button>
@@ -378,10 +379,11 @@
 <script>
 
     // 成员，单位，文件
-    var all = ${ObjectMapper.writeValueAsString(patent.argMap)};
+    var order =  ${ObjectMapper.writeValueAsString(patent)};
+    var all = order['argMap'];
     var taskId = '${taskId}';
     var taskName = '${taskName}';
-    console.log(${ObjectMapper.writeValueAsString(patent)});
+    console.log(order);
     if (!isNull(all)) {
         filesData = all['filesData'];
         unitTemp = all['units'];
@@ -390,7 +392,8 @@
         replyByCol = all['replyByCol'];
         replyByDep = all['replyByDep'];
     }
-    getActors();
+    getActors(); // 这是取成员的
+
     upToLoadFile();
 
     if (filesData == null) {
@@ -398,7 +401,6 @@
     }
     scanFiles(filesData);
 
-    //选择框
     var dept = '${ObjectMapper.writeValueAsString(patent.dept)}';
     var standardId = '${ObjectMapper.writeValueAsString(patent.standard)}';
     dept = jQuery.parseJSON(dept);
@@ -475,7 +477,7 @@
             {"id": "1025", "value": "外观专利"},
             {"id": "1026", "value": "实用专利"}],
         onChange: function (result) {
-            $('#patTypeValue').val(this.getItem(result)["context"]["innerHTML"]);
+//            $('#patTypeValue').val(this.getItem(result)["context"]["innerHTML"]);
         }
     });
     $('#dept').selectize({
@@ -497,7 +499,7 @@
             });
         },
         onChange: function (result) {
-            $('#deptValue').val(this.getItem(result)["context"]["innerHTML"]);
+//            $('#deptValue').val(this.getItem(result)["context"]["innerHTML"]);
         }
     });
 
@@ -546,6 +548,7 @@
     $('#getScore').click(function () {
         getScore();
     });
+
 </script>
 <!-- /.main-container -->
 </html>
