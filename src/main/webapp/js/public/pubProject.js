@@ -9,6 +9,10 @@
  */
 var Main_Actor;
 var Main_ActorName;
+var $actorTable = $('#actorTable');
+var actorTemp = [];
+var unitTemp = [];
+var fundTemp = [];
 var allSelections =
     [
         {"1": [{"type": "自然科学"}, {"type": "哲学与社会科学"}, {"type": "教育教学改革"}, {"type": ""}, {"type": ""}]},
@@ -29,11 +33,6 @@ var optionsMenu = {
     '6': 'isAppr',
     '7': 'isAwdProj'
 };
-var $actorTable = $('#actorTable');
-var actorTemp = [];
-var unitTemp = [];
-var fundTemp = [];
-
 // 将对话框里的值加载进成员表
 function subActorInfo(index, flag) {
     var id = $('#actor').val();
@@ -198,6 +197,21 @@ function actorTran(value, row) {
         return;
 }
 /*********************表单||表格的动作和行为****************/
+//表单不可编辑
+function uneditableForm(){
+    $('form input').attr("disabled", "disabled");
+    $('form select').attr("disabled", "disabled");
+    //$('#addDiff').attr("disabled", "disabled");
+    //$('#addActor').hide();
+    //$('#addUnit').hide();
+    $('.delFiles').hide();
+}
+function hideActorOperate() {
+    $('#actorTable').bootstrapTable('hideColumn', 'operate');
+}
+function hideUnitOperate() {
+    $('#unitTable').bootstrapTable('hideColumn', 'operate');
+}
 ////显示详情
 //function showForm() {
 //    $('#projTable-box').addClass('collapsed');

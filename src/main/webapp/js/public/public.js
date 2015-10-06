@@ -1,6 +1,7 @@
 var paperRoles = [{"role": "第一作者"}, {"role": "通讯作者"}, {"role": "第二作者"}
     , {"role": "第三作者"}, {"role": "第四作者"}, {"role": "其他"}];
 var patentRoles = [{"role": "第一专利权人"}, {"role": "知识产权所有人"}];
+var projectRoles = [{"role": "负责人"}, {"role": "参与人"}];
 
 /**--------------------------工作流公共方法------------------**/
 var workflow = window.workflow || {};

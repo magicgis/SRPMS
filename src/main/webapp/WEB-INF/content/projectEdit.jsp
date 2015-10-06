@@ -21,9 +21,6 @@
             display: none;
         }
 
-        input.ace.ace-switch.ace-switch-7[type="checkbox"] + .lbl::before {
-            content: "启动 \a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0停止";
-        }
     </style>
 </head>
 <body class="no-skin">
@@ -62,12 +59,12 @@
                     <form id="project" class="form-horizontal" role="form">
                         <div hidden="hidden">
                             <input type="text" name="dept.value" id="deptValue" value="${patent.dept.value}"/>
-                            <input type="text" name="WF_Task" id="WF_Task" value="${task.id}"/>
+                            <%--<input type="text" name="WF_Task" id="WF_Task" value="${task.id}"/>--%>
                             <%--<input type="text" name="WF_Order" id="WF_Order" value="${task.orderId}"/>--%>
                             <%--<input type="text" name="IsComplete" id="IsComplete"/>--%>
                             <%--<input type="text" name="score" id="score"/>--%>
-                            <input type="text" name="standard.id" id="standardId" value="${patent.stand.id}"/>
-                            <input type="text" name="id" id="projectId" value="${patent.id}"/>
+                            <input type="text" name="standard.id" id="standardId"/>
+                            <input type="text" name="id"/>
                         </div>
                         <div id="projInfo" class="col-xs-12 col-md-7 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
@@ -521,39 +518,21 @@
             $(this).prev().focus();
         });
     });
-
-    <%--var status = '${task.taskName}';--%>
-
-    <%--if (status == 'ApprovalByDep') {--%>
-    <%--$('input').attr('disabled', 'disabled');--%>
-    <%--$('.teacher').hide();--%>
-    <%--//  禁用上传按钮--%>
-    <%--$('#upload').hide();--%>
-    <%--}--%>
-
-    <%--if (status == "Blank" || status == "Uncomplete") {//根据项目信息完成状态显示不同功能按钮--%>
-    <%--$('.school').show();--%>
-    <%--$('.save').hide();--%>
-    <%--$('.orderBack').hide();--%>
-    <%--$('.del').hide();--%>
-    <%--} else {--%>
-    <%--$('.save').show();--%>
-    <%--$('.orderBack').show();--%>
-    <%--$('.del').show();--%>
-    <%--$('.school').hide();--%>
-    <%--}--%>
+    // 成员，单位，文件
     // todo 取出实体内的额外信息，附件信息也应该在其中。
     var all = '${ObjectMapper.writeValueAsString(project.argMap)}';
     //todo 取出部门信息，可同理取出专利类型
     var dept = '${ObjectMapper.writeValueAsString(project.dept)}';
-//    if (all!='') {
-//        all = jQuery.parseJSON(all);
+    var taskId = '${taskId}';
+    var taskName = '${taskName}';
+//    if (!isNull(all)) {
 //        filesData = all['filesData'];
-//        actorTemp = all['actors'];
-//        fundTemp = all['fund'];
 //        unitTemp = all['units'];
+//        Main_Actor = all['Main-Actor'];
+//        Main_ActorName = all['Main-ActorName'];
+//        replyByCol = all['replyByCol'];
+//        replyByDep = all['replyByDep'];
 //    }
-    dept = jQuery.parseJSON(dept);
     allSections();//选择框
     upToLoadFile();//文件上传
     firstOrOther();//是否是联合单位
@@ -562,8 +541,98 @@
     if (filesData == null) {
         filesData = {};
     }
-
     scanFiles(filesData);
+    //选择框
+    <%--var dept = '${ObjectMapper.writeValueAsString(patent.dept)}';--%>
+    <%--var standardId = '${ObjectMapper.writeValueAsString(patent.standard)}';--%>
+    <%--dept = jQuery.parseJSON(dept);--%>
+    $('#actorTable').bootstrapTable({
+        columns: [
+            {
+                field: 'staff.id',
+                title: '工号',
+                sortable: true,
+                visible: false
+            }, {
+                field: 'rank',
+                title: '排名',
+                sortable: true,
+                //editable: true,
+                footerFormatter: "totalNameFormatter"
+            }, {
+                field: 'staff.name',
+                title: '成员',
+                sortable: true
+            }, {
+                field: 'role',
+                title: '角色',
+                sortable: true
+            }, {
+                field: 'score',
+                title: '分数',
+                sortable: true,
+                //editable: true,
+                footerFormatter: "totalMarksFormatter"
+            }, {
+                field: 'unit',
+                title: '归属单位',
+                //editable: true,
+                sortable: true
+            }, {
+                field: 'operate',
+                title: '操作',
+                sortable: true,
+                formatter: "operateAFormatter",
+                events: "operateAEvents"
+            }],
+        data: actorTemp
+    });
+    $('#fundTable').bootstrapTable({
+        columns: [{
+            field: 'time',
+            title: '到账时间',
+            //editable: true,
+            sortable: true
+        }, {
+            field: 'mny',
+            title: '到账金额',
+            //editable: true,
+            sortable: true,
+            footerFormatter: "totalFundsFormatter"
+        }, {
+            field: 'outMny',
+            title: '外拨金额',
+            // editable: true,
+            sortable: true,
+            footerFormatter: "totalEFundFormatter"
+        }, {
+            field: 'operate',
+            title: '操作',
+            sortable: true,
+            formatter: "operateFFormatter",
+            events: "operateFEvents"
+        }],
+        data: fundTemp
+    });
+    $('#unitTable').bootstrapTable({
+        columns: [{
+            field: 'rank',
+            title: '排名',
+            sortable: true,
+            footerFormatter: "totalUnitFormatter"
+        }, {
+            field: 'unit',
+            title: '单位名称',
+            sortable: true
+        }, {
+            field: 'operate',
+            title: '操作',
+            sortable: false,
+            formatter: "operateFormatterUnit",
+            events: "operateEventsUnit"
+        }],
+        data: unitTemp
+    });
     //是否为第一单位
     $('#attr').change(function () {
         firstOrOther();
