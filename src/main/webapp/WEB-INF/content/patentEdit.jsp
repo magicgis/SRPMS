@@ -108,7 +108,7 @@
                                                             <div class="col-sm-8">
                                                                 <input id="dept" name="dept.id"
                                                                        type="text" class="form-control col-xs-12"
-                                                                       value="${patent.dept.value}"
+                                                                       <%--value="${patent.dept.value}"--%>
                                                                        placeholder="请选择"/>
                                                             </div>
                                                         </div>
@@ -378,12 +378,19 @@
 
 <script>
 
+    getPatType(); // 初始化 专利类型
+    getDept();   // 初始化 学院
+
     // 成员，单位，文件
-    var order =  ${ObjectMapper.writeValueAsString(patent)};
-    var all = order['argMap'];
-    var taskId = '${taskId}';
+    var order =  ${ObjectMapper.writeValueAsString(patent)}; // 获得 order 或 实体
+    var all = order['argMap']; // 获得 成员，单位，附件，负责人等信息
+    var dept = order['dept'];
+    var standardId = order['standard'];
+    var taskId = '${taskId}';  // 获得 task的id
     var taskName = '${taskName}';
     console.log(order);
+    console.log(dept);
+
     if (!isNull(all)) {
         filesData = all['filesData'];
         unitTemp = all['units'];
@@ -393,20 +400,11 @@
         replyByDep = all['replyByDep'];
     }
 
-    getPatType(); // 专利类型
-    getDept();   // 学院
-    getActors(); // 这是取成员的
-    upToLoadFile();
-
+    // 显示 附件
     if (filesData == null) {
         filesData = {};
     }
     scanFiles(filesData);
-
-    var dept = '${ObjectMapper.writeValueAsString(patent.dept)}';
-    var standardId = '${ObjectMapper.writeValueAsString(patent.standard)}';
-    dept = jQuery.parseJSON(dept);
-
 
     $('#actorTable').bootstrapTable({
         columns: [
@@ -468,8 +466,16 @@
         data: unitTemp
     });
 
-    DisplayForm($('#patType').selectize(), '1023');
-    DisplayForm($('#dept').selectize(), dept['id']);
+    getActors(); // 这是取成员的
+    upToLoadFile(); // 上传文件的
+
+    DisplayForm($('#patType').selectize(), standardId, 0); // 显示 专利类型
+
+    if(dept !== null) {  // 显示 所属部门
+        var $dept = $('#dept').selectize();
+        addOptionSelectize($dept, [dept]);
+        DisplayForm($dept, dept['id'], 0);
+    }
 
     //监听 确认
     $(".confirm").click(function () {

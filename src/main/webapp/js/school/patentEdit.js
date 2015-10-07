@@ -5,11 +5,9 @@
 
 
 $(function () {
-    //TODO
+
     $('#reply').hide();
-    //if(!$.isEmptyObject(dept)) {
-    //    addOptionSelectize($('#dept').selectize(), [dept]);
-    //}
+
     init();
 
 });
@@ -18,8 +16,8 @@ $(function () {
 
 function init() {
     var status = all['Status'];
-    if (order['process'] == '1' || order['process'] == '9') {
-        $('.onEdit').hide();
+    if (order['process'] == '1' || order['process'] == '9') { // 流程 已启动 或 已结束
+        $('.onEdit').hide();                                  // 则不可编辑
         $('#upload').hide();
         $('#addActor').hide();
         $('#addUnit').hide();

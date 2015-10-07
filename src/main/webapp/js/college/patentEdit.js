@@ -32,11 +32,10 @@ function init() {
             $('.onApproval').hide();
             $('#reply').hide();
         }
-    }else if(status.indexOf('WaitForCollegeSubmit') >= 0){
+    } else if(status.indexOf('WaitForCollegeSubmit') >= 0){
         $('.onApproval').hide();
         $('#reply').hide();
     }
-    console.log(status.indexOf('WaitForCollegeSubmit'));
 }
 
 function approve(){
@@ -44,7 +43,7 @@ function approve(){
     approveInfo["DecByCol"]=true;
     approveInfo["replyByCol"]=$('#reply-box').val();
     workflow.execute(userName,taskId,approveInfo).success(function(){
-        //window.location.href="/patent";
+        window.location.href="/patent";
     });
 }
 
@@ -53,6 +52,6 @@ function refuse(){
     refuseAwardInfo["DecByCol"]=false;
     refuseAwardInfo["replyByCol"]=$('#reply-box').val();
     workflow.execute(userName,taskId,refuseAwardInfo).success(function(){
-        //window.location.href="/patent";
+        window.location.href="/patent";
     });
 }

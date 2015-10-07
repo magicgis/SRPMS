@@ -1,4 +1,3 @@
-var actorTemp = [];
 var $actorTable = $('#actorTable');
 
 // 类型翻译
@@ -154,7 +153,7 @@ function totalMarksFormatter(data) {
 }
 
 // 论文类型
-function paperType() {
+function getPaperType() {
     $('#type').selectize({
         valueField: 'id',
         labelField: 'value',
@@ -339,137 +338,3 @@ function view(index, row, value) {
         ].join('');
     }
 }
-/**
- * 文件上传
- */
-function upToLoadFile() {
-    $('#upload').Huploadify({
-        header: {"Authorization": $.cookie('srpms_token')},
-        auto: true,
-        fileTypeExts: '*.txt;*.jpg;*.jpeg;*.JPG;*.JPEG;*.png;*.pdf;*.doc;*.docx;',
-        multi: true,
-        fileSizeLimit: 99999,
-        showUploadedPercent: true,//是否实时显示上传的百分比，如20%
-        showUploadedSize: true,
-        method: 'post',
-        uploader: '/api/file/upload',
-        onUploadSuccess: function (file, data) {
-            var fileInfo = {};
-            fileInfo['size'] = formatFileSize(file.size, false);
-            fileInfo['fileKey'] = data;
-            filesData[file.name] = fileInfo;
-            //console.log(filesData);
-            scanFiles(filesData);
-        }
-    });
-}
-/**
- * 显示上传的资料
- * @param filesData
- */
-function scanFiles(filesData) {
-    for (var key in filesData) {
-        var fileId = filesData[key]['fileKey'];
-        var fileSize = filesData[key]['size'];
-        $('#downFiles').prepend('<li id="li' + fileId + '" class="dd-item"> ' +
-            '<div class="dd-handle">' +
-            '<font size="1">' + key + '</font>&nbsp;&nbsp;&nbsp;&nbsp;' +
-            '<span>（' + fileSize + '）</span>' +
-            '<div class="pull-right action-buttons">' +
-            '<a class="blue" style="cursor:pointer" onclick="downFile(\'' + fileId + '\')" id="down_' + fileId + '">' +
-            '<i class="ace-icon fa  fa-cloud-download  bigger-140"></i>' +
-            '</a>&nbsp;&nbsp;&nbsp;&nbsp;' +
-            '<a class="fd red" style="cursor:pointer" onclick="delFile(\'' + fileId + '\')" id="del_' + fileId + '">' +
-            '<i class="ace-icon fa fa-trash-o bigger-140"></i>' +
-            '</a>' +
-            '</div>' +
-            '</div> ' +
-            '</li>');
-    }
-}
-/**
- *文件下载
- * @param fileId
- */
-function downFile(fileId) {
-    var url = '/api/file/' + fileId;
-    //window.location.href=url;
-    $.ajax({
-        url: url,
-        type: 'get',
-        success: function () {
-            window.location = url;
-        }
-    });
-
-    /*    var xhr = new XMLHttpRequest();
-     xhr.open( "GET", url);
-     xhr.setRequestHeader('Authorization', $.cookie('srpms_token'));
-     xhr.addEventListener( "load", function(){
-     console.log(this.responseText);
-     data = this.responseText;
-     data = "data:text/csv;base64,"+btoa(data);
-     document.location = data;
-     }, false);
-     xhr.send(null);*/
-}
-/**
- * 删除上传的文件
- * @param fileId
- */
-function delFile(fileId) {
-    /*    $("#li" + fileId).remove();*/
-    //console.log(filesData);
-    BootstrapDialog.confirm({
-        title: '提示！',
-        message: '你确定要删除该项吗?',
-        type: BootstrapDialog.TYPE_WARNING,
-        closable: true,
-        draggable: true,
-        btnCancelLabel: '取消',
-        btnOKLabel: '确定',
-        btnOKClass: 'btn-warning',
-        callback: function (result) {
-            if (result) {
-                $.ajax({
-                    type: 'DELETE',
-                    url: '/api/file/' + fileId,
-                    success: function () {
-                        for (var key in filesData) {
-                            if (filesData[key]['fileKey'] == fileId) {
-                                delete filesData[key];
-                            }
-                        }
-                        $("#li" + fileId).remove();
-                    }
-                });
-            }
-        }
-    });
-}
-/**
- * 文件大小
- * @param size byKB
- */
-function formatFileSize(size, byKB) {
-    if (size > 1024 * 1024 && !byKB) {
-        size = (Math.round(size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
-    }
-    else {
-        size = (Math.round(size * 100 / 1024) / 100).toString() + 'KB';
-    }
-    return size;
-}
-/**
- * 显示文件信息
- * @param data
- */
-function showFiles(data) {
-    if (data == null || data == undefined) {
-        $('#downFiles').empty();
-    } else {
-        $('#downFiles').empty();
-        scanFiles(data);
-    }
-}
-

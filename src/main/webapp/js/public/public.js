@@ -491,7 +491,9 @@ function DisplayForm($type, ItemValue, flag) {
     if (isNull(ItemValue)) {
         $type[0].selectize.setValue("");
     } else if (flag == '0') {
+        console.log('in '+ ItemValue);
         $type[0].selectize.setValue(ItemValue);
+        console.log('out');
     } else {
         $type[0].selectize.createItem(ItemValue);
     }
