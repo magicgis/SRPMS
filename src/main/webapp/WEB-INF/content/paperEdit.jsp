@@ -510,6 +510,12 @@
     <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 </a>
 <!-- /.main-container -->
+<script>
+
+    var filesData = {};
+    var actorTemp = [];
+
+</script>
 
 <script src='<c:url value="/js/public/public.js"/>'></script>
 <script src='<c:url value="/js/public/pubPaper.js"/>'></script>
@@ -519,31 +525,31 @@
 
 
     $(function ($) {
+
         $('#conferTime').daterangepicker();
-
         showTooltip();
-    });
+    }); // 显示用的
 
-    getMagName();
-    upToLoadFile();
-    CollectionType();
-    NewIssue();
-    selectData();
-    //    $('#reply-box').hide();
-    //    $('#reply').hide();
+    getMagName(); // 初始化期刊名字
+    upToLoadFile(); // 初始化上传插件
+    CollectionType(); // 初始化收录类型
+    NewIssue(); // 初始化报刊类型
+    selectData(); // 会议时间插件
+    getPaperType(); // 初始化论文类型插件
+
     $('#confirmC').hide();
-    paperType();
 
-    var entity = ${ObjectMapper.writeValueAsString(order)};
-    var args = entity['variableMap'];
+    var entity = ${ObjectMapper.writeValueAsString(order)}; // 获得order
+    var args = entity['variableMap']; // 成员，附件等信息都在里面
     var latestInfo = args['WF_Latest'];
     if(latestInfo == undefined) {
         latestInfo = new Object();
     }
-    var taskId = '${taskId}';
-    var orderId = entity['id'];
-    var status = args['Status'];
-    // 批复
+
+    var taskId = '${taskId}';  // 获得task的id
+    var orderId = entity['id']; // 获得order的id
+    var status = args['Status']; // 获得状态
+    // 获得批复
     var replyByCol, replyByDep;
     var approvalByCol = getApprovalByCol(args);
     if(approvalByCol !== ""){
@@ -553,8 +559,9 @@
     if(approvalByDep !== "") {
         replyByDep = args[approvalByDep]['replyByDep'];
     }
-    var paperType = latestInfo["type"];
-    var filesData = latestInfo["filesData"];
+
+    var paperType = latestInfo["type"]; // 获得论文类型
+    filesData = latestInfo["filesData"]; // 获得附件
 
     console.log(entity);
 
@@ -602,49 +609,44 @@
         $('form input').val();
 
         actorTemp = [];
-        //获取orderId与taskId
-
+        //  赋值 orderId与taskId
         $("#WF_Order").val(orderId);
         $('#WF_Task').val(taskId);
 
-
-        //  期刊选择
-        var $magId = $("#magId").selectize();
-        //  论文类型
+        //  赋值 论文类型
         var $paperType = $("#type").selectize();
-
-
         DisplayForm($paperType, paperType, 0);
 
-        if (paperType == "magPaper") {
+        //  期刊选择框
+        var $magId = $("#magId").selectize();
+
+        if (paperType == "magPaper") { // 如果是期刊论文
             // 期刊名称以及刊物级别
-            // 期刊名称
+
             var magId = latestInfo["mag.id"];
-
+            // 赋值 期刊名称
             addOptionSelectize($magId, [{'id': magId, 'name': latestInfo['mag.name']}]);
-
             DisplayForm($magId, magId, 0);
 
-            // 期刊级别
-            if ((isNull(magId) || isInt(magId)) // 期刊没填 期刊在库中
+            // 赋值 期刊级别
+            if ((isNull(magId) || isInt(magId)) // 期刊没填 或 期刊在库中
                     && !(status == "Blank" || status == "Uncomplete" || status.indexOf('Refuse') >= 0) // 期刊不在填写中
             ) {
                 recoveryMagLevel();
             } else {
                 replaceMagLevel();
-//                console.log(latestInfo['mag.standard.infoMap.col_type']);
                 DisplayForm($("#otherPaper").selectize(), latestInfo['mag.standard.infoMap.col_type'], 0);
             }
-        }// 显示magId与判断magId的代码顺序不能改
+        }// end if 期刊论文 显示magId与判断magId的代码顺序不能改
 
-        //可编辑状态
+        // 可编辑状态
         if (status == "Blank" || status == "Uncomplete" || status.indexOf('RefuseByCol') >= 0) {
             $('#confirm').show();
             $('#save').show();
             $('.orderBack').hide();
             $('#del').show();
         }
-        //不可编辑
+        // 不可编辑
         else {
             uneditableForm();
             disableSelectize($magId);
@@ -654,49 +656,52 @@
                 disableSelectize($("#otherPaper").selectize());
             }
             $('#del').hide();
-            if (status == 'Complete' || status == 'WaitForSubmit') {
+            $('#save').hide();
+            if (status == 'Complete' || status == 'WaitForSubmit') { // 确认后和待统一提交还可以撤回
                 $('.orderBack').show();
             } else {
                 $('.orderBack').hide();
             }
-            if(status == 'Complete' && window.location.href.indexOf('task')) {
+            if(status == 'Complete' && window.location.href.indexOf('task')) { // 主负责人确认后，参与人可以确认
                 $('.confirm').show();
                 $('.orderBack').hide();
             }else{
                 $('.confirm').hide();
             }
-            $('#save').hide();
-        }
+        } // end if
 
-        //显示mag或者confer
+        // 显示mag或者confer
         magOrConfer();
 
-        //显示总分
+        // 显示总分
         var score = latestInfo['sum'];
         if (score == undefined || score == null || score == "") {
             $("#showSum").html("");
         } else {
             $("#showSum").html("　可分配总分：" + score + "分");
         }
-        //成员信息
+        // 显示成员信息
         if (latestInfo['actors'] != null) {
             actorTemp = latestInfo['actors'];
         }
         $("#actorTable").bootstrapTable('load', actorTemp);
-        // 会议论文收录类型
+        // 显示会议论文收录类型
         DisplayForm($("#conferType").selectize(), latestInfo["confer.standard.id"], 0);
-        // 报刊等级
+
+        // 显示报刊等级
         DisplayForm($("#newsType").selectize(), latestInfo["newspaper.standard.id"], 0);
-        // 填充表单
+
+        // 填充表单input
         $('#paper').autofill(latestInfo, {
             findbyname: true,
             restrict: false
         });
-        // 文件信息
-        if(filesData != undefined) {
+
+        // 显示文件信息
+        if(filesData != undefined && filesData != null) {
             showFiles(filesData);
         }
-    }
+    } // end if order非空
 
     //监听 更换论文类型
     $('#type').change(function () {

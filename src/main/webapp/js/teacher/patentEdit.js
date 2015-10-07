@@ -98,13 +98,13 @@ function confirm() {
                     if ("valid" in data) {
                         if (data["valid"] == true) {
                             afterSuccess("确认成功！");
-                            //window.location.href = "/patent";
+                            window.location.href = "/patent";
                         } else {
                             errorMsg(data["msg"]);
                         }
                     } else {
                         afterSuccess("确认成功！");
-                        //window.location.href = "/patent";
+                        window.location.href = "/patent";
                     }
                 });
             }
