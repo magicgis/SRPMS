@@ -72,11 +72,10 @@
                                 <div id="tableCon">
                                     <table id="allSRInfoTable"
                                            data-toolbar="#SRToolbar"
-                                           data-search="true"
                                            data-show-columns="true"
                                            data-show-refresh="true"
                                            data-show-toggle="true"
-                                           data-page-list="[10]"
+                                           data-page-list="[10,15,20]"
                                            data-pagination="true"
                                            data-single-select="true"
                                            data-click-to-select="true">
@@ -105,18 +104,21 @@
                                                         </li>
                                                     </ul>
                                                 </div>
+                                                <button class="btn btn-success allSubmit">
+                                                    <i class="ace fa fa-check"></i>统一提交
+                                                </button>
                                             </c:when>
                                             <c:when test="${sessionScope.level == '2'}">
-
+                                                <button class="btn btn-success allSubmit">
+                                                    <i class="ace fa fa-check"></i>统一提交
+                                                </button>
                                             </c:when>
                                             <c:when test="${sessionScope.level == '3'}">
 
                                             </c:when>
                                         </c:choose>
 
-                                        <button class="btn btn-success allSubmit">
-                                            <i class="ace fa fa-check"></i>统一提交
-                                        </button>
+
                                     </div>
                                 </div>
                             </div>

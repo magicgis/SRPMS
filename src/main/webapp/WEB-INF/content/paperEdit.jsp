@@ -37,6 +37,7 @@
         .noradio th.bs-checkbox {
             display: none;
         }
+
     </style>
 </head>
 
@@ -258,10 +259,10 @@
                                                     <h4 class="widget-title">期刊信息</h4>
 
                                                     <div class="widget-toolbar no-border">
-                        <span class="btn btn-primary btn-xs" id="addDiff">
-                            <i class="ace-icon fa fa-plus bigger-100"></i>
-                            添加新期刊
-                        </span>
+                                                        <span class="btn btn-primary btn-xs" id="addDiff">
+                                                            <i class="ace-icon fa fa-plus bigger-100"></i>
+                                                            添加新期刊
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 <div class="widget-body ">
@@ -447,7 +448,7 @@
                                                     </button>
                                                 </div>
                                                 <div id="paperBtn" class="pull-right">
-                                                    <button class="btn btn-info btn-sm back" type="button">
+                                                    <button class="tabOrdBtn btn btn-info btn-sm back" type="button">
                                                         <i class="ace-icon fa fa-reply  bigger-110"></i>
                                                         返回
                                                     </button>
@@ -461,7 +462,7 @@
                                                         <i class="ace-icon fa fa-save bigger-110"></i>
                                                         保存
                                                     </button>
-                                                    <button class="btn btn-success btn-sm" type="button" id="confirmC">
+                                                    <button class="tabOrdBtn btn btn-success btn-sm" type="button" id="confirmC">
                                                         <i class="ace-icon fa fa-check bigger-110"></i>
                                                         确认
                                                     </button>
@@ -470,22 +471,22 @@
                                             <c:otherwise>
                                                 <div class="col-md-offset-4 col-md-8">
 
-                                                    &nbsp; &nbsp; &nbsp;
-                                                    <button class="btn btn-success" type="button" id="Approve">
+
+                                                    <button class="tabOrdBtn btn btn-success" type="button" id="Approve">
                                                         <i class="ace-icon fa fa-check bigger-110"></i>
                                                         通过
                                                     </button>
-                                                    &nbsp; &nbsp; &nbsp;
-                                                    <button class="btn back" type="button">
+
+                                                    <button class="tabOrdBtn btn back" type="button">
                                                         <i class="ace-icon fa fa-reply  bigger-110"></i>
                                                         返回
                                                     </button>
-                                                    &nbsp; &nbsp; &nbsp;
-                                                    <button class="btn btn-danger" type="button" id="Refuse">
+
+                                                    <button class="tabOrdBtn btn btn-danger" type="button" id="Refuse">
                                                         <i class="ace-icon fa fa-remove bigger-110"></i>
                                                         驳回
                                                     </button>
-                                                    &nbsp; &nbsp; &nbsp;
+
 
                                                 </div>
                                             </c:otherwise>
@@ -528,8 +529,8 @@
     CollectionType();
     NewIssue();
     selectData();
-//    $('#reply-box').hide();
-//    $('#reply').hide();
+    //    $('#reply-box').hide();
+    //    $('#reply').hide();
     $('#confirmC').hide();
     paperType();
 
@@ -631,7 +632,7 @@
                 recoveryMagLevel();
             } else {
                 replaceMagLevel();
-                console.log(latestInfo['mag.standard.infoMap.col_type']);
+//                console.log(latestInfo['mag.standard.infoMap.col_type']);
                 DisplayForm($("#otherPaper").selectize(), latestInfo['mag.standard.infoMap.col_type'], 0);
             }
         }// 显示magId与判断magId的代码顺序不能改
@@ -640,7 +641,7 @@
         if (status == "Blank" || status == "Uncomplete" || status.indexOf('RefuseByCol') >= 0) {
             $('#confirm').show();
             $('#save').show();
-            $('#orderBack').hide();
+            $('.orderBack').hide();
             $('#del').show();
         }
         //不可编辑
@@ -654,11 +655,16 @@
             }
             $('#del').hide();
             if (status == 'Complete' || status == 'WaitForSubmit') {
-                $('#orderBack').show();
+                $('.orderBack').show();
             } else {
-                $('#orderBack').hide();
+                $('.orderBack').hide();
             }
-            $('#confirm').hide();
+            if(status == 'Complete' && window.location.href.indexOf('task')) {
+                $('.confirm').show();
+                $('.orderBack').hide();
+            }else{
+                $('.confirm').hide();
+            }
             $('#save').hide();
         }
 

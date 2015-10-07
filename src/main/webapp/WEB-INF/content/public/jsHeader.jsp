@@ -156,6 +156,9 @@ window.jQuery || document.write("<script src='assets/js/jquery1x.min.js'>" + "<"
         background: none repeat scroll 0 0 #EEE;
     }
 
+    button.tabOrdBtn {
+        margin: 0px 10px 0px 10px;
+    }
     /*.user-info {*/
     /*width: 150px;*/
     /*}*/

@@ -55,19 +55,19 @@ function magOrConfer_add(){
 function uneditableForm() {
     $('form input').attr("disabled", "disabled");
     $('form select').attr("disabled", "disabled");
-    $('#addDiff').attr("disabled", "disabled");
+    $('#addDiff').hide();
     $('#addActor').hide();
     $('#getScore').hide();
     $('.delFiles').hide();
     $('#actorTable').bootstrapTable('hideColumn', 'operate');
     $('.type').hide();
-
+    $('#upload').hide();
 }
 // 表单可编辑
 function editableForm() {
     $('form input').removeAttr("disabled", "disabled");
     $('form select').removeAttr("disabled", "disabled");
-    $('#addDiff').removeAttr("disabled", "disabled");
+    $('#addDiff').show();
     $('#addActor').show();
     $('#getScore').show();
     $('.delFiles').show();
@@ -259,6 +259,40 @@ function getMagName() {
 
         }
     });
+}
+//刊物级别的替换
+function recoveryMagLevel() {
+    if (document.querySelector("#otherPaper")) {
+        $("#otherPaper").parent().empty().append("<input data-rel='tooltip' type='text' "
+            + "class='form-control mag-input uneditableInput' id='magLevel' "
+            + "name='mag.standard.infoMap.col_type' title='不可编辑' data-placement='right' "
+            + "onfocus='this.blur()' onmouseover='showTooltip()'/>");
+    }
+}
+
+//刊物级别的替换
+function replaceMagLevel() {
+    if (document.querySelector("#magLevel")) {
+        $("#magLevel").replaceWith(
+            "<select id='otherPaper' class='form-control mag-input' name='mag.standard.infoMap.col_type'>" +
+            "</select>");
+        $("#otherPaper").selectize({
+            valueField: 'id',
+            labelField: 'value',
+            create: false,
+            options: [
+                {"id": "其它外文论文", "value": "其它外文论文"},
+                {"id": "其它中文论文", "value": "其它中文论文"}
+            ],
+            onChange: function (result) {
+                if (result == "其它外文论文") {
+                    $("#magStandardId").val("1018");    //todo
+                } else {
+                    $("#magStandardId").val("1019");    //todo
+                }
+            }
+        });
+    }
 }
 /**
  * 获得最新的批复

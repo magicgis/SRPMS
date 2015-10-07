@@ -3,9 +3,9 @@ $(function () {
     init();
 
 });
-
+var flag = true;
 function init() {
-
+    $('#reply-box').hide();
     if (status.indexOf('Refuse') >= 0) {
         $('#reply').show();
         $('#reply-display').show();
@@ -238,6 +238,7 @@ function editActor(row, index) {
                 findbyname: true,
                 restrict: false
             });
+            $(".editableModal").show();
             //是否可编辑
             if (flag) {//可编辑
                 enableSelectize($actor);
@@ -246,7 +247,6 @@ function editActor(row, index) {
                 $("#rank").removeAttr("disabled");
                 $("#marks").removeAttr("disabled");
                 $("#btn-ok").show();
-                $(".editableModal").show();
             } else {  //不可编辑
                 disableSelectize($actor);
                 disableSelectize($role);
@@ -254,7 +254,6 @@ function editActor(row, index) {
                 $("#rank").attr("disabled", "disabled");
                 $("#marks").attr("disabled", "disabled");
                 $("#btn-ok").attr("disabled", "disabled").hide();
-                $(".editableModal").show();
             }
             if (row["staff.id"] == "9998" || row["staff.id"] == "9999") {
                 $("#marks").attr("disabled", "disabled");
@@ -263,38 +262,3 @@ function editActor(row, index) {
     });
 }
 
-
-//刊物级别的替换
-function recoveryMagLevel() {
-    if (document.querySelector("#otherPaper")) {
-        $("#otherPaper").parent().empty().append("<input data-rel='tooltip' type='text' "
-            + "class='form-control mag-input uneditableInput' id='magLevel' "
-            + "name='mag.standard.infoMap.col_type' title='不可编辑' data-placement='right' "
-            + "onfocus='this.blur()' onmouseover='showTooltip()'/>");
-    }
-}
-
-//刊物级别的替换
-function replaceMagLevel() {
-    if (document.querySelector("#magLevel")) {
-        $("#magLevel").replaceWith(
-            "<select id='otherPaper' class='form-control mag-input' name='mag.standard.infoMap.col_type'>" +
-            "</select>");
-        $("#otherPaper").selectize({
-            valueField: 'id',
-            labelField: 'value',
-            create: false,
-            options: [
-                {"id": "其它外文论文", "value": "其它外文论文"},
-                {"id": "其它中文论文", "value": "其它中文论文"}
-            ],
-            onChange: function (result) {
-                if (result == "其它外文论文") {
-                    $("#magStandardId").val("1018");    //todo
-                } else {
-                    $("#magStandardId").val("1019");    //todo
-                }
-            }
-        });
-    }
-}
