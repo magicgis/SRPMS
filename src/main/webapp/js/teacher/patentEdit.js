@@ -14,7 +14,7 @@ $(function () {
     disableSelectize($('#patType').selectize());
     hideUnitOperate();
     init();
-
+    $('.removeActor').hide();
     $('#upload').hide();
     $('.onApproval').hide();
 

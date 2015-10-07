@@ -143,7 +143,6 @@
     </c:when>
     <c:when test="${sessionScope.level == '3'}">
         <script src="<c:url value="/js/school/patent.js"/>"></script>
-        <script src="<c:url value="/js/school/patent.js"/>"></script>
     </c:when>
 </c:choose>
 

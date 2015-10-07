@@ -144,15 +144,7 @@ function uneditableForm(){
     $('form input').attr("disabled", "disabled");
     $('form select').attr("disabled", "disabled");
     $('#addDiff').attr("disabled", "disabled");
-    //$('#addActor').hide();
-    //$('#addUnit').hide();
     $('.delFiles').hide();
-}
-function hideActorOperate() {
-    $('#actorTable').bootstrapTable('hideColumn', 'operate');
-}
-function hideUnitOperate() {
-    $('#unitTable').bootstrapTable('hideColumn', 'operate');
 }
 /*
  * 获取人员信息
@@ -198,4 +190,48 @@ function getActors() {
     else {
         actorTemp = all[keyStr]['actors'];
     }
+}
+
+function getPatType() {
+    $('#patType').selectize({ //todo
+        valueField: 'id',
+        labelField: 'value',
+        maxItems: 1,
+        //todo 需要换成真实数据
+        options: [
+            {"id": "1023", "value": "国际发明专利"},
+            {"id": "1024", "value": "中国发明专利"},
+            {"id": "1025", "value": "外观专利"},
+            {"id": "1026", "value": "实用专利"}]
+//        ,
+//        onChange: function (result) {
+//            $('#patTypeValue').val(this.getItem(result)["context"]["innerHTML"]);
+//        }
+    });
+}
+
+function getDept() {
+    $('#dept').selectize({
+        valueField: 'id',
+        labelField: 'value',
+        maxItems: 1,
+        preload: true,
+        load: function (query, callback) {
+            $.ajax({
+                url: '../api/baseinfo/院系',
+                type: 'GET',
+                dataType: 'json',
+                error: function () {
+                    callback();
+                },
+                success: function (res) {
+                    callback(res);
+                }
+            });
+        }
+//        ,
+//        onChange: function (result) {
+//            $('#deptValue').val(this.getItem(result)["context"]["innerHTML"]);
+//        }
+    });
 }

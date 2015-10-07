@@ -354,22 +354,10 @@ function submit() {
  * 新建
  */
 function start() {
-    $('form input').val(null);
-    $('#downFiles').empty();
-    actorTemp = [];
-    filesData = {};
-    $('#actorTable').bootstrapTable('load', actorTemp);
     workflow.startOrder(userName, "basicProcess_Beta", "paper").success(function (data) {
         afterSuccess("新建成功！");
-        showForm();
-        magOrConfer();
-        $('#orderBack').hide();
         var orderId = data["id"];
-        $('#WF_Order').val(orderId);
-        workflow.latestTask(orderId).success(function (currentTask) {
-            var taskId = currentTask[0]['id'];
-            $('#WF_Task').val(taskId);
-        });
+        window.location.href='/order/'+orderId;
     });
 }
 /**

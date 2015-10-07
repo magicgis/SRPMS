@@ -7,7 +7,9 @@
 $(function () {
     //TODO
     $('#reply').hide();
-
+    //if(!$.isEmptyObject(dept)) {
+    //    addOptionSelectize($('#dept').selectize(), [dept]);
+    //}
     init();
 
 });

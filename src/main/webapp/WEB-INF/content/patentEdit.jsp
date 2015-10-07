@@ -96,7 +96,7 @@
                                                             <div class="col-sm-9">
                                                                 <input id="name" name="name"
                                                                        type="text" class="form-control col-xs-12"
-                                                                       placeholder="请选择" value="${patent.name}"/>
+                                                                       placeholder="请输入" value="${patent.name}"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -392,8 +392,10 @@
         replyByCol = all['replyByCol'];
         replyByDep = all['replyByDep'];
     }
-    getActors(); // 这是取成员的
 
+    getPatType(); // 专利类型
+    getDept();   // 学院
+    getActors(); // 这是取成员的
     upToLoadFile();
 
     if (filesData == null) {
@@ -466,43 +468,8 @@
         data: unitTemp
     });
 
-    $('#patType').selectize({ //todo
-        valueField: 'id',
-        labelField: 'value',
-        maxItems: 1,
-        //todo 需要换成真实数据
-        options: [
-            {"id": "1023", "value": "国际发明专利"},
-            {"id": "1024", "value": "中国发明专利"},
-            {"id": "1025", "value": "外观专利"},
-            {"id": "1026", "value": "实用专利"}],
-        onChange: function (result) {
-//            $('#patTypeValue').val(this.getItem(result)["context"]["innerHTML"]);
-        }
-    });
-    $('#dept').selectize({
-        valueField: 'id',
-        labelField: 'value',
-        maxItems: 1,
-        preload: true,
-        load: function (query, callback) {
-            $.ajax({
-                url: '../api/baseinfo/院系',
-                type: 'GET',
-                dataType: 'json',
-                error: function () {
-                    callback();
-                },
-                success: function (res) {
-                    callback(res);
-                }
-            });
-        },
-        onChange: function (result) {
-//            $('#deptValue').val(this.getItem(result)["context"]["innerHTML"]);
-        }
-    });
-
+    DisplayForm($('#patType').selectize(), '1023');
+    DisplayForm($('#dept').selectize(), dept['id']);
 
     //监听 确认
     $(".confirm").click(function () {

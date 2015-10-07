@@ -83,7 +83,7 @@
                                         <input type="text" name="WF_Order" id="WF_Order"/>
                                         <input type="text" name="IsComplete" id="IsComplete"/>
                                         <input type="text" name="mag.name" id="magName"/>
-                                        <input type="text" name="score" id="score"/>
+                                        <input type="text" name="sum" id="score"/>
                                         <input type="text" name="mag.standard.id" id="magStandardId"/>
                                         <%--<input type="text" name="newspaper.standard.id" id="newsStandardId"/>--%>
                                         <%--<input type="text" name="confer.standard.id" id="conferStandardId"/>--%>
@@ -368,16 +368,14 @@
                                                     <div class="row">
                                                         <div id="actorToolbar">
                                                             <a data-toggle="modal" id="addActor"
-                                                               class="btn btn-primary btn-sm">添加成员</a>
+                                                               class="btn btn-primary btn-sm">添加成员</a>　
                                                             <%--<a data-toggle="modal" id="editActor" class="btn btn-primary btn-sm" style="display: none;">编辑成员</a>--%>
                                                             <a data-toggle="modal" id="getScore"
                                                                class="btn btn-primary btn-sm">计算分数</a>
                                                         </div>
                                                         <table id="actorTable"
                                                                data-toolbar="#actorToolbar"
-                                                               data-show-footer="true"
-                                                               data-show-columns="true"
-                                                               data-show-toggle="true"></table>
+                                                               data-show-footer="true"></table>
                                                     </div>
                                                 </div>
                                             </div>
@@ -497,6 +495,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xs-12" id="info_alert"></div>
                 </div>
             </div>
         </div>
@@ -517,23 +516,10 @@
 
 <script type="text/javascript">
 
-    //监听 点击通过
-    $("#Approve").click(function () {
-        approve();
-    });
-    //监听 点击驳回
-    $("#Refuse").click(function () {
-        refuse();
-    });
 
     $(function ($) {
         $('#conferTime').daterangepicker();
-        $('.date-picker').datepicker({
-            autoclose: true,
-            todayHighlight: true
-        }).next().on(ace.click_event, function () {
-            $(this).prev().focus();
-        });
+
         showTooltip();
     });
 
@@ -542,23 +528,73 @@
     CollectionType();
     NewIssue();
     selectData();
-    $('#reply-box').hide();
-    $('#reply').hide();
+//    $('#reply-box').hide();
+//    $('#reply').hide();
     $('#confirmC').hide();
     paperType();
 
     var entity = ${ObjectMapper.writeValueAsString(order)};
     var args = entity['variableMap'];
     var latestInfo = args['WF_Latest'];
+    if(latestInfo == undefined) {
+        latestInfo = new Object();
+    }
     var taskId = '${taskId}';
     var orderId = entity['id'];
     var status = args['Status'];
+    // 批复
+    var replyByCol, replyByDep;
+    var approvalByCol = getApprovalByCol(args);
+    if(approvalByCol !== ""){
+        replyByCol = args[approvalByCol]['replyByCol'];
+    }
+    var approvalByDep = getApprovalByDep(args);
+    if(approvalByDep !== "") {
+        replyByDep = args[approvalByDep]['replyByDep'];
+    }
     var paperType = latestInfo["type"];
+    var filesData = latestInfo["filesData"];
 
-    console.log(args);
-    console.log(latestInfo);
-    console.log(taskId);
-    console.log(paperType);
+    console.log(entity);
+
+    $('#actorTable').bootstrapTable({
+        columns: [
+            {
+                field: 'staff.id',
+                title: '工号',
+                sortable: true,
+                visible: false
+            }, {
+                field: 'rank',
+                title: '排名',
+                sortable: true,
+                footerFormatter: "totalNameFormatter"
+            }, {
+                field: 'staff.name',
+                title: '成员',
+                sortable: true
+            }, {
+                field: 'role',
+                title: '角色',
+                sortable: true
+            }, {
+                field: 'score',
+                title: '分数',
+                sortable: true,
+                footerFormatter: "totalMarksFormatter"
+            }, {
+                field: 'unit',
+                title: '归属单位',
+                sortable: true
+            }, {
+                field: 'operate',
+                title: '操作',
+                sortable: true,
+                formatter: "operateFormatter",
+                events: "operateEvents"
+            }],
+        data: actorTemp
+    });
 
     if (entity != null || !$.isEmptyObject(entity)) {
         //清空
@@ -584,8 +620,6 @@
             // 期刊名称
             var magId = latestInfo["mag.id"];
 
-            console.log(magId);
-            console.log(latestInfo['mag.name']);
             addOptionSelectize($magId, [{'id': magId, 'name': latestInfo['mag.name']}]);
 
             DisplayForm($magId, magId, 0);
@@ -603,49 +637,21 @@
         }// 显示magId与判断magId的代码顺序不能改
 
         //可编辑状态
-        if (status == "Blank" || status == "Uncomplete" || status.indexOf('Refuse') >= 0) {
-            editableForm();
-            enableSelectize($magId);
-            if (document.querySelector("#otherPaper")) {
-                enableSelectize($("#otherPaper").selectize());
-            }
+        if (status == "Blank" || status == "Uncomplete" || status.indexOf('RefuseByCol') >= 0) {
             $('#confirm').show();
             $('#save').show();
             $('#orderBack').hide();
             $('#del').show();
-            workflow.latestTask(orderId).success(function (currentTask) {
-                var taskId = currentTask[0]['id'];
-                $('#WF_Task').val(taskId);
-                if (status.indexOf('Refuse') >= 0) {
-                    $('#reply').show();
-                    $('#reply-display').show();
-                    var reply = $('#reply-display').children('p');
-                    var who = $('#reply-display').children('small');
-                    reply.empty();
-                    who.empty();
-                    if (status.indexOf("Col") >= 0) {
-                        reply.append(currentTask[0]['variableMap']['replyByCol']);
-                        who.append("学院批复");
-                    } else {
-                        $('#del').hide();
-                        $('#confirm').hide();
-                        $('#save').hide();
-                        reply.append(currentTask[0]['variableMap']['replyByDep']);
-                        who.append("管理部门批复");
-                    }
-                } else {
-                    $('#reply').hide();
-                }
-            });
         }
         //不可编辑
         else {
             uneditableForm();
             disableSelectize($magId);
+            disableSelectize($("#conferType").selectize());
+            disableSelectize($("#newsType").selectize());
             if (document.querySelector("#otherPaper")) {
                 disableSelectize($("#otherPaper").selectize());
             }
-
             $('#del').hide();
             if (status == 'Complete' || status == 'WaitForSubmit') {
                 $('#orderBack').show();
@@ -660,11 +666,11 @@
         magOrConfer();
 
         //显示总分
-        var score = latestInfo['score'];
+        var score = latestInfo['sum'];
         if (score == undefined || score == null || score == "") {
             $("#showSum").html("");
         } else {
-            $("#showSum").html("可分配总分：" + score + "分");
+            $("#showSum").html("　可分配总分：" + score + "分");
         }
         //成员信息
         if (latestInfo['actors'] != null) {
@@ -681,12 +687,9 @@
             restrict: false
         });
         // 文件信息
-        showFiles(latestInfo["filesData"]);
-    }
-
-
-    function showTooltip() {
-        $('[data-rel=tooltip]').tooltip({container: 'body'});
+        if(filesData != undefined) {
+            showFiles(filesData);
+        }
     }
 
     //监听 更换论文类型
@@ -694,7 +697,6 @@
         magOrConfer();
         magOrConfer_add();
     });
-
     //监听 增加新期刊
     $("#addDiff").click(function () {
         window.location.href = "magazine";
@@ -718,7 +720,7 @@
     });
     //监听 点击返回
     $(".back").click(function () {
-        showTableTeacher(url, tableTypes);
+        history.go(-1);
     });
     //监听 删除
     $("#del").click(function () {
@@ -728,397 +730,18 @@
     $(".orderBack").click(function () {
         getOrderBack();
     });
+    //监听 点击通过
+    $("#Approve").click(function () {
+        approve();
+    });
+    //监听 点击驳回
+    $("#Refuse").click(function () {
+        refuse();
+    });
     //监听 部分input不可输入
     $(".uneditableInput").focus(function () {
         this.blur();
     });
-
-    /**
-     * 撤回order
-     */
-    function getOrderBack() {
-        var row = $('#PaperTable').bootstrapTable('getSelections')[0];
-        var order = row['id'];
-        var jsonData = Object();
-        jsonData['order'] = order;
-        jsonData['user'] = userName;
-        window.workflow.getBack(userName, order).success(function () {
-            afterSuccess("已撤回");
-            showTableTeacher(url, tableTypes);
-        });
-    }
-    /**
-     * 删除order
-     */
-    function delOrder() {
-        var order = $("#WF_Order").val();
-        BootstrapDialog.confirm({
-            title: '提示！',
-            message: '你确定要删除该项吗?',
-            type: BootstrapDialog.TYPE_WARNING,
-            closable: true,
-            draggable: true,
-            btnCancelLabel: '取消',
-            btnOKLabel: '确定',
-            btnOKClass: 'btn-warning',
-            callback: function (result) {
-                if (result) {
-                    workflow.delOrder(order).success(function () {
-                        afterSuccess("删除成功！");
-                        showTableTeacher(url, tableTypes);
-                    });
-                }
-            }
-        });
-    }
-
-    // 期刊名称 以及根据名称自动填充信息
-    function getMagName() {
-        $('#magId').selectize({
-            valueField: 'id',
-            labelField: 'name',
-            searchField: 'name',
-            sortField: {
-                field: 'text',
-                direction: 'asc'
-            },
-            maxItems: 1,
-            create: true,
-            load: function (query, callback) {
-                if (!query.length) return callback();
-                $.ajax({
-                    url: '/api/mag/json',
-                    type: 'GET',
-                    dataType: 'json',
-                    data: {
-                        query: query
-                    },
-                    error: function () {
-                        callback();
-                    },
-                    success: function (res) {
-                        callback(res);
-                    }
-                });
-            },
-            onChange: function (result) {
-                var magId = this;
-                if ($("#magId").val() != "") {
-                    var getMag = $.ajax({
-                        url: '/api/mag/' + result,
-                        type: 'GET',
-                        dataType: 'json'
-                    });
-                    // 根据magId获取期刊信息 并填充
-                    getMag.complete(function (info) {
-                        var statusCode = getMag.status;
-                        if (statusCode == 200) {
-                            recoveryMagLevel();
-                            $('#magName').val(magId.getItem(result)["context"]["innerHTML"]);
-                            getMag.success(function (data) {
-                                $("#magLevel").val(data["standard"]["infoMap"]["col_type"]);
-                                $("#issn").val(data["issn"]);
-                                $("#cn").val(data["cn"]);
-                                $("#magStandardId").val(data["standard"]["id"]);
-                            });
-                        } else if (statusCode == 204) {
-                            replaceMagLevel();
-                            $('#magName').val(result);
-                        }
-                    });
-                }
-
-            }
-        });
-    }
-
-
-    /**
-     * 确认
-     */
-    function confirm() {
-        $('#IsComplete').val(true);
-        var jsonData = getFormData('paper');
-        BootstrapDialog.confirm({
-            title: '确认信息',
-            message: '确认?',
-            type: BootstrapDialog.TYPE_INFO,
-            closable: true,
-            draggable: true,
-            btnCancelLabel: '取消',
-            btnOKLabel: '确认',
-            btnOKClass: 'btn-ok',
-            callback: function (result) {
-                /**
-                 * userName,taskId,status
-                 */
-                if (result) {
-                    workflow.execute(userName, $('#WF_Task').val(), jsonData).success(function (data) {
-                        if ("valid" in data) {
-                            if (data["valid"] == true) {
-                                afterSuccess("确认成功！");
-                                showTableTeacher(url, tableTypes);
-                            } else {
-                                errorMsg(data["msg"]);
-                            }
-                        } else {
-                            afterSuccess("确认成功！");
-                            showTableTeacher(url, tableTypes);
-                        }
-                    });
-                }
-            }
-        });
-    }
-
-    /**
-     * 添加成员
-     */
-    function addActor() {
-        BootstrapDialog.show({
-            type: BootstrapDialog.TYPE_PRIMARY,
-            message: function (dialog) {
-                var $message = $('<div></div>');
-                var pageToLoad = dialog.getData('pageToLoad');
-                $message.load(pageToLoad);
-                return $message;
-            },
-            title: "成员信息",
-            data: {
-                'pageToLoad': 'dialog/addActor.html'
-            },
-            closeByBackdrop: false,
-            buttons: [{
-                id: 'btn-oknm',
-                icon: 'glyphicon glyphicon-check',
-                label: '添加',
-                cssClass: 'btn-info',
-                autospin: false,
-                action: function (dialogRef) {
-                    if (!isFull()) {
-                        messageModal('请将信息填写完整。');
-                        return;
-                    }
-                    subActorInfo(null, 1);
-                    dialogRef.close();
-                }
-            }],
-            onshown: function () {
-                fillRoles(paperRoles);
-            }
-        });
-    }
-
-    /**
-     * 编辑成员
-     */
-    function editActor(row, index) {
-        BootstrapDialog.show({
-            type: BootstrapDialog.TYPE_PRIMARY,
-            message: function (dialog) {
-                var $message = $('<div></div>');
-                var pageToLoad = dialog.getData('pageToLoad');
-                $message.load(pageToLoad);
-                return $message;
-            },
-            title: "成员信息",
-            data: {
-                'pageToLoad': 'dialog/addActor.html'
-            },
-            closeByBackdrop: false,
-            buttons: [{
-                id: 'btn-ok',
-                icon: 'glyphicon glyphicon-check',
-                label: '保存',
-                cssClass: 'btn-info',
-                autospin: false,
-                action: function (dialogRef) {
-                    if (!isFull()) {
-                        messageModal('请将信息填写完整。');
-                        return;
-                    }
-                    subActorInfo(index, 0);
-                    dialogRef.close();
-                }
-            }, {
-                id: 'btn-cancel',
-                icon: 'glyphicon glyphicon-check',
-                label: '关闭',
-                cssClass: 'btn-info',
-                autospin: false,
-                action: function (dialogRef) {
-                    dialogRef.close();
-                }
-            }],
-            onshown: function () {
-                fillRoles(paperRoles);
-                var $actor = $("#actor").selectize();
-                var $role = $("#role").selectize();
-                var $units = $("#units").selectize();
-                addOptionSelectize($actor, [{'id': row["staff.id"], 'name': row["staff.name"], "col": {"value": ""}}]);
-                $actor[0].selectize.setValue(row["staff.id"]);
-                //填充角色
-                DisplayForm($role, row["role"], 0);
-                //填充单位
-                DisplayForm($units, row["unit"], 1);
-                //填充其他
-                $('#actorsInfo').autofill(row, {
-                    findbyname: true,
-                    restrict: false
-                });
-                //是否可编辑
-                if (flag) {//可编辑
-                    enableSelectize($actor);
-                    enableSelectize($role);
-                    enableSelectize($units);
-                    $("#rank").removeAttr("disabled");
-                    $("#marks").removeAttr("disabled");
-                    $("#btn-ok").show();
-                    $(".editableModal").show();
-                } else {  //不可编辑
-                    disableSelectize($actor);
-                    disableSelectize($role);
-                    disableSelectize($units);
-                    $("#rank").attr("disabled", "disabled");
-                    $("#marks").attr("disabled", "disabled");
-                    $("#btn-ok").attr("disabled", "disabled").hide();
-                    $(".editableModal").show();
-                }
-                if (row["staff.id"] == "9998" || row["staff.id"] == "9999") {
-                    $("#marks").attr("disabled", "disabled");
-                }
-            }
-        });
-    }
-
-    /**
-     * 计算分数
-     */
-    function getScore() {
-        var jsonData = getFormData('paper');
-        workflow.getScore(jsonData).success(function (data) {
-            if (data["valid"] == false) {
-                errorMsg(data["msg"]);
-                flag = true;
-            } else if (data["hasSum"] == false) {
-                $("#actorTable").bootstrapTable('load', data["actors"]);
-                flag = false;
-                errorMsg(data["msg"]);
-            } else if (data["hasSum"] == true) {
-                $("#score").val(data["sum"]);
-                $("#showSum").html("可分配总分：" + data["sum"] + "分");
-                errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
-                flag = true;
-            }
-        });
-    }
-
-
-    //刊物级别的替换
-    function replaceMagLevel() {
-        if (document.querySelector("#magLevel")) {
-            $("#magLevel").replaceWith(
-                    "<select id='otherPaper' class='form-control mag-input' name='mag.standard.infoMap.col_type'>" +
-                    "</select>");
-            $("#otherPaper").selectize({
-                valueField: 'id',
-                labelField: 'value',
-                create: false,
-                options: [
-                    {"id": "其它外文论文", "value": "其它外文论文"},
-                    {"id": "其它中文论文", "value": "其它中文论文"}
-                ],
-                onChange: function (result) {
-                    if (result == "其它外文论文") {
-                        $("#magStandardId").val("1018");    //todo
-                    } else {
-                        $("#magStandardId").val("1019");    //todo
-                    }
-                }
-            });
-        }
-    }
-    //刊物级别的替换
-    function recoveryMagLevel() {
-        if (document.querySelector("#otherPaper")) {
-            $("#otherPaper").parent().empty().append("<input data-rel='tooltip' type='text' "
-                    + "class='form-control mag-input uneditableInput' id='magLevel' "
-                    + "name='mag.standard.infoMap.col_type' title='不可编辑' data-placement='right' "
-                    + "onfocus='this.blur()' onmouseover='showTooltip()'/>");
-        }
-    }
-    /**
-     * 保存
-     */
-    function save() {
-        $('#IsComplete').val(false);
-        //var jsonData = $("#paper").serialize();
-        var jsonData = getFormData('paper');
-        //console.log(jsonData);
-        workflow.execute(userName, '', jsonData).success(function () {
-            afterSuccess("保存成功！");
-            showTableTeacher(url, tableTypes);
-        });
-    }
-
-    function getMagName() {
-        $('#magId').selectize({
-            valueField: 'id',
-            labelField: 'name',
-            searchField: 'name',
-            sortField: {
-                field: 'text',
-                direction: 'asc'
-            },
-            maxItems: 1,
-            create: true,
-            load: function (query, callback) {
-                if (!query.length) return callback();
-                $.ajax({
-                    url: '/api/mag/json',
-                    type: 'GET',
-                    dataType: 'json',
-                    data: {
-                        query: query
-                    },
-                    error: function () {
-                        callback();
-                    },
-                    success: function (res) {
-                        callback(res);
-                    }
-                });
-            },
-            onChange: function (result) {
-                var magId = this;
-                if ($("#magId").val() != "") {
-                    var getMag = $.ajax({
-                        url: '/api/mag/' + result,
-                        type: 'GET',
-                        dataType: 'json'
-                    });
-                    // 根据magId获取期刊信息 并填充
-                    getMag.complete(function (info) {
-                        var statusCode = getMag.status;
-                        if (statusCode == 200) {
-                            recoveryMagLevel();
-                            $('#magName').val(magId.getItem(result)["context"]["innerHTML"]);
-                            getMag.success(function (data) {
-                                $("#magLevel").val(data["standard"]["infoMap"]["col_type"]);
-                                $("#issn").val(data["issn"]);
-                                $("#cn").val(data["cn"]);
-                                $("#magStandardId").val(data["standard"]["id"]);
-                            });
-                        } else if (statusCode == 204) {
-                            replaceMagLevel();
-                            $('#magName').val(result);
-                        }
-                    });
-                }
-
-            }
-        });
-    }
 
 
 </script>
@@ -1129,10 +752,10 @@
         <script src="<c:url value="/js/teacher/paperEdit.js"/>"></script>
     </c:when>
     <c:when test="${sessionScope.level == '2'}">
-        <script src="<c:url value="/js/college/paper.js"/>"></script>
+        <script src="<c:url value="/js/college/paperEdit.js"/>"></script>
     </c:when>
     <c:when test="${sessionScope.level == '3'}">
-        <script src="<c:url value="/js/school/paper.js"/>"></script>
+        <script src="<c:url value="/js/school/paperEdit.js"/>"></script>
     </c:when>
 </c:choose>
 

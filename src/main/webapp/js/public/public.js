@@ -202,7 +202,40 @@ function getSubmission(pData) {
     }
     return keyStr;
 }
-
+function getApprovalByCol(pData) {
+    var max;
+    var keyStr = "";
+    for (var key in pData) {
+        var partn = new RegExp('WF_\\d+_ApprovalByCol');
+        if (partn.test(key)) {
+            var keyValue = key.substring(3, key.length - 14);
+            if (parseInt(max) < parseInt(keyValue)||max == undefined) {
+                max = keyValue;
+            }
+        }
+        if(max!=undefined) {
+            keyStr = "WF_" + max + "_ApprovalByCol";
+        }
+    }
+    return keyStr;
+}
+function getApprovalByDep(pData) {
+    var max;
+    var keyStr = "";
+    for (var key in pData) {
+        var partn = new RegExp('WF_\\d+_ApprovalByDep');
+        if (partn.test(key)) {
+            var keyValue = key.substring(3, key.length - 14);
+            if (parseInt(max) < parseInt(keyValue)||max == undefined) {
+                max = keyValue;
+            }
+        }
+        if(max!=undefined) {
+            keyStr = "WF_" + max + "_ApprovalByDep";
+        }
+    }
+    return keyStr;
+}
 
 /**
  * 公共方法 对任务的完成状态进行翻译
@@ -236,6 +269,13 @@ function actorTran(value,row){
         return value.substring(0,value.length-1);
     else
         return;
+}
+
+function hideActorOperate() {
+    $('#actorTable').bootstrapTable('hideColumn', 'operate');
+}
+function hideUnitOperate() {
+    $('#unitTable').bootstrapTable('hideColumn', 'operate');
 }
 
 // 简单消息弹框
@@ -534,6 +574,10 @@ jQuery(function ($) {
     });
 });
 
+
+function showTooltip() {
+    $('[data-rel=tooltip]').tooltip({container: 'body'});
+}
 
 
 /**--------------------------成员表公共方法------------------**/

@@ -200,6 +200,67 @@ function selectData() {
     );
 }
 /**
+ * 获取期刊
+ */
+function getMagName() {
+    $('#magId').selectize({
+        valueField: 'id',
+        labelField: 'name',
+        searchField: 'name',
+        sortField: {
+            field: 'text',
+            direction: 'asc'
+        },
+        maxItems: 1,
+        create: true,
+        load: function (query, callback) {
+            if (!query.length) return callback();
+            $.ajax({
+                url: '/api/mag/json',
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    query: query
+                },
+                error: function () {
+                    callback();
+                },
+                success: function (res) {
+                    callback(res);
+                }
+            });
+        },
+        onChange: function (result) {
+            var magId = this;
+            if ($("#magId").val() != "") {
+                var getMag = $.ajax({
+                    url: '/api/mag/' + result,
+                    type: 'GET',
+                    dataType: 'json'
+                });
+                // 根据magId获取期刊信息 并填充
+                getMag.complete(function (info) {
+                    var statusCode = getMag.status;
+                    if (statusCode == 200) {
+                        recoveryMagLevel();
+                        $('#magName').val(magId.getItem(result)["context"]["innerHTML"]);
+                        getMag.success(function (data) {
+                            $("#magLevel").val(data["standard"]["infoMap"]["col_type"]);
+                            $("#issn").val(data["issn"]);
+                            $("#cn").val(data["cn"]);
+                            $("#magStandardId").val(data["standard"]["id"]);
+                        });
+                    } else if (statusCode == 204) {
+                        replaceMagLevel();
+                        $('#magName').val(result);
+                    }
+                });
+            }
+
+        }
+    });
+}
+/**
  * 获得最新的批复
  * @param data
  */
