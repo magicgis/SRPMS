@@ -51,6 +51,23 @@ public interface Engine {
     Order startInstanceById(String processId, String operator, String type);
 
     /**
+     * 新建实体流程
+     *
+     * @param entityId 实体主键
+     * @param type     实体类型
+     * @return order
+     */
+    Order startInstanceByEntity(String entityId, String type);
+
+    /**
+     * 撤回实体流程
+     *
+     * @param orderId 流程id
+     * @return t/f
+     */
+    boolean resetEntityProcess(String orderId);
+
+    /**
      * 根据orderId获取活跃任务
      *
      * @param orderId orderId
