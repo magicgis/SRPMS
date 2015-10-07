@@ -1,7 +1,15 @@
 package engine;
 
+import dao.PatentDao;
+import dao.ProjectDao;
+import dao.StaffDao;
 import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
+import entity.Patent;
+import entity.Project;
+import entity.Staff;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.snaker.engine.SnakerEngine;
 import org.snaker.engine.access.QueryFilter;
 import org.snaker.engine.entity.HistoryTask;
@@ -12,6 +20,7 @@ import org.snaker.engine.helper.StreamHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,16 +32,25 @@ import java.util.Map;
  * Created by guofan on 2015/1/22
  */
 @Service
+@SuppressWarnings("unchecked")
 public class SnakerEngineUtils implements Engine {
+
+    private static final Logger log = LogManager.getLogger(SnakerEngineUtils.class);
 
     @Autowired
     private OrderActorDao orderActorDao;
     @Autowired
     private SnakerEngine snakerEngine;
+    @Autowired
+    private PatentDao patentDao;
+    @Autowired
+    private ProjectDao projectDao;
+    @Autowired
+    private StaffDao staffDao;
 
     public void initFlows() {
         snakerEngine.process().deploy(StreamHelper.getStreamFromClasspath("workflow/easy.snaker"));
-//        snakerEngine.process().deploy(StreamHelper.getStreamFromClasspath("workflow/mag.snaker"));
+        snakerEngine.process().deploy(StreamHelper.getStreamFromClasspath("workflow/mag.snaker"));
     }
 
     public List<Process> getAllProcess() {
@@ -89,6 +107,97 @@ public class SnakerEngineUtils implements Engine {
         HashMap args = new HashMap();
         args.put("WF_Type", type);
         return snakerEngine.startInstanceById(processId, operator, args);
+    }
+
+    @Override
+    public Order startInstanceByEntity(String entityId, String type) {
+        HashMap<String, Object> args;
+        HashMap entityInfo;
+        Staff staff;
+        String processId = getProcessByName("basicProcess_Beta").getId();
+        Order order = null;
+        switch (type) {
+            case "patent":
+                //找到实体
+                Patent patent = patentDao.getById(entityId);
+                //取出信息
+                args = (HashMap<String, Object>) patent.getArgMap();
+                entityInfo = (HashMap) args.clone();
+                //从信息找到负责人
+                staff = staffDao.getById((Serializable) args.get("Main-Actor"));
+
+                args.put("WF_Type", "patent");
+                args.put("WF_Entity", entityId);
+
+                order = startInstanceById(processId, staff.getId(), args);
+
+                entityInfo.put("WF_OrderId", order.getId());
+                patent.setArgMap(entityInfo);
+                patent.setProcess("1");
+                patentDao.update(patent);
+                break;
+
+            case "project":
+                Project project = projectDao.getById(entityId);
+                args = (HashMap<String, Object>) project.getArgMap();
+                entityInfo = (HashMap) args.clone();
+                staff = staffDao.getById((Serializable) args.get("Main-Actor"));
+
+                args.put("WF_Type", "project");
+                args.put("WF_Entity", entityId);
+
+                order = startInstanceById(processId, staff.getId(), args);
+
+                entityInfo.put("WF_OrderId", order.getId());
+                project.setArgMap(entityInfo);
+                project.setProcess("1");
+                projectDao.update(project);
+                break;
+        }
+        return order;
+    }
+
+    @Override
+    public boolean resetEntityProcess(String orderId) {
+        Order order;
+        String type, entityId;
+        try {
+            order = getOrder(orderId);
+            type = (String) order.getVariableMap().get("WF_Type");
+            entityId = (String) order.getVariableMap().get("WF_Entity");
+            snakerEngine.order().cascadeRemove(orderId);
+            orderActorDao.deleteAllOrder(orderId);
+            HashMap args;
+            switch (type) {
+                case "patent":
+                    //找到实体
+                    Patent patent = patentDao.getById(entityId);
+                    //取出信息
+                    args = (HashMap<String, Object>) patent.getArgMap();
+
+                    args.remove("WF_OrderId");
+                    patent.setArgMap(args);
+
+                    patent.setProcess("0");
+                    patentDao.update(patent);
+                    break;
+                case "project":
+                    Project project = projectDao.getById(entityId);
+                    args = (HashMap<String, Object>) project.getArgMap();
+
+                    args.remove("WF_OrderId");
+                    project.setArgMap(args);
+
+                    project.setProcess("0");
+                    projectDao.update(project);
+                    break;
+            }
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
+            log.error("传入的OrderId有误，或者不是实体工作流程,Id:" + orderId);
+            return false;
+        }
+        return true;
     }
 
     public List<Task> execute(String taskId, String operator, Map<String, Object> args) {
