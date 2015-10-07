@@ -53,6 +53,11 @@ $(function () {
     });
 
 });
+
+$('#PaperTable').on('click-row.bs.table', function (e, row, $element) {
+    var orderId = row["id"];
+    window.location.href = '/order/' + orderId;
+});
 //var tableTypes = "PaperTable";
 //var orderUrl = '/api/workflow/order/' + userName + '/paper/all';
 

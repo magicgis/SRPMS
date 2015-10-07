@@ -48,46 +48,9 @@ $(function () {
         responseHandler: tableTrans
     });
     allInfo();
-    $('#actorTable').bootstrapTable({
-        columns: [
-            {
-                field: 'staff.id',
-                title: '工号',
-                sortable: true,
-                visible: false
-            }, {
-                field: 'rank',
-                title: '排名',
-                sortable: true,
-                footerFormatter: "totalNameFormatter"
-            }, {
-                field: 'staff.name',
-                title: '成员',
-                sortable: true
-            }, {
-                field: 'role',
-                title: '角色',
-                sortable: true
-            }, {
-                field: 'score',
-                title: '分数',
-                sortable: true,
-                footerFormatter: "totalMarksFormatter"
-            }, {
-                field: 'unit',
-                title: '归属单位',
-                sortable: true
-            }, {
-                field: 'operate',
-                title: '操作',
-                sortable: true,
-                formatter: "operateFormatter",
-                events: "operateEvents"
-            }],
-        data: actorTemp
-    });
 
 });
+
 //论文表
 var tableTypes = "PaperTable";
 //所有的论文
@@ -100,6 +63,12 @@ var partakeUrl = '/api/workflow/order/' + userName + '/paper/2nd';
 var confirmUrl = '/api/workflow/' + userName + '/confirmTask';
 //当前url
 var url = allUrl;
+
+
+pTable.on('click-row.bs.table', function (e, row, $element) {
+    var orderId = row["id"];
+    window.location.href = '/order/' + orderId;
+});
 
 function allInfo() {
     pTable.bootstrapTable('refresh', {url: allUrl});
