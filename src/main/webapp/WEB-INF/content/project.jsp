@@ -87,11 +87,23 @@
                                 <div id="tProjectToolbar">
                                     <c:choose>
                                         <c:when test="${sessionScope.level == '3'}">
+                                            <div class="btn-group">
+                                                <button class="btn btn-primary dropdown-toggle"
+                                                        data-toggle="dropdown">
+                                                    查看选项
+                                                    <span class="ace-icon fa fa-caret-down icon-on-right"></span>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-left">
+                                                    <li>
+                                                        <a href="#" id="all">全部项目</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" id="audit">待审批项目</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                             <button id="add" class="btn btn-primary">
-                                                <i class="fa fa-plus"></i>添加项目
-                                            </button>
-                                            <button id="submit" class="btn btn-success">
-                                                <i class="fa fa-check"></i> 统一提交
+                                                <i class="fa fa-plus"></i> 添加项目
                                             </button>
                                         </c:when>
                                     </c:choose>

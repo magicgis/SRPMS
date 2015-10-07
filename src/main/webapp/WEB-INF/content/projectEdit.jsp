@@ -50,7 +50,7 @@
                         <i class="ace-icon fa fa-home home-icon"></i>
                         <a href="<c:url value="/allSRInfo"/>">Home</a>
                     </li>
-                    <li class="active">期刊</li>
+                    <li class="active">项目</li>
                 </ul>
                 <!-- /.breadcrumb -->
             </div>
@@ -65,7 +65,7 @@
                             <%--<input type="text" name="score" id="score"/>--%>
                             <%--<input type="text" name="dept.value" id="deptValue" value="${patent.dept.value}"/>--%>
                             <input type="text" name="standard.id" id="standardId"/>
-                            <input type="text" name="id" value="${project.id}"/>
+                            <input type="text" name="id" id="projectId" value="${project.id}"/>
                         </div>
                         <div id="projInfo" class="col-xs-12 col-md-7 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
@@ -114,12 +114,12 @@
 
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
-                                                       for="rank">项目等级</label>
+                                                        for="pRank">项目等级</label>
 
                                                 <div class="col-sm-8">
                                                     <div class="col-sm-13">
-                                                        <input class="form-control" id="rank"
-                                                               type="text" name="rank"
+                                                        <input class="form-control"
+                                                               type="text" id="pRank" name="pRank"
                                                                value=""
                                                                placeholder="请选择"/>
                                                     </div>
@@ -271,9 +271,10 @@
                                                             <h4 class="widget-title">附件信息</h4>
 
                                                             <div class="widget-toolbar no-border">
+                                                                <c:if test="${sessionScope.level == '3'}">
                                                                 <div id="upload">
-
                                                                 </div>
+                                                                </c:if>
                                                             </div>
                                                         </div>
                                                         <div class="widget-body">
@@ -301,10 +302,16 @@
                                     <div class="widget-main">
                                         <div class="row">
                                             <div id="actorToolbar">
+                                            <c:choose>
+                                            <c:when test="${sessionScope.level == '3'}">
                                                 <a data-toggle="modal"
                                                    class="btn btn-primary btn-sm addActor">添加成员</a>
+                                            </c:when>
+                                            <c:when test="${sessionScope.level == '1'}">
                                                 <a data-toggle="modal"
                                                    class="btn btn-primary btn-sm getScore">计算分数</a>
+                                            </c:when>
+                                            </c:choose>
                                             </div>
                                             <table id="actorTable"
                                                    data-toolbar="#actorToolbar"
@@ -387,16 +394,18 @@
 
                     <div class="row">
                         <div id="formBtn" class="col-xs-12 clearfix">
-                            <div class="pull-left onEdit">
-                                <button class="btn btn-danger del" type="button">
+                            <div class="pull-left onDel">
+                                <c:if test="${sessionScope.level == '3'}">
+                                 <button class="btn btn-danger del" type="button">
                                     <i class="ace-icon fa fa-trash  bigger-100"></i>
                                     删除
-                                </button>
-                                &nbsp;
-                                <button class="btn btn-danger orderBack" type="button">
+                                 </button>
+                                 &nbsp;
+                                 <button class="btn btn-danger orderBack" type="button">
                                     <i class="ace-icon fa  fa-repeat bigger-100"></i>
                                     撤回
-                                </button>
+                                 </button>
+                                </c:if>
                             </div>
                             <div class="pull-right">
                                 <span class="onEdit">
@@ -421,55 +430,6 @@
                                         驳回
                                     </button>
                                 </span>
-                                <%--<c:choose>--%>
-                                <%--<c:when test="${sessionScope.level == '1'}">--%>
-                                <%--<button class="confirm btn btn-success teacher" type="button">--%>
-                                <%--<i class="ace-icon fa fa-check bigger-110"></i>--%>
-                                <%--确认--%>
-                                <%--</button>--%>
-                                <%--</c:when>--%>
-                                <%--<c:when test="${sessionScope.level == '2'}">--%>
-                                <%--<button class="btn btn-success Approve" type="button">--%>
-                                <%--<i class="ace-icon fa fa-check bigger-110"></i>--%>
-                                <%--通过--%>
-                                <%--</button>--%>
-                                <%--&nbsp;--%>
-                                <%--<button class="btn btn-danger Refuse" type="button">--%>
-                                <%--<i class="ace-icon fa fa-remove bigger-110"></i>--%>
-                                <%--驳回--%>
-                                <%--</button>--%>
-                                <%--&nbsp;--%>
-                                <%--</c:when>--%>
-                                <%--<c:when test="${sessionScope.level == '3'}">--%>
-                                <%--<button class="btn btn-danger del" type="button">--%>
-                                <%--<i class="ace-icon fa fa-trash  bigger-100"></i>--%>
-                                <%--删除--%>
-                                <%--</button>--%>
-                                <%--&nbsp;--%>
-                                <%--<button class="btn btn-danger orderBack" type="button">--%>
-                                <%--<i class="ace-icon fa  fa-repeat bigger-100"></i>--%>
-                                <%--撤回--%>
-                                <%--</button>--%>
-                                <%--&nbsp;--%>
-                                <%--<button class="btn btn-info save" type="button">--%>
-                                <%--<i class="ace-icon fa fa-save bigger-110"></i>--%>
-                                <%--保存--%>
-                                <%--</button>--%>
-                                <%--<button class="btn btn-success Approve school hidden" type="button">--%>
-                                <%--<i class="ace-icon fa fa-check bigger-110"></i>--%>
-                                <%--通过--%>
-                                <%--</button>--%>
-                                <%--&nbsp;--%>
-                                <%--<button class="btn btn-danger Refuse school hidden" type="button">--%>
-                                <%--<i class="ace-icon fa fa-remove bigger-110"></i>--%>
-                                <%--驳回--%>
-                                <%--</button>--%>
-                                <%--<button class="confirm btn btn-success" type="button">--%>
-                                <%--<i class="ace-icon fa fa-check bigger-110"></i>--%>
-                                <%--确认--%>
-                                <%--</button>--%>
-                                <%--</c:when>--%>
-                                <%--</c:choose>--%>
                                 <button class="btn btn-success back" type="button">
                                     <i class="ace-icon fa fa-reply  bigger-110"></i>
                                     返回
@@ -489,12 +449,10 @@
 <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
     <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 </a>
-
-
 <!-- /.main-container -->
+</body>
 <script src='<c:url value="/js/public/public.js"/>'></script>
 <script src='<c:url value="/js/public/pubProject.js"/>'></script>
-
 <c:choose>
     <c:when test="${sessionScope.level == '1'}">
         <script src="<c:url value="/js/teacher/projectEdit.js"/>"></script>
@@ -507,7 +465,6 @@
         <script src="<c:url value="/js/school/projectEdit.js"/>"></script>
     </c:when>
 </c:choose>
-
 <script type="text/javascript">
     $(function ($) {
         $('.date-picker').datepicker({
@@ -517,28 +474,24 @@
             $(this).prev().focus();
         });
     });
-    allSections();//选择框
-    upToLoadFile();//文件上传
-    firstOrOther();//是否是联合单位
     // 成员，单位，文件
     // todo 取出实体内的额外信息，附件信息也应该在其中。
     var entity = ${ObjectMapper.writeValueAsString(project)};
     var all = ${ObjectMapper.writeValueAsString(project.argMap)};
-    //todo 取出部门信息，可同理取出专利类型
+    var standardId = '${ObjectMapper.writeValueAsString(patent.standard)}';
     var dept = '${ObjectMapper.writeValueAsString(project.dept)}';
-
     var taskId = '${taskId}';
     var taskName = '${taskName}';
+    allSections();//选择框
+    upToLoadFile();//文件上传
+    firstOrOther();//是否是联合单位
     fullUpInfo(all,entity);//tian chong
-    //真不容易
     var filesData;
     if (filesData == null) {
         filesData = {};
     }
     scanFiles(filesData);
     //选择框
-    var dept = '${ObjectMapper.writeValueAsString(patent.dept)}';
-    var standardId = '${ObjectMapper.writeValueAsString(patent.standard)}';
     dept = jQuery.parseJSON(dept);
     $('#actorTable').bootstrapTable({
         columns: [
@@ -632,6 +585,7 @@
         firstOrOther();
     });
     $('.back').click(function () {
+        $('#ProjectTable').bootstrapTable('refresh', {url: '/api/project/all'});
         history.go(-1);
     });
     //监听 添加成员
@@ -670,6 +624,5 @@
         Refuse();
     })
 </script>
-</body>
 </html>
 

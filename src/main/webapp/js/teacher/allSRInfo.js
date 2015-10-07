@@ -47,45 +47,10 @@ $(function () {
     });
     /* $('#tableOrd').hide();*/
 });
-//$('#allSRInfoTable').on('click-row.bs.table', function (e, row) {
-//    var wfType = row['WF_Type'];
-//    var taskId = row['id'];
-//    for (var key in selectDefferent) {
-//        if (key == wfType) {
-//            $("#confirmForm").empty();
-//            var url = selectDefferent[key];
-//            showForm();
-//            $("#confirmForm").load(url, function () {
-//                $('#WF_Task').val(taskId);
-//                $('form input').val(null);
-//                if (row['actors'] != null) {
-//                    actorTemp = row['actors'];
-//                } else {
-//                    actorTemp =[];
-//                }
-//                /*显示成员表*/
-//                scanActorTable();
-//                showFiles(row["filesData"]); //显示文件信息
-//                $('#' + wfType).autofill(row, {
-//                    findbyname: true,
-//                    restrict: false
-//                });
-//                uneditableForm();
-//
-//                magOrConfer();
-//                $("#actorTable").bootstrapTable('load', actorTemp);
-//                $('#addDiff').hide();
-//                $('#reply').hide();
-//                $('#getScore').hide();
-//                if (wfType == 'paper') {
-//                    paperType();
-//                    $('#magId').val(row['mag.name']);
-//                }
-//                //showForm();
-//            });
-//        }
-//    }
-//});
+$('#allSRInfoTable').on('click-row.bs.table', function (e, row) {
+    var taskId = row['id'];
+    window.location.href='/task/'+taskId;
+});
 //监听 所有科研
 $('#allSRInform').click(function () {
     allSRInform();

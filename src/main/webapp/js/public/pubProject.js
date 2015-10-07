@@ -7,18 +7,18 @@
  * 6表示是否获奖
  * @type {Array}
  */
-var Main_Actor;
-var Main_ActorName;
-var $actorTable = $('#actorTable');
 var actorTemp = [];
 var unitTemp = [];
 var fundTemp = [];
+var Main_Actor;
+var Main_ActorName;
 var replyByCol, replyByDep;
+var $actorTable = $('#actorTable');
 //var deptValue=Object();
 var allSelections =
     [
         {"1": [{"type": "自然科学"}, {"type": "哲学与社会科学"}, {"type": "教育教学改革"}, {"type": ""}, {"type": ""}]},
-        {"2": [{"rank": "国家级"}, {"rank": "省部级"}, {"rank": ""}, {"rank": ""}, {"rank": ""}]},
+        {"2": [{"pRank": "国家级"}, {"pRank": "省部级"}]},
         {"3": [{"attr": "子课题"}, {"attr": "联合项目"}, {"attr": "独立项目"}, {"attr": ""}, {"attr": ""}]},
         {"4": [{"rateUnit": "国家科技部"}, {"rateUnit": "国家自然科学基金委员会"}, {"rateUnit": "国家中医药管理局"}, {"rateUnit": "教育部"}, {"rateUnit": "其他部委"}]},
         {"5": [{"rateSrc": "“973”计划A类资助"}, {"rateSrc": "“973”计划B类资助"}, {"rateSrc": "“973”计划C类资助"}, {"rateSrc": "“863”计划"}, {"rateSrc": "国家重大科技专项"}]},
@@ -26,7 +26,7 @@ var allSelections =
 //项目表单中的复选框
 var optionsMenu = {
     '1': 'type',
-    '2': 'rank',
+    '2': 'pRank',
     '3': 'attr',
     '4': 'rateUnit',
     '5': 'rateSrc'
@@ -39,10 +39,10 @@ function subActorInfo(index, flag) {
     var units = $('#units').val();
     var role = $('#role').val();
     var rank = $('#rank').val();
-    var mark = (marks == "" ? '0' : (marks / units.length).toFixed(2));
+    //var mark = (marks == "" ? '0' : (marks / units.length).toFixed(2));
     actorTemp = getActorsData();
     $.each(units, function (i, value) {
-        actorTemp.push({"staff.id": id, "rank": rank, "staff.name": actor, "role": role, "score": mark, "unit": value});
+        actorTemp.push({"staff.id": id, "rank": rank, "staff.name": actor, "role": role, "score": marks, "unit": value});
     });
     if (rank == '1' || rank == 1) {
         Main_Actor = id;
@@ -97,7 +97,7 @@ function totalMarksFormatter(data) {
 function subUnitInfo(index) {
     var unit = $('#unit').val();
     var rank = $('#rank').val();
-    //console.log(rank);
+    //console.log(aRank);
     unitTemp.push({"rank": rank, "unit": unit});
     if (index == null) {  // 增加一行
         $('#unitTable').bootstrapTable("load", unitTemp);
@@ -255,7 +255,7 @@ function allSections() {
     $.each(optionsMenu, function (key, value) {
         selectUniversal(value, key);
     });
-    //selectUniversal("rank",2);
+    //selectUniversal("aRank",2);
     $('#dept').selectize({
         valueField: 'id',
         labelField: 'value',
@@ -279,9 +279,6 @@ function allSections() {
             });
         },
         onChange: function (result) {
-            //var depId=result;
-            //var depText=this.getItem(result)["context"]["innerHTML"];
-            //deptValue[depId]=depText;
         }
     });
 }
@@ -339,9 +336,8 @@ function firstOrOther() {
     }
 }
 /**************************************************************/
-function fullUpInfo(all){
+function fullUpInfo(all,entity){
     if (!isNull(all)) {
-        //deptValue=all['deptValue'];
         actorTemp = all['actors'];
         filesData = all['filesData'];
         unitTemp = all['units'];
@@ -350,6 +346,7 @@ function fullUpInfo(all){
         Main_ActorName = all['Main-ActorName'];
         replyByCol = all['replyByCol'];
         replyByDep = all['replyByDep'];
+
         $("#fundTable").bootstrapTable('load', fundTemp);
         $("#actorTable").bootstrapTable('load', actorTemp);
         if (entity['attr'] == "联合项目") {
@@ -424,12 +421,12 @@ function fullUpInfo(all){
 //    return type[value];
 //}
 //
-//function rankTran(value,row){
-//    var rank = {
+//function aRankTran(value,row){
+//    var aRank = {
 //        'nation':'国家级',
 //        'province':'省部级'
 //    };
-//    return rank[value];
+//    return aRank[value];
 //
 //}
 //

@@ -5,15 +5,16 @@ $(function () {
     $.each(optionsMenu, function (key, value) {
         disableSelectize($('#' + value).selectize());
     });
+    disableSelectize($('#dept').selectize());
+    uneditableForm();
     hideUnitOperate();
+    $('.onApprove').hide();
     $('#reply-box').hide();
     $('#reply').hide();
     $('#unitInfo').hide();
-    hideUnitOperate();
-    $('#upload').hide();
-    $('.onApproval').hide();
     init();
 });
+var flag = true;
 function init() {
     var status = all['Status'];
     if( !(status=='Blank' || status=='Uncomplete' || status.indexOf('Refuse') >= 0)) {
@@ -50,9 +51,9 @@ function save() {
     var send = new Object();
     send['IsComplete'] = 'false';
     send['actors'] = getActorsData();
+    send['fund'] = getFundsData();
     workflow.execute(userName, taskId, send).success(function () {
         afterSuccess("保存成功！");
-        window.location.href = "/project";
     });
     console.log(send);
 }
@@ -62,7 +63,9 @@ function confirm() {
     if(status == 'Uncomplete'){
         send['IsComplete'] = 'true';
         send['actors'] = getActorsData();
+        send['fund'] = getFundsData();
     }
+    console.log(send);
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '确认?',
@@ -81,13 +84,11 @@ function confirm() {
                     if ("valid" in data) {
                         if (data["valid"] == true) {
                             afterSuccess("确认成功！");
-                            //window.location.href = "/patent";
                         } else {
                             errorMsg(data["msg"]);
                         }
                     } else {
                         afterSuccess("确认成功！");
-                        //window.location.href = "/patent";
                     }
                 });
             }
@@ -130,11 +131,12 @@ function editActor(row, index) {
             cssClass: 'btn-info',
             autospin: false,
             action: function (dialogRef) {
+                //console.log(getActorsData());
                 dialogRef.close();
             }
         }],
         onshown: function () {
-            fillRoles(patentRoles);
+            fillRoles(projectRoles);
             var $actor = $("#actor").selectize();
             var $role = $("#role").selectize();
             var $units = $("#units").selectize();
@@ -142,6 +144,7 @@ function editActor(row, index) {
             $actor[0].selectize.setValue(row["staff.id"]);
             //填充角色
             DisplayForm($role, row["role"], 0);
+            $("#role").val(row["role"]);
             //填充单位
             DisplayForm($units, row["unit"], 1);
             //填充其他
@@ -169,7 +172,7 @@ function editActor(row, index) {
     });
 }
 function getScore() {
-    var jsonData = getFormData('paper');
+    var jsonData = getFormData('project');
     workflow.getScore(jsonData).success(function (data) {
         if (data["valid"] == false) { // 检验不合格
             errorMsg(data["msg"]);
@@ -185,13 +188,4 @@ function getScore() {
             flag = true;
         }
     });
-}
-function getActors() {
-    var keyStr = getSubmission(all);
-    if(keyStr == "") {
-        actorTemp = all['actors'];
-    }
-    else {
-        actorTemp = all[keyStr]['actors'];
-    }
 }

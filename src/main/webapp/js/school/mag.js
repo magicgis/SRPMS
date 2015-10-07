@@ -21,7 +21,7 @@ $(function () {
         }, {
             field: 'issn',
             title: 'ISSN',
-            sortable: true,
+            sortable: true
             //formatter: "typeTran"
         }, {
             field: 'cn',

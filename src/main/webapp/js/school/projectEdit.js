@@ -2,27 +2,64 @@
  * Created by zheng on 2015/10/2.
  */
 $(function () {
-    //$('#reply-box').hide();
-    //$('#reply').hide();
-    //$('#unitInfo').hide();
-    //$('.getScore').hide();
+    //TODO
+    $('#reply').hide();
+    init();
 });
-
+function init() {
+    var status = entity['Status'];
+    if (entity['process'] == '1' || entity['process'] == '9') {
+        $('#reply').show();
+        $('.onEdit').hide();
+        $('.onDel').hide();
+        $('#upload').hide();
+        $('.addActor').hide();
+        $('.addUnit').hide();
+        $('.addFund').hide();
+        $.each(optionsMenu, function (key, value) {
+            disableSelectize($('#' + value).selectize());
+        });
+        disableSelectize($('#dept').selectize());
+        uneditableForm();
+        hideActorOperate();
+        hideUnitOperate();
+        // 实体中不能审批，order中才可以。实体中没有status，所以这样判断
+        if ( !isNull(status) && status.indexOf('refuse')>=0) {
+            $('#reply').show();
+            $('#reply-display').show();
+            var reply = $('#reply-display').children('p');
+            var who = $('#reply-display').children('small');
+            reply.empty();
+            who.empty();
+            if (status.indexOf("WaitForDep") >= 0) { // 学院通过了
+                reply.append(replyByCol);
+                who.append("学院批复");
+                $('.onApproval').show();
+            } else {
+                $('.onApproval').hide();
+                $('#reply').hide();
+            }
+        }else{
+            $('.onApproval').hide();
+        }
+    } else if (entity['process'] == null || entity['process'] == '0') { // 刚刚新增或未启动
+        $('.onApproval').hide();
+        $('.onEdit').show();$('.onDel').show();
+    }
+}
 /**与项目信息有关的 保存||确认||撤回||删除||提交所有**/
 function save() {
     saveStep1().success(function(data) {
 
         saveStep2(data).success(function (res) {
-            //history.go(-1);
+
         })
     });
 }
 function confirm() {
     //这儿需要先调用save()将信息保存一次
     saveStep1().success(function(data) {
-
         saveStep2(data).success(function (res) {
-
             BootstrapDialog.confirm({
                 title: '是否启动流程',
                 message: '确认?',
@@ -38,7 +75,7 @@ function confirm() {
                      */
                     if (result) {
                         workflow.startEntityOrder("project", $('#projectId').val()).success(function (data) {
-                            history.go(-1);
+                            //history.go(-1);
                         });
                     }
                 }
@@ -60,7 +97,7 @@ function orderBack() {
     });
 }
 function delOrder() {
-    var order = $("#WF_Order").val();
+    var order = entity['id'];
     BootstrapDialog.confirm({
         title: '提示！',
         message: '你确定要删除该项吗?',
@@ -96,7 +133,8 @@ function Approve() {
         callback: function (result) {
             if (result) {
                 workflow.execute('dep',taskId, approveInfo).success(function () {
-                    window.location.href = "/project";
+                    afterSuccess('审批通过！');
+                    //window.location.href = "/project";
                 });
             }
         }
@@ -106,9 +144,9 @@ function Approve() {
  * 驳回
  */
 function Refuse() {
-    var refuseAwardInfo = Object();
-    refuseAwardInfo["DecByDep"] = false;
-    refuseAwardInfo["replyByDep"] = $('#reply-box').val();
+    var refuseInfo = Object();
+    refuseInfo["DecByDep"] = false;
+    refuseInfo["replyByDep"] = $('#reply-box').val();
     BootstrapDialog.confirm({
         title: '警告！',
         message: '你确定驳回吗?',
@@ -120,8 +158,9 @@ function Refuse() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep', taskId, refuseAwardInfo).success(function () {
-                    window.location.href = "/project";
+                workflow.execute('dep', taskId, refuseInfo).success(function () {
+                    afterSuccess('审批驳回！');
+                   // window.location.href = "/project";
                 });
             }
         }
@@ -139,7 +178,7 @@ function addActor() {
         },
         title: "成员信息",
         data: {
-            'pageToLoad': '../dialog/addActor.html'
+            'pageToLoad': '/dialog/addActor.html'
         },
         closeByBackdrop: false,
         buttons: [{
@@ -147,15 +186,10 @@ function addActor() {
             icon: 'glyphicon glyphicon-check',
             label: '添加',
             cssClass: 'btn-info',
-            //hotkey: 83,
             autospin: false,
             action: function (dialogRef) {
                 if (!isFull()) {
-                    BootstrapDialog.show({
-                        title: '通知',
-                        type: BootstrapDialog.TYPE_INFO,
-                        message: '请将信息填写完整。'
-                    });
+                    messageModal('请将信息填写完整。');
                     return;
                 }
                 subActorInfo(null, 1);
@@ -163,7 +197,6 @@ function addActor() {
             }
         }],
         onshown: function () {
-            console.log(projectRoles);
             fillRoles(projectRoles);
         }
     });
@@ -247,7 +280,7 @@ function editActor(row, index) {
                 disableSelectize($actor);
                 disableSelectize($role);
                 disableSelectize($units);
-                $("#rank").attr("disabled", "disabled");
+                $("#aRank").attr("disabled", "disabled");
                 $("#marks").attr("disabled", "disabled");
                 $("#btn-ok").attr("disabled", "disabled").hide();
                 //$("#btn-cancel").show();
@@ -441,13 +474,13 @@ function saveStep2(data) {
     $('#projectId').val(data);
     send['actors'] = getActorsData();
     send['fund'] = getFundsData();
-    send['deptValue']=deptValue;
     send['filesData'] = filesData;
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
     if($('#attr').val() == '联合项目'){
         send['units'] = getUnitsData();
     }
+    console.log(send);
     return $.ajax({
         type: 'put',
         url: '/api/project/' + data,
