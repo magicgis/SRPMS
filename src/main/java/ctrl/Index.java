@@ -1,10 +1,7 @@
 package ctrl;
 
 import engine.Engine;
-import entity.Paper;
-import entity.Patent;
-import entity.Project;
-import entity.User;
+import entity.*;
 import org.snaker.engine.entity.Order;
 import org.snaker.engine.entity.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import service.BookService;
 import service.PatentService;
 import service.ProjectService;
 import service.UserService;
@@ -39,6 +37,8 @@ public class Index {
     PatentService patentService;
     @Autowired
     ProjectService projectService;
+    @Autowired
+    BookService bookService;
 
     @RequestMapping(value = {"login", ""}, method = RequestMethod.GET)
     public String index(Model model, RedirectAttributes redirectAttributes) {
@@ -56,8 +56,15 @@ public class Index {
         else {
             request.getSession().setAttribute("user", u);
             request.getSession().setAttribute("level", u.getPrivilege());
-            return "redirect:paper";
+            return "redirect:allSRInfo";
         }
+    }
+
+    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    public String logout(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        request.getSession().removeAttribute("user");
+        request.getSession().removeAttribute("level");
+        return "redirect:login";
     }
 
     @RequestMapping(value = {"paper"}, method = RequestMethod.GET)
@@ -85,10 +92,6 @@ public class Index {
         return "magazineEdit";
     }
 
-    @RequestMapping(value = {"book"}, method = RequestMethod.GET)
-    public String book(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "book";
-    }
 
     @RequestMapping(value = {"userInfo"}, method = RequestMethod.GET)
     public String userInfo(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, HttpSession session) {
@@ -118,68 +121,23 @@ public class Index {
         return "patentEdit";
     }
 
-    @RequestMapping(value = {"order/{orderId}"}, method = RequestMethod.GET)
-    public String OrderEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
-                            @PathVariable("orderId") String orderId) {
-        Order order = engine.getOrder(orderId);
-        Task task = engine.getTaskByOrder(orderId).get(0);
-        String type = (String) order.getVariableMap().get("WF_Type");
-        String entityId = (String) order.getVariableMap().get("WF_Entity");
-        switch (type) {
-            case "patent":
-                Patent patent = patentService.getById(entityId);
-                patent.setArgMap(order.getVariableMap());
-                model.addAttribute(patent);
-                model.addAttribute("taskId", task.getId());
-                model.addAttribute("taskName", task.getTaskName());
-                return "patentEdit";
-            case "project":
-                Project project = projectService.getById(entityId);
-                project.setArgMap(order.getVariableMap());
-                model.addAttribute(project);
-                model.addAttribute("taskId", task.getId());
-                model.addAttribute("taskName", task.getTaskName());
-                return "projectEdit";
-            case "paper":
-                model.addAttribute(order);
-                model.addAttribute("taskId", task.getId());
-                model.addAttribute("taskName", task.getTaskName());
-                return "paperEdit";
-            default:
-                return "redirect:allSRInfo";
-        }
+    @RequestMapping(value = {"book"}, method = RequestMethod.GET)
+    public String book(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        return "book";
     }
 
-    @RequestMapping(value = {"task/{taskId}"}, method = RequestMethod.GET)
-    public String taskEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
-                           @PathVariable("taskId") String taskId) {
-        Task task = engine.getTask(taskId);
-        Order order = engine.getOrder(task.getOrderId());
-        String type = (String) order.getVariableMap().get("WF_Type");
-        String entityId = (String) order.getVariableMap().get("WF_Entity");
-        switch (type) {
-            case "patent":
-                Patent patent = patentService.getById(entityId);
-                patent.setArgMap(order.getVariableMap());
-                model.addAttribute(patent);
-                model.addAttribute("taskId", task.getId());
-                model.addAttribute("taskName", task.getTaskName());
-                return "patentEdit";
-            case "project":
-                Project project = projectService.getById(entityId);
-                project.setArgMap(order.getVariableMap());
-                model.addAttribute(project);
-                model.addAttribute("taskId", task.getId());
-                model.addAttribute("taskName", task.getTaskName());
-                return "projectEdit";
-            case "paper":
-                model.addAttribute(order);
-                model.addAttribute("taskId", task.getId());
-                model.addAttribute("taskName", task.getTaskName());
-                return "paperEdit";
-            default:
-                return "redirect:allSRInfo";
-        }
+    @RequestMapping(value = {"book/new"}, method = RequestMethod.GET)
+    public String newBook(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        model.addAttribute(new Patent());
+        return "bookEdit";
+    }
+
+    @RequestMapping(value = {"book/{bookId}"}, method = RequestMethod.GET)
+    public String bookEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                           @PathVariable("bookId") String bookId) {
+        Book book = bookService.getById(bookId);
+        model.addAttribute(book);
+        return "bookEdit";
     }
 
     @RequestMapping(value = {"project"}, method = RequestMethod.GET)
@@ -249,6 +207,83 @@ public class Index {
     @RequestMapping(value = {"allSRInfo"}, method = RequestMethod.GET)
     public String allSRinfo(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         return "allSRInfo";
+    }
+
+    @RequestMapping(value = {"order/{orderId}"}, method = RequestMethod.GET)
+    public String OrderEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                            @PathVariable("orderId") String orderId) {
+        Order order = engine.getOrder(orderId);
+        Task task = engine.getTaskByOrder(orderId).get(0);
+        String type = (String) order.getVariableMap().get("WF_Type");
+        String entityId = (String) order.getVariableMap().get("WF_Entity");
+        switch (type) {
+            case "patent":
+                Patent patent = patentService.getById(entityId);
+                patent.setArgMap(order.getVariableMap());
+                model.addAttribute(patent);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "patentEdit";
+            case "project":
+                Project project = projectService.getById(entityId);
+                project.setArgMap(order.getVariableMap());
+                model.addAttribute(project);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "projectEdit";
+            case "book":
+                Book book = bookService.getById(entityId);
+                book.setArgMap(order.getVariableMap());
+                model.addAttribute(book);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "bookEdit";
+            case "paper":
+                model.addAttribute(order);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "paperEdit";
+            default:
+                return "redirect:allSRInfo";
+        }
+    }
+
+    @RequestMapping(value = {"task/{taskId}"}, method = RequestMethod.GET)
+    public String taskEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                           @PathVariable("taskId") String taskId) {
+        Task task = engine.getTask(taskId);
+        Order order = engine.getOrder(task.getOrderId());
+        String type = (String) order.getVariableMap().get("WF_Type");
+        String entityId = (String) order.getVariableMap().get("WF_Entity");
+        switch (type) {
+            case "patent":
+                Patent patent = patentService.getById(entityId);
+                patent.setArgMap(order.getVariableMap());
+                model.addAttribute(patent);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "patentEdit";
+            case "project":
+                Project project = projectService.getById(entityId);
+                project.setArgMap(order.getVariableMap());
+                model.addAttribute(project);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "projectEdit";
+            case "book":
+                Book book = bookService.getById(entityId);
+                book.setArgMap(order.getVariableMap());
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "bookEdit";
+            case "paper":
+                model.addAttribute(order);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "paperEdit";
+            default:
+                return "redirect:allSRInfo";
+        }
     }
 
 }

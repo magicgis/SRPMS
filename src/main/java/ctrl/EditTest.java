@@ -1,5 +1,6 @@
 package ctrl;
 
+import entity.Paper;
 import org.snaker.engine.entity.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,12 +18,18 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/edit")
 public class EditTest {
 
+    /**
+     * 自行依照格式进行添加，进行测试
+     * 访问路径统一为 /edit/*
+     * 仅供测试使用
+     */
 
-//    @RequestMapping(value = {"/patent"}, method = RequestMethod.GET)
-//    public String patentEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-//        model.addAttribute(new Task());
-//        return "patentEdit";
-//    }
+
+    @RequestMapping(value = {"/paper"}, method = RequestMethod.GET)
+    public String patentEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        model.addAttribute(new Paper());
+        return "paperEdit";
+    }
 
     @RequestMapping(value = {"/project"}, method = RequestMethod.GET)
     public String projectEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
