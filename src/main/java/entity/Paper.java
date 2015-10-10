@@ -1,6 +1,13 @@
 package entity;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by guofan on 2015/6/10.
@@ -17,11 +24,12 @@ public class Paper {
     private String pubDate;
     private Integer score;
     private Integer numWord;
-    private String memo;
+    private String arg;
     private String attachment;
     private Mag mag;
     private Confer confer;
     private Newspaper newspaper;
+    private BaseInfo baseInfo;
 
     @Id
     @Column(name = "id")
@@ -114,13 +122,40 @@ public class Paper {
     }
 
     @Basic
-    @Column(name = "memo")
-    public String getMemo() {
-        return memo;
+    @Column(name = "arg")
+    public String getArg() {
+        return arg;
     }
 
-    public void setMemo(String memo) {
-        this.memo = memo;
+    public void setArg(String arg) {
+        this.arg = arg;
+    }
+
+    @Transient
+    public Map getArgMap() {
+        if (this.arg == null) {
+            return new HashMap();
+        }
+        JsonFactory factory = new JsonFactory();
+        ObjectMapper mapper = new ObjectMapper(factory);
+        TypeReference<HashMap<String, Object>> typeRef
+                = new TypeReference<HashMap<String, Object>>() {
+        };
+        try {
+
+            return mapper.readValue(getArg(), typeRef);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void setArgMap(Map infoMap) {
+        try {
+            this.arg = new ObjectMapper().writeValueAsString(infoMap);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Basic
@@ -149,8 +184,12 @@ public class Paper {
         if (pubDate != null ? !pubDate.equals(paper.pubDate) : paper.pubDate != null) return false;
         if (score != null ? !score.equals(paper.score) : paper.score != null) return false;
         if (numWord != null ? !numWord.equals(paper.numWord) : paper.numWord != null) return false;
-        if (memo != null ? !memo.equals(paper.memo) : paper.memo != null) return false;
-        return !(attachment != null ? !attachment.equals(paper.attachment) : paper.attachment != null);
+        if (arg != null ? !arg.equals(paper.arg) : paper.arg != null) return false;
+        if (attachment != null ? !attachment.equals(paper.attachment) : paper.attachment != null) return false;
+        if (mag != null ? !mag.equals(paper.mag) : paper.mag != null) return false;
+        if (confer != null ? !confer.equals(paper.confer) : paper.confer != null) return false;
+        if (newspaper != null ? !newspaper.equals(paper.newspaper) : paper.newspaper != null) return false;
+        return !(baseInfo != null ? !baseInfo.equals(paper.baseInfo) : paper.baseInfo != null);
 
     }
 
@@ -165,8 +204,12 @@ public class Paper {
         result = 31 * result + (pubDate != null ? pubDate.hashCode() : 0);
         result = 31 * result + (score != null ? score.hashCode() : 0);
         result = 31 * result + (numWord != null ? numWord.hashCode() : 0);
-        result = 31 * result + (memo != null ? memo.hashCode() : 0);
+        result = 31 * result + (arg != null ? arg.hashCode() : 0);
         result = 31 * result + (attachment != null ? attachment.hashCode() : 0);
+        result = 31 * result + (mag != null ? mag.hashCode() : 0);
+        result = 31 * result + (confer != null ? confer.hashCode() : 0);
+        result = 31 * result + (newspaper != null ? newspaper.hashCode() : 0);
+        result = 31 * result + (baseInfo != null ? baseInfo.hashCode() : 0);
         return result;
     }
 
@@ -198,5 +241,15 @@ public class Paper {
 
     public void setNewspaper(Newspaper newspaper) {
         this.newspaper = newspaper;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "dept", referencedColumnName = "id")
+    public BaseInfo getBaseInfo() {
+        return baseInfo;
+    }
+
+    public void setBaseInfo(BaseInfo baseInfo) {
+        this.baseInfo = baseInfo;
     }
 }
