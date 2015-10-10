@@ -623,7 +623,7 @@ function processStatus(statusVlaue, isMain, userLevel) {
             if (statusVlaue == "WaitForCol") {
                 return "210";//能批复，无批复原因
             } else if (statusVlaue == "RefuseByDep") {
-                return "201";//不能批复，有批复原因
+                return "211";//能批复，有批复原因
             } else {
                 return "200";//只能看
             }
