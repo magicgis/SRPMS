@@ -192,11 +192,11 @@ function getSubmission(pData) {
         var partn = new RegExp('WF_\\d+_Submission');
         if (partn.test(key)) {
             var keyValue = key.substring(3, key.length - 11);
-            if (parseInt(max) < parseInt(keyValue)||max == undefined) {
+            if (parseInt(max) < parseInt(keyValue) || max == undefined) {
                 max = keyValue;
             }
         }
-        if(max!=undefined) {
+        if (max != undefined) {
             keyStr = "WF_" + max + "_Submission";
         }
     }
@@ -209,11 +209,11 @@ function getApprovalByCol(pData) {
         var partn = new RegExp('WF_\\d+_ApprovalByCol');
         if (partn.test(key)) {
             var keyValue = key.substring(3, key.length - 14);
-            if (parseInt(max) < parseInt(keyValue)||max == undefined) {
+            if (parseInt(max) < parseInt(keyValue) || max == undefined) {
                 max = keyValue;
             }
         }
-        if(max!=undefined) {
+        if (max != undefined) {
             keyStr = "WF_" + max + "_ApprovalByCol";
         }
     }
@@ -226,11 +226,11 @@ function getApprovalByDep(pData) {
         var partn = new RegExp('WF_\\d+_ApprovalByDep');
         if (partn.test(key)) {
             var keyValue = key.substring(3, key.length - 14);
-            if (parseInt(max) < parseInt(keyValue)||max == undefined) {
+            if (parseInt(max) < parseInt(keyValue) || max == undefined) {
                 max = keyValue;
             }
         }
-        if(max!=undefined) {
+        if (max != undefined) {
             keyStr = "WF_" + max + "_ApprovalByDep";
         }
     }
@@ -264,9 +264,9 @@ function statusTran(value, row) {
 }
 
 // 成员翻译
-function actorTran(value,row){
-    if(value!=undefined && value!=null && value!="")
-        return value.substring(0,value.length-1);
+function actorTran(value, row) {
+    if (value != undefined && value != null && value != "")
+        return value.substring(0, value.length - 1);
     else
         return;
 }
@@ -491,7 +491,7 @@ function DisplayForm($type, ItemValue, flag) {
     if (isNull(ItemValue)) {
         $type[0].selectize.setValue("");
     } else if (flag == '0') {
-        console.log('in '+ ItemValue);
+        console.log('in ' + ItemValue);
         $type[0].selectize.setValue(ItemValue);
         console.log('out');
     } else {
@@ -579,6 +579,61 @@ jQuery(function ($) {
 
 function showTooltip() {
     $('[data-rel=tooltip]').tooltip({container: 'body'});
+}
+
+/**
+ *
+ * @param statusVlaue 当前任务状态，不存在则传null
+ * @param isMain 是否为负责人，1或者0，不存在此关系则传0；
+ * @param userLevel 用户等级
+ */
+function processStatus(statusVlaue, isMain, userLevel) {
+    //应该是实体
+    if (statusVlaue == null) {
+        switch (userLevel) {
+            case 1:
+                return 0;//能看
+            case 2:
+                return 0;//能看
+            case 3:
+                return 1;//什么都能
+        }
+    }
+    switch (userLevel) {
+        case 1:
+            //当前用户为负责人
+            if (isMain == 1) {
+                if (statusVlaue == "Blank" || statusVlaue == "Uncomplete") {
+                    return "11110";//能修改，能删除，能撤回，无批复原因
+                } else if (statusVlaue == "RefuseByCol") {
+                    return "11111";//能修改，能删除，能撤回,有批复原因
+                } else if (statusVlaue == "Complete") {
+                    return "10110";//不能修改，能删除，能撤回，无批复原因
+                } else {
+                    return "10000";//只能查看
+                }
+            } else {
+                if (statusVlaue == "Complete") {
+                    return "01";//能确认
+                } else {
+                    return "00";//不能确认
+                }
+            }
+        case 2:
+            if (statusVlaue == "WaitForCol") {
+                return "210";//能批复，无批复原因
+            } else if (statusVlaue == "RefuseByDep") {
+                return "201";//不能批复，有批复原因
+            } else {
+                return "200";//只能看
+            }
+        case 3:
+            if (statusVlaue == "WaitForDep") {
+                return "311";//能批复，能删除
+            } else {
+                return "301";//能批复，能删除
+            }
+    }
 }
 
 
