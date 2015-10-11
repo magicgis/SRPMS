@@ -166,7 +166,7 @@ public class Workflow {
         /*获取当前order*/
             Order order = engine.getOrder(task.getOrderId());
             Map re = standardService.confirmChecking(order, args);
-            if ((boolean) re.get("valid") || task.getVariableMap().get("WF_Type").equals("patent")||task.getVariableMap().get("WF_Type").equals("project")) {
+            if ((boolean) re.get("valid") || !task.getVariableMap().get("WF_Type").equals("paper")) {
                 tasks = engine.execute(taskId, user, (Map) args);
             }
             else {
