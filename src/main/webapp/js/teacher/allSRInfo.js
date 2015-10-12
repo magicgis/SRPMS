@@ -49,7 +49,7 @@ $(function () {
 });
 $('#allSRInfoTable').on('click-row.bs.table', function (e, row) {
     var taskId = row['id'];
-    window.location.href='/task/'+taskId;
+    window.location.href='/order/'+taskId;
 });
 //监听 所有科研
 $('#allSRInform').click(function () {
