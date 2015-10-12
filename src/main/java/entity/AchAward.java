@@ -19,6 +19,7 @@ public class AchAward {
     private String id;
     private String name;
     private String date;
+    private String achType;
     private String unit;
     private String result;
     private String way;
@@ -99,6 +100,16 @@ public class AchAward {
 
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    @Basic
+    @Column(name = "ach_type", nullable = true, insertable = true, updatable = true, length = 255)
+    public String getAchType() {
+        return achType;
+    }
+
+    public void setAchType(String achType) {
+        this.achType = achType;
     }
 
     @Basic
