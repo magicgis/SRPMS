@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import service.BookService;
-import service.PatentService;
-import service.ProjectService;
-import service.UserService;
+import service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -39,6 +36,8 @@ public class Index {
     ProjectService projectService;
     @Autowired
     BookService bookService;
+    @Autowired
+    AchAppraisalService achAppraisalService;
 
     @RequestMapping(value = {"login", ""}, method = RequestMethod.GET)
     public String index(Model model, RedirectAttributes redirectAttributes) {
@@ -157,6 +156,25 @@ public class Index {
         Project project = projectService.getById(projectId);
         model.addAttribute(project);
         return "projectEdit";
+    }
+
+    @RequestMapping(value = {"achAppraisal"}, method = RequestMethod.GET)
+    public String achAppraisal(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        return "achAppraisal";
+    }
+
+    @RequestMapping(value = {"achAppraisal/new"}, method = RequestMethod.GET)
+    public String newAchAppraisal(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        model.addAttribute(new AchAppraisal());
+        return "achAppraisalEdit";
+    }
+
+    @RequestMapping(value = {"project/{achAppraisalId}"}, method = RequestMethod.GET)
+    public String achAppraisalEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                              @PathVariable("achAppraisalId") String achAppraisalId) {
+        AchAppraisal achAppraisal = achAppraisalService.getById(achAppraisalId);
+        model.addAttribute(achAppraisal);
+        return "achAppraisalEdit";
     }
 
     @RequestMapping(value = {"newOthers"}, method = RequestMethod.GET)
