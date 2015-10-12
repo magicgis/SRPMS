@@ -128,7 +128,7 @@ public class Index {
 
     @RequestMapping(value = {"book/new"}, method = RequestMethod.GET)
     public String newBook(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        model.addAttribute(new Patent());
+        model.addAttribute(new Book());
         return "bookEdit";
     }
 
