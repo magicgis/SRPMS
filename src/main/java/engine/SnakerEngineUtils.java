@@ -1,10 +1,12 @@
 package engine;
 
+import dao.BookDao;
 import dao.PatentDao;
 import dao.ProjectDao;
 import dao.StaffDao;
 import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
+import entity.Book;
 import entity.Patent;
 import entity.Project;
 import entity.Staff;
@@ -47,6 +49,8 @@ public class SnakerEngineUtils implements Engine {
     private ProjectDao projectDao;
     @Autowired
     private StaffDao staffDao;
+    @Autowired
+    private BookDao bookDao;
 
     public void initFlows() {
         snakerEngine.process().deploy(StreamHelper.getStreamFromClasspath("workflow/easy.snaker"));
@@ -152,6 +156,23 @@ public class SnakerEngineUtils implements Engine {
                 project.setArgMap(entityInfo);
                 project.setProcess("1");
                 projectDao.update(project);
+                break;
+
+            case "book":
+                Book book = bookDao.getById(entityId);
+                args = (HashMap<String, Object>) book.getArgMap();
+                entityInfo = (HashMap) args.clone();
+                staff = staffDao.getById((Serializable) args.get("Main-Actor"));
+
+                args.put("WF_Type", "book");
+                args.put("WF_Entity", entityId);
+
+                order = startInstanceById(processId, staff.getId(), args);
+
+                entityInfo.put("WF_OrderId", order.getId());
+                book.setArgMap(entityInfo);
+                book.setProcess("1");
+                bookDao.update(book);
                 break;
         }
         return order;
