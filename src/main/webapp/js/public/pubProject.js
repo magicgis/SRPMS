@@ -199,16 +199,7 @@ function actorTran(value, row) {
 function uneditableForm(){
     $('form input').attr("disabled", "disabled");
     $('form select').attr("disabled", "disabled");
-    //$('#addDiff').attr("disabled", "disabled");
-    //$('#addActor').hide();
-    //$('#addUnit').hide();
     $('.delFiles').hide();
-}
-function hideActorOperate() {
-    $('#actorTable').bootstrapTable('hideColumn', 'operate');
-}
-function hideUnitOperate() {
-    $('#unitTable').bootstrapTable('hideColumn', 'operate');
 }
 ////显示详情
 //function showForm() {

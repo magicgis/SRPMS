@@ -89,116 +89,33 @@
                                        data-click-to-select="true">
                                 </table>
                                 <div id="tBookToolbar">
-                                    <button id="addBook" class="btn btn-primary">
-                                        <i class="fa fa-plus"></i>添加项目
-                                    </button>
-                                    <button id="submit" class="btn btn-success">
-                                        <i class="fa fa-check"></i> 统一提交
-                                    </button>
+                                    <c:choose>
+                                        <c:when test="${sessionScope.level == '3'}">
+                                            <div class="btn-group">
+                                                <button class="btn btn-primary dropdown-toggle"
+                                                        data-toggle="dropdown">
+                                                    查看选项
+                                                    <span class="ace-icon fa fa-caret-down icon-on-right"></span>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-left">
+                                                    <li>
+                                                        <a href="#" id="all">全部专著信息</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" id="audit">待审批专著信息</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <button id="add" class="btn btn-primary">
+                                                <i class="fa fa-plus"></i> 添加专著信息
+                                            </button>
+                                        </c:when>
+                                    </c:choose>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12" id="info_alert"></div>
-                    <div class="col-xs-12">
-                        <div class="widget-box transparent ui-sortable-handle collapsed" style="opacity: 1;"
-                             id="book-box">
-                            <div class="widget-body">
-                                <div class="row">
-                                    <jsp:include page="public/bookForm.jsp"/>
-
-                                    <c:choose>
-                                        <c:when test="${sessionScope.level == '1'}">
-                                            <div id="formBtn" class="col-xs-12 clearfix">
-                                                <div class="pull-left">
-                                                    <button class="btn btn-primary" type="button" id="DiffAdd">
-                                                        <i class="ace-icon fa fa-trash  bigger-100"></i>
-                                                        差异申请
-                                                    </button>
-                                                    <button class="btn btn-danger   " type="button" id="del">
-                                                        <i class="ace-icon fa fa-trash  bigger-100"></i>
-                                                        删除
-                                                    </button>
-                                                    &nbsp; &nbsp; &nbsp;
-                                                    <button class="btn btn-danger  " type="button" id="orderBack">
-                                                        <i class="ace-icon fa  fa-repeat bigger-100"></i>
-                                                        撤回
-                                                    </button>
-                                                </div>
-                                                <div class="pull-right">
-                                                    <button class="btn btn-success" type="button" id="confirm">
-                                                        <i class="ace-icon fa fa-check bigger-110"></i>
-                                                        确认
-                                                    </button>
-
-                                                    <button class="btn btn-info" type="button" id="save">
-                                                        <i class="ace-icon fa fa-save bigger-110"></i>
-                                                        保存
-                                                    </button>
-                                                        <%--&nbsp; &nbsp; &nbsp;--%>
-                                                    <button class="btn btn-primary" type="button" id="back">
-                                                        <i class="ace-icon fa fa-reply  bigger-110"></i>
-                                                        返回
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </c:when>
-                                        <c:when test="${sessionScope.level == '2'}">
-                                            <div id="formBtn" class="col-xs-12">
-                                                <div class="col-md-offset-1 col-md-8">
-                                                    <button class="btn btn-success" type="button" id="Approve">
-                                                        <i class="ace-icon fa fa-check bigger-110"></i>
-                                                        通过
-                                                    </button>
-                                                    &nbsp; &nbsp; &nbsp;
-                                                    <button class="btn" type="button" id="back">
-                                                        <i class="ace-icon fa fa-reply  bigger-110"></i>
-                                                        返回
-                                                    </button>
-                                                    &nbsp; &nbsp; &nbsp;
-                                                    <button class="btn btn-danger" type="button" id="Refuse">
-                                                        <i class="ace-icon fa fa-remove bigger-110"></i>
-                                                        驳回
-                                                    </button>
-                                                    &nbsp; &nbsp; &nbsp;
-                                                    <button class="btn btn-primary" type="button" id="next">
-                                                        下一条
-                                                        <i class="ace-icon fa fa-arrow-right bigger-110"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </c:when>
-                                        <c:when test="${sessionScope.level == '3'}">
-                                            <div id="formBtn" class="col-xs-12">
-                                                <div class="col-md-offset-1 col-md-8">
-                                                    <button class="btn btn-success" type="button" id="Approve">
-                                                        <i class="ace-icon fa fa-check bigger-110"></i>
-                                                        通过
-                                                    </button>
-                                                    &nbsp; &nbsp; &nbsp;
-                                                    <button class="btn" type="button" id="back">
-                                                        <i class="ace-icon fa fa-reply  bigger-110"></i>
-                                                        返回
-                                                    </button>
-                                                    &nbsp; &nbsp; &nbsp;
-                                                    <button class="btn btn-danger" type="button" id="Refuse">
-                                                        <i class="ace-icon fa fa-remove bigger-110"></i>
-                                                        驳回
-                                                    </button>
-                                                    &nbsp; &nbsp; &nbsp;
-                                                    <button class="btn btn-primary" type="button" id="next">
-                                                        下一条
-                                                        <i class="ace-icon fa fa-arrow-right bigger-110"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </c:when>
-                                    </c:choose>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -233,50 +150,12 @@
 <%--<script src="test.js"></script>--%>
 <script type="text/javascript">
     jQuery(function ($) {
-        $('#upFiles').ace_file_input({
-            style: 'well',
-            btn_choose: 'Drop files here or click to choose',
-            btn_change: null,
-            no_icon: 'ace-icon fa fa-cloud-upload',
-            droppable: true,
-            thumbnail: 'small'//large | fit
-            //,icon_remove:null//set null, to hide remove/reset button
-            /**,before_change:function(files, dropped) {
-						//Check an example below
-						//or examples/file-upload.html
-						return true;
-					}*/
-            /**,before_remove : function() {
-						return true;
-					}*/
-            ,
-            preview_error: function (filename, error_code) {
-                //name of the file that failed
-                //error_code values
-                //1 = 'FILE_LOAD_FAILED',
-                //2 = 'IMAGE_LOAD_FAILED',
-                //3 = 'THUMBNAIL_FAILED'
-                //alert(error_code);
-            }
-
-        }).on('change', function () {
-            //console.log($(this).data('ace_input_files'));
-            //console.log($(this).data('ace_input_method'));
-        });
-
-
-        //datepicker plugin
-        //link
         $('.date-picker').datepicker({
             autoclose: true,
             todayHighlight: true
-        })
-            //show datepicker when clicking on the icon
-                .next().on(ace.click_event, function () {
-                    $(this).prev().focus();
-                });
-
-
+        }).next().on(ace.click_event, function () {
+            $(this).prev().focus();
+        });
     });
 
 </script>

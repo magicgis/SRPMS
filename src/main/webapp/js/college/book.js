@@ -1,11 +1,9 @@
 /**
  * Created by zheng on 2015/5/17.
  */
-var actorTemp =[];
 $(function(){
-    showForm();
     $('#BookTable').bootstrapTable({
-        //url: '/api/workflow/order/xgfan/project/all',
+        url: '/api/workflow/order/' + userName + '/book/all',
         sidePagination:"server",
         columns: [{
             radio:true
@@ -15,21 +13,19 @@ $(function(){
             sortable: true,
             visible:false
         },{
-            field:'projName',
+            field:'name',
             title:'著作名称',
             sortable:true
         },{
-            field:'projType',
-            title:'著作类型',
-            sortable:true,
-            formatter:"typeTran"
+            field:'pubType',
+            title:'出版类型',
+            sortable:true
         },{
-            field:'bkWdNum',
+            field:'sumWord',
             title:'著作总字数',
-            sortable:true,
-            formatter:"rateUnitTran"
+            sortable:true
         },{
-            field:'actSolTime',
+            field:'bkReward',
             title:'著作获奖情况',
             sortable:true
         },{
@@ -37,7 +33,7 @@ $(function(){
             title:'提交者',
             sortable:true
         },{
-            field:'projRank',
+            field:'publisher',
             title:'出版社',
             sortable:true,
             formatter:"rankTran"
@@ -49,80 +45,10 @@ $(function(){
         }],
         responseHandler: tableTrans
     });
-
-    $('#actorTable').bootstrapTable({
-        columns: [{
-            field:'actor',
-            title:'成员',
-            editable:true,
-            sortable:true,
-            footerFormatter:"totalNameFormatter"
-        },{
-            field:'role',
-            title:'角色',
-            editable:true,
-            sortable:true
-        },{
-            field:'marks',
-            title:'分数',
-            editable:true,
-            sortable:true,
-            footerFormatter:"totalMarksFormatter"
-        },{
-            field:'units',
-            title:'归属单位',
-            editable:true,
-            sortable:true
-        }],
-        data:actorTemp
-    });
-    uneditableForm();
-    $('#reply-box').show();
-    $('#reply').show();
 });
 //监听 点击table
 $('#BookTable').on('click-row.bs.table', function (e, row, $element) {
-    $('form input').val(null);
-    actorTemp =[];
     var orderId = row["id"];
-    var status = row["Status"];
-    if(status == 'WaitForCol') {
-        workflow.latestTask(orderId).success(function (currentTask) {
-            var taskId = currentTask[0]['id'];
-            $('#WF_Task').val(taskId);
-        });
-        $("#Approve").removeAttr("disabled","disabled");
-        $("#Refuse").removeAttr("disabled","disabled");
-    }else{
-        $("#Approve").attr("disabled","disabled");
-        $("#Refuse").attr("disabled","disabled");
-    }
-    if(row['actors']!=null) {
-        actorTemp = row['actors'];
-    }
-    $('#book').autofill(row, {
-        findbyname: true,
-        restrict: false
-    });
-    $("#actorTable").bootstrapTable('load',actorTemp);
-    showForm();
+    window.location.href = '/order/' + orderId;
 });
-//监听 点击返回
-$("#back").click(function(){
-    showTable();
-});
-//通过
-$("#Approve").click(function(){
-    approveInfo();
-});
-//驳回
-$("#Refuse").click(function(){
-    refuseAwardInfo();
-});
-//下一条
-$("#next").click(function(){
-    // console.log($('#tNewFoodTable').bootstrapTable('getSelections'));
-});
-//上一条
-$("#previous").click(function(){
-});
+

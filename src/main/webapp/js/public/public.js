@@ -2,6 +2,7 @@ var paperRoles = [{"role": "第一作者"}, {"role": "通讯作者"}, {"role": "
     , {"role": "第三作者"}, {"role": "第四作者"}, {"role": "其他"}];
 var patentRoles = [{"role": "第一专利权人"}, {"role": "知识产权所有人"}];
 var projectRoles = [{"role": "负责人"}, {"role": "参与人"}];
+var bookRoles = [{"role": "主编或第一主编"}, {"role": "第二及以下编"},{"role": "副主编"},{"role": "参编"}];
 
 /**--------------------------工作流公共方法------------------**/
 var workflow = window.workflow || {};
@@ -695,7 +696,13 @@ function processStatus(statusVlaue, isMain, userLevel) {
 //    return '共' + total.toFixed(0) + "分";
 //}
 
-
+function isMainActor(MainActor,userName){
+    if(MainActor==userName){
+        return 1;
+    }else{
+        return 0;
+    }
+}
 /**--------------------------单位表公共方法------------------**/
 ////将对话框里的值加载进单位表
 //function subUnitInfo() {

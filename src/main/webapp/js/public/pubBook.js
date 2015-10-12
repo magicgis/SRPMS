@@ -1,126 +1,149 @@
 /**
  * Created by zheng on 2015/4/24.
  */
-//是否联合项目
-function firstOrOther(){
-    if($('#isComAch').val()=='true'){
-        $('#unitInfo').show();
-        //$('#medunitTable').bootstrapTable("load",medunitTemps);
-    }else if($('#isComAch').val()=='false'){
-        $('#unitInfo').hide();
-        $('#unitTable').bootstrapTable("load",unitTemp);
-    }else{
-        $('#unitInfo').hide();
-        $('#unitTable').bootstrapTable("load",unitTemp);
+var actorTemp = [];
+var Main_Actor;
+var Main_ActorName;
+var replyByCol, replyByDep;
+var $actorTable = $('#actorTable');
+
+// 将对话框里的值加载进成员表
+function subActorInfo(index, flag) {
+    var id = $('#actor').val();
+    var actor = $('#actor').text();
+    var marks = $('#marks').val();
+    var units = $('#units').val();
+    var role = $('#role').val();
+    var rank = $('#rank').val();
+    var textNumber = $('#textNumber').val();
+    //var mark = (marks == "" ? '0' : (marks / units.length).toFixed(2));
+    //测试专用
+    //scoreAllocation(marks,index);
+    actorTemp = getActorsData();
+    $.each(units, function (i, value) {
+        actorTemp.push({"staff.id": id, "rank": rank, "staff.name": actor,
+            "role": role, "score": marks, "unit": value,"textNumber":textNumber});
+    });
+    if (rank == '1' || rank == 1) {
+        Main_Actor = id;
+        Main_ActorName = actor;
+    }
+    if (flag) {  // 增加一行
+        $('#actorTable').bootstrapTable("load", actorTemp);
+    } else {    // 替换一行
+        actorTemp.remove(index);
+        $('#actorTable').bootstrapTable('load', actorTemp);
     }
 }
-//显示详情
-function showForm(){
-    //$('#awardTable-box').addClass('collapsed');用时不能注释
-    $('#award-box').removeClass('collapsed');
-}
-//显示总览
-function showTable(){
-    $('#AwardTable').bootstrapTable('refresh',{silent: true});
-    $('#awardTable-box').removeClass('collapsed');
-    $('#award-box').addClass('collapsed');
-}
-//状态翻译
-function statusTran(value,row){
-    if(value == 'Blank'){
-        return '待填写';
-    }else if(value == 'Uncomplete'){
-        return '已保存';
-    }else if(value == 'Complete'){
-        return '等待他人确认';
-    }else if(value == 'WaitForSubmit'){
-        return '待统一提交';
-    }else if(value == 'WaitForCol'){
-        return '学院审核中';
-    }else if(value == 'WaitForDep'){
-        return '管理部门审核中';
-    }else if(value == 'RefuseByDep'){
-        return '管理部门驳回，待修改'
-    }else if(value == 'RefuseByCol'){
-        return '学院驳回，待修改'
-    }
-};
-//添加 删除 行动作
-window.operateAAEvents = {
-    'click .removeAwardActor': function (e, value, row, index) {
+// 移除和编辑成员
+window.operateEvents = {
+    'click .removeActor': function (e, value, row, index) {
         $('#actorTable').bootstrapTable('remove', {
-            field: 'staId',
-            values: [row.staId]
+            field: 'staff.id',
+            values: [row["staff.id"]]
         });
+    },
+    'click .editActor': function (e, value, row, index) {
+        editActor(row, index);
     }
 };
-function operateAAFormatter(value, row, index) {
+// 操作
+function operateFormatter(value, row, index) {
     return [
-        '<a class="removeAwardActor" href="javascript:void(0)" title="Remove" >',
-        '<i class="glyphicon glyphicon-remove"></i>',
-        '</a>'
-    ].join('');
-};
-window.operateAUEvents = {
-    'click .removeUnit': function (e, value, row, index) {
-        $('#unitTable').bootstrapTable('remove', {
-            field: 'unitName',
-            values: [row.unitName]
-        });
-    }
-};
-function operateAUFormatter(value, row, index) {
-    return [
-        '<a class="removeUnit" href="javascript:void(0)" title="Remove" >',
+        '<a class="editActor" href="javascript:void(0)" title="edit" >',
+        '<i class="ace-icon fa fa-pencil bigger-110"></i>',
+        '</a>&nbsp;&nbsp;&nbsp;',
+        '<a class="removeActor" href="javascript:void(0)" title="Remove" >',
         '<i class="glyphicon glyphicon-remove"></i>',
         '</a>'
     ].join('');
 }
-//监听 修改成员表
-$('#actorTable').on('editable-save.bs.table', function (e, row, $element){
-    $('#actorTable').bootstrapTable("load",actorTemp);
-});
-
-//监听 添加成员
-$("#addActor").click(function(){
-    actorTemp.push({"staName":"", "staId":"","role":"","marks":"0"  }) ;
-    $('#actorTable').bootstrapTable("load",actorTemp);
-});
-//监听 修改单位表
-$('#unitTable').on('editable-save.bs.table', function (e, row, $element){
-    $('#unitTable').bootstrapTable("load",unitTemp);
-});
-
-//监听 添单位员
-$("#addUnit").click(function(){
-    unitTemp.push({"unitName":"", "unitRank":"" }) ;
-    $('#unitTable').bootstrapTable("load",unitTemp);
-});
-//单位数目及人数
+// 总人数
 function totalNameFormatter(data) {
-    return "共"+data.length+"人";
+    return "共" + data.length + "人";
 }
-function totalMarksFormatter(data){
-    return "共"+data.length+"人";
+// 总分
+function totalMarksFormatter(data) {
+    var total = 0;
+    $.each(data, function (i, row) {
+        if (row.score !== null && row.score !== undefined && row.score !== "") {
+            total += +(row.score.toString().substring(0));
+        }
+    });
+    //测试专用
+    //var tempScore=$('#tempScore').val();
+    var Score=50-total.toFixed(0);
+    if(Score<=0){
+        messageModal("分数分配错误！");
+        return;
+    }
+    $('.testScore').empty();
+    $('#tempScore').val(Score);
+    $('.testScore').append('剩余'+Score+'分');
+    return '共' + total.toFixed(0) + "分";
 }
-function totalUnitFormatter(data){
-    return "共"+data.length+"单位";
+/**************************获取表格数据************************/
+function getActorsData() {
+    var actorTemp = $("#actorTable").bootstrapTable('getData');
+    $.each(actorTemp, function (index, value) {
+        delete value[0];
+    });
+    return actorTemp;
 }
 //表单不可编辑
 function uneditableForm(){
     $('form input').attr("disabled", "disabled");
     $('form select').attr("disabled", "disabled");
-    $('#addActor').attr("disabled", "disabled");
-    $('#addUnit').attr("disabled", "disabled");
-    //$('#actorTable').bootstrapTable('hideColumn','operate');addUnit
+    $('.delFiles').hide();
 }
-//成功提示
-function afterSuccess(msg){
-    $('form input').val(null);
-    $('#paper-box').addClass('collapsed');
-    $('#info_alert').empty();
-    $('<div class="alert alert-block alert-success" id="success_info"></div>').appendTo('#info_alert');
-    $('<button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times">' +
-    '</i></button><i class="ace-icon fa fa-check green" id="success_icon"></i>').appendTo('#success_info');
-    $('#success_icon').append(msg);
+function getPubType(){
+    $('#pubType').selectize({
+        valueField: 'id',
+        labelField: 'value',
+        create: true,
+        options: [
+            {"id":"1020","value": "公开出版著作"},
+            {"id":"1021","value": "教育部规划教材"},
+            {"id":"1022","value": "协编教材"},
+            {"id":"1023","value":"其他教材"}],
+        maxItems: 1
+    });
+}
+function fullUpInfo(all,entity){
+    if (!isNull(all)) {
+        actorTemp = all['actors'];
+        filesData = all['filesData'];
+        Main_Actor = all['Main-Actor'];
+        Main_ActorName = all['Main-ActorName'];
+        replyByCol = all['replyByCol'];
+        replyByDep = all['replyByDep'];
+        $("#actorTable").bootstrapTable('load', actorTemp);
+    }
+}
+function allSelection(){
+    $('#dept').selectize({
+        valueField: 'id',
+        labelField: 'value',
+        delimiter: ',',
+        persist: false,
+        options: [],
+        create: false,
+        preload: true,
+        maxItems: 1,
+        load: function (query, callback) {
+            $.ajax({
+                url: '../api/baseinfo/部门',
+                type: 'GET',
+                dataType: 'json',
+                error: function () {
+                    callback();
+                },
+                success: function (res) {
+                    callback(res);
+                }
+            });
+        },
+        onChange: function (result) {
+        }
+    });
 }

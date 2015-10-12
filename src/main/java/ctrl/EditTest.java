@@ -36,5 +36,4 @@ public class EditTest {
         model.addAttribute(new Task());
         return "projectEdit";
     }
-
 }

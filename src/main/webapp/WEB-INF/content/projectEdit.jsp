@@ -58,7 +58,7 @@
                 <div class="row">
                     <form id="project" class="form-horizontal" role="form">
                         <div hidden="hidden">
-                            <input type="text" name="dept.value" id="deptValue" value=""/>
+                            <%--<input type="text" name="dept.value" id="deptValue" value=""/>--%>
                             <%--<input type="text" name="WF_Task" id="WF_Task" value="${task.id}"/>--%>
                             <%--<input type="text" name="WF_Order" id="WF_Order" value="${task.orderId}"/>--%>
                             <%--<input type="text" name="IsComplete" id="IsComplete"/>--%>
@@ -477,9 +477,11 @@
     // 成员，单位，文件
     // todo 取出实体内的额外信息，附件信息也应该在其中。
     var entity = ${ObjectMapper.writeValueAsString(project)};
+    console.log(entity);
     var all = ${ObjectMapper.writeValueAsString(project.argMap)};
-    var standardId = '${ObjectMapper.writeValueAsString(patent.standard)}';
-    var dept = '${ObjectMapper.writeValueAsString(project.dept)}';
+    var standardId = '${ObjectMapper.writeValueAsString(project.standard)}';
+    //var dept = entity['dept'];
+    var dept ='${ObjectMapper.writeValueAsString(project.dept)}';
     var taskId = '${taskId}';
     var taskName = '${taskName}';
     allSections();//选择框
@@ -492,7 +494,12 @@
     }
     scanFiles(filesData);
     //选择框
-    dept = jQuery.parseJSON(dept);
+    //dept = jQuery.parseJSON(dept);
+    if(dept !== null) {  // 显示 所属部门
+        var $dept = $('#dept').selectize();
+        addOptionSelectize($dept, [dept]);
+        DisplayForm($dept, dept['id'], 0);
+    }
     $('#actorTable').bootstrapTable({
         columns: [
             {

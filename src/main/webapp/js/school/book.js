@@ -1,11 +1,44 @@
 /**
  * Created by zheng on 2015/5/17.
  */
-var actorTemp =[];
-$(function(){
-    showForm();
+var which = 0;
+$(function () {
+    allInfoList();
+});
+$('#all').click(function () {
+    which = 0;
+    $('#BookTable').bootstrapTable('destroy');
+    allInfoList();
+});
+$('#audit').click(function () {
+    which = 1;
+    $('#BookTable').bootstrapTable('destroy');
+    auditInfoList()
+});
+//监听 点击新建
+$("#add").click(function () {
+    window.location.href = '/book/new';
+});
+
+$('#BookTable').on('click-row.bs.table', function (e, row, $element) {
+    var orderId = row["id"];
+    if (which == 0) {
+        window.location.href = '/book/' + orderId;
+    } else {
+        window.location.href = '/order/' + orderId;
+    }
+});
+function processTran(arg) {
+    var t = {
+        "0": "未启动",
+        "1": "流程中",
+        "9": "已结束"
+    };
+    return t[arg];
+}
+function allInfoList() {
     $('#BookTable').bootstrapTable({
-        //url: '/api/workflow/order/xgfan/project/all',
+        url: '/api/book/all',
         sidePagination:"server",
         columns: [{
             radio:true
@@ -15,21 +48,19 @@ $(function(){
             sortable: true,
             visible:false
         },{
-            field:'projName',
+            field:'name',
             title:'著作名称',
             sortable:true
         },{
-            field:'projType',
-            title:'著作类型',
-            sortable:true,
-            formatter:"typeTran"
+            field:'pubType',
+            title:'出版类型',
+            sortable:true
         },{
-            field:'bkWdNum',
+            field:'sumWord',
             title:'著作总字数',
-            sortable:true,
-            formatter:"rateUnitTran"
+            sortable:true
         },{
-            field:'actSolTime',
+            field:'bkReward',
             title:'著作获奖情况',
             sortable:true
         },{
@@ -37,7 +68,7 @@ $(function(){
             title:'提交者',
             sortable:true
         },{
-            field:'projRank',
+            field:'publisher',
             title:'出版社',
             sortable:true,
             formatter:"rankTran"
@@ -46,83 +77,62 @@ $(function(){
             title:'状态',
             sortable:true,
             formatter:'statusTran'
+        }, {
+            field: 'process',
+            title: '流程状态',
+            sortable: true,
+            formatter: 'processTran'
+        }]
+    });
+}
+function auditInfoList() {
+    $('#BookTable').bootstrapTable({
+        url: '/api/workflow/order/' + userName + '/book/all',
+        sidePagination:"server",
+        columns: [{
+            radio:true
+        },{
+            field: 'id',
+            title: 'id',
+            sortable: true,
+            visible:false
+        },{
+            field:'name',
+            title:'著作名称',
+            sortable:true
+        },{
+            field:'pubType',
+            title:'出版类型',
+            sortable:true
+        },{
+            field:'sumWord',
+            title:'著作总字数',
+            sortable:true
+        },{
+            field:'bkReward',
+            title:'著作获奖情况',
+            sortable:true
+        },{
+            field:'S-ACTOR',
+            title:'提交者',
+            sortable:true
+        },{
+            field:'publisher',
+            title:'出版社',
+            sortable:true,
+            formatter:"rankTran"
+        },{
+            field:'Status',
+            title:'状态',
+            sortable:true,
+            formatter:'statusTran'
+        }, {
+            field: 'process',
+            title: '流程状态',
+            sortable: true,
+            formatter: 'processTran'
         }],
         responseHandler: tableTrans
     });
+}
 
-    $('#actorTable').bootstrapTable({
-        columns: [{
-            field:'actor',
-            title:'成员',
-            editable:true,
-            sortable:true,
-            footerFormatter:"totalNameFormatter"
-        },{
-            field:'role',
-            title:'角色',
-            editable:true,
-            sortable:true
-        },{
-            field:'marks',
-            title:'分数',
-            editable:true,
-            sortable:true,
-            footerFormatter:"totalMarksFormatter"
-        },{
-            field:'units',
-            title:'归属单位',
-            editable:true,
-            sortable:true
-        }],
-        data:actorTemp
-    });
-    uneditableForm();
-    $('#reply-box').show();
-    $('#reply').show();
-});
-//监听 点击table
-$('#BookTable').on('click-row.bs.table', function (e, row, $element) {
-    $('form input').val(null);
-    actorTemp =[];
-    var orderId = row["id"];
-    var status = row["Status"];
-    if(status == 'WaitForCol') {
-        workflow.latestTask(orderId).success(function (currentTask) {
-            var taskId = currentTask[0]['id'];
-            $('#WF_Task').val(taskId);
-        });
-        $("#Approve").removeAttr("disabled","disabled");
-        $("#Refuse").removeAttr("disabled","disabled");
-    }else{
-        $("#Approve").attr("disabled","disabled");
-        $("#Refuse").attr("disabled","disabled");
-    }
-    if(row['actors']!=null) {
-        actorTemp = row['actors'];
-    }
-    $('#book').autofill(row, {
-        findbyname: true,
-        restrict: false
-    });
-    $("#actorTable").bootstrapTable('load',actorTemp);
-    showForm();
-});
-//监听 点击返回
-$("#back").click(function(){
-    showTable();
-});
-//通过
-$("#Approve").click(function(){
-    approveInfo();
-});
-//驳回
-$("#Refuse").click(function(){
-    refuseAwardInfo();
-});
-//下一条
-$("#next").click(function(){
-    // console.log($('#tNewFoodTable').bootstrapTable('getSelections'));
-});
-//上一条
-$("#previous").click(function(){
-});
