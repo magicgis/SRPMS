@@ -186,7 +186,7 @@ public class Index {
 
     @RequestMapping(value = {"achAward/new"}, method = RequestMethod.GET)
     public String newAchAward(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        model.addAttribute(new AchAppraisal());
+        model.addAttribute(new AchAward());
         return "achAwardEdit";
     }
 
