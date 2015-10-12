@@ -69,7 +69,9 @@ public class AchAppraisalApi {
     @Path("/{id}")
     @Consumes("application/json;charset=UTF-8")
     public boolean update(@PathParam("id") String id, HashMap<String, Object> args) {
-        return false;//todo
+        AchAppraisal achAppraisal = achAppraisalService.getById(id);
+        achAppraisal.setArgMap(args);
+        return achAppraisalService.update(achAppraisal);
     }
 
     @DELETE
