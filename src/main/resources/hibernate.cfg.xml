@@ -39,6 +39,7 @@
         <mapping class="entity.Project"/>
         <mapping class="entity.Patent"/>
         <mapping class="entity.Book"/>
+        <mapping class="entity.AchAppraisal"/>
         <mapping class="entity.security.Permission"/>
         <mapping class="entity.security.Role"/>
         <mapping class="entity.security.Url"/>
