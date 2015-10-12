@@ -78,7 +78,6 @@
                             <div class="widget-body" id="publicArea">
                                 <table id="PatentTable"
                                        data-toolbar="#tPatentToolbar"
-                                       data-search="true"
                                        data-show-columns="true"
                                        data-show-refresh="true"
                                        data-show-toggle="true"
@@ -91,9 +90,9 @@
 
                                     <c:choose>
                                         <c:when test="${sessionScope.level == '1'}">
-                                            <button id="submit" class="btn btn-success">
-                                                <i class="fa fa-check"></i> 统一提交
-                                            </button>
+                                            <%--<button id="submit" class="btn btn-success">--%>
+                                                <%--<i class="fa fa-check"></i> 统一提交--%>
+                                            <%--</button>--%>
                                         </c:when>
                                         <c:when test="${sessionScope.level == '3'}">
                                             <div class="btn-group">

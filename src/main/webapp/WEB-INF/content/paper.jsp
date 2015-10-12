@@ -77,7 +77,6 @@
                                 <div id="tableOrder">
                                     <table id="PaperTable" class="noradio"
                                            data-toolbar="#tPaperToolbar"
-                                           data-search="true"
                                            data-show-columns="true"
                                            data-show-refresh="true"
                                            data-show-toggle="true"
@@ -104,9 +103,6 @@
                                                         </li>
                                                         <li>
                                                             <a href="#" id="partakeBtn">参与论文</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" id="confirmBtn">待确认论文</a>
                                                         </li>
                                                     </ul>
                                                 </div>
