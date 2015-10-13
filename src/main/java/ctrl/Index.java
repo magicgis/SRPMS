@@ -169,7 +169,7 @@ public class Index {
         return "achAppraisalEdit";
     }
 
-    @RequestMapping(value = {"project/{achAppraisalId}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"achAppraisal/{achAppraisalId}"}, method = RequestMethod.GET)
     public String achAppraisalEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
                               @PathVariable("achAppraisalId") String achAppraisalId) {
         AchAppraisal achAppraisal = achAppraisalService.getById(achAppraisalId);

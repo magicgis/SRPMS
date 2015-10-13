@@ -3,6 +3,8 @@ var paperRoles = [{"role": "第一作者"}, {"role": "通讯作者"}, {"role": "
 var patentRoles = [{"role": "第一专利权人"}, {"role": "知识产权所有人"}];
 var projectRoles = [{"role": "负责人"}, {"role": "参与人"}];
 var bookRoles = [{"role": "主编或第一主编"}, {"role": "第二及以下编"},{"role": "副主编"},{"role": "参编"}];
+var appraiseRoles = [{"role": "负责人"}, {"role": "参与人"}];
+
 
 /**--------------------------工作流公共方法------------------**/
 var workflow = window.workflow || {};
@@ -139,7 +141,7 @@ workflow.getScore = function (args) {
     });
 };
 
-/**--------------------------处理数据公共方法------------------**/
+/**--------------------------处理数据公共方法 table相关的------------------**/
 /**
  * 对获取到的数据进行处理
  * 方便表格显示
@@ -264,6 +266,15 @@ function statusTran(value, row) {
     }
 }
 
+function processTran(arg) {
+    var t = {
+        "0": "未启动",
+        "1": "流程中",
+        "9": "已结束"
+    };
+    return t[arg];
+}
+
 // 成员翻译
 function actorTran(value, row) {
     if (value != undefined && value != null && value != "")
@@ -272,14 +283,26 @@ function actorTran(value, row) {
         return;
 }
 
+// 编辑页面获得成员信息
+function getActors() {
+    var keyStr = getSubmission(all);
+    if(isNull(all['actors'])) { // 新建的
+        actorTemp = [];
+    }else if(keyStr == "") {
+        actorTemp = all['actors'];
+    }
+    else {
+        actorTemp = all[keyStr]['actors'];
+    }
+}
+
 function hideActorOperate() {
     $('#actorTable').bootstrapTable('hideColumn', 'operate');
 }
 function hideUnitOperate() {
     $('#unitTable').bootstrapTable('hideColumn', 'operate');
 }
-
-// 简单消息弹框
+/**--------------------------简单消息弹框------------------**/
 function messageModal(message) {
     BootstrapDialog.show({
         title: '通知',
@@ -287,7 +310,7 @@ function messageModal(message) {
         message: message
     });
 }
-// 获取编辑页面的数据
+/**--------------------------获取编辑页面的数据------------------**/
 function getFormData(type) {
     var jsonData = $("#" + type).serializeJSON();
     $.each(jsonData, function (key, value) {
@@ -317,6 +340,66 @@ Array.prototype.remove = function (dx) {
     }
     this.length -= 1
 };
+
+Array.prototype.unique = function()
+{
+    var n = {},r=[]; //n为hash表，r为临时数组
+    for(var i = 0; i < this.length; i++) //遍历当前数组
+    {
+        if (!n[this[i]]) //如果hash表中没有当前项
+        {
+            n[this[i]] = true; //存入hash表
+            r.push(this[i]); //把当前数组的当前项push到临时数组里面
+        }
+    }
+    return r;
+};
+/**
+ * 获取级联选择框的第一个的数据
+ * @param data standard表中的数据
+ * @param str  需要的字段的key 作为字符串参数传进来
+ * @returns {Array}
+ */
+function getList(data, str){
+
+    var tempArray = [];
+    var tempList = [];
+    var i = 0; // 是否可以被添加进去
+    $.each(data,function(index, obj) {
+        tempArray.push(obj['infoMap'][str]);
+    });
+    tempArray = tempArray.unique(); // array去重
+
+    $.each(tempArray, function(index,value) { // 转换成JSON的List
+        var type = {};
+        type['value'] = value;
+        tempList.push(type);
+    });
+    return tempList;
+}
+
+/**
+ *
+ * @param data standard表中的数据
+ * @param str1 上一个选择框的筛选条件的key
+ * @param str2 本选择框要显示的内容的key
+ * @param result 对应于str1的筛选条件
+ */
+function getStandardList(data, str1, str2, result) {
+    var tempList2 = [];
+    var tempList = $.grep(data, function(obj, index){
+        return obj['infoMap'][str1] == result;
+    });
+    $.each(tempList, function(index, obj) {
+        var temp = {};
+        temp['id'] = obj['id'];
+        temp['value'] = obj['infoMap'][str2];
+        tempList2.push(temp);
+    });
+    return tempList2;
+}
+
+//}
 
 /**--------------------------附件公共方法------------------**/
 /**
@@ -499,6 +582,30 @@ function DisplayForm($type, ItemValue, flag) {
         $type[0].selectize.createItem(ItemValue);
     }
 }
+/**
+ * 所属部门选择框初始化
+ */
+function getDept() {
+    $('#dept').selectize({
+        valueField: 'id',
+        labelField: 'value',
+        maxItems: 1,
+        preload: true,
+        load: function (query, callback) {
+            $.ajax({
+                url: '../api/baseinfo/院系',
+                type: 'GET',
+                dataType: 'json',
+                error: function () {
+                    callback();
+                },
+                success: function (res) {
+                    callback(res);
+                }
+            });
+        }
+    });
+}
 
 /**--------------------------字符串属性公共方法------------------**/
 /**
@@ -514,7 +621,7 @@ function isInt(str) {
     }
 }
 function isNull(str) {
-    return (str == '' || str == undefined || str == null || str == '{}' || str == {} || jQuery.isEmptyObject(str));
+    return (str == '' || str == undefined || str == null || str == {} || jQuery.isEmptyObject(str));
 }
 
 /**--------------------------提示信息公共方法------------------**/
@@ -638,6 +745,15 @@ function processStatus(statusVlaue, isMain, userLevel) {
 }
 
 
+function isMainActor(MainActor,userName){
+    if(MainActor==userName){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+
 /**--------------------------成员表公共方法------------------**/
 //// 将对话框里的值加载进成员表
 //function subActorInfo(index,flag) {
@@ -695,14 +811,6 @@ function processStatus(statusVlaue, isMain, userLevel) {
 //    });
 //    return '共' + total.toFixed(0) + "分";
 //}
-
-function isMainActor(MainActor,userName){
-    if(MainActor==userName){
-        return 1;
-    }else{
-        return 0;
-    }
-}
 /**--------------------------单位表公共方法------------------**/
 ////将对话框里的值加载进单位表
 //function subUnitInfo() {
