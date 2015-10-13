@@ -247,31 +247,6 @@ function allSections() {
         selectUniversal(value, key);
     });
     //selectUniversal("aRank",2);
-    $('#dept').selectize({
-        valueField: 'id',
-        labelField: 'value',
-        delimiter: ',',
-        persist: false,
-        options: [],
-        create: false,
-        preload: true,
-        maxItems: 1,
-        load: function (query, callback) {
-            $.ajax({
-                url: '../api/baseinfo/部门',
-                type: 'GET',
-                dataType: 'json',
-                error: function () {
-                    callback();
-                },
-                success: function (res) {
-                    callback(res);
-                }
-            });
-        },
-        onChange: function (result) {
-        }
-    });
 }
 function selectUniversal(Ids, type) {
     var num = parseInt(type);
@@ -329,7 +304,7 @@ function firstOrOther() {
 /**************************************************************/
 function fullUpInfo(all,entity){
     if (!isNull(all)) {
-        actorTemp = all['actors'];
+        getActors();
         filesData = all['filesData'];
         unitTemp = all['units'];
         fundTemp = all['fund'];
@@ -337,7 +312,7 @@ function fullUpInfo(all,entity){
         Main_ActorName = all['Main-ActorName'];
         replyByCol = all['replyByCol'];
         replyByDep = all['replyByDep'];
-
+        showFiles(filesData);
         $("#fundTable").bootstrapTable('load', fundTemp);
         $("#actorTable").bootstrapTable('load', actorTemp);
         if (entity['attr'] == "联合项目") {

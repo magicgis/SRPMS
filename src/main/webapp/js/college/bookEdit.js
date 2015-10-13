@@ -3,6 +3,7 @@
  */
 $(function(){
     disableSelectize($('#pubType').selectize());
+    disableSelectize($('#dept').selectize());
     uneditableForm();
     hideActorOperate();
     $('.onEdit').hide();

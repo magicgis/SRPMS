@@ -423,9 +423,6 @@
         });
     }
     getStdList(); // 获取成果鉴定的standard待填充
-    getDept();   // 初始化 学院
-    getAchType();// 初始化 成果类型
-    upToLoadFile(); // 初始化 上传文件的
     var $appRank = $("#appRank").selectize({
         valueFieled: 'id',
         labelField: 'value',
@@ -445,7 +442,8 @@
             $appRank[0].selectize.addOption(appRankList);
         }
     });
-
+    getDept();   // 初始化 学院
+    upToLoadFile(); // 初始化 上传文件的
     // 成员，单位，文件
     var order =  ${ObjectMapper.writeValueAsString(achAppraisal)}; // 获得 order 或 实体
 

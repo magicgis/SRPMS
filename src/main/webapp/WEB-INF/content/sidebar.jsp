@@ -65,7 +65,7 @@
                 </li>
 
                 <li class="">
-                    <a href="<c:url value="/award"/>">
+                    <a href="<c:url value="/achAward"/>">
                         <i class="menu-icon fa fa-caret-right"></i>
                         成果获奖
                     </a>

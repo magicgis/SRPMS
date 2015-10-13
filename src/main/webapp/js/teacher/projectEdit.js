@@ -2,10 +2,10 @@
  * Created by zheng on 2015/10/3.
  */
 $(function () {
-    $.each(optionsMenu, function (key, value) {
-        disableSelectize($('#' + value).selectize());
+    var elementlist = document.querySelectorAll('.selectized');
+    $.each(elementlist, function(index, value) {
+        disableSelectize($(value).selectize());
     });
-    disableSelectize($('#dept').selectize());
     uneditableForm();
     hideUnitOperate();
     $('.onApprove').hide();

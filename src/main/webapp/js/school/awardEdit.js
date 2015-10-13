@@ -1,7 +1,6 @@
 /**
  * Created by zheng on 2015/10/12.
  */
-/**与项目信息有关的 保存||确认||撤回||删除||提交所有**/
 $(function () {
     //TODO
     $('#reply').hide();
@@ -11,19 +10,23 @@ function init() {
     var status = entity['Status'];
     var statusCode=processStatus(status,0,3);
     if (entity['process'] == '1' || entity['process'] == '9') {
+        var elementlist = document.querySelectorAll('.selectized');
+        $.each(elementlist, function(index, value) {
+            disableSelectize($(value).selectize());
+        });
         $('#reply').show();
         $('.onEdit').hide();
         $('.onDel').hide();
         $('#upload').hide();
-        $('.addActor').hide();
-        disableSelectize($('#pubType').selectize());
-        disableSelectize($('#dept').selectize());
+        $('#addActor').hide();
+        $('#addUnit').hide();
         uneditableForm();
         hideActorOperate();
         // 实体中不能审批，order中才可以。实体中没有status，所以这样判断
         switch (parseInt(statusCode)){
             case 1:
                 $('.onApprove').hide();
+                $('.del').hide();
             case 311:
                 $('#reply').show();
                 $('#reply-display').show();
@@ -31,7 +34,9 @@ function init() {
                 var who = $('#reply-display').children('small');
                 reply.empty();
                 who.empty();
+                $('.onApprove').show();
                 $('.onDel').show();
+                $('.orderBack').hide();
                 break;
             case 301:
                 $('#reply').show();
@@ -40,33 +45,17 @@ function init() {
                 var who = $('#reply-display').children('small');
                 reply.empty();
                 who.empty();
+                $('.onApprove').show();
                 $('.onDel').show();
+                $('.orderBack').hide();
                 break;
         }
-
-        //if ( !isNull(status) && status.indexOf('refuse')>=0) {
-        //    $('#reply').show();
-        //    $('#reply-display').show();
-        //    var reply = $('#reply-display').children('p');
-        //    var who = $('#reply-display').children('small');
-        //    reply.empty();
-        //    who.empty();
-        //    if (status.indexOf("WaitForDep") >= 0) { // 学院通过了
-        //        reply.append(replyByCol);
-        //        who.append("学院批复");
-        //        $('.onApproval').show();
-        //    } else {
-        //        $('.onApproval').hide();
-        //        $('#reply').hide();
-        //    }
-        //}else{
-        //    $('.onApproval').hide();
-        //}
     } else if (entity['process'] == null || entity['process'] == '0') { // 刚刚新增或未启动
         $('.onApproval').hide();
         $('.onEdit').show();$('.onDel').show();
     }
 }
+/**与项目信息有关的 保存||确认||撤回||删除||提交所有**/
 function save() {
     saveStep1().success(function(data) {
 
@@ -93,7 +82,7 @@ function confirm() {
                      * userName,taskId,status
                      */
                     if (result) {
-                        workflow.startEntityOrder("book", $('#bookId').val()).success(function (data) {
+                        workflow.startEntityOrder("achAward", $('#awardId').val()).success(function (data) {
                             //history.go(-1);
                         });
                     }
@@ -104,8 +93,7 @@ function confirm() {
 
 }
 function orderBack() {
-    var row = $('#BookTable').bootstrapTable('getSelections')[0];
-    var order = row['id'];
+    var order = entity['id'];
     var jsonData = Object();
     jsonData['order'] = order;
     jsonData['user'] = userName;
@@ -128,7 +116,6 @@ function delOrder() {
             if (result) {
                 workflow.delOrder(order).success(function () {
                     afterSuccess("删除成功！");
-                    //window.location.href = "/book";
                 });
             }
         }
@@ -151,12 +138,15 @@ function Approve() {
             if (result) {
                 workflow.execute('dep',taskId, approveInfo).success(function () {
                     afterSuccess('审批通过！');
-                    //window.location.href = "/book";
+                    //window.location.href = "/award";
                 });
             }
         }
     });
 }
+/**
+ * 驳回
+ */
 function Refuse() {
     var refuseInfo = Object();
     refuseInfo["DecByDep"] = false;
@@ -174,7 +164,7 @@ function Refuse() {
             if (result) {
                 workflow.execute('dep', taskId, refuseInfo).success(function () {
                     afterSuccess('审批驳回！');
-                    // window.location.href = "/book";
+                    // window.location.href = "/award";
                 });
             }
         }
@@ -211,8 +201,7 @@ function addActor() {
             }
         }],
         onshown: function () {
-            $('.bookTextNumber').show();
-            fillRoles(bookRoles);
+            fillRoles(awardRoles);
         }
     });
 }
@@ -264,8 +253,7 @@ function editActor(row, index) {
             }
         }],
         onshown: function () {
-            fillRoles(bookRoles);
-            $('.bookTextNumber').show();
+            fillRoles(awardRoles);
             //填充名字
             var $actor = $("#actor").selectize();
             $actor[0].selectize.addOption([{'id': row["staff.id"], 'name': row["staff.name"], "col": {"value": ""}}]);
@@ -305,11 +293,106 @@ function editActor(row, index) {
         }
     });
 }
+/*计算分数*/
+function getScore() {
+    var jsonData = getFormData("award");
+    //console.log(jsonData);
+    workflow.getScore(jsonData).success(function (data) {
+        if (data["valid"] == false) {
+            errorMsg(data["msg"]);
+        } else if (data["hasSum"] == false) {
+            $("#actorTable").bootstrapTable('load', data["actors"]);
+            errorMsg(data["msg"]);
+        } else if (data["hasSum"] == true) {
+            $("#score").val(data["sum"]);
+            $("#showSum").html("总分：" + data["sum"] + "分");
+            errorMsg(data["msg"]);
+        }
+    });
+}
+/*****************************有关单位的操作***********************/
+/**
+ * 添加单位
+ */
+function addUnit() {
+    BootstrapDialog.show({
+        type: BootstrapDialog.TYPE_PRIMARY,
+        message: function (dialog) {
+            var $message = $('<div></div>');
+            var pageToLoad = dialog.getData('pageToLoad');
+            $message.load(pageToLoad);
+            return $message;
+        },
+        title: "参与单位信息",
+        data: {
+            'pageToLoad': '../dialog/addUnit.html'
+        },
+        closeByBackdrop: false,
+        buttons: [{
+            id: 'btn-ok',
+            icon: 'glyphicon glyphicon-check',
+            label: '添加',
+            cssClass: 'btn-info',
+            autospin: false,
+            action: function (dialogRef) {
+                //console.log($("#rank").val());
+                if (!isFull()) {
+                    messageModal('请将信息填写完整。');
+                    return;
+                }
+                subUnitInfo(null);
+                dialogRef.close();
+            }
+        }]
+    });
+}
+//编辑单位
+function editUnit(row, index) {
+    BootstrapDialog.show({
+        type: BootstrapDialog.TYPE_PRIMARY,
+        message: function (dialog) {
+            var $message = $('<div></div>');
+            var pageToLoad = dialog.getData('pageToLoad');
+            $message.load(pageToLoad);
+            return $message;
+        },
+        title: "成员信息",
+        data: {
+            'pageToLoad': '../dialog/addUnit.html'
+        },
+        closeByBackdrop: false,
+        buttons: [{
+            id: 'btn-ok',
+            icon: 'glyphicon glyphicon-check',
+            label: '保存',
+            cssClass: 'btn-info',
+            autospin: false,
+            action: function (dialogRef) {
+                if (!isFull()) {
+                    messageModal('请将单位信息填写完整。');
+                    return;
+                }
+                subUnitInfo(index);
+                dialogRef.close();
+            }
+        }],
+        onshown: function () {
+            var $unit = $("#unit").selectize();
+            //填充单位
+            DisplayForm($unit, row["unit"], 1);
+            //填充其他
+            $('#unitInfo').autofill(row, {
+                findbyname: true,
+                restrict: false
+            });
+        }
+    });
+}
 /********************************保存***************************/
 function saveStep1() {
     return $.ajax({
-        url: '/api/book/book',
-        data: $('#book').serialize(),
+        url: '/api/achAward/achAward',
+        data: $('#award').serialize(),
         type: 'POST',
         dataType: 'text'
     })
@@ -317,15 +400,20 @@ function saveStep1() {
 function saveStep2(data) {
     var send = new Object();
     //避免新建的时候多次点击保存多次新建
-    $('#bookId').val(data);
+    $('#awardId').val(data);
     send['actors'] = getActorsData();
     send['filesData'] = filesData;
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
+    send['units'] = getUnitsData();
+    send['achName']= Main_ActorName;
+    send['name']= $('#name').val();
+    send['awardType']=$('#achType').val();
+    send['date']=$('#date').val();
     console.log(send);
     return $.ajax({
         type: 'put',
-        url: '/api/book/' + data,
+        url: '/api/achAward/' + data,
         data: JSON.stringify(send),
         dataType: 'json',
         contentType: 'application/json;charset=UTF-8'

@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: zheng
   Date: 2015/10/12
-  Time: 0:01
+  Time: 17:17
   To change this template use File | Settings | File Templates.
 --%>
 <jsp:useBean id="ObjectMapper" scope="application" class="com.fasterxml.jackson.databind.ObjectMapper"/>
@@ -13,7 +13,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta charset="utf-8"/>
-    <title>著作信息</title>
+    <title>成果获奖信息</title>
 
     <meta name="description" content="Dynamic tables and grids using jqGrid plugin"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
@@ -57,35 +57,50 @@
                         <i class="ace-icon fa fa-home home-icon"></i>
                         <a href="<c:url value="/allSRInfo"/>">Home</a>
                     </li>
-                    <li class="active">著作</li>
+                    <li class="active">成果获奖</li>
                 </ul>
                 <!-- /.breadcrumb -->
             </div>
             <div class="page-content">
                 <div class="row">
-                    <form id="book" class="form-horizontal" role="form">
+                    <form id="award" class="form-horizontal" role="form">
                         <div hidden="hidden">
-                            <%--<input type="text" name="standard.id" id="standardId"/>--%>
-                            <input type="text" name="id" id="bookId" value="${book.id}"/>
+                            <input type="text" name="id" id="awardId" value="${award.id}"/>
                         </div>
-                        <div id="newInstrumentsInfo" class="col-xs-12 col-md-6 widget-container-col ui-sortable">
+                        <div id="achInfo" class="col-xs-12 col-md-7 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
                                 <div class="widget-header">
-                                    <h4 class="widget-title">著作信息</h4>
+                                    <h4 class="widget-title">成果信息</h4>
                                 </div>
                                 <div class="widget-body ">
                                     <div class="widget-main">
                                         <div class="row">
                                             <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="bkName">著作名称</label>
+                                                <label class="col-xs-4 control-label no-padding-left"
+                                                       for="name">成果名称</label>
 
-                                                <div class="col-sm-8">
-                                                    <input type="text" id="bkName" name="name"
-                                                           value="${book.name}"
-                                                           placeholder="" class="col-xs-12"/>
+                                                <div class="col-xs-8">
+                                                    <input type="text" id="name" name="name"
+                                                           value="${achAward.name}"
+                                                           placeholder="" size="78%"/>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12 col-sm-6">
+                                                <label class="col-sm-4 control-label no-padding-left"
+                                                       for="achType">成果类型</label>
+
+                                                <div class="col-sm-8">
+                                                    <div class="col-sm-13">
+                                                        <input id="achType" name="achType"
+                                                               type="text" class="form-control col-xs-12"
+                                                               value="${achAward.achType}"
+                                                               placeholder="请选择"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
                                                        for="dept">所属部门</label>
@@ -102,95 +117,95 @@
                                         <div class="row">
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
-                                                       for="pubType">出版类型</label>
+                                                       for="regNo">成果登记号</label>
 
                                                 <div class="col-sm-8">
-                                                    <input class="form-control" id="pubType"
-                                                           type="text" name="pubType"
-                                                           value="${book.pubType}"
+                                                    <input type="text" id="regNo" name="regNo"
+                                                           placeholder="" class="col-xs-12"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="actorInfo" class="col-xs-12 col-md-5 widget-container-col ui-sortable">
+                            <div class="widget-box transparent ui-sortable-handle col-xs-12"
+                                 style="opacity: 1;">
+                                <div class="widget-header" id="actorInfoHeader">
+                                    <h4 class="widget-title">参与人员</h4>
+                                    <span id="showSum" style="font-size: 15px"></span>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <div class="row">
+                                            <div id="actorToolbar">
+                                                <c:choose>
+                                                    <c:when test="${sessionScope.level == '3'}">
+                                                        <a data-toggle="modal" id="addActor"
+                                                           class="btn btn-primary btn-sm
+                                                           glyphicon glyphicon-plus">添加成员</a>
+                                                    </c:when>
+                                                    <c:when test="${sessionScope.level == '1'}">
+                                                        <a data-toggle="modal" id="getScore"
+                                                           class="btn btn-primary btn-sm">计算分数</a>
+
+                                                    </c:when>
+                                                </c:choose>
+                                            </div>
+                                            <table id="actorTable"
+                                                   data-toolbar="#actorToolbar"
+                                                   data-show-footer="true"
+                                                   data-show-columns="false"
+                                                   data-show-toggle="false">
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="awardInfo"
+                             class="col-xs-12 col-md-7 widget-container-col ui-sortable">
+                            <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
+                                <div class="widget-header">
+                                    <h4 class="widget-title">获奖信息</h4>
+                                </div>
+                                <div class="widget-body ">
+                                    <div class="widget-main">
+                                        <div class="row">
+                                            <div class="form-group col-xs-12 col-sm-6">
+                                                <label class="col-sm-4 control-label no-padding-left"
+                                                       for="awdProp">奖励性质</label>
+
+                                                <div class="col-sm-8">
+                                                    <input id="awdProp" name="awdprop"
+                                                           type="text" class="form-control col-xs-12"
                                                            placeholder="请选择"/>
                                                 </div>
                                             </div>
+
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
-                                                       for="pubDate">出版年月</label>
+                                                       for="awdType">奖项类别</label>
 
                                                 <div class="col-sm-8">
-                                                    <input type="text" id="pubDate" name="pubDate"
+                                                    <input id="awdType" name="standard.id"
+                                                           type="text" class="form-control col-xs-12"
+                                                           placeholder="请选择"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12 col-sm-6">
+                                                <label class="col-sm-4 control-label no-padding-left"
+                                                       for="date">获奖时间
+                                                </label>
+
+                                                <div class="col-sm-8">
+                                                    <input type="text" id="date" name="date"
                                                            class="col-xs-12 date-picker"
-                                                           value="${book.pubDate}"
+                                                           value="${achAward.date}"
                                                            placeholder="" data-date-format="yyyy-mm-dd"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="isbn">ISBN号</label>
-
-                                                <div class="col-sm-8">
-                                                    <input type="text" id="isbn" name="isbn"
-                                                           value="${book.isbn}"
-                                                           placeholder="" class="col-xs-12"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="publisher">出版社</label>
-
-                                                <div class="col-sm-8">
-                                                    <input type="text" id="publisher" name="publisher"
-                                                           value="${book.publisher}"
-                                                           placeholder="" class="col-xs-12"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="bkReward" placeholder="请选择"
-                                                        >著作获奖</label>
-
-                                                <div class="col-sm-8">
-                                                    <select class="form-control" id="bkReward"
-                                                            placeholder="请选择">
-                                                        <option value=""></option>
-                                                        <option value="1">是</option>
-                                                        <option value="0">否</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="sumWord">著作总字数</label>
-
-                                                <div class="col-sm-8">
-                                                    <input type="text" name="sumWord" id="sumWord"
-                                                           value="${book.sumWord}"
-                                                           placeholder="" class="col-xs-12"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="year">计分年度</label>
-
-                                                <div class="col-sm-8">
-                                                    <input type="text" name="year" id="year"
-                                                           value="${book.year}"
-                                                           placeholder="" class="col-xs-12"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="bulDate">公告时间</label>
-
-                                                <div class="col-sm-8">
-                                                    <input class="form-control date-picker" type="text" id="bulDate"
-                                                           name="bulDate" value="${book.bulDate}"
-                                                           data-date-format="yyyy-mm-dd" placeholder=""
-                                                           class="col-xs-12"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -224,41 +239,28 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="actorInfo" class="col-xs-12 col-md-6 widget-container-col ui-sortable">
-                            <div class="widget-box transparent ui-sortable-handle col-xs-12"
-                                 style="opacity: 1;">
-                                <div class="widget-header" id="actorInfoHeader">
-                                    <h4 class="widget-title">参与人员</h4>
-                                    <span id="showSum" style="font-size: 15px"></span>
+                        <div id="unitInfo" class="col-xs-12 col-md-5 widget-container-col ui-sortable">
+                            <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
+                                <div class="widget-header">
+                                    <h4 class="widget-title">共有单位信息</h4>
                                 </div>
                                 <div class="widget-body">
                                     <div class="widget-main">
                                         <div class="row">
-                                            <div id="actorToolbar">
-                                                <c:choose>
-                                                    <c:when test="${sessionScope.level == '3'}">
-                                                        <a data-toggle="modal" id="addActor"
-                                                           class="btn btn-primary btn-sm">添加成员</a>
-                                                    </c:when>
-                                                    <c:when test="${sessionScope.level == '1'}">
-                                                        <a data-toggle="modal" id="getScore"
-                                                           class="btn btn-primary btn-sm">计算分数</a>
-
-                                                    </c:when>
-                                                </c:choose>
+                                            <div id="unitToolbar">
+                                                <a class="btn btn-primary btn-sm" id="addUnit"><i
+                                                        class="glyphicon glyphicon-plus"></i> 添加单位</a>
                                             </div>
-                                            <table id="actorTable"
-                                                   data-toolbar="#actorToolbar"
-                                                   data-show-footer="true"
-                                                   data-show-columns="false"
-                                                   data-show-toggle="false">
-                                            </table>
+                                            <table id="unitTable"
+                                                   data-toolbar="#unitToolbar"
+                                                   data-show-toggle="false"
+                                                   data-show-footer="true"></table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div id="reply" class="col-xs-12 col-md-5 widget-container-col ui-sortable">
+                        <div id="reply" class="col-xs-12 col-md-5 col-xs-offset-7 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
                                 <div class="widget-header">
                                     <h4 class="widget-title">批复</h4>
@@ -280,16 +282,18 @@
                             </div>
                         </div>
                     </form>
-                    <div class="col-xs-12" id="msg_alert"></div>
+
+
                     <div class="row">
                         <div id="formBtn" class="col-xs-12 clearfix">
                             <div class="pull-left onDel">
                                 <c:if test="${sessionScope.level == '3'}">
-                                    <button class="btn btn-danger tabOrdBtn del" type="button">
+                                    <button class="btn btn-danger del" type="button">
                                         <i class="ace-icon fa fa-trash  bigger-100"></i>
                                         删除
                                     </button>
-                                    <button class="btn btn-danger tabOrdBtn orderBack" type="button">
+                                    &nbsp;
+                                    <button class="btn btn-danger orderBack" type="button">
                                         <i class="ace-icon fa  fa-repeat bigger-100"></i>
                                         撤回
                                     </button>
@@ -297,28 +301,28 @@
                             </div>
                             <div class="pull-right">
                                 <span class="onEdit">
-                                    <button class="confirm btn btn-success tabOrdBtn" type="button">
+                                    <button class="confirm btn btn-success" type="button">
                                         <i class="ace-icon fa fa-check bigger-110"></i>
                                         确认
                                     </button>
-
-                                    <button class="btn btn-info tabOrdBtn save" type="button">
+                                    &nbsp;
+                                    <button class="btn btn-info save" type="button">
                                         <i class="ace-icon fa fa-save bigger-110"></i>
                                         保存
                                     </button>
                                 </span>
                                 <span class="onApprove">
-                                    <button class="btn btn-success tabOrdBtn Approve" type="button">
+                                    <button class="btn btn-success Approve" type="button">
                                         <i class="ace-icon fa fa-check bigger-110"></i>
                                         通过
                                     </button>
-
-                                    <button class="btn btn-danger tabOrdBtn Refuse" type="button">
+                                    &nbsp;
+                                    <button class="btn btn-danger Refuse" type="button">
                                         <i class="ace-icon fa fa-remove bigger-110"></i>
                                         驳回
                                     </button>
                                 </span>
-                                <button class="btn btn-success tabOrdBtn back" type="button">
+                                <button class="btn btn-success back" type="button">
                                     <i class="ace-icon fa fa-reply  bigger-110"></i>
                                     返回
                                 </button>
@@ -340,16 +344,16 @@
 <!-- /.main-container -->
 </body>
 <script src='<c:url value="/js/public/public.js"/>'></script>
-<script src='<c:url value="/js/public/pubBook.js"/>'></script>
+<script src='<c:url value="/js/public/pubAward.js"/>'></script>
 <c:choose>
     <c:when test="${sessionScope.level == '1'}">
-        <script src="<c:url value="/js/teacher/bookEdit.js"/>"></script>
+        <script src="<c:url value="/js/teacher/awardEdit.js"/>"></script>
     </c:when>
     <c:when test="${sessionScope.level == '2'}">
-        <script src="<c:url value="/js/college/bookEdit.js"/>"></script>
+        <script src="<c:url value="/js/college/awardEdit.js"/>"></script>
     </c:when>
     <c:when test="${sessionScope.level == '3'}">
-        <script src="<c:url value="/js/school/bookEdit.js"/>"></script>
+        <script src="<c:url value="/js/school/awardEdit.js"/>"></script>
     </c:when>
 </c:choose>
 <script type="text/javascript">
@@ -361,26 +365,66 @@
             $(this).prev().focus();
         });
     });
+    var  StdList = [];
+    var apppropList = [];
+    function getStdList() {
+        $.ajax({
+            type: 'GET',
+            async: false,
+            url: '/api/standard/type/成果',
+            dataType: 'json',
+            contentType: 'application/json;charset=UTF-8',
+            success: function(data) {
+                StdList = data;
+                apppropList = getList(StdList, 'awdprop');
+            }
+        });
+    }
+    getStdList(); // 获取成果鉴定的standard待填充
+    var $awdtype = $("#awdType").selectize({
+        valueField: 'id',
+        labelField: 'value',
+        maxItems:1
+    });
+    var $awdprop = $("#awdProp").selectize({
+        valueFieled: 'value',
+        labelField: 'value',
+        options: apppropList,
+        maxItems: 1,
+        onChange: function(result) {
+            var apptypeList = [];
+            apptypeList = getStandardList(StdList, 'awdprop', 'awdtype', result);
+            $awdtype[0].selectize.clearOptions();
+            $awdtype[0].selectize.addOption(apptypeList);
+        }
+    });
+
     // 成员，单位，文件
     // todo 取出实体内的额外信息，附件信息也应该在其中。
-    var entity = ${ObjectMapper.writeValueAsString(book)};
-    var all = ${ObjectMapper.writeValueAsString(book.argMap)};
+    var entity = ${ObjectMapper.writeValueAsString(achAward)};
+    var all = ${ObjectMapper.writeValueAsString(achAward.argMap)};
+    var standard=entity['standard'];
     var dept = entity['dept'];
     var taskId = '${taskId}';
     var taskName = '${taskName}';
-    getPubType();//选择框
     upToLoadFile();//文件上传
+    allSelection();
     getDept();
     fullUpInfo(all, entity);//填充
     var filesData;
     if (filesData == null) {
         filesData = {};
     }
-    if(dept !== null) {  // 显示 所属部门
+    if (dept !== null) {  // 显示 所属部门
         var $dept = $('#dept').selectize();
         addOptionSelectize($dept, [dept]);
         DisplayForm($dept, dept['id'], 0);
     }
+    if(!isNull(standard)){
+        DisplayForm($awdprop, standard['infoMap']['awdprop'], 0);
+        DisplayForm($awdtype, standard['id'], 0);
+    }
+    DisplayForm($('#achType').selectize(), entity['achType'], 0);
     $('#actorTable').bootstrapTable({
         columns: [
             {
@@ -410,10 +454,6 @@
                 field: 'unit',
                 title: '归属单位',
                 sortable: true
-            },  {
-                field: 'textNumber',
-                title: '承担字数',
-                sortable: true
             }, {
                 field: 'operate',
                 title: '操作',
@@ -422,6 +462,25 @@
                 events: "operateEvents"
             }],
         data: actorTemp
+    });
+    $('#unitTable').bootstrapTable({
+        columns: [{
+            field: 'rank',
+            title: '排名',
+            sortable: true,
+            footerFormatter: "totalUnitFormatter"
+        }, {
+            field: 'unit',
+            title: '单位名称',
+            sortable: true
+        }, {
+            field: 'operate',
+            title: '操作',
+            sortable: false,
+            formatter: "operateFormatterUnit",
+            events: "operateEventsUnit"
+        }],
+        data: unitTemp
     });
     $('.back').click(function () {
         history.go(-1);
@@ -433,6 +492,10 @@
     //监听 分配分数
     $('#getScore').click(function () {
         getScore();
+    });
+    //监听 添加单位
+    $('#addUnit').click(function () {
+        addUnit();
     });
     //监听 点击保存||确认||撤回||删除
     $(".save").click(function () {

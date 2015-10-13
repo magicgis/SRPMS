@@ -1,14 +1,47 @@
 /**
  * Created by zheng on 2015/4/24.
  */
-var actorTemp =[];
-var unitTemp = [];
+var which = 0;
 $(function () {
+    allInfoList();
+});
+$('#all').click(function () {
+    which = 0;
+    $('#AwardTable').bootstrapTable('destroy');
+    allInfoList();
+});
+$('#audit').click(function () {
+    which = 1;
+    $('#AwardTable').bootstrapTable('destroy');
+    auditInfoList()
+});
+//监听 点击新建
+$("#add").click(function () {
+    window.location.href = '/achAward/new';
+});
+
+$('#AwardTable').on('click-row.bs.table', function (e, row, $element) {
+    var orderId = row["id"];
+    if (which == 0) {
+        window.location.href = '/achAward/' + orderId;
+    } else {
+        window.location.href = '/order/' + orderId;
+    }
+});
+function processTran(arg) {
+    var t = {
+        "0": "未启动",
+        "1": "流程中",
+        "9": "已结束"
+    };
+    return t[arg];
+}
+function allInfoList() {
     $('#AwardTable').bootstrapTable({
-        url: '/api/workflow/order/col/award/all',
+        url: '/api/achAward/all',
+        sidePagination:"server",
         columns: [{
             radio: true
-            //visible:false
         }, {
             field: 'id',
             title: 'id',
@@ -31,96 +64,58 @@ $(function () {
             field: 'awardRank',
             title: '获奖时间',
             sortable: true
+        },{
+            field:'Status',
+            title:'状态',
+            sortable:true,
+            formatter:'statusTran'
+        }, {
+            field: 'process',
+            title: '流程状态',
+            sortable: true,
+            formatter: 'processTran'
+        }]
+    });
+}
+function auditInfoList() {
+    $('#AwardTable').bootstrapTable({
+        url: '/api/workflow/order/' + userName + '/achAward/all',
+        sidePagination:"server",
+        columns: [{
+            radio: true
+            //visible:false
+        }, {
+            field: 'id',
+            title: 'id',
+            sortable: true,
+            visible: false
+        }, {
+            field: 'achName',
+            title: '录入人',
+            sortable: true
+        }, {
+            field: 'name',
+            title: '成果名称',
+            sortable: true
+        }, {
+            field: 'awardType',
+            title: '类型',
+            sortable: 'true'
+        }, {
+            field: 'date',
+            title: '获奖时间',
+            sortable: true
         }, {
             field: 'Status',
             title: '状态',
             sortable: true,
             formatter: 'statusTran'
+        }, {
+            field: 'process',
+            title: '流程状态',
+            sortable: true,
+            formatter: 'processTran'
         }],
-        responseHandler:tableTrans
+        responseHandler: tableTrans
     });
-
-    $('#actorTable').bootstrapTable({
-        columns: [{
-            field:'actor',
-            title:'姓名',
-            editable:true,
-            sortable:true,
-            footerFormatter:"totalNameFormatter"
-        },{
-            field:'staId',
-            title:'工号',
-            editable:true,
-            sortable:true
-            //footerFormatter:"totalNameFormatter"
-        },{
-            field:'marks',
-            title:'分数',
-            editable:true,
-            sortable:true,
-            footerFormatter:"totalMarksFormatter"
-        },{
-            field:'role',
-            title:'角色',
-            editable:true,
-            sortable:true
-            //  footerFormatter:"totalNameFormatter"
-        }],
-        data:actorTemp
-    });
-
-    $('#unitTable').bootstrapTable({
-        columns: [{
-            field:'unitName',
-            title:'单位名称',
-            editable:true,
-            sortable:true,
-            footerFormatter:"totalUnitFormatter"
-        },{
-            field:'unitRank',
-            title:'单位排名',
-            editable:true,
-            sortable:true
-            // footerFormatter:"totalNameFormatter"
-        }],
-        data:unitTemp
-    });
-    $('#reply-box').show();
-    $('#reply').show();
-    $('#actorToolbar').hide();
-    //$('#fundToolbar').hide();
-    $('#unitToolbar').hide();
-    showForm();
-});
-//监听 点击返回
-$("#back").click(function(){
-
-});
-$("#Approve").click(function(){
-});
-$("#Refuse").click(function(){
-});
-$("#next").click(function(){
-    // console.log($('#tNewFoodTable').bootstrapTable('getSelections'));
-});
-$("#previous").click(function(){
-});
-
-
-function approve(){
-    //var jsonData = Object();
-    //jsonData["DecByCol"]=true;
-    //jsonData["WF_User"]="col";
-    //jsonData["WF_Task"]=$('#WF_Task').val();
-    //jsonData["replyByCol"]=$('#reply-box').val();
-    //pubapprove(jsonData);
-}
-
-function refuse(){
-    //var jsonData = Object();
-    //jsonData["DecByCol"]=false;
-    //jsonData["WF_User"]="col";
-    //jsonData["WF_Task"]=$('#WF_Task').val();
-    //jsonData["replyByCol"]=$('#reply-box').val();
-    //pubrefuse(jsonData);
 }

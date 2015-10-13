@@ -220,7 +220,7 @@ public class Index {
 
     @RequestMapping(value = {"award"}, method = RequestMethod.GET)
     public String award(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "award";
+        return "achAward";
     }
 
     @RequestMapping(value = {"appraise"}, method = RequestMethod.GET)

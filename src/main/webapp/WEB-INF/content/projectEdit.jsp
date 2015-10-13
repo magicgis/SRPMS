@@ -396,12 +396,12 @@
                         <div id="formBtn" class="col-xs-12 clearfix">
                             <div class="pull-left onDel">
                                 <c:if test="${sessionScope.level == '3'}">
-                                 <button class="btn btn-danger del" type="button">
+                                 <button class="btn btn-danger tabOrdBtn del" type="button">
                                     <i class="ace-icon fa fa-trash  bigger-100"></i>
                                     删除
                                  </button>
-                                 &nbsp;
-                                 <button class="btn btn-danger orderBack" type="button">
+
+                                 <button class="btn btn-danger tabOrdBtn orderBack" type="button">
                                     <i class="ace-icon fa  fa-repeat bigger-100"></i>
                                     撤回
                                  </button>
@@ -409,28 +409,28 @@
                             </div>
                             <div class="pull-right">
                                 <span class="onEdit">
-                                    <button class="confirm btn btn-success" type="button">
+                                    <button class="confirm tabOrdBtn btn btn-success" type="button">
                                         <i class="ace-icon fa fa-check bigger-110"></i>
                                         确认
                                     </button>
-                                    &nbsp;
-                                    <button class="btn btn-info save" type="button">
+
+                                    <button class="btn btn-info tabOrdBtn save" type="button">
                                         <i class="ace-icon fa fa-save bigger-110"></i>
                                         保存
                                     </button>
                                 </span>
                                 <span class="onApprove">
-                                    <button class="btn btn-success Approve" type="button">
+                                    <button class="btn btn-success tabOrdBtn Approve" type="button">
                                         <i class="ace-icon fa fa-check bigger-110"></i>
                                         通过
                                     </button>
-                                    &nbsp;
-                                    <button class="btn btn-danger Refuse" type="button">
+
+                                    <button class="btn btn-danger tabOrdBtn Refuse" type="button">
                                         <i class="ace-icon fa fa-remove bigger-110"></i>
                                         驳回
                                     </button>
                                 </span>
-                                <button class="btn btn-success back" type="button">
+                                <button class="btn btn-success tabOrdBtn back" type="button">
                                     <i class="ace-icon fa fa-reply  bigger-110"></i>
                                     返回
                                 </button>
@@ -477,24 +477,22 @@
     // 成员，单位，文件
     // todo 取出实体内的额外信息，附件信息也应该在其中。
     var entity = ${ObjectMapper.writeValueAsString(project)};
-    console.log(entity);
+    //console.log(entity);
     var all = ${ObjectMapper.writeValueAsString(project.argMap)};
     var standardId = '${ObjectMapper.writeValueAsString(project.standard)}';
     //var dept = entity['dept'];
     var dept ='${ObjectMapper.writeValueAsString(project.dept)}';
     var taskId = '${taskId}';
     var taskName = '${taskName}';
-    allSections();//选择框
+    allSections();
+    getDept();//选择框
     upToLoadFile();//文件上传
     firstOrOther();//是否是联合单位
-    fullUpInfo(all,entity);//tian chong
+    fullUpInfo(all,entity);//tian chon
     var filesData;
     if (filesData == null) {
         filesData = {};
     }
-    scanFiles(filesData);
-    //选择框
-    //dept = jQuery.parseJSON(dept);
     if(dept !== null) {  // 显示 所属部门
         var $dept = $('#dept').selectize();
         addOptionSelectize($dept, [dept]);
@@ -629,7 +627,8 @@
     })
     $(".Refuse").click(function () {
         Refuse();
-    })
+    });
+    //选择
 </script>
 </html>
 

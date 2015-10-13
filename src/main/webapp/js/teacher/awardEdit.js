@@ -2,8 +2,10 @@
  * Created by zheng on 2015/10/12.
  */
 $(function () {
-    disableSelectize($('#pubType').selectize());
-    disableSelectize($('#dept').selectize());
+    var elementlist = document.querySelectorAll('.selectized');
+    $.each(elementlist, function(index, value) {
+        disableSelectize($(value).selectize());
+    });
     uneditableForm();
     hideUnitOperate();
     $('.onApprove').hide();
@@ -31,7 +33,7 @@ function init() {
             $('.save').hide();
             break;
         case 11110:
-           // hideActorOperate();
+            // hideActorOperate();
             $('.getScore').show();
             $('.save').show();
             $('.confirm').show();
@@ -106,11 +108,8 @@ function save() {
 function confirm() {
     var status = all['Status'];
     var send = new Object();
-    if(status == 'Uncomplete'){
-        send['IsComplete'] = 'true';
-        send['actors'] = getActorsData();
-    }
-    console.log(send);
+    send['IsComplete'] = 'true';
+    send['actors'] = getActorsData();
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '确认?',
@@ -181,7 +180,7 @@ function editActor(row, index) {
             }
         }],
         onshown: function () {
-            fillRoles(bookRoles);
+            fillRoles(awardRoles);
             var $actor = $("#actor").selectize();
             var $role = $("#role").selectize();
             var $units = $("#units").selectize();
@@ -202,7 +201,6 @@ function editActor(row, index) {
             disableSelectize($units);
             $("#rank").attr("disabled", "disabled");
             $("#textNumber").attr("disabled", "disabled");
-            $('.bookTextNumber').show();
             $(".editableModal").show();
             //是否可编辑
             if (flag) {//可编辑

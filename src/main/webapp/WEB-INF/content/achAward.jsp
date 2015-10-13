@@ -1,33 +1,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<%--
-  Created by IntelliJ IDEA.
-  User: zheng
-  Date: 2015/5/11
-  Time: 14:01
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta charset="utf-8"/>
-    <title>著作管理 -
-        <c:choose>
-            <c:when test="${sessionScope.level == '1'}">
-                教师
-            </c:when>
-            <c:when test="${sessionScope.level == '2'}">
-                学院
-            </c:when>
-            <c:when test="${sessionScope.level == '3'}">
-                学校
-            </c:when>
-        </c:choose>
-    </title>
+    <title>成果获奖管理 -      <c:choose>
+        <c:when test="${sessionScope.level == '1'}">
+            教师
+        </c:when>
+        <c:when test="${sessionScope.level == '2'}">
+            学院
+        </c:when>
+        <c:when test="${sessionScope.level == '3'}">
+            学校
+        </c:when>
+    </c:choose></title>
 
     <meta name="description" content="Dynamic tables and grids using jqGrid plugin"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
     <jsp:include page="public/jsHeader.jsp"/>
     <style>
         td.bs-checkbox {
@@ -40,6 +32,7 @@
     </style>
 
 </head>
+
 <body class="no-skin">
 <jsp:include page="public/topbar.jsp"/>
 
@@ -67,7 +60,7 @@
                         <i class="ace-icon fa fa-home home-icon"></i>
                         <a href="index.jsp">Home</a>
                     </li>
-                    <li class="active">著作</li>
+                    <li class="active">成果获奖</li>
                 </ul>
                 <!-- /.breadcrumb -->
             </div>
@@ -75,10 +68,10 @@
             <div class="page-content">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="widget-box transparent " style="opacity: 1;" id="bookTable-box">
+                        <div class="widget-box transparent " style="opacity: 1;" id="awardTable-box">
                             <div class="widget-body">
-                                <table id="BookTable"
-                                       data-toolbar="#tBookToolbar"
+                                <table id="AwardTable"
+                                       data-toolbar="#tAwardToolbar"
                                        data-search="true"
                                        data-show-columns="true"
                                        data-show-refresh="true"
@@ -88,7 +81,7 @@
                                        data-single-select="true"
                                        data-click-to-select="true">
                                 </table>
-                                <div id="tBookToolbar">
+                                <div id="tAwardToolbar">
                                     <c:choose>
                                         <c:when test="${sessionScope.level == '3'}">
                                             <div class="btn-group">
@@ -121,33 +114,27 @@
         </div>
     </div>
 </div>
-</div>
 <!-- /.main-content -->
-
 <jsp:include page="public/footer.jsp"/>
-
 <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
     <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 </a>
 </div>
-
-
 <!-- /.main-container -->
 <script src='<c:url value="/js/public/public.js"/>'></script>
-<script src='<c:url value="/js/public/pubBook.js"/>'></script>
+<script src='<c:url value="/js/public/pubAward.js"/>'></script>
 
 <c:choose>
     <c:when test="${sessionScope.level == '1'}">
-        <script src="<c:url value="/js/teacher/book.js"/>"></script>
+        <script src="<c:url value="/js/teacher/award.js"/>"></script>
     </c:when>
     <c:when test="${sessionScope.level == '2'}">
-        <script src="<c:url value="/js/college/book.js"/>"></script>
+        <script src="<c:url value="/js/college/award.js"/>"></script>
     </c:when>
     <c:when test="${sessionScope.level == '3'}">
-        <script src="<c:url value="/js/school/book.js"/>"></script>
+        <script src="<c:url value="/js/school/award.js"/>"></script>
     </c:when>
 </c:choose>
-<%--<script src="test.js"></script>--%>
 <script type="text/javascript">
     jQuery(function ($) {
         $('.date-picker').datepicker({

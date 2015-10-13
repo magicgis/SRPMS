@@ -1,11 +1,10 @@
 /**
  * Created by zheng on 2015/4/24.
  */
-var actorTemp =[];
-var unitTemp = [];
 $(function () {
     $('#AwardTable').bootstrapTable({
-        url: '/api/workflow/order/col/award/all',
+        url: '/api/workflow/order/' + userName + '/achAward/all',
+        sidePagination: "server",
         columns: [{
             radio: true
             //visible:false
@@ -14,21 +13,20 @@ $(function () {
             title: 'id',
             sortable: true,
             visible: false
-        }, {
+        },  {
             field: 'achName',
             title: '录入人',
             sortable: true
         }, {
-            field: 'achType',
+            field: 'name',
             title: '成果名称',
             sortable: true
-            // formatter:"typeTran"
         }, {
-            field: 'awardName',
+            field: 'awardType',
             title: '类型',
             sortable: 'true'
         }, {
-            field: 'awardRank',
+            field: 'date',
             title: '获奖时间',
             sortable: true
         }, {
@@ -39,90 +37,9 @@ $(function () {
         }],
         responseHandler:tableTrans
     });
-
-    $('#actorTable').bootstrapTable({
-        columns: [{
-            field:'actor',
-            title:'姓名',
-            editable:true,
-            sortable:true,
-            footerFormatter:"totalNameFormatter"
-        },{
-            field:'staId',
-            title:'工号',
-            editable:true,
-            sortable:true
-            //footerFormatter:"totalNameFormatter"
-        },{
-            field:'marks',
-            title:'分数',
-            editable:true,
-            sortable:true,
-            footerFormatter:"totalMarksFormatter"
-        },{
-            field:'role',
-            title:'角色',
-            editable:true,
-            sortable:true
-            //  footerFormatter:"totalNameFormatter"
-        }],
-        data:actorTemp
-    });
-
-    $('#unitTable').bootstrapTable({
-        columns: [{
-            field:'unitName',
-            title:'单位名称',
-            editable:true,
-            sortable:true,
-            footerFormatter:"totalUnitFormatter"
-        },{
-            field:'unitRank',
-            title:'单位排名',
-            editable:true,
-            sortable:true
-            // footerFormatter:"totalNameFormatter"
-        }],
-        data:unitTemp
-    });
-    $('#reply-box').show();
-    $('#reply').show();
-    $('#actorToolbar').hide();
-    //$('#fundToolbar').hide();
-    $('#unitToolbar').hide();
-    showForm();
 });
-//监听 点击返回
-$("#back").click(function(){
-
+//监听 点击table
+$('#AwardTable').on('click-row.bs.table', function (e, row, $element) {
+    var orderId = row["id"];
+    window.location.href = '/order/' + orderId;
 });
-$("#Approve").click(function(){
-    approveAwardInfo();
-});
-$("#Refuse").click(function(){
-    refuseAwardInfo();
-});
-$("#next").click(function(){
-    // console.log($('#tNewFoodTable').bootstrapTable('getSelections'));
-});
-$("#previous").click(function(){
-});
-
-
-function approveAwardInfo(){
-    //var jsonData = Object();
-    //jsonData["DecByCol"]=true;
-    //jsonData["WF_User"]="col";
-    //jsonData["WF_Task"]=$('#WF_Task').val();
-    //jsonData["replyByCol"]=$('#reply-box').val();
-    //pubapprove(jsonData);
-}
-
-function refuseAwardInfo(){
-    //var jsonData = Object();
-    //jsonData["DecByCol"]=false;
-    //jsonData["WF_User"]="col";
-    //jsonData["WF_Task"]=$('#WF_Task').val();
-    //jsonData["replyByCol"]=$('#reply-box').val();
-    //pubrefuse(jsonData);
-}

@@ -111,39 +111,13 @@ function getPubType(){
 }
 function fullUpInfo(all,entity){
     if (!isNull(all)) {
-        actorTemp = all['actors'];
+        getActors();
         filesData = all['filesData'];
         Main_Actor = all['Main-Actor'];
         Main_ActorName = all['Main-ActorName'];
         replyByCol = all['replyByCol'];
         replyByDep = all['replyByDep'];
         $("#actorTable").bootstrapTable('load', actorTemp);
+        showFiles(filesData);
     }
-}
-function allSelection(){
-    $('#dept').selectize({
-        valueField: 'id',
-        labelField: 'value',
-        delimiter: ',',
-        persist: false,
-        options: [],
-        create: false,
-        preload: true,
-        maxItems: 1,
-        load: function (query, callback) {
-            $.ajax({
-                url: '../api/baseinfo/部门',
-                type: 'GET',
-                dataType: 'json',
-                error: function () {
-                    callback();
-                },
-                success: function (res) {
-                    callback(res);
-                }
-            });
-        },
-        onChange: function (result) {
-        }
-    });
 }
