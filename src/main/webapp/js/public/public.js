@@ -384,8 +384,10 @@ function getList(data, str){
  * @param str1 上一个选择框的筛选条件的key
  * @param str2 本选择框要显示的内容的key
  * @param result 对应于str1的筛选条件
+ * @return tempList2
  */
 function getStandardList(data, str1, str2, result) {
+
     var tempList2 = [];
     var tempList = $.grep(data, function(obj, index){
         return obj['infoMap'][str1] == result;
