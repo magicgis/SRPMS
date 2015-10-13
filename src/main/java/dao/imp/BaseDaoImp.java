@@ -105,11 +105,10 @@ public class BaseDaoImp<T> implements BaseDao<T> {
     }
 
     public List<T> getAll() {
-        log.debug("BaseDAO Get All " + entityClass.getName());
-        String hql = "from " + getEntityClass().getName();
+//        log.debug("BaseDAO Get All " + entityClass.getName());
         List<T> res = null;
         try {
-            res = this.getCurrentSession().createQuery(hql).list();
+            res = this.getCurrentSession().createCriteria(entityClass.getName()).list();
         } catch (HibernateException hex) {
             log.error("BaseDAO Get All " + entityClass.getName() + " Failed", hex);
         }
