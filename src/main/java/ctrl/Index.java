@@ -277,13 +277,20 @@ public class Index {
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "bookEdit";
+            case "achAward":
+                AchAward achAward = achAwardService.getById(entityId);
+                achAward.setArgMap(order.getVariableMap());
+                model.addAttribute(achAward);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "achAwardEdit";
             case "paper":
                 model.addAttribute(order);
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "paperEdit";
             default:
-                return "redirect:allSRInfo";
+                return "redirect:/allSRInfo";
         }
     }
 
@@ -315,13 +322,19 @@ public class Index {
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "bookEdit";
+            case "achAward":
+                AchAward achAward = achAwardService.getById(entityId);
+                achAward.setArgMap(order.getVariableMap());
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "achAwardEdit";
             case "paper":
                 model.addAttribute(order);
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "paperEdit";
             default:
-                return "redirect:allSRInfo";
+                return "redirect:/allSRInfo";
         }
     }
 
