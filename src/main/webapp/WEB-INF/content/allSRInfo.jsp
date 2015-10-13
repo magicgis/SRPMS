@@ -84,25 +84,32 @@
                                         <c:choose>
                                             <c:when test="${sessionScope.level == '1'}">
                                                 <div class="btn-group">
-                                                    <button class="btn btn-primary dropdown-toggle"
-                                                            data-toggle="dropdown">
+                                                        <button class="btn btn-default dropdown-toggle"
+                                                        data-toggle="dropdown">
                                                         查看选项
                                                         <span class="ace-icon fa fa-caret-down icon-on-right"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu dropdown-menu-left">
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-left">
                                                         <li>
-                                                            <a href="#" id="allSRInform">所有科研</a>
+                                                        <a href="#" id="allSRInform">所有科研</a>
                                                         </li>
                                                         <li>
-                                                            <a href="#" id="orderSRInfo">主导科研</a>
+                                                        <a href="#" id="orderSRInfo">主导科研</a>
                                                         </li>
                                                         <li>
-                                                            <a href="#" id="partakeBtn">参与科研</a>
+                                                        <a href="#" id="partakeBtn">参与科研</a>
                                                         </li>
                                                         <li>
-                                                            <a href="#" id="confirmBtn">待确认</a>
+                                                        <a href="#" id="confirmBtn">待确认</a>
                                                         </li>
-                                                    </ul>
+                                                        </ul>
+
+                                                    <%--<select name="choose">--%>
+                                                        <%--<option href="#" id="allSRInform">所有科研</option>--%>
+                                                        <%--<option href="#" id="orderSRInfo">主导科研</option>--%>
+                                                        <%--<option href="#" id="partakeBtn">参与科研</option>--%>
+                                                        <%--<option href="#" id="confirmBtn">待确认</option>--%>
+                                                    <%--</select>--%>
                                                 </div>
                                                 <button class="btn btn-success allSubmit">
                                                     <i class="ace fa fa-check"></i>统一提交

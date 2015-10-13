@@ -1,10 +1,11 @@
 package api;
 
-import entity.AchAppraisal;
+import entity.AchAward;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-import service.AchAppraisalService;
+import service.AchAwardService;
 import service.BaseInfoService;
+import service.StandardInfoService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MultivaluedMap;
@@ -19,12 +20,15 @@ import static util.Trans.putMapOnObj;
  * Created by guofan on 2015/10/12.
  */
 @RestController
-@Path("/achAppraisal")
-public class AchAppraisalApi {
+@Path("/achAward")
+public class AchAwardApi {
     @Autowired
-    AchAppraisalService achAppraisalService;
+    AchAwardService achAwardService;
+
     @Autowired
     BaseInfoService baseInfoService;
+    @Autowired
+    StandardInfoService standardInfoService;
 
     @GET
     @Path("/all")
@@ -34,34 +38,34 @@ public class AchAppraisalApi {
                       @QueryParam("search") String search,
                       @QueryParam("sort") String sort,
                       @QueryParam("order") String ord) {
-        return getSubMap(achAppraisalService.search(search, sort, ord), limit, offset);
+        return getSubMap(achAwardService.search(search, sort, ord), limit, offset);
     }
 
     @POST
-    @Path("/achAppraisal")
+    @Path("/achAward")
     public Serializable add(MultivaluedMap args) {
         HashMap<String, Object> x = new HashMap<>();
         for (Object key : args.keySet()) {
             x.put((String) key, args.getFirst(key));
         }
-        AchAppraisal achAppraisal;
+        AchAward achAward;
         if ("".equals(args.getFirst("id"))) {
-            achAppraisal = new AchAppraisal();
-            achAppraisal.setProcess("0");//表示刚填表
+            achAward = new AchAward();
+            achAward.setProcess("0");//表示刚填表
         }
         else {
-            achAppraisal = achAppraisalService.getById((Serializable) args.getFirst("id"));
+            achAward = achAwardService.getById((Serializable) args.getFirst("id"));
         }
-        putMapOnObj(achAppraisal, x);
-//        achAppraisal.setStandard(standardInfoService.getById((Serializable) args.getFirst("standard.id")));
-        achAppraisal.setDept(baseInfoService.getById((Serializable) args.getFirst("dept.id")));
-        if ("".equals(achAppraisal.getId())) {
-            achAppraisal.setId(null);
-            return achAppraisalService.add(achAppraisal);
+        putMapOnObj(achAward, x);
+        achAward.setStandard(standardInfoService.getById((Serializable) args.getFirst("standard.id")));
+        achAward.setDept(baseInfoService.getById((Serializable) args.getFirst("dept.id")));
+        if ("".equals(achAward.getId())) {
+            achAward.setId(null);
+            return achAwardService.add(achAward);
         }
         else {
-            achAppraisalService.update(achAppraisal);
-            return achAppraisal.getId();
+            achAwardService.update(achAward);
+            return achAward.getId();
         }
     }
 
@@ -69,9 +73,9 @@ public class AchAppraisalApi {
     @Path("/{id}")
     @Consumes("application/json;charset=UTF-8")
     public boolean update(@PathParam("id") String id, HashMap<String, Object> args) {
-        AchAppraisal achAppraisal = achAppraisalService.getById(id);
-        achAppraisal.setArgMap(args);
-        return achAppraisalService.update(achAppraisal);
+        AchAward achAward = achAwardService.getById(id);
+        achAward.setArgMap(args);
+        return achAwardService.update(achAward);
     }
 
     @DELETE

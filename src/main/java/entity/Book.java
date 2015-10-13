@@ -172,9 +172,9 @@ public class Book {
         return null;
     }
 
-    public void setArgMap(Map infoMap) {
+    public void setArgMap(Map argMap) {
         try {
-            this.arg = new ObjectMapper().writeValueAsString(infoMap);
+            this.arg = new ObjectMapper().writeValueAsString(argMap);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

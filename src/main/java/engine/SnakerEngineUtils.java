@@ -1,15 +1,9 @@
 package engine;
 
-import dao.BookDao;
-import dao.PatentDao;
-import dao.ProjectDao;
-import dao.StaffDao;
+import dao.*;
 import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
-import entity.Book;
-import entity.Patent;
-import entity.Project;
-import entity.Staff;
+import entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.snaker.engine.SnakerEngine;
@@ -51,6 +45,10 @@ public class SnakerEngineUtils implements Engine {
     private StaffDao staffDao;
     @Autowired
     private BookDao bookDao;
+    @Autowired
+    private AchAwardDao achAwardDao;
+    @Autowired
+    private AchAppraisalDao achAppraisalDao;
 
     public void initFlows() {
         snakerEngine.process().deploy(StreamHelper.getStreamFromClasspath("workflow/easy.snaker"));
@@ -174,6 +172,41 @@ public class SnakerEngineUtils implements Engine {
                 book.setProcess("1");
                 bookDao.update(book);
                 break;
+
+            case "achAward":
+                AchAward achAward = achAwardDao.getById(entityId);
+                args = (HashMap<String, Object>) achAward.getArgMap();
+                entityInfo = (HashMap) args.clone();
+                staff = staffDao.getById((Serializable) args.get("Main-Actor"));
+
+                args.put("WF_Type", "achAward");
+                args.put("WF_Entity", entityId);
+
+                order = startInstanceById(processId, staff.getId(), args);
+
+                entityInfo.put("WF_OrderId", order.getId());
+                achAward.setArgMap(entityInfo);
+                achAward.setProcess("1");
+                achAwardDao.update(achAward);
+                break;
+
+            case "achAppraisal":
+                AchAppraisal achAppraisal = achAppraisalDao.getById(entityId);
+                args = (HashMap<String, Object>) achAppraisal.getArgMap();
+                entityInfo = (HashMap) args.clone();
+                staff = staffDao.getById((Serializable) args.get("Main-Actor"));
+
+                args.put("WF_Type", "achAppraisal");
+                args.put("WF_Entity", entityId);
+
+                order = startInstanceById(processId, staff.getId(), args);
+
+                entityInfo.put("WF_OrderId", order.getId());
+                achAppraisal.setArgMap(entityInfo);
+                achAppraisal.setProcess("1");
+                achAppraisalDao.update(achAppraisal);
+                break;
+
         }
         return order;
     }

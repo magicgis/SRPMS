@@ -38,6 +38,8 @@ public class Index {
     BookService bookService;
     @Autowired
     AchAppraisalService achAppraisalService;
+    @Autowired
+    AchAwardService achAwardService;
 
     @RequestMapping(value = {"login", ""}, method = RequestMethod.GET)
     public String index(Model model, RedirectAttributes redirectAttributes) {
@@ -171,10 +173,29 @@ public class Index {
 
     @RequestMapping(value = {"achAppraisal/{achAppraisalId}"}, method = RequestMethod.GET)
     public String achAppraisalEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
-                              @PathVariable("achAppraisalId") String achAppraisalId) {
+                                   @PathVariable("achAppraisalId") String achAppraisalId) {
         AchAppraisal achAppraisal = achAppraisalService.getById(achAppraisalId);
         model.addAttribute(achAppraisal);
         return "achAppraisalEdit";
+    }
+
+    @RequestMapping(value = {"achAward"}, method = RequestMethod.GET)
+    public String achAward(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        return "achAward";
+    }
+
+    @RequestMapping(value = {"achAward/new"}, method = RequestMethod.GET)
+    public String newAchAward(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        model.addAttribute(new AchAward());
+        return "achAwardEdit";
+    }
+
+    @RequestMapping(value = {"achAward/{achAwardId}"}, method = RequestMethod.GET)
+    public String achAwardEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                               @PathVariable("achAwardId") String achAwardId) {
+        AchAward achAward = achAwardService.getById(achAwardId);
+        model.addAttribute(achAward);
+        return "achAwardEdit";
     }
 
     @RequestMapping(value = {"newOthers"}, method = RequestMethod.GET)

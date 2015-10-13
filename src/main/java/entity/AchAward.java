@@ -1,8 +1,14 @@
 package entity;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by guofan on 2015/10/12.
@@ -13,6 +19,7 @@ public class AchAward {
     private String id;
     private String name;
     private String date;
+    private String achType;
     private String unit;
     private String result;
     private String way;
@@ -96,6 +103,16 @@ public class AchAward {
     }
 
     @Basic
+    @Column(name = "ach_type", nullable = true, insertable = true, updatable = true, length = 255)
+    public String getAchType() {
+        return achType;
+    }
+
+    public void setAchType(String achType) {
+        this.achType = achType;
+    }
+
+    @Basic
     @Column(name = "arg", nullable = true, insertable = true, updatable = true, length = 255)
     public String getArg() {
         return arg;
@@ -103,6 +120,33 @@ public class AchAward {
 
     public void setArg(String arg) {
         this.arg = arg;
+    }
+
+    @Transient
+    public Map getArgMap() {
+        if (this.arg == null) {
+            return new HashMap();
+        }
+        JsonFactory factory = new JsonFactory();
+        ObjectMapper mapper = new ObjectMapper(factory);
+        TypeReference<HashMap<String, Object>> typeRef
+                = new TypeReference<HashMap<String, Object>>() {
+        };
+        try {
+
+            return mapper.readValue(getArg(), typeRef);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void setArgMap(Map argMap) {
+        try {
+            this.arg = new ObjectMapper().writeValueAsString(argMap);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Basic
