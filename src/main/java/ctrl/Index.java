@@ -284,6 +284,13 @@ public class Index {
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "achAwardEdit";
+            case "achAppraisal":
+                AchAppraisal achAppraisal = achAppraisalService.getById(entityId);
+                achAppraisal.setArgMap(order.getVariableMap());
+                model.addAttribute(achAppraisal);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "achAppraisalEdit";
             case "paper":
                 model.addAttribute(order);
                 model.addAttribute("taskId", task.getId());
