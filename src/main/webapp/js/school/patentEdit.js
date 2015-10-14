@@ -129,7 +129,7 @@ function confirm() {
  *
  * */
 function delOrder() {
-    var order = $("#WF_Order").val();
+    var id = $("#patentId").val();
     BootstrapDialog.confirm({
         title: '提示！',
         message: '你确定要删除该项吗?',
@@ -141,9 +141,9 @@ function delOrder() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.delOrder(order).success(function () {
+                workflow.delOrder(order['id']).success(function (data) {
                     afterSuccess("删除成功！");
-                    //window.location.href = "/patent";
+                    //window.location.href = '/appraise';
                 });
             }
         }
@@ -343,7 +343,7 @@ function approve() {
         btnOKClass: 'btn-ok',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep', $('#WF_Task').val(), approveInfo).success(function () {
+                workflow.execute(userName, taskId, approveInfo).success(function () {
                     //window.location.href = "/patent";
                 });
             }
@@ -368,7 +368,7 @@ function refuse() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep', $('#WF_Task').val(), refuseAwardInfo).success(function () {
+                workflow.execute(userName, taskId, refuseAwardInfo).success(function () {
                     //window.location.href = "/patent";
                 });
             }

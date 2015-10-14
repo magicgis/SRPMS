@@ -16,7 +16,7 @@
     </script>
     <ul class="nav nav-list">
         <li class="">
-            <a href="allSRInfo">
+            <a href="/allSRInfo">
                 <i class="menu-icon fa fa-home"></i>
                 <span class="menu-text"> 总览 </span>
             </a>

@@ -76,7 +76,7 @@ function save() {
 function confirm() {
     var status = all['Status'];
     var send = new Object();
-    if(status == 'Uncomplete'){
+    if(status == 'Uncomplete' || status == 'RefuseByCol'){
         send['IsComplete'] = 'true';
         send['actors'] = getActorsData();
     }
@@ -141,6 +141,7 @@ function editActor(row, index) {
                     return;
                 }
                 subActorInfo(index, 0);
+                $('.removeActor').hide();
                 dialogRef.close();
             }
         }, {

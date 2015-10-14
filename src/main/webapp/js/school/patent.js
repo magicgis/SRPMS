@@ -1,10 +1,7 @@
 /**
  * Created by zheng on 2015/4/22.
  */
-//所有的专利
-//var allUrl = '/api/workflow/order/' + userName + '/patent/all';
-//当前url
-//var url = allUrl;
+
 var which = 0; //默认显示全部专利
 
 $(function () {
@@ -113,11 +110,3 @@ $('#PatentTable').on('click-row.bs.table', function (e, row, $element) {
 });
 
 
-function processTran(arg) {
-    var t = {
-        "0": "未启动",
-        "1": "流程中",
-        "9": "已结束"
-    };
-    return t[arg];
-}

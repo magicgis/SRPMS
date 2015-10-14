@@ -1,80 +1,38 @@
-//状态翻译
-function statusTran(value,row){
-    if(value == 'Blank'){
-        return '待填写';
-    }else if(value == 'Uncomplete'){
-        return '已保存';
-    }else if(value == 'Complete'){
-        return '等待他人确认';
-    }else if(value == 'WaitForSubmit'){
-        return '待统一提交';
-    }else if(value == 'WaitForCol'){
-        return '学院审核中';
-    }else if(value == 'WaitForDep'){
-        return '管理部门审核中';
-    }else if(value == 'RefuseByDep'){
-        return '管理部门驳回，待修改'
-    }else if(value == 'RefuseByCol'){
-        return '学院驳回，待修改'
-    }
-}
 
-//是否显示共有单位表
-function unitTableShow(){
-    if($('#isComAch').val()=="yes"){
-        $('#unitInfo').show();
-    }else if($('#isComAch').val()=="no"){
-        $('#unitInfo').hide();
-    }else{
-        $('#unitInfo').hide();
-    }
-}
 
 //表单不可编辑
 function uneditableForm(){
     $('form input').attr("disabled", "disabled");
     $('form select').attr("disabled", "disabled");
-    $('#addActor').attr("disabled", "disabled");
-    $('#actorTable').bootstrapTable('hideColumn','operate');
+
+    var elementlist = document.querySelectorAll('.selectized');
+    $.each(elementlist, function(index, value) {
+        disableSelectize($(value).selectize());
+    });
+    $('#addActor').hide();
+    $('#addUnit').hide();
+    $('.delFiles').hide();
+    $('.removeActor').hide();
 }
 
-//表单可编辑
-function editableForm(){
-    $('form input').removeAttr("disabled", "disabled");
-    $('form select').removeAttr("disabled", "disabled");
-    $('#addActor').removeAttr("disabled", "disabled");
-    $('#actorTable').bootstrapTable('showColumn','operate');
-}
-
-//显示总览
-function showTable(){
-    $('#AppraiseTable').bootstrapTable('refresh',{silent: true});
-    $('#appraiseTable-box').removeClass('collapsed');
-    $('#appraise-box').addClass('collapsed');
-}
-
-//显示详情
-function showForm(){
-    $('#appraiseTable-box').addClass('collapsed');
-    $('#appraise-box').removeClass('collapsed');
-}
-
-//获取最新提交内容
-function getSubmission(pData){
-    var max = 0;
-    var keyStr="";
-    for(var key in pData){
-        var partn = new RegExp('WF_\\d+_Submission',["i"]);
-        if(partn.exec(key)){
-            var keyValue=key.substring(3,key.length-11);
-            if(max < keyValue){
-                max = keyValue;
-            }
+function typeTran() {
+    var termArray = {
+        "paper": "论文",
+        "book": "著作",
+        "project": "项目",
+        "patent":"专利",
+        "medicine":"新药",
+        "food":"功能性食品",
+        "instrument":"医疗器械",
+        "other":"其他"
+    };
+    for (var key in termArray) {
+        if (value == key) {
+            return termArray[key];
         }
-        keyStr="WF_"+max+"_Submission";
     }
-    return keyStr;
 }
+
 //--------------------------------actorTable总计----------------------------------------
 function totalNameFormatter(data) {
     return "共"+data.length+"人";
@@ -83,39 +41,134 @@ function totalNameFormatter(data) {
 function totalMarksFormatter(data) {
     var total = 0;
     $.each(data, function (i, row) {
-        total += +(row.marks.toString().substring(0));
+        if(row.score !== null && row.score !== undefined && row.score !=="") {
+            total += +(row.score.toString().substring(0));
+        }
     });
-    return '总分:' + total+"分";
+    return '共' + total.toFixed(0) + "分";
+}
+
+// 将对话框里的值加载进成员表
+function subActorInfo(index,flag) {
+    var id = $('#actor').val();
+    var actor = $('#actor').text();
+    var marks = $('#marks').val();
+    var units = $('#units').val();
+    var role = $('#role').val();
+    var rank = $('#rank').val();
+    var mark = (marks == "" ? '0' : (marks / units.length).toFixed(2));
+    actorTemp = getActorsData();
+    $.each(units, function (i, value) {
+        actorTemp.push({"staff.id": id, "rank": rank, "staff.name": actor, "role": role, "score": mark, "unit": value});
+    });
+    if(rank == '1' || rank == 1){
+        Main_Actor = id;
+        Main_ActorName = actor;
+    }
+    if(flag) {  // 增加一行
+        $('#actorTable').bootstrapTable("load", actorTemp);
+    } else {    // 替换一行
+        actorTemp.remove(index);
+        $('#actorTable').bootstrapTable('load',actorTemp);
+    }
+}
+// 移除和编辑成员
+window.operateEvents = {
+    'click .removeActor': function (e, value, row, index) {
+        $('#actorTable').bootstrapTable('remove', {
+            field: 'staff.id',
+            values: [row["staff.id"]]
+        });
+    },
+    'click .editActor': function (e, value, row, index) {
+        editActor(row, index);
+    }
+};
+// 操作
+function operateFormatter(value, row, index) {
+    return [
+        '<a class="editActor" href="javascript:void(0)" title="edit" >',
+        '<i class="ace-icon fa fa-pencil bigger-110"></i>',
+        '</a>&nbsp;&nbsp;&nbsp;',
+        '<a class="removeActor" href="javascript:void(0)" title="Remove" >',
+        '<i class="glyphicon glyphicon-remove"></i>',
+        '</a>'
+    ].join('');
 }
 //--------------------------------unitTable总计------------------------------------
-function totalNameFormattera(data){
-    return "共"+data.length+"个单位"
+// 总个数
+function totalUnitFormatter(data) {
+    return "共" + data.length + "个";
 }
 
-//审核未通过
-function pubrefuse(data){
-    return $.ajax({
-        type:'post',
-        url:'/api/workflow/execute',
-        data:JSON.stringify(data),
-        dataType : 'json',
-        contentType:'application/json;charset=UTF-8',
-        success:function(){
-            return showTable;
-        }
-    });
-}
-//审核通过
-function pubapprove(data){
-    return $.ajax({
-        type:'post',
-        url:'/api/workflow/execute',
-        data:JSON.stringify(data),
-        dataType : 'json',
-        contentType:'application/json;charset=UTF-8',
-        success:function(){
-            return showTable;
-        }
-    });
+// 将对话框里的值加载进单位表
+function subUnitInfo(index) {
+    var unit = $('#unit').val();
+    var rank = $('#rank').val();
+    unitTemp.push({"rank": rank, "unit": unit});
+    if(index == null) {  // 增加一行
+        $('#unitTable').bootstrapTable("load", unitTemp);
+    } else {    // 替换一行
+        unitTemp.remove(index);
+        $('#unitTable').bootstrapTable('load', unitTemp);
+    }
+    $('#unitTable').bootstrapTable('load', unitTemp);
 }
 
+window.operateEventsUnit = {
+    'click .removeUnit': function (e, value, row, index) {
+        $('#unitTable').bootstrapTable('remove', {
+            field: 'unit',
+            values: [row["unit"]]
+        });
+    },
+    'click .editUnit': function (e, value, row, index) {
+        editUnit(row, index);
+    }
+};
+// 操作
+function operateFormatterUnit(value, row, index) {
+    return [
+        '<a class="editUnit" href="javascript:void(0)" title="edit" >',
+        '<i class="ace-icon fa fa-pencil bigger-110"></i>',
+        '</a>&nbsp;&nbsp;&nbsp;',
+        '<a class="removeUnit" href="javascript:void(0)" title="Remove" >',
+        '<i class="glyphicon glyphicon-remove"></i>',
+        '</a>'
+    ].join('');
+}
+
+/*
+ * 获取人员信息
+ *
+ * */
+function getActorsData(){
+    var actorsData = $("#actorTable").bootstrapTable('getData');
+    $.each(actorsData, function (index, value) {
+        delete value[0];
+    });
+    return actorsData;
+}
+
+function getUnitsData() {
+    return $('#unitTable').bootstrapTable('getData');
+}
+
+
+// 成果类型
+function getAchType(){
+    $('#achType').selectize({
+        valueField: 'id',
+        labelField: 'value',
+        options: [
+            {"id": "paper", "value": "论文"},
+            {"id": "book", "value": "著作"},
+            {"id": "project", "value": "项目"},
+            {"id": "patent","value":"专利"},
+            {"id": "medicine","value":"新药"},
+            {"id": "food","value":"功能性食品"},
+            {"id": "instrument","value":"医疗器械"},
+            {"id": "other","value":"其他"}],
+        maxItems: 1
+    });
+}

@@ -26,7 +26,7 @@ var wfTypeTans = {
     "food": "新食品",
     "change": "差异",
     "award": "成果获奖",
-    "appraise": "成果鉴定"
+    "achAppraisal": "成果鉴定"
 };
 /**
  *查看/编辑样式
@@ -93,27 +93,27 @@ function actorTran(value,row){
         return;
 }
 // 状态翻译
-function statusTran(value, row) {
-    if (value == 'Blank') {
-        return '待填写';
-    } else if (value == 'Uncomplete') {
-        return '已保存';
-    } else if (value == 'Complete') {
-        return '等待确认';
-    } else if (value == "ApprovedByCol") {
-        return '待学院统一提交';
-    } else if (value == 'WaitForSubmit') {
-        return '待统一提交';
-    } else if (value == 'WaitForCol') {
-        return '学院审核中';
-    } else if (value == 'WaitForDep') {
-        return '管理部门审核中';
-    } else if (value == 'RefuseByDep') {
-        return '管理部门驳回，待学院审核'
-    } else if (value == 'RefuseByCol') {
-        return '学院驳回，待修改'
-    }
-}
+//function statusTran(value, row) {
+//    if (value == 'Blank') {
+//        return '待填写';
+//    } else if (value == 'Uncomplete') {
+//        return '已保存';
+//    } else if (value == 'Complete') {
+//        return '等待确认';
+//    } else if (value == "ApprovedByCol") {
+//        return '待学院统一提交';
+//    } else if (value == 'WaitForSubmit') {
+//        return '待统一提交';
+//    } else if (value == 'WaitForCol') {
+//        return '学院审核中';
+//    } else if (value == 'WaitForDep') {
+//        return '管理部门审核中';
+//    } else if (value == 'RefuseByDep') {
+//        return '管理部门驳回，待学院审核'
+//    } else if (value == 'RefuseByCol') {
+//        return '学院驳回，待修改'
+//    }
+//}
 //论文类型
 function paperType() {
     if ($('#paperType').val() == "conferPaper") {

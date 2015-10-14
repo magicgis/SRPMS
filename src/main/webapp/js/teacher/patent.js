@@ -39,25 +39,25 @@ $(function () {
         }],
         responseHandler: tableTrans
     });
-    $('#upload').hide();
+
 });
 
-/*统一提交*/
-$("#submit").click(function () {
-    submitAll();
-});
-
-/*
- * 提交所有
- *
- * */
-function submitAll() {
-    var submitData = 'WF_User=' + userName;
-    workflow.submitByTeacher(submitData).success(function () {
-        afterSuccess("提交成功");
-        window.location.href = "/patent";
-    });
-}
+///*统一提交*/
+//$("#submit").click(function () {
+//    submitAll();
+//});
+//
+///*
+// * 提交所有
+// *
+// * */
+//function submitAll() {
+//    var submitData = 'WF_User=' + userName;
+//    workflow.submitByTeacher(submitData).success(function () {
+//        afterSuccess("提交成功");
+//        window.location.href = "/patent";
+//    });
+//}
 
 $('#PatentTable').on('click-row.bs.table', function (e, row, $element) {
     var orderId = row["id"];

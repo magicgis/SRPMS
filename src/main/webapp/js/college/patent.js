@@ -39,3 +39,8 @@ $(function () {
 
 });
 
+//监听 点击成果鉴定表
+$('#PatentTable').on('click-row.bs.table', function (e, row, $element) {
+    var orderId = row["id"];
+    window.location.href = '/order/' + orderId;
+});

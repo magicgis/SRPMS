@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import service.AchAppraisalService;
 import service.BaseInfoService;
+import service.StandardInfoService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MultivaluedMap;
@@ -25,6 +26,8 @@ public class AchAppraisalApi {
     AchAppraisalService achAppraisalService;
     @Autowired
     BaseInfoService baseInfoService;
+    @Autowired
+    StandardInfoService standardInfoService;
 
     @GET
     @Path("/all")
@@ -53,7 +56,7 @@ public class AchAppraisalApi {
             achAppraisal = achAppraisalService.getById((Serializable) args.getFirst("id"));
         }
         putMapOnObj(achAppraisal, x);
-//        achAppraisal.setStandard(standardInfoService.getById((Serializable) args.getFirst("standard.id")));
+        achAppraisal.setStandard(standardInfoService.getById((Serializable) args.getFirst("standard.id")));
         achAppraisal.setDept(baseInfoService.getById((Serializable) args.getFirst("dept.id")));
         if ("".equals(achAppraisal.getId())) {
             achAppraisal.setId(null);

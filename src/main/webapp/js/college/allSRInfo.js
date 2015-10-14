@@ -20,7 +20,8 @@ $(function () {
         }, {
             field: 'ActorList',
             title: '人员',
-            sortable: true
+            sortable: true,
+            formatter: "actorTran"
         }/*,{
          field:'searchName',
          title:'科研名称',

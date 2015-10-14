@@ -75,7 +75,7 @@
                                         <%--<input type="text" name="WF_Order" id="WF_Order"/>--%>
                                         <%--<input type="text" name="WF_Task" id="WF_Task"/>--%>
                                         <%--<input type="text" name="IsComplete" id="IsComplete"/>--%>
-                                        <%--<input type="text" name="pscore" id="score"/>--%>
+                                            <input type="text" name="sum" id="score"/>
                                         <%--<input type="text" name="dept.value" id="deptValue"--%>
                                                <%--value="${patent.dept.value}"/>--%>
                                         <%--<input type="text" name="patent.standard.value" id="patTypeValue"/>--%>
@@ -297,23 +297,25 @@
                                                 <div class="pull-left onEdit">
 
                                                     <c:if test="${sessionScope.level == '3'}">
-                                                        <button class="tabOrdBtn btn btn-danger btn-sm del" type="button">
+                                                        <button class="tabOrdBtn btn btn-danger btn-sm del"
+                                                                type="button">
                                                             <i class="ace-icon fa fa-trash  bigger-110"></i>
                                                             删除
                                                         </button>
                                                     </c:if>
                                                 </div>
                                                 <div class="pull-right">
-                                                    <button class="tabOrdBtn btn btn-danger btn-sm back" type="button">
+                                                    <button class="tabOrdBtn btn btn-danger btn-sm back"
+                                                            type="button">
                                                         <i class="ace-icon fa fa-reply  bigger-110"></i>
                                                         返回
-                                                    </button>&nbsp;&nbsp;&nbsp;&nbsp;　　　　
+                                                    </button>
                                                     <span class="onEdit">
                                                         <button class="tabOrdBtn btn btn-primary btn-sm save"
                                                                 type="button">
                                                             <i class="ace-icon fa fa-save bigger-110"></i>
                                                             保存
-                                                        </button>&nbsp;&nbsp;&nbsp;&nbsp;　　　　
+                                                        </button>
                                                         <button class="tabOrdBtn btn btn-success btn-sm confirm"
                                                                 type="button">
                                                             <i class="ace-icon fa fa-check bigger-110"></i>
@@ -321,11 +323,13 @@
                                                         </button>
                                                     </span>
                                                     <span class="onApproval">
-                                                        <button class="btn btn-success btn-sm approve" type="button">
+                                                        <button class="tabOrdBtn btn btn-success btn-sm approve"
+                                                                type="button">
                                                             <i class="ace-icon fa fa-check bigger-110"></i>
                                                             通过
-                                                        </button>&nbsp;&nbsp;&nbsp;&nbsp;　　　　
-                                                        <button class="btn btn-warning btn-sm refuse" type="button">
+                                                        </button>
+                                                        <button class="tabOrdBtn btn btn-warning btn-sm refuse"
+                                                                type="button">
                                                             <i class="ace-icon fa fa-remove bigger-110"></i>
                                                             驳回
                                                         </button>
@@ -404,7 +408,7 @@
     if (filesData == null) {
         filesData = {};
     }
-    scanFiles(filesData);
+    showFiles(filesData);
 
     $('#actorTable').bootstrapTable({
         columns: [

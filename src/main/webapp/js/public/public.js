@@ -4,7 +4,7 @@ var patentRoles = [{"role": "第一专利权人"}, {"role": "知识产权所有�
 var projectRoles = [{"role": "负责人"}, {"role": "参与人"}];
 var bookRoles = [{"role": "主编或第一主编"}, {"role": "第二及以下编"},{"role": "副主编"},{"role": "参编"}];
 var appraiseRoles = [{"role": "负责人"}, {"role": "参与人"}];
-var awardRoles = [{"role": "负责人"}, {"role": "参与人"}];
+
 
 /**--------------------------工作流公共方法------------------**/
 var workflow = window.workflow || {};
@@ -101,7 +101,7 @@ workflow.latestTask = function (order) {
 };
 /**
  * 统一提交
- * @param WF_User
+ * @param submitData
  * @returns boolean
  */
 workflow.submitByTeacher = function (submitData) {
@@ -116,7 +116,7 @@ workflow.submitByTeacher = function (submitData) {
 
 /**
  * 统一提交
- * @param WF_User
+ * @param submitData
  * @returns boolean
  */
 workflow.submitByCol = function (submitData) {
@@ -156,7 +156,7 @@ function tableTrans(res) {
     } else {
         respon = res["rows"]
     }
-    ;
+
     $.each(respon, function (index, value) {
         /*取出variableMap*/
         var maps = value['variableMap'];
@@ -375,7 +375,6 @@ function getList(data, str){
         type['value'] = value;
         tempList.push(type);
     });
-    //console.log(tempList);
     return tempList;
 }
 
@@ -399,7 +398,6 @@ function getStandardList(data, str1, str2, result) {
         temp['value'] = obj['infoMap'][str2];
         tempList2.push(temp);
     });
-    //console.log(tempList2)
     return tempList2;
 }
 
@@ -425,8 +423,8 @@ function upToLoadFile() {
             var tempFileData = {};
             fileInfo['size'] = formatFileSize(file.size, false);
             fileInfo['fileKey'] = data;
-            filesData[file.name] = fileInfo;
             tempFileData[file.name] = fileInfo;
+            filesData[file.name] = fileInfo;
             scanFiles(tempFileData);
         }
     });
@@ -580,9 +578,7 @@ function DisplayForm($type, ItemValue, flag) {
     if (isNull(ItemValue)) {
         $type[0].selectize.setValue("");
     } else if (flag == '0') {
-     //   console.log('in ' + ItemValue);
         $type[0].selectize.setValue(ItemValue);
-     //   console.log('out');
     } else {
         $type[0].selectize.createItem(ItemValue);
     }
@@ -719,7 +715,7 @@ function processStatus(statusVlaue, isMain, userLevel) {
                 if (statusVlaue == "Blank" || statusVlaue == "Uncomplete") {
                     return "11110";//能修改，能删除，能撤回，无批复原因
                 } else if (statusVlaue == "RefuseByCol") {
-                    return "11111";//能修改，能删除，能撤回,有批复原因
+                    return "11111";//能修改，能删除，能撤回,有批复原因 todo 能撤回吗？
                 } else if (statusVlaue == "Complete") {
                     return "10110";//不能修改，能删除，能撤回，无批复原因
                 } else {

@@ -179,18 +179,6 @@ function showEdit() {
     $('.onApproval').hide();
 }
 
-// 编辑页面获得成员信息
-function getActors() {
-    var keyStr = getSubmission(all);
-    if(isNull(all['actors'])) { // 新建的
-        actorTemp = [];
-    }else if(keyStr == "") {
-        actorTemp = all['actors'];
-    }
-    else {
-        actorTemp = all[keyStr]['actors'];
-    }
-}
 
 function getPatType() {
     $('#patType').selectize({ //todo
@@ -206,32 +194,6 @@ function getPatType() {
 //        ,
 //        onChange: function (result) {
 //            $('#patTypeValue').val(this.getItem(result)["context"]["innerHTML"]);
-//        }
-    });
-}
-
-function getDept() {
-    $('#dept').selectize({
-        valueField: 'id',
-        labelField: 'value',
-        maxItems: 1,
-        preload: true,
-        load: function (query, callback) {
-            $.ajax({
-                url: '../api/baseinfo/院系',
-                type: 'GET',
-                dataType: 'json',
-                error: function () {
-                    callback();
-                },
-                success: function (res) {
-                    callback(res);
-                }
-            });
-        }
-//        ,
-//        onChange: function (result) {
-//            $('#deptValue').val(this.getItem(result)["context"]["innerHTML"]);
 //        }
     });
 }
