@@ -3,8 +3,9 @@ var paperRoles = [{"role": "第一作者"}, {"role": "通讯作者"}, {"role": "
 var patentRoles = [{"role": "第一专利权人"}, {"role": "知识产权所有人"}];
 var projectRoles = [{"role": "负责人"}, {"role": "参与人"}];
 var bookRoles = [{"role": "主编或第一主编"}, {"role": "第二及以下编"},{"role": "副主编"},{"role": "参编"}];
+var awardRoles = [{"role": "负责人"}, {"role": "参与人"}];
 var appraiseRoles = [{"role": "负责人"}, {"role": "参与人"}];
-
+var achTranRoles = appraiseRoles;
 
 /**--------------------------工作流公共方法------------------**/
 var workflow = window.workflow || {};
@@ -698,7 +699,7 @@ function showTooltip() {
  */
 function processStatus(statusVlaue, isMain, userLevel) {
     //应该是实体
-    if (statusVlaue == null) {
+    if (statusVlaue == null || statusVlaue == '') {
         switch (userLevel) {
             case 1:
                 return 0;//能看

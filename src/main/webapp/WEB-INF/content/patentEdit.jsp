@@ -410,6 +410,8 @@
     }
     showFiles(filesData);
 
+    getActors(); // 这是取成员的
+
     $('#actorTable').bootstrapTable({
         columns: [
             {
@@ -470,7 +472,6 @@
         data: unitTemp
     });
 
-    getActors(); // 这是取成员的
     upToLoadFile(); // 上传文件的
 
     DisplayForm($('#patType').selectize(), standardId, 0); // 显示 专利类型

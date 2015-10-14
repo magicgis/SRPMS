@@ -44,9 +44,11 @@ function init() {
             }
         }else{
             $('.onApproval').hide();
+            $('#actorTable').bootstrapTable('hideColumn', 'score');
         }
     } else if (order['process'] == null || order['process'] == '0') { // 刚刚新增或未启动
         $('.onApproval').hide();
+        $('#actorTable').bootstrapTable('hideColumn', 'score');
     }
 }
 

@@ -7,8 +7,9 @@ $(function () {
 });
 
 function init() {
-    var statusCode = processStatus(status,0,3);
-    console.log(statusCode, order['process'], status);
+
+    var statusCode=processStatus(status,0,3);
+    console.log(statusCode,order['process']);
     if (order['process'] == '1' || order['process'] == '9') {
         uneditableForm();
         hideActorOperate();
@@ -20,7 +21,7 @@ function init() {
         // 实体中不能审批，order中才可以。实体中没有status，所以这样判断
         switch (parseInt(statusCode)){
             case 1:
-                $('.onApproval').hide();
+                $('.onApprove').hide();
                 $('#actorTable').bootstrapTable('hideColumn', 'score');
             case 311:
 
@@ -60,7 +61,6 @@ function canDoNothing() {
     $('.onApproval').hide();
 }
 
-//function cando
 
 /**
  * 添加成员
@@ -95,7 +95,7 @@ function addActor() {
             }
         }],
         onshown: function () {
-            fillRoles(appraiseRoles);
+            fillRoles(achTranRoles);
         }
     });
 }
@@ -143,7 +143,7 @@ function editActor(row, index){
             }
         }],
         onshown: function () {
-            fillRoles(appraiseRoles);
+            fillRoles(achTranRoles);
             var $actor = $("#actor").selectize();
             var $role = $("#role").selectize();
             var $units = $("#units").selectize();
@@ -287,27 +287,10 @@ function editUnit(row, index) {
 
 
 
-//鉴定结论******************************************要做级联，还未实现*************************************************
-// var op1=[
-//     {"id":"0001","value":"国际领先"},
-//     {"id":"0002","value":"国际先进"},
-//     {"id":"0003","value":"国内领先"},
-//     {"id":"0004","value":"国内先进"}
-// ];
-//var op2=[
-//    {"id":"1001","value":"国家级优秀"},
-//    {"id":"1002","value":"省部级优秀"},
-//    {"id":"1003","value":"国家级良好"},
-//    {"id":"1004","value":"省部级良好"},
-//    {"id":"1005","value":"国家级合格"},
-//    {"id":"1006","value":"省部级合格"}
-//];
-
 function saveStep1() {
-    console.log( $('#appraise').serialize());
     return $.ajax({
-        url: '/api/achAppraisal/achAppraisal',
-        data: $('#appraise').serialize(),
+        url: '/api/achTran/achTran',
+        data: $('#achTran').serialize(),
         type: 'POST',
         dataType: 'text'
     })
@@ -315,7 +298,7 @@ function saveStep1() {
 function saveStep2(data) {
     var send = new Object();
     //避免新建的时候多次点击保存多次新建
-    $('#achAppraiseId').val(data);
+    $('#achTranId').val(data);
     send['actors'] = getActorsData();
     send['units'] = getUnitsData();
     send['filesData'] = filesData;
@@ -324,7 +307,7 @@ function saveStep2(data) {
 
     return $.ajax({
         type: 'put',
-        url: '/api/achAppraisal/' + data,
+        url: '/api/achTran/' + data,
         data: JSON.stringify(send),
         dataType: 'json',
         contentType: 'application/json;charset=UTF-8'
@@ -332,7 +315,7 @@ function saveStep2(data) {
 }
 // 保存
 function save() {
-    //var send = getFormData('appraise');
+    //var send = getFormData('achTran');
     //$.ajax({
     //    url:'/dskf',
     //    type: 'post',
@@ -342,7 +325,7 @@ function save() {
 
         saveStep2(data).success(function (res) {
             afterSuccess("保存成功！");
-            //window.location.href = '/appraise';
+            //window.location.href = '/achTran';
         })
     });
 }
@@ -367,9 +350,9 @@ function confirm() {
                      * userName,taskId,status
                      */
                     if (result) {
-                        workflow.startEntityOrder("achAppraisal", $('#achAppraiseId').val()).success(function (data) {
+                        workflow.startEntityOrder("achTran", $('#achTranId').val()).success(function (data) {
                             afterSuccess("任务已启动！");
-                            //window.location.href = '/appraise';
+                            //window.location.href = '/achTran';
                         });
                     }
                 }
@@ -396,7 +379,7 @@ function delOrder() {
             if (result) {
                 workflow.delOrder(order['id']).success(function (data) {
                     afterSuccess("删除成功！");
-                    //window.location.href = '/appraise';
+                    //window.location.href = '/achTran';
                 });
             }
         }
@@ -410,7 +393,7 @@ function getOrderBack() {
     var order = order['id'];
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
-        //window.location.href = '/appraise';
+        //window.location.href = '/achTran';
     });
 }
 
@@ -447,7 +430,7 @@ function addActor() {
             }
         }],
         onshown: function () {
-            fillRoles(appraiseRoles);
+            fillRoles(achTranRoles);
         }
     });
 }
@@ -493,7 +476,7 @@ function editActor(row, index) {
             }
         }],
         onshown: function () {
-            fillRoles(appraiseRoles);
+            fillRoles(achTranRoles);
             var $actor = $("#actor").selectize();
             var $role = $("#role").selectize();
             var $units = $("#units").selectize();
@@ -608,7 +591,7 @@ function approve() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, approveInfo).success(function () {
-                    //window.location.href = '/appraise';
+                    //window.location.href = '/achTran';
                 });
             }
         }
@@ -633,7 +616,7 @@ function refuse() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, refuseAwardInfo).success(function () {
-                    //window.location.href = '/appraise';
+                    //window.location.href = '/achTran';
                 });
             }
         }

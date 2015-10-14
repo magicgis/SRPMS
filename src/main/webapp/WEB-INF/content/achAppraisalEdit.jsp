@@ -13,7 +13,19 @@
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<meta charset="utf-8"/>
-	<title>成果鉴定信息</title>
+	<title>成果鉴定信息
+		<c:choose>
+			<c:when test="${sessionScope.level == '1'}">
+				教师
+			</c:when>
+			<c:when test="${sessionScope.level == '2'}">
+				学院
+			</c:when>
+			<c:when test="${sessionScope.level == '3'}">
+				学校
+			</c:when>
+		</c:choose>
+	</title>
 
 	<meta name="description" content="Dynamic tables and grids using jqGrid plugin"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>

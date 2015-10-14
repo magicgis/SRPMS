@@ -1,6 +1,6 @@
 
-var which = 0; //默认显示全部鉴定
-var AppraiseTable = $('#AppraiseTable');
+var which = 0; //默认显示全部转化
+var AchTranTable = $('#AchTranTable');
 
 $(function () {
     allList();
@@ -8,34 +8,34 @@ $(function () {
 
 $('#approve').click(function() {
     which = 1; // 显示待审核专利
-    AppraiseTable.bootstrapTable('destroy');
+    AchTranTable.bootstrapTable('destroy');
     approveList();
 });
 
 $('#all').click(function() {
     which = 0; // 显示全部专利
-    AppraiseTable.bootstrapTable('destroy');
+    AchTranTable.bootstrapTable('destroy');
     allList();
 });
 
 //监听 点击新建
 $("#add").click(function () {
-    window.location.href = '/achAppraisal/new';
+    window.location.href = '/achTran/new';
 });
 
 //监听 点击table
-AppraiseTable.on('click-row.bs.table', function (e, row, $element) {
+AchTranTable.on('click-row.bs.table', function (e, row, $element) {
     var orderId = row["id"];
     if (which == 0) {
-        window.location.href = '/achAppraisal/' + orderId;
+        window.location.href = '/achTran/' + orderId;
     } else {
         window.location.href = '/order/' + orderId;
     }
 });
 
 function allList() {
-    AppraiseTable.bootstrapTable({
-        url: '/api/achAppraisal/all',
+    AchTranTable.bootstrapTable({
+        url: '/api/achTran/all',
         sidePagination: "server",
         flat: true,
         columns: [{
@@ -62,8 +62,8 @@ function allList() {
 }
 
 function approveList(){
-    AppraiseTable.bootstrapTable({
-        url: '/api/workflow/order/'+userName+'/appraise/all',
+    AchTranTable.bootstrapTable({
+        url: '/api/workflow/order/'+userName+'/achTran/all',
         sidePagination:"server",
         columns: [{
             radio:true,
@@ -79,7 +79,7 @@ function approveList(){
             sortable:true
         },{
             field:'name',
-            title:'成果鉴定名称',
+            title:'成果转化名称',
             sortable:true
         },{
             field:'achType',
@@ -87,8 +87,8 @@ function approveList(){
             sortable:true,
             formatter:"typeTran"
         },{
-            field:'certifyUnit',
-            title:'鉴定单位',
+            field:'tranUnit',
+            title:'转让单位',
             sortable:true
         },{
             field:'WF_Col',

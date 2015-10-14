@@ -1,40 +1,40 @@
-
+/**
+ * Created by huyuanyuan555 on 2015/4/19.
+ */
 $(function () {
-    $('#AppraiseTable').bootstrapTable({
-        url: '/api/workflow/order/'+userName+'/achAppraisal/all',
-        sidePagination:"server",
+    $('#AchTranTable').bootstrapTable({
+        url: '/api/workflow/order/' + userName + '/achTran/all',
+        sidePagination: "server",
         columns: [{
             radio:true
+            //visible:false
         },{
             field: 'id',
             title: 'id',
             sortable: true,
             visible:false
         },{
-            field:'S-ACTOR',
-            title:'提交者',
-            sortable:true
-        },{
             field:'name',
             title:'成果名称',
             sortable:true
         },{
             field:'achType',
-            title:'成果类别',
+            title:'成果类型',
             sortable:true,
             formatter:"typeTran"
+        }, {
+            field:'tranUnit',
+            title:'转让单位',
+            sortable:'true'
         },{
-            field:'checkName',
-            title:'鉴定单位',
+            field:'date',
+            title:'转让日期',
             sortable:true
         },{
-            field:'WF_Actor',
-            title:'参与人',
-            sortable:true
-        },{
-            field:'appraiseDate',
-            title:'鉴定日期',
-            sortable:true
+            field:'ActorList',
+            title:'参与者',
+            sortable:true,
+            formatter: "actorTran"
         },{
             field:'Status',
             title:'状态',
@@ -42,11 +42,14 @@ $(function () {
             formatter:'statusTran'
         }],
         responseHandler: tableTrans
+
     });
+
 });
 
-//监听 点击成果鉴定表
-$('#AppraiseTable').on('click-row.bs.table', function (e, row, $element) {
+
+//监听 点击成果转化表
+$('#AchTranTable').on('click-row.bs.table', function (e, row, $element) {
     var orderId = row["id"];
     window.location.href = '/order/' + orderId;
 });

@@ -1,7 +1,7 @@
 
 $(function () {
-    $('#AppraiseTable').bootstrapTable({
-        url: '/api/workflow/order/'+userName+'/achAppraisal/all',
+    $('#AchTranTable').bootstrapTable({
+        url: '/api/workflow/order/'+userName+'/achTran/all',
         sidePagination:"server",
         columns: [{
             radio:true
@@ -24,16 +24,16 @@ $(function () {
             sortable:true,
             formatter:"typeTran"
         },{
-            field:'checkName',
-            title:'鉴定单位',
+            field:'tranUnit',
+            title:'转让单位',
+            sortable:'true'
+        },{
+            field:'date',
+            title:'转让日期',
             sortable:true
         },{
             field:'WF_Actor',
             title:'参与人',
-            sortable:true
-        },{
-            field:'appraiseDate',
-            title:'鉴定日期',
             sortable:true
         },{
             field:'Status',
@@ -45,8 +45,8 @@ $(function () {
     });
 });
 
-//监听 点击成果鉴定表
-$('#AppraiseTable').on('click-row.bs.table', function (e, row, $element) {
+//监听 点击成果转化表
+$('#AchTranTable').on('click-row.bs.table', function (e, row, $element) {
     var orderId = row["id"];
     window.location.href = '/order/' + orderId;
 });
