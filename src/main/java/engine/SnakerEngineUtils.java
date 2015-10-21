@@ -278,6 +278,7 @@ public class SnakerEngineUtils implements Engine {
         String flowOderStr = "WF_" + Integer.toString(flowOrder) + "_" + task.getTaskName();
         Map<String, Object> temp = new HashMap<String, Object>();
         if (task.getTaskName().equals("Submission")) {
+            flowOderStr = "WF_0_Submission";
             temp.put("WF_Latest", args);
         }
         temp.put(flowOderStr, args);

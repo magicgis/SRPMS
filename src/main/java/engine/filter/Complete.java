@@ -5,7 +5,11 @@ import engine.entity.OrderActorDao;
 import entity.Paper;
 import org.snaker.engine.SnakerInterceptor;
 import org.snaker.engine.core.Execution;
+import service.ConferService;
+import service.MagService;
+import util.StaticFactory;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,17 +26,39 @@ public class Complete implements SnakerInterceptor {
     @Override
     public void intercept(Execution execution) {
 
+        MagService magService = (MagService) StaticFactory.getBean(MagService.class);
+        ConferService conferService = (ConferService) StaticFactory.getBean(ConferService.class);
+
         String orderId = execution.getOrder().getId();
 
 
         Map<String, Object> args = execution.getOrder().getVariableMap();
-        Paper paper = new Paper();
-        Map<String, Object> info = (Map<String, Object>) engine.utils.Tool.getLatestArgs(args);
-        util.Trans.putMapOnObj(paper, info);
-//        paper.setBgPage(info.get("bgPage"));
-        System.out.println(info.toString());
-        System.out.println(paper.toString());
-        paper.setAttachment((String) info.get("filesData"));
+
+        String type = (String) args.get("WF_Type");
+        switch (type) {
+            case "paper":
+                Paper paper = new Paper();
+                Map<String, Object> info = (Map<String, Object>) engine.utils.Tool.getLatestArgs(args);
+                util.Trans.putMapOnObj(paper, info);
+                System.out.println(info.toString());
+                System.out.println(paper.toString());
+                paper.setAttachment((String) info.get("filesData"));
+                if ("magPaper".equals(info.get("type"))) {
+                    paper.setMag(magService.getById((Serializable) info.get("mag.id")));
+                }
+                else if ("conferPaper".equals(info.get("type"))) {
+//                    paper.setConfer(conferService.getById((Serializable) info.get("confer.id")));
+                    //todo 这儿情况复杂，可能需要先存储一个会议记录，但是感觉没必要
+                }
+                else if ("newsPaper".equals(info.get("type"))) {
+//                    paper.setConfer(conferService.getById((Serializable) info.get("news.id")));
+                    //todo 这儿也需要特殊处理，我艹
+                }
+
+                break;
+
+        }
+
         OrderActorDao orderActorDao = (OrderActorDao) util.StaticFactory.getBean(OrderActorDao.class);
         List<OrderActor> x = orderActorDao.getByOrder(orderId);
         for (OrderActor orderActor : x) {

@@ -68,11 +68,6 @@ public class Index {
         return "redirect:login";
     }
 
-    @RequestMapping(value = {"paper"}, method = RequestMethod.GET)
-    public String paper(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "paper";
-    }
-
     @RequestMapping(value = {"paper/new"}, method = RequestMethod.GET)
     public String newPaper(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         model.addAttribute(new Paper());
@@ -103,11 +98,6 @@ public class Index {
         return "userInfo";
     }
 
-    @RequestMapping(value = {"patent"}, method = RequestMethod.GET)
-    public String patent(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "patent";
-    }
-
     @RequestMapping(value = {"patent/new"}, method = RequestMethod.GET)
     public String newPatent(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         model.addAttribute(new Patent());
@@ -120,11 +110,6 @@ public class Index {
         Patent patent = patentService.getById(patentId);
         model.addAttribute(patent);
         return "patentEdit";
-    }
-
-    @RequestMapping(value = {"book"}, method = RequestMethod.GET)
-    public String book(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "book";
     }
 
     @RequestMapping(value = {"book/new"}, method = RequestMethod.GET)
@@ -141,11 +126,6 @@ public class Index {
         return "bookEdit";
     }
 
-    @RequestMapping(value = {"project"}, method = RequestMethod.GET)
-    public String project(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "project";
-    }
-
     @RequestMapping(value = {"project/new"}, method = RequestMethod.GET)
     public String newProject(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         model.addAttribute(new Project());
@@ -158,11 +138,6 @@ public class Index {
         Project project = projectService.getById(projectId);
         model.addAttribute(project);
         return "projectEdit";
-    }
-
-    @RequestMapping(value = {"achAppraisal"}, method = RequestMethod.GET)
-    public String achAppraisal(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "achAppraisal";
     }
 
     @RequestMapping(value = {"achAppraisal/new"}, method = RequestMethod.GET)
@@ -179,11 +154,6 @@ public class Index {
         return "achAppraisalEdit";
     }
 
-    @RequestMapping(value = {"achAward"}, method = RequestMethod.GET)
-    public String achAward(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "achAward";
-    }
-
     @RequestMapping(value = {"achAward/new"}, method = RequestMethod.GET)
     public String newAchAward(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         model.addAttribute(new AchAward());
@@ -196,46 +166,6 @@ public class Index {
         AchAward achAward = achAwardService.getById(achAwardId);
         model.addAttribute(achAward);
         return "achAwardEdit";
-    }
-
-    @RequestMapping(value = {"newOthers"}, method = RequestMethod.GET)
-    public String newOthers(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "newOthers";
-    }
-
-    @RequestMapping(value = {"newMedicine"}, method = RequestMethod.GET)
-    public String newMedicine(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "newMedicine";
-    }
-
-    @RequestMapping(value = {"newInstruments"}, method = RequestMethod.GET)
-    public String newInstruments(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "newInstruments";
-    }
-
-    @RequestMapping(value = {"newFunctionFood"}, method = RequestMethod.GET)
-    public String newFunctionFood(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "newFunctionFood";
-    }
-
-    @RequestMapping(value = {"award"}, method = RequestMethod.GET)
-    public String award(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "achAward";
-    }
-
-    @RequestMapping(value = {"appraise"}, method = RequestMethod.GET)
-    public String appraise(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "appraise";
-    }
-
-    @RequestMapping(value = {"change"}, method = RequestMethod.GET)
-    public String change(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "change";
-    }
-
-    @RequestMapping(value = {"different"}, method = RequestMethod.GET)
-    public String different(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "different";
     }
 
     @RequestMapping(value = {"sysBaseInfo"}, method = RequestMethod.GET)
