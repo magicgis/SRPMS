@@ -24,4 +24,8 @@ public interface StaRefService extends BaseService<StaRef> {
 
     Object getEntity(StaRef staRef);
 
+    List<Object> getEntity(String id, String type, Integer role);
+
+    List<Object> getEntity(String id, Integer role);
+
 }

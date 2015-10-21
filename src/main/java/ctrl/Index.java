@@ -76,7 +76,7 @@ public class Index {
     @RequestMapping(value = {"paper/new"}, method = RequestMethod.GET)
     public String newPaper(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         model.addAttribute(new Paper());
-        return "paper";
+        return "paperEdit";
     }
 
     @RequestMapping(value = {"magazine"}, method = RequestMethod.GET)
@@ -243,9 +243,40 @@ public class Index {
         return "sysBaseInfo";
     }
 
+    @RequestMapping(value = {"allSRInfo-{type:\\w+}-{level:\\w+}"}, method = RequestMethod.GET)
+    public String allSRinfo(@PathVariable("type") String type, @PathVariable("level") String level,
+                            Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        model.addAttribute("type", type);
+        model.addAttribute("level", level);
+        return "allSRInfo";
+    }
+
+    @RequestMapping(value = {"allSRInfo-{type:\\w+}"}, method = RequestMethod.GET)
+    public String allSRinfo(@PathVariable("type") String type,
+                            Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        return "redirect:allSRInfo-" + type + "-all";
+    }
+
     @RequestMapping(value = {"allSRInfo"}, method = RequestMethod.GET)
     public String allSRinfo(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "allSRInfo";
+        return "redirect:allSRInfo-all-all";
+    }
+
+    @RequestMapping(value = {"allEntity-{type:\\w+}"}, method = RequestMethod.GET)
+    public String allEntity(@PathVariable("type") String type,
+                            Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        model.addAttribute("type", type);
+        return "entity";
+    }
+
+    @RequestMapping(value = {"allEntity"}, method = RequestMethod.GET)
+    public String allEntity(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        return "redirect:allEntity-all";
+    }
+
+    @RequestMapping(value = {"task"}, method = RequestMethod.GET)
+    public String task(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        return "task";
     }
 
     @RequestMapping(value = {"order/{orderId}"}, method = RequestMethod.GET)

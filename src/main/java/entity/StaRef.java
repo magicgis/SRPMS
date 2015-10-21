@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 /**
  * Created by guofan on 2015/6/10.
@@ -10,8 +11,8 @@ import javax.persistence.*;
 public class StaRef {
     private String id;
     private String type;
-    private String role;
-    private Double score;
+    private Integer role;
+    private BigDecimal score;
     private String unit;
     private String entityId;
     private String arg;
@@ -39,21 +40,21 @@ public class StaRef {
 
     @Basic
     @Column(name = "role")
-    public String getRole() {
+    public Integer getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Integer role) {
         this.role = role;
     }
 
     @Basic
     @Column(name = "score")
-    public Double getScore() {
+    public BigDecimal getScore() {
         return score;
     }
 
-    public void setScore(Double score) {
+    public void setScore(BigDecimal score) {
         this.score = score;
     }
 

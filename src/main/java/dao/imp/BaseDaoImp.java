@@ -150,7 +150,8 @@ public class BaseDaoImp<T> implements BaseDao<T> {
         String hql;
         if (value instanceof String) {
             hql = "from " + entityClass.getName() + " where " + propertyName + " = '" + value + "'";
-        } else {
+        }
+        else {
             hql = "from " + entityClass.getName() + " where " + propertyName + " = " + value;
         }
         try {
@@ -255,7 +256,8 @@ public class BaseDaoImp<T> implements BaseDao<T> {
         for (String s : params.keySet()) {
             if (params.get(s) instanceof String) {
                 where = where + s + " = " + "'" + params.get(s) + "' and ";
-            } else {
+            }
+            else {
                 where = where + s + " = " + params.get(s) + " and ";
             }
         }

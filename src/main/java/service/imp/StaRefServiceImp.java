@@ -1,10 +1,11 @@
 package service.imp;
 
-import dao.StaRefDao;
+import dao.*;
 import entity.StaRef;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.support.AbstractBeanFactory;
 import org.springframework.stereotype.Service;
 import service.StaRefService;
 import util.StaticFactory;
@@ -19,6 +20,21 @@ public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefSe
 
     @Autowired
     StaRefDao staRefDao;
+    @Autowired
+    PaperDao paperDao;
+    @Autowired
+    BookDao bookDao;
+    @Autowired
+    PatentDao patentDao;
+    @Autowired
+    ProjectDao projectDao;
+    @Autowired
+    AchAppraisalDao achAppraisalDao;
+    @Autowired
+    AchAwardDao achAwardDao;
+    @Autowired
+    AbstractBeanFactory abstractBeanFactory;
+
 
     private static final Logger log = LogManager.getLogger(StaRefServiceImp.class);
 
@@ -69,4 +85,58 @@ public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefSe
         }
         return ans;
     }
+
+    @Override
+    public List<Object> getEntity(String id, String type, Integer role) {
+        List<StaRef> res = staRefDao.getByTypeAndRole(id, type, role);
+        List<Object> ans = new LinkedList<>();
+
+        Class x = null;
+        try {
+            StringBuffer meType = new StringBuffer(type);
+            meType.setCharAt(0, Character.toUpperCase(meType.charAt(0)));
+            x = Class.forName(StaRefDao.class.getPackage().getName() + "." + meType.toString() + "Dao");
+            BaseDao dao = (BaseDao) StaticFactory.getBean(x);
+
+            for (StaRef re : res) {
+                ans.add(dao.getById(re.getEntityId()));
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return ans;
+    }
+
+    /**
+     * todo 估计性能差到爆表，当然，性能不重要
+     *
+     * @param id
+     * @param role
+     * @return
+     */
+    @Override
+    public List<Object> getEntity(String id, Integer role) {
+        List<StaRef> res = staRefDao.getByTypeAndRole(id, null, role);
+        List<Object> ans = new LinkedList<>();
+
+        Class x = null;
+        try {
+            for (StaRef re : res) {
+                StringBuffer meType = new StringBuffer(re.getType());
+                meType.setCharAt(0, Character.toUpperCase(meType.charAt(0)));
+
+                x = Class.forName(StaRefDao.class.getPackage().getName() + "." + meType.toString() + "Dao");
+
+                BaseDao dao = (BaseDao) abstractBeanFactory.getBean(x);
+                ans.add(dao.getById(re.getEntityId()));
+
+            }
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return ans;
+    }
+
+
 }

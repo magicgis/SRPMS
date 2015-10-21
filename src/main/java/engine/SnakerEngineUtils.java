@@ -130,6 +130,7 @@ public class SnakerEngineUtils implements Engine {
 
                 args.put("WF_Type", "patent");
                 args.put("WF_Entity", entityId);
+                args.put("name", patent.getName());
 
                 order = startInstanceById(processId, staff.getId(), args);
 
@@ -147,6 +148,7 @@ public class SnakerEngineUtils implements Engine {
 
                 args.put("WF_Type", "project");
                 args.put("WF_Entity", entityId);
+                args.put("name", project.getName());
 
                 order = startInstanceById(processId, staff.getId(), args);
 
@@ -164,6 +166,7 @@ public class SnakerEngineUtils implements Engine {
 
                 args.put("WF_Type", "book");
                 args.put("WF_Entity", entityId);
+                args.put("name", book.getName());
 
                 order = startInstanceById(processId, staff.getId(), args);
 
@@ -181,6 +184,7 @@ public class SnakerEngineUtils implements Engine {
 
                 args.put("WF_Type", "achAward");
                 args.put("WF_Entity", entityId);
+                args.put("name", achAward.getName());
 
                 order = startInstanceById(processId, staff.getId(), args);
 
@@ -198,6 +202,7 @@ public class SnakerEngineUtils implements Engine {
 
                 args.put("WF_Type", "achAppraisal");
                 args.put("WF_Entity", entityId);
+                args.put("name", achAppraisal.getName());
 
                 order = startInstanceById(processId, staff.getId(), args);
 
