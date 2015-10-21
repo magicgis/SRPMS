@@ -1,96 +1,21 @@
-/**
- * Created by zheng on 2015/6/8.
- */
-/**
- * 所有科研信息
- * */
-var actorTemp = [];
-$(function () {
-    $('#allSRInfoTable').bootstrapTable({
-        url: '/api/workflow/order/' + userName + '/all/all',
-        sidePagination: "server",
-        columns: [{
-            radio: true
-            //visible:false
-        }, {
-            field: 'id',
-            title: 'id',
-            sortable: true,
-            visible: false
-        }, {
-            field: 'ActorList',
-            title: '人员',
-            sortable: true,
-            formatter: "actorTran"
-        }, {
-            field: 'name',
-            title: '科研名称',
-            sortable: true
-        }, {
-            field: 'WF_Type',
-            title: '科研类型',
-            sortable: true,
-            formatter: "wfTypeTran"
-        }, {
-            field: 'Status',
-            title: '状态',
-            sortable: true,
-            formatter: 'statusTran'
-        }, {
-            field: 'operator',
-            align: 'center',
-            title: '操作',
-            width: 75,
-            formatter: view
-        }],
-        responseHandler: tableTrans
+//参与类型切换
+$('.level').click(function () {
+    $('#levelOption').html(this.children[0].text + '<span class="ace-icon fa fa-caret-down icon-on-right"></span>');
+    level = this.id;
+    allTable.bootstrapTable("refresh", {url: apiUrl(srtype)});
+    changeUrl();
+});
+
+$('#newPaper').click(function () {
+    workflow.startOrder(userName, "basicProcess_Beta", "paper").success(function (data) {
+        afterSuccess("新建成功！,请切换到论文查看");
+        allTable.bootstrapTable("refresh");
     });
-    /* $('#tableOrd').hide();*/
 });
-$('#allSRInfoTable').on('click-row.bs.table', function (e, row) {
-    var taskId = row['id'];
-    window.location.href='/order/'+taskId;
+
+$('#newMag').click(function () {
+    window.open("/magazine");
 });
-//监听 所有科研
-$('#allSRInform').click(function () {
-    allSRInform();
-});
-//监听 主导科研
-$('#orderSRInfo').click(function () {
-    orderSRInfo();
-});
-//监听 参与科研
-$('#partakeBtn').click(function () {
-    partake();
-});
-//监听 要确认科研
-$('#confirmBtn').click(function () {
-    waitConfirm();
-});
-//监听 点击返回
-$("#back").click(function () {
-    showTable();
-});
-function allSRInform() {
-    $('#confirm').hide();
-    var orderUrl = '/api/workflow/order/' + userName + '/all/all';
-    showTable(orderUrl);
-}
-function orderSRInfo() {
-    $('#confirm').hide();
-    var orderUrl = '/api/workflow/order/' + userName + '/all/1st';
-    showTable(orderUrl);
-}
-function partake() {
-    $('#confirm').hide();
-    var orderUrl = '/api/workflow/order/' + userName + '/all/2nd';
-    showTable(orderUrl);
-}
-function waitConfirm() {
-    $('#confirm').show();
-    var orderUrl = '/api/workflow/' + userName + '/confirmTask';
-    showTable(orderUrl);
-}
 
 $('.allSubmit').click(function () {
 
@@ -116,42 +41,6 @@ $('.allSubmit').click(function () {
                         BootstrapDialog.alert("提交失败");
                     }
                     $('#allSRInfoTable').bootstrapTable('refresh');
-                });
-            }
-        }
-    });
-});
-$('#confirm').click(function () {
-    $('#IsComplete').val(true);
-    var jsonData = $("#paper").serializeJSON();
-    $.each(jsonData, function (key, value) {
-        if (value == "" || value == null) {
-            delete jsonData[key];
-        }
-    });
-    if (filesData != null) {
-        jsonData['filesData'] = filesData;
-    }
-    jsonData["magName"] = $("#magName").val();
-    jsonData["actors"] = getActorsData();
-    jsonData["WF_User"] = userName;
-    BootstrapDialog.confirm({
-        title: '确认信息',
-        message: '确认 ?',
-        type: BootstrapDialog.TYPE_INFO,
-        closable: true,
-        draggable: true,
-        btnCancelLabel: '取消',
-        btnOKLabel: '确认',
-        btnOKClass: 'btn-ok',
-        callback: function (result) {
-            /**
-             * userName,taskId,status
-             */
-            if (result) {
-                workflow.execute(userName, $('#WF_Task').val(), jsonData).success(function () {
-                    afterSuccess("确认成功！");
-                    showTable();
                 });
             }
         }

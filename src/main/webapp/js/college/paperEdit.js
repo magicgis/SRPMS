@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2015/10/7.
  */
-$(function() {
+$(function () {
     init();
 
     $("#upload").hide();

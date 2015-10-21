@@ -126,7 +126,8 @@
 
                                             <div class="col-sm-8">
                                                 <input id="deptName" name="staff.col.value"
-                                                       placeholder="" class="form-control" value="${user.staff.col.value}"/>
+                                                       placeholder="" class="form-control"
+                                                       value="${user.staff.col.value}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -137,7 +138,8 @@
 
                                             <div class="col-sm-8">
                                                 <input id="rankName" name="staff.rank.value"
-                                                       placeholder="" class="form-control" value="${user.staff.rank.value}"/>
+                                                       placeholder="" class="form-control"
+                                                       value="${user.staff.rank.value}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -148,7 +150,8 @@
 
                                             <div class="col-sm-8">
                                                 <input id="position" name="staff.position"
-                                                       placeholder="" class="form-control" value="${user.staff.position}"/>
+                                                       placeholder="" class="form-control"
+                                                       value="${user.staff.position}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -181,7 +184,7 @@
 
                                             <div class="col-sm-8">
                                                 <input id="degree" name="staff.degree"
-                                                       placeholder="" class="form-control" />
+                                                       placeholder="" class="form-control"/>
                                             </div>
                                         </div>
                                     </div>
@@ -375,10 +378,8 @@
 
         </div>
     </div>
-
-
+    <jsp:include page="public/footer.jsp"/>
 </div>
-<jsp:include page="public/footer.jsp"/>
 <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
     <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 </a>

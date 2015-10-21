@@ -57,7 +57,7 @@ public class Index {
         else {
             request.getSession().setAttribute("user", u);
             request.getSession().setAttribute("level", u.getPrivilege());
-            return "redirect:allSRInfo";
+            return "redirect:process";
         }
     }
 
@@ -243,35 +243,42 @@ public class Index {
         return "sysBaseInfo";
     }
 
-    @RequestMapping(value = {"allSRInfo-{type:\\w+}-{level:\\w+}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"process-{type:\\w+}-{level:\\w+}"}, method = RequestMethod.GET)
     public String allSRinfo(@PathVariable("type") String type, @PathVariable("level") String level,
                             Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         model.addAttribute("type", type);
         model.addAttribute("level", level);
-        return "allSRInfo";
+        return "processView";
     }
 
-    @RequestMapping(value = {"allSRInfo-{type:\\w+}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"process-{type:\\w+}"}, method = RequestMethod.GET)
     public String allSRinfo(@PathVariable("type") String type,
                             Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "redirect:allSRInfo-" + type + "-all";
+        return "redirect:process-" + type + "-all";
     }
 
-    @RequestMapping(value = {"allSRInfo"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"process"}, method = RequestMethod.GET)
     public String allSRinfo(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "redirect:allSRInfo-all-all";
+        return "redirect:process-all-all";
     }
 
-    @RequestMapping(value = {"allEntity-{type:\\w+}"}, method = RequestMethod.GET)
-    public String allEntity(@PathVariable("type") String type,
+    @RequestMapping(value = {"entity-{type:\\w+}-{level:\\w+}"}, method = RequestMethod.GET)
+    public String allEntity(@PathVariable("type") String type, @PathVariable("level") String level,
                             Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         model.addAttribute("type", type);
-        return "entity";
+        model.addAttribute("level", level);
+        return "entityView";
     }
 
-    @RequestMapping(value = {"allEntity"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"entity-{type:\\w+}"}, method = RequestMethod.GET)
+    public String allEntity(@PathVariable("type") String type,
+                            Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        return "redirect:entity-" + type + "-all";
+    }
+
+    @RequestMapping(value = {"entity"}, method = RequestMethod.GET)
     public String allEntity(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "redirect:allEntity-all";
+        return "redirect:entity-all-all";
     }
 
     @RequestMapping(value = {"task"}, method = RequestMethod.GET)

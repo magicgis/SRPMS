@@ -99,9 +99,9 @@
             </div>
         </div>
     </div>
+    <jsp:include page="public/footer.jsp"/>
 </div>
 <!-- /.main-content -->
-<jsp:include page="public/footer.jsp"/>
 
 <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
     <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
@@ -117,5 +117,12 @@
         <script src="<c:url value="/js/school/mag.js"/>"></script>
     </c:when>
 </c:choose>
+<script>
+    //类别更换
+    $('.viewType').click(function (self) {
+        window.location.href = "/allSRInfo-" + this.id.substr(0, this.id.length - 4) + "-all";
+    });
+
+</script>
 </body>
 </html>

@@ -83,8 +83,7 @@
             </div>
         </div>
     </div>
+    <jsp:include page="public/footer.jsp"/>
 </div>
-<!-- /.main-content -->
-<jsp:include page="public/footer.jsp"/>
 </body>
 </html>

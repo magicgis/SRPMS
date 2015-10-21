@@ -35,40 +35,10 @@
             </a>
         </div>
 
-        <div class="navbar-buttons navbar-header pull-right" role="navigation">
-            <ul class="nav ace-nav">
-                <li class="light-blue">
-                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <img class="nav-user-photo" src="<c:url value="/assets/avatars/user.jpg"/>"
-                             alt="Jason's Photo"/>
-								<span class="user-info">
-                                  <div id="infoName" style="font-size: 12px">
-                                      <span style="font-size: 12px">用户：${sessionScope.user.staff.name}</span>
-                                  </div>
-								</span>
-                        <i class="ace-icon fa fa-caret-down"></i>
-                    </a>
-
-                    <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-                        <li>
-                            <a href="<c:url value="/userInfo"/>">
-                                <i class="ace-icon fa fa-cog"></i>
-                                设置
-                            </a>
-                        </li>
-
-                        <li>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="logout">
-                                <i class="ace-icon fa fa-power-off"></i>
-                                退出
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+        <div class="navbar-buttons  nav navbar-top-links navbar-right navbar-header pull-right" role="navigation">
+                    <button>
+                        <span class="user-info" style="font-size: 18px">${sessionScope.user.staff.name}</span>
+                    </button>
         </div>
     </div>
     <!-- /.navbar-container -->

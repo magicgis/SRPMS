@@ -2,7 +2,7 @@ var paperRoles = [{"role": "第一作者"}, {"role": "通讯作者"}, {"role": "
     , {"role": "第三作者"}, {"role": "第四作者"}, {"role": "其他"}];
 var patentRoles = [{"role": "第一专利权人"}, {"role": "知识产权所有人"}];
 var projectRoles = [{"role": "负责人"}, {"role": "参与人"}];
-var bookRoles = [{"role": "主编或第一主编"}, {"role": "第二及以下编"},{"role": "副主编"},{"role": "参编"}];
+var bookRoles = [{"role": "主编或第一主编"}, {"role": "第二及以下编"}, {"role": "副主编"}, {"role": "参编"}];
 var awardRoles = [{"role": "负责人"}, {"role": "参与人"}];
 var appraiseRoles = [{"role": "负责人"}, {"role": "参与人"}];
 var achTranRoles = appraiseRoles;
@@ -287,9 +287,9 @@ function actorTran(value, row) {
 // 编辑页面获得成员信息
 function getActors() {
     var keyStr = getSubmission(all);
-    if(isNull(all['actors'])) { // 新建的
+    if (isNull(all['actors'])) { // 新建的
         actorTemp = [];
-    }else if(keyStr == "") {
+    } else if (keyStr == "") {
         actorTemp = all['actors'];
     }
     else {
@@ -342,10 +342,9 @@ Array.prototype.remove = function (dx) {
     this.length -= 1
 };
 
-Array.prototype.unique = function()
-{
-    var n = {},r=[]; //n为hash表，r为临时数组
-    for(var i = 0; i < this.length; i++) //遍历当前数组
+Array.prototype.unique = function () {
+    var n = {}, r = []; //n为hash表，r为临时数组
+    for (var i = 0; i < this.length; i++) //遍历当前数组
     {
         if (!n[this[i]]) //如果hash表中没有当前项
         {
@@ -361,17 +360,17 @@ Array.prototype.unique = function()
  * @param str  需要的字段的key 作为字符串参数传进来
  * @returns {Array}
  */
-function getList(data, str){
+function getList(data, str) {
 
     var tempArray = [];
     var tempList = [];
     var i = 0; // 是否可以被添加进去
-    $.each(data,function(index, obj) {
+    $.each(data, function (index, obj) {
         tempArray.push(obj['infoMap'][str]);
     });
     tempArray = tempArray.unique(); // array去重
 
-    $.each(tempArray, function(index,value) { // 转换成JSON的List
+    $.each(tempArray, function (index, value) { // 转换成JSON的List
         var type = {};
         type['value'] = value;
         tempList.push(type);
@@ -390,10 +389,10 @@ function getList(data, str){
 function getStandardList(data, str1, str2, result) {
 
     var tempList2 = [];
-    var tempList = $.grep(data, function(obj, index){
+    var tempList = $.grep(data, function (obj, index) {
         return obj['infoMap'][str1] == result;
     });
-    $.each(tempList, function(index, obj) {
+    $.each(tempList, function (index, obj) {
         var temp = {};
         temp['id'] = obj['id'];
         temp['value'] = obj['infoMap'][str2];
@@ -747,13 +746,23 @@ function processStatus(statusVlaue, isMain, userLevel) {
 }
 
 
-function isMainActor(MainActor,userName){
-    if(MainActor==userName){
+function isMainActor(MainActor, userName) {
+    if (MainActor == userName) {
         return 1;
-    }else{
+    } else {
         return 0;
     }
 }
+
+/*拓展jquery 获取url的值*/
+(function ($) {
+    $.getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r !== null) return unescape(r[2]);
+        return null;
+    }
+})(jQuery);
 
 
 /**--------------------------成员表公共方法------------------**/
@@ -849,3 +858,38 @@ function isMainActor(MainActor,userName){
 //function totalUnitFormatter(data) {
 //    return "共" + data.length + "个";
 //}
+
+var wfTypeTans = {
+    "project": "项目",
+    "patent": "专利",
+    "paper": "论文",
+    "newOther": "其他新产品",
+    "newMedicine": "新药",
+    "instrument": "新器械",
+    "food": "新食品",
+    "change": "差异",
+    "award": "成果获奖",
+    "achAppraisal": "成果鉴定"
+};
+
+function wfTypeTran(value, row) {
+    for (var key in wfTypeTans) {
+        if (key == value) {
+            return wfTypeTans[key];
+        }
+    }
+}
+
+/**
+ * 进度
+ * @param arg
+ * @returns {*}
+ */
+function processTran(arg) {
+    var t = {
+        "0": "未启动",
+        "1": "流程中",
+        "9": "已结束"
+    };
+    return t[arg];
+}

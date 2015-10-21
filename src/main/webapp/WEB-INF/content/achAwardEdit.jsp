@@ -55,7 +55,7 @@
                 <ul class="breadcrumb">
                     <li>
                         <i class="ace-icon fa fa-home home-icon"></i>
-                        <a href="<c:url value="/allSRInfo"/>">Home</a>
+                        <a href="#">Home</a>
                     </li>
                     <li class="active">成果获奖</li>
                 </ul>
@@ -333,10 +333,10 @@
             </div>
         </div>
     </div>
+    <jsp:include page="public/footer.jsp"/>
 </div>
 <!-- /.main-content -->
 
-<jsp:include page="public/footer.jsp"/>
 
 <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
     <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>

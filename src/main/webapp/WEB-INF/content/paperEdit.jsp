@@ -462,7 +462,8 @@
                                                         <i class="ace-icon fa fa-save bigger-110"></i>
                                                         保存
                                                     </button>
-                                                    <button class="tabOrdBtn btn btn-success btn-sm" type="button" id="confirmC">
+                                                    <button class="tabOrdBtn btn btn-success btn-sm" type="button"
+                                                            id="confirmC">
                                                         <i class="ace-icon fa fa-check bigger-110"></i>
                                                         确认
                                                     </button>
@@ -472,7 +473,8 @@
                                                 <div class="col-md-offset-4 col-md-8">
 
 
-                                                    <button class="tabOrdBtn btn btn-success" type="button" id="Approve">
+                                                    <button class="tabOrdBtn btn btn-success" type="button"
+                                                            id="Approve">
                                                         <i class="ace-icon fa fa-check bigger-110"></i>
                                                         通过
                                                     </button>
@@ -501,10 +503,9 @@
             </div>
         </div>
     </div>
+    <jsp:include page="public/footer.jsp"/>
 </div>
-<!-- /.main-content -->
 
-<jsp:include page="public/footer.jsp"/>
 
 <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
     <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
@@ -542,7 +543,7 @@
     var entity = ${ObjectMapper.writeValueAsString(order)}; // 获得order
     var args = entity['variableMap']; // 成员，附件等信息都在里面
     var latestInfo = args['WF_Latest'];
-    if(latestInfo == undefined) {
+    if (latestInfo == undefined) {
         latestInfo = new Object();
     }
 
@@ -552,11 +553,11 @@
     // 获得批复
     var replyByCol, replyByDep;
     var approvalByCol = getApprovalByCol(args);
-    if(approvalByCol !== ""){
+    if (approvalByCol !== "") {
         replyByCol = args[approvalByCol]['replyByCol'];
     }
     var approvalByDep = getApprovalByDep(args);
-    if(approvalByDep !== "") {
+    if (approvalByDep !== "") {
         replyByDep = args[approvalByDep]['replyByDep'];
     }
 
@@ -662,10 +663,10 @@
             } else {
                 $('.orderBack').hide();
             }
-            if(status == 'Complete' && window.location.href.indexOf('task')) { // 主负责人确认后，参与人可以确认
+            if (status == 'Complete' && window.location.href.indexOf('task')) { // 主负责人确认后，参与人可以确认
                 $('.confirm').show();
                 $('.orderBack').hide();
-            }else{
+            } else {
                 $('.confirm').hide();
             }
         } // end if
@@ -698,7 +699,7 @@
         });
 
         // 显示文件信息
-        if(filesData != undefined && filesData != null) {
+        if (filesData != undefined && filesData != null) {
             showFiles(filesData);
         }
     } // end if order非空

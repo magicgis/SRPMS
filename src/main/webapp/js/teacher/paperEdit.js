@@ -27,7 +27,6 @@ function init() {
 }
 
 
-
 /**
  * 计算分数
  */
@@ -61,7 +60,7 @@ function save() {
     var jsonData = getFormData('paper');
     workflow.execute(userName, taskId, jsonData).success(function () {
         afterSuccess("保存成功！");
-        window.location.href = '/paper';
+        window.location.href = '/allSRInfo';
     });
     console.log("haha");
 }
