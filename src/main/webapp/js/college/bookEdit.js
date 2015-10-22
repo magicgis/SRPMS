@@ -15,14 +15,13 @@ $(function(){
     init();
 });
 function init() {
-    var status = all['Status'];
-    var statusCode=processStatus(status,0,2);
     $('#reply').show();
     $('#reply-display').show();
     var reply = $('#reply-display').children('p');
     var who = $('#reply-display').children('small');
-
-    switch (parseInt(statusCode)){
+    var status = entity['Status'];
+    var statusCode=parseInt(processStatus(status,0,3));
+    switch (statusCode){
         case 211:
             reply.append(replyByDep);
             who.append("管理部门批复学院批复");
@@ -38,21 +37,6 @@ function init() {
             $('.onApprove').hide();
             break;
     }
-    //if (status.indexOf('Refuse') >= 0) {
-    //    $('#reply').show();
-    //    $('#reply-display').show();
-    //    var reply = $('#reply-display').children('p');
-    //    var who = $('#reply-display').children('small');
-    //    reply.empty();
-    //    who.empty();
-    //    if (status.indexOf("Dep") >= 0) {
-    //        reply.append(replyByDep);
-    //        who.append("管理部门批复");
-    //    } else if(status=='WaitForDep') {
-    //        $('#reply').hide();
-    //        $('.onApprove').hide();
-    //    }
-    //}
 }
 //监听 添加金额信息
 function Approve(){

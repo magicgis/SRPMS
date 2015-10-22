@@ -154,7 +154,6 @@
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="bkReward"
                                                             placeholder="请选择">
-                                                        <option value=""></option>
                                                         <option value="1">是</option>
                                                         <option value="0">否</option>
                                                     </select>
@@ -364,6 +363,7 @@
     // 成员，单位，文件
     // todo 取出实体内的额外信息，附件信息也应该在其中。
     var entity = ${ObjectMapper.writeValueAsString(book)};
+    console.log(entity);
     var all = ${ObjectMapper.writeValueAsString(book.argMap)};
     var dept = entity['dept'];
     var taskId = '${taskId}';
@@ -424,7 +424,7 @@
         data: actorTemp
     });
     $('.back').click(function () {
-        history.go(-1);
+        window.history.back();
     });
     //监听 添加成员
     $('#addActor').click(function () {

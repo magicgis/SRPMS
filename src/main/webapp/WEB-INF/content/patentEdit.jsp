@@ -387,6 +387,7 @@
 
     // 成员，单位，文件
     var order =  ${ObjectMapper.writeValueAsString(patent)}; // 获得 order 或 实体
+    console.log(order);
     var all = order['argMap']; // 获得 成员，单位，附件，负责人等信息
     var dept = order['dept'];
     var standardId = order['standard'];

@@ -9,7 +9,32 @@ $(function () {
 });
 function init() {
     var status = entity['Status'];
-    var statusCode=processStatus(status,0,3);
+    var statusCode=parseInt(processStatus(status,0,3));
+    switch (statusCode) {
+        case 1:
+            $('#reply').hide();
+            $('.onApprove').hide();
+            $('.orderBack').hide();
+            break;
+        case 311:
+            $('#reply').show();
+            $('#reply-display').show();
+            var reply = $('#reply-display').children('p');
+            var who = $('#reply-display').children('small');
+            reply.empty();
+            who.empty();
+            $('.onDel').show();
+            break;
+        case 301:
+            $('#reply').show();
+            $('#reply-display').show();
+            var reply = $('#reply-display').children('p');
+            var who = $('#reply-display').children('small');
+            reply.empty();
+            who.empty();
+            $('.onDel').show();
+            break;
+    }
     if (entity['process'] == '1' || entity['process'] == '9') {
         $('#reply').show();
         $('.onEdit').hide();
@@ -20,48 +45,6 @@ function init() {
         disableSelectize($('#dept').selectize());
         uneditableForm();
         hideActorOperate();
-        // 实体中不能审批，order中才可以。实体中没有status，所以这样判断
-        switch (parseInt(statusCode)){
-            case 1:
-                $('.onApprove').hide();
-            case 311:
-                $('#reply').show();
-                $('#reply-display').show();
-                var reply = $('#reply-display').children('p');
-                var who = $('#reply-display').children('small');
-                reply.empty();
-                who.empty();
-                $('.onDel').show();
-                break;
-            case 301:
-                $('#reply').show();
-                $('#reply-display').show();
-                var reply = $('#reply-display').children('p');
-                var who = $('#reply-display').children('small');
-                reply.empty();
-                who.empty();
-                $('.onDel').show();
-                break;
-        }
-
-        //if ( !isNull(status) && status.indexOf('refuse')>=0) {
-        //    $('#reply').show();
-        //    $('#reply-display').show();
-        //    var reply = $('#reply-display').children('p');
-        //    var who = $('#reply-display').children('small');
-        //    reply.empty();
-        //    who.empty();
-        //    if (status.indexOf("WaitForDep") >= 0) { // 学院通过了
-        //        reply.append(replyByCol);
-        //        who.append("学院批复");
-        //        $('.onApproval').show();
-        //    } else {
-        //        $('.onApproval').hide();
-        //        $('#reply').hide();
-        //    }
-        //}else{
-        //    $('.onApproval').hide();
-        //}
     } else if (entity['process'] == null || entity['process'] == '0') { // 刚刚新增或未启动
         $('.onApproval').hide();
         $('.onEdit').show();$('.onDel').show();
@@ -307,6 +290,7 @@ function editActor(row, index) {
 }
 /********************************保存***************************/
 function saveStep1() {
+    console.log($('#book').serialize());
     return $.ajax({
         url: '/api/book/book',
         data: $('#book').serialize(),
@@ -322,7 +306,6 @@ function saveStep2(data) {
     send['filesData'] = filesData;
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
-    console.log(send);
     return $.ajax({
         type: 'put',
         url: '/api/book/' + data,

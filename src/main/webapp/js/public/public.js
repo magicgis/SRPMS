@@ -716,7 +716,7 @@ function showTooltip() {
  */
 function processStatus(statusVlaue, isMain, userLevel) {
     //应该是实体
-    if (statusVlaue == null || statusVlaue == '') {
+    if (statusVlaue == null || statusVlaue == ''||statusVlaue == undefined) {
         switch (userLevel) {
             case 1:
                 return 0;//能看
@@ -910,4 +910,8 @@ function processTran(arg) {
         "9": "已结束"
     };
     return t[arg];
+}
+function pubTypeTrans(res){
+    var pubType={"1020":"公开出版著作", "1021":"教育部规划教材","1022": "协编教材","1023":"其他教材"};
+    return pubType[res];
 }

@@ -215,7 +215,7 @@
                         title: '评分来源',
                         sortable: true
                     }, {
-                        field: 'real_time',
+                        field: 'realDate',
                         title: '实际结题时间',
                         sortable: true
                     }, {
@@ -314,6 +314,7 @@
                 allTable.bootstrapTable('destroy').bootstrapTable({
                     url: apiUrl("book"),
                     sidePagination: "server",
+                    flat:true,
                     columns: [{
                         radio: true
                     }, {
@@ -328,7 +329,8 @@
                     }, {
                         field: 'pubType',
                         title: '出版类型',
-                        sortable: true
+                        sortable: true,
+                        formatter:'pubTypeTrans'
                     }, {
                         field: 'sumWord',
                         title: '著作总字数',
@@ -338,14 +340,13 @@
                         title: '著作获奖情况',
                         sortable: true
                     }, {
-                        field: 'S-ACTOR',
-                        title: '提交者',
-                        sortable: true
+                        field:'argMap.Main-ActorName',
+                        title:'负责人',
+                        sortable:true
                     }, {
                         field: 'publisher',
                         title: '出版社',
-                        sortable: true,
-                        formatter: "rankTran"
+                        sortable: true
                     }, {
                         field: 'Status',
                         title: '状态',
@@ -403,6 +404,7 @@
                 allTable.bootstrapTable('destroy').bootstrapTable({
                     url: apiUrl('achAward'),
                     sidePagination: "server",
+                    flat:true,
                     columns: [{
                         radio: true
                     }, {
@@ -411,18 +413,18 @@
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'achName',
-                        title: '录入人',
-                        sortable: true
-                    }, {
                         field: 'name',
                         title: '成果名称',
                         sortable: true
                     }, {
-                        field: 'awardType',
-                        title: '获奖类型',
-                        sortable: 'true'
-                    }, {
+                        field: 'achType',
+                        title: '成果类型',
+                        sortable: true,
+                        formatter: 'typeTran'
+                    },{
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    },{
                         field: 'date',
                         title: '获奖时间',
                         sortable: true

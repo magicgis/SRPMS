@@ -230,10 +230,10 @@
                                             </div>
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
-                                                       for="real_time">实际结题时间</label>
+                                                       for="realDate">实际结题时间</label>
 
                                                 <div class="col-sm-8">
-                                                    <input class="form-control date-picker" id="real_time"
+                                                    <input class="form-control date-picker" id="realDate"
                                                            type="text" name="realDate"
                                                            data-date-format="yyyy-mm-dd"  value="${project.realDate}" />
                                                 </div>
@@ -460,7 +460,6 @@
         <script src="<c:url value="/js/college/projectEdit.js"/>"></script>
     </c:when>
     <c:when test="${sessionScope.level == '3'}">
-
         <script src="<c:url value="/js/school/projectEdit.js"/>"></script>
     </c:when>
 </c:choose>
@@ -589,7 +588,7 @@
         firstOrOther();
     });
     $('.back').click(function () {
-        $('#ProjectTable').bootstrapTable('refresh', {url: '/api/project/all'});
+        //$('#ProjectTable').bootstrapTable('refresh', {url: '/api/project/all'});
         history.go(-1);
     });
     //监听 添加成员
