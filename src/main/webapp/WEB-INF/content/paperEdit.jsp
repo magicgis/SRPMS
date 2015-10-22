@@ -513,7 +513,6 @@
 <!-- /.main-container -->
 <script>
 
-    var filesData = {};
     var actorTemp = [];
 
 </script>
@@ -532,7 +531,6 @@
     }); // 显示用的
 
     getMagName(); // 初始化期刊名字
-    upToLoadFile(); // 初始化上传插件
     CollectionType(); // 初始化收录类型
     NewIssue(); // 初始化报刊类型
     selectData(); // 会议时间插件
@@ -562,8 +560,11 @@
     }
 
     var paperType = latestInfo["type"]; // 获得论文类型
-    filesData = latestInfo["filesData"]; // 获得附件
-
+    var filesData = latestInfo["filesData"]; // 获得附件
+    if (isNull(filesData)) {
+        filesData = {};
+    }
+    upToLoadFile(); // 初始化上传插件
     console.log(entity);
 
     $('#actorTable').bootstrapTable({

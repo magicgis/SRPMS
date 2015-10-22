@@ -16,7 +16,18 @@ var selectDefferent = {
     "award": "",
     "appraise": ""
 };
-
+// 论文的类型翻译
+function typeTran(value, row) {
+    if (value == 'conferPaper') {
+        return '会议论文';
+    } else if (value == 'magPaper') {
+        return '期刊论文';
+    } else if (value == 'newsPaper') {
+        return '报刊论文';
+    } else {
+        return;
+    }
+}
 /**
  *查看/编辑样式
  *
