@@ -1,15 +1,18 @@
 package engine.filter;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
 import entity.Paper;
 import org.snaker.engine.SnakerInterceptor;
 import org.snaker.engine.core.Execution;
-import service.ConferService;
 import service.MagService;
+import service.PaperService;
 import util.StaticFactory;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,12 +30,15 @@ public class Complete implements SnakerInterceptor {
     public void intercept(Execution execution) {
 
         MagService magService = (MagService) StaticFactory.getBean(MagService.class);
-        ConferService conferService = (ConferService) StaticFactory.getBean(ConferService.class);
+//        ConferService conferService = (ConferService) StaticFactory.getBean(ConferService.class);
+        PaperService paperService = (PaperService) StaticFactory.getBean(PaperService.class);
 
         String orderId = execution.getOrder().getId();
 
 
         Map<String, Object> args = execution.getOrder().getVariableMap();
+
+        ArrayList userInfo;
 
         String type = (String) args.get("WF_Type");
         switch (type) {
@@ -43,8 +49,12 @@ public class Complete implements SnakerInterceptor {
                 System.out.println(info.toString());
                 System.out.println(paper.toString());
                 paper.setAttachment((String) info.get("filesData"));
+                JsonFactory factory = new JsonFactory();
+                ObjectMapper mapper = new ObjectMapper(factory);
+                userInfo = (ArrayList) info.get("actors");
+
                 if ("magPaper".equals(info.get("type"))) {
-                    paper.setMag(magService.getById((Serializable) info.get("mag.id")));
+                    paper.setMag(magService.getById((Serializable) ((HashMap) info.get("mag")).get("id")));
                 }
                 else if ("conferPaper".equals(info.get("type"))) {
 //                    paper.setConfer(conferService.getById((Serializable) info.get("confer.id")));
@@ -54,6 +64,7 @@ public class Complete implements SnakerInterceptor {
 //                    paper.setConfer(conferService.getById((Serializable) info.get("news.id")));
                     //todo 这儿也需要特殊处理，我艹
                 }
+                Serializable id = paperService.add(paper);
 
                 break;
 

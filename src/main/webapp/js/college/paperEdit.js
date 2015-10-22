@@ -45,7 +45,7 @@ function approve() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, req).success(function () {
-                    window.location.href = '/paper';
+                    window.location.href = '/process-paper-all';
                 });
             } else {
                 BootstrapDialog.show({
@@ -75,7 +75,7 @@ function refuse() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, req).success(function () {
-                    window.location.href = '/paper';
+                    window.location.href = '/process-paper-all';
                 });
             } else {
                 BootstrapDialog.show({

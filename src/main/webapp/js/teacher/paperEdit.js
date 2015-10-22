@@ -60,7 +60,7 @@ function save() {
     var jsonData = getFormData('paper');
     workflow.execute(userName, taskId, jsonData).success(function () {
         afterSuccess("保存成功！");
-        window.location.href = '/allSRInfo';
+        window.location.href = '/process-paper-all';
     });
     console.log("haha");
 }
@@ -88,14 +88,14 @@ function confirm() {
                     if ("valid" in data) {
                         if (data["valid"] == true) {
                             afterSuccess("确认成功！");
-                            window.location.href = '/paper';
+                            window.location.href = '/process-paper-all';
                         } else {
                             errorMsg(data["msg"]);
                             flag = true;
                         }
                     } else {
                         afterSuccess("确认成功！");
-                        window.location.href = '/paper';
+                        window.location.href = '/process-paper-all';
                     }
                 });
             }
@@ -114,7 +114,7 @@ function getOrderBack() {
     //send['user'] = userName;
     window.workflow.getBack(userName, orderId).success(function () {
         afterSuccess("已撤回");
-        window.location.href = '/paper';
+        window.location.href = '/process-paper-all';
     });
 }
 /**
@@ -135,7 +135,7 @@ function delOrder() {
             if (result) {
                 workflow.delOrder(order).success(function () {
                     afterSuccess("删除成功！");
-                    window.location.href = '/paper';
+                    window.location.href = '/process-paper-all';
                 });
             }
         }

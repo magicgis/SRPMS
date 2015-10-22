@@ -171,7 +171,7 @@
 
     //链接跳转
     allTable.on('click-row.bs.table', function (e, row) {
-        window.open('/order/' + row['id']);
+        window.location.href = '/order/' + row['id'];
     });
 
     //类别更换
