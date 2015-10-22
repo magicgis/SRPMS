@@ -90,10 +90,22 @@
                                                     </button>
                                                     <ul class="dropdown-menu dropdown-menu-left">
                                                         <li id="newPatent">
-                                                            <a>专利信息</a>
+                                                            <a href="<c:url value="/patent/new"/> ">专利信息</a>
                                                         </li>
                                                         <li id="newProject">
-                                                            <a>项目信息</a>
+                                                            <a href="<c:url value="/project/new"/> ">项目信息</a>
+                                                        </li>
+                                                        <li id="newBook">
+                                                            <a href="<c:url value="/book/new"/> ">著作信息</a>
+                                                        </li>
+                                                        <li id="newAppaise">
+                                                            <a href="<c:url value="/appraise/new"/> ">鉴定信息</a>
+                                                        </li>
+                                                        <li id="newAchTran">
+                                                            <a href="<c:url value="/achTran/new"/> ">转化信息</a>
+                                                        </li>
+                                                        <li id="newAchAward">
+                                                            <a href="<c:url value="/achAward/new"/> ">获奖信息</a>
                                                         </li>
                                                     </ul>
                                                 </div>

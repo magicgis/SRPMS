@@ -300,7 +300,7 @@ function switchEntityView(viewType) {
                     field: 'operator',
                     align: 'center',
                     title: '操作',
-                    width: 75,
+                    width: 75
                 }],
                 responseHandler: tableTrans
             });
