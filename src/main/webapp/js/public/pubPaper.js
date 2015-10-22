@@ -9,7 +9,7 @@ function typeTran(value, row) {
     } else if (value == 'newsPaper') {
         return '报刊论文';
     } else {
-        return;
+        return '';
     }
 }
 // 显示Mag、Confer还是newsPaper

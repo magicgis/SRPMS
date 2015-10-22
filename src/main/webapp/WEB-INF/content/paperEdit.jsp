@@ -664,11 +664,11 @@
             } else {
                 $('.orderBack').hide();
             }
-            if (status == 'Complete' && window.location.href.indexOf('task')) { // 主负责人确认后，参与人可以确认
-                $('.confirm').show();
+            if (status == 'Complete' && window.location.href.indexOf('task')>=0) { // 主负责人确认后，参与人可以确认
+                $('#confirm').show();
                 $('.orderBack').hide();
             } else {
-                $('.confirm').hide();
+	            $('#confirm').hide();
             }
         } // end if
 

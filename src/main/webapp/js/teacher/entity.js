@@ -1,7 +1,6 @@
 
 //参与类型切换
 $('.level').click(function () {
-    console.log("dhfak");
     $('#levelOption').html(this.children[0].text + '<span class="ace-icon fa fa-caret-down icon-on-right"></span>');
     level = this.id;
     allTable.bootstrapTable("refresh", {url: entityApiUrl(entityType)});

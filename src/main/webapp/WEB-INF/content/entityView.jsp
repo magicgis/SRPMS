@@ -99,7 +99,7 @@
                                                             <a href="<c:url value="/book/new"/> ">著作信息</a>
                                                         </li>
                                                         <li id="newAppaise">
-                                                            <a href="<c:url value="/appraise/new"/> ">鉴定信息</a>
+                                                            <a href="<c:url value="/achAppraisal/new"/> ">鉴定信息</a>
                                                         </li>
                                                         <li id="newAchTran">
                                                             <a href="<c:url value="/achTran/new"/> ">转化信息</a>
