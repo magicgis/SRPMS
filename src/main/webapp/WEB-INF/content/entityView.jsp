@@ -110,6 +110,26 @@
                                                     </ul>
                                                 </div>
                                             </c:when>
+                                            <c:when test="${sessionScope.level == '1'}">
+                                                <div class="btn-group">
+                                                    <button class="btn btn-primary dropdown-toggle"
+                                                            data-toggle="dropdown" id="levelOption">
+                                                        查看选项
+                                                        <span class="ace-icon fa fa-caret-down icon-on-right"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-left">
+                                                        <li class="level" id="all">
+                                                            <a>所有科研</a>
+                                                        </li>
+                                                        <li class="level" id="1st">
+                                                            <a>主导科研</a>
+                                                        </li>
+                                                        <li class="level" id="2nd">
+                                                            <a>参与科研</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </c:when>
                                         </c:choose>
 
                                     </div>
@@ -140,6 +160,12 @@
     var level = '${level}';//参与类型
     console.log(entityType);
     console.log(level);
+    if (entityType === null) {
+	    srtype = 'all';
+    }
+    if (level === null) {
+	    level = 'all';
+    }
 
     $(function () {
         switchEntityView(entityType + "Entity");
