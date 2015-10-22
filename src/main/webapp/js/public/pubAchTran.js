@@ -35,24 +35,6 @@ function getAchType(){
     });
 }
 
-function typeTran() {
-    var termArray = {
-        "paper": "论文",
-        "book": "著作",
-        "project": "项目",
-        "patent":"专利",
-        "medicine":"新药",
-        "food":"功能性食品",
-        "instrument":"医疗器械",
-        "other":"其他"
-    };
-    for (var key in termArray) {
-        if (value == key) {
-            return termArray[key];
-        }
-    }
-}
-
 function subActorInfo(index,flag) {
     var id = $('#actor').val();
     var actor = $('#actor').text();

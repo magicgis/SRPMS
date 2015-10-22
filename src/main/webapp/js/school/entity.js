@@ -75,9 +75,15 @@ function switchEntityView(viewType) {
                     title: '专利名称',
                     sortable: true
                 }, {
-                    field: 'state',
+                    field: 'standard.value',
                     title: '专利类型',
                     sortable: true
+                }, {
+                    field: 'patentNo',
+                    title: '专利号'
+                }, {
+                    field: 'apprDate',
+                    title: '获批时间'
                 }, {
                     field: 'argMap.Main-ActorName',
                     title: '负责人'
@@ -192,6 +198,19 @@ function switchEntityView(viewType) {
                     title: '成果名称',
                     sortable: true
                 }, {
+                    field: 'achType',
+                    title: '成果类型',
+                    sortable: true,
+                    formatter: "typeTran"
+                }, {
+                    field: 'certifyUnit',
+                    title: '鉴定单位',
+                    sortable: 'true'
+                }, {
+                    field: 'date',
+                    title: '鉴定日期',
+                    sortable: true
+                }, {
                     field: 'argMap.Main-ActorName',
                     title: '负责人'
                 }, {
@@ -221,7 +240,6 @@ function switchEntityView(viewType) {
                     field: 'achType',
                     title: '成果名称',
                     sortable: true
-                    // formatter:"typeTran"
                 }, {
                     field: 'awardName',
                     title: '类型',

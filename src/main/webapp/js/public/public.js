@@ -276,6 +276,24 @@ function processTran(arg) {
     return t[arg];
 }
 
+
+function typeTran(value) {
+    var termArray = {
+        "paper": "论文",
+        "book": "著作",
+        "project": "项目",
+        "patent":"专利",
+        "medicine":"新药",
+        "food":"功能性食品",
+        "instrument":"医疗器械",
+        "other":"其他"
+    };
+    if(isNull(value)){
+        return '';
+    }
+    return termArray[value];
+}
+
 // 成员翻译
 function actorTran(value, row) {
     if (value != undefined && value != null && value != "")

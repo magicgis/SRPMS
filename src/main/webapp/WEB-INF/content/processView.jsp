@@ -248,8 +248,16 @@
                         title: '专利名称',
                         sortable: true
                     }, {
-                        field: 'state',
-                        title: '专利状态',
+                        field: 'standard.value',
+                        title: '专利类型',
+                        sortable: true
+                    }, {
+                        field: 'patentNo',
+                        title: '专利号',
+                        sortable: true
+                    }, {
+                        field: 'apprDate',
+                        title: '获批时间',
                         sortable: true
                     }, {
                         field: 'ActorList',

@@ -43,9 +43,9 @@ function init() {
     } else if (order['process'] == null || order['process'] == '0') { // 刚刚新增或未启动
         $('.onApproval').hide();
         $('#actorTable').bootstrapTable('hideColumn', 'score');
-        if(order['process'] == null){
-            $('.onDel').hide();
-        }
+        //if(order['process'] == null){
+        $('.onDel').hide();
+        //}
     }
 }
 
