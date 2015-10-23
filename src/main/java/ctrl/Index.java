@@ -168,6 +168,21 @@ public class Index {
         return "achAwardEdit";
     }
 
+    @RequestMapping(value = {"achTran/new"}, method = RequestMethod.GET)
+    public String newachTran(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        model.addAttribute(new AchAward());
+        return "achTranEdit";
+    }
+
+    @RequestMapping(value = {"achTran/{achAwardId}"}, method = RequestMethod.GET)
+    public String achTranEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                               @PathVariable("achAwardId") String achAwardId) {
+        AchAward achAward = achAwardService.getById(achAwardId);
+        model.addAttribute(achAward);
+        return "achTranEdit";
+    }
+
+
     @RequestMapping(value = {"sysBaseInfo"}, method = RequestMethod.GET)
     public String sysBaseInfo(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         return "sysBaseInfo";
