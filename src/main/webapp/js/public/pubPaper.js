@@ -173,11 +173,7 @@ function CollectionType() {
     $('#conferType').selectize({
         valueField: 'id',
         labelField: 'value',
-        options: [  //todo
-            {"id":"1014","value": "SCI IV区"},
-            {"id":"1015","value": "SSCI"},
-            {"id":"1016","value": "EI"},
-            {"id":"1017","value": "A&HCI"}],
+        options: conferType,
         maxItems: 1
     });
 }
@@ -187,10 +183,7 @@ function NewIssue() {
         valueField: 'id',
         labelField: 'value',
         create: true,
-        options: [
-            {"id":"1020","value": "一类报刊(50分)"},
-            {"id":"1021","value": "一类报刊(40分)"},
-            {"id":"1022","value": "二类刊物二类报刊"}],
+        options: newsList,
         maxItems: 1
     });
 }
@@ -283,17 +276,7 @@ function replaceMagLevel() {
             valueField: 'id',
             labelField: 'value',
             create: false,
-            options: [
-                {"id": "其它外文论文", "value": "其它外文论文"},
-                {"id": "其它中文论文", "value": "其它中文论文"}
-            ],
-            onChange: function (result) {
-                if (result == "其它外文论文") {
-                    $("#magStandardId").val("1018");    //todo
-                } else {
-                    $("#magStandardId").val("1019");    //todo
-                }
-            }
+            options: magTypeList
         });
     }
 }

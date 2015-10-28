@@ -541,6 +541,28 @@
 		showTooltip();
 	}); // 显示用的
 
+	var StdList = [];
+	var conferType = [];
+	var magTypeList = [];
+	var newsList = [];
+	function getStdList() { // 拦截standard表的数据
+		$.ajax({
+			type: 'GET',
+			async: false, // false
+			url: '/api/standard/type/论文',
+			dataType: 'json',
+			contentType: 'application/json;charset=UTF-8',
+			success: function (data) {
+				StdList = data;
+				newsList = getStandardList(StdList, 'papertype', 'col_type', '报刊');
+				magTypeList = getStandardList(StdList, 'type', 'col_type', '其他论文');
+				conferType = getStandardList(StdList, 'papertype', 'col_type', '会议');
+
+			}
+		});
+	}
+	getStdList(); // 获取成果鉴定的standard待填充
+
 	getMagName(); // 初始化期刊名字
 	getDept(); // 初始化所属部门
 	CollectionType(); // 初始化收录类型
