@@ -53,7 +53,11 @@ function magOrConfer_add(){
 // 表单不可编辑
 function uneditableForm() {
     $('form input').attr("disabled", "disabled");
-    $('form select').attr("disabled", "disabled");
+
+    var elementlist = document.querySelectorAll('.selectized');
+    $.each(elementlist, function(index, value) {
+        disableSelectize($(value).selectize());
+    });
     $('#addDiff').hide();
     $('#addActor').hide();
     $('#getScore').hide();

@@ -13,7 +13,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta charset="utf-8"/>
-    <title>成果鉴定信息
+    <title>成果鉴定信息-
         <c:choose>
             <c:when test="${sessionScope.level == '1'}">
                 教师
@@ -83,6 +83,7 @@
                                 <%--<input type="text" name="IsComplete" id="IsComplete"/>--%>
                                 <input type="text" name="sum" id="score"/>
                                 <input type="text" name="id" id="achAppraiseId" value="${achAppraisal.id}"/>
+                                <input type="text" name="WF_Type" id="WF_Type" value="achAppraisal"/>
                             </div>
 
                             <div class="col-xs-12 col-md-6">

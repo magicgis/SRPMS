@@ -75,11 +75,12 @@
                                         <%--<input type="text" name="WF_Order" id="WF_Order"/>--%>
                                         <%--<input type="text" name="WF_Task" id="WF_Task"/>--%>
                                         <%--<input type="text" name="IsComplete" id="IsComplete"/>--%>
-                                            <input type="text" name="sum" id="score"/>
+                                        <input type="text" name="sum" id="score"/>
                                         <%--<input type="text" name="dept.value" id="deptValue"--%>
-                                               <%--value="${patent.dept.value}"/>--%>
+                                        <%--value="${patent.dept.value}"/>--%>
                                         <%--<input type="text" name="patent.standard.value" id="patTypeValue"/>--%>
                                         <input type="text" name="id" id="patentId" value="${patent.id}"/>
+                                        <input type="text" name="WF_Type" id="WF_Type" value="patent"/>
                                     </div>
                                     <div id="patentInfo" class="col-xs-12 col-md-6 widget-container-col ui-sortable">
                                         <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
@@ -108,7 +109,7 @@
                                                             <div class="col-sm-8">
                                                                 <input id="dept" name="dept.id"
                                                                        type="text" class="form-control col-xs-12"
-                                                                       <%--value="${patent.dept.value}"--%>
+                                                                <%--value="${patent.dept.value}"--%>
                                                                        placeholder="请选择"/>
                                                             </div>
                                                         </div>
