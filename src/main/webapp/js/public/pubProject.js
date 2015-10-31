@@ -201,38 +201,6 @@ function uneditableForm(){
     $('form select').attr("disabled", "disabled");
     $('.delFiles').hide();
 }
-////显示详情
-//function showForm() {
-//    $('#projTable-box').addClass('collapsed');
-//    $('#proj-box').removeClass('collapsed');
-//}
-////显示总览
-//function showTable() {
-//    clearSelect();
-//    clearOptionsSelectize($("#dept").selectize());
-//    $('#ProjectTable').bootstrapTable('refresh', {silent: true});
-//    $('#projTable-box').removeClass('collapsed');
-//    $('#proj-box').addClass('collapsed');
-//}
-////可编辑
-//function editableForm() {
-//    $('form input').removeAttr("disabled", "disabled");
-//    $('form select').removeAttr("disabled", "disabled");
-//    $('#fundTable').bootstrapTable('showColumn', 'operate');
-//    $('#actorTable').bootstrapTable('showColumn', 'operate');
-//    $('#unitTable').bootstrapTable('showColumn', 'operate');
-//}
-////不可编辑
-//function uneditableForm() {
-//    $('form input').attr("disabled", "disabled");
-//    $('form select').attr("disabled", "disabled");
-//    $('#addActor').attr("disabled", "disabled");
-//    $('#addUnit').attr("disabled", "disabled");
-//    $('#addFund').attr("disabled", "disabled");
-//    $('#fundTable').bootstrapTable('hideColumn', 'operate');
-//    $('#actorTable').bootstrapTable('hideColumn', 'operate');
-//    $('#unitTable').bootstrapTable('hideColumn', 'operate');
-//}
 function view(index, row, value) {
     {
         return [
@@ -327,75 +295,6 @@ function fullUpInfo(all,entity){
         //DisplayForm($('#dept').selectize(), deptValue[dept], 0);
     }
 }
-/**********************************************************************************************************************/
-/******************************************************修改分界线*******************************************************/
-/******************************************************修改分界线*******************************************************/
-/**********************************************************************************************************************/
-////启用或禁用
-//function disableOrEnable(index, row, value) {
-//    //测试区
-//    if (row['user.status'] == 1) {
-//        return [
-//            '<label><input class="UserEnableChange ace ace-switch ace-switch-7" type="checkbox" ' +
-//            'checked name="switch-field-1"><span class="lbl"></span></label>'
-//        ].join('');
-//    } else {
-//        return [
-//            '<label><input class="UserDisableChange ace ace-switch ace-switch-7" type="checkbox" ' +
-//            'name="switch-field-1"><span class="lbl"></span></label>'
-//        ].join('');
-//    }
-//}
-////启用或禁用 操作
-//window.operateEvents = {
-//    //测试
-//    'change .UserEnableChange': function (e, value, row, index) {
-//        var ableType = 'disable';
-//        var TipInfo = '已禁用';
-//        disableOrEnableUser(row['id'], ableType, TipInfo);
-//    },
-//    'change .UserDisableChange': function (e, value, row, index) {
-//        $('#UserTable').bootstrapTable('resetView', {'clickToSelect': false});
-//        var ableType = 'enable';
-//        var TipInfo = '已起用';
-//        disableOrEnableUser(row['id'], ableType, TipInfo);
-//    }
-//};
-//function disableOrEnableUser(id, ableType, TipInfo) {
-//    //alert("请选择项目负责人");
-//    $.ajax({
-//        type: 'POST',
-//        url: '../api/staff/' + ableType + '/' + id,
-//        contentType: 'application/json;charset=UTF-8',
-//        success: function (result) {
-//            if (result.errmsg) {
-//                //失败提示
-//                failInfo('操作失败！');
-//                return;
-//            } else {
-//                showTable();
-//            }
-//        }
-//    });
-//}
-//function typeTran(value,row){
-//    var type={
-//        'philosophy':'自然科学',
-//        'science':'哲学与社会科学',
-//        'education':'教育教学改革'
-//    };
-//    return type[value];
-//}
-//
-//function aRankTran(value,row){
-//    var aRank = {
-//        'nation':'国家级',
-//        'province':'省部级'
-//    };
-//    return aRank[value];
-//
-//}
-//
 
 
 

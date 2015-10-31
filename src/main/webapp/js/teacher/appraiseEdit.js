@@ -10,58 +10,9 @@ $(function() {
     $('#upload').hide();
     $('#reply-box').hide();
     $('#reply').hide();
-    init();
+    init(entity,all,replyByDep,1);
 });
-function init() {
-    var status = all['Status'];
-    var isMain = isMainActor(Main_Actor,userName);
-    var statusCode = processStatus(status,isMain,1);
-    switch (parseInt(statusCode)){
-        case 01:
-            $('.confirm').show();
-            hideActorOperate();
-            $('#getScore').hide();
-            $('.save').hide();
-            break;
-        case 00:
-            $('.confirm').hide();
-            hideActorOperate();
-            $('#getScore').hide();
-            $('.save').hide();
-            break;
-        case 11110:
-            // hideActorOperate();
-            $('#getScore').show();
-            $('.save').show();
-            $('.confirm').show();
-            break;
-        case 10110:
-            $('.confirm').hide();
-            hideActorOperate();
-            $('#getScore').hide();
-            $('.save').hide();
-            break;
-        case 10000:
-            $('.confirm').hide();
-            hideActorOperate();
-            $('#getScore').hide();
-            $('.save').hide();
-            break;
-        case 11111:
-            $('#reply').show();
-            $('#reply-display').show();
-            var reply = $('#reply-display').children('p');
-            var who = $('#reply-display').children('small');
-            reply.empty();
-            who.empty();
-            //$('.confirm').hide();
-            //$('.save').hide();
-            reply.append(replyByCol);
-            who.append("学院批复");
-            break;
-    }
 
-}
 
 
 /*

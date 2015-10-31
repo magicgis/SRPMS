@@ -500,9 +500,8 @@
                         title: '科研类型',
                         formatter: "wfTypeTran"
                     }, {
-                        field: 'ActorList',
-                        title: '人员',
-                        formatter: "actorTran"
+                        field: 'Main-ActorName',
+                        title: '负责人'
                     }, {
                         field: 'Status',
                         title: '状态',

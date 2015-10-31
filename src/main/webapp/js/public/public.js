@@ -485,17 +485,6 @@ function downFile(fileId) {
             window.location = url;
         }
     });
-
-    /*    var xhr = new XMLHttpRequest();
-     xhr.open( "GET", url);
-     xhr.setRequestHeader('Authorization', $.cookie('srpms_token'));
-     xhr.addEventListener( "load", function(){
-     console.log(this.responseText);
-     data = this.responseText;
-     data = "data:text/csv;base64,"+btoa(data);
-     document.location = data;
-     }, false);
-     xhr.send(null);*/
 }
 /**
  * 删除上传的文件
@@ -781,8 +770,180 @@ function isMainActor(MainActor, userName) {
         return null;
     }
 })(jQuery);
+/**
+ * 全部的初始化脚本
+ * 教师1||学院2||学校3
+ * */
+function init(entity,all,replyByDep,level) {
+    switch (level){
+        case 1:
+            var status = all['Status'];
+            var isMain=isMainActor(all['Main-Actor'],userName);
+            var statusCode=parseInt(processStatus(status,0,level));
+            switch (statusCode){
+                case 01:
+                    $('.confirm').show();
+                    hideActorOperate();
+                    $('.getScore').hide();
+                    $('.save').hide();
+                    break;
+                case 00:
+                    $('.confirm').hide();
+                    hideActorOperate();
+                    $('.getScore').hide();
+                    $('.save').hide();
+                    break;
+                case 11110:
+                    $('.getScore').show();
 
+                    $('.onEdit').show();
+                    break;
+                case 10110:
+                    hideActorOperate();
+                    $('.getScore').hide();
+                    $('.onEdit').hide();
+                    $('.delAndBack').show();
+                    break;
+                case 10000:
+                    hideActorOperate();
+                    $('.onEdit').hide();
+                    $('.delAndBack').hide();
+                    $('.getScore').hide();
+                    break;
+                case 11111:
+                    $('#reply').show();
+                    $('#reply-display').show();
+                    var reply = $('#reply-display').children('p');
+                    var who = $('#reply-display').children('small');
+                    reply.empty();
+                    who.empty();
+                    $('.onEdit').show();
+                    $('.delAndBack').show();
+                    reply.append(replyByDep);
+                    who.append("管理部门批复");
+                    break;
+            }
+            break;
+        case 2:
+            var status = all['Status'];
+            var isMain=isMainActor(all['Main-Actor'],userName);
+            $('#reply').show();
+            $('#reply-display').show();
+            var reply = $('#reply-display').children('p');
+            var who = $('#reply-display').children('small');
+            var statusCode=parseInt(processStatus(status,0,level));
+            switch (statusCode){
+                case 211:
+                    $('.onApprove').show();
+                    reply.append(replyByDep);
+                    who.append("管理部门批复");
+                    break;
+                case 210:
+                    $('.onApprove').show();
+                    reply.remove();
+                    who.remove();
+                    break;
+                case 200:
+                    reply.append(replyByDep);
+                    who.append("管理部门批复");
+                    $('#reply').attr("disable","disable");
+                    $('.onApprove').hide();
+                    break;
+            }
+            break;
+        case 3:
+            var status = entity['Status'];
+            var statusCode=parseInt(processStatus(status,0,level));
+            switch (statusCode) {
+                case 1:
+                    $('.onApprove').hide();
+                    $('.orderBack').hide();
+                case 311:
+                    $('#reply').show();
+                    $('#reply-display').show();
+                    var reply = $('#reply-display').children('p');
+                    var who = $('#reply-display').children('small');
+                    reply.empty();
+                    who.empty();
+                    $('.onDel').show();
+                    break;
+                case 301:
+                    $('#reply').show();
+                    $('#reply-display').show();
+                    var reply = $('#reply-display').children('p');
+                    var who = $('#reply-display').children('small');
+                    reply.empty();
+                    who.empty();
+                    $('.onDel').show();
+                    break;
+            }
+            if (entity['process'] == '1' || entity['process'] == '9') {
+                $('#reply').show();
+                $('.onEdit').hide();
+                $('.onDel').hide();
+                $('#upload').hide();
+                $('.addActor').hide();
+                $('.addUnit').hide();
+                $('.addFund').hide();
+                $.each(optionsMenu, function (key, value) {
+                    disableSelectize($('#' + value).selectize());
+                });
+                disableSelectize($('#dept').selectize());
+                uneditableForm();
+                hideActorOperate();
+                hideUnitOperate();
+                // 实体中不能审批，order中才可以。实体中没有status，所以这样判断
+            } else if (entity['process'] == null || entity['process'] == '0') { // 刚刚新增或未启动
+                $('#upload').show();
+                $('.onApproval').hide();
+                $('.onEdit').show();
+                $('.onDel').show();
+                $('#reply').hide();
+            }
+            break;
+    }
 
+}
+
+var wfTypeTans = {
+    "book":"著作",
+    "project": "项目",
+    "patent": "专利",
+    "paper": "论文",
+    "newOther": "其他新产品",
+    "newMedicine": "新药",
+    "instrument": "新器械",
+    "food": "新食品",
+    "change": "差异",
+    "award": "成果获奖",
+    "achAppraisal": "成果鉴定"
+};
+
+function wfTypeTran(value, row) {
+    if(!isNull(value)){
+        return wfTypeTans[value];
+    }else{
+       return '--' ;
+    }
+}
+
+/**
+ * 进度
+ * @param arg
+ * @returns {*}
+ */
+function processTran(arg) {
+    var t = {
+        "0": "未启动",
+        "1": "流程中",
+        "9": "已结束"
+    };
+    return t[arg];
+}
+function pubTypeTrans(res){
+    var pubType={"1020":"公开出版著作", "1021":"教育部规划教材","1022": "协编教材","1023":"其他教材"};
+    return pubType[res];
+}
 /**--------------------------成员表公共方法------------------**/
 //// 将对话框里的值加载进成员表
 //function subActorInfo(index,flag) {
@@ -876,42 +1037,3 @@ function isMainActor(MainActor, userName) {
 //function totalUnitFormatter(data) {
 //    return "共" + data.length + "个";
 //}
-
-var wfTypeTans = {
-    "project": "项目",
-    "patent": "专利",
-    "paper": "论文",
-    "newOther": "其他新产品",
-    "newMedicine": "新药",
-    "instrument": "新器械",
-    "food": "新食品",
-    "change": "差异",
-    "award": "成果获奖",
-    "achAppraisal": "成果鉴定"
-};
-
-function wfTypeTran(value, row) {
-    for (var key in wfTypeTans) {
-        if (key == value) {
-            return wfTypeTans[key];
-        }
-    }
-}
-
-/**
- * 进度
- * @param arg
- * @returns {*}
- */
-function processTran(arg) {
-    var t = {
-        "0": "未启动",
-        "1": "流程中",
-        "9": "已结束"
-    };
-    return t[arg];
-}
-function pubTypeTrans(res){
-    var pubType={"1020":"公开出版著作", "1021":"教育部规划教材","1022": "协编教材","1023":"其他教材"};
-    return pubType[res];
-}

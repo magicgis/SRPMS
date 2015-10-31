@@ -13,46 +13,12 @@ $(function () {
     disableSelectize($('#dept').selectize());
     disableSelectize($('#patType').selectize());
     hideUnitOperate();
-    init();
+    init(entity,all,replyByDep,1);
     $('.removeActor').hide();
     $('#upload').hide();
     $('.onApproval').hide();
 
 });
-
-function init() {
-    var status = all['Status'];
-    if( !(status=='Blank' || status=='Uncomplete' || status.indexOf('Refuse') >= 0)) {
-        hideActorOperate();
-        $('#getScore').hide();
-        $('.save').hide();
-        if(status == 'Complete' && all['Main-Actor']!=userName) {
-            $('.confirm').show();
-        }else{
-            $('.confirm').hide();
-        }
-        $('#reply').hide();
-    }else if (status.indexOf('Refuse') >= 0) {
-        $('#reply').show();
-        $('#reply-display').show();
-        var reply = $('#reply-display').children('p');
-        var who = $('#reply-display').children('small');
-        reply.empty();
-        who.empty();
-        if (status.indexOf("Col") >= 0) {
-            reply.append(replyByCol);
-            who.append("学院批复");
-        } else {
-            $('.confirm').hide();
-            $('.save').hide();
-            reply.append(replyByDep);
-            who.append("管理部门批复");
-        }
-    } else {
-        $('#reply').hide();
-    }
-}
-
 /*
  * 保存
  *   教师端的保存处理机制和论文大体一样

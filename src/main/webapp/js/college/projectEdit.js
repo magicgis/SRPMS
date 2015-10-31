@@ -15,28 +15,8 @@ $(function(){
     $('.getScore').hide();
     $('.addUnit').hide();
     $('.addFund').hide();
-    init();
+    init(entity,all,replyByDep,3);
 });
-function init() {
-    var status = all['Status'];
-    //console.log(all['Status']);
-    if (status.indexOf('Refuse') >= 0) {
-        $('#reply').show();
-        $('#reply-display').show();
-        var reply = $('#reply-display').children('p');
-        var who = $('#reply-display').children('small');
-        reply.empty();
-        who.empty();
-        if (status.indexOf("Dep") >= 0) {
-            reply.append(replyByDep);
-            who.append("管理部门批复");
-        } else if(status=='WaitForDep') {
-            $('#reply').hide();
-            $("#Approve").attr("disabled", "disabled");
-            $("#Refuse").attr("disabled", "disabled");
-        }
-    }
-}
 //监听 添加金额信息
 function Approve(){
     var approveInfo = Object();

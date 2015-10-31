@@ -190,7 +190,7 @@ function getPatType() {
             {"id": "1023", "value": "国际发明专利"},
             {"id": "1024", "value": "中国发明专利"},
             {"id": "1025", "value": "外观专利"},
-            {"id": "1026", "value": "实用专利"}]
+            {"id": "1026", "value": "实用新型专利"}]
 //        ,
 //        onChange: function (result) {
 //            $('#patTypeValue').val(this.getItem(result)["context"]["innerHTML"]);

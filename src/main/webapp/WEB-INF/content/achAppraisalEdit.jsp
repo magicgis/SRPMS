@@ -107,18 +107,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-
-                                                    <div class="form-group col-xs-12 col-sm-6">
-                                                        <label class="col-sm-4 control-label no-padding-left"
-                                                               for="achType">成果类型</label>
-
-                                                        <div class="col-sm-8"><!--选择框-->
-                                                            <input id="achType" name="achType"
-                                                                   type="text" class="form-control col-xs-12"
-                                                                   placeholder="请选择"/>
-                                                        </div>
-                                                    </div>
-
                                                     <div class="form-group col-xs-12 col-sm-6">
                                                         <label class="col-sm-4 control-label no-padding-left"
                                                                for="dept">所属部门</label>
@@ -126,18 +114,6 @@
                                                         <div class="col-sm-8"><!--选择框-->
                                                             <input class="form-control" id="dept"
                                                                    name="dept.id" placeholder="请选择"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="form-group col-xs-12 col-sm-6">
-                                                        <label class="col-sm-4 control-label no-padding-left"
-                                                               for="regNo">成果登记号</label>
-
-                                                        <div class="col-sm-8">
-                                                            <input id="regNo" name="regNo"
-                                                                   type="text" class="form-control col-xs-12"
-                                                                   placeholder="" value="${achAppraisal.regNo}"/>
                                                         </div>
                                                     </div>
 
@@ -320,7 +296,7 @@
 
                         </form>
 
-                        <div id="reply" class="col-xs-12 col-md-6 widget-container-col ui-sortable">
+                        <div id="reply" class="col-xs-12 col-xs-offset-6 col-md-6 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
                                 <div class="widget-header">
                                     <h4 class="widget-title">批复</h4>
@@ -349,20 +325,20 @@
                 <div class="row">
                     <div id="formBtn" class="col-xs-12 clearfix">
                         <div class="pull-left onDel">
-
-                            <%--<c:if test="${sessionScope.level == '3'}">--%>
-                            <button class="tabOrdBtn btn btn-danger btn-sm del"
+                            <c:if test="${sessionScope.level == '3'}">
+                              <button class="tabOrdBtn btn btn-danger btn-sm del"
                                     type="button">
                                 <i class="ace-icon fa fa-trash  bigger-110"></i>
                                 删除
-                            </button>
-                            <button class="tabOrdBtn btn btn-danger btn-sm orderBack"
+                              </button>
+                              <button class="tabOrdBtn btn btn-danger btn-sm orderBack"
                                     type="button">
                                 <i class="ace-icon fa  fa-repeat bigger-110"></i>
                                 撤回
-                            </button>
-                            <%--</c:if>--%>
+                              </button>
+                            </c:if>
                         </div>
+
                         <div class="pull-right">
                             <button class="tabOrdBtn btn btn-danger btn-sm back"
                                     type="button">
@@ -445,7 +421,6 @@
     }
     getStdList(); // 获取成果鉴定的standard待填充
     getDept();   // 初始化 学院
-    getAchType();// 初始化 成果类型
     upToLoadFile(); // 初始化 上传文件的
     var $appRank = $("#appRank").selectize({ // 初始化 鉴定等级
         valueField: 'id',
@@ -467,14 +442,13 @@
     });
 
     // 成员，单位，文件
-    var order =  ${ObjectMapper.writeValueAsString(achAppraisal)}; // 获得 order 或 实体
+    var entity =  ${ObjectMapper.writeValueAsString(achAppraisal)}; // 获得 order 或 实体
     var userLevel = ${sessionScope.level};
     var isMain = 0;
-    console.log(order);
 
-    var all = order['argMap']; // 获得 成员，单位，附件，负责人等信息
-    var dept = order['dept'];
-    var standard = order['standard'];
+    var all = entity['argMap']; // 获得 成员，单位，附件，负责人等信息
+    var dept = entity['dept'];
+    var standard = entity['standard'];
     var taskId = '${taskId}';  // 获得 task的id
     var taskName = '${taskName}';
 
@@ -565,9 +539,6 @@
         }],
         data: unitTemp
     });
-
-    DisplayForm($('#achType').selectize(), order['achType'], 0);
-
     if (!isNull(standard)) {
         DisplayForm($appType, standard['infoMap']['jdprop'], 0);
         DisplayForm($appRank, standard['id'], 0);

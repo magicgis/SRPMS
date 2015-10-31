@@ -46,7 +46,7 @@ function switchEntityView(viewType) {
                     sortable: true
                     //formatter: "rateUnitTran"
                 }, {
-                    field: 'real_time',
+                    field: 'realDate',
                     title: '实际结题时间',
                     sortable: true
                 }, {
@@ -83,11 +83,6 @@ function switchEntityView(viewType) {
                     title: '专利名称',
                     sortable: true
                 },
-                    //    {
-                    //    field: 'state',
-                    //    title: '专利类型',
-                    //    sortable: true
-                    //},
                     {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
@@ -140,6 +135,7 @@ function switchEntityView(viewType) {
             allTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityApiUrl('book'),
                 sidePagination: "server",
+                flat:true,
                 columns: [{
                     radio: true
                 }, {
@@ -148,30 +144,29 @@ function switchEntityView(viewType) {
                     sortable: true,
                     visible: false
                 }, {
-                    field: 'name',
-                    title: '著作名称',
-                    sortable: true
-                }, {
-                    field: 'pubType',
-                    title: '出版类型',
-                    sortable: true
-                }, {
-                    field: 'sumWord',
-                    title: '著作总字数',
-                    sortable: true
-                }, {
-                    field: 'bkReward',
-                    title: '著作获奖情况',
-                    sortable: true
-                }, {
-                    field: 'S-ACTOR',
-                    title: '提交者',
-                    sortable: true
-                }, {
-                    field: 'publisher',
-                    title: '出版社',
-                    sortable: true,
-                    formatter: "rankTran"
+                    field:'name',
+                    title:'著作名称',
+                    sortable:true
+                },{
+                    field:'pubType',
+                    title:'出版类型',
+                    sortable:true,
+                    formatter: 'pubTypeTrans'
+                },{
+                    field:'sumWord',
+                    title:'著作总字数',
+                    sortable:true
+                },{
+                    field:'bkReward',
+                    title:'著作获奖情况',
+                    sortable:true
+                },{
+                    field: 'argMap.Main-ActorName',
+                    title: '负责人'
+                },{
+                    field:'publisher',
+                    title:'出版社',
+                    sortable:true
                 }, {
                     field: 'Status',
                     title: '状态',
@@ -216,6 +211,7 @@ function switchEntityView(viewType) {
             allTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityApiUrl('achAward'),
                 sidePagination: "server",
+                flat:true,
                 columns: [{
                     radio: true
                 }, {
@@ -224,20 +220,24 @@ function switchEntityView(viewType) {
                     sortable: true,
                     visible: false
                 }, {
-                    field: 'achName',
-                    title: '录入人',
+                    field: 'id',
+                    title: 'id',
+                    sortable: true,
+                    visible: false
+                }, {
+                    field: 'name',
+                    title: '成果名称',
                     sortable: true
                 }, {
                     field: 'achType',
-                    title: '成果名称',
-                    sortable: true
-                    // formatter:"typeTran"
-                }, {
-                    field: 'awardName',
-                    title: '类型',
-                    sortable: 'true'
-                }, {
-                    field: 'awardRank',
+                    title: '成果类型',
+                    sortable: true,
+                    formatter: 'typeTran'
+                },{
+                    field: 'argMap.Main-ActorName',
+                    title: '负责人'
+                },{
+                    field: 'date',
                     title: '获奖时间',
                     sortable: true
                 }, {

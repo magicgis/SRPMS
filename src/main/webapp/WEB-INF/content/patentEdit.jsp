@@ -72,13 +72,7 @@
                                 <form id="patent" class="form-horizontal" role="form">
                                     <div hidden="hidden">
                                         <%--todo 根据需求来添加相应的隐藏输入框--%>
-                                        <%--<input type="text" name="WF_Order" id="WF_Order"/>--%>
-                                        <%--<input type="text" name="WF_Task" id="WF_Task"/>--%>
-                                        <%--<input type="text" name="IsComplete" id="IsComplete"/>--%>
                                         <input type="text" name="sum" id="score"/>
-                                        <%--<input type="text" name="dept.value" id="deptValue"--%>
-                                        <%--value="${patent.dept.value}"/>--%>
-                                        <%--<input type="text" name="patent.standard.value" id="patTypeValue"/>--%>
                                         <input type="text" name="id" id="patentId" value="${patent.id}"/>
                                         <input type="text" name="WF_Type" id="WF_Type" value="patent"/>
                                     </div>
@@ -369,34 +363,18 @@
 </script>
 <script src='<c:url value="/js/public/public.js"/>'></script>
 <script src='<c:url value="/js/public/pubPatent.js"/>'></script>
-<c:choose>
-    <c:when test="${sessionScope.level == '1'}">
-        <script src="<c:url value="/js/teacher/patentEdit.js"/>"></script>
-    </c:when>
-    <c:when test="${sessionScope.level == '2'}">
-        <script src="<c:url value="/js/college/patentEdit.js"/>"></script>
-    </c:when>
-    <c:when test="${sessionScope.level == '3'}">
-        <script src="<c:url value="/js/school/patentEdit.js"/>"></script>
-    </c:when>
-</c:choose>
-
 <script>
 
     getPatType(); // 初始化 专利类型
     getDept();   // 初始化 学院
 
     // 成员，单位，文件
-    var order =  ${ObjectMapper.writeValueAsString(patent)}; // 获得 order 或 实体
-    console.log(order);
-    var all = order['argMap']; // 获得 成员，单位，附件，负责人等信息
-    var dept = order['dept'];
-    var standardId = order['standard'];
+    var entity =  ${ObjectMapper.writeValueAsString(patent)}; // 获得 entity 或 实体
+    var all = entity['argMap']; // 获得 成员，单位，附件，负责人等信息
+    var dept = entity['dept'];
+    var standardId = entity['standard'];
     var taskId = '${taskId}';  // 获得 task的id
     var taskName = '${taskName}';
-    console.log(order);
-    console.log(dept);
-
     if (!isNull(all)) {
         filesData = all['filesData'];
         unitTemp = all['units'];
@@ -530,5 +508,16 @@
     });
 
 </script>
+<c:choose>
+    <c:when test="${sessionScope.level == '1'}">
+        <script src="<c:url value="/js/teacher/patentEdit.js"/>"></script>
+    </c:when>
+    <c:when test="${sessionScope.level == '2'}">
+        <script src="<c:url value="/js/college/patentEdit.js"/>"></script>
+    </c:when>
+    <c:when test="${sessionScope.level == '3'}">
+        <script src="<c:url value="/js/school/patentEdit.js"/>"></script>
+    </c:when>
+</c:choose>
 <!-- /.main-container -->
 </html>

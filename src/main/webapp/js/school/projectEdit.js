@@ -4,55 +4,8 @@
 $(function () {
     //TODO
     $('#reply').hide();
-    init();
+    init(entity,all,replyByDep,3);
 });
-function init() {
-    var status = entity['Status'];
-    var statusCode=parseInt(processStatus(status,0,3));
-    switch (statusCode) {
-        case 1:
-            $('.onApprove').hide();
-            $('.orderBack').hide();
-        case 311:
-            $('#reply').show();
-            $('#reply-display').show();
-            var reply = $('#reply-display').children('p');
-            var who = $('#reply-display').children('small');
-            reply.empty();
-            who.empty();
-            $('.onDel').show();
-            break;
-        case 301:
-            $('#reply').show();
-            $('#reply-display').show();
-            var reply = $('#reply-display').children('p');
-            var who = $('#reply-display').children('small');
-            reply.empty();
-            who.empty();
-            $('.onDel').show();
-            break;
-    }
-    if (entity['process'] == '1' || entity['process'] == '9') {
-        $('#reply').show();
-        $('.onEdit').hide();
-        $('.onDel').hide();
-        $('#upload').hide();
-        $('.addActor').hide();
-        $('.addUnit').hide();
-        $('.addFund').hide();
-        $.each(optionsMenu, function (key, value) {
-            disableSelectize($('#' + value).selectize());
-        });
-        disableSelectize($('#dept').selectize());
-        uneditableForm();
-        hideActorOperate();
-        hideUnitOperate();
-        // 实体中不能审批，order中才可以。实体中没有status，所以这样判断
-    } else if (entity['process'] == null || entity['process'] == '0') { // 刚刚新增或未启动
-        $('.onApproval').hide();
-        $('.onEdit').show();$('.onDel').show();
-    }
-}
 /**与项目信息有关的 保存||确认||撤回||删除||提交所有**/
 function save() {
     saveStep1().success(function(data) {

@@ -3,53 +3,8 @@
  */
 $(function () {
     $('#reply').hide();
-    init();
+    init(entity,all,replyByDep,3);
 });
-
-function init() {
-
-    var statusCode=processStatus(status,0,3);
-    console.log(statusCode,order['process']);
-    if (order['process'] == '1' || order['process'] == '9') {
-        uneditableForm();
-        hideActorOperate();
-        hideUnitOperate();
-        $('#reply').show();
-        $('.onEdit').hide();
-        $('.onDel').hide();
-        $('#upload').hide();
-        // 实体中不能审批，order中才可以。实体中没有status，所以这样判断
-        switch (parseInt(statusCode)){
-            case 1:
-                $('.onApprove').hide();
-                $('#actorTable').bootstrapTable('hideColumn', 'score');
-            case 311:
-
-                $('#reply').show();
-                $('#reply-box').show();
-                $('.onDel').show();
-                break;
-            case 301:
-                $('#reply').show();
-                $('#reply-display').show();
-                $('#reply-box').hide();
-                var reply = $('#reply-display').children('p');
-                var who = $('#reply-display').children('small');
-                reply.append(replyByDep);
-                who.append("管理部门批复");
-                $('.onApproval').hide();
-                $('.onDel').show();
-                break;
-        }
-    } else if (order['process'] == null || order['process'] == '0') { // 刚刚新增或未启动
-        $('.onApproval').hide();
-        $('#actorTable').bootstrapTable('hideColumn', 'score');
-        if(order['process'] == null){
-            $('.onDel').hide();
-        }
-    }
-}
-
 function canDoNothing() {
     uneditableForm();
     hideActorOperate();

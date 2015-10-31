@@ -340,17 +340,6 @@
 </body>
 <script src='<c:url value="/js/public/public.js"/>'></script>
 <script src='<c:url value="/js/public/pubBook.js"/>'></script>
-<c:choose>
-    <c:when test="${sessionScope.level == '1'}">
-        <script src="<c:url value="/js/teacher/bookEdit.js"/>"></script>
-    </c:when>
-    <c:when test="${sessionScope.level == '2'}">
-        <script src="<c:url value="/js/college/bookEdit.js"/>"></script>
-    </c:when>
-    <c:when test="${sessionScope.level == '3'}">
-        <script src="<c:url value="/js/school/bookEdit.js"/>"></script>
-    </c:when>
-</c:choose>
 <script type="text/javascript">
     $(function ($) {
         $('.date-picker').datepicker({
@@ -363,7 +352,6 @@
     // 成员，单位，文件
     // todo 取出实体内的额外信息，附件信息也应该在其中。
     var entity = ${ObjectMapper.writeValueAsString(book)};
-    console.log(entity);
     var all = ${ObjectMapper.writeValueAsString(book.argMap)};
     var dept = entity['dept'];
     var taskId = '${taskId}';
@@ -454,6 +442,17 @@
         Refuse();
     });
 </script>
+<c:choose>
+    <c:when test="${sessionScope.level == '1'}">
+        <script src="<c:url value="/js/teacher/bookEdit.js"/>"></script>
+    </c:when>
+    <c:when test="${sessionScope.level == '2'}">
+        <script src="<c:url value="/js/college/bookEdit.js"/>"></script>
+    </c:when>
+    <c:when test="${sessionScope.level == '3'}">
+        <script src="<c:url value="/js/school/bookEdit.js"/>"></script>
+    </c:when>
+</c:choose>
 </html>
 
 

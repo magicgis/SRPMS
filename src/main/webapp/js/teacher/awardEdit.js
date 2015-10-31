@@ -12,90 +12,9 @@ $(function () {
     $('.onDel').hide();
     $('#reply-box').hide();
     $('#reply').hide();
-    init();
+    init(entity,all,replyByDep,1);
 });
 var flag = true;
-function init() {
-    var status = all['Status'];
-    var isMain=isMainActor(all['Main-Actor'],userName);
-    var statusCode=processStatus(status,isMain,1);
-    switch (parseInt(statusCode)){
-        case 01:
-            $('.confirm').show();
-            hideActorOperate();
-            $('.getScore').hide();
-            $('.save').hide();
-            break;
-        case 00:
-            $('.confirm').hide();
-            hideActorOperate();
-            $('.getScore').hide();
-            $('.save').hide();
-            break;
-        case 11110:
-            // hideActorOperate();
-            $('.getScore').show();
-            $('.save').show();
-            $('.confirm').show();
-            break;
-        case 10110:
-            $('.confirm').hide();
-            hideActorOperate();
-            $('.getScore').hide();
-            $('.save').hide();
-            break;
-        case 10000:
-            $('.confirm').hide();
-            hideActorOperate();
-            $('.getScore').hide();
-            $('.save').hide();
-            break;
-        case 11111:
-            $('#reply').show();
-            $('#reply-display').show();
-            var reply = $('#reply-display').children('p');
-            var who = $('#reply-display').children('small');
-            reply.empty();
-            who.empty();
-            $('.confirm').hide();
-            $('.save').hide();
-            reply.append(replyByDep);
-            who.append("管理部门批复");
-            break;
-    }
-
-
-
-    //if( !(status=='Blank' || status=='Uncomplete' || status.indexOf('Refuse') >= 0)) {
-    //    hideActorOperate();
-    //    $('.getScore').hide();
-    //    $('.save').hide();
-    //    if(status == 'Complete' && all['Main-Actor']!=userName) {
-    //        $('.confirm').show();
-    //    }else{
-    //        $('.confirm').hide();
-    //    }
-    //    $('#reply').hide();
-    //}else if (status.indexOf('Refuse') >= 0) {
-    //    $('#reply').show();
-    //    $('#reply-display').show();
-    //    var reply = $('#reply-display').children('p');
-    //    var who = $('#reply-display').children('small');
-    //    reply.empty();
-    //    who.empty();
-    //    if (status.indexOf("Col") >= 0) {
-    //        reply.append(replyByCol);
-    //        who.append("学院批复");
-    //    } else {
-    //        $('.confirm').hide();
-    //        $('.save').hide();
-    //        reply.append(replyByDep);
-    //        who.append("管理部门批复");
-    //    }
-    //} else {
-    //    $('#reply').hide();
-    //}
-}
 function save() {
     var send = new Object();
     send['IsComplete'] = 'false';

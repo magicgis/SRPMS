@@ -75,32 +75,18 @@
                                 <div class="widget-body ">
                                     <div class="widget-main">
                                         <div class="row">
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-xs-4 control-label no-padding-left"
+                                            <div class="form-group col-xs-12">
+                                                <label class="col-sm-2 control-label no-padding-left"
                                                        for="name">成果名称</label>
 
-                                                <div class="col-xs-8">
-                                                    <input type="text" id="name" name="name"
-                                                           value="${achAward.name}"
-                                                           placeholder="" size="78%"/>
+                                                <div class="col-sm-9">
+                                                    <input id="name" name="name"
+                                                           type="text" class="form-control col-xs-12"
+                                                           placeholder="" value="${achAward.name}"/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="achType">成果类型</label>
-
-                                                <div class="col-sm-8">
-                                                    <div class="col-sm-13">
-                                                        <input id="achType" name="achType"
-                                                               type="text" class="form-control col-xs-12"
-                                                               value="${achAward.achType}"
-                                                               placeholder="请选择"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
                                                        for="dept">所属部门</label>
@@ -111,17 +97,6 @@
                                                                type="text" class="form-control col-xs-12"
                                                                placeholder="请选择"/>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="regNo">成果登记号</label>
-
-                                                <div class="col-sm-8">
-                                                    <input type="text" id="regNo" name="regNo"
-                                                           placeholder="" class="col-xs-12"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -345,17 +320,6 @@
 </body>
 <script src='<c:url value="/js/public/public.js"/>'></script>
 <script src='<c:url value="/js/public/pubAward.js"/>'></script>
-<c:choose>
-    <c:when test="${sessionScope.level == '1'}">
-        <script src="<c:url value="/js/teacher/awardEdit.js"/>"></script>
-    </c:when>
-    <c:when test="${sessionScope.level == '2'}">
-        <script src="<c:url value="/js/college/awardEdit.js"/>"></script>
-    </c:when>
-    <c:when test="${sessionScope.level == '3'}">
-        <script src="<c:url value="/js/school/awardEdit.js"/>"></script>
-    </c:when>
-</c:choose>
 <script type="text/javascript">
     $(function ($) {
         $('.date-picker').datepicker({
@@ -371,7 +335,7 @@
         $.ajax({
             type: 'GET',
             async: false,
-            url: '/api/standard/type/成果',
+            url: '/api/standard/type/成果获奖',
             dataType: 'json',
             contentType: 'application/json;charset=UTF-8',
             success: function(data) {
@@ -424,7 +388,6 @@
         DisplayForm($awdprop, standard['infoMap']['awdprop'], 0);
         DisplayForm($awdtype, standard['id'], 0);
     }
-    DisplayForm($('#achType').selectize(), entity['achType'], 0);
     $('#actorTable').bootstrapTable({
         columns: [
             {
@@ -517,6 +480,17 @@
         Refuse();
     });
 </script>
+<c:choose>
+    <c:when test="${sessionScope.level == '1'}">
+        <script src="<c:url value="/js/teacher/awardEdit.js"/>"></script>
+    </c:when>
+    <c:when test="${sessionScope.level == '2'}">
+        <script src="<c:url value="/js/college/awardEdit.js"/>"></script>
+    </c:when>
+    <c:when test="${sessionScope.level == '3'}">
+        <script src="<c:url value="/js/school/awardEdit.js"/>"></script>
+    </c:when>
+</c:choose>
 </html>
 
 

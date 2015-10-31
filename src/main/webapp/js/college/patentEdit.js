@@ -13,30 +13,8 @@ $(function(){
     hideUnitOperate();
     $('.onEdit').hide();
     $('#upload').hide();
-    init();
+    init(entity,all,replyByDep,2);
 });
-
-function init() {
-    var status = all['Status'];
-    if (status.indexOf('Refuse') >= 0) {
-        $('#reply').show();
-        $('#reply-display').show();
-        var reply = $('#reply-display').children('p');
-        var who = $('#reply-display').children('small');
-        reply.empty();
-        who.empty();
-        if (status.indexOf("Dep") >= 0) {
-            reply.append(replyByDep);
-            who.append("管理部门批复");
-        } else {
-            $('.onApproval').hide();
-            $('#reply').hide();
-        }
-    } else if(status.indexOf('WaitForCollegeSubmit') >= 0){
-        $('.onApproval').hide();
-        $('#reply').hide();
-    }
-}
 
 function approve(){
     var approveInfo = Object();

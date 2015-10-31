@@ -8,51 +8,9 @@ $(function () {
 
     $('#reply').hide();
 
-    init();
+    init(entity,all,replyByDep,3);
 
 });
-
-
-
-function init() {
-    var status = all['Status'];
-    if (order['process'] == '1' || order['process'] == '9') { // 流程 已启动 或 已结束
-        $('.onEdit').hide();                                  // 则不可编辑
-        $('#upload').hide();
-        $('#addActor').hide();
-        $('#addUnit').hide();
-        disableSelectize($('#dept').selectize());
-        disableSelectize($('#patType').selectize());
-        uneditableForm();
-        hideActorOperate();
-        hideUnitOperate();
-        // 实体中不能审批，order中才可以。实体中没有status，所以这样判断
-        if ( !isNull(status) && status.indexOf('refuse')>=0) {
-            $('#reply').show();
-            $('#reply-display').show();
-            var reply = $('#reply-display').children('p');
-            var who = $('#reply-display').children('small');
-            reply.empty();
-            who.empty();
-            if (status.indexOf("WaitForDep") >= 0) { // 学院通过了
-                reply.append(replyByCol);
-                who.append("学院批复");
-                $('.onApproval').show();
-            } else {
-                $('.onApproval').hide();
-                $('#reply').hide();
-            }
-        }else{
-            $('.onApproval').hide();
-            $('#actorTable').bootstrapTable('hideColumn', 'score');
-        }
-    } else if (order['process'] == null || order['process'] == '0') { // 刚刚新增或未启动
-        $('.onApproval').hide();
-        $('#actorTable').bootstrapTable('hideColumn', 'score');
-    }
-}
-
-
 /*
  * 保存
  *

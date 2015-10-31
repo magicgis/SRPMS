@@ -90,26 +90,15 @@
 									<div class="widget-body ">
 										<div class="widget-main">
 											<div class="row">
-												<div class="form-group col-xs-12 col-sm-6">
-													<label class="col-sm-4 control-label no-padding-left"
-													       for="name">成果名称</label>
+												<div class="form-group col-xs-12">
+													<label class="col-sm-2 control-label no-padding-left"
+														   for="name">成果名称</label>
 
-													<div class="col-sm-8">
-														<input type="text" id="name" name="name"
-														       placeholder="" class="form-control col-xs-12"
-														       value="${achTran.name}"/>
+													<div class="col-sm-9">
+														<input id="name" name="name"
+															   type="text" class="form-control col-xs-12"
+															   placeholder="" value="${achTran.name}"/>
 													</div>
-												</div>
-												<div class="form-group col-xs-12 col-sm-6">
-													<label class="col-sm-4 control-label no-padding-left"
-													       for="achType">成果类型</label>
-
-													<div class="col-sm-8"><!--选择框-->
-														<input id="achType" name="achType"
-														       class="form-control col-xs-12"
-														       placeholder="请选择"/>
-													</div>
-
 												</div>
 											</div>
 											<div class="row">
@@ -366,21 +355,18 @@
 <script>
 
 	getDept();   // 初始化 学院
-	getAchType();// 初始化 成果类型
 	upToLoadFile(); // 初始化 上传文件的
 
 	// 成员，单位，文件
-	var order =  '${ObjectMapper.writeValueAsString(achTran)}'; // 获得 order 或 实体
-	if(isNull(order)) {
-		order = {};
+	var entity =  '${ObjectMapper.writeValueAsString(achTran)}'; // 获得 entity 或 实体
+	if(isNull(entity)) {
+		entity = {};
 	}
 	var userLevel = ${sessionScope.level};
 	var isMain = 0;
-	console.log(order);
-
-	var all = order['argMap']; // 获得 成员，单位，附件，负责人等信息
-	var dept = order['dept'];
-	//	var standard = order['standard'];
+	var all = entity['argMap']; // 获得 成员，单位，附件，负责人等信息
+	var dept = entity['dept'];
+	//	var standard = entity['standard'];
 	var taskId = '${taskId}';  // 获得 task的id
 	var taskName = '${taskName}';
 
@@ -472,14 +458,6 @@
 		}],
 		data: unitTemp
 	});
-
-	DisplayForm($('#achType').selectize(), order['achType'], 0);
-
-	//	if(!isNull(standard)) {
-	//		DisplayForm($appType, standard['infoMap']['jdprop'], 0);
-	//		DisplayForm($appRank, standard['id'], 0);
-	//	}
-
 	if (!isNull(dept)) {  // 显示 所属部门
 		var $dept = $('#dept').selectize();
 		addOptionSelectize($dept, [dept]);

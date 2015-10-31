@@ -446,7 +446,7 @@
 									<div id="formBtn" class="col-xs-12 clearfix">
 										<c:choose>
 											<c:when test="${sessionScope.level == '1'}">
-												<div class="pull-left">
+												<div class="pull-left delAndBack">
 													<button class="tabOrdBtn btn btn-danger btn-sm" type="button"
 													        id="del">
 														<i class="ace-icon fa fa-trash  bigger-110"></i>
@@ -482,8 +482,6 @@
 											</c:when>
 											<c:otherwise>
 												<div class="col-md-offset-4 col-md-8">
-
-
 													<button class="tabOrdBtn btn btn-success" type="button"
 													        id="Approve">
 														<i class="ace-icon fa fa-check bigger-110"></i>

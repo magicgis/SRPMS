@@ -100,6 +100,65 @@
                                         <div class="row">
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
+                                                       for="dept">所属部门</label>
+
+                                                <div class="col-sm-8">
+                                                    <div class="col-sm-13">
+                                                        <input id="dept" name="dept.id"
+                                                               type="text" class="form-control col-xs-12"
+                                                               placeholder="请选择"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-xs-12 col-sm-6">
+                                                <label class="col-sm-4 control-label no-padding-left"
+                                                       for="attr">项目属性</label>
+
+                                                <div class="col-sm-8">
+                                                    <div class="col-sm-13">
+                                                        <input class="form-control" id="attr"
+                                                               type="text" name="attr"
+                                                               value=""
+                                                               placeholder="请选择"/>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-xs-12 col-sm-6">
+                                                <label class="col-sm-4 control-label no-padding-left"
+                                                       for="isAppr">获得立项</label>
+
+                                                <div class="col-sm-8">
+                                                    <div class="col-sm-13">
+                                                        <select class="form-control" id="isAppr" value="${project.isAppr}">
+                                                            <option value=""></option>
+                                                            <option value="1">是</option>
+                                                            <option value="0">否</option>
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-xs-12 col-sm-6">
+                                                <label class="col-sm-4 control-label no-padding-left"
+                                                       for="appr_time">立项时间</label>
+
+                                                <div class="col-sm-8">
+                                                    <input class="form-control date-picker" id="appr_time"
+                                                           type="text" name="apprDate"
+                                                           data-date-format="yyyy-mm-dd" value="${project.apprDate}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12 col-sm-6">
+                                                <label class="col-sm-4 control-label no-padding-left"
                                                        for="type">项目类别</label>
 
                                                 <div class="col-sm-8">
@@ -126,36 +185,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="dept">所属部门</label>
-
-                                                <div class="col-sm-8">
-                                                    <div class="col-sm-13">
-                                                        <input id="dept" name="dept.id"
-                                                               type="text" class="form-control col-xs-12"
-                                                               placeholder="请选择"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="attr">项目属性</label>
-
-                                                <div class="col-sm-8">
-                                                    <div class="col-sm-13">
-                                                        <input class="form-control" id="attr"
-                                                               type="text" name="attr"
-                                                               value=""
-                                                               placeholder="请选择"/>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
 
                                         <div class="row">
                                             <div class="form-group col-xs-12 col-sm-6">
@@ -199,35 +228,7 @@
                                                            data-date-format="yyyy-mm-dd" value="${project.planDate}"/>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="isAppr">获得立项</label>
 
-                                                <div class="col-sm-8">
-                                                    <div class="col-sm-13">
-                                                        <select class="form-control" id="isAppr" value="${project.isAppr}">
-                                                            <option value=""></option>
-                                                            <option value="1">是</option>
-                                                            <option value="0">否</option>
-                                                        </select>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="appr_time">立项时间</label>
-
-                                                <div class="col-sm-8">
-                                                    <input class="form-control date-picker" id="appr_time"
-                                                           type="text" name="apprDate"
-                                                           data-date-format="yyyy-mm-dd" value="${project.apprDate}" />
-                                                </div>
-                                            </div>
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
                                                        for="realDate">实际结题时间</label>
@@ -240,27 +241,26 @@
                                             </div>
                                         </div>
 
+                                        <%--<div class="row">--%>
 
-                                        <div class="row">
+                                            <%--<!--获奖字段-->--%>
+                                            <%--<div class="form-group col-xs-12 col-sm-6">--%>
+                                                <%--<label class="col-sm-4 control-label no-padding-left"--%>
+                                                       <%--for="isAwdProj">是否获批</label>--%>
 
-                                            <!--获奖字段-->
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="isAwdProj">是否获奖</label>
+                                                <%--<div class="col-sm-8">--%>
+                                                    <%--<div class="col-sm-13">--%>
+                                                        <%--<select class="form-control" id="isAwdProj"--%>
+                                                                <%--placeholder="请选择">--%>
+                                                            <%--<option value=""></option>--%>
+                                                            <%--<option value="1">是</option>--%>
+                                                            <%--<option value="0">否</option>--%>
+                                                        <%--</select>--%>
+                                                    <%--</div>--%>
 
-                                                <div class="col-sm-8">
-                                                    <div class="col-sm-13">
-                                                        <select class="form-control" id="isAwdProj"
-                                                                placeholder="请选择">
-                                                            <option value=""></option>
-                                                            <option value="1">是</option>
-                                                            <option value="0">否</option>
-                                                        </select>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
+                                                <%--</div>--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
 
                                         <div class="row">
                                             <div class="col-xs-12">
@@ -452,17 +452,7 @@
 </body>
 <script src='<c:url value="/js/public/public.js"/>'></script>
 <script src='<c:url value="/js/public/pubProject.js"/>'></script>
-<c:choose>
-    <c:when test="${sessionScope.level == '1'}">
-        <script src="<c:url value="/js/teacher/projectEdit.js"/>"></script>
-    </c:when>
-    <c:when test="${sessionScope.level == '2'}">
-        <script src="<c:url value="/js/college/projectEdit.js"/>"></script>
-    </c:when>
-    <c:when test="${sessionScope.level == '3'}">
-        <script src="<c:url value="/js/school/projectEdit.js"/>"></script>
-    </c:when>
-</c:choose>
+
 <script type="text/javascript">
     $(function ($) {
         $('.date-picker').datepicker({
@@ -628,5 +618,16 @@
     });
     //选择
 </script>
+<c:choose>
+    <c:when test="${sessionScope.level == '1'}">
+        <script src="<c:url value="/js/teacher/projectEdit.js"/>"></script>
+    </c:when>
+    <c:when test="${sessionScope.level == '2'}">
+        <script src="<c:url value="/js/college/projectEdit.js"/>"></script>
+    </c:when>
+    <c:when test="${sessionScope.level == '3'}">
+        <script src="<c:url value="/js/school/projectEdit.js"/>"></script>
+    </c:when>
+</c:choose>
 </html>
 

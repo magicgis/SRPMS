@@ -12,41 +12,9 @@ $(function () {
     $('#reply-box').hide();
     $('#reply').hide();
     $('#unitInfo').hide();
-    init();
+    init(entity,all,replyByDep,3);
 });
 var flag = true;
-function init() {
-    var status = all['Status'];
-    if( !(status=='Blank' || status=='Uncomplete' || status.indexOf('Refuse') >= 0)) {
-        hideActorOperate();
-        $('.getScore').hide();
-        $('.save').hide();
-        if(status == 'Complete' && all['Main-Actor']!=userName) {
-            $('.confirm').show();
-        }else{
-            $('.confirm').hide();
-        }
-        $('#reply').hide();
-    }else if (status.indexOf('Refuse') >= 0) {
-        $('#reply').show();
-        $('#reply-display').show();
-        var reply = $('#reply-display').children('p');
-        var who = $('#reply-display').children('small');
-        reply.empty();
-        who.empty();
-        if (status.indexOf("Col") >= 0) {
-            reply.append(replyByCol);
-            who.append("学院批复");
-        } else {
-            $('.confirm').hide();
-            $('.save').hide();
-            reply.append(replyByDep);
-            who.append("管理部门批复");
-        }
-    } else {
-        $('#reply').hide();
-    }
-}
 function save() {
     var send = new Object();
     send['IsComplete'] = 'false';
