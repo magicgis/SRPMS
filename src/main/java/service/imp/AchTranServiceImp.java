@@ -1,9 +1,12 @@
 package service.imp;
 
+import dao.AchTranDao;
 import entity.AchTran;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.AchTranService;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -11,8 +14,12 @@ import java.util.List;
  */
 @Service
 public class AchTranServiceImp extends BaseServiceImp<AchTran> implements AchTranService {
+    @Autowired
+    AchTranDao achTranDao;
+
     @Override
     public List<AchTran> search(String keyword, String sort, String order) {
-        return null;
+        List<String> keys = Arrays.asList("name", "arg");
+        return achTranDao.findByArrayFuz(keys, keyword, sort, order);
     }
 }
