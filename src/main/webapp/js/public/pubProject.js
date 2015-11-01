@@ -15,14 +15,14 @@ var Main_ActorName;
 var replyByCol, replyByDep;
 var $actorTable = $('#actorTable');
 //var deptValue=Object();
-var allSelections =
-    [
-        {"1": [{"type": "自然科学"}, {"type": "哲学与社会科学"}, {"type": "教育教学改革"}, {"type": ""}, {"type": ""}]},
-        {"2": [{"pRank": "国家级"}, {"pRank": "省部级"}]},
-        {"3": [{"attr": "子课题"}, {"attr": "联合项目"}, {"attr": "独立项目"}, {"attr": ""}, {"attr": ""}]},
-        {"4": [{"rateUnit": "国家科技部"}, {"rateUnit": "国家自然科学基金委员会"}, {"rateUnit": "国家中医药管理局"}, {"rateUnit": "教育部"}, {"rateUnit": "其他部委"}]},
-        {"5": [{"rateSrc": "“973”计划A类资助"}, {"rateSrc": "“973”计划B类资助"}, {"rateSrc": "“973”计划C类资助"}, {"rateSrc": "“863”计划"}, {"rateSrc": "国家重大科技专项"}]},
-    ];
+//var allSelections =
+//    [
+//        {"1": [{"type": "自然科学"}, {"type": "哲学与社会科学"}, {"type": "教育教学改革"}, {"type": ""}, {"type": ""}]},
+//        {"2": [{"pRank": "国家级"}, {"pRank": "省部级"}]},
+//        {"3": [{"attr": "子课题"}, {"attr": "联合项目"}, {"attr": "独立项目"}, {"attr": ""}, {"attr": ""}]},
+//        {"4": [{"rateUnit": "国家科技部"}, {"rateUnit": "国家自然科学基金委员会"}, {"rateUnit": "国家中医药管理局"}, {"rateUnit": "教育部"}, {"rateUnit": "其他部委"}]},
+//        {"5": [{"rateSrc": "“973”计划A类资助"}, {"rateSrc": "“973”计划B类资助"}, {"rateSrc": "“973”计划C类资助"}, {"rateSrc": "“863”计划"}, {"rateSrc": "国家重大科技专项"}]},
+//    ];
 //项目表单中的复选框
 var optionsMenu = {
     '1': 'type',
@@ -210,39 +210,94 @@ function view(index, row, value) {
 }
 /**************************表单中的复选框**********************/
 //复选框 数值与选择
-function allSections() {
-    $.each(optionsMenu, function (key, value) {
-        selectUniversal(value, key);
-    });
-    //selectUniversal("aRank",2);
-}
-function selectUniversal(Ids, type) {
-    var num = parseInt(type);
-    $('#' + Ids).selectize({
-        valueField: Ids,
-        labelField: Ids,
-        options: allSelections[num - 1][type],
-        create: false,
-        maxItems: 1
-    });
-}
+//function allSections() {
+//    $.each(optionsMenu, function (key, value) {
+//        selectUniversal(value, key);
+//    });
+//    //selectUniversal("aRank",2);
+//}
+//function selectUniversal(Ids, type) {
+//    var num = parseInt(type);
+//    $('#' + Ids).selectize({
+//        valueField: Ids,
+//        labelField: Ids,
+//        options: allSelections[num - 1][type],
+//        create: false,
+//        maxItems: 1
+//    });
+//}
 //复选框能用
-function selectEnable(flag) {
-    $.each(optionsMenu, function (key, value) {
-        if (flag == 1) {
-            $('#' + optionsMenu[key]).selectize()[0].selectize.enable();
-        } else if (flag == 0) {
-            $('#' + optionsMenu[key]).selectize()[0].selectize.disable();
+//function selectEnable(flag) {
+//    $.each(optionsMenu, function (key, value) {
+//        if (flag == 1) {
+//            $('#' + optionsMenu[key]).selectize()[0].selectize.enable();
+//        } else if (flag == 0) {
+//            $('#' + optionsMenu[key]).selectize()[0].selectize.disable();
+//        }
+//    });
+//}
+//清除复选框的内容
+var  StdList = [];
+var projectList = [];
+function getStdList(projectSet) {
+    $.ajax({
+        type: 'GET',
+        async: false,
+        url: '/api/standard/type/'+projectSet,
+        dataType: 'json',
+        contentType: 'application/json;charset=UTF-8',
+        success: function(data) {
+            StdList = data;
+            projectList = getList(StdList, 'projtype');
+            console.log(projectList);
         }
     });
 }
-//清除复选框的内容
-function clearSelect() {
-    $.each(optionsMenu, function (key, value) {
-        DisplayForm($('#' + value).selectize(), '', 0);
+function allSections(){
+    $('#attr').selectize({
+        valueField: 'value',
+        labelField: 'value',
+        options: [{"id":"1","value": "子课题"},
+            {"id":"2","value": "联合项目"},
+            {"id":"3","value":"独立项目"}],
+        create: false,
+        maxItems: 1
     });
+    $('#isAppr').change(function(){
+        var setProject=$('#isAppr').val();
+        if(setProject=='1'){
+            var projectSet="项目立项";
+            getStdList(projectSet);
+
+        }else if(setProject=='0'){
+            var projectSet="项目未获立项";
+            getStdList(projectSet);
+        }
+    });
+    var $projrank = $("#projrank").selectize({ // 初始化 鉴定等级
+        valueField: 'id',
+        labelField: 'value',
+        maxItems: 1
+    });
+    var $projtype = $("#projtype").selectize({ // 初始化 projtype
+        valueFieled: 'value',
+        labelField: 'value',
+        options: projectList,
+        maxItems: 1,
+        onChange: function (result) { // onChange时间 绑定级联
+            var proRankList = [];
+            //var proOrigList = [];
+            //var proBelongList = [];
+            proRankList = getStandardList(StdList, 'projrank', 'projtype', result);
+            $projrank[0].selectize.clearOptions();
+            $projrank[0].selectize.addOption(proRankList);
+        }
+    });
+}
+function clearSelect() {
     clearOptionsSelectize($("#dept").selectize());
 }
+
 /**************************获取表格数据************************/
 function getActorsData() {
     var actorTemp = $("#actorTable").bootstrapTable('getData');
@@ -292,7 +347,6 @@ function fullUpInfo(all,entity){
         } else {
             $('#unitInfo').hide();
         }
-        //DisplayForm($('#dept').selectize(), deptValue[dept], 0);
     }
 }
 

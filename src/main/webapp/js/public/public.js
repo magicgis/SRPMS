@@ -832,6 +832,10 @@ function init(entity,all,replyByDep,level) {
             var reply = $('#reply-display').children('p');
             var who = $('#reply-display').children('small');
             var statusCode=parseInt(processStatus(status,0,level));
+            var elementlist = document.querySelectorAll('.selectized');
+            $.each(elementlist, function(index, value) {
+                disableSelectize($(value).selectize());
+            });
             switch (statusCode){
                 case 211:
                     $('.onApprove').show();
@@ -885,8 +889,9 @@ function init(entity,all,replyByDep,level) {
                 $('.addActor').hide();
                 $('.addUnit').hide();
                 $('.addFund').hide();
-                $.each(optionsMenu, function (key, value) {
-                    disableSelectize($('#' + value).selectize());
+                var elementlist = document.querySelectorAll('.selectized');
+                $.each(elementlist, function(index, value) {
+                    disableSelectize($(value).selectize());
                 });
                 disableSelectize($('#dept').selectize());
                 uneditableForm();

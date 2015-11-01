@@ -90,12 +90,6 @@ function getActorsData() {
     });
     return actorTemp;
 }
-//表单不可编辑
-function uneditableForm(){
-    $('form input').attr("disabled", "disabled");
-    $('form select').attr("disabled", "disabled");
-    $('.delFiles').hide();
-}
 function getPubType(){
     $('#pubType').selectize({
         valueField: 'id',

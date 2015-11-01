@@ -1,49 +1,34 @@
 /**
- * Created by Administrator on 2015/10/3.
+ * Created by zheng on 2015/10/12.
  */
-$(function() {
+$(function () {
     var elementlist = document.querySelectorAll('.selectized');
     $.each(elementlist, function(index, value) {
         disableSelectize($(value).selectize());
     });
     uneditableForm();
     hideUnitOperate();
-    $('.onApproval').hide();
+    $('.onApprove').hide();
     $('.onDel').hide();
-    $('#upload').hide();
     $('#reply-box').hide();
     $('#reply').hide();
     init(entity,all,replyByDep,1);
 });
-
-
-
-/*
- * 保存
- *   教师端的保存处理机制和论文大体一样
- *   区别在于：1，无需实体信息，即表格部分不需要，只需要table里的人
- *   保存就是isComplete为false，确认就是isComplete为true
- * */
+var flag = true;
 function save() {
     var send = new Object();
     send['IsComplete'] = 'false';
     send['actors'] = getActorsData();
     workflow.execute(userName, taskId, send).success(function () {
         afterSuccess("保存成功！");
-        //window.location.href = "/appraise";
     });
+    //console.log(send);
 }
-/*
- * 确认
- *
- * */
 function confirm() {
     var status = all['Status'];
     var send = new Object();
-    if(status == 'Uncomplete' || status == 'RefuseByCol'){
-        send['IsComplete'] = 'true';
-        send['actors'] = getActorsData();
-    }
+    send['IsComplete'] = 'true';
+    send['actors'] = getActorsData();
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '确认?',
@@ -62,25 +47,18 @@ function confirm() {
                     if ("valid" in data) {
                         if (data["valid"] == true) {
                             afterSuccess("确认成功！");
-                            //window.location.href = "/appraise";
                         } else {
                             errorMsg(data["msg"]);
                         }
                     } else {
                         afterSuccess("确认成功！");
-                        //window.location.href = "/appraise";
                     }
                 });
             }
         }
     });
 }
-
-/**
- * 编辑成员
- */
-var flag=true;
-
+/**************************编辑成员||计算分数||**************************************/
 function editActor(row, index) {
     BootstrapDialog.show({
         type: BootstrapDialog.TYPE_PRIMARY,
@@ -107,7 +85,6 @@ function editActor(row, index) {
                     return;
                 }
                 subActorInfo(index, 0);
-                $('.removeActor').hide();
                 dialogRef.close();
             }
         }, {
@@ -117,11 +94,12 @@ function editActor(row, index) {
             cssClass: 'btn-info',
             autospin: false,
             action: function (dialogRef) {
+                //console.log(getActorsData());
                 dialogRef.close();
             }
         }],
         onshown: function () {
-            fillRoles(appraiseRoles);
+            fillRoles(awardRoles);
             var $actor = $("#actor").selectize();
             var $role = $("#role").selectize();
             var $units = $("#units").selectize();
@@ -129,6 +107,7 @@ function editActor(row, index) {
             $actor[0].selectize.setValue(row["staff.id"]);
             //填充角色
             DisplayForm($role, row["role"], 0);
+            $("#role").val(row["role"]);
             //填充单位
             DisplayForm($units, row["unit"], 1);
             //填充其他
@@ -140,6 +119,7 @@ function editActor(row, index) {
             disableSelectize($role);
             disableSelectize($units);
             $("#rank").attr("disabled", "disabled");
+            $("#textNumber").attr("disabled", "disabled");
             $(".editableModal").show();
             //是否可编辑
             if (flag) {//可编辑
@@ -155,25 +135,25 @@ function editActor(row, index) {
         }
     });
 }
-
-/**
- * 计算分数
- */
 function getScore() {
-    var jsonData = getFormData('paper');
-    workflow.getScore(jsonData).success(function (data) {
-        if (data["valid"] == false) { // 检验不合格
-            errorMsg(data["msg"]);
-            flag = true;
-        } else if (data["hasSum"] == false) { // 后台分配分数
-            $("#actorTable").bootstrapTable('load', data["actors"]);
-            flag = false;
-            errorMsg(data["msg"]);
-        } else if (data["hasSum"] == true) {  // 给总分，负责人分配分数
-            $("#score").val(data["sum"]);
-            $("#showSum").html("总分：" + data["sum"] + "分");
-            errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
-            flag = true;
-        }
-    });
+    //alert("###################");
+    $('#actorToolbar').append('<a data-toggle="modal" class="btn btn-white btn-info btn-bold testScore">' +
+    '剩余50分</a><input id="tempScore" value="50" hidden="hidden">');
+    $('#getScore').attr("disabled", "disabled");
+    //var jsonData = getFormData('project');
+    //workflow.getScore(jsonData).success(function (data) {
+    //    if (data["valid"] == false) { // 检验不合格
+    //        errorMsg(data["msg"]);
+    //        flag = true;
+    //    } else if (data["hasSum"] == false) { // 后台分配分数
+    //        $("#actorTable").bootstrapTable('load', data["actors"]);
+    //        flag = false;
+    //        errorMsg(data["msg"]);
+    //    } else if (data["hasSum"] == true) {  // 给总分，负责人分配分数
+    //        $("#score").val(data["sum"]);
+    //        $("#showSum").html("总分：" + data["sum"] + "分");
+    //        errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
+    //        flag = true;
+    //    }
+    //});
 }

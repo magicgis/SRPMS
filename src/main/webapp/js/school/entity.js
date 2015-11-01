@@ -265,6 +265,37 @@ function switchEntityView(viewType) {
                 }]
             });
             break;
+        case 'newFoodEntity':
+            allTable.bootstrapTable('destroy').bootstrapTable({
+                url: entityApiUrl('newFood'),
+                sidePagination: "server",
+                flat: true,
+                columns: [{
+                    radio: true
+                }, {
+                    field: 'id',
+                    title: 'id',
+                    sortable: true,
+                    visible: false
+                }, {
+                    field:'foodName',
+                    title:'食品名称',
+                    sortable: true
+                }, {
+                    field: 'argMap.Main-ActorName',
+                    title: '负责人'
+                }, {
+                    field:'newFoodDate',
+                    title:'获批时间',
+                    sortable: true
+                },{
+                    field: 'process',
+                    title: '流程状态',
+                    sortable: true,
+                    formatter: 'processTran'
+                }]
+            });
+            break;
         case 'allEntity': //todo
             allTable.bootstrapTable('destroy').bootstrapTable({
                 url: apiUrl('all'),

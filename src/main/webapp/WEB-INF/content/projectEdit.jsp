@@ -159,13 +159,12 @@
                                         <div class="row">
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
-                                                       for="type">项目类别</label>
+                                                       for="projtype">项目类别</label>
 
                                                 <div class="col-sm-8">
                                                     <div class="col-sm-13">
-                                                        <input class="form-control" id="type"
-                                                               type="text" name="type"
-                                                               value=""
+                                                        <input class="form-control" id="projtype"
+                                                               type="text" name="projtype"
                                                                placeholder="请选择"/>
                                                     </div>
                                                 </div>
@@ -173,13 +172,12 @@
 
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
-                                                        for="pRank">项目等级</label>
+                                                        for="projrank">项目等级</label>
 
                                                 <div class="col-sm-8">
                                                     <div class="col-sm-13">
                                                         <input class="form-control"
-                                                               type="text" id="pRank" name="pRank"
-                                                               value=""
+                                                               type="text" id="projrank" name="projrank"
                                                                placeholder="请选择"/>
                                                     </div>
                                                 </div>
@@ -189,12 +187,12 @@
                                         <div class="row">
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
-                                                       for="rateUnit">项目来源</label>
+                                                       for="projorig">项目来源</label>
 
                                                 <div class="col-sm-8">
                                                     <div class="col-sm-13">
-                                                        <input class="form-control" id="rateUnit"
-                                                               type="text" name="rateUnit"
+                                                        <input class="form-control" id="projorig"
+                                                               type="text" name="projorig"
                                                                value=""
                                                                placeholder="请选择"/>
                                                     </div>
@@ -204,13 +202,12 @@
                                             <%--项目评分归属字段--%>
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
-                                                       for="rateSrc">项目归属</label>
+                                                       for="projbelong">项目归属</label>
 
                                                 <div class="col-sm-8">
                                                     <div class="col-sm-13">
-                                                        <input class="form-control" id="rateSrc"
-                                                               type="text" name="rateSrc"
-                                                               value=""
+                                                        <input class="form-control" id="projbelong"
+                                                               type="text" name="projbelong"
                                                                placeholder="请选择"/>
                                                     </div>
                                                 </div>
@@ -465,10 +462,8 @@
     // 成员，单位，文件
     // todo 取出实体内的额外信息，附件信息也应该在其中。
     var entity = ${ObjectMapper.writeValueAsString(project)};
-    //console.log(entity);
     var all = ${ObjectMapper.writeValueAsString(project.argMap)};
     var standardId = '${ObjectMapper.writeValueAsString(project.standard)}';
-    //var dept = entity['dept'];
     var dept ='${ObjectMapper.writeValueAsString(project.dept)}';
     var taskId = '${taskId}';
     var taskName = '${taskName}';
@@ -577,6 +572,7 @@
     $('#attr').change(function () {
         firstOrOther();
     });
+
     $('.back').click(function () {
         //$('#ProjectTable').bootstrapTable('refresh', {url: '/api/project/all'});
         history.go(-1);

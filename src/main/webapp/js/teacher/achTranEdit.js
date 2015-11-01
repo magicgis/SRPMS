@@ -2,7 +2,10 @@
  * Created by Administrator on 2015/10/3.
  */
 $(function() {
-
+    var elementlist = document.querySelectorAll('.selectized');
+    $.each(elementlist, function(index, value) {
+        disableSelectize($(value).selectize());
+    });
     uneditableForm();
     hideUnitOperate();
     $('.onApproval').hide();

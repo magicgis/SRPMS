@@ -2,11 +2,8 @@
  * Created by Administrator on 2015/10/3.
  */
 $(function(){
-
     $('#reply').show();
-
     uneditableForm();
-
     disableSelectize($('#dept').selectize());
     disableSelectize($('#patType').selectize());
     hideActorOperate();

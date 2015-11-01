@@ -2,8 +2,6 @@
  * Created by zheng on 2015/10/12.
  */
 $(function(){
-    disableSelectize($('#pubType').selectize());
-    disableSelectize($('#dept').selectize());
     uneditableForm();
     hideActorOperate();
     $('.onEdit').hide();
