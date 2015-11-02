@@ -9,14 +9,8 @@ $(function () {
     // 存在Status,WF_Col,WF_Col_Id等等，基本是前台上一次放什么进去，第二次就能以同样的方式拿到
     // 还需要判断order的状态来 判断是否能算分与分配分数
 
-    uneditableForm();
-    disableSelectize($('#dept').selectize());
-    disableSelectize($('#patType').selectize());
-    hideUnitOperate();
+
     init(entity,all,replyByDep,1);
-    $('.removeActor').hide();
-    $('#upload').hide();
-    $('.onApproval').hide();
 
 });
 /*
@@ -31,7 +25,6 @@ function save() {
     send['actors'] = getActorsData();
     workflow.execute(userName, taskId, send).success(function () {
         afterSuccess("保存成功！");
-        window.location.href = "/patent";
     });
     console.log(send);
 }
@@ -64,13 +57,13 @@ function confirm() {
                     if ("valid" in data) {
                         if (data["valid"] == true) {
                             afterSuccess("确认成功！");
-                            window.location.href = "/patent";
+                            //window.location.href = "/patent";
                         } else {
                             errorMsg(data["msg"]);
                         }
                     } else {
                         afterSuccess("确认成功！");
-                        window.location.href = "/patent";
+                        //window.location.href = "/patent";
                     }
                 });
             }

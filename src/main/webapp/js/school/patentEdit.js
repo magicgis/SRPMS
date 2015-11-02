@@ -6,8 +6,6 @@
 
 $(function () {
 
-    $('#reply').hide();
-
     init(entity,all,replyByDep,3);
 
 });
@@ -46,6 +44,7 @@ function save() {
     saveStep1().success(function(data) {
 
         saveStep2(data).success(function (res) {
+            afterSuccess('保存成功！');
             //history.go(-1);
         })
     });
@@ -75,6 +74,7 @@ function confirm() {
                      */
                     if (result) {
                         workflow.startEntityOrder("patent", $('#patentId').val()).success(function (data) {
+                            afterSuccess('任务已分发给相关教师！');
                             //history.go(-1);
                         });
                     }
@@ -101,12 +101,23 @@ function delOrder() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.delOrder(order['id']).success(function (data) {
+                workflow.delOrder(entity['id']).success(function (data) {
                     afterSuccess("删除成功！");
-                    //window.location.href = '/appraise';
+                    //window.location.href = '/patent';
                 });
             }
         }
+    });
+}
+
+/**
+ * 撤回
+ */
+function orderBack() {
+    var order = entity['id'];
+    window.workflow.getBack(userName, order).success(function () {
+        afterSuccess("已撤回");
+        //window.location.href = '/patent';
     });
 }
 
@@ -304,6 +315,7 @@ function approve() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, approveInfo).success(function () {
+                    afterSuccess('已通过！');
                     //window.location.href = "/patent";
                 });
             }
@@ -329,6 +341,7 @@ function refuse() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, refuseAwardInfo).success(function () {
+                    afterSuccess('已驳回至学院！');
                     //window.location.href = "/patent";
                 });
             }

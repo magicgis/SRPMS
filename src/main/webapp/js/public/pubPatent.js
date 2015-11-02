@@ -111,41 +111,6 @@ function actorTran(value,row){
     else
         return;
 }
-//显示控制
-//function showForm(){
-//    $('#newPatentTable-box').addClass('collapsed');
-//    $('#patent-box').removeClass('collapsed');
-//}
-
-//function showTable(newUrl){
-//    $('#PatentTable').bootstrapTable('refresh', {url: newUrl});
-//
-//    $('#newPatentTable-box').removeClass('collapsed');
-//    $('#patent-box').addClass('collapsed');
-//}
-//function showTableSchool(newUrl){
-//    DisplayForm($('#patType').selectize(), null, 0);
-//    $("#showSum").html("");
-//    showTable(newUrl);
-//}
-//表单可编辑
-//function editableForm(){
-//    $('form input').removeAttr("disabled", "disabled");
-//    $('form select').removeAttr("disabled", "disabled");
-//    $('#addDiff').removeAttr("disabled", "disabled");
-//    $('#addActor').show();
-//    $('#getScore').show();
-//    $('.delFiles').show();
-//    $('#actorTable').bootstrapTable('showColumn', 'operate');
-//    $('#unitTable').bootstrapTable('showColumn', 'operate');
-//}
-//表单不可编辑
-function uneditableForm(){
-    $('form input').attr("disabled", "disabled");
-    $('form select').attr("disabled", "disabled");
-    $('#addDiff').attr("disabled", "disabled");
-    $('.delFiles').hide();
-}
 /*
  * 获取人员信息
  *

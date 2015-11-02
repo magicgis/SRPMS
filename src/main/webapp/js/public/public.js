@@ -321,6 +321,9 @@ function hideActorOperate() {
 function hideUnitOperate() {
     $('#unitTable').bootstrapTable('hideColumn', 'operate');
 }
+function hideColumnScore() {
+    $('#actorTable').bootstrapTable('hideColumn', 'score');
+}
 /**--------------------------简单消息弹框------------------**/
 function messageModal(message) {
     BootstrapDialog.show({
@@ -720,11 +723,13 @@ function processStatus(statusVlaue, isMain, userLevel) {
             //当前用户为负责人
             if (isMain == 1) {
                 if (statusVlaue == "Blank" || statusVlaue == "Uncomplete") {
-                    return "11110";//能修改，能删除，能撤回，无批复原因
+                    return "11110";//能修改，不能删除，不能撤回，无批复原因
                 } else if (statusVlaue == "RefuseByCol") {
                     return "11111";//能修改，能删除，能撤回,有批复原因 todo 能撤回吗？
                 } else if (statusVlaue == "Complete") {
                     return "10110";//不能修改，能删除，能撤回，无批复原因
+                } else if (statusVlaue == "WaitForSubmit") {
+                    return "10011";//不能修改，不能删除，能撤回，无批复原因
                 } else {
                     return "10000";//只能查看
                 }
@@ -775,139 +780,190 @@ function isMainActor(MainActor, userName) {
  * 教师1||学院2||学校3
  * */
 function init(entity,all,replyByDep,level) {
+    console.log('all',all);
+    var process = entity['process'];
     switch (level){
         case 1:
-            var status = all['Status'];
-            var isMain=isMainActor(all['Main-Actor'],userName);
-            var statusCode=parseInt(processStatus(status,0,level));
-            switch (statusCode){
-                case 01:
-                    $('.confirm').show();
-                    hideActorOperate();
-                    $('.getScore').hide();
-                    $('.save').hide();
-                    break;
-                case 00:
-                    $('.confirm').hide();
-                    hideActorOperate();
-                    $('.getScore').hide();
-                    $('.save').hide();
-                    break;
-                case 11110:
-                    $('.getScore').show();
 
-                    $('.onEdit').show();
+            uneditableForm();
+            hideUnitOperate();
+            $('.removeActor').hide();
+            $('#upload').hide();
+            $('.delFiles').hide();
+            $('.onApprove').hide();
+
+            var status = all['Status'];
+            var isMain = isMainActor(all['Main-Actor'],userName);
+            var statusCode = processStatus(status,isMain,level);
+            switch (statusCode){
+                case '01':
+                    console.log('01');
+                    $('.save').hide();
+                    $('#reply').hide();
+                    $('.onDel').hide();
+                    $('.getScore').hide();
+                    hideActorOperate();
                     break;
-                case 10110:
+                case '00':
+                    console.log('00');
+                    $('.confirm').hide();
+                    $('.save').hide();
+                    $('#reply').hide();
+                    $('.onDel').hide();
+                    $('.getScore').hide();
+                    hideActorOperate();
+                    break;
+                case '11110':
+                    console.log('11110');
+                    $('#reply').hide();
+                    $('.onDel').hide();
+                    break;
+                case '10110':
+                    console.log('10110');
                     hideActorOperate();
                     $('.getScore').hide();
                     $('.onEdit').hide();
-                    $('.delAndBack').show();
+                    $('.del').hide();
+                    $('#reply').hide();
                     break;
-                case 10000:
+                case '10011':
+                    console.log('10000');
                     hideActorOperate();
+                    $('#reply').hide();
                     $('.onEdit').hide();
-                    $('.delAndBack').hide();
+                    $('.del').hide();
                     $('.getScore').hide();
                     break;
-                case 11111:
+                case '10000':
+                    console.log('10000');
+                    hideActorOperate();
+                    $('#reply').hide();
+                    $('.onEdit').hide();
+                    $('.onDel').hide();
+                    $('.getScore').hide();
+                    break;
+                case '11111':
+                    console.log('11111');
                     $('#reply').show();
+                    $('#reply-box').hide();
                     $('#reply-display').show();
                     var reply = $('#reply-display').children('p');
                     var who = $('#reply-display').children('small');
-                    reply.empty();
-                    who.empty();
-                    $('.onEdit').show();
-                    $('.delAndBack').show();
-                    reply.append(replyByDep);
-                    who.append("管理部门批复");
+                    reply.append(replyByCol);
+                    who.append("学院批复");
+
+                    $('.onDel').hide();
                     break;
             }
             break;
         case 2:
-            var status = all['Status'];
-            var isMain=isMainActor(all['Main-Actor'],userName);
+
+            uneditableForm();
+            hideActorOperate();
+            hideUnitOperate();
+            $('#upload').hide();
+            $('.delFiles').hide();
+            $('.onEdit').hide();
+            $('.onDel').hide();
+
             $('#reply').show();
             $('#reply-display').show();
             var reply = $('#reply-display').children('p');
             var who = $('#reply-display').children('small');
+
+            var status = all['Status'];
             var statusCode=parseInt(processStatus(status,0,level));
-            var elementlist = document.querySelectorAll('.selectized');
-            $.each(elementlist, function(index, value) {
-                disableSelectize($(value).selectize());
-            });
+
             switch (statusCode){
                 case 211:
-                    $('.onApprove').show();
+                    console.log('211');
                     reply.append(replyByDep);
                     who.append("管理部门批复");
                     break;
                 case 210:
-                    $('.onApprove').show();
-                    reply.remove();
-                    who.remove();
+                    console.log('210');
+                    $('#reply-display').hide();
                     break;
                 case 200:
-                    reply.append(replyByDep);
-                    who.append("管理部门批复");
-                    $('#reply').attr("disable","disable");
+                    console.log('200');
+                    reply.append(replyByCol);
+                    who.append("学院批复");
+                    $('#reply-box').hide();
                     $('.onApprove').hide();
                     break;
             }
             break;
         case 3:
-            var status = entity['Status'];
-            var statusCode=parseInt(processStatus(status,0,level));
+            var status = all['Status'];
+            var statusCode = parseInt(processStatus(status, 0, level));
             switch (statusCode) {
                 case 1:
+                    console.log('1');
                     $('.onApprove').hide();
-                    $('.orderBack').hide();
+                    $('#reply').hide();
+                    $('.onDel').hide();
+                    break;
                 case 311:
+                    console.log('311');
                     $('#reply').show();
                     $('#reply-display').show();
                     var reply = $('#reply-display').children('p');
                     var who = $('#reply-display').children('small');
-                    reply.empty();
-                    who.empty();
-                    $('.onDel').show();
+                    reply.append(replyByCol);
+                    who.append("学院批复");
                     break;
                 case 301:
+                    console.log('301');
                     $('#reply').show();
+                    $('#reply-box').hide();
                     $('#reply-display').show();
                     var reply = $('#reply-display').children('p');
                     var who = $('#reply-display').children('small');
-                    reply.empty();
-                    who.empty();
-                    $('.onDel').show();
+                    reply.append(replyByDep);
+                    who.append("管理部门批复");
+
+                    $('.onApprove').hide();
                     break;
             }
-            if (entity['process'] == '1' || entity['process'] == '9') {
-                $('#reply').show();
+            if (process == '1') {
                 $('.onEdit').hide();
                 $('.onDel').hide();
+
+                uneditableForm();
                 $('#upload').hide();
+                $('.delFiles').hide();
+
+                hideActorOperate();
+                hideUnitOperate();
+                hideColumnScore(); // 还在流程中 分数不给看
                 $('.addActor').hide();
                 $('.addUnit').hide();
                 $('.addFund').hide();
-                var elementlist = document.querySelectorAll('.selectized');
-                $.each(elementlist, function(index, value) {
-                    disableSelectize($(value).selectize());
-                });
-                disableSelectize($('#dept').selectize());
-                uneditableForm();
-                hideActorOperate();
-                hideUnitOperate();
-                // 实体中不能审批，order中才可以。实体中没有status，所以这样判断
-            } else if (entity['process'] == null || entity['process'] == '0') { // 刚刚新增或未启动
+
+            } else if(process == '9') {
+                $('.confirm').hide();
+                $('.onApprove').hide();
+                $('.orderBack').hide();
+
+            } else if (process == null || process == '0') { // 刚刚新增或未启动
                 $('#upload').show();
-                $('.onApproval').hide();
                 $('.onEdit').show();
-                $('.onDel').show();
+                $('.onApprove').hide();
+                $('.onDel').hide();
                 $('#reply').hide();
+                hideColumnScore();
             }
             break;
     }
+    console.log('process:', process, 'status:', status, 'level:', level, 'isMain:', isMain, 'statusCode:', statusCode);
+}
+function uneditableForm() {
+    $('form input').attr("disabled", "disabled");
 
+    var elementlist = document.querySelectorAll('.selectized');
+    $.each(elementlist, function(index, value) {
+        disableSelectize($(value).selectize());
+    });
 }
 
 var wfTypeTans = {
@@ -928,7 +984,7 @@ function wfTypeTran(value, row) {
     if(!isNull(value)){
         return wfTypeTans[value];
     }else{
-       return '--' ;
+        return '--' ;
     }
 }
 

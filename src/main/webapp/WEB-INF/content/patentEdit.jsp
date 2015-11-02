@@ -16,7 +16,21 @@
 
     <meta name="description" content="Dynamic tables and grids using jqGrid plugin"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-    <title>专利信息</title>
+
+    <title>专利信息-
+	    <c:choose>
+		    <c:when test="${sessionScope.level == '1'}">
+			    教师
+		    </c:when>
+		    <c:when test="${sessionScope.level == '2'}">
+			    学院
+		    </c:when>
+		    <c:when test="${sessionScope.level == '3'}">
+			    学校
+		    </c:when>
+	    </c:choose>
+    </title>
+
     <jsp:include page="public/jsHeader.jsp"/>
     <style>
         td.bs-checkbox {
@@ -212,12 +226,10 @@
                                                         <div id="actorToolbar">
                                                             <c:choose>
                                                                 <c:when test="${sessionScope.level == '3'}">
-                                                                    <a data-toggle="modal" id="addActor"
-                                                                       class="btn btn-primary btn-sm">添加成员</a>
+                                                                    <a class="btn btn-primary btn-sm addActor">添加成员</a>
                                                                 </c:when>
-                                                                <c:when test="${sessionScope.level == '1'}">
-                                                                    <a data-toggle="modal" id="getScore"
-                                                                       class="btn btn-primary btn-sm">计算分数</a>
+                                                                <c:when test="${sessionScope.level == '1' || sessionScope.level == '3'}">
+                                                                    <a class="btn btn-primary btn-sm getScore">计算分数</a>
                                                                 </c:when>
                                                             </c:choose>
                                                         </div>
@@ -245,8 +257,7 @@
                                                     <div class="row">
                                                         <div id="unitToolbar">
                                                             <c:if test="${sessionScope.level == '3'}">
-                                                                <a id="addUnit" class="btn btn-primary btn-sm">
-                                                                        <%--<i class="glyphicon glyphicon-plus"></i> --%>
+                                                                <a class="btn btn-primary btn-sm addUnit">
                                                                     添加单位</a>
                                                             </c:if>
                                                         </div>
@@ -289,15 +300,20 @@
                                     <div class="widget-body">
                                         <div class="row">
                                             <div id="formBtn" class="col-xs-12 clearfix">
-                                                <div class="pull-left onEdit">
+                                                <div class="pull-left onDel">
 
-                                                    <c:if test="${sessionScope.level == '3'}">
+                                                    <%--<c:if test="${sessionScope.level == '3'}">--%>
                                                         <button class="tabOrdBtn btn btn-danger btn-sm del"
                                                                 type="button">
                                                             <i class="ace-icon fa fa-trash  bigger-110"></i>
                                                             删除
                                                         </button>
-                                                    </c:if>
+                                                        <button class="btn btn-danger tabOrdBtn btn-sm orderBack"
+                                                                type="button">
+                                                            <i class="ace-icon fa fa-repeat bigger-110"></i>
+                                                            撤回
+                                                        </button>
+                                                    <%--</c:if>--%>
                                                 </div>
                                                 <div class="pull-right">
                                                     <button class="tabOrdBtn btn btn-danger btn-sm back"
@@ -317,13 +333,13 @@
                                                             确认
                                                         </button>
                                                     </span>
-                                                    <span class="onApproval">
-                                                        <button class="tabOrdBtn btn btn-success btn-sm approve"
+                                                    <span class="onApprove">
+                                                        <button class="tabOrdBtn btn btn-success btn-sm Approve"
                                                                 type="button">
                                                             <i class="ace-icon fa fa-check bigger-110"></i>
                                                             通过
                                                         </button>
-                                                        <button class="tabOrdBtn btn btn-warning btn-sm refuse"
+                                                        <button class="tabOrdBtn btn btn-warning btn-sm Refuse"
                                                                 type="button">
                                                             <i class="ace-icon fa fa-remove bigger-110"></i>
                                                             驳回
@@ -380,10 +396,17 @@
         unitTemp = all['units'];
         Main_Actor = all['Main-Actor'];
         Main_ActorName = all['Main-ActorName'];
-        replyByCol = all['replyByCol'];
-        replyByDep = all['replyByDep'];
     }
 
+    var approvalByCol = getApprovalByCol(all);
+    if (approvalByCol !== "") {
+	    replyByCol = all[approvalByCol]['replyByCol'];
+    }
+    var approvalByDep = getApprovalByDep(all);
+    if (approvalByDep !== "") {
+	    replyByDep = all[approvalByDep]['replyByDep'];
+    }
+    console.log(entity);
     // 显示 附件
     if (filesData == null) {
         filesData = {};
@@ -466,6 +489,9 @@
     $(".confirm").click(function () {
         confirm();
     });
+    $(".orderBack").click(function () {
+        orderBack();
+    });
     //监听 返回
     $('.back').click(function () {
         history.go(-1);
@@ -475,11 +501,11 @@
         delOrder();
     });
     //监听 通过
-    $('.approve').click(function () {
+    $('.Approve').click(function () {
         approve();
     });
     //监听 驳回
-    $('.refuse').click(function () {
+    $('.Refuse').click(function () {
         refuse();
     });
     //监听 保存
