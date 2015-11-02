@@ -481,6 +481,134 @@
 
                 });
                 break;
+            case 'newFoodView':
+                allTable.bootstrapTable('destroy').bootstrapTable({
+                    url: entityApiUrl('newFood'),
+                    sidePagination: "server",
+                    flat: true,
+                    columns: [{
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field:'name',
+                        title:'食品名称',
+                        sortable: true
+                    }, {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    },{
+                        field:'newFoodDate',
+                        title:'获批时间',
+                        sortable: true
+                    },{
+                        field: 'Status',
+                        title: '状态',
+                        sortable: true,
+                        formatter: 'statusTran'
+                    }],
+                    responseHandler: tableTrans
+                });
+                break;
+            case 'newInstruView':
+                allTable.bootstrapTable('destroy').bootstrapTable({
+                    url: entityApiUrl('newInstru'),
+                    sidePagination: "server",
+                    flat: true,
+                    columns: [{
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field:'name',
+                        title:'食品名称',
+                        sortable: true
+                    },{
+                        field:'newInstruDate',
+                        title:'获批时间',
+                        sortable: true
+                    } ,{
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    },{
+                        field: 'Status',
+                        title: '状态',
+                        sortable: true,
+                        formatter: 'statusTran'
+                    }],
+                    responseHandler: tableTrans
+                });
+                break;
+            case 'newMedicineView':
+            allTable.bootstrapTable('destroy').bootstrapTable({
+                url: entityApiUrl('newMedicine'),
+                sidePagination: "server",
+                flat: true,
+                columns: [{
+                    radio: true
+                }, {
+                    field: 'id',
+                    title: 'id',
+                    sortable: true,
+                    visible: false
+                }, {
+                    field:'name',
+                    title:'药品名称',
+                    sortable: true
+                },{
+                    field:'date',
+                    title:'获批时间',
+                    sortable: true
+                } ,{
+                    field: 'argMap.Main-ActorName',
+                    title: '负责人'
+                },{
+                    field: 'Status',
+                    title: '状态',
+                    sortable: true,
+                    formatter: 'statusTran'
+                }],
+                responseHandler: tableTrans
+            });
+            break;
+            case 'newOtherView':
+                allTable.bootstrapTable('destroy').bootstrapTable({
+                    url: entityApiUrl('newOther'),
+                    sidePagination: "server",
+                    flat: true,
+                    columns: [{
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field:'name',
+                        title:'产品名称',
+                        sortable: true
+                    },{
+                        field:'date',
+                        title:'获批时间',
+                        sortable: true
+                    } ,{
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    },{
+                        field: 'Status',
+                        title: '状态',
+                        sortable: true,
+                        formatter: 'statusTran'
+                    }],
+                    responseHandler: tableTrans
+                });
+                break;
             case 'allView':
                 allTable.bootstrapTable('destroy').bootstrapTable({
                     url: apiUrl('all'),

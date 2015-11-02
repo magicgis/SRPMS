@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: zheng
-  Date: 2015/11/1
-  Time: 23:53
+  Date: 2015/11/2
+  Time: 15:28
   To change this template use File | Settings | File Templates.
 --%>
 <jsp:useBean id="ObjectMapper" scope="application" class="com.fasterxml.jackson.databind.ObjectMapper"/>
@@ -13,7 +13,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta charset="utf-8"/>
-    <title>新功能食品</title>
+    <title>其他新产品</title>
 
     <meta name="description" content="Dynamic tables and grids using jqGrid plugin"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
@@ -57,36 +57,33 @@
                         <i class="ace-icon fa fa-home home-icon"></i>
                         <a href="#">Home</a>
                     </li>
-                    <li class="active">新功能食品</li>
+                    <li class="active">其他新产品</li>
                 </ul>
                 <!-- /.breadcrumb -->
             </div>
             <div class="page-content">
                 <div class="row">
-                    <form id="food" class="form-horizontal" role="form">
+                    <form id="other" class="form-horizontal" role="form">
                         <div hidden="hidden">
-                            <input type="text" name="id" id="foodId" value="${food.id}"/>
+                            <input type="text" name="id" id="otherId" value="${other.id}"/>
                         </div>
                         <div id="achInfo" class="col-xs-12 col-md-7 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
                                 <div class="widget-header">
-                                    <h4 class="widget-title">新功能食品</h4>
+                                    <h4 class="widget-title">其他新产品信息</h4>
                                 </div>
                                 <div class="widget-body ">
                                     <div class="widget-main">
                                         <div class="row">
-                                            <div class="form-group col-xs-12">
-                                                <label class="col-sm-2 control-label no-padding-left"
-                                                       for="name">食品名称</label>
+                                            <div class="form-group col-xs-12 col-sm-6">
+                                                <label class="col-sm-4 control-label no-padding-left"
+                                                       for="name">产品名称</label>
 
-                                                <div class="col-sm-9">
-                                                    <input id="name" name="name"
-                                                           type="text" class="form-control col-xs-12"
-                                                           placeholder="" value=""/>
+                                                <div class="col-sm-8">
+                                                    <input type="text" id="name" name="name"
+                                                           placeholder="" class="col-xs-12" value=""/>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
                                                        for="dept">所属部门</label>
@@ -99,18 +96,18 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <label class="col-sm-4 control-label no-padding-left"
-                                                   for="foodProdNo">生产许可编号</label>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12 col-sm-6">
+                                                <label class="col-sm-4 control-label no-padding-left"
+                                                       for="otherProdNo">生产许可编号</label>
 
-                                            <div class="col-sm-8">
-                                                <div class="col-sm-13">
-                                                    <input type="text" id="foodProdNo" name="foodProdNo"
-                                                           class="form-control col-xs-12"
+                                                <div class="col-sm-8">
+                                                    <input type="text" id="otherProdNo" name="otherProdNo"
                                                            placeholder="" class="col-xs-12"/>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
+
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
                                                        for="date">获批时间</label>
@@ -121,6 +118,9 @@
                                                            data-date-format="yyyy-mm-dd" value="" />
                                                 </div>
                                             </div>
+                                        </div>
+
+                                        <div class="row">
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
                                                        for="firstUnit">第一研发单位</label>
@@ -264,34 +264,34 @@
                                     </button>
                                 </c:if>
                             </div>
-                            <div class="pull-right">
-                                <span class="onEdit">
-                                    <button class="confirm btn btn-success" type="button">
-                                        <i class="ace-icon fa fa-check bigger-110"></i>
-                                        确认
-                                    </button>
-                                    &nbsp;
-                                    <button class="btn btn-info save" type="button">
-                                        <i class="ace-icon fa fa-save bigger-110"></i>
-                                        保存
-                                    </button>
-                                </span>
-                                <span class="onApprove">
-                                    <button class="btn btn-success Approve" type="button">
-                                        <i class="ace-icon fa fa-check bigger-110"></i>
-                                        通过
-                                    </button>
-                                    &nbsp;
-                                    <button class="btn btn-danger Refuse" type="button">
-                                        <i class="ace-icon fa fa-remove bigger-110"></i>
-                                        驳回
-                                    </button>
-                                </span>
-                                <button class="btn btn-success back" type="button">
+                        <div class="pull-right">
+                        <span class="onEdit">
+                              <button class="confirm btn btn-success" type="button">
+                                  <i class="ace-icon fa fa-check bigger-110"></i>
+                                  确认
+                              </button>
+
+                              <button class="btn btn-info save" type="button">
+                                  <i class="ace-icon fa fa-save bigger-110"></i>
+                                  保存
+                              </button>
+                        </span>
+                        <span class="onApprove">
+                            <button class="btn btn-success Approve" type="button">
+                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                通过
+                            </button>
+
+                           <button class="btn btn-danger Refuse" type="button">
+                               <i class="ace-icon fa fa-remove bigger-110"></i>
+                               驳回
+                           </button>
+                        </span>
+                           <button class="btn btn-success back" type="button">
                                     <i class="ace-icon fa fa-reply  bigger-110"></i>
                                     返回
-                                </button>
-                            </div>
+                           </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -309,7 +309,7 @@
 <!-- /.main-container -->
 </body>
 <script src='<c:url value="/js/public/public.js"/>'></script>
-<script src='<c:url value="/js/public/pubFood.js"/>'></script>
+<script src='<c:url value="/js/public/pubMedic.js"/>'></script>
 <script type="text/javascript">
     $(function ($) {
         $('.date-picker').datepicker({
@@ -319,10 +319,16 @@
             $(this).prev().focus();
         });
     });
+    $('#instruType').focus(function () {
+        $('#explainInfo').show();
+    });
+    $('#instruType').blur(function () {
+        $('#explainInfo').hide();
+    });
     // 成员，单位，文件
     // todo 取出实体内的额外信息，附件信息也应该在其中。
-    var entity = ${ObjectMapper.writeValueAsString(newFood)};
-    var all = ${ObjectMapper.writeValueAsString(newFood.argMap)};
+    var entity = ${ObjectMapper.writeValueAsString(newOther)};
+    var all = ${ObjectMapper.writeValueAsString(newOther.argMap)};
     var dept = entity['dept'];
     var taskId = '${taskId}';
     var taskName = '${taskName}';
@@ -440,16 +446,19 @@
 </script>
 <c:choose>
     <c:when test="${sessionScope.level == '1'}">
-        <script src="<c:url value="/js/teacher/newFoodEdit.js"/>"></script>
+        <script src="<c:url value="/js/teacher/newOtherEdit.js"/>"></script>
     </c:when>
     <c:when test="${sessionScope.level == '2'}">
-        <script src="<c:url value="/js/college/newFoodEdit.js"/>"></script>
+        <script src="<c:url value="/js/college/newOtherEdit.js"/>"></script>
     </c:when>
     <c:when test="${sessionScope.level == '3'}">
-        <script src="<c:url value="/js/school/newFoodEdit.js"/>"></script>
+        <script src="<c:url value="/js/school/newOtherEdit.js"/>"></script>
     </c:when>
 </c:choose>
 </html>
+
+
+
 
 
 

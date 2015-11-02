@@ -33,7 +33,7 @@ function confirm() {
                      * userName,taskId,status
                      */
                     if (result) {
-                        workflow.startEntityOrder("newFood", $('#foodId').val()).success(function (data) {
+                        workflow.startEntityOrder("newOther", $('#otherId').val()).success(function (data) {
                             //history.go(-1);
                         });
                     }
@@ -152,7 +152,7 @@ function addActor() {
             }
         }],
         onshown: function () {
-            fillRoles(foodRoles);
+            fillRoles(otherRoles);
         }
     });
 }
@@ -204,7 +204,7 @@ function editActor(row, index) {
             }
         }],
         onshown: function () {
-            fillRoles(foodRoles);
+            fillRoles(otherRoles);
             //填充名字
             var $actor = $("#actor").selectize();
             $actor[0].selectize.addOption([{'id': row["staff.id"], 'name': row["staff.name"], "col": {"value": ""}}]);
@@ -246,7 +246,7 @@ function editActor(row, index) {
 }
 /*计算分数*/
 function getScore() {
-    var jsonData = getFormData("food");
+    var jsonData = getFormData("other");
     //console.log(jsonData);
     workflow.getScore(jsonData).success(function (data) {
         if (data["valid"] == false) {
@@ -342,8 +342,8 @@ function editUnit(row, index) {
 /********************************保存***************************/
 function saveStep1() {
     return $.ajax({
-        url: '/api/newFood/newFood',
-        data: $('#food').serialize(),
+        url: '/api/newOther/newOther',
+        data: $('#other').serialize(),
         type: 'POST',
         dataType: 'text'
     })
@@ -351,7 +351,7 @@ function saveStep1() {
 function saveStep2(data) {
     var send = new Object();
     //避免新建的时候多次点击保存多次新建
-    $('#foodId').val(data);
+    $('#otherId').val(data);
     send['actors'] = getActorsData();
     send['filesData'] = filesData;
     send['Main-Actor'] = Main_Actor;
@@ -359,10 +359,11 @@ function saveStep2(data) {
     send['units'] = getUnitsData();
     send['achName']= Main_ActorName;
     send['name']= $('#name').val();
+    send['date']=$('#date').val();
     console.log(send);
     return $.ajax({
         type: 'put',
-        url: '/api/newFood/' + data,
+        url: '/api/newOther/' + data,
         data: JSON.stringify(send),
         dataType: 'json',
         contentType: 'application/json;charset=UTF-8'

@@ -99,7 +99,7 @@ function editActor(row, index) {
             }
         }],
         onshown: function () {
-            fillRoles(foodRoles);
+            fillRoles(otherRoles);
             var $actor = $("#actor").selectize();
             var $role = $("#role").selectize();
             var $units = $("#units").selectize();

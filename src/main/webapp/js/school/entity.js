@@ -278,16 +278,109 @@ function switchEntityView(viewType) {
                     sortable: true,
                     visible: false
                 }, {
-                    field:'foodName',
+                    field:'name',
                     title:'食品名称',
                     sortable: true
                 }, {
                     field: 'argMap.Main-ActorName',
                     title: '负责人'
                 }, {
-                    field:'newFoodDate',
+                    field:'date',
                     title:'获批时间',
                     sortable: true
+                },{
+                    field: 'process',
+                    title: '流程状态',
+                    sortable: true,
+                    formatter: 'processTran'
+                }]
+            });
+            break;
+        case 'newInstruEntity':
+            allTable.bootstrapTable('destroy').bootstrapTable({
+                url: entityApiUrl('newInstru'),
+                sidePagination: "server",
+                flat: true,
+                columns: [{
+                    radio: true
+                }, {
+                    field: 'id',
+                    title: 'id',
+                    sortable: true,
+                    visible: false
+                }, {
+                    field:'name',
+                    title:'器械名称',
+                    sortable: true
+                },{
+                    field:'date',
+                    title:'获批时间',
+                    sortable: true
+                } ,{
+                    field: 'argMap.Main-ActorName',
+                    title: '负责人'
+                },{
+                    field: 'process',
+                    title: '流程状态',
+                    sortable: true,
+                    formatter: 'processTran'
+                }]
+            });
+            break;
+        case 'newMedicineEntity':
+            allTable.bootstrapTable('destroy').bootstrapTable({
+                url: entityApiUrl('newMedicine'),
+                sidePagination: "server",
+                flat: true,
+                columns: [{
+                    radio: true
+                }, {
+                    field: 'id',
+                    title: 'id',
+                    sortable: true,
+                    visible: false
+                }, {
+                    field:'name',
+                    title:'药品名称',
+                    sortable: true
+                },{
+                    field:'date',
+                    title:'获批时间',
+                    sortable: true
+                } ,{
+                    field: 'argMap.Main-ActorName',
+                    title: '负责人'
+                },{
+                    field: 'process',
+                    title: '流程状态',
+                    sortable: true,
+                    formatter: 'processTran'
+                }]
+            });
+            break;
+        case 'newOtherEntity':
+            allTable.bootstrapTable('destroy').bootstrapTable({
+                url: entityApiUrl('newOther'),
+                sidePagination: "server",
+                flat: true,
+                columns: [{
+                    radio: true
+                }, {
+                    field: 'id',
+                    title: 'id',
+                    sortable: true,
+                    visible: false
+                }, {
+                    field:'name',
+                    title:'产品名称',
+                    sortable: true
+                },{
+                    field:'date',
+                    title:'获批时间',
+                    sortable: true
+                } ,{
+                    field: 'argMap.Main-ActorName',
+                    title: '负责人'
                 },{
                     field: 'process',
                     title: '流程状态',

@@ -6,7 +6,10 @@ var bookRoles = [{"role": "主编或第一主编"}, {"role": "第二及以下编
 var awardRoles = [{"role": "负责人"}, {"role": "参与人"}];
 var appraiseRoles = [{"role": "负责人"}, {"role": "参与人"}];
 var achTranRoles = appraiseRoles;
-
+var foodRoles=appraiseRoles;
+var instruRoles=appraiseRoles;
+var medicineRoles=appraiseRoles;
+var otherRoles=appraiseRoles;
 /**--------------------------工作流公共方法------------------**/
 var workflow = window.workflow || {};
 /**
