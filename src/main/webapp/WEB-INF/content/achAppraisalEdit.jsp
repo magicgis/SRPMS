@@ -79,8 +79,6 @@
                     <div class="col-xs-12">
                         <form id="appraise" class="form-horizontal" role="form">
                             <div hidden="hidden">
-                                <%--<input type="text" name="WF_Task" id="WF_Task"/>--%>
-                                <%--<input type="text" name="IsComplete" id="IsComplete"/>--%>
                                 <input type="text" name="sum" id="score"/>
                                 <input type="text" name="id" id="achAppraiseId" value="${achAppraisal.id}"/>
                                 <input type="text" name="WF_Type" id="WF_Type" value="achAppraisal"/>
@@ -250,12 +248,14 @@
                                             <div class="widget-main">
                                                 <div class="row">
                                                     <div id="actorToolbar">
-                                                        <a data-toggle="modal" id="addActor"
-                                                           class="btn btn-primary btn-sm">添加成员</a>
-                                                        <c:if test="${sessionScope.level == '1'}">
-                                                            <a data-toggle="modal" id="getScore"
-                                                               class="btn btn-primary btn-sm">计算分数</a>
-                                                        </c:if>
+                                                        <c:choose>
+                                                            <c:when test="${sessionScope.level == '3'}">
+                                                                <a class="btn btn-primary btn-sm addActor">添加成员</a>
+                                                            </c:when>
+                                                            <c:when test="${sessionScope.level == '1' || sessionScope.level == '3'}">
+                                                                <a class="btn btn-primary btn-sm getScore">计算分数</a>
+                                                            </c:when>
+                                                        </c:choose>
                                                     </div>
                                                     <table id="actorTable"
                                                            data-toolbar="#actorToolbar"
@@ -278,8 +278,10 @@
                                             <div class="widget-main">
                                                 <div class="row">
                                                     <div id="unitToolbar">
-                                                        <a id="addUnit" class="btn btn-primary btn-sm"><i
-                                                                class="glyphicon glyphicon-plus"></i> 添加单位</a>
+                                                        <c:if test="${sessionScope.level == '3'}">
+                                                            <a class="btn btn-primary btn-sm addUnit">
+                                                                添加单位</a>
+                                                        </c:if>
                                                     </div>
                                                     <table id="unitTable"
                                                            data-toolbar="#unitToolbar"
@@ -357,7 +359,7 @@
                                     确认
                                 </button>
                             </span>
-                            <span class="onApproval">
+                            <span class="onApprove">
                                 <button class="tabOrdBtn btn btn-success btn-sm approve"
                                         type="button">
                                     <i class="ace-icon fa fa-check bigger-110"></i>

@@ -207,10 +207,14 @@
 									<div class="widget-main">
 										<div class="row">
 											<div id="actorToolbar">
-												<a data-toggle="modal" id="addActor"
-												   class="btn btn-primary btn-sm">添加成员</a>
-												<%--<a data-toggle="modal" id="getScore"--%>
-												   <%--class="btn btn-primary btn-sm">计算分数</a>--%>
+												<c:choose>
+													<c:when test="${sessionScope.level == '3'}">
+														<a class="btn btn-primary btn-sm addActor">添加成员</a>
+													</c:when>
+													<c:when test="${sessionScope.level == '1' || sessionScope.level == '3'}">
+														<a class="btn btn-primary btn-sm getScore">计算分数</a>
+													</c:when>
+												</c:choose>
 											</div>
 											<table id="actorTable"
 											       data-toolbar="#actorToolbar"
@@ -235,8 +239,10 @@
 									<div class="widget-main">
 										<div class="row">
 											<div id="unitToolbar">
-												<a id="addUnit" class="btn btn-primary btn-sm">
-													添加单位</a>
+												<c:if test="${sessionScope.level == '3'}">
+													<a class="btn btn-primary btn-sm addUnit">
+														添加单位</a>
+												</c:if>
 											</div>
 											<table id="unitTable"
 											       data-toolbar="#unitToolbar"
@@ -306,7 +312,7 @@
 	                                确认
                                 </button>
                             </span>
-                            <span class="onApproval">
+                            <span class="onApprove">
                                 <button class="tabOrdBtn btn btn-success btn-sm approve"
                                         type="button">
 	                                <i class="ace-icon fa fa-check bigger-110"></i>

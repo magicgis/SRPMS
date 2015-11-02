@@ -13,7 +13,19 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta charset="utf-8"/>
-    <title>成果获奖信息</title>
+    <title>成果获奖信息-
+        <c:choose>
+            <c:when test="${sessionScope.level == '1'}">
+                教师
+            </c:when>
+            <c:when test="${sessionScope.level == '2'}">
+                学院
+            </c:when>
+            <c:when test="${sessionScope.level == '3'}">
+                学校
+            </c:when>
+        </c:choose>
+    </title>
 
     <meta name="description" content="Dynamic tables and grids using jqGrid plugin"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
@@ -65,7 +77,9 @@
                 <div class="row">
                     <form id="award" class="form-horizontal" role="form">
                         <div hidden="hidden">
+                            <input type="text" name="sum" id="score"/>
                             <input type="text" name="id" id="awardId" value="${award.id}"/>
+                            <input type="text" name="WF_Type" id="WF_Type" value="achAward"/>
                         </div>
                         <div id="achInfo" class="col-xs-12 col-md-7 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">

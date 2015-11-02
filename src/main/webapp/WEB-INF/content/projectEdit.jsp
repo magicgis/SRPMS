@@ -6,7 +6,19 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta charset="utf-8"/>
-    <title>项目信息</title>
+    <title>项目信息-
+        <c:choose>
+            <c:when test="${sessionScope.level == '1'}">
+                教师
+            </c:when>
+            <c:when test="${sessionScope.level == '2'}">
+                学院
+            </c:when>
+            <c:when test="${sessionScope.level == '3'}">
+                学校
+            </c:when>
+        </c:choose>
+    </title>
 
     <meta name="description" content="Dynamic tables and grids using jqGrid plugin"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
@@ -58,20 +70,15 @@
                 <div class="row">
                     <form id="project" class="form-horizontal" role="form">
                         <div hidden="hidden">
-                            <%--<input type="text" name="dept.value" id="deptValue" value=""/>--%>
-                            <%--<input type="text" name="WF_Task" id="WF_Task" value="${task.id}"/>--%>
-                            <%--<input type="text" name="WF_Order" id="WF_Order" value="${task.orderId}"/>--%>
-                            <%--<input type="text" name="IsComplete" id="IsComplete"/>--%>
-                            <%--<input type="text" name="score" id="score"/>--%>
-                            <%--<input type="text" name="dept.value" id="deptValue" value="${patent.dept.value}"/>--%>
+                            <input type="text" name="sum" id="score"/>
                             <input type="text" name="standard.id" id="standardId"/>
                             <input type="text" name="id" id="projectId" value="${project.id}"/>
+                            <input type="text" name="WF_Type" id="WF_Type" value="project"/>
                         </div>
                         <div id="projInfo" class="col-xs-12 col-md-7 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
                                 <div class="widget-header">
                                     <h4 class="widget-title">项目信息</h4>
-
                                 </div>
                                 <div class="widget-body ">
                                     <div class="widget-main">
