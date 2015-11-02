@@ -2,17 +2,8 @@
  * Created by zheng on 2015/10/3.
  */
 $(function () {
-    var elementlist = document.querySelectorAll('.selectized');
-    $.each(elementlist, function(index, value) {
-        disableSelectize($(value).selectize());
-    });
-    uneditableForm();
-    hideUnitOperate();
-    $('.onApprove').hide();
-    $('#reply-box').hide();
-    $('#reply').hide();
-    $('#unitInfo').hide();
-    init(entity,all,replyByDep,3);
+
+    init(entity, all, replyByDep, 1);
 });
 var flag = true;
 function save() {
@@ -90,6 +81,7 @@ function editActor(row, index) {
                     return;
                 }
                 subActorInfo(index, 0);
+                $('.removeActor').hide();
                 dialogRef.close();
             }
         }, {
@@ -99,7 +91,6 @@ function editActor(row, index) {
             cssClass: 'btn-info',
             autospin: false,
             action: function (dialogRef) {
-                //console.log(getActorsData());
                 dialogRef.close();
             }
         }],

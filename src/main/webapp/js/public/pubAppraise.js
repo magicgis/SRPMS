@@ -1,19 +1,19 @@
 
 
 //表单不可编辑
-function uneditableForm(){
-    $('form input').attr("disabled", "disabled");
-    $('form select').attr("disabled", "disabled");
-
-    var elementlist = document.querySelectorAll('.selectized');
-    $.each(elementlist, function(index, value) {
-        disableSelectize($(value).selectize());
-    });
-    $('#addActor').hide();
-    $('#addUnit').hide();
-    $('.delFiles').hide();
-    $('.removeActor').hide();
-}
+//function uneditableForm(){
+//    $('form input').attr("disabled", "disabled");
+//    $('form select').attr("disabled", "disabled");
+//
+//    var elementlist = document.querySelectorAll('.selectized');
+//    $.each(elementlist, function(index, value) {
+//        disableSelectize($(value).selectize());
+//    });
+//    $('#addActor').hide();
+//    $('#addUnit').hide();
+//    $('.delFiles').hide();
+//    $('.removeActor').hide();
+//}
 
 
 //--------------------------------actorTable总计----------------------------------------

@@ -1,13 +1,7 @@
 /**
  * Created by zheng on 2015/4/24.
  */
-var actorTemp = [];
-var unitTemp = [];
-var fundTemp = [];
-var Main_Actor;
-var Main_ActorName;
-var replyByCol, replyByDep;
-var $actorTable = $('#actorTable');
+
 // 将对话框里的值加载进成员表
 function subActorInfo(index, flag) {
     var id = $('#actor').val();
@@ -122,11 +116,11 @@ function totalUnitFormatter(data) {
     return "共" + data.length + "个";
 }
 //表单不可编辑
-function uneditableForm(){
-    $('form input').attr("disabled", "disabled");
-    $('form select').attr("disabled", "disabled");
-    $('.delFiles').hide();
-}
+//function uneditableForm(){
+//    $('form input').attr("disabled", "disabled");
+//    $('form select').attr("disabled", "disabled");
+//    $('.delFiles').hide();
+//}
 function fullUpInfo(all,entity){
     if (!isNull(all)) {
         getActors();

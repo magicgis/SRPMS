@@ -2,18 +2,8 @@
  * Created by Administrator on 2015/10/3.
  */
 $(function() {
-    var elementlist = document.querySelectorAll('.selectized');
-    $.each(elementlist, function(index, value) {
-        disableSelectize($(value).selectize());
-    });
-    uneditableForm();
-    hideUnitOperate();
-    $('.onApproval').hide();
-    $('.onDel').hide();
-    $('#upload').hide();
-    $('#reply-box').hide();
-    $('#reply').hide();
-    init(entity,all,replyByDep,1);
+
+    init(entity, all, replyByDep, 1);
 });
 
 

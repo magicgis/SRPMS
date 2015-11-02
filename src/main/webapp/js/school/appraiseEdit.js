@@ -2,7 +2,7 @@
  * Created by huyuanyuan555 on 2015/10/5.
  */
 $(function () {
-    $('#reply').hide();
+
     init(entity,all,replyByDep,3);
 });
 
@@ -364,7 +364,7 @@ function delOrder() {
  * 撤回
  */
 function getOrderBack() {
-    var order = order['id'];
+    var order = entity['id'];
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
         //window.location.href = '/appraise';

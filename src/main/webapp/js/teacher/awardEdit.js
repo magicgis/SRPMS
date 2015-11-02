@@ -2,19 +2,12 @@
  * Created by zheng on 2015/10/12.
  */
 $(function () {
-    var elementlist = document.querySelectorAll('.selectized');
-    $.each(elementlist, function(index, value) {
-        disableSelectize($(value).selectize());
-    });
-    uneditableForm();
-    hideUnitOperate();
-    $('.onApprove').hide();
-    $('.onDel').hide();
-    $('#reply-box').hide();
-    $('#reply').hide();
-    init(entity,all,replyByDep,1);
+
+    init(entity, all, replyByDep, 1);
 });
+
 var flag = true;
+
 function save() {
     var send = new Object();
     send['IsComplete'] = 'false';
@@ -22,8 +15,8 @@ function save() {
     workflow.execute(userName, taskId, send).success(function () {
         afterSuccess("保存成功！");
     });
-    //console.log(send);
 }
+
 function confirm() {
     var status = all['Status'];
     var send = new Object();
@@ -58,6 +51,7 @@ function confirm() {
         }
     });
 }
+
 /**************************编辑成员||计算分数||**************************************/
 function editActor(row, index) {
     BootstrapDialog.show({
@@ -85,6 +79,7 @@ function editActor(row, index) {
                     return;
                 }
                 subActorInfo(index, 0);
+                $('.removeActor').hide();
                 dialogRef.close();
             }
         }, {
@@ -135,6 +130,7 @@ function editActor(row, index) {
         }
     });
 }
+
 function getScore() {
     //alert("###################");
     $('#actorToolbar').append('<a data-toggle="modal" class="btn btn-white btn-info btn-bold testScore">' +

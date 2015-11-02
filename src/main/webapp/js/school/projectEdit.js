@@ -2,8 +2,7 @@
  * Created by zheng on 2015/10/2.
  */
 $(function () {
-    //TODO
-    $('#reply').hide();
+
     init(entity,all,replyByDep,3);
 });
 /**与项目信息有关的 保存||确认||撤回||删除||提交所有**/
@@ -11,7 +10,7 @@ function save() {
     saveStep1().success(function(data) {
 
         saveStep2(data).success(function (res) {
-
+            afterSuccess("保存成功！");
         })
     });
 }
@@ -34,7 +33,7 @@ function confirm() {
                      */
                     if (result) {
                         workflow.startEntityOrder("project", $('#projectId').val()).success(function (data) {
-                            //history.go(-1);
+                            afterSuccess("任务已启动！");
                         });
                     }
                 }
@@ -91,9 +90,8 @@ function Approve() {
         btnOKClass: 'btn-ok',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep',taskId, approveInfo).success(function () {
-                    afterSuccess('审批通过！');
-                    //window.location.href = "/project";
+                workflow.execute(userName, taskId, approveInfo).success(function () {
+                    afterSuccess('已通过！');
                 });
             }
         }
@@ -117,9 +115,9 @@ function Refuse() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep', taskId, refuseInfo).success(function () {
-                    afterSuccess('审批驳回！');
-                   // window.location.href = "/project";
+                workflow.execute(userName, taskId, refuseAwardInfo).success(function () {
+                    afterSuccess('已驳回至学院！');
+                    //window.location.href = '/achTran';
                 });
             }
         }
@@ -201,7 +199,6 @@ function editActor(row, index) {
             icon: 'glyphicon glyphicon-check',
             label: '关闭',
             cssClass: 'btn-info',
-            //hotkey: 68,
             autospin: false,
             action: function (dialogRef) {
                 dialogRef.close();
@@ -224,27 +221,6 @@ function editActor(row, index) {
                 findbyname: true,
                 restrict: false
             });
-            //是否可编辑
-            var flag = true;    //todo
-            if (flag) {//可编辑
-                enableSelectize($actor);
-                enableSelectize($role);
-                enableSelectize($units);
-                $("#rank").removeAttr("disabled");
-                $("#marks").removeAttr("disabled");
-                //$("#btn-cancel").hide();
-                $("#btn-ok").show();
-                $(".editableModal").show();
-            } else {  //不可编辑
-                disableSelectize($actor);
-                disableSelectize($role);
-                disableSelectize($units);
-                $("#aRank").attr("disabled", "disabled");
-                $("#marks").attr("disabled", "disabled");
-                $("#btn-ok").attr("disabled", "disabled").hide();
-                //$("#btn-cancel").show();
-                $(".editableModal").show();
-            }
         }
     });
 }

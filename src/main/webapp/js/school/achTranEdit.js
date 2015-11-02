@@ -2,20 +2,9 @@
  * Created by huyuanyuan555 on 2015/10/5.
  */
 $(function () {
-    $('#reply').hide();
+
     init(entity,all,replyByDep,3);
 });
-function canDoNothing() {
-    uneditableForm();
-    hideActorOperate();
-    hideUnitOperate();
-    $('#upload').hide();
-    $('#getScore').hide();
-    $('.onEdit').hide();
-    $('.onDel').hide();
-    $('.onApproval').hide();
-}
-
 
 /**
  * 添加成员
@@ -51,13 +40,14 @@ function addActor() {
         }],
         onshown: function () {
             fillRoles(achTranRoles);
+            $(".editableModal").show();
         }
     });
 }
 /**
  * 编辑成员
  */
-var flag=true;
+//var flag=true;
 
 function editActor(row, index){
     BootstrapDialog.show({
@@ -99,6 +89,7 @@ function editActor(row, index){
         }],
         onshown: function () {
             fillRoles(achTranRoles);
+            $(".editableModal").show();
             var $actor = $("#actor").selectize();
             var $role = $("#role").selectize();
             var $units = $("#units").selectize();
@@ -114,52 +105,53 @@ function editActor(row, index){
                 restrict: false
             });
             //是否可编辑
-            if(flag) {//可编辑
-                enableSelectize($actor);
-                enableSelectize($role);
-                enableSelectize($units);
-                $("#rank").removeAttr("disabled");
-                $("#marks").removeAttr("disabled");
-                $("#btn-ok").show();
-                $(".editableModal").show();
-            } else {  //不可编辑
-                disableSelectize($actor);
-                disableSelectize($role);
-                disableSelectize($units);
-                $("#rank").attr("disabled", "disabled");
-                $("#marks").attr("disabled", "disabled");
-                $("#btn-ok").attr("disabled", "disabled").hide();
-                $(".editableModal").show();
-            }
-            if(row["staff.id"] == "9998" || row["staff.id"] == "9999"){
-                $("#marks").attr("disabled", "disabled");
-            }
+            //if(flag) {//可编辑
+            //    enableSelectize($actor);
+            //    enableSelectize($role);
+            //    enableSelectize($units);
+            //    $("#rank").removeAttr("disabled");
+            //    $("#marks").removeAttr("disabled");
+            //    $("#btn-ok").show();
+            //    $(".editableModal").show();
+            //} else {  //不可编辑
+            //    disableSelectize($actor);
+            //    disableSelectize($role);
+            //    disableSelectize($units);
+            //    $("#rank").attr("disabled", "disabled");
+            //    $("#marks").attr("disabled", "disabled");
+            //    $("#btn-ok").attr("disabled", "disabled").hide();
+            //    $(".editableModal").show();
+            //}
+            //if(row["staff.id"] == "9998" || row["staff.id"] == "9999"){
+            //    $("#marks").attr("disabled", "disabled");
+            //}
         }
     });
 }
 
 
 /**
+ /**
  * 计算分数
  */
-function getScore() {
-    var jsonData = getFormData('paper');
-    workflow.getScore(jsonData).success(function(data) {
-        if(data["valid"] == false) {
-            errorMsg(data["msg"]);
-            flag = true;
-        }else if(data["hasSum"] == false) {
-            $("#actorTable").bootstrapTable('load', data["actors"]);
-            flag = false;
-            errorMsg(data["msg"]);
-        }else if(data["hasSum"] == true) {
-            $("#score").val(data["sum"]);
-            $("#showSum").html("可分配总分：" + data["sum"] + "分");
-            errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
-            flag = true;
-        }
-    });
-}
+//function getScore() {
+//    var jsonData = getFormData('paper');
+//    workflow.getScore(jsonData).success(function(data) {
+//        if(data["valid"] == false) {
+//            errorMsg(data["msg"]);
+//            flag = true;
+//        }else if(data["hasSum"] == false) {
+//            $("#actorTable").bootstrapTable('load', data["actors"]);
+//            flag = false;
+//            errorMsg(data["msg"]);
+//        }else if(data["hasSum"] == true) {
+//            $("#score").val(data["sum"]);
+//            $("#showSum").html("可分配总分：" + data["sum"] + "分");
+//            errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
+//            flag = true;
+//        }
+//    });
+//}
 
 /**
  * 添加单位
@@ -332,7 +324,7 @@ function delOrder() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.delOrder(order['id']).success(function (data) {
+                workflow.delOrder(entity['id']).success(function (data) {
                     afterSuccess("删除成功！");
                     //window.location.href = '/achTran';
                 });
@@ -345,188 +337,13 @@ function delOrder() {
  * 撤回
  */
 function getOrderBack() {
-    var order = order['id'];
+    var order = entity['id'];
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
         //window.location.href = '/achTran';
     });
 }
 
-/**
- * 添加成员
- */
-function addActor() {
-    BootstrapDialog.show({
-        type: BootstrapDialog.TYPE_PRIMARY,
-        message: function (dialog) {
-            var $message = $('<div></div>');
-            var pageToLoad = dialog.getData('pageToLoad');
-            $message.load(pageToLoad);
-            return $message;
-        },
-        title: "成员信息",
-        data: {
-            'pageToLoad': '/dialog/addActor.html'
-        },
-        closeByBackdrop: false,
-        buttons: [{
-            id: 'btn-oknm',
-            icon: 'glyphicon glyphicon-check',
-            label: '添加',
-            cssClass: 'btn-info',
-            autospin: false,
-            action: function (dialogRef) {
-                if (!isFull()) {
-                    messageModal('请将信息填写完整。');
-                    return;
-                }
-                subActorInfo(null, 1);
-                dialogRef.close();
-            }
-        }],
-        onshown: function () {
-            fillRoles(achTranRoles);
-        }
-    });
-}
-/**
- * 编辑成员
- */
-function editActor(row, index) {
-    BootstrapDialog.show({
-        type: BootstrapDialog.TYPE_PRIMARY,
-        message: function (dialog) {
-            var $message = $('<div></div>');
-            var pageToLoad = dialog.getData('pageToLoad');
-            $message.load(pageToLoad);
-            return $message;
-        },
-        title: "成员信息",
-        data: {
-            'pageToLoad': '/dialog/addActor.html'
-        },
-        closeByBackdrop: false,
-        buttons: [{
-            id: 'btn-ok',
-            icon: 'glyphicon glyphicon-check',
-            label: '保存',
-            cssClass: 'btn-info',
-            autospin: false,
-            action: function (dialogRef) {
-                if (!isFull()) {
-                    messageModal('请将信息填写完整。');
-                    return;
-                }
-                subActorInfo(index, 0);
-                dialogRef.close();
-            }
-        }, {
-            id: 'btn-cancel',
-            icon: 'glyphicon glyphicon-check',
-            label: '关闭',
-            cssClass: 'btn-info',
-            autospin: false,
-            action: function (dialogRef) {
-                dialogRef.close();
-            }
-        }],
-        onshown: function () {
-            fillRoles(achTranRoles);
-            var $actor = $("#actor").selectize();
-            var $role = $("#role").selectize();
-            var $units = $("#units").selectize();
-            addOptionSelectize($actor, [{'id': row["staff.id"], 'name': row["staff.name"], "col": {"value": ""}}]);
-            $actor[0].selectize.setValue(row["staff.id"]);
-            //填充角色
-            DisplayForm($role, row["role"], 0);
-            //填充单位
-            DisplayForm($units, row["unit"], 1);
-            //填充其他
-            $('#actorsInfo').autofill(row, {
-                findbyname: true,
-                restrict: false
-            });
-        }
-    });
-}
-/**
- * 添加单位
- */
-function addUnit() {
-    BootstrapDialog.show({
-        type: BootstrapDialog.TYPE_PRIMARY,
-        message: function (dialog) {
-            var $message = $('<div></div>');
-            var pageToLoad = dialog.getData('pageToLoad');
-            $message.load(pageToLoad);
-            return $message;
-        },
-        title: "参与单位信息",
-        data: {
-            'pageToLoad': '/dialog/addUnit.html'
-        },
-        closeByBackdrop: false,
-        buttons: [{
-            id: 'btn-ok',
-            icon: 'glyphicon glyphicon-check',
-            label: '添加',
-            cssClass: 'btn-info',
-            autospin: false,
-            action: function (dialogRef) {
-                if (!isFull()) {
-                    messageModal('请将信息填写完整。');
-                    return;
-                }
-                subUnitInfo(null);
-                dialogRef.close();
-            }
-        }]
-    });
-}
-/**
- * 编辑单位
- */
-function editUnit(row, index) {
-    BootstrapDialog.show({
-        type: BootstrapDialog.TYPE_PRIMARY,
-        message: function (dialog) {
-            var $message = $('<div></div>');
-            var pageToLoad = dialog.getData('pageToLoad');
-            $message.load(pageToLoad);
-            return $message;
-        },
-        title: "成员信息",
-        data: {
-            'pageToLoad': '/dialog/addUnit.html'
-        },
-        closeByBackdrop: false,
-        buttons: [{
-            id: 'btn-ok',
-            icon: 'glyphicon glyphicon-check',
-            label: '保存',
-            cssClass: 'btn-info',
-            autospin: false,
-            action: function (dialogRef) {
-                if (!isFull()) {
-                    messageModal('请将单位信息填写完整。');
-                    return;
-                }
-                subUnitInfo(index);
-                dialogRef.close();
-            }
-        }],
-        onshown: function () {
-            var $unit = $("#unit").selectize();
-            //填充单位
-            DisplayForm($unit, row["unit"], 1);
-            //填充其他
-            $('#unitInfo').autofill(row, {
-                findbyname: true,
-                restrict: false
-            });
-        }
-    });
-}
 /**
  * 通过
  */
@@ -546,7 +363,7 @@ function approve() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, approveInfo).success(function () {
-                    //window.location.href = '/achTran';
+                    afterSuccess('已通过！');
                 });
             }
         }
@@ -571,6 +388,7 @@ function refuse() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, refuseAwardInfo).success(function () {
+                    afterSuccess('已驳回至学院！');
                     //window.location.href = '/achTran';
                 });
             }

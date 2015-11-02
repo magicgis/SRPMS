@@ -7,13 +7,7 @@
  * 6表示是否获奖
  * @type {Array}
  */
-var actorTemp = [];
-var unitTemp = [];
-var fundTemp = [];
-var Main_Actor;
-var Main_ActorName;
-var replyByCol, replyByDep;
-var $actorTable = $('#actorTable');
+
 //var deptValue=Object();
 //var allSelections =
 //    [
@@ -196,11 +190,11 @@ function actorTran(value, row) {
 }
 /*********************表单||表格的动作和行为****************/
 //表单不可编辑
-function uneditableForm(){
-    $('form input').attr("disabled", "disabled");
-    $('form select').attr("disabled", "disabled");
-    $('.delFiles').hide();
-}
+//function uneditableForm(){
+//    $('form input').attr("disabled", "disabled");
+//    $('form select').attr("disabled", "disabled");
+//    $('.delFiles').hide();
+//}
 function view(index, row, value) {
     {
         return [
