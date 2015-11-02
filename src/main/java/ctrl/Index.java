@@ -176,7 +176,7 @@ public class Index {
 
     @RequestMapping(value = {"achTran/{achAwardId}"}, method = RequestMethod.GET)
     public String achTranEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
-                               @PathVariable("achAwardId") String achAwardId) {
+                              @PathVariable("achAwardId") String achAwardId) {
         AchAward achAward = achAwardService.getById(achAwardId);
         model.addAttribute(achAward);
         return "achTranEdit";
@@ -253,13 +253,6 @@ public class Index {
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "projectEdit";
-            case "book":
-                Book book = bookService.getById(entityId);
-                book.setArgMap(order.getVariableMap());
-                model.addAttribute(book);
-                model.addAttribute("taskId", task.getId());
-                model.addAttribute("taskName", task.getTaskName());
-                return "bookEdit";
             case "achAward":
                 AchAward achAward = achAwardService.getById(entityId);
                 achAward.setArgMap(order.getVariableMap());
@@ -279,6 +272,11 @@ public class Index {
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "paperEdit";
+            case "book":
+                model.addAttribute(order);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "bookEdit";
             default:
                 return "redirect:/allSRInfo";
         }
@@ -306,12 +304,6 @@ public class Index {
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "projectEdit";
-            case "book":
-                Book book = bookService.getById(entityId);
-                book.setArgMap(order.getVariableMap());
-                model.addAttribute("taskId", task.getId());
-                model.addAttribute("taskName", task.getTaskName());
-                return "bookEdit";
             case "achAward":
                 AchAward achAward = achAwardService.getById(entityId);
                 achAward.setArgMap(order.getVariableMap());
@@ -323,6 +315,11 @@ public class Index {
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "paperEdit";
+            case "book":
+                model.addAttribute(order);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "bookEdit";
             default:
                 return "redirect:/allSRInfo";
         }
