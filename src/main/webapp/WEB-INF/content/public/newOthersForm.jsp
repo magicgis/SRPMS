@@ -18,6 +18,7 @@
       </div>
       <div class="widget-body ">
         <div class="widget-main">
+
           <div class="row">
             <div class="form-group col-xs-12 col-sm-6">
               <label class="col-sm-4 control-label no-padding-left"
@@ -51,6 +52,7 @@
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="form-group col-xs-12 col-sm-6">
               <label class="col-sm-4 control-label no-padding-left"

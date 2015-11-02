@@ -109,6 +109,9 @@
                                                         </li>
                                                     </ul>
                                                 </div>
+
+                                                <font size="4" color="black">请输入姓名:</font><input id="keyName" name="keyName" type="text">
+                                                &nbsp;<button class="btn btn-success btn-sm inquiryBtn" type="button">查询</button>
                                             </c:when>
                                             <c:when test="${sessionScope.level == '1'}">
                                                 <div class="btn-group">
@@ -154,6 +157,8 @@
 <!-- /.main-container -->
 <script src='<c:url value="/js/public/public.js"/>'></script>
 <script>
+    var student = [{"id":"9998","name":"在校学生","col":{"value":""}},
+        {"id":"9999","name":"外校人员","col":{"value":""}}];
     var allTable = $('#allEntityTable');
     //根据url载入不同的API
     var entityType = '${type}';//项目类型
@@ -200,7 +205,84 @@
             ].join('');
         }
     }
-
+    $('.inquiryBtn').click(function(){
+        var keyName=$('#keyName').val();
+        console.log(keyName);
+        if(keyName==''){
+            messageModal("请输入姓名！");
+            return;
+        }
+        var keyNumber=keyName;
+        allTable.bootstrapTable('destroy').bootstrapTable({
+            url: "api/entity/"+keyNumber+"/all/all",
+            sidePagination: "server",
+            columns: [{
+                radio: true
+            }, {
+                field: 'id',
+                title: 'id',
+                visible: false
+            }, {
+                field: 'name',
+                title: '科研名称'
+            }, {
+                field: 'WF_Type',
+                title: '科研类型',
+                formatter: "wfTypeTran"
+            }, {
+                field: 'ActorList',
+                title: '人员',
+                formatter: "actorTran"
+            }, {
+                field: 'Status',
+                title: '状态',
+                formatter: 'statusTran'
+            }, {
+                field: 'operator',
+                align: 'center',
+                title: '操作',
+                width: 75
+            }],
+            responseHandler: tableTrans
+        });
+    });
+    $('#keyName').selectize({
+        valueField: 'id',
+        labelField: 'name',
+        searchField: 'name',
+        create: false,
+        preload:true,
+        maxItems: 1,
+        render: {
+            option: function(item, escape) {
+                return '<div>' +
+                        '<span class="name">' + escape(item.name) + '</span>' +
+                        '&nbsp;' + '&nbsp;' +
+                        '<span class="dept">' + escape(item["col"].value || '') + '</span>' +
+                        '</div>';
+            }
+        },
+        load: function(query, callback) {
+            if(!query.length) return callback(student);
+            $.ajax({
+                url: '../api/staff/json',
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    query: query
+                },
+                error: function() {
+                    callback();
+                },
+                success: function(res) {
+                    if(res==undefined||res==null){
+                        return;
+                    }
+                    callback(res);
+                }
+            });
+        }
+    });
 </script>
 
 <c:choose>

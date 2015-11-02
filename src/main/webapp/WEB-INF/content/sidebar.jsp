@@ -139,7 +139,7 @@
                     <ul class="submenu">
 
 
-                        <li>
+                        <li class="processType" id="newMedicineView">
                             <a>
                                 <i class="menu-icon fa fa-medkit"></i>
 
@@ -150,7 +150,7 @@
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="">
+                        <li class="processType" id="newFoodView">
                             <a>
                                 <i class="menu-icon fa fa-birthday-cake"></i>
                                 <span class="menu-text"> 新功能性食品</span>
@@ -158,7 +158,7 @@
 
                             <b class="arrow"></b>
                         </li>
-                        <li class="">
+                        <li class="processType" id="newInstruView">
                             <a>
 
                                 <i class="menu-icon fa fa-stethoscope"></i>
@@ -169,7 +169,7 @@
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="">
+                        <li class="processType" id="newOtherView">
                             <a>
                                 <i class="menu-icon fa fa-cubes"></i>
                                 <span class="menu-text"> 其他新产品 </span>
@@ -279,7 +279,7 @@
                     <ul class="submenu">
 
 
-                        <li>
+                        <li class="entityType" id="newMedicineEntity">
                             <a>
                                 <i class="menu-icon fa fa-medkit"></i>
 
@@ -290,7 +290,7 @@
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="">
+                        <li class="entityType" id="newFoodEntity">
                             <a>
                                 <i class="menu-icon fa fa-birthday-cake"></i>
                                 <span class="menu-text"> 新功能性食品</span>
@@ -298,7 +298,7 @@
 
                             <b class="arrow"></b>
                         </li>
-                        <li class="">
+                        <li class="entityType" id="newInstruEntity">
                             <a>
 
                                 <i class="menu-icon fa fa-stethoscope"></i>
@@ -309,7 +309,7 @@
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="">
+                        <li class="entityType" id="newOtherEntity">
                             <a>
                                 <i class="menu-icon fa fa-cubes"></i>
                                 <span class="menu-text"> 其他新产品 </span>
