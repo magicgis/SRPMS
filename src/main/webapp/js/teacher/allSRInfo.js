@@ -12,7 +12,12 @@ $('#newPaper').click(function () {
         allTable.bootstrapTable("refresh");
     });
 });
-
+$('#newBook').click(function () {
+    workflow.startOrder(userName, "basicProcess_Beta", "book").success(function (data) {
+        afterSuccess("新建成功！,请切换到著作查看");
+        allTable.bootstrapTable("refresh");
+    });
+});
 $('#newMag').click(function () {
     window.open("/magazine");
 });

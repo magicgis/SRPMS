@@ -32,13 +32,13 @@
 
     <jsp:include page="public/jsHeader.jsp"/>
     <style>
-        td.bs-checkbox {
-            display: none;
-        }
+        /*td.bs-checkbox {*/
+            /*display: none;*/
+        /*}*/
 
-        th.bs-checkbox {
-            display: none;
-        }
+        /*th.bs-checkbox {*/
+            /*display: none;*/
+        /*}*/
 
     </style>
 </head>
@@ -77,10 +77,10 @@
                 <div class="row">
                     <form id="book" class="form-horizontal" role="form">
                         <div hidden="hidden">
-                            <%--<input type="text" name="standard.id" id="standardId"/>--%>
-                            <input type="text" name="sum" id="score"/>
-                            <input type="text" name="id" id="bookId" value="${book.id}"/>
-                            <input type="text" name="WF_Type" id="WF_Type" value="book"/>
+                            <input type="text" name="standard.id" id="standardId"/>
+                            <input type="text" name="WF_Task" id="WF_Task"/>
+                            <input type="text" name="WF_Order" id="WF_Order"/>
+                            <input type="text" name="IsComplete" id="IsComplete"/>
                         </div>
                         <div id="newInstrumentsInfo" class="col-xs-12 col-md-6 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
@@ -168,6 +168,7 @@
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="bkReward"
                                                             placeholder="请选择">
+                                                        <option value="${book.bkReward}"></option>
                                                         <option value="1">是</option>
                                                         <option value="0">否</option>
                                                     </select>
@@ -184,6 +185,7 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="row">
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
@@ -205,8 +207,38 @@
                                                            data-date-format="yyyy-mm-dd" placeholder=""
                                                            class="col-xs-12"/>
                                                 </div>
+
                                             </div>
                                         </div>
+
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="col-xs-12 widget-container-col ui-sortable" id="awardedHead">
+                                                    <div class="widget-box transparent ui-sortable-handle"
+                                                         style="opacity: 1;">
+                                                        <div class="widget-header">
+                                                            <h4 class="widget-title">已获奖著作信息</h4>
+
+                                                            <div class="widget-toolbar no-border">
+                                                                <c:if test="${sessionScope.level == '1'}">
+                                                                    <a data-toggle="modal" id="selectAward" class="btn btn-primary btn-sm">
+                                                                        选择已有著作
+                                                                    </a>
+                                                                </c:if>
+                                                            </div>
+                                                        </div>
+                                                        <div class="widget-body">
+                                                            <div class="widget-main">
+                                                                <div class="dd" id="awardList">
+                                                                    <ol class="dd-list" id=""></ol>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="row">
                                             <div class="col-xs-12">
                                                 <div class="col-xs-12 widget-container-col ui-sortable" id="fileHead">
@@ -216,7 +248,7 @@
                                                             <h4 class="widget-title">附件信息</h4>
 
                                                             <div class="widget-toolbar no-border">
-                                                                <c:if test="${sessionScope.level == '3'}">
+                                                                <c:if test="${sessionScope.level == '1'}">
                                                                     <div id="upload">
                                                                     </div>
                                                                 </c:if>
@@ -248,24 +280,15 @@
                                     <div class="widget-main">
                                         <div class="row">
                                             <div id="actorToolbar">
-                                                <c:choose>
-                                                    <c:when test="${sessionScope.level == '3'}">
-                                                        <a data-toggle="modal" id="addActor"
-                                                           class="btn btn-primary btn-sm">添加成员</a>
-                                                    </c:when>
-                                                    <c:when test="${sessionScope.level == '1'}">
-                                                        <a data-toggle="modal" id="getScore"
-                                                           class="btn btn-primary btn-sm">计算分数</a>
-
-                                                    </c:when>
-                                                </c:choose>
+                                                <a data-toggle="modal" id="addActor"
+                                                   class="btn btn-primary btn-sm">添加成员</a>　
+                                                <%--<a data-toggle="modal" id="editActor" class="btn btn-primary btn-sm" style="display: none;">编辑成员</a>--%>
+                                                <a data-toggle="modal" id="getScore"
+                                                   class="btn btn-primary btn-sm">计算分数</a>
                                             </div>
                                             <table id="actorTable"
                                                    data-toolbar="#actorToolbar"
-                                                   data-show-footer="true"
-                                                   data-show-columns="false"
-                                                   data-show-toggle="false">
-                                            </table>
+                                                   data-show-footer="true"></table>
                                         </div>
                                     </div>
                                 </div>
@@ -296,46 +319,62 @@
                     <div class="col-xs-12" id="msg_alert"></div>
                     <div class="row">
                         <div id="formBtn" class="col-xs-12 clearfix">
-                            <div class="pull-left onDel">
-                                <c:if test="${sessionScope.level == '3'}">
-                                    <button class="btn btn-danger tabOrdBtn del" type="button">
-                                        <i class="ace-icon fa fa-trash  bigger-100"></i>
-                                        删除
-                                    </button>
-                                    <button class="btn btn-danger tabOrdBtn orderBack" type="button">
-                                        <i class="ace-icon fa  fa-repeat bigger-100"></i>
-                                        撤回
-                                    </button>
-                                </c:if>
-                            </div>
-                            <div class="pull-right">
-                                <span class="onEdit">
-                                    <button class="confirm btn btn-success tabOrdBtn" type="button">
-                                        <i class="ace-icon fa fa-check bigger-110"></i>
-                                        确认
-                                    </button>
+                            <c:choose>
+                                <c:when test="${sessionScope.level == '1'}">
+                                    <div class="pull-left delAndBack">
+                                        <button class="tabOrdBtn btn btn-danger btn-sm" type="button"
+                                                id="del">
+                                            <i class="ace-icon fa fa-trash  bigger-110"></i>
+                                            删除
+                                        </button>
+                                        <button class="tabOrdBtn btn btn-danger btn-sm orderBack"
+                                                type="button">
+                                            <i class="ace-icon fa  fa-repeat bigger-110"></i>
+                                            撤回
+                                        </button>
+                                    </div>
+                                    <div id="bookBtn" class="pull-right">
+                                        <button class="tabOrdBtn btn btn-info btn-sm back" type="button">
+                                            <i class="ace-icon fa fa-reply  bigger-110"></i>
+                                            返回
+                                        </button>
+                                        <button class="tabOrdBtn btn btn-success btn-sm" type="button"
+                                                id="confirm">
+                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                            确认
+                                        </button>
+                                        <button class="tabOrdBtn btn btn-primary btn-sm" type="button"
+                                                id="save">
+                                            <i class="ace-icon fa fa-save bigger-110"></i>
+                                            保存
+                                        </button>
+                                        <button class="tabOrdBtn btn btn-success btn-sm" type="button"
+                                                id="confirmC">
+                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                            确认
+                                        </button>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="col-md-offset-4 col-md-8">
+                                        <button class="tabOrdBtn btn btn-success" type="button"
+                                                id="Approve">
+                                            <i class="ace-icon fa fa-check bigger-110"></i>
+                                            通过
+                                        </button>
 
-                                    <button class="btn btn-info tabOrdBtn save" type="button">
-                                        <i class="ace-icon fa fa-save bigger-110"></i>
-                                        保存
-                                    </button>
-                                </span>
-                                <span class="onApprove">
-                                    <button class="btn btn-success tabOrdBtn Approve" type="button">
-                                        <i class="ace-icon fa fa-check bigger-110"></i>
-                                        通过
-                                    </button>
+                                        <button class="tabOrdBtn btn back" type="button">
+                                            <i class="ace-icon fa fa-reply  bigger-110"></i>
+                                            返回
+                                        </button>
 
-                                    <button class="btn btn-danger tabOrdBtn Refuse" type="button">
-                                        <i class="ace-icon fa fa-remove bigger-110"></i>
-                                        驳回
-                                    </button>
-                                </span>
-                                <button class="btn btn-success tabOrdBtn back" type="button">
-                                    <i class="ace-icon fa fa-reply  bigger-110"></i>
-                                    返回
-                                </button>
-                            </div>
+                                        <button class="tabOrdBtn btn btn-danger" type="button" id="Refuse">
+                                            <i class="ace-icon fa fa-remove bigger-110"></i>
+                                            驳回
+                                        </button>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div>
@@ -365,23 +404,33 @@
     });
     // 成员，单位，文件
     // todo 取出实体内的额外信息，附件信息也应该在其中。
-    var entity = ${ObjectMapper.writeValueAsString(book)};
-    var all = ${ObjectMapper.writeValueAsString(book.argMap)};
-    var dept = entity['dept'];
+    var entity = ${ObjectMapper.writeValueAsString(order)};
+    var all = entity['variableMap']; // 成员，附件等信息都在里面
+    var latestInfo = all['WF_Latest'];
+    if (latestInfo == undefined) {
+        latestInfo = new Object();
+    }
+    var status = all['Status']; // 获得状态
+    var dept = latestInfo['dept.id'];
     var taskId = '${taskId}';
-    var taskName = '${taskName}';
+    var orderId = entity['id'];
+    var pubType=latestInfo["pubType"];
+   //获得批复
+    var approvalByCol = getApprovalByCol(all);
+    if (approvalByCol !== "") {
+        replyByCol = all[approvalByCol]['replyByCol'];
+    }
+    var approvalByDep = getApprovalByDep(all);
+    if (approvalByDep !== "") {
+        replyByDep = all[approvalByDep]['replyByDep'];
+    }
+
     getPubType();//选择框
     upToLoadFile();//文件上传
     getDept();
-    fullUpInfo(all, entity);//填充
     var filesData;
     if (filesData == null) {
         filesData = {};
-    }
-    if(dept !== null) {  // 显示 所属部门
-        var $dept = $('#dept').selectize();
-        addOptionSelectize($dept, [dept]);
-        DisplayForm($dept, dept['id'], 0);
     }
     $('#actorTable').bootstrapTable({
         columns: [
@@ -425,35 +474,112 @@
             }],
         data: actorTemp
     });
-    $('.back').click(function () {
-        window.history.back();
-    });
+    if (entity != null || !$.isEmptyObject(entity)) {
+        $('form input').val();
+        actorTemp = [];
+        //  赋值 orderId与taskId
+        $("#WF_Order").val(orderId);
+        $('#WF_Task').val(taskId);
+        console.log("orderId"+$("#WF_Order").val());
+        //  赋值 论文类型
+        var $pubType = $("#pubType").selectize();
+        DisplayForm($pubType, pubType, 0);
+
+        if(!isNull(dept)){
+            DisplayForm($('#dept').selectize(), [dept], 0);
+        }//end if
+
+        // 可编辑状态
+        if (status == "Blank" || status == "Uncomplete" || status.indexOf('RefuseByCol') >= 0) {
+            editTableBook();
+            $('#confirm').show();
+            $('#save').show();
+            $('.orderBack').hide();
+            $('#del').show();
+        }
+        // 不可编辑
+        else {
+            unEditTableBook();
+            $('#del').hide();
+            $('#save').hide();
+            if (status == 'Complete' || status == 'WaitForSubmit') { // 确认后和待统一提交还可以撤回
+                $('.orderBack').show();
+            } else {
+                $('.orderBack').hide();
+            }
+            if (status == 'Complete' && window.location.href.indexOf('task')>=0) { // 主负责人确认后，参与人可以确认
+                $('#confirm').show();
+                $('.orderBack').hide();
+            } else {
+                $('#confirm').hide();
+            }
+        } // end if
+
+        // 显示总分
+        var score = latestInfo['sum'];
+        if (score == undefined || score == null || score == "") {
+            $("#showSum").html("");
+        } else {
+            $("#showSum").html("　可分配总分：" + score + "分");
+        }
+        // 显示成员信息
+        if (latestInfo['actors'] != null) {
+            actorTemp = latestInfo['actors'];
+        }
+        $("#actorTable").bootstrapTable('load', actorTemp);
+
+        // 填充表单input
+        $('#book').autofill(latestInfo, {
+            findbyname: true,
+            restrict: false
+        });
+//        filesData=latestInfo['filesData'];
+        // 显示文件信息
+        if (filesData != undefined && filesData != null) {
+            showFiles(filesData);
+        }
+        if (awardedData != undefined && awardedData != null) {
+            scanAwardInfo(awardedData);
+        }
+    }
     //监听 添加成员
     $('#addActor').click(function () {
         addActor();
+    });
+    $('#selectAward').click(function(){
+        addAwarded();
     });
     //监听 分配分数
     $('#getScore').click(function () {
         getScore();
     });
-    //监听 点击保存||确认||撤回||删除
-    $(".save").click(function () {
+    //监听 点击保存
+    $("#save").click(function () {
         save();
     });
-    $(".confirm").click(function () {
+    //监听 点击确认
+    $("#confirm").click(function () {
         confirm();
     });
-    $(".orderBack").click(function () {
-        orderBack();
+    //监听 点击返回
+    $(".back").click(function () {
+        history.go(-1);
     });
-    $(".del").click(function () {
+    //监听 删除
+    $("#del").click(function () {
         delOrder();
     });
-    $(".Approve").click(function () {
+    //监听 点击撤回
+    $(".orderBack").click(function () {
+        getOrderBack();
+    });
+    //监听 点击通过
+    $("#Approve").click(function () {
         Approve();
     });
-    $(".Refuse").click(function () {
-        Refuse();
+    //监听 点击驳回
+    $("#Refuse").click(function () {
+        refuse();
     });
 </script>
 <c:choose>

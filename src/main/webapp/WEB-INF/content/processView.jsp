@@ -110,6 +110,9 @@
                                                         <li id="newPaper">
                                                             <a>论文</a>
                                                         </li>
+                                                        <li id="newBook">
+                                                            <a>著作</a>
+                                                        </li>
                                                         <li id="newMag">
                                                             <a>期刊</a>
                                                         </li>
@@ -615,7 +618,6 @@
                     sidePagination: "server",
                     columns: [{
                         radio: true
-                        //visible:false
                     }, {
                         field: 'id',
                         title: 'id',

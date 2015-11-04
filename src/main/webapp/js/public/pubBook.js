@@ -18,7 +18,7 @@ function subActorInfo(index, flag) {
     var textNumber = $('#textNumber').val();
     //var mark = (marks == "" ? '0' : (marks / units.length).toFixed(2));
     //测试专用
-    //scoreAllocation(marks,index);
+    //scorelatestInfoocation(marks,index);
     actorTemp = getActorsData();
     $.each(units, function (i, value) {
         actorTemp.push({"staff.id": id, "rank": rank, "staff.name": actor,
@@ -70,16 +70,6 @@ function totalMarksFormatter(data) {
             total += +(row.score.toString().substring(0));
         }
     });
-    //测试专用
-    //var tempScore=$('#tempScore').val();
-    var Score=50-total.toFixed(0);
-    if(Score<=0){
-        messageModal("分数分配错误！");
-        return;
-    }
-    $('.testScore').empty();
-    $('#tempScore').val(Score);
-    $('.testScore').append('剩余'+Score+'分');
     return '共' + total.toFixed(0) + "分";
 }
 /**************************获取表格数据************************/
@@ -103,15 +93,96 @@ function getPubType(){
         maxItems: 1
     });
 }
-function fullUpInfo(all,entity){
-    if (!isNull(all)) {
-        getActors();
-        filesData = all['filesData'];
-        Main_Actor = all['Main-Actor'];
-        Main_ActorName = all['Main-ActorName'];
-        replyByCol = all['replyByCol'];
-        replyByDep = all['replyByDep'];
-        $("#actorTable").bootstrapTable('load', actorTemp);
-        showFiles(filesData);
+// 表单不可编辑
+function unEditTableBook() {
+    $('form input').attr("disabled", "disabled");
+    $('form select').attr("disabled", "disabled");
+    var elementlist = document.querySelectorAll('.selectized');
+    $.each(elementlist, function(index, value) {
+        disableSelectize($(value).selectize());
+    });//select
+    $('#addActor').hide();
+    $('#getScore').hide();
+    $('.delFiles').hide();
+    $('#actorTable').bootstrapTable('hideColumn', 'operate');
+    $('#upload').hide();
+    $('.delAwardeds').hide();
+}
+// 表单可编辑
+function editTableBook() {
+    //enableSelectize($type)
+    $('form input').removeAttr("disabled", "disabled");
+    var elementlist = document.querySelectorAll('.selectized');
+    $.each(elementlist, function(index, value) {
+        enableSelectize($(value).selectize());
+    });
+    $('form select').attr("disabled", "disabled");
+    $('form select').removeAttr("disabled", "disabled");
+    $('#addActor').show();
+    $('#getScore').show();
+    $('.delFiles').show();
+    $('#upload').show();
+    $('#actorTable').bootstrapTable('showColumn', 'operate');
+}
+function getUnitsData(){}
+/**
+ * 获得最新的批复
+ * @param data
+ */
+function getApprovalBy(data) {
+    var max = 0;
+    var keyStr = "";
+    for (var key in pData) {
+        var partn = new RegExp('WF_\\d+_Submission');
+        if (partn.test(key)) {
+            var keyValue = parseInt(key.substring(3, key.length - 11));
+            if (max < keyValue) {
+                max = keyValue;
+            }
+        }
+        keyStr = "WF_" + max + "_Submission";
     }
+    return keyStr;
+}
+//增加已获奖著作
+var awardedData;
+if (awardedData == null) {
+    awardedData = {};
+}
+function awardedInfo(){
+    $('#BookAward').on('check.bs.table',function(e, row){
+        awardedData[row["id"]]=row["name"];
+    });
+    $('#BookAward').on('uncheck-all.bs.table',function(e, row){
+        for (var key in awardedData) {
+            if (awardedData[key] == row["id"]) {
+                delete awardedData[key];
+            }
+        }
+    });
+    scanAwardInfo(awardedData);
+}
+function scanAwardInfo(awardedData){
+    for (var key in awardedData) {
+        var bookName = awardedData[key]['name'];
+        $('#downFiles').prepend('<li id="li' + fileId + '" class="dd-item"> ' +
+        '<div class="dd-handle">' +
+        '<font size="1">《' + bookName + '》</font>&nbsp;&nbsp;&nbsp;&nbsp;' +
+        '<div class="pull-right action-buttons">' +
+        '<a class="fd red delAwardeds" style="cursor:pointer" onclick="delAwarded(\'' + key + '\')" >' +
+        '<i class="ace-icon fa fa-trash-o bigger-140"></i>' +
+        '</a>' +
+        '</div>' +
+        '</div> ' +
+        '</li>');
+    }
+}
+function delAwarded(fileId) {
+    /*    $("#li" + fileId).remove();*/
+    for (var key in awardedData) {
+        if (awardedData[key] == fileId) {
+            delete awardedData[key];
+        }
+    }
+    $("#li" + fileId).remove();
 }

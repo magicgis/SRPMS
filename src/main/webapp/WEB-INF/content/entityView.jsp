@@ -205,9 +205,14 @@
             ].join('');
         }
     }
+    $('#keyName').change(function(){
+        var keyName=$('#keyName').val();
+        if(keyName==''){
+            switchEntityView(entityType + "Entity");
+        }
+    });
     $('.inquiryBtn').click(function(){
         var keyName=$('#keyName').val();
-        console.log(keyName);
         if(keyName==''){
             messageModal("请输入姓名！");
             return;

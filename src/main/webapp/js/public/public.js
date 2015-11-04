@@ -498,7 +498,6 @@ function downFile(fileId) {
  */
 function delFile(fileId) {
     /*    $("#li" + fileId).remove();*/
-    console.log(filesData)
     BootstrapDialog.confirm({
         title: '提示！',
         message: '你确定要删除该项吗?',
@@ -653,7 +652,7 @@ function afterSuccess(msg) {
     $('#success_icon').append(msg);
     setTimeout(function () {
         $('#info_alert').empty();
-    }, 1500);
+    }, 2000);
 }
 /**
  * 错误信息

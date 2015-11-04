@@ -497,8 +497,6 @@
 														<i class="ace-icon fa fa-remove bigger-110"></i>
 														驳回
 													</button>
-
-
 												</div>
 											</c:otherwise>
 										</c:choose>

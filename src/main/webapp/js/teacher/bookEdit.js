@@ -2,34 +2,51 @@
  * Created by zheng on 2015/10/12.
  */
 $(function () {
-    disableSelectize($('#pubType').selectize());
-    disableSelectize($('#dept').selectize());
-    uneditableForm();
-    hideUnitOperate();
-    $('.onApprove').hide();
-    $('.onDel').hide();
-    $('#reply-box').hide();
-    $('#reply').hide();
-    init(entity,all,replyByDep,3);
+    // 各种初始化
+    init();
 });
 var flag = true;
+function init() {
+    $('#reply-box').hide();
+    if (status.indexOf('Refuse') >= 0) {
+        $('#reply').show();
+        $('#reply-display').show();
+        var reply = $('#reply-display').children('p');
+        var who = $('#reply-display').children('small');
+        if (status.indexOf("Col") >= 0) {
+            reply.append(replyByCol);
+            who.append("学院批复");
+        } else {
+            $('#del').hide();
+            $('#confirm').hide();
+            $('#save').hide();
+            reply.append(replyByDep);
+            who.append("管理部门批复");
+        }
+    } else {
+        $('#reply').hide();
+    }
+}
+/**
+ * 保存
+ */
 function save() {
-    var send = new Object();
-    send['IsComplete'] = 'false';
-    send['actors'] = getActorsData();
-    workflow.execute(userName, taskId, send).success(function () {
+    $('#IsComplete').val(false);
+    var jsonData = getFormData('book');
+    if (awardedData != null) {
+        jsonData['awardedData'] = awardedData;
+    }
+    workflow.execute(userName, taskId, jsonData).success(function () {
         afterSuccess("保存成功！");
+        window.location.href = '/process-book-all';
     });
-    //console.log(send);
 }
 function confirm() {
-    var status = all['Status'];
-    var send = new Object();
-    if(status == 'Uncomplete'){
-        send['IsComplete'] = 'true';
-        send['actors'] = getActorsData();
+    $('#IsComplete').val(true);
+    var jsonData = getFormData('book');
+    if (awardedData != null) {
+        jsonData['awardedData'] = awardedData;
     }
-    console.log(send);
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '确认?',
@@ -44,22 +61,128 @@ function confirm() {
              * userName,taskId,status
              */
             if (result) {
-                workflow.execute(userName, taskId, send).success(function (data) {
+                workflow.execute(userName, $('#WF_Task').val(), jsonData).success(function (data) {
                     if ("valid" in data) {
                         if (data["valid"] == true) {
                             afterSuccess("确认成功！");
+                            window.location.href = '/process-book-all';
                         } else {
                             errorMsg(data["msg"]);
+                            flag = true;
                         }
                     } else {
                         afterSuccess("确认成功！");
+                        window.location.href = '/process-book-all';
                     }
                 });
             }
         }
     });
 }
-/**************************编辑成员||计算分数||**************************************/
+/**
+ * 撤回order
+ */
+function getOrderBack() {
+
+    window.workflow.getBack(userName, orderId).success(function () {
+        afterSuccess("已撤回");
+        window.location.href = '/process-book-all';
+    });
+}
+/**
+ * 删除order
+ */
+function delOrder() {
+    var order = $("#WF_Order").val();
+    BootstrapDialog.confirm({
+        title: '提示！',
+        message: '你确定要删除该项吗?',
+        type: BootstrapDialog.TYPE_WARNING,
+        closable: true,
+        draggable: true,
+        btnCancelLabel: '取消',
+        btnOKLabel: '确定',
+        btnOKClass: 'btn-warning',
+        callback: function (result) {
+            if (result) {
+                workflow.delOrder(order).success(function () {
+                    afterSuccess("删除成功！");
+                    window.location.href = '/process-book-all';
+                });
+            }
+        }
+    });
+}
+/**************************编辑成员||计算分数||选择已有著作**************************************/
+function addAwarded(){
+    BootstrapDialog.show({
+        type: BootstrapDialog.TYPE_PRIMARY,
+        message: function (dialog) {
+            var $message = $('<div></div>');
+            var pageToLoad = dialog.getData('pageToLoad');
+            $message.load(pageToLoad);
+            return $message;
+        },
+        title: "著作信息",
+        data: {
+            'pageToLoad': '/dialog/bookAward.html'
+        },
+        closeByBackdrop: false,
+        buttons: [{
+            id: 'btn-oknm',
+            icon: 'glyphicon glyphicon-check',
+            label: '确认',
+            cssClass: 'btn-info',
+            autospin: false,
+            action: function (dialogRef) {
+                //if (!isFull()) {
+                //    messageModal('请将信息填写完整。');
+                //    return;
+                //}
+                awardedInfo();
+                dialogRef.close();
+            }
+        }],
+        onshown: function () {
+
+        }
+    });
+}
+function addActor() {
+    BootstrapDialog.show({
+        type: BootstrapDialog.TYPE_PRIMARY,
+        message: function (dialog) {
+            var $message = $('<div></div>');
+            var pageToLoad = dialog.getData('pageToLoad');
+            $message.load(pageToLoad);
+            return $message;
+        },
+        title: "成员信息",
+        data: {
+            'pageToLoad': '/dialog/addActor.html'
+        },
+        closeByBackdrop: false,
+        buttons: [{
+            id: 'btn-oknm',
+            icon: 'glyphicon glyphicon-check',
+            label: '添加',
+            cssClass: 'btn-info',
+            autospin: false,
+            action: function (dialogRef) {
+                if (!isFull()) {
+                    messageModal('请将信息填写完整。');
+                    return;
+                }
+                subActorInfo(null, 1);
+                dialogRef.close();
+            }
+        }],
+        onshown: function () {
+            $('.bookTextNumber').show();
+            fillRoles(bookRoles);
+        }
+    });
+}
 function editActor(row, index) {
     BootstrapDialog.show({
         type: BootstrapDialog.TYPE_PRIMARY,
@@ -137,25 +260,27 @@ function editActor(row, index) {
         }
     });
 }
+/**
+ * 计算分数
+ */
 function getScore() {
-    //alert("###################");
-    $('#actorToolbar').append('<a data-toggle="modal" class="btn btn-white btn-info btn-bold testScore">' +
-    '剩余50分</a><input id="tempScore" value="50" hidden="hidden">');
-    $('#getScore').attr("disabled", "disabled");
-    //var jsonData = getFormData('project');
-    //workflow.getScore(jsonData).success(function (data) {
-    //    if (data["valid"] == false) { // 检验不合格
-    //        errorMsg(data["msg"]);
-    //        flag = true;
-    //    } else if (data["hasSum"] == false) { // 后台分配分数
-    //        $("#actorTable").bootstrapTable('load', data["actors"]);
-    //        flag = false;
-    //        errorMsg(data["msg"]);
-    //    } else if (data["hasSum"] == true) {  // 给总分，负责人分配分数
-    //        $("#score").val(data["sum"]);
-    //        $("#showSum").html("总分：" + data["sum"] + "分");
-    //        errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
-    //        flag = true;
-    //    }
-    //});
+    var jsonData = getFormData('book');
+    workflow.getScore(jsonData).success(function (data) {
+        console.log(data);
+        if (data["valid"] == false) {
+            errorMsg(data["msg"]);
+            flag = true;
+        } else if (data["hasSum"] == false) {
+            $("#actorTable").bootstrapTable('load', data["actors"]);
+            flag = false;
+            errorMsg(data["msg"]);
+        } else if (data["hasSum"] == true) {
+            $("#score").val(data["sum"]);
+            console.log($("#score").val());
+            console.log(data["sum"]);
+            $("#showSum").html("　可分配总分：" + data["sum"] + "分");
+            errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
+            flag = true;
+        }
+    });
 }
