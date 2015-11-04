@@ -166,8 +166,6 @@
     if (level === null) {
         level = 'all';
     }
-
-
     $(function () {
         switchView(srtype + "View");
     });

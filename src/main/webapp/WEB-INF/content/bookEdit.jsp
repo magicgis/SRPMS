@@ -424,7 +424,6 @@
     if (approvalByDep !== "") {
         replyByDep = all[approvalByDep]['replyByDep'];
     }
-
     getPubType();//选择框
     upToLoadFile();//文件上传
     getDept();

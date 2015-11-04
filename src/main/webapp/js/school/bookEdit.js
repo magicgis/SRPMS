@@ -1,7 +1,7 @@
 /**
  * Created by zheng on 2015/10/12.
  */
-$(function() {
+$(function () {
     init();
     unEditTableBook();
 });
@@ -38,9 +38,8 @@ function Approve() {
         btnOKClass: 'btn-ok',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep',taskId, approveInfo).success(function () {
+                workflow.execute('dep', taskId, approveInfo).success(function () {
                     afterSuccess('审批通过！');
-                    //window.location.href = "/book";
                 });
             }
         }

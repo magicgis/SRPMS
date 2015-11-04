@@ -113,8 +113,8 @@ function delOrder() {
         }
     });
 }
-/**************************编辑成员||计算分数||选择已有著作**************************************/
-function addAwarded(){
+/**************************编辑成员||计算分数||选择已有获奖著作**************************************/
+function addAwarded() {
     BootstrapDialog.show({
         type: BootstrapDialog.TYPE_PRIMARY,
         message: function (dialog) {

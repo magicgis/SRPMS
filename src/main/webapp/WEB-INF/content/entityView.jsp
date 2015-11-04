@@ -110,7 +110,9 @@
                                                     </ul>
                                                 </div>
 
-                                                <font size="4" color="black">请输入姓名:</font><input id="keyName" name="keyName" type="text">
+                                                <font size="4" color="black">请输入姓名:</font><input id="keyName"
+                                                                                                 name="keyName"
+                                                                                                 type="text">
                                                 &nbsp;<button class="btn btn-success btn-sm inquiryBtn" type="button">查询</button>
                                             </c:when>
                                             <c:when test="${sessionScope.level == '1'}">
@@ -157,8 +159,8 @@
 <!-- /.main-container -->
 <script src='<c:url value="/js/public/public.js"/>'></script>
 <script>
-    var student = [{"id":"9998","name":"在校学生","col":{"value":""}},
-        {"id":"9999","name":"外校人员","col":{"value":""}}];
+    var student = [{"id": "9998", "name": "在校学生", "col": {"value": ""}},
+        {"id": "9999", "name": "外校人员", "col": {"value": ""}}];
     var allTable = $('#allEntityTable');
     //根据url载入不同的API
     var entityType = '${type}';//项目类型
@@ -166,10 +168,10 @@
     console.log(entityType);
     console.log(level);
     if (entityType === null) {
-	    srtype = 'all';
+        srtype = 'all';
     }
     if (level === null) {
-	    level = 'all';
+        level = 'all';
     }
 
     $(function () {
@@ -205,21 +207,21 @@
             ].join('');
         }
     }
-    $('#keyName').change(function(){
-        var keyName=$('#keyName').val();
-        if(keyName==''){
+    $('#keyName').change(function () {
+        var keyName = $('#keyName').val();
+        if (keyName == '') {
             switchEntityView(entityType + "Entity");
         }
     });
-    $('.inquiryBtn').click(function(){
-        var keyName=$('#keyName').val();
-        if(keyName==''){
+    $('.inquiryBtn').click(function () {
+        var keyName = $('#keyName').val();
+        if (keyName == '') {
             messageModal("请输入姓名！");
             return;
         }
-        var keyNumber=keyName;
+        var keyNumber = keyName;
         allTable.bootstrapTable('destroy').bootstrapTable({
-            url: "api/entity/"+keyNumber+"/all/all",
+            url: "api/entity/" + keyNumber + "/all/all",
             sidePagination: "server",
             columns: [{
                 radio: true
@@ -256,10 +258,10 @@
         labelField: 'name',
         searchField: 'name',
         create: false,
-        preload:true,
+        preload: true,
         maxItems: 1,
         render: {
-            option: function(item, escape) {
+            option: function (item, escape) {
                 return '<div>' +
                         '<span class="name">' + escape(item.name) + '</span>' +
                         '&nbsp;' + '&nbsp;' +
@@ -267,8 +269,8 @@
                         '</div>';
             }
         },
-        load: function(query, callback) {
-            if(!query.length) return callback(student);
+        load: function (query, callback) {
+            if (!query.length) return callback(student);
             $.ajax({
                 url: '../api/staff/json',
                 type: 'get',
@@ -276,11 +278,11 @@
                 data: {
                     query: query
                 },
-                error: function() {
+                error: function () {
                     callback();
                 },
-                success: function(res) {
-                    if(res==undefined||res==null){
+                success: function (res) {
+                    if (res == undefined || res == null) {
                         return;
                     }
                     callback(res);

@@ -5,7 +5,6 @@ $(function () {
     init();
     unEditTableBook();
     $("#upload").hide();
-
 });
 
 function init() {
@@ -27,10 +26,10 @@ function init() {
     }
 }
 //监听 添加金额信息
-function Approve(){
+function Approve() {
     var approveInfo = Object();
-    approveInfo["DecByCol"]=true;
-    approveInfo["replyByCol"]=$('#reply-box').val();
+    approveInfo["DecByCol"] = true;
+    approveInfo["replyByCol"] = $('#reply-box').val();
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '你确认通过吗?',
@@ -54,10 +53,10 @@ function Approve(){
         }
     });
 }
-function Refuse(){
+function Refuse() {
     var refuseInfo = Object();
-    refuseInfo["DecByCol"]=false;
-    refuseInfo["replyByCol"]=$('#reply-box').val();
+    refuseInfo["DecByCol"] = false;
+    refuseInfo["replyByCol"] = $('#reply-box').val();
     BootstrapDialog.confirm({
         title: '警告！',
         message: '你确定要驳回吗?',

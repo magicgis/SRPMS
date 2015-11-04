@@ -2,7 +2,6 @@
  * Created by Administrator on 2015/10/3.
  */
 $(function(){
-
     init(entity,all,replyByDep,2);
 });
 function approve(){

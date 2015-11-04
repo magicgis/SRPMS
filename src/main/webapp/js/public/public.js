@@ -782,7 +782,6 @@ function isMainActor(MainActor, userName) {
  * 教师1||学院2||学校3
  * */
 function init(entity,all,replyByDep,level) {
-    console.log('all',all);
     var process = entity['process'];
     switch (level){
         case 1:
