@@ -1,21 +1,18 @@
 package engine.filter;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
 import entity.Paper;
 import org.snaker.engine.SnakerInterceptor;
 import org.snaker.engine.core.Execution;
-import service.MagService;
-import service.PaperService;
+import service.*;
 import util.StaticFactory;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static util.Trans.getFileData;
+import static util.Trans.moveMap;
 
 /**
  * DATE:2015/3/22
@@ -32,6 +29,8 @@ public class Complete implements SnakerInterceptor {
         MagService magService = (MagService) StaticFactory.getBean(MagService.class);
 //        ConferService conferService = (ConferService) StaticFactory.getBean(ConferService.class);
         PaperService paperService = (PaperService) StaticFactory.getBean(PaperService.class);
+        BaseInfoService baseInfoService = (BaseInfoService) StaticFactory.getBean(BaseInfoService.class);
+        StaRefService staRefService = (StaRefService) StaticFactory.getBean(StaRefService.class);
 
         String orderId = execution.getOrder().getId();
 
@@ -44,15 +43,20 @@ public class Complete implements SnakerInterceptor {
         switch (type) {
             case "paper":
                 Paper paper = new Paper();
-                Map<String, Object> info = (Map<String, Object>) engine.utils.Tool.getLatestArgs(args);
+                Map<String, Object> info = (Map<String, Object>) args.get("WF_0_Submission");
+                //todo 临时措施
+                info.put("score", info.get("sum"));
                 util.Trans.putMapOnObj(paper, info);
-                System.out.println(info.toString());
-                System.out.println(paper.toString());
-                paper.setAttachment((String) info.get("filesData"));
-                JsonFactory factory = new JsonFactory();
-                ObjectMapper mapper = new ObjectMapper(factory);
-                userInfo = (ArrayList) info.get("actors");
-
+                //处理附件信息
+                paper.setAttachment(getFileData(info.get("filesData")));
+                //处理部门信息
+                String deptId = (String) ((Map) info.get("dept")).get("id");
+                paper.setDept(baseInfoService.getById(deptId));
+                //那些不好显示的部分
+                Map argMap = new HashMap();
+                moveMap(info, argMap, Arrays.asList("actors", "filesData", "dept", "mag", "confer", "newspaper"));
+                paper.setArgMap(argMap);
+                //子类进行处理，holy shit
                 if ("magPaper".equals(info.get("type"))) {
                     paper.setMag(magService.getById((Serializable) ((HashMap) info.get("mag")).get("id")));
                 }
@@ -62,11 +66,23 @@ public class Complete implements SnakerInterceptor {
                 }
                 else if ("newsPaper".equals(info.get("type"))) {
 //                    paper.setConfer(conferService.getById((Serializable) info.get("news.id")));
-                    //todo 这儿也需要特殊处理，我艹
+                    //todo 这儿也需要特殊处理，
                 }
+
                 Serializable id = paperService.add(paper);
 
+                userInfo = (ArrayList) info.get("actors");
+                staRefService.insertRelation((String) id, "paper", userInfo);
+
                 break;
+            case "book":
+                break;
+            case "patent":
+                PatentService patentService = (PatentService) StaticFactory.getBean(PatentService.class);
+//                Patent patent = patentService.getById()
+            default:
+                break;
+
 
         }
 

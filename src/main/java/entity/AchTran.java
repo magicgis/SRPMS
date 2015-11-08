@@ -10,6 +10,8 @@ import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import static util.Trans.argMap;
+
 /**
  * Created by guofan on 2015/10/22.
  */
@@ -113,21 +115,7 @@ public class AchTran {
 
     @Transient
     public Map getArgMap() {
-        if (this.arg == null) {
-            return new HashMap();
-        }
-        JsonFactory factory = new JsonFactory();
-        ObjectMapper mapper = new ObjectMapper(factory);
-        TypeReference<HashMap<String, Object>> typeRef
-                = new TypeReference<HashMap<String, Object>>() {
-        };
-        try {
-
-            return mapper.readValue(getArg(), typeRef);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return argMap(this.arg);
     }
 
     public void setArgMap(Map argMap) {

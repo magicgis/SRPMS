@@ -1,14 +1,14 @@
 package entity;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.HashMap;
+import java.math.BigDecimal;
 import java.util.Map;
+
+import static util.Trans.argMap;
 
 /**
  * Created by guofan on 2015/6/10.
@@ -17,20 +17,20 @@ import java.util.Map;
 @Table(name = "paper")
 public class Paper {
     private String id;
-    private String paperType;
+    private String type;
     private String name;
     private String vol;
     private String iss;
     private String bgPage;
     private String pubDate;
-    private Integer score;
+    private BigDecimal score;
     private Integer numWord;
     private String arg;
     private String attachment;
     private Mag mag;
     private Confer confer;
     private Newspaper newspaper;
-    private BaseInfo baseInfo;
+    private BaseInfo dept;
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -44,14 +44,15 @@ public class Paper {
         this.id = id;
     }
 
+    //todo
     @Basic
-    @Column(name = "paper_type")
-    public String getPaperType() {
-        return paperType;
+    @Column(name = "type")
+    public String getType() {
+        return type;
     }
 
-    public void setPaperType(String paperType) {
-        this.paperType = paperType;
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Basic
@@ -106,11 +107,11 @@ public class Paper {
 
     @Basic
     @Column(name = "score")
-    public Integer getScore() {
+    public BigDecimal getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(BigDecimal score) {
         this.score = score;
     }
 
@@ -136,26 +137,12 @@ public class Paper {
 
     @Transient
     public Map getArgMap() {
-        if (this.arg == null) {
-            return new HashMap();
-        }
-        JsonFactory factory = new JsonFactory();
-        ObjectMapper mapper = new ObjectMapper(factory);
-        TypeReference<HashMap<String, Object>> typeRef
-                = new TypeReference<HashMap<String, Object>>() {
-        };
-        try {
-
-            return mapper.readValue(getArg(), typeRef);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return argMap(this.arg);
     }
 
-    public void setArgMap(Map infoMap) {
+    public void setArgMap(Map argMap) {
         try {
-            this.arg = new ObjectMapper().writeValueAsString(infoMap);
+            this.arg = new ObjectMapper().writeValueAsString(argMap);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -179,7 +166,7 @@ public class Paper {
         Paper paper = (Paper) o;
 
         if (id != null ? !id.equals(paper.id) : paper.id != null) return false;
-        if (paperType != null ? !paperType.equals(paper.paperType) : paper.paperType != null) return false;
+        if (type != null ? !type.equals(paper.type) : paper.type != null) return false;
         if (name != null ? !name.equals(paper.name) : paper.name != null) return false;
         if (vol != null ? !vol.equals(paper.vol) : paper.vol != null) return false;
         if (iss != null ? !iss.equals(paper.iss) : paper.iss != null) return false;
@@ -192,14 +179,14 @@ public class Paper {
         if (mag != null ? !mag.equals(paper.mag) : paper.mag != null) return false;
         if (confer != null ? !confer.equals(paper.confer) : paper.confer != null) return false;
         if (newspaper != null ? !newspaper.equals(paper.newspaper) : paper.newspaper != null) return false;
-        return !(baseInfo != null ? !baseInfo.equals(paper.baseInfo) : paper.baseInfo != null);
+        return !(dept != null ? !dept.equals(paper.dept) : paper.dept != null);
 
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (paperType != null ? paperType.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (vol != null ? vol.hashCode() : 0);
         result = 31 * result + (iss != null ? iss.hashCode() : 0);
@@ -212,7 +199,7 @@ public class Paper {
         result = 31 * result + (mag != null ? mag.hashCode() : 0);
         result = 31 * result + (confer != null ? confer.hashCode() : 0);
         result = 31 * result + (newspaper != null ? newspaper.hashCode() : 0);
-        result = 31 * result + (baseInfo != null ? baseInfo.hashCode() : 0);
+        result = 31 * result + (dept != null ? dept.hashCode() : 0);
         return result;
     }
 
@@ -248,11 +235,11 @@ public class Paper {
 
     @ManyToOne
     @JoinColumn(name = "dept", referencedColumnName = "id")
-    public BaseInfo getBaseInfo() {
-        return baseInfo;
+    public BaseInfo getDept() {
+        return dept;
     }
 
-    public void setBaseInfo(BaseInfo baseInfo) {
-        this.baseInfo = baseInfo;
+    public void setDept(BaseInfo dept) {
+        this.dept = dept;
     }
 }

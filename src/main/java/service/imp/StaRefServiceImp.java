@@ -17,6 +17,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static util.Trans.changeTypeName;
+
 @Service
 public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefService {
 
@@ -56,7 +58,7 @@ public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefSe
             String id = (String) getId.invoke(entity);
             HashMap<String, Object> query = new HashMap();
             query.put("entityId", id);
-            query.put("type", type.getSimpleName());
+            query.put("type", type.getSimpleName().toLowerCase());
             ans = staRefDao.findByMapAcc(query);
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,7 +81,7 @@ public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefSe
         Object ans = new Object();
         String type = staRef.getType();
         try {
-            Class x = Class.forName(staRefDao.getClass().getPackage() + "." + type + "Dao");
+            Class x = Class.forName(staRefDao.getClass().getPackage() + "." + changeTypeName(type) + "Dao");
             Object dao = StaticFactory.getBean(x);
             Method getById = x.getMethod("getById");
             ans = getById.invoke(dao, staRef.getEntityId());

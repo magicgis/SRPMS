@@ -1,14 +1,13 @@
 package entity;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.HashMap;
 import java.util.Map;
+
+import static util.Trans.argMap;
 
 /**
  * Created by guofan on 2015/10/11.
@@ -155,21 +154,7 @@ public class Book {
 
     @Transient
     public Map getArgMap() {
-        if (this.arg == null) {
-            return new HashMap();
-        }
-        JsonFactory factory = new JsonFactory();
-        ObjectMapper mapper = new ObjectMapper(factory);
-        TypeReference<HashMap<String, Object>> typeRef
-                = new TypeReference<HashMap<String, Object>>() {
-        };
-        try {
-
-            return mapper.readValue(getArg(), typeRef);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return argMap(this.arg);
     }
 
     public void setArgMap(Map argMap) {

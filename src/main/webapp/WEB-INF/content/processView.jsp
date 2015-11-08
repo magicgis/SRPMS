@@ -278,6 +278,7 @@
                 allTable.bootstrapTable('destroy').bootstrapTable({
                     url: apiUrl("paper"),
                     sidePagination: "server",
+                    flat: "true",
                     columns: [{
                         radio: true
                     }, {
@@ -285,21 +286,21 @@
                         title: 'id',
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.WF_0_Submission.name',
                         title: '论文名称'
                     }, {
-                        field: 'type',
+                        field: 'variableMap.type',
                         title: '论文类别',
                         formatter: "typeTran"
                     }, {
-                        field: 'pubDate',
+                        field: 'variableMap.WF_0_Submission.pubDate',
                         title: '发表日期'
                     }, {
-                        field: 'ActorList',
+                        field: 'variableMap.WF_0_Submission.ActorList',
                         title: '参与者',
                         formatter: "actorTran"
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.Status',
                         title: '状态',
                         formatter: 'statusTran'
                     }, {
@@ -307,15 +308,14 @@
                         align: 'center',
                         title: '操作',
                         formatter: view
-                    }],
-                    responseHandler: tableTrans
+                    }]
                 });
                 break;
             case 'bookView':
                 allTable.bootstrapTable('destroy').bootstrapTable({
                     url: apiUrl("book"),
                     sidePagination: "server",
-                    flat:true,
+                    flat: true,
                     columns: [{
                         radio: true
                     }, {
@@ -331,7 +331,7 @@
                         field: 'pubType',
                         title: '出版类型',
                         sortable: true,
-                        formatter:'pubTypeTrans'
+                        formatter: 'pubTypeTrans'
                     }, {
                         field: 'sumWord',
                         title: '著作总字数',
@@ -341,9 +341,9 @@
                         title: '著作获奖情况',
                         sortable: true
                     }, {
-                        field:'argMap.Main-ActorName',
-                        title:'负责人',
-                        sortable:true
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人',
+                        sortable: true
                     }, {
                         field: 'publisher',
                         title: '出版社',
@@ -405,7 +405,7 @@
                 allTable.bootstrapTable('destroy').bootstrapTable({
                     url: apiUrl('achAward'),
                     sidePagination: "server",
-                    flat:true,
+                    flat: true,
                     columns: [{
                         radio: true
                     }, {
@@ -422,10 +422,10 @@
                         title: '成果类型',
                         sortable: true,
                         formatter: 'typeTran'
-                    },{
+                    }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
-                    },{
+                    }, {
                         field: 'date',
                         title: '获奖时间',
                         sortable: true
@@ -495,17 +495,17 @@
                         sortable: true,
                         visible: false
                     }, {
-                        field:'name',
-                        title:'食品名称',
+                        field: 'name',
+                        title: '食品名称',
                         sortable: true
                     }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
-                    },{
-                        field:'newFoodDate',
-                        title:'获批时间',
+                    }, {
+                        field: 'newFoodDate',
+                        title: '获批时间',
                         sortable: true
-                    },{
+                    }, {
                         field: 'Status',
                         title: '状态',
                         sortable: true,
@@ -527,17 +527,17 @@
                         sortable: true,
                         visible: false
                     }, {
-                        field:'name',
-                        title:'食品名称',
+                        field: 'name',
+                        title: '食品名称',
                         sortable: true
-                    },{
-                        field:'newInstruDate',
-                        title:'获批时间',
+                    }, {
+                        field: 'newInstruDate',
+                        title: '获批时间',
                         sortable: true
-                    } ,{
+                    }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
-                    },{
+                    }, {
                         field: 'Status',
                         title: '状态',
                         sortable: true,
@@ -547,37 +547,37 @@
                 });
                 break;
             case 'newMedicineView':
-            allTable.bootstrapTable('destroy').bootstrapTable({
-                url: entityApiUrl('newMedicine'),
-                sidePagination: "server",
-                flat: true,
-                columns: [{
-                    radio: true
-                }, {
-                    field: 'id',
-                    title: 'id',
-                    sortable: true,
-                    visible: false
-                }, {
-                    field:'name',
-                    title:'药品名称',
-                    sortable: true
-                },{
-                    field:'date',
-                    title:'获批时间',
-                    sortable: true
-                } ,{
-                    field: 'argMap.Main-ActorName',
-                    title: '负责人'
-                },{
-                    field: 'Status',
-                    title: '状态',
-                    sortable: true,
-                    formatter: 'statusTran'
-                }],
-                responseHandler: tableTrans
-            });
-            break;
+                allTable.bootstrapTable('destroy').bootstrapTable({
+                    url: entityApiUrl('newMedicine'),
+                    sidePagination: "server",
+                    flat: true,
+                    columns: [{
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '药品名称',
+                        sortable: true
+                    }, {
+                        field: 'date',
+                        title: '获批时间',
+                        sortable: true
+                    }, {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'Status',
+                        title: '状态',
+                        sortable: true,
+                        formatter: 'statusTran'
+                    }],
+                    responseHandler: tableTrans
+                });
+                break;
             case 'newOtherView':
                 allTable.bootstrapTable('destroy').bootstrapTable({
                     url: entityApiUrl('newOther'),
@@ -591,17 +591,17 @@
                         sortable: true,
                         visible: false
                     }, {
-                        field:'name',
-                        title:'产品名称',
+                        field: 'name',
+                        title: '产品名称',
                         sortable: true
-                    },{
-                        field:'date',
-                        title:'获批时间',
+                    }, {
+                        field: 'date',
+                        title: '获批时间',
                         sortable: true
-                    } ,{
+                    }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
-                    },{
+                    }, {
                         field: 'Status',
                         title: '状态',
                         sortable: true,

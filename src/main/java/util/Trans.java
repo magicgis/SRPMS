@@ -1,8 +1,13 @@
 package util;
 
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -112,7 +117,20 @@ public class Trans {
             if (fdname != null && map.containsKey(fdname)) {
                 try {
                     if (!(map.get(fdname) instanceof Map)) {
-                        method.invoke(obj, map.get(fdname));
+                        Class type = method.getParameterTypes()[0];
+                        System.out.println(type.getSimpleName());
+                        if (String.class.equals(type)) {
+                            method.invoke(obj, (String) map.get(fdname));
+                        }
+                        else if (BigDecimal.class.equals(type)) {
+                            method.invoke(obj, BigDecimal.valueOf(Double.valueOf((String) map.get(fdname))));
+                        }
+                        else if (Integer.class.equals(type)) {
+                            method.invoke(obj, Integer.valueOf((String) map.get(fdname)));
+                        }
+                        else {
+                            method.invoke(obj, map.get(fdname));
+                        }
                     }
                 } catch (Exception e) {
                     continue;
@@ -130,6 +148,21 @@ public class Trans {
         if (src != null) {
             StringBuffer sb = new StringBuffer(src);
             sb.setCharAt(0, Character.toLowerCase(sb.charAt(0)));
+            return sb.toString();
+        }
+        else {
+            return null;
+        }
+    }
+
+    /**
+     * @param src 源字符串
+     * @return 字符串，将src的第一个字母转换为大写，src为空时返回null
+     */
+    public static String changeTypeName(String src) {
+        if (src != null) {
+            StringBuffer sb = new StringBuffer(src);
+            sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
             return sb.toString();
         }
         else {
@@ -214,6 +247,52 @@ public class Trans {
             ans.put(list.get(i).toString(), list.get(i + 1));
         }
         return ans;
+    }
+
+    static public HashMap argMap(String arg) {
+        if (arg == null) {
+            return new HashMap();
+        }
+        JsonFactory factory = new JsonFactory();
+        ObjectMapper mapper = new ObjectMapper(factory);
+        TypeReference<HashMap<String, Object>> typeRef
+                = new TypeReference<HashMap<String, Object>>() {
+        };
+        try {
+            return mapper.readValue(arg, typeRef);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    static public String getFileData(Object fileData) {
+        List<Map> files = new ArrayList<>();
+        try {
+            files = (List<Map>) fileData;
+        } catch (ClassCastException e) {
+            files.add((Map) fileData);
+        }
+        String atts = null;
+        for (Map file : files) {
+            Map temp = (Map) file.get(file.keySet().toArray()[0]);
+            String fileKey = (String) temp.get("fileKey");
+            if (atts == null) {
+                atts = fileKey;
+            }
+            else {
+                atts = atts + "," + fileKey;
+            }
+        }
+        return atts;
+    }
+
+    static public void moveMap(Map src, Map target, List<String> keys) {
+        for (String key : keys) {
+            if (src.get(key) != null) {
+                target.put(key, src.get(key));
+            }
+        }
     }
 
 }
