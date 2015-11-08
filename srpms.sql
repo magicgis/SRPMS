@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50625
 File Encoding         : 65001
 
-Date: 2015-10-11 01:44:21
+Date: 2015-11-09 06:27:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,9 +31,9 @@ CREATE TABLE `ach_appraisal` (
   `way` varchar(255) DEFAULT NULL,
   `score` int(11) DEFAULT NULL,
   `standard` varchar(255) DEFAULT NULL,
-  `arg` varchar(255) DEFAULT NULL,
+  `arg` varchar(3000) DEFAULT NULL,
   `ach_type` varchar(255) DEFAULT NULL,
-  `is_union` int(11) DEFAULT NULL,
+  `process` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ach_appr_fk1` (`dept`),
   KEY `ach_appr_fk2` (`standard`),
@@ -53,18 +53,50 @@ CREATE TABLE `ach_award` (
   `id` varchar(255) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `dept` varchar(255) DEFAULT NULL,
+  `standard` varchar(255) DEFAULT NULL,
   `date` varchar(255) DEFAULT NULL,
   `unit` varchar(255) DEFAULT NULL,
   `result` varchar(255) DEFAULT NULL,
   `way` varchar(255) DEFAULT NULL,
   `score` int(11) DEFAULT NULL,
-  `standard` varchar(255) DEFAULT NULL,
-  `arg` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `arg` varchar(3000) DEFAULT NULL,
+  `process` varchar(255) DEFAULT NULL,
+  `ach_type` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ach_award_fk1` (`dept`),
+  KEY `ach_award_fk2` (`standard`),
+  CONSTRAINT `ach_award_fk1` FOREIGN KEY (`dept`) REFERENCES `base_info` (`id`),
+  CONSTRAINT `ach_award_fk2` FOREIGN KEY (`standard`) REFERENCES `standard` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ach_award
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for ach_tran
+-- ----------------------------
+DROP TABLE IF EXISTS `ach_tran`;
+CREATE TABLE `ach_tran` (
+  `id` varchar(255) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `date` varchar(255) DEFAULT NULL,
+  `dept` varchar(255) DEFAULT NULL,
+  `standard` varchar(255) DEFAULT NULL,
+  `actual_money` varchar(255) DEFAULT NULL,
+  `money` varchar(255) DEFAULT NULL,
+  `score` int(11) DEFAULT NULL,
+  `process` varchar(255) DEFAULT NULL,
+  `arg` varchar(2000) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ach_tran_fk2` (`standard`),
+  KEY `ach_tran_fk1` (`dept`),
+  CONSTRAINT `ach_tran_fk1` FOREIGN KEY (`dept`) REFERENCES `base_info` (`id`),
+  CONSTRAINT `ach_tran_fk2` FOREIGN KEY (`standard`) REFERENCES `standard` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ach_tran
 -- ----------------------------
 
 -- ----------------------------
@@ -81,15 +113,8 @@ CREATE TABLE `attachment` (
 -- ----------------------------
 -- Records of attachment
 -- ----------------------------
-INSERT INTO `attachment` VALUES ('40280e815032f9d8015032fd49530000', null, '2015-10-04-21-14-31-616.doc');
-INSERT INTO `attachment` VALUES ('40280e815032f9d80150330b0bfc0001', null, '2015-10-04-21-29-33-404.doc');
-INSERT INTO `attachment` VALUES ('40280e81503314920150331718590000', null, '2015-10-04-21-42-42-993.doc');
-INSERT INTO `attachment` VALUES ('40280e81503b02b301503b47f43b0000', null, '2015-10-06-11-53-02-744.doc');
-INSERT INTO `attachment` VALUES ('40280e81503b02b301503b4e6dc10001', null, '2015-10-06-12-00-07-89.pdf');
-INSERT INTO `attachment` VALUES ('40280e81504064f9015040887f020000', null, '2015-10-07-12-21-38-652.doc');
-INSERT INTO `attachment` VALUES ('40280e81504147930150415728e50000', null, '2015-10-07-16-07-22-588.docx');
-INSERT INTO `attachment` VALUES ('40280e8150414793015041579cd90001', null, '2015-10-07-16-07-52-254.doc');
-INSERT INTO `attachment` VALUES ('40280e81504147930150418b36dc0002', null, '2015-10-07-17-04-14-26.pdf');
+INSERT INTO `attachment` VALUES ('4028e38150e872070150e875b85c0000', null, '2015-11-09-02-57-20-445.docx');
+INSERT INTO `attachment` VALUES ('4028e38150e8b40f0150e8cdbee80000', null, '2015-11-09-04-33-29-305.doc');
 
 -- ----------------------------
 -- Table structure for base_info
@@ -298,6 +323,55 @@ CREATE TABLE `confer` (
 
 -- ----------------------------
 -- Records of confer
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for food
+-- ----------------------------
+DROP TABLE IF EXISTS `food`;
+CREATE TABLE `food` (
+  `id` varchar(255) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `date` varchar(255) DEFAULT NULL,
+  `dept` varchar(255) DEFAULT NULL,
+  `standard` varchar(255) DEFAULT NULL,
+  `product__no` varchar(255) DEFAULT NULL,
+  `score` int(11) DEFAULT NULL,
+  `process` varchar(255) DEFAULT NULL,
+  `args` varchar(2000) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `food_fk2` (`standard`),
+  KEY `food_fk1` (`dept`),
+  CONSTRAINT `food_fk1` FOREIGN KEY (`dept`) REFERENCES `base_info` (`id`),
+  CONSTRAINT `food_fk2` FOREIGN KEY (`standard`) REFERENCES `standard` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of food
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for instrument
+-- ----------------------------
+DROP TABLE IF EXISTS `instrument`;
+CREATE TABLE `instrument` (
+  `id` varchar(255) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `dept` varchar(255) DEFAULT NULL,
+  `standard` varchar(255) DEFAULT NULL,
+  `production_no` varchar(255) DEFAULT NULL,
+  `score` int(11) DEFAULT NULL,
+  `process` varchar(255) DEFAULT NULL,
+  `args` varchar(2000) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `instrument_fk2` (`standard`),
+  KEY `instrument_fk1` (`dept`),
+  CONSTRAINT `instrument_fk1` FOREIGN KEY (`dept`) REFERENCES `base_info` (`id`),
+  CONSTRAINT `instrument_fk2` FOREIGN KEY (`standard`) REFERENCES `standard` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of instrument
 -- ----------------------------
 
 -- ----------------------------
@@ -22794,6 +22868,36 @@ INSERT INTO `mag` VALUES ('40280e814ffbf601014ffbf8797c0000', null, null, '1013'
 INSERT INTO `mag` VALUES ('40280e814ffbf601014ffbf9a09f0001', 'awfeawef', null, '1013', 'efaw', 'fawe', 'fawefaw', 'efawef', null, null, null);
 
 -- ----------------------------
+-- Table structure for medicine
+-- ----------------------------
+DROP TABLE IF EXISTS `medicine`;
+CREATE TABLE `medicine` (
+  `id` varchar(255) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `date` varchar(255) DEFAULT NULL,
+  `dept` varchar(255) DEFAULT NULL,
+  `standard` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `child_type` varchar(255) DEFAULT NULL,
+  `stage` varchar(255) DEFAULT NULL,
+  `clin_code` varchar(255) DEFAULT NULL,
+  `prod_code` varchar(255) DEFAULT NULL,
+  `med_certid` varchar(255) DEFAULT NULL,
+  `score` int(11) DEFAULT NULL,
+  `process` varchar(255) DEFAULT NULL,
+  `args` varchar(2000) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `med_fk1` (`dept`),
+  KEY `med_fk2` (`standard`),
+  CONSTRAINT `med_fk1` FOREIGN KEY (`dept`) REFERENCES `base_info` (`id`),
+  CONSTRAINT `med_fk2` FOREIGN KEY (`standard`) REFERENCES `standard` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of medicine
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for newspaper
 -- ----------------------------
 DROP TABLE IF EXISTS `newspaper`;
@@ -22831,6 +22935,30 @@ CREATE TABLE `ordactor` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for others
+-- ----------------------------
+DROP TABLE IF EXISTS `others`;
+CREATE TABLE `others` (
+  `id` varchar(255) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `dept` varchar(255) DEFAULT NULL,
+  `standard` varchar(255) DEFAULT NULL,
+  `production_no` varchar(255) DEFAULT NULL,
+  `score` int(11) DEFAULT NULL,
+  `process` varchar(255) DEFAULT NULL,
+  `args` varchar(2000) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `others_fk2` (`standard`),
+  KEY `others_fk1` (`dept`),
+  CONSTRAINT `others_fk1` FOREIGN KEY (`dept`) REFERENCES `base_info` (`id`),
+  CONSTRAINT `others_fk2` FOREIGN KEY (`standard`) REFERENCES `standard` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of others
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for paper
 -- ----------------------------
 DROP TABLE IF EXISTS `paper`;
@@ -22839,13 +22967,13 @@ CREATE TABLE `paper` (
   `confer` varchar(255) DEFAULT NULL,
   `mag` varchar(255) DEFAULT NULL,
   `newspaper` varchar(255) DEFAULT NULL,
-  `paper_type` tinyint(1) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `vol` varchar(255) DEFAULT NULL,
   `iss` varchar(255) DEFAULT NULL,
   `bg_page` varchar(255) DEFAULT NULL,
   `pub_date` varchar(255) DEFAULT NULL,
-  `score` int(11) DEFAULT NULL,
+  `score` decimal(11,0) DEFAULT NULL,
   `dept` varchar(255) DEFAULT NULL,
   `num_word` int(11) DEFAULT NULL,
   `arg` varchar(3000) DEFAULT NULL,
@@ -22991,8 +23119,8 @@ CREATE TABLE `sta_ref` (
   `id` varchar(255) NOT NULL,
   `staff` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
-  `role` varchar(255) DEFAULT NULL,
-  `score` double(255,0) DEFAULT NULL,
+  `role` int(255) DEFAULT NULL,
+  `score` decimal(30,0) DEFAULT NULL,
   `unit` varchar(255) DEFAULT NULL,
   `entity_id` varchar(255) DEFAULT NULL,
   `arg` varchar(255) DEFAULT NULL,
@@ -23034,7 +23162,7 @@ CREATE TABLE `staff` (
 -- Records of staff
 -- ----------------------------
 INSERT INTO `staff` VALUES ('0001', '张岳', '110001', '110001', '412726199105083643', '110001', null, null, null, null, null);
-INSERT INTO `staff` VALUES ('10001', 'teacher', '110001', '110001', null, null, null, null, null, null, null);
+INSERT INTO `staff` VALUES ('10001', 'teacher', '110001', '110001', '111111111111111111', '110004', 'edu', 'ganwei', '13001', null, null);
 INSERT INTO `staff` VALUES ('10002', 'college', '110001', '110001', null, null, null, null, null, null, null);
 INSERT INTO `staff` VALUES ('10003', 'school', '110001', '110001', null, null, null, null, null, null, null);
 INSERT INTO `staff` VALUES ('1001', '汪华', '120012', '110001', '42010**********510', null, null, '行政人员', null, null, null);
@@ -24848,6 +24976,80 @@ INSERT INTO `standard` VALUES ('1019', '论文', '{\"papertype\":\"会议\",\"ty
 INSERT INTO `standard` VALUES ('1020', '论文', '{\"papertype\":\"报刊\",\"type\":\"中文报刊\",\"col_type\":\"一类报刊\",\"memo\":\"\"}', '3000', null, '50');
 INSERT INTO `standard` VALUES ('1021', '论文', '{\"papertype\":\"报刊\",\"type\":\"中文报刊\",\"col_type\":\"一类报刊\",\"memo\":\"\"}', '3000', null, '40');
 INSERT INTO `standard` VALUES ('1022', '论文', '{\"papertype\":\"报刊\",\"type\":\"中文报刊\",\"col_type\":\"二类刊物二类报刊\",\"memo\":\"\"}', '5000', null, '5');
+INSERT INTO `standard` VALUES ('2001', '项目未获立项', '{\"projtype\":\"科研项目\",\"projorig\":\"国家自然科学基金（面上、青年）、国家社科基金一般项目\"}', null, '3', '10');
+INSERT INTO `standard` VALUES ('2002', '项目未获立项', '{\"projtype\":\"团队项目\",\"projorig\":\"国家自然科学基金创新研究群体、重点（大）项目\"}', null, '5', '50');
+INSERT INTO `standard` VALUES ('3001', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家最高科学技术奖\"}', null, '1', '3000');
+INSERT INTO `standard` VALUES ('3002', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家自然科学奖特等奖\"}', null, null, '2000');
+INSERT INTO `standard` VALUES ('3003', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家自然科学奖一等奖\"}', null, '5', '1000');
+INSERT INTO `standard` VALUES ('3004', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家自然科学奖二等奖\"}', null, '5', '700');
+INSERT INTO `standard` VALUES ('3005', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家技术发明奖特等奖\"}', null, null, '2000');
+INSERT INTO `standard` VALUES ('3006', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家技术发明奖一等奖\"}', null, '6', '1000');
+INSERT INTO `standard` VALUES ('3007', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家技术发明奖二等奖\"}', null, '6', '700');
+INSERT INTO `standard` VALUES ('3008', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家科技进步奖特等奖\"}', null, null, '2000');
+INSERT INTO `standard` VALUES ('3009', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家科技进步奖一等奖\"}', null, '15', '1000');
+INSERT INTO `standard` VALUES ('3010', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家科技进步奖二等奖\"}', null, '10', '700');
+INSERT INTO `standard` VALUES ('3011', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省科技奖科学技术突出贡献奖\"}', null, '1', '800');
+INSERT INTO `standard` VALUES ('3012', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省自然科学奖特等奖\"}', null, null, '800');
+INSERT INTO `standard` VALUES ('3013', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省自然科学奖一等奖\"}', null, '5', '500');
+INSERT INTO `standard` VALUES ('3014', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省自然科学奖二等奖（国家一级学会一等奖）\"}', null, '5', '300');
+INSERT INTO `standard` VALUES ('3015', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省自然科学奖三等奖（国家一级学会二等奖）\"}', null, '5', '200');
+INSERT INTO `standard` VALUES ('3016', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术发明奖特等奖\"}', null, null, '800');
+INSERT INTO `standard` VALUES ('3017', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术发明奖一等奖\"}', null, '6', '500');
+INSERT INTO `standard` VALUES ('3018', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术发明奖二等奖（国家一级学会一等奖）\"}', null, '6', '300');
+INSERT INTO `standard` VALUES ('3019', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术发明奖三等奖（国家一级学会二等奖）\"}', null, '6', '200');
+INSERT INTO `standard` VALUES ('3020', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术成果推广奖特等奖\"}', null, null, '800');
+INSERT INTO `standard` VALUES ('3021', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术成果推广奖一等奖\"}', null, '20', '500');
+INSERT INTO `standard` VALUES ('3022', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术成果推广奖二等奖（国家一级学会一等奖）\"}', null, '14', '300');
+INSERT INTO `standard` VALUES ('3023', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术成果推广奖三等奖（国家一级学会二等奖）\"}', null, '8', '200');
+INSERT INTO `standard` VALUES ('3024', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省科技进步奖特等奖\"}', null, '50', '800');
+INSERT INTO `standard` VALUES ('3025', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省科技进步奖一等奖\"}', null, '15', '500');
+INSERT INTO `standard` VALUES ('3026', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省科技进步奖二等奖（国家一级学会一等奖）\"}', null, '10', '300');
+INSERT INTO `standard` VALUES ('3027', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省科技进步奖三等奖（国家一级学会二等奖）\"}', null, '7', '200');
+INSERT INTO `standard` VALUES ('3028', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"武汉市科技重大贡献奖\"}', null, '1', '400');
+INSERT INTO `standard` VALUES ('3029', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"武汉市一等奖\"}', null, '15', '300');
+INSERT INTO `standard` VALUES ('3030', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"武汉市二等奖\"}', null, '10', '200');
+INSERT INTO `standard` VALUES ('3031', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"武汉市三等奖\"}', null, '7', '100');
+INSERT INTO `standard` VALUES ('3032', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"国家级教学成果特等奖\"}', null, '8', '500');
+INSERT INTO `standard` VALUES ('3033', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"国家级教学成果一等奖\"}', null, '8', '300');
+INSERT INTO `standard` VALUES ('3034', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"国家级教学成果二等奖\"}', null, '7', '200');
+INSERT INTO `standard` VALUES ('3035', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教学成果特等奖\"}', null, '8', '300');
+INSERT INTO `standard` VALUES ('3036', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教学成果一等奖\"}', null, '8', '200');
+INSERT INTO `standard` VALUES ('3037', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教学成果二等奖\"}', null, '8', '150');
+INSERT INTO `standard` VALUES ('3038', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教学成果三等奖\"}', null, '8', '100');
+INSERT INTO `standard` VALUES ('3039', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教育厅、全国高教学会及其他厅局级教学成果一等奖\"}', null, '8', '50');
+INSERT INTO `standard` VALUES ('3040', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教育厅、全国高教学会及其他厅局级教学成果二等奖\"}', null, '8', '30');
+INSERT INTO `standard` VALUES ('3041', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教育厅、全国高教学会及其他厅局级教学成果三等奖\"}', null, '8', '20');
+INSERT INTO `standard` VALUES ('3042', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"厅局级以上各类教学论文奖一等奖\"}', null, '5', '10');
+INSERT INTO `standard` VALUES ('3043', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"厅局级以上各类教学论文奖二等奖\"}', null, '5', '8');
+INSERT INTO `standard` VALUES ('3044', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"厅局级以上各类教学论文奖三等奖\"}', null, '5', '5');
+INSERT INTO `standard` VALUES ('3045', '成果', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"省部级哲学社会科学成果一等奖\"}', null, '5', '500');
+INSERT INTO `standard` VALUES ('3046', '成果', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"省部级哲学社会科学成果二等奖\"}', null, '5', '300');
+INSERT INTO `standard` VALUES ('3047', '成果', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"省部级哲学社会科学成果三等奖\"}', null, '5', '200');
+INSERT INTO `standard` VALUES ('3048', '成果', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"厅局级哲学社会科学成果一等奖\"}', null, '4', '200');
+INSERT INTO `standard` VALUES ('3049', '成果', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"厅局级哲学社会科学成果二等奖\"}', null, '3', '100');
+INSERT INTO `standard` VALUES ('3050', '成果', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"厅局级哲学社会科学成果三等奖\"}', null, '2', '80');
+INSERT INTO `standard` VALUES ('3051', '成果', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"湖北省发展研究奖一等奖\"}', null, '5', '100');
+INSERT INTO `standard` VALUES ('3052', '成果', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"湖北省发展研究奖二等奖\"}', null, '4', '50');
+INSERT INTO `standard` VALUES ('3053', '成果', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"湖北省发展研究奖三等奖\"}', null, '3', '30');
+INSERT INTO `standard` VALUES ('3054', '成果', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"武汉市发展研究奖一等奖\"}', null, '4', '50');
+INSERT INTO `standard` VALUES ('3055', '成果', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"武汉市发展研究奖二等奖\"}', null, '3', '30');
+INSERT INTO `standard` VALUES ('3056', '成果', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"武汉市发展研究奖三等奖\"}', null, '2', '20');
+INSERT INTO `standard` VALUES ('4001', '成果鉴定', '{\"jdprop\":\"自然科学\",\"jdtype\":\"国际领先\"}', null, '20', '200');
+INSERT INTO `standard` VALUES ('4002', '成果鉴定', '{\"jdprop\":\"自然科学\",\"jdtype\":\"国际先进\"}', null, '20', '100');
+INSERT INTO `standard` VALUES ('4003', '成果鉴定', '{\"jdprop\":\"自然科学\",\"jdtype\":\"国内领先\"}', null, '20', '50');
+INSERT INTO `standard` VALUES ('4004', '成果鉴定', '{\"jdprop\":\"自然科学\",\"jdtype\":\"国内先进\"}', null, '20', '20');
+INSERT INTO `standard` VALUES ('4005', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"国家级优秀\"}', null, '8', '150');
+INSERT INTO `standard` VALUES ('4006', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"国家级良好\"}', null, '8', '80');
+INSERT INTO `standard` VALUES ('4007', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"国家级合格\"}', null, '8', '30');
+INSERT INTO `standard` VALUES ('4008', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"省部级优秀\"}', null, '8', '100');
+INSERT INTO `standard` VALUES ('4009', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"省部级良好\"}', null, '8', '50');
+INSERT INTO `standard` VALUES ('4010', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"省部级合格\"}', null, '8', '20');
+INSERT INTO `standard` VALUES ('5001', '未获批', '{\"type\":\"自然科学类\",\"awdgrade\":\"国家奖励\"}', null, '5', '100');
+INSERT INTO `standard` VALUES ('5002', '未获批', '{\"type\":\"自然科学类\",\"awdgrade\":\"湖北省奖励\"}', null, '4', '50');
+INSERT INTO `standard` VALUES ('5003', '未获批', '{\"type\":\"自然科学类\",\"awdgrade\":\"武汉市奖励\"}', null, '3', '30');
+INSERT INTO `standard` VALUES ('5004', '未获批', '{\"type\":\"人文社科类\",\"awdgrade\":\"国家奖励\"}', null, '5', '100');
+INSERT INTO `standard` VALUES ('5005', '未获批', '{\"type\":\"人文社科类\",\"awdgrade\":\"湖北省奖励\"}', null, '4', '50');
+INSERT INTO `standard` VALUES ('5006', '未获批', '{\"type\":\"人文社科类\",\"awdgrade\":\"武汉市奖励\"}', null, '3', '30');
 
 -- ----------------------------
 -- Table structure for url
@@ -24918,7 +25120,7 @@ INSERT INTO `user` VALUES ('college', '10002', null, '90d1d29a98ad49da6e695e3de2
 INSERT INTO `user` VALUES ('school', '10003', null, '2e38ebbd299251f5bd03b8f012ef1957', '3', '1');
 INSERT INTO `user` VALUES ('teacher', '10001', null, '3d9f62093962bbbb2157143ab41471c0', '1', '1');
 INSERT INTO `user` VALUES ('test', '0001', null, '47ec2dd791e31e2ef2076caf64ed9b3d', '1', '1');
-INSERT INTO `user` VALUES ('xgfan', '1003', null, '90b1f77d807d966cfd7205c6b4f989af', '1', '1');
+INSERT INTO `user` VALUES ('xgfan', '1003', null, '90b1f77d807d966cfd7205c6b4f989af', '1', '0');
 
 -- ----------------------------
 -- Table structure for wf_cc_order
