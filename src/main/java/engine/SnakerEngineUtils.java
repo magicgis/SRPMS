@@ -270,11 +270,6 @@ public class SnakerEngineUtils implements Engine {
         Map<String, Object> orderArg = snakerEngine.query().getOrder(orderId).getVariableMap();
         /*获取Order里面的顺序*/
         int flowOrder = 0;
-        for (String key : orderArg.keySet()) {
-            if (orderArg.get(key) instanceof Map && key.startsWith("WF")) {
-                flowOrder++;
-            }
-        }
         String flowOderStr = "WF_" + Integer.toString(flowOrder) + "_" + task.getTaskName();
         Map<String, Object> temp = new HashMap<String, Object>();
         if (task.getTaskName().equals("Submission")) {
@@ -285,9 +280,24 @@ public class SnakerEngineUtils implements Engine {
 
         /*把此轮的参数放入Order*/
         snakerEngine.order().addVariable(orderId, temp);
+        Map fxxkMyself = new HashMap();
+
+        if (args.containsKey("IsComplete")) {
+            fxxkMyself.put("IsComplete", args.get("IsComplete"));
+        }
+        if (args.containsKey("WF_Actor")) {
+            fxxkMyself.put("WF_Actor", args.get("WF_Actor"));
+        }
+        if (args.containsKey("DecByCol")) {
+            fxxkMyself.put("DecByCol", args.get("DecByCol"));
+        }
+        if (args.containsKey("DecByDep")) {
+            fxxkMyself.put("DecByDep", args.get("DecByDep"));
+
+        }
 
         /*执行任务（不一定会产生新任务）*/
-        List<Task> tasks = snakerEngine.executeTask(taskId, operator, args);
+        List<Task> tasks = snakerEngine.executeTask(taskId, operator, fxxkMyself);
         if (tasks.isEmpty()) {
             return null;
         }

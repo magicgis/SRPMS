@@ -1,5 +1,7 @@
 package entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -16,10 +18,12 @@ public class StaRef {
     private String unit;
     private String entityId;
     private String arg;
-    private Staff rStaff;
+    private Staff staff;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     public String getId() {
         return id;
     }
@@ -120,11 +124,11 @@ public class StaRef {
 
     @ManyToOne
     @JoinColumn(name = "staff", referencedColumnName = "id")
-    public Staff getRStaff() {
-        return rStaff;
+    public Staff getStaff() {
+        return staff;
     }
 
-    public void setRStaff(Staff rStaff) {
-        this.rStaff = rStaff;
+    public void setStaff(Staff staff) {
+        this.staff = staff;
     }
 }

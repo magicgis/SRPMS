@@ -11,15 +11,19 @@ import service.StaRefService;
 import util.StaticFactory;
 
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefService {
 
     @Autowired
     StaRefDao staRefDao;
+    @Autowired
+    StaffDao staffDao;
     @Autowired
     PaperDao paperDao;
     @Autowired
@@ -138,5 +142,18 @@ public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefSe
         return ans;
     }
 
-
+    @Override
+    public void insertRelation(String entity, String type, List<Map> actors) {
+        staRefDao.removeRelation(entity, type);
+        for (Map actor : actors) {
+            StaRef staRef = new StaRef();
+            staRef.setEntityId(entity);
+            staRef.setType(type);
+            staRef.setScore(BigDecimal.valueOf(Double.valueOf((String) actor.get("score"))));
+            staRef.setRole("1".equals((String) actor.get("rank")) ? 1 : 0);
+            staRef.setStaff(staffDao.getById((String) actor.get("staff.id")));
+            staRef.setUnit((String) actor.get("unit"));
+            staRefDao.save(staRef);
+        }
+    }
 }

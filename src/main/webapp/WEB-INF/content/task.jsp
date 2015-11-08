@@ -95,30 +95,29 @@
     $("#taskTable").bootstrapTable({
         url: '/api/workflow/' + userName + '/confirmTask',
         sidePagination: "server",
+        flat: 'true',
         columns: [{
             radio: true
-            //visible:false
         }, {
             field: 'id',
             title: 'id',
             visible: false
         }, {
-            field: 'ActorList',
+            field: 'variableMap.ActorList',
             title: '人员',
             formatter: "actorTran"
         }, {
-            field: 'name',
+            field: 'variableMap.WF_Latest.name',
             title: '科研名称'
         }, {
-            field: 'WF_Type',
+            field: 'variableMap.WF_Type',
             title: '科研类型',
             formatter: "wfTypeTran"
         }, {
-            field: 'Status',
+            field: 'variableMap.Status',
             title: '状态',
             formatter: 'statusTran'
-        }],
-        responseHandler: tableTrans
+        }]
     });
 
     $('#taskTable').on('click-row.bs.table', function (e, row) {

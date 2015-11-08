@@ -136,16 +136,23 @@ public class Workflow {
     @Consumes("application/json;charset=UTF-8")
     @Produces("application/json;charset=UTF-8")
     public Object execute_beta(HashMap<String, Object> args) {
+        //获取用户id和taskId
         String user = (String) args.get("WF_User");
         args.remove("WF_User");
         String taskId = (String) args.get("WF_Task");
         args.remove("WF_Task");
+        //如果传来的含有actors
         if (args.containsKey("actors")) {
             List<Map<String, Object>> actors = (List<Map<String, Object>>) args.get("actors");
+            //防止重复（可能存在挂多个单位的情况）
             List<String> aList = new ArrayList<>();
+            //生成下一步的执行者
             StringBuffer as = new StringBuffer();
+            //单纯的用于显示
             StringBuffer actosStr = new StringBuffer();
+            //遍历所有的actor Map
             for (Map<String, Object> u : actors) {
+                //获取用户id
                 String aId = (String) u.get("staff.id");
                 if (aList.contains(aId)) {
                     continue;

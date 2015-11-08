@@ -30,4 +30,15 @@ public class StaRefDaoImp extends BaseDaoImp<StaRef> implements StaRefDao {
         return getCurrentSession().createQuery(hql).list();
     }
 
+    @Override
+    public Boolean removeRelation(String entity, String type) {
+        String hql = "delete form StaRef where entity = '" + entity + "' and type = '" + type + "'";
+        try {
+            getCurrentSession().createQuery(hql);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }
