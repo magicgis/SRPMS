@@ -513,23 +513,23 @@
         save();
     });
     //监听 添加单位
-    $('#addUnit').click(function () {
+    $('.addUnit').click(function () {
         addUnit();
     });
     //监听 添加成员
-    $('#addActor').click(function () {
+    $('.addActor').click(function () {
         addActor();
     });
     //监听 编辑成员
-    $('#editActor').click(function () {
+    $('.editActor').click(function () {
         editActor();
     });
     //监听 编辑单位
-    $('#editUnit').click(function () {
+    $('.editUnit').click(function () {
         editUnit();
     });
     //监听 分配分数
-    $('#getScore').click(function () {
+    $('.getScore').click(function () {
         getScore();
     });
 

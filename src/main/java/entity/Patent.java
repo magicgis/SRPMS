@@ -136,9 +136,9 @@ public class Patent {
         return argMap(this.arg);
     }
 
-    public void setArgMap(Map infoMap) {
+    public void setArgMap(Map argMap) {
         try {
-            this.arg = new ObjectMapper().writeValueAsString(infoMap);
+            this.arg = new ObjectMapper().writeValueAsString(argMap);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

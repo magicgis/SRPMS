@@ -3,6 +3,7 @@ package engine.filter;
 import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
 import entity.Paper;
+import entity.Patent;
 import org.snaker.engine.SnakerInterceptor;
 import org.snaker.engine.core.Execution;
 import service.*;
@@ -26,24 +27,22 @@ public class Complete implements SnakerInterceptor {
     @Override
     public void intercept(Execution execution) {
 
-        MagService magService = (MagService) StaticFactory.getBean(MagService.class);
-//        ConferService conferService = (ConferService) StaticFactory.getBean(ConferService.class);
-        PaperService paperService = (PaperService) StaticFactory.getBean(PaperService.class);
         BaseInfoService baseInfoService = (BaseInfoService) StaticFactory.getBean(BaseInfoService.class);
         StaRefService staRefService = (StaRefService) StaticFactory.getBean(StaRefService.class);
 
         String orderId = execution.getOrder().getId();
-
-
         Map<String, Object> args = execution.getOrder().getVariableMap();
 
-        ArrayList userInfo;
+
+        Map<String, Object> info = (Map<String, Object>) args.get("WF_0_Submission");
+
+        Serializable id = null;
 
         String type = (String) args.get("WF_Type");
         switch (type) {
             case "paper":
+                PaperService paperService = (PaperService) StaticFactory.getBean(PaperService.class);
                 Paper paper = new Paper();
-                Map<String, Object> info = (Map<String, Object>) args.get("WF_0_Submission");
                 //todo 临时措施
                 info.put("score", info.get("sum"));
                 util.Trans.putMapOnObj(paper, info);
@@ -58,6 +57,7 @@ public class Complete implements SnakerInterceptor {
                 paper.setArgMap(argMap);
                 //子类进行处理，holy shit
                 if ("magPaper".equals(info.get("type"))) {
+                    MagService magService = (MagService) StaticFactory.getBean(MagService.class);
                     paper.setMag(magService.getById((Serializable) ((HashMap) info.get("mag")).get("id")));
                 }
                 else if ("conferPaper".equals(info.get("type"))) {
@@ -68,23 +68,27 @@ public class Complete implements SnakerInterceptor {
 //                    paper.setConfer(conferService.getById((Serializable) info.get("news.id")));
                     //todo 这儿也需要特殊处理，
                 }
-
-                Serializable id = paperService.add(paper);
-
-                userInfo = (ArrayList) info.get("actors");
-                staRefService.insertRelation((String) id, "paper", userInfo);
-
+                id = paperService.add(paper);
                 break;
             case "book":
                 break;
             case "patent":
                 PatentService patentService = (PatentService) StaticFactory.getBean(PatentService.class);
-//                Patent patent = patentService.getById()
+                id = (String) args.get("WF_Entity");
+                Patent patent = patentService.getById(id);
+                Map init = patent.getArgMap();
+//todo                patent.setScore();
+                moveMap(info, init, Arrays.asList("actors"));
+                patent.setArgMap(init);
+                patent.setProcess("9");
+                patentService.update(patent);
+                break;
             default:
                 break;
 
-
         }
+
+        staRefService.insertRelation((String) id, type, (ArrayList) info.get("actors"));
 
         OrderActorDao orderActorDao = (OrderActorDao) util.StaticFactory.getBean(OrderActorDao.class);
         List<OrderActor> x = orderActorDao.getByOrder(orderId);
