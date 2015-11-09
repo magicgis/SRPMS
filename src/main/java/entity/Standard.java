@@ -1,11 +1,14 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Map;
 
-import static util.Trans.str2Map;
+import static util.Trans.argMap;
 
 /**
  * Created by guofan on 2015/6/10.
@@ -17,9 +20,10 @@ public class Standard {
     private String type;
     @JsonIgnore
     private String info;
-    private Integer min;
-    private Integer max;
-    private Integer value;
+    private BigDecimal min;
+    private BigDecimal max;
+    private BigDecimal value;
+    private BigDecimal value2;
     private Map infoMap;
 
     @Id
@@ -54,41 +58,55 @@ public class Standard {
 
     @Basic
     @Column(name = "max")
-    public Integer getMax() {
+    public BigDecimal getMax() {
         return max;
     }
 
-    public void setMax(Integer max) {
+    public void setMax(BigDecimal max) {
         this.max = max;
     }
 
     @Basic
     @Column(name = "min")
-    public Integer getMin() {
+    public BigDecimal getMin() {
         return min;
     }
 
-    public void setMin(Integer min) {
+    public void setMin(BigDecimal min) {
         this.min = min;
     }
 
     @Basic
     @Column(name = "value")
-    public Integer getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(BigDecimal value) {
         this.value = value;
+    }
+
+    @Basic
+    @Column(name = "value2")
+    public BigDecimal getValue2() {
+        return value2;
+    }
+
+    public void setValue2(BigDecimal value2) {
+        this.value2 = value2;
     }
 
     @Transient
     public Map getInfoMap() {
-        return str2Map(getInfo());
+        return argMap(getInfo());
     }
 
     public void setInfoMap(Map infoMap) {
-        this.info = infoMap.toString();
+        try {
+            this.info = new ObjectMapper().writeValueAsString(info);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -103,7 +121,9 @@ public class Standard {
         if (info != null ? !info.equals(standard.info) : standard.info != null) return false;
         if (min != null ? !min.equals(standard.min) : standard.min != null) return false;
         if (max != null ? !max.equals(standard.max) : standard.max != null) return false;
-        return !(value != null ? !value.equals(standard.value) : standard.value != null);
+        if (value != null ? !value.equals(standard.value) : standard.value != null) return false;
+        if (value2 != null ? !value2.equals(standard.value2) : standard.value2 != null) return false;
+        return !(infoMap != null ? !infoMap.equals(standard.infoMap) : standard.infoMap != null);
 
     }
 
@@ -115,6 +135,8 @@ public class Standard {
         result = 31 * result + (min != null ? min.hashCode() : 0);
         result = 31 * result + (max != null ? max.hashCode() : 0);
         result = 31 * result + (value != null ? value.hashCode() : 0);
+        result = 31 * result + (value2 != null ? value2.hashCode() : 0);
+        result = 31 * result + (infoMap != null ? infoMap.hashCode() : 0);
         return result;
     }
 }

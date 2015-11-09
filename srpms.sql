@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50625
 File Encoding         : 65001
 
-Date: 2015-11-09 06:27:28
+Date: 2015-11-09 14:06:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -115,6 +115,8 @@ CREATE TABLE `attachment` (
 -- ----------------------------
 INSERT INTO `attachment` VALUES ('4028e38150e872070150e875b85c0000', null, '2015-11-09-02-57-20-445.docx');
 INSERT INTO `attachment` VALUES ('4028e38150e8b40f0150e8cdbee80000', null, '2015-11-09-04-33-29-305.doc');
+INSERT INTO `attachment` VALUES ('4028e38150e98be30150e98db98c0000', null, '2015-11-09-08-03-10-820.docx');
+INSERT INTO `attachment` VALUES ('4028e38150e98be30150e98dc4f40001', null, '2015-11-09-08-03-13-753.doc');
 
 -- ----------------------------
 -- Table structure for base_info
@@ -23021,6 +23023,7 @@ CREATE TABLE `patent` (
 -- ----------------------------
 -- Records of patent
 -- ----------------------------
+INSERT INTO `patent` VALUES ('4028e38150e98be30150e98e28670002', '2015-11-06', '{\"actors\":[{\"staff.id\":\"10001\",\"rank\":\"1\",\"staff.name\":\"teacher\",\"role\":\"第一专利权人\",\"score\":\"0\",\"unit\":\"湖北省中医院\"}],\"WF_OrderId\":\"f09ff736e37c442fa48e6d000101ff29\",\"units\":[{\"rank\":\"1\",\"unit\":\"湖北中医药大学\"}],\"Main-Actor\":\"10001\",\"filesData\":{\"请假申请.docx\":{\"size\":\"17.52KB\",\"fileKey\":\"4028e38150e98be30150e98db98c0000\"},\"多协议开发文档.doc\":{\"size\":\"2.02MB\",\"fileKey\":\"4028e38150e98be30150e98dc4f40001\"}},\"Main-ActorName\":\"teacher\"}', null, '专利信息', '123123', '1231234', '9', '2015-11-11', '0', null, '120002', null);
 
 -- ----------------------------
 -- Table structure for permission
@@ -23132,6 +23135,7 @@ CREATE TABLE `sta_ref` (
 -- ----------------------------
 -- Records of sta_ref
 -- ----------------------------
+INSERT INTO `sta_ref` VALUES ('4028e38150e9a1ee0150e9a5ffc60001', '10001', 'patent', '1', '0', '湖北省中医院', '4028e38150e98be30150e98e28670002', null);
 
 -- ----------------------------
 -- Table structure for staff
@@ -24945,111 +24949,262 @@ CREATE TABLE `standard` (
   `id` varchar(255) NOT NULL,
   `type` varchar(255) DEFAULT NULL,
   `info` varchar(255) DEFAULT NULL,
-  `min` int(11) DEFAULT NULL,
-  `max` int(11) DEFAULT NULL,
-  `value` int(11) NOT NULL,
+  `min` decimal(11,3) DEFAULT NULL,
+  `max` decimal(11,3) DEFAULT NULL,
+  `value` decimal(11,3) NOT NULL,
+  `value2` decimal(11,3) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of standard
 -- ----------------------------
-INSERT INTO `standard` VALUES ('1001', '论文', '{\"papertype\":\"期刊\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"SCI1区\",\"memo\":\"以中科院最新分区为准\"}', null, '5', '200');
-INSERT INTO `standard` VALUES ('1002', '论文', '{\"papertype\":\"期刊\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"SCI2区\",\"memo\":\"以中科院最新分区为准\"}', null, '5', '150');
-INSERT INTO `standard` VALUES ('1003', '论文', '{\"papertype\":\"期刊\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"SCI3区\",\"memo\":\"以中科院最新分区为准\"}', null, '5', '80');
-INSERT INTO `standard` VALUES ('1004', '论文', '{\"papertype\":\"期刊\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"SCI4区\",\"memo\":\"以中科院最新分区为准\"}', null, '5', '40');
-INSERT INTO `standard` VALUES ('1005', '论文', '{\"papertype\":\"期刊\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"SSCI\",\"memo\":\"\"}', null, '5', '80');
-INSERT INTO `standard` VALUES ('1006', '论文', '{\"papertype\":\"期刊\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"EI\",\"memo\":\"\"}', null, '5', '30');
-INSERT INTO `standard` VALUES ('1007', '论文', '{\"papertype\":\"期刊\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"A&HCI\",\"memo\":\"\"}', null, '5', '60');
-INSERT INTO `standard` VALUES ('1008', '论文', '{\"papertype\":\"期刊\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"ISTP\",\"memo\":\"同一人在同一期或同一论文集有多篇论文,仅计一篇\"}', null, '5', '20');
-INSERT INTO `standard` VALUES ('1009', '论文', '{\"papertype\":\"期刊\",\"type\":\"其他外文论文\",\"col_type\":\"\",\"memo\":\"指非五大索引收录的外文论文\"}', null, '3', '10');
-INSERT INTO `standard` VALUES ('1010', '论文', '{\"papertype\":\"期刊\",\"type\":\"中文学术论文\",\"col_type\":\"中国中文核心(CSCD)\",\"memo\":\"CSCD以最新《北大中文核心期刊目录》为准.中国科技核心以中国科学技术信息研究所《中国科技核心期刊目录》最新版为准.CSSCI以南京大学《中文社会科学引文索引》最新版为准\"}', null, '3', '10');
-INSERT INTO `standard` VALUES ('1011', '论文', '{\"papertype\":\"期刊\",\"type\":\"中文学术论文\",\"col_type\":\"中国社会科学索引(CSSCI)\",\"memo\":\"CSCD以最新《北大中文核心期刊目录》为准.中国科技核心以中国科学技术信息研究所《中国科技核心期刊目录》最新版为准.CSSCI以南京大学《中文社会科学引文索引》最新版为准\"}', null, null, '10');
-INSERT INTO `standard` VALUES ('1012', '论文', '{\"papertype\":\"期刊\",\"type\":\"中文学术论文\",\"col_type\":\"中国科技核心\",\"memo\":\"CSCD以最新《北大中文核心期刊目录》为准.中国科技核心以中国科学技术信息研究所《中国科技核心期刊目录》最新版为准.CSSCI以南京大学《中文社会科学引文索引》最新版为准\"}', null, '2', '5');
-INSERT INTO `standard` VALUES ('1013', '论文', '{\"papertype\":\"期刊\",\"type\":\"中文学术论文\",\"col_type\":\"其他公开发表论文\",\"memo\":\"CSCD以最新《北大中文核心期刊目录》为准.中国科技核心以中国科学技术信息研究所《中国科技核心期刊目录》最新版为准.CSSCI以南京大学《中文社会科学引文索引》最新版为准\"}', null, '1', '2');
-INSERT INTO `standard` VALUES ('1014', '论文', '{\"papertype\":\"会议\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"SCIⅣ区\",\"memo\":\"以中科院最新分区为准\"}', null, '5', '30');
-INSERT INTO `standard` VALUES ('1015', '论文', '{\"papertype\":\"会议\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"SSCI\",\"memo\":\"\"}', null, '5', '50');
-INSERT INTO `standard` VALUES ('1016', '论文', '{\"papertype\":\"会议\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"EI\",\"memo\":\"\"}', null, '5', '20');
-INSERT INTO `standard` VALUES ('1017', '论文', '{\"papertype\":\"会议\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"A&HCI\",\"memo\":\"\"}', null, '5', '40');
-INSERT INTO `standard` VALUES ('1018', '论文', '{\"papertype\":\"会议\",\"type\":\"其他外文论文\",\"col_type\":\"\",\"memo\":\"指非五大索引收录的外文论文\"}', null, '3', '10');
-INSERT INTO `standard` VALUES ('1019', '论文', '{\"papertype\":\"会议\",\"type\":\"中文学术论文\",\"col_type\":\"其他公开发表论文\",\"memo\":\"CSCD以最新《北大中文核心期刊目录》为准.中国科技核心以中国科学技术信息研究所《中国科技核心期刊目录》最新版为准.CSSCI以南京大学《中文社会科学引文索引》最新版为准\"}', null, '1', '2');
-INSERT INTO `standard` VALUES ('1020', '论文', '{\"papertype\":\"报刊\",\"type\":\"中文报刊\",\"col_type\":\"一类报刊\",\"memo\":\"\"}', '3000', null, '50');
-INSERT INTO `standard` VALUES ('1021', '论文', '{\"papertype\":\"报刊\",\"type\":\"中文报刊\",\"col_type\":\"一类报刊\",\"memo\":\"\"}', '3000', null, '40');
-INSERT INTO `standard` VALUES ('1022', '论文', '{\"papertype\":\"报刊\",\"type\":\"中文报刊\",\"col_type\":\"二类刊物二类报刊\",\"memo\":\"\"}', '5000', null, '5');
-INSERT INTO `standard` VALUES ('2001', '项目未获立项', '{\"projtype\":\"科研项目\",\"projorig\":\"国家自然科学基金（面上、青年）、国家社科基金一般项目\"}', null, '3', '10');
-INSERT INTO `standard` VALUES ('2002', '项目未获立项', '{\"projtype\":\"团队项目\",\"projorig\":\"国家自然科学基金创新研究群体、重点（大）项目\"}', null, '5', '50');
-INSERT INTO `standard` VALUES ('3001', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家最高科学技术奖\"}', null, '1', '3000');
-INSERT INTO `standard` VALUES ('3002', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家自然科学奖特等奖\"}', null, null, '2000');
-INSERT INTO `standard` VALUES ('3003', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家自然科学奖一等奖\"}', null, '5', '1000');
-INSERT INTO `standard` VALUES ('3004', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家自然科学奖二等奖\"}', null, '5', '700');
-INSERT INTO `standard` VALUES ('3005', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家技术发明奖特等奖\"}', null, null, '2000');
-INSERT INTO `standard` VALUES ('3006', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家技术发明奖一等奖\"}', null, '6', '1000');
-INSERT INTO `standard` VALUES ('3007', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家技术发明奖二等奖\"}', null, '6', '700');
-INSERT INTO `standard` VALUES ('3008', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家科技进步奖特等奖\"}', null, null, '2000');
-INSERT INTO `standard` VALUES ('3009', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家科技进步奖一等奖\"}', null, '15', '1000');
-INSERT INTO `standard` VALUES ('3010', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家科技进步奖二等奖\"}', null, '10', '700');
-INSERT INTO `standard` VALUES ('3011', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省科技奖科学技术突出贡献奖\"}', null, '1', '800');
-INSERT INTO `standard` VALUES ('3012', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省自然科学奖特等奖\"}', null, null, '800');
-INSERT INTO `standard` VALUES ('3013', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省自然科学奖一等奖\"}', null, '5', '500');
-INSERT INTO `standard` VALUES ('3014', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省自然科学奖二等奖（国家一级学会一等奖）\"}', null, '5', '300');
-INSERT INTO `standard` VALUES ('3015', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省自然科学奖三等奖（国家一级学会二等奖）\"}', null, '5', '200');
-INSERT INTO `standard` VALUES ('3016', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术发明奖特等奖\"}', null, null, '800');
-INSERT INTO `standard` VALUES ('3017', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术发明奖一等奖\"}', null, '6', '500');
-INSERT INTO `standard` VALUES ('3018', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术发明奖二等奖（国家一级学会一等奖）\"}', null, '6', '300');
-INSERT INTO `standard` VALUES ('3019', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术发明奖三等奖（国家一级学会二等奖）\"}', null, '6', '200');
-INSERT INTO `standard` VALUES ('3020', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术成果推广奖特等奖\"}', null, null, '800');
-INSERT INTO `standard` VALUES ('3021', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术成果推广奖一等奖\"}', null, '20', '500');
-INSERT INTO `standard` VALUES ('3022', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术成果推广奖二等奖（国家一级学会一等奖）\"}', null, '14', '300');
-INSERT INTO `standard` VALUES ('3023', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术成果推广奖三等奖（国家一级学会二等奖）\"}', null, '8', '200');
-INSERT INTO `standard` VALUES ('3024', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省科技进步奖特等奖\"}', null, '50', '800');
-INSERT INTO `standard` VALUES ('3025', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省科技进步奖一等奖\"}', null, '15', '500');
-INSERT INTO `standard` VALUES ('3026', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省科技进步奖二等奖（国家一级学会一等奖）\"}', null, '10', '300');
-INSERT INTO `standard` VALUES ('3027', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省科技进步奖三等奖（国家一级学会二等奖）\"}', null, '7', '200');
-INSERT INTO `standard` VALUES ('3028', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"武汉市科技重大贡献奖\"}', null, '1', '400');
-INSERT INTO `standard` VALUES ('3029', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"武汉市一等奖\"}', null, '15', '300');
-INSERT INTO `standard` VALUES ('3030', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"武汉市二等奖\"}', null, '10', '200');
-INSERT INTO `standard` VALUES ('3031', '成果', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"武汉市三等奖\"}', null, '7', '100');
-INSERT INTO `standard` VALUES ('3032', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"国家级教学成果特等奖\"}', null, '8', '500');
-INSERT INTO `standard` VALUES ('3033', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"国家级教学成果一等奖\"}', null, '8', '300');
-INSERT INTO `standard` VALUES ('3034', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"国家级教学成果二等奖\"}', null, '7', '200');
-INSERT INTO `standard` VALUES ('3035', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教学成果特等奖\"}', null, '8', '300');
-INSERT INTO `standard` VALUES ('3036', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教学成果一等奖\"}', null, '8', '200');
-INSERT INTO `standard` VALUES ('3037', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教学成果二等奖\"}', null, '8', '150');
-INSERT INTO `standard` VALUES ('3038', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教学成果三等奖\"}', null, '8', '100');
-INSERT INTO `standard` VALUES ('3039', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教育厅、全国高教学会及其他厅局级教学成果一等奖\"}', null, '8', '50');
-INSERT INTO `standard` VALUES ('3040', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教育厅、全国高教学会及其他厅局级教学成果二等奖\"}', null, '8', '30');
-INSERT INTO `standard` VALUES ('3041', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教育厅、全国高教学会及其他厅局级教学成果三等奖\"}', null, '8', '20');
-INSERT INTO `standard` VALUES ('3042', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"厅局级以上各类教学论文奖一等奖\"}', null, '5', '10');
-INSERT INTO `standard` VALUES ('3043', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"厅局级以上各类教学论文奖二等奖\"}', null, '5', '8');
-INSERT INTO `standard` VALUES ('3044', '成果', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"厅局级以上各类教学论文奖三等奖\"}', null, '5', '5');
-INSERT INTO `standard` VALUES ('3045', '成果', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"省部级哲学社会科学成果一等奖\"}', null, '5', '500');
-INSERT INTO `standard` VALUES ('3046', '成果', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"省部级哲学社会科学成果二等奖\"}', null, '5', '300');
-INSERT INTO `standard` VALUES ('3047', '成果', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"省部级哲学社会科学成果三等奖\"}', null, '5', '200');
-INSERT INTO `standard` VALUES ('3048', '成果', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"厅局级哲学社会科学成果一等奖\"}', null, '4', '200');
-INSERT INTO `standard` VALUES ('3049', '成果', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"厅局级哲学社会科学成果二等奖\"}', null, '3', '100');
-INSERT INTO `standard` VALUES ('3050', '成果', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"厅局级哲学社会科学成果三等奖\"}', null, '2', '80');
-INSERT INTO `standard` VALUES ('3051', '成果', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"湖北省发展研究奖一等奖\"}', null, '5', '100');
-INSERT INTO `standard` VALUES ('3052', '成果', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"湖北省发展研究奖二等奖\"}', null, '4', '50');
-INSERT INTO `standard` VALUES ('3053', '成果', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"湖北省发展研究奖三等奖\"}', null, '3', '30');
-INSERT INTO `standard` VALUES ('3054', '成果', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"武汉市发展研究奖一等奖\"}', null, '4', '50');
-INSERT INTO `standard` VALUES ('3055', '成果', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"武汉市发展研究奖二等奖\"}', null, '3', '30');
-INSERT INTO `standard` VALUES ('3056', '成果', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"武汉市发展研究奖三等奖\"}', null, '2', '20');
-INSERT INTO `standard` VALUES ('4001', '成果鉴定', '{\"jdprop\":\"自然科学\",\"jdtype\":\"国际领先\"}', null, '20', '200');
-INSERT INTO `standard` VALUES ('4002', '成果鉴定', '{\"jdprop\":\"自然科学\",\"jdtype\":\"国际先进\"}', null, '20', '100');
-INSERT INTO `standard` VALUES ('4003', '成果鉴定', '{\"jdprop\":\"自然科学\",\"jdtype\":\"国内领先\"}', null, '20', '50');
-INSERT INTO `standard` VALUES ('4004', '成果鉴定', '{\"jdprop\":\"自然科学\",\"jdtype\":\"国内先进\"}', null, '20', '20');
-INSERT INTO `standard` VALUES ('4005', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"国家级优秀\"}', null, '8', '150');
-INSERT INTO `standard` VALUES ('4006', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"国家级良好\"}', null, '8', '80');
-INSERT INTO `standard` VALUES ('4007', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"国家级合格\"}', null, '8', '30');
-INSERT INTO `standard` VALUES ('4008', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"省部级优秀\"}', null, '8', '100');
-INSERT INTO `standard` VALUES ('4009', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"省部级良好\"}', null, '8', '50');
-INSERT INTO `standard` VALUES ('4010', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"省部级合格\"}', null, '8', '20');
-INSERT INTO `standard` VALUES ('5001', '未获批', '{\"type\":\"自然科学类\",\"awdgrade\":\"国家奖励\"}', null, '5', '100');
-INSERT INTO `standard` VALUES ('5002', '未获批', '{\"type\":\"自然科学类\",\"awdgrade\":\"湖北省奖励\"}', null, '4', '50');
-INSERT INTO `standard` VALUES ('5003', '未获批', '{\"type\":\"自然科学类\",\"awdgrade\":\"武汉市奖励\"}', null, '3', '30');
-INSERT INTO `standard` VALUES ('5004', '未获批', '{\"type\":\"人文社科类\",\"awdgrade\":\"国家奖励\"}', null, '5', '100');
-INSERT INTO `standard` VALUES ('5005', '未获批', '{\"type\":\"人文社科类\",\"awdgrade\":\"湖北省奖励\"}', null, '4', '50');
-INSERT INTO `standard` VALUES ('5006', '未获批', '{\"type\":\"人文社科类\",\"awdgrade\":\"武汉市奖励\"}', null, '3', '30');
+INSERT INTO `standard` VALUES ('1001', '论文', '{\"papertype\":\"期刊\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"SCI1区\",\"memo\":\"以中科院最新分区为准\"}', null, '5.000', '200.000', null);
+INSERT INTO `standard` VALUES ('1002', '论文', '{\"papertype\":\"期刊\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"SCI2区\",\"memo\":\"以中科院最新分区为准\"}', null, '5.000', '150.000', null);
+INSERT INTO `standard` VALUES ('1003', '论文', '{\"papertype\":\"期刊\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"SCI3区\",\"memo\":\"以中科院最新分区为准\"}', null, '5.000', '80.000', null);
+INSERT INTO `standard` VALUES ('1004', '论文', '{\"papertype\":\"期刊\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"SCI4区\",\"memo\":\"以中科院最新分区为准\"}', null, '5.000', '40.000', null);
+INSERT INTO `standard` VALUES ('1005', '论文', '{\"papertype\":\"期刊\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"SSCI\",\"memo\":\"\"}', null, '5.000', '80.000', null);
+INSERT INTO `standard` VALUES ('1006', '论文', '{\"papertype\":\"期刊\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"EI\",\"memo\":\"\"}', null, '5.000', '30.000', null);
+INSERT INTO `standard` VALUES ('1007', '论文', '{\"papertype\":\"期刊\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"A&HCI\",\"memo\":\"\"}', null, '5.000', '60.000', null);
+INSERT INTO `standard` VALUES ('1008', '论文', '{\"papertype\":\"期刊\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"ISTP\",\"memo\":\"同一人在同一期或同一论文集有多篇论文,仅计一篇\"}', null, '5.000', '20.000', null);
+INSERT INTO `standard` VALUES ('1009', '论文', '{\"papertype\":\"期刊\",\"type\":\"其他外文论文\",\"col_type\":\"\",\"memo\":\"指非五大索引收录的外文论文\"}', null, '3.000', '10.000', null);
+INSERT INTO `standard` VALUES ('1010', '论文', '{\"papertype\":\"期刊\",\"type\":\"中文学术论文\",\"col_type\":\"中国中文核心(CSCD)\",\"memo\":\"CSCD以最新《北大中文核心期刊目录》为准.中国科技核心以中国科学技术信息研究所《中国科技核心期刊目录》最新版为准.CSSCI以南京大学《中文社会科学引文索引》最新版为准\"}', null, '3.000', '10.000', null);
+INSERT INTO `standard` VALUES ('1011', '论文', '{\"papertype\":\"期刊\",\"type\":\"中文学术论文\",\"col_type\":\"中国社会科学索引(CSSCI)\",\"memo\":\"CSCD以最新《北大中文核心期刊目录》为准.中国科技核心以中国科学技术信息研究所《中国科技核心期刊目录》最新版为准.CSSCI以南京大学《中文社会科学引文索引》最新版为准\"}', null, null, '10.000', null);
+INSERT INTO `standard` VALUES ('1012', '论文', '{\"papertype\":\"期刊\",\"type\":\"中文学术论文\",\"col_type\":\"中国科技核心\",\"memo\":\"CSCD以最新《北大中文核心期刊目录》为准.中国科技核心以中国科学技术信息研究所《中国科技核心期刊目录》最新版为准.CSSCI以南京大学《中文社会科学引文索引》最新版为准\"}', null, '2.000', '5.000', null);
+INSERT INTO `standard` VALUES ('1013', '论文', '{\"papertype\":\"期刊\",\"type\":\"中文学术论文\",\"col_type\":\"其他公开发表论文\",\"memo\":\"CSCD以最新《北大中文核心期刊目录》为准.中国科技核心以中国科学技术信息研究所《中国科技核心期刊目录》最新版为准.CSSCI以南京大学《中文社会科学引文索引》最新版为准\"}', null, '1.000', '2.000', null);
+INSERT INTO `standard` VALUES ('1014', '论文', '{\"papertype\":\"会议\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"SCIⅣ区\",\"memo\":\"以中科院最新分区为准\"}', null, '5.000', '30.000', null);
+INSERT INTO `standard` VALUES ('1015', '论文', '{\"papertype\":\"会议\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"SSCI\",\"memo\":\"\"}', null, '5.000', '50.000', null);
+INSERT INTO `standard` VALUES ('1016', '论文', '{\"papertype\":\"会议\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"EI\",\"memo\":\"\"}', null, '5.000', '20.000', null);
+INSERT INTO `standard` VALUES ('1017', '论文', '{\"papertype\":\"会议\",\"type\":\"国际五大索引收录论文\",\"col_type\":\"A&HCI\",\"memo\":\"\"}', null, '5.000', '40.000', null);
+INSERT INTO `standard` VALUES ('1018', '论文', '{\"papertype\":\"会议\",\"type\":\"其他外文论文\",\"col_type\":\"\",\"memo\":\"指非五大索引收录的外文论文\"}', null, '3.000', '10.000', null);
+INSERT INTO `standard` VALUES ('1019', '论文', '{\"papertype\":\"会议\",\"type\":\"中文学术论文\",\"col_type\":\"其他公开发表论文\",\"memo\":\"CSCD以最新《北大中文核心期刊目录》为准.中国科技核心以中国科学技术信息研究所《中国科技核心期刊目录》最新版为准.CSSCI以南京大学《中文社会科学引文索引》最新版为准\"}', null, '1.000', '2.000', null);
+INSERT INTO `standard` VALUES ('1020', '论文', '{\"papertype\":\"报刊\",\"type\":\"中文报刊\",\"col_type\":\"一类报刊\",\"memo\":\"\"}', '3000.000', null, '50.000', null);
+INSERT INTO `standard` VALUES ('1021', '论文', '{\"papertype\":\"报刊\",\"type\":\"中文报刊\",\"col_type\":\"一类报刊\",\"memo\":\"\"}', '3000.000', null, '40.000', null);
+INSERT INTO `standard` VALUES ('1022', '论文', '{\"papertype\":\"报刊\",\"type\":\"中文报刊\",\"col_type\":\"二类刊物二类报刊\",\"memo\":\"\"}', '5000.000', null, '5.000', null);
+INSERT INTO `standard` VALUES ('2001', '项目未获立项', '{\"projtype\":\"科研项目\",\"projorig\":\"国家自然科学基金（面上、青年）、国家社科基金一般项目\"}', null, '3.000', '10.000', null);
+INSERT INTO `standard` VALUES ('2002', '项目未获立项', '{\"projtype\":\"团队项目\",\"projorig\":\"国家自然科学基金创新研究群体、重点（大）项目\"}', null, '5.000', '50.000', null);
+INSERT INTO `standard` VALUES ('3001', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家最高科学技术奖\"}', null, '1.000', '3000.000', null);
+INSERT INTO `standard` VALUES ('3002', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家自然科学奖特等奖\"}', null, null, '2000.000', null);
+INSERT INTO `standard` VALUES ('3003', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家自然科学奖一等奖\"}', null, '5.000', '1000.000', null);
+INSERT INTO `standard` VALUES ('3004', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家自然科学奖二等奖\"}', null, '5.000', '700.000', null);
+INSERT INTO `standard` VALUES ('3005', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家技术发明奖特等奖\"}', null, null, '2000.000', null);
+INSERT INTO `standard` VALUES ('3006', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家技术发明奖一等奖\"}', null, '6.000', '1000.000', null);
+INSERT INTO `standard` VALUES ('3007', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家技术发明奖二等奖\"}', null, '6.000', '700.000', null);
+INSERT INTO `standard` VALUES ('3008', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家科技进步奖特等奖\"}', null, null, '2000.000', null);
+INSERT INTO `standard` VALUES ('3009', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家科技进步奖一等奖\"}', null, '15.000', '1000.000', null);
+INSERT INTO `standard` VALUES ('3010', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"国家科技进步奖二等奖\"}', null, '10.000', '700.000', null);
+INSERT INTO `standard` VALUES ('3011', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省科技奖科学技术突出贡献奖\"}', null, '1.000', '800.000', null);
+INSERT INTO `standard` VALUES ('3012', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省自然科学奖特等奖\"}', null, null, '800.000', null);
+INSERT INTO `standard` VALUES ('3013', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省自然科学奖一等奖\"}', null, '5.000', '500.000', null);
+INSERT INTO `standard` VALUES ('3014', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省自然科学奖二等奖（国家一级学会一等奖）\"}', null, '5.000', '300.000', null);
+INSERT INTO `standard` VALUES ('3015', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省自然科学奖三等奖（国家一级学会二等奖）\"}', null, '5.000', '200.000', null);
+INSERT INTO `standard` VALUES ('3016', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术发明奖特等奖\"}', null, null, '800.000', null);
+INSERT INTO `standard` VALUES ('3017', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术发明奖一等奖\"}', null, '6.000', '500.000', null);
+INSERT INTO `standard` VALUES ('3018', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术发明奖二等奖（国家一级学会一等奖）\"}', null, '6.000', '300.000', null);
+INSERT INTO `standard` VALUES ('3019', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术发明奖三等奖（国家一级学会二等奖）\"}', null, '6.000', '200.000', null);
+INSERT INTO `standard` VALUES ('3020', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术成果推广奖特等奖\"}', null, null, '800.000', null);
+INSERT INTO `standard` VALUES ('3021', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术成果推广奖一等奖\"}', null, '20.000', '500.000', null);
+INSERT INTO `standard` VALUES ('3022', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术成果推广奖二等奖（国家一级学会一等奖）\"}', null, '14.000', '300.000', null);
+INSERT INTO `standard` VALUES ('3023', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省技术成果推广奖三等奖（国家一级学会二等奖）\"}', null, '8.000', '200.000', null);
+INSERT INTO `standard` VALUES ('3024', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省科技进步奖特等奖\"}', null, '50.000', '800.000', null);
+INSERT INTO `standard` VALUES ('3025', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省科技进步奖一等奖\"}', null, '15.000', '500.000', null);
+INSERT INTO `standard` VALUES ('3026', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省科技进步奖二等奖（国家一级学会一等奖）\"}', null, '10.000', '300.000', null);
+INSERT INTO `standard` VALUES ('3027', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"湖北省科技进步奖三等奖（国家一级学会二等奖）\"}', null, '7.000', '200.000', null);
+INSERT INTO `standard` VALUES ('3028', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"武汉市科技重大贡献奖\"}', null, '1.000', '400.000', null);
+INSERT INTO `standard` VALUES ('3029', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"武汉市一等奖\"}', null, '15.000', '300.000', null);
+INSERT INTO `standard` VALUES ('3030', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"武汉市二等奖\"}', null, '10.000', '200.000', null);
+INSERT INTO `standard` VALUES ('3031', '成果获奖', '{\"awdprop\":\"自然类科学类奖\",\"awdtype\":\"武汉市三等奖\"}', null, '7.000', '100.000', null);
+INSERT INTO `standard` VALUES ('3032', '成果获奖', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"国家级教学成果特等奖\"}', null, '8.000', '500.000', null);
+INSERT INTO `standard` VALUES ('3033', '成果获奖', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"国家级教学成果一等奖\"}', null, '8.000', '300.000', null);
+INSERT INTO `standard` VALUES ('3034', '成果获奖', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"国家级教学成果二等奖\"}', null, '7.000', '200.000', null);
+INSERT INTO `standard` VALUES ('3035', '成果获奖', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教学成果特等奖\"}', null, '8.000', '300.000', null);
+INSERT INTO `standard` VALUES ('3036', '成果获奖', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教学成果一等奖\"}', null, '8.000', '200.000', null);
+INSERT INTO `standard` VALUES ('3037', '成果获奖', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教学成果二等奖\"}', null, '8.000', '150.000', null);
+INSERT INTO `standard` VALUES ('3038', '成果获奖', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教学成果三等奖\"}', null, '8.000', '100.000', null);
+INSERT INTO `standard` VALUES ('3039', '成果获奖', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教育厅、全国高教学会及其他厅局级教学成果一等奖\"}', null, '8.000', '50.000', null);
+INSERT INTO `standard` VALUES ('3040', '成果获奖', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教育厅、全国高教学会及其他厅局级教学成果二等奖\"}', null, '8.000', '30.000', null);
+INSERT INTO `standard` VALUES ('3041', '成果获奖', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"湖北省教育厅、全国高教学会及其他厅局级教学成果三等奖\"}', null, '8.000', '20.000', null);
+INSERT INTO `standard` VALUES ('3042', '成果获奖', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"厅局级以上各类教学论文奖一等奖\"}', null, '5.000', '10.000', null);
+INSERT INTO `standard` VALUES ('3043', '成果获奖', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"厅局级以上各类教学论文奖二等奖\"}', null, '5.000', '8.000', null);
+INSERT INTO `standard` VALUES ('3044', '成果获奖', '{\"awdprop\":\"教育教学成果奖\",\"awdtype\":\"厅局级以上各类教学论文奖三等奖\"}', null, '5.000', '5.000', null);
+INSERT INTO `standard` VALUES ('3045', '成果获奖', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"省部级哲学社会科学成果一等奖\"}', null, '5.000', '500.000', null);
+INSERT INTO `standard` VALUES ('3046', '成果获奖', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"省部级哲学社会科学成果二等奖\"}', null, '5.000', '300.000', null);
+INSERT INTO `standard` VALUES ('3047', '成果获奖', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"省部级哲学社会科学成果三等奖\"}', null, '5.000', '200.000', null);
+INSERT INTO `standard` VALUES ('3048', '成果获奖', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"厅局级哲学社会科学成果一等奖\"}', null, '4.000', '200.000', null);
+INSERT INTO `standard` VALUES ('3049', '成果获奖', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"厅局级哲学社会科学成果二等奖\"}', null, '3.000', '100.000', null);
+INSERT INTO `standard` VALUES ('3050', '成果获奖', '{\"awdprop\":\"哲学社会科学类奖\",\"awdtype\":\"厅局级哲学社会科学成果三等奖\"}', null, '2.000', '80.000', null);
+INSERT INTO `standard` VALUES ('3051', '成果获奖', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"湖北省发展研究奖一等奖\"}', null, '5.000', '100.000', null);
+INSERT INTO `standard` VALUES ('3052', '成果获奖', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"湖北省发展研究奖二等奖\"}', null, '4.000', '50.000', null);
+INSERT INTO `standard` VALUES ('3053', '成果获奖', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"湖北省发展研究奖三等奖\"}', null, '3.000', '30.000', null);
+INSERT INTO `standard` VALUES ('3054', '成果获奖', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"武汉市发展研究奖一等奖\"}', null, '4.000', '50.000', null);
+INSERT INTO `standard` VALUES ('3055', '成果获奖', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"武汉市发展研究奖二等奖\"}', null, '3.000', '30.000', null);
+INSERT INTO `standard` VALUES ('3056', '成果获奖', '{\"awdprop\":\"政府调研奖类\",\"awdtype\":\"武汉市发展研究奖三等奖\"}', null, '2.000', '20.000', null);
+INSERT INTO `standard` VALUES ('3057', '成果获奖', '{\"awdprop\":\"公开出版著作\",\"awdtype\":\"国家图书奖\"}', null, null, '1.500', null);
+INSERT INTO `standard` VALUES ('3058', '成果获奖', '{\"awdprop\":\"公开出版著作\",\"awdtype\":\"全国优秀科技图书奖（科技进步奖科技著作）一等奖\"}', null, null, '1.500', null);
+INSERT INTO `standard` VALUES ('3059', '成果获奖', '{\"awdprop\":\"公开出版著作\",\"awdtype\":\"全国优秀科技图书奖（科技进步奖科技著作）二等奖\"}', null, null, '1.200', null);
+INSERT INTO `standard` VALUES ('3060', '成果获奖', '{\"awdprop\":\"公开出版著作\",\"awdtype\":\"全国优秀科技图书奖（科技进步奖科技著作）三等奖\"}', null, null, '1.100', null);
+INSERT INTO `standard` VALUES ('3061', '成果获奖', '{\"awdprop\":\"公开出版教材教育部规划教材\",\"awdtype\":\"国家优秀教材一等奖\"}', null, null, '1.500', null);
+INSERT INTO `standard` VALUES ('3062', '成果获奖', '{\"awdprop\":\"公开出版教材教育部规划教材\",\"awdtype\":\"国家优秀教材二等奖\"}', null, null, '1.200', null);
+INSERT INTO `standard` VALUES ('3063', '成果获奖', '{\"awdprop\":\"公开出版教材教育部规划教材\",\"awdtype\":\"国家优秀教材三等奖\"}', null, null, '1.100', null);
+INSERT INTO `standard` VALUES ('3064', '成果获奖', '{\"awdprop\":\"公开出版教材行业规划教材\",\"awdtype\":\"“新世纪全国高等中医药优秀教材”奖一等奖\"}', null, null, '1.200', null);
+INSERT INTO `standard` VALUES ('3065', '成果获奖', '{\"awdprop\":\"公开出版教材行业规划教材\",\"awdtype\":\"“新世纪全国高等中医药优秀教材”奖二等奖\"}', null, null, '1.100', null);
+INSERT INTO `standard` VALUES ('3066', '成果获奖', '{\"awdprop\":\"公开出版教材行业规划教材\",\"awdtype\":\"“新世纪全国高等中医药优秀教材”奖三等奖\"}', null, null, '1.050', null);
+INSERT INTO `standard` VALUES ('4001', '成果鉴定', '{\"jdprop\":\"自然科学\",\"jdtype\":\"国际领先\"}', null, '20.000', '200.000', null);
+INSERT INTO `standard` VALUES ('4002', '成果鉴定', '{\"jdprop\":\"自然科学\",\"jdtype\":\"国际先进\"}', null, '20.000', '100.000', null);
+INSERT INTO `standard` VALUES ('4003', '成果鉴定', '{\"jdprop\":\"自然科学\",\"jdtype\":\"国内领先\"}', null, '20.000', '50.000', null);
+INSERT INTO `standard` VALUES ('4004', '成果鉴定', '{\"jdprop\":\"自然科学\",\"jdtype\":\"国内先进\"}', null, '20.000', '20.000', null);
+INSERT INTO `standard` VALUES ('4005', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"国家级优秀\"}', null, '8.000', '150.000', null);
+INSERT INTO `standard` VALUES ('4006', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"国家级良好\"}', null, '8.000', '80.000', null);
+INSERT INTO `standard` VALUES ('4007', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"国家级合格\"}', null, '8.000', '30.000', null);
+INSERT INTO `standard` VALUES ('4008', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"省部级优秀\"}', null, '8.000', '100.000', null);
+INSERT INTO `standard` VALUES ('4009', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"省部级良好\"}', null, '8.000', '50.000', null);
+INSERT INTO `standard` VALUES ('4010', '成果鉴定', '{\"jdprop\":\"哲学社会科学\",\"jdtype\":\"省部级合格\"}', null, '8.000', '20.000', null);
+INSERT INTO `standard` VALUES ('5001', '未获批', '{\"type\":\"自然科学类\",\"awdgrade\":\"国家奖励\"}', null, '5.000', '100.000', null);
+INSERT INTO `standard` VALUES ('5002', '未获批', '{\"type\":\"自然科学类\",\"awdgrade\":\"湖北省奖励\"}', null, '4.000', '50.000', null);
+INSERT INTO `standard` VALUES ('5003', '未获批', '{\"type\":\"自然科学类\",\"awdgrade\":\"武汉市奖励\"}', null, '3.000', '30.000', null);
+INSERT INTO `standard` VALUES ('5004', '未获批', '{\"type\":\"人文社科类\",\"awdgrade\":\"国家奖励\"}', null, '5.000', '100.000', null);
+INSERT INTO `standard` VALUES ('5005', '未获批', '{\"type\":\"人文社科类\",\"awdgrade\":\"湖北省奖励\"}', null, '4.000', '50.000', null);
+INSERT INTO `standard` VALUES ('5006', '未获批', '{\"type\":\"人文社科类\",\"awdgrade\":\"武汉市奖励\"}', null, '3.000', '30.000', null);
+INSERT INTO `standard` VALUES ('6001', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家科技部\",\"projbelong\":\"“973”计划A类资助\"}', null, '9.000', '1000.000', '600.000');
+INSERT INTO `standard` VALUES ('6002', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家科技部\",\"projbelong\":\"“973”计划B类资助\"}', null, '9.000', '800.000', '480.000');
+INSERT INTO `standard` VALUES ('6003', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家科技部\",\"projbelong\":\"“973”计划C类资助\"}', null, '9.000', '600.000', '360.000');
+INSERT INTO `standard` VALUES ('6004', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家科技部\",\"projbelong\":\"“863”计划\"}', null, '9.000', '400.000', '240.000');
+INSERT INTO `standard` VALUES ('6005', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家科技部\",\"projbelong\":\"国家重大科技专项\"}', null, '9.000', '400.000', '240.000');
+INSERT INTO `standard` VALUES ('6006', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家科技部\",\"projbelong\":\"国家重大科学研究计划\"}', null, '9.000', '400.000', '240.000');
+INSERT INTO `standard` VALUES ('6007', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家科技部\",\"projbelong\":\"国家科技支撑计划\"}', null, '9.000', '300.000', '180.000');
+INSERT INTO `standard` VALUES ('6008', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家科技部\",\"projbelong\":\"国家政策引导计划及专项\"}', null, '9.000', '150.000', '90.000');
+INSERT INTO `standard` VALUES ('6009', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家科技部\",\"projbelong\":\"国家国际科技合作\"}', null, '9.000', '150.000', '90.000');
+INSERT INTO `standard` VALUES ('6010', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家科技部\",\"projbelong\":\"科技部创新人才推进计划\"}', null, '9.000', '300.000', '180.000');
+INSERT INTO `standard` VALUES ('6011', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家自然科学基金委员会\",\"projbelong\":\"国家自然科学基金重大项目\"}', null, '9.000', '600.000', '360.000');
+INSERT INTO `standard` VALUES ('6012', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家自然科学基金委员会\",\"projbelong\":\"国家杰出青年基金\"}', null, '9.000', '500.000', '300.000');
+INSERT INTO `standard` VALUES ('6013', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家自然科学基金委员会\",\"projbelong\":\"国家自然科学基金创新研究群体项目\"}', null, '9.000', '500.000', '300.000');
+INSERT INTO `standard` VALUES ('6014', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家自然科学基金委员会\",\"projbelong\":\"国家自然科学基金重点项目\"}', null, '9.000', '400.000', '240.000');
+INSERT INTO `standard` VALUES ('6015', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家自然科学基金委员会\",\"projbelong\":\"国家自然科学基金专项项目\"}', null, '9.000', '400.000', '240.000');
+INSERT INTO `standard` VALUES ('6016', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家自然科学基金委员会\",\"projbelong\":\"国家自然基金面上项目\"}', null, '9.000', '200.000', '120.000');
+INSERT INTO `standard` VALUES ('6017', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家自然科学基金委员会\",\"projbelong\":\"国家基金委其他科学研究项目\"}', null, '9.000', '200.000', '120.000');
+INSERT INTO `standard` VALUES ('6018', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家自然科学基金委员会\",\"projbelong\":\"国家自然科学基金青年科学基金项目\"}', null, '9.000', '150.000', '90.000');
+INSERT INTO `standard` VALUES ('6019', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"国家级\",\"projorig\":\"国家发展与改革委员会\",\"projbelong\":\"国家发改委科学研究项目\"}', null, '9.000', '200.000', '120.000');
+INSERT INTO `standard` VALUES ('6020', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"省部级\",\"projorig\":\"国家卫生与计划生育委员会\",\"projbelong\":\"国家卫计委科学研究项目\"}', null, '6.000', '150.000', '90.000');
+INSERT INTO `standard` VALUES ('6021', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"省部级\",\"projorig\":\"国家中医药管理局\",\"projbelong\":\"国家中医药管理局中医药行业科研专项\"}', null, '6.000', '200.000', '120.000');
+INSERT INTO `standard` VALUES ('6022', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"省部级\",\"projorig\":\"国家中医药管理局\",\"projbelong\":\"国家中医药管理局公益性行业科研专项\"}', null, '6.000', '150.000', '90.000');
+INSERT INTO `standard` VALUES ('6023', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"省部级\",\"projorig\":\"国家中医药管理局\",\"projbelong\":\"国家中医药管理局国家基本公共卫生服务项目\"}', null, '6.000', '150.000', '90.000');
+INSERT INTO `standard` VALUES ('6024', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"省部级\",\"projorig\":\"国家中医药管理局\",\"projbelong\":\"国家中医药管理局其他科学研究项目\"}', null, '6.000', '100.000', '60.000');
+INSERT INTO `standard` VALUES ('6025', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"省部级\",\"projorig\":\"教育部\",\"projbelong\":\"教育部“长江学者”奖励计划\"}', null, '6.000', '400.000', '240.000');
+INSERT INTO `standard` VALUES ('6026', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"省部级\",\"projorig\":\"教育部\",\"projbelong\":\"教育部创新团队发展计划\"}', null, '6.000', '400.000', '240.000');
+INSERT INTO `standard` VALUES ('6027', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"省部级\",\"projorig\":\"教育部\",\"projbelong\":\"教育部新世纪优秀人才支持计划\"}', null, '6.000', '150.000', '90.000');
+INSERT INTO `standard` VALUES ('6028', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"省部级\",\"projorig\":\"教育部\",\"projbelong\":\"霍英东教育基金会科学研究项目\"}', null, '6.000', '100.000', '60.000');
+INSERT INTO `standard` VALUES ('6029', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"省部级\",\"projorig\":\"教育部\",\"projbelong\":\"教育部其他科学研究项目\"}', null, '6.000', '100.000', '60.000');
+INSERT INTO `standard` VALUES ('6030', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"省部级\",\"projorig\":\"其他部委\",\"projbelong\":\"其他部委科学研究项目\"}', null, '6.000', '100.000', '60.000');
+INSERT INTO `standard` VALUES ('6031', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"省部级\",\"projorig\":\"湖北省科学技术厅\",\"projbelong\":\"科技厅重大项目\"}', null, '6.000', '100.000', '24.000');
+INSERT INTO `standard` VALUES ('6032', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"省部级\",\"projorig\":\"湖北省科学技术厅\",\"projbelong\":\"湖北省自然科学基金重点项目\"}', null, '6.000', '40.000', '20.000');
+INSERT INTO `standard` VALUES ('6033', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"省部级\",\"projorig\":\"湖北省科学技术厅\",\"projbelong\":\"湖北省软科学研究项目\"}', null, '6.000', '40.000', '20.000');
+INSERT INTO `standard` VALUES ('6034', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"省部级\",\"projorig\":\"湖北省科学技术厅\",\"projbelong\":\"湖北省自然科学基金面上项目\"}', null, '6.000', '20.000', '10.000');
+INSERT INTO `standard` VALUES ('6035', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"厅局级\",\"projorig\":\"其他厅局\",\"projbelong\":\"其他厅局项目\"}', null, '5.000', '15.000', '10.000');
+INSERT INTO `standard` VALUES ('6036', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"校级\",\"projorig\":\"湖北中医药大学\",\"projbelong\":\"校级项目\"}', null, '3.000', '10.000', '5.000');
+INSERT INTO `standard` VALUES ('6037', '项目立项', '{\"projtype\":\"自然科学\",\"projrank\":\"横向\",\"projorig\":\"横向\",\"projbelong\":\"横向项目\"}', null, null, '3.000', '2.000');
+INSERT INTO `standard` VALUES ('6038', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"国家级\",\"projorig\":\"全国哲学社会科学规划办公室\",\"projbelong\":\"国家社科基金重大项目\"}', null, '9.000', '400.000', '240.000');
+INSERT INTO `standard` VALUES ('6039', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"国家级\",\"projorig\":\"全国哲学社会科学规划办公室\",\"projbelong\":\"国家社科基金重点项目\"}', null, '9.000', '300.000', '180.000');
+INSERT INTO `standard` VALUES ('6040', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"国家级\",\"projorig\":\"全国哲学社会科学规划办公室\",\"projbelong\":\"国家社科基金中华学术外译项目\"}', null, '9.000', '300.000', '180.000');
+INSERT INTO `standard` VALUES ('6041', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"国家级\",\"projorig\":\"全国哲学社会科学规划办公室\",\"projbelong\":\"国家社科基金一般项目（含教育类、艺术类）、后期资助项目\"}', null, '9.000', '200.000', '120.000');
+INSERT INTO `standard` VALUES ('6042', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"国家级\",\"projorig\":\"全国哲学社会科学规划办公室\",\"projbelong\":\"国家社科基金西部项目\"}', null, '9.000', '200.000', '120.000');
+INSERT INTO `standard` VALUES ('6043', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"国家级\",\"projorig\":\"全国哲学社会科学规划办公室\",\"projbelong\":\"国家社科基金学术期刊资助项目\"}', null, '9.000', '200.000', '120.000');
+INSERT INTO `standard` VALUES ('6044', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"国家级\",\"projorig\":\"全国哲学社会科学规划办公室\",\"projbelong\":\"国家社科基金科学成果文库\"}', null, '9.000', '200.000', '120.000');
+INSERT INTO `standard` VALUES ('6045', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"国家级\",\"projorig\":\"全国哲学社会科学规划办公室\",\"projbelong\":\"国家社科基金单列学科项目\"}', null, '9.000', '200.000', '120.000');
+INSERT INTO `standard` VALUES ('6046', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"国家级\",\"projorig\":\"全国哲学社会科学规划办公室\",\"projbelong\":\"国家社科基金青年项目（含教育类、艺术类）\"}', null, '9.000', '150.000', '90.000');
+INSERT INTO `standard` VALUES ('6047', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"省部级\",\"projorig\":\"教育部\",\"projbelong\":\"教育部人文社会科学研究专项任务项目\"}', null, '6.000', '150.000', '90.000');
+INSERT INTO `standard` VALUES ('6048', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"省部级\",\"projorig\":\"教育部\",\"projbelong\":\"教育部哲学社会科学研究重大课题攻关项目\"}', null, '6.000', '150.000', '90.000');
+INSERT INTO `standard` VALUES ('6049', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"省部级\",\"projorig\":\"教育部\",\"projbelong\":\"教育部哲学社会科学研究一般项目\"}', null, '6.000', '100.000', '60.000');
+INSERT INTO `standard` VALUES ('6050', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"省部级\",\"projorig\":\"教育部\",\"projbelong\":\"教育部哲学社会科学研究后期资助项目\"}', null, '6.000', '100.000', '60.000');
+INSERT INTO `standard` VALUES ('6051', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"省部级\",\"projorig\":\"教育部\",\"projbelong\":\"教育部哲学社会科学研究发展报告资助项目\"}', null, '6.000', '80.000', '50.000');
+INSERT INTO `standard` VALUES ('6052', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"省部级\",\"projorig\":\"省哲学社会科学规划办公室\",\"projbelong\":\"湖北省社科基金项目\"}', null, '6.000', '40.000', '20.000');
+INSERT INTO `standard` VALUES ('6053', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"省部级\",\"projorig\":\"其他省部\",\"projbelong\":\"其他省部级社科项目\"}', null, '6.000', '40.000', '20.000');
+INSERT INTO `standard` VALUES ('6054', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"厅局级\",\"projorig\":\"教育厅\",\"projbelong\":\"湖北省教育厅繁荣哲学社会科学研究重大项目\"}', null, '5.000', '40.000', '20.000');
+INSERT INTO `standard` VALUES ('6055', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"厅局级\",\"projorig\":\"教育厅\",\"projbelong\":\"湖北省教育厅人文社会科学研究重点项目\"}', null, '5.000', '20.000', '10.000');
+INSERT INTO `standard` VALUES ('6056', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"厅局级\",\"projorig\":\"教育厅\",\"projbelong\":\"湖北省教育厅人文社会科学研究一般项目\"}', null, '5.000', '15.000', '10.000');
+INSERT INTO `standard` VALUES ('6057', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"厅局级\",\"projorig\":\"其他厅局\",\"projbelong\":\"其他厅局级社科项目\"}', null, '5.000', '15.000', '10.000');
+INSERT INTO `standard` VALUES ('6058', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"校级\",\"projorig\":\"湖北中医药大学\",\"projbelong\":\"校级课题\"}', null, '3.000', '10.000', '5.000');
+INSERT INTO `standard` VALUES ('6059', '项目立项', '{\"projtype\":\"哲学与社会科学\",\"projrank\":\"横向\",\"projorig\":\"横向\",\"projbelong\":\"横向社科项目\"}', null, null, '4.000', '2.500');
+INSERT INTO `standard` VALUES ('6060', '项目立项', '{\"projtype\":\"教育教学改革项目\",\"projrank\":\"国家级\",\"projorig\":\"国家教育规划办公室、教指委\",\"projbelong\":\"教育科学项目\"}', null, '9.000', '200.000', '120.000');
+INSERT INTO `standard` VALUES ('6061', '项目立项', '{\"projtype\":\"教育教学改革项目\",\"projrank\":\"国家级\",\"projorig\":\"教育部\",\"projbelong\":\"教育教学项目\"}', null, '9.000', '200.000', '120.000');
+INSERT INTO `standard` VALUES ('6062', '项目立项', '{\"projtype\":\"教育教学改革项目\",\"projrank\":\"省部级\",\"projorig\":\"国家中医药管理局\",\"projbelong\":\"教育教学项目\"}', null, '6.000', '100.000', '60.000');
+INSERT INTO `standard` VALUES ('6063', '项目立项', '{\"projtype\":\"教育教学改革项目\",\"projrank\":\"省部级\",\"projorig\":\"湖北省教育厅\",\"projbelong\":\"教育教改项目\"}', null, '6.000', '40.000', '20.000');
+INSERT INTO `standard` VALUES ('6064', '项目立项', '{\"projtype\":\"教育教学改革项目\",\"projrank\":\"省部级\",\"projorig\":\"湖北省教育科学规划办公室\",\"projbelong\":\"教研教改重点项目\"}', null, '6.000', '40.000', '20.000');
+INSERT INTO `standard` VALUES ('6065', '项目立项', '{\"projtype\":\"教育教学改革项目\",\"projrank\":\"省部级\",\"projorig\":\"湖北省教育科学规划办公室\",\"projbelong\":\"教研教改一般项目\"}', null, '6.000', '20.000', '10.000');
+INSERT INTO `standard` VALUES ('6066', '项目立项', '{\"projtype\":\"教育教学改革项目\",\"projrank\":\"厅局级\",\"projorig\":\"全国高教学会\",\"projbelong\":\"教育教改项目\"}', null, '5.000', '30.000', '15.000');
+INSERT INTO `standard` VALUES ('6067', '项目立项', '{\"projtype\":\"教育教学改革项目\",\"projrank\":\"厅局级\",\"projorig\":\"湖北省高教学会\",\"projbelong\":\"教育教改项目\"}', null, '5.000', '20.000', '10.000');
+INSERT INTO `standard` VALUES ('6068', '项目立项', '{\"projtype\":\"教育教学改革项目\",\"projrank\":\"校级\",\"projorig\":\"湖北中医药大学\",\"projbelong\":\"教育教改项目\"}', null, '3.000', '10.000', '5.000');
+INSERT INTO `standard` VALUES ('6069', '项目立项', '{\"projtype\":\"社会服务项目\",\"projrank\":\"\",\"projorig\":\"\",\"projbelong\":\"\"}', null, null, '2.000', '1.000');
+INSERT INTO `standard` VALUES ('7001', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"中药类1类\"}', null, null, '1.000', null);
+INSERT INTO `standard` VALUES ('7002', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"中药类2类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7003', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"中药类3类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7004', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"中药类4类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7005', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"中药类5类\"}', null, null, '3.000', null);
+INSERT INTO `standard` VALUES ('7006', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"中药类6类\"}', null, null, '4.000', null);
+INSERT INTO `standard` VALUES ('7007', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"中药类7类\"}', null, null, '5.000', null);
+INSERT INTO `standard` VALUES ('7008', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"中药类8类\"}', null, null, '5.000', null);
+INSERT INTO `standard` VALUES ('7009', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"中药类9类\"}', null, null, '6.000', null);
+INSERT INTO `standard` VALUES ('7010', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"化学药1类\"}', null, null, '1.000', null);
+INSERT INTO `standard` VALUES ('7011', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"化学药2类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7012', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"化学药3类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7013', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"化学药4类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7014', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"化学药5类\"}', null, null, '3.000', null);
+INSERT INTO `standard` VALUES ('7015', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"化学药6类\"}', null, null, '4.000', null);
+INSERT INTO `standard` VALUES ('7016', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"化学药7类\"}', null, null, '5.000', null);
+INSERT INTO `standard` VALUES ('7017', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"化学药8类\"}', null, null, '5.000', null);
+INSERT INTO `standard` VALUES ('7018', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"化学药9类\"}', null, null, '6.000', null);
+INSERT INTO `standard` VALUES ('7019', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"生物药类1类\"}', null, null, '1.000', null);
+INSERT INTO `standard` VALUES ('7020', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"生物药类2类\"}', null, null, '1.000', null);
+INSERT INTO `standard` VALUES ('7021', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"生物药类3类\"}', null, null, '1.000', null);
+INSERT INTO `standard` VALUES ('7022', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"生物药类4类\"}', null, null, '1.000', null);
+INSERT INTO `standard` VALUES ('7023', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"生物药类5类\"}', null, null, '1.000', null);
+INSERT INTO `standard` VALUES ('7024', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"生物药类6类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7025', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"生物药类7类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7026', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"生物药类8类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7027', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"生物药类9类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7028', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"生物药类10类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7029', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"生物药类11类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7030', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"生物药类12类\"}', null, null, '3.000', null);
+INSERT INTO `standard` VALUES ('7031', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"生物药类13类\"}', null, null, '4.000', null);
+INSERT INTO `standard` VALUES ('7032', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"生物药类14类\"}', null, null, '5.000', null);
+INSERT INTO `standard` VALUES ('7033', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"临床批件\",\"cat\":\"生物药类15类\"}', null, null, '6.000', null);
+INSERT INTO `standard` VALUES ('7034', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"中药类1类\"}', null, null, '1.000', null);
+INSERT INTO `standard` VALUES ('7035', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"中药类2类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7036', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"中药类3类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7037', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"中药类4类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7038', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"中药类5类\"}', null, null, '3.000', null);
+INSERT INTO `standard` VALUES ('7039', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"中药类6类\"}', null, null, '4.000', null);
+INSERT INTO `standard` VALUES ('7040', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"中药类7类\"}', null, null, '5.000', null);
+INSERT INTO `standard` VALUES ('7041', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"中药类8类\"}', null, null, '5.000', null);
+INSERT INTO `standard` VALUES ('7042', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"中药类9类\"}', null, null, '6.000', null);
+INSERT INTO `standard` VALUES ('7043', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"化学药1类\"}', null, null, '1.000', null);
+INSERT INTO `standard` VALUES ('7044', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"化学药2类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7045', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"化学药3类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7046', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"化学药4类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7047', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"化学药5类\"}', null, null, '3.000', null);
+INSERT INTO `standard` VALUES ('7048', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"化学药6类\"}', null, null, '4.000', null);
+INSERT INTO `standard` VALUES ('7049', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"化学药7类\"}', null, null, '5.000', null);
+INSERT INTO `standard` VALUES ('7050', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"化学药8类\"}', null, null, '5.000', null);
+INSERT INTO `standard` VALUES ('7051', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"化学药9类\"}', null, null, '6.000', null);
+INSERT INTO `standard` VALUES ('7052', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"生物药类1类\"}', null, null, '1.000', null);
+INSERT INTO `standard` VALUES ('7053', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"生物药类2类\"}', null, null, '1.000', null);
+INSERT INTO `standard` VALUES ('7054', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"生物药类3类\"}', null, null, '1.000', null);
+INSERT INTO `standard` VALUES ('7055', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"生物药类4类\"}', null, null, '1.000', null);
+INSERT INTO `standard` VALUES ('7056', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"生物药类5类\"}', null, null, '1.000', null);
+INSERT INTO `standard` VALUES ('7057', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"生物药类6类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7058', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"生物药类7类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7059', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"生物药类8类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7060', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"生物药类9类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7061', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"生物药类10类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7062', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"生物药类11类\"}', null, null, '2.000', null);
+INSERT INTO `standard` VALUES ('7063', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"生物药类12类\"}', null, null, '3.000', null);
+INSERT INTO `standard` VALUES ('7064', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"生物药类13类\"}', null, null, '4.000', null);
+INSERT INTO `standard` VALUES ('7065', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"生物药类14类\"}', null, null, '5.000', null);
+INSERT INTO `standard` VALUES ('7066', '新产品', '{\"prodtype\":\"新药\",\"cond\":\"新药证书\",\"cat\":\"生物药类15类\"}', null, null, '6.000', null);
+INSERT INTO `standard` VALUES ('7067', '新产品', '{\"prodtype\":\"新功能性食品\",\"cond\":\"生产许可\",\"cat\":\"\"}', null, null, '0.000', null);
+INSERT INTO `standard` VALUES ('7068', '新产品', '{\"prodtype\":\"新医疗器械\",\"cond\":\"生产许可\",\"cat\":\"医疗器械1类\"}', null, null, '0.000', null);
+INSERT INTO `standard` VALUES ('7069', '新产品', '{\"prodtype\":\"新医疗器械\",\"cond\":\"生产许可\",\"cat\":\"医疗器械2类\"}', null, null, '0.000', null);
+INSERT INTO `standard` VALUES ('7070', '新产品', '{\"prodtype\":\"新医疗器械\",\"cond\":\"生产许可\",\"cat\":\"医疗器械3类\"}', null, null, '0.000', null);
+INSERT INTO `standard` VALUES ('7071', '新产品', '{\"prodtype\":\"其他新产品\",\"cond\":\"生产许可\",\"cat\":\"\"}', null, null, '0.000', null);
 
 -- ----------------------------
 -- Table structure for url
@@ -25249,6 +25404,8 @@ CREATE TABLE `wf_process` (
 -- ----------------------------
 -- Records of wf_process
 -- ----------------------------
+INSERT INTO `wf_process` VALUES ('c9982a83cad44b4ea8b5bb291bebb028', 'basicProcess_Beta', '基础流程Beta', '', null, '1', 0x3C70726F63657373206E616D653D22626173696350726F636573735F426574612220646973706C61794E616D653D22E59FBAE7A180E6B581E7A88B42657461223E0D0A202020203C7374617274206E616D653D2273746172742220706F7374496E746572636570746F72733D22656E67696E652E66696C7465722E5374617274223E0D0A20202020202020203C7472616E736974696F6E206F66667365743D22302C2D31302220746F3D225375626D697373696F6E22206E616D653D2253746172746572222F3E0D0A202020203C2F73746172743E0D0A202020203C7461736B206E616D653D225375626D697373696F6E2220646973706C61794E616D653D22E5BD95E585A5222061737369676E6D656E7448616E646C65723D22656E67696E652E726F6C652E726F6C65220D0A20202020202020202020706F7374496E746572636570746F72733D22656E67696E652E66696C7465722E5375626D697373696F6E223E0D0A20202020202020203C7472616E736974696F6E206F66667365743D22302C2D31302220746F3D22536176654F725375626D697422206E616D653D22743273617665222F3E0D0A202020203C2F7461736B3E0D0A202020203C6465636973696F6E206E616D653D22536176654F725375626D69742220657870723D22234973436F6D706C6574653F277332636F6E6669726D273A2773327375626D697373696F6E2722206175746F457865637574653D2259223E0D0A20202020202020203C7472616E736974696F6E20746F3D22436F6E6669726D22206E616D653D227332636F6E6669726D222F3E0D0A20202020202020203C7472616E736974696F6E20746F3D225375626D697373696F6E22206E616D653D2273327375626D697373696F6E222F3E0D0A202020203C2F6465636973696F6E3E0D0A202020203C7461736B206E616D653D22436F6E6669726D2220646973706C61794E616D653D22E7A1AEE8AEA42220706572666F726D547970653D22414C4C22207461736B547970653D224D616A6F72220D0A20202020202020202020706F7374496E746572636570746F72733D22656E67696E652E66696C7465722E436F6E6669726D223E0D0A20202020202020203C7472616E736974696F6E20746F3D225375626D697442795465616368657222206E616D653D2263327375626D6974222F3E0D0A202020203C2F7461736B3E0D0A202020203C7461736B206E616D653D225375626D69744279546561636865722220646973706C61794E616D653D22E7BB9FE4B880E68F90E4BAA42220706572666F726D547970653D22414C4C22207461736B547970653D224D616A6F72220D0A2020202020202020202061737369676E6D656E7448616E646C65723D22656E67696E652E726F6C652E726F6C652220706F7374496E746572636570746F72733D22656E67696E652E66696C7465722E5375626D6974427954656163686572223E0D0A20202020202020203C7472616E736974696F6E20746F3D22417070726F76616C4279436F6C22206E616D653D227332617070726F76616C222F3E0D0A202020203C2F7461736B3E0D0A202020203C7461736B206E616D653D22417070726F76616C4279436F6C2220646973706C61794E616D653D22E999A2E7B3BBE5AEA1E6A0B8222061737369676E6D656E7448616E646C65723D22656E67696E652E726F6C652E726F6C65220D0A20202020202020202020706F7374496E746572636570746F72733D22656E67696E652E66696C7465722E4465636973696F6E223E0D0A20202020202020203C7472616E736974696F6E206F66667365743D22302C2D31302220746F3D226465636973696F6E3122206E616D653D2263326431222F3E0D0A202020203C2F7461736B3E0D0A202020203C6465636973696F6E206E616D653D226465636973696F6E312220657870723D22234465634279436F6C3F2764313273273A27643132742722206175746F457865637574653D2259223E0D0A20202020202020203C7472616E736974696F6E20746F3D225375626D69744279436F6C22206E616D653D2264313273222F3E0D0A20202020202020203C7472616E736974696F6E20746F3D225375626D697373696F6E22206E616D653D2264313274222F3E0D0A202020203C2F6465636973696F6E3E0D0A202020203C7461736B206E616D653D225375626D69744279436F6C2220646973706C61794E616D653D22E999A2E7B3BBE68F90E4BAA42220706572666F726D547970653D22414C4C22207461736B547970653D224D616A6F72220D0A2020202020202020202061737369676E6D656E7448616E646C65723D22656E67696E652E726F6C652E726F6C652220706F7374496E746572636570746F72733D22656E67696E652E66696C7465722E5375626D69744279436F6C223E0D0A20202020202020203C7472616E736974696F6E20746F3D22417070726F76616C427944657022206E616D653D227332617070726F76616C222F3E0D0A202020203C2F7461736B3E0D0A202020203C7461736B206E616D653D22417070726F76616C42794465702220646973706C61794E616D653D22E983A8E997A8E5AEA1E689B9222061737369676E6D656E7448616E646C65723D22656E67696E652E726F6C652E726F6C65220D0A20202020202020202020706F7374496E746572636570746F72733D22656E67696E652E66696C7465722E4465636973696F6E223E0D0A20202020202020203C7472616E736974696F6E206F66667365743D22302C2D31302220746F3D226465636973696F6E3222206E616D653D2273326432222F3E0D0A202020203C2F7461736B3E0D0A202020203C6465636973696F6E206E616D653D226465636973696F6E322220657870723D222344656342794465703F2764323265273A27643232632722206175746F457865637574653D2259223E0D0A20202020202020203C7472616E736974696F6E206F66667365743D22302C2D31302220746F3D22656E6422206E616D653D2264323265222F3E0D0A20202020202020203C7472616E736974696F6E206F66667365743D22302C2D31302220746F3D22417070726F76616C4279436F6C2220673D223835362C3631373B3834372C31393522206E616D653D2264323263222F3E0D0A202020203C2F6465636973696F6E3E0D0A202020203C656E64206E616D653D22656E642220707265496E746572636570746F72733D22656E67696E652E66696C7465722E436F6D706C657465223E0D0A202020203C2F656E643E0D0A3C2F70726F636573733E, '0', '2015-11-09 08:06:09', null);
+INSERT INTO `wf_process` VALUES ('e3702f1c15764f0d9bdcd11c832d897a', 'newMag', '添加新期刊', '', null, '1', 0x3C70726F63657373206E616D653D226E65774D61672220646973706C61794E616D653D22E6B7BBE58AA0E696B0E69C9FE5888A223E0D0A202020203C7374617274206E616D653D227374617274223E0D0A20202020202020203C7472616E736974696F6E206F66667365743D22302C2D31302220746F3D225375626D697373696F6E22206E616D653D2253746172746572222F3E0D0A202020203C2F73746172743E0D0A0D0A202020203C7461736B206E616D653D225375626D697373696F6E2220646973706C61794E616D653D22E5A1ABE58699E794B3E8AFB7222061737369676E6D656E7448616E646C65723D22656E67696E652E726F6C652E726F6C65223E0D0A20202020202020203C7472616E736974696F6E206F66667365743D22302C2D31302220746F3D22417070726F76616C427944657022206E616D653D225375626D697373696F6E32417070726F76616C222F3E0D0A202020203C2F7461736B3E0D0A0D0A202020203C7461736B206E616D653D22417070726F76616C42794465702220646973706C61794E616D653D22E983A8E997A8E5AEA1E689B9222061737369676E6D656E7448616E646C65723D22656E67696E652E726F6C652E726F6C65223E0D0A20202020202020203C7472616E736974696F6E206F66667365743D22302C2D31302220746F3D22656E6422206E616D653D22656E64222F3E0D0A202020203C2F7461736B3E0D0A0D0A202020203C656E64206E616D653D22656E642220706F7374496E746572636570746F72733D22656E67696E652E66696C7465722E4E65774D6167223E0D0A202020203C2F656E643E0D0A3C2F70726F636573733E, '0', '2015-11-09 08:06:09', null);
 
 -- ----------------------------
 -- Table structure for wf_surrogate
