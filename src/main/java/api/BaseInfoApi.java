@@ -65,10 +65,10 @@ public class BaseInfoApi {
     @Produces("application/json;charset=UTF-8")
     public boolean add(HashMap<String, String> args) {
         BaseInfo baseInfo = new BaseInfo();
-        String tableName = (String) args.get("tableName");
+        String tableName = args.get("tableName");
         String id = baseInfoService.getNewID(tableName);
         baseInfo.setTableName(tableName);
-        baseInfo.setValue((String) args.get("value"));
+        baseInfo.setValue(args.get("value"));
         baseInfo.setId(id);
         baseInfo.setKeyCode(id);
         return baseInfoService.save(baseInfo);

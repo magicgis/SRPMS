@@ -45,9 +45,8 @@ public class Permission {
         Permission that = (Permission) o;
 
         if (isPermit != null ? !isPermit.equals(that.isPermit) : that.isPermit != null) return false;
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        return !(id != null ? !id.equals(that.id) : that.id != null);
 
-        return true;
     }
 
     @Override

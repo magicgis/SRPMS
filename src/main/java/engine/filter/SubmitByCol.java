@@ -19,7 +19,7 @@ public class SubmitByCol implements SnakerInterceptor {
         String order = execution.getOrder().getId();
         String type = orderActorDao.getByOrder(order).get(0).getType();
         if (execution.getTasks().get(0).getTaskName().equals("ApprovalByDep")) {
-            Map<String, Object> args = new HashMap<String, Object>();
+            Map<String, Object> args = new HashMap<>();
             args.put("Status", "WaitForDep");
             execution.getEngine().order().addVariable(order, args);
             orderActorDao.save(order, "10003", 3, type);

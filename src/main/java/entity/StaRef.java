@@ -105,9 +105,8 @@ public class StaRef {
         if (score != null ? !score.equals(staRef.score) : staRef.score != null) return false;
         if (unit != null ? !unit.equals(staRef.unit) : staRef.unit != null) return false;
         if (entityId != null ? !entityId.equals(staRef.entityId) : staRef.entityId != null) return false;
-        if (arg != null ? !arg.equals(staRef.arg) : staRef.arg != null) return false;
+        return !(arg != null ? !arg.equals(staRef.arg) : staRef.arg != null);
 
-        return true;
     }
 
     @Override

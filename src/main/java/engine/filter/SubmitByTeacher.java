@@ -28,7 +28,7 @@ public class SubmitByTeacher implements SnakerInterceptor {
         List<Task> tasks = execution.getEngine().query().getActiveTasks(new QueryFilter().setOrderId(order));
         if (tasks.size() == 1 && tasks.get(0).getTaskName().equals("ApprovalByCol")) {
             //TODO 将学院与管理部门与order绑定！
-            Map<String, Object> args = new HashMap<String, Object>();
+            Map<String, Object> args = new HashMap<>();
             args.put("Status", "WaitForCol");
             execution.getEngine().order().addVariable(order, args);
             orderActorDao.save(order, "10002", 2, type);

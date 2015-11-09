@@ -156,7 +156,7 @@ public class CrunchifyInMemoryCache<K, T> {
         synchronized (crunchifyCacheMap) {
             MapIterator itr = crunchifyCacheMap.mapIterator();
 
-            deleteKey = new ArrayList<K>((crunchifyCacheMap.size() / 2) + 1);
+            deleteKey = new ArrayList<>((crunchifyCacheMap.size() / 2) + 1);
             K key = null;
             CrunchifyCacheObject c = null;
 

@@ -99,7 +99,7 @@ public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefSe
 
         Class x = null;
         try {
-            StringBuffer meType = new StringBuffer(type);
+            StringBuilder meType = new StringBuilder(type);
             meType.setCharAt(0, Character.toUpperCase(meType.charAt(0)));
             x = Class.forName(StaRefDao.class.getPackage().getName() + "." + meType.toString() + "Dao");
             BaseDao dao = (BaseDao) StaticFactory.getBean(x);
@@ -129,7 +129,7 @@ public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefSe
         Class x = null;
         try {
             for (StaRef re : res) {
-                StringBuffer meType = new StringBuffer(re.getType());
+                StringBuilder meType = new StringBuilder(re.getType());
                 meType.setCharAt(0, Character.toUpperCase(meType.charAt(0)));
 
                 x = Class.forName(StaRefDao.class.getPackage().getName() + "." + meType.toString() + "Dao");
@@ -152,7 +152,7 @@ public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefSe
             staRef.setEntityId(entity);
             staRef.setType(type);
             staRef.setScore(BigDecimal.valueOf(Double.valueOf((String) actor.get("score"))));
-            staRef.setRole("1".equals((String) actor.get("rank")) ? 1 : 0);
+            staRef.setRole("1".equals(actor.get("rank")) ? 1 : 0);
             staRef.setStaff(staffDao.getById((String) actor.get("staff.id")));
             staRef.setUnit((String) actor.get("unit"));
             staRefDao.save(staRef);

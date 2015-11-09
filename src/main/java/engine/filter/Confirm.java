@@ -51,7 +51,7 @@ public class Confirm implements SnakerInterceptor {
         /*如果任务是递交学院审批，那么就可以把学院与管理部门与order绑定了*/
         if (tasks.size() == 1 && tasks.get(0).getTaskName().equals("SubmitByTeacher")) {
             //TODO 将学院与管理部门与order绑定！
-            Map<String, Object> args = new HashMap<String, Object>();
+            Map<String, Object> args = new HashMap<>();
             args.put("Status", "WaitForSubmit");
             execution.getEngine().order().addVariable(order, args);
         }

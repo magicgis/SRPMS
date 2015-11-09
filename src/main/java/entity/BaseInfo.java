@@ -63,9 +63,8 @@ public class BaseInfo {
         if (id != null ? !id.equals(baseInfo.id) : baseInfo.id != null) return false;
         if (tableName != null ? !tableName.equals(baseInfo.tableName) : baseInfo.tableName != null) return false;
         if (keyCode != null ? !keyCode.equals(baseInfo.keyCode) : baseInfo.keyCode != null) return false;
-        if (value != null ? !value.equals(baseInfo.value) : baseInfo.value != null) return false;
+        return !(value != null ? !value.equals(baseInfo.value) : baseInfo.value != null);
 
-        return true;
     }
 
     @Override

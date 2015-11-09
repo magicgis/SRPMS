@@ -88,9 +88,8 @@ public class Confer {
         if (name != null ? !name.equals(confer.name) : confer.name != null) return false;
         if (time != null ? !time.equals(confer.time) : confer.time != null) return false;
         if (addr != null ? !addr.equals(confer.addr) : confer.addr != null) return false;
-        if (memo != null ? !memo.equals(confer.memo) : confer.memo != null) return false;
+        return !(memo != null ? !memo.equals(confer.memo) : confer.memo != null);
 
-        return true;
     }
 
     @Override

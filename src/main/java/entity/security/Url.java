@@ -65,9 +65,8 @@ public class Url {
         if (id != null ? !id.equals(url1.id) : url1.id != null) return false;
         if (url != null ? !url.equals(url1.url) : url1.url != null) return false;
         if (type != null ? !type.equals(url1.type) : url1.type != null) return false;
-        if (define != null ? !define.equals(url1.define) : url1.define != null) return false;
+        return !(define != null ? !define.equals(url1.define) : url1.define != null);
 
-        return true;
     }
 
     @Override

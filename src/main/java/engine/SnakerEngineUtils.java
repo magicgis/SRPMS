@@ -271,7 +271,7 @@ public class SnakerEngineUtils implements Engine {
         /*获取Order里面的顺序*/
         int flowOrder = 0;
         String flowOderStr = "WF_" + Integer.toString(flowOrder) + "_" + task.getTaskName();
-        Map<String, Object> temp = new HashMap<String, Object>();
+        Map<String, Object> temp = new HashMap<>();
         if (task.getTaskName().equals("Submission")) {
             flowOderStr = "WF_0_Submission";
             temp.put("WF_Latest", args);
@@ -307,7 +307,7 @@ public class SnakerEngineUtils implements Engine {
             if (!Boolean.valueOf((String) args.get("IsComplete")))
                 return tasks;
             String[] actorString = args.get("WF_Actor").toString().split(",");
-            List<String> actors = new ArrayList<String>();
+            List<String> actors = new ArrayList<>();
             for (String u : actorString) {
                 if (!u.equals(" ") && !u.equals(""))
                     actors.add(u);
@@ -384,7 +384,7 @@ public class SnakerEngineUtils implements Engine {
         }
         if (taskId != null) {
             snakerEngine.task().withdrawTask(taskId, actor);
-            HashMap<String, Object> status = new HashMap<String, Object>();
+            HashMap<String, Object> status = new HashMap<>();
             status.put("Status", "Uncomplete");
             snakerEngine.order().addVariable(orderId, status);
             ans = true;
@@ -407,7 +407,7 @@ public class SnakerEngineUtils implements Engine {
 
     public List<Task> getConfirmTask(String actor) {
         List<Task> allTask = getTaskByActor(actor);
-        List<Task> ans = new ArrayList<Task>();
+        List<Task> ans = new ArrayList<>();
         if (allTask != null && allTask.size() != 0) {
             for (Task task : allTask) {
                 if (task.getTaskName().equals("Confirm")) {

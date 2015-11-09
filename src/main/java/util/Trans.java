@@ -30,7 +30,7 @@ public class Trans {
         int size = list.size();
         limit = limit == null ? size : limit;
         offset = offset == null ? 0 : offset;
-        HashMap<String, Object> ans = new HashMap<String, Object>();
+        HashMap<String, Object> ans = new HashMap<>();
         if (limit + offset > size) {
             ans.put("rows", list.subList(offset, size));
             ans.put("total", Integer.toString(size));
@@ -51,7 +51,6 @@ public class Trans {
      * @throws Exception
      */
     public static String MD5(String args) {
-        String original = args;
         MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("MD5");
@@ -59,9 +58,9 @@ public class Trans {
             e.printStackTrace();
             return null;
         }
-        md.update(original.getBytes());
+        md.update(args.getBytes());
         byte[] digest = md.digest();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (byte b : digest) {
             sb.append(String.format("%02x", b & 0xff));
         }
@@ -133,7 +132,6 @@ public class Trans {
                         }
                     }
                 } catch (Exception e) {
-                    continue;
                 }
             }
         }
@@ -146,7 +144,7 @@ public class Trans {
      */
     public static String changeMethodName(String src) {
         if (src != null) {
-            StringBuffer sb = new StringBuffer(src);
+            StringBuilder sb = new StringBuilder(src);
             sb.setCharAt(0, Character.toLowerCase(sb.charAt(0)));
             return sb.toString();
         }
@@ -161,7 +159,7 @@ public class Trans {
      */
     public static String changeTypeName(String src) {
         if (src != null) {
-            StringBuffer sb = new StringBuffer(src);
+            StringBuilder sb = new StringBuilder(src);
             sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
             return sb.toString();
         }
@@ -237,8 +235,7 @@ public class Trans {
                 l.remove(l.size() - 1);
             }
         }
-        Map<String, Object> ans = (Map<String, Object>) list.get(0);
-        return ans;
+        return (Map<String, Object>) list.get(0);
     }
 
     public static Map<String, Object> list2Map(List list) {

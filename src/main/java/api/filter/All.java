@@ -65,7 +65,7 @@ public class All implements ContainerRequestFilter {
             /*在缓存内寻找用户的权限*/
             Boolean flag = PermissionCache.get(role + "-" + path + "-" + type);
             /*如果未找到（未设置权限）或者无权限*/
-            if (flag == null || flag == false) {
+            if (flag == null || !flag) {
                 /*打断，返回401*/
 //                requestContext.abortWith(Response
 //                        .status(Response.Status.UNAUTHORIZED)

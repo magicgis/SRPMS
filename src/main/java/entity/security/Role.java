@@ -41,9 +41,8 @@ public class Role {
         Role role1 = (Role) o;
 
         if (role != null ? !role.equals(role1.role) : role1.role != null) return false;
-        if (define != null ? !define.equals(role1.define) : role1.define != null) return false;
+        return !(define != null ? !define.equals(role1.define) : role1.define != null);
 
-        return true;
     }
 
     @Override

@@ -83,9 +83,8 @@ public class User {
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (pwd != null ? !pwd.equals(user.pwd) : user.pwd != null) return false;
         if (privilege != null ? !privilege.equals(user.privilege) : user.privilege != null) return false;
-        if (status != null ? !status.equals(user.status) : user.status != null) return false;
+        return !(status != null ? !status.equals(user.status) : user.status != null);
 
-        return true;
     }
 
     @Override

@@ -15,7 +15,7 @@ public class Decision implements SnakerInterceptor {
     @Override
     public void intercept(Execution execution) {
         String order = execution.getOrder().getId();
-        Map<String, Object> args = new HashMap<String, Object>();
+        Map<String, Object> args = new HashMap<>();
         Map<String, Object> dec = execution.getArgs();
         boolean flag = false;
         if (dec.containsKey("DecByCol")) {

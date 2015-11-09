@@ -55,9 +55,8 @@ public class Attachment {
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (user != null ? !user.equals(that.user) : that.user != null) return false;
-        if (path != null ? !path.equals(that.path) : that.path != null) return false;
+        return !(path != null ? !path.equals(that.path) : that.path != null);
 
-        return true;
     }
 
     @Override

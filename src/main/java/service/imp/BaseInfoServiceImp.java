@@ -25,7 +25,7 @@ public class BaseInfoServiceImp extends BaseServiceImp<BaseInfo> implements Base
 
     @Override
     public List getByTableName(String tableName) {
-        HashMap args = new HashMap<String,String>();
+        HashMap args = new HashMap<>();
         args.put("tableName",tableName);
         return baseInfoDao.findByMapAcc(args);
     }
@@ -37,7 +37,7 @@ public class BaseInfoServiceImp extends BaseServiceImp<BaseInfo> implements Base
 
     @Override
     public String getNewID(String tableName) {
-        HashMap args = new HashMap<String,String>();
+        HashMap args = new HashMap<>();
         args.put("tableName",tableName);
         List<BaseInfo> list = baseInfoDao.findByMapAcc(args) ;
         if (!list.isEmpty()) {

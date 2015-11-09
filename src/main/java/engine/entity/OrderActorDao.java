@@ -86,7 +86,7 @@ public class OrderActorDao {
 
     public List<OrderActor> getByAll(String actor, String type, Integer role) {
         String hql = "from OrderActor";
-        List<String> where = new ArrayList<String>();
+        List<String> where = new ArrayList<>();
         if (actor != null && !actor.trim().equals("")) {
             where.add("actor = '" + actor + "'");
         }

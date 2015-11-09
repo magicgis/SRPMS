@@ -64,9 +64,8 @@ public class Newspaper {
         if (id != null ? !id.equals(newspaper.id) : newspaper.id != null) return false;
         if (name != null ? !name.equals(newspaper.name) : newspaper.name != null) return false;
         if (period != null ? !period.equals(newspaper.period) : newspaper.period != null) return false;
-        if (memo != null ? !memo.equals(newspaper.memo) : newspaper.memo != null) return false;
+        return !(memo != null ? !memo.equals(newspaper.memo) : newspaper.memo != null);
 
-        return true;
     }
 
     @Override

@@ -35,7 +35,7 @@ public class Submission implements SnakerInterceptor {
                 orderActorDao.save(order, actor, 1, type);
             }
         }
-        Map<String, Object> args = new HashMap<String, Object>();
+        Map<String, Object> args = new HashMap<>();
         /*如果表单填写完毕,就加上部分全局变量*/
         String status = (String) execution.getArgs().get("IsComplete");
         if (Boolean.valueOf(status).equals(true)) {

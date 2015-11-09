@@ -31,7 +31,7 @@ public class Start implements SnakerInterceptor {
         //以员工表为准
         StaffService staffService = (StaffService) getBean(StaffService.class);
 
-        Map<String, Object> args = new HashMap<String, Object>();
+        Map<String, Object> args = new HashMap<>();
         Staff staff;
         BaseInfo col;
         //员工发起与学校发起的区别在于负责人。
