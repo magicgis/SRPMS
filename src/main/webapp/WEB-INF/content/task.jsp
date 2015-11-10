@@ -67,6 +67,8 @@
                             <div class="widget-body">
                                 <div id="tableCon">
                                     <table id="taskTable"
+                                           data-show-columns="true"
+                                           data-show-refresh="true"
                                            data-page-list="[10,15,20]"
                                            data-pagination="true"
                                            data-single-select="true"
@@ -90,7 +92,7 @@
 </a>
 <!-- /.main-container -->
 <script src='<c:url value="/js/public/public.js"/>'></script>
-<script src='<c:url value="/js/public/pubAllSRInfo.js"/>'></script>
+<%--<script src='<c:url value="/js/public/pubAllSRInfo.js"/>'></script>--%>
 <script type="text/javascript">
     $("#taskTable").bootstrapTable({
         url: '/api/workflow/' + userName + '/confirmTask',

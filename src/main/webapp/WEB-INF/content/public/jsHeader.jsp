@@ -159,6 +159,10 @@ window.jQuery || document.write("<script src='assets/js/jquery1x.min.js'>" + "<"
     button.tabOrdBtn {
         margin: 0px 10px 0px 10px;
     }
+
+    .score {
+	    padding: 1px 4px 1px !important;
+    }
     /*.user-info {*/
     /*width: 150px;*/
     /*}*/

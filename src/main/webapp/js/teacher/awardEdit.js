@@ -131,25 +131,10 @@ function editActor(row, index) {
     });
 }
 
-function getScore() {
-    //alert("###################");
-    $('#actorToolbar').append('<a data-toggle="modal" class="btn btn-white btn-info btn-bold testScore">' +
-    '剩余50分</a><input id="tempScore" value="50" hidden="hidden">');
-    $('#getScore').attr("disabled", "disabled");
-    //var jsonData = getFormData('project');
-    //workflow.getScore(jsonData).success(function (data) {
-    //    if (data["valid"] == false) { // 检验不合格
-    //        errorMsg(data["msg"]);
-    //        flag = true;
-    //    } else if (data["hasSum"] == false) { // 后台分配分数
-    //        $("#actorTable").bootstrapTable('load', data["actors"]);
-    //        flag = false;
-    //        errorMsg(data["msg"]);
-    //    } else if (data["hasSum"] == true) {  // 给总分，负责人分配分数
-    //        $("#score").val(data["sum"]);
-    //        $("#showSum").html("总分：" + data["sum"] + "分");
-    //        errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
-    //        flag = true;
-    //    }
-    //});
-}
+//function getScore() {
+//    //alert("###################");
+//    $('#actorToolbar').append('<a data-toggle="modal" class="btn btn-white btn-info btn-bold testScore">' +
+//    '剩余50分</a><input id="tempScore" value="50" hidden="hidden">');
+//    $('#getScore').attr("disabled", "disabled");
+//
+//}
