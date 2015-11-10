@@ -425,6 +425,27 @@ function getStandardList(data, str1, str2, result) {
     return tempList2;
 }
 
+function getStandardList(data, str1, value1, str2, value2, str3, value3, str4) {
+
+    var tempList2 = [];
+    var tempList = $.grep(data, function (obj, index) {
+        return obj['infoMap'][str1] == value1;
+    });
+    tempList = $.grep(data, function (obj, index) {
+        return obj['infoMap'][str2] == value2;
+    });
+    tempList = $.grep(data, function (obj, index) {
+        return obj['infoMap'][str3] == value3;
+    });
+    $.each(tempList, function (index, obj) {
+        var temp = {};
+        temp['id'] = obj['id'];
+        temp['value'] = obj['infoMap'][str4];
+        tempList2.push(temp);
+    });
+    return tempList2;
+}
+
 //}
 
 /**--------------------------附件公共方法------------------**/

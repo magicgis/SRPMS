@@ -13,9 +13,9 @@
             render: {
                 option: function(item, escape) {
                     return '<div>' +
-                            '<span class="id">' + escape(item.id) + '</span>' +
-                            '&nbsp;' + '&nbsp;' +
                             '<span class="name">' + escape(item.name) + '</span>' +
+                            '&nbsp;' + '&nbsp;' +
+                            '<span class="id">' + escape(item.id) + '</span>' +
                             '&nbsp;' + '&nbsp;' +
                             '<span class="dept">' + escape(item["col"].value || '') + '</span>' +
                             '</div>';
@@ -160,7 +160,7 @@
                                        onkeyup="this.value=value.replace(/[^\d]/g,'')"
                                        onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"/>
                                     <span class="help-inline col-xs-12">
-                                        <span class="middle">*请输入数字，该排名代表此人在项目、论文等科研工作中的排名位置</span>
+                                        <span class="middle">*请输入数字，不可重复，该排名代表此人在项目、论文等科研工作中的排名位置</span>
                                     </span>
                             </div>
                         </div>
