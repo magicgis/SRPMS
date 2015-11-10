@@ -77,7 +77,7 @@ public class BaseInfoApi {
     @GET
     @Path("/{id}")
     @Produces("application/json;charset=UTF-8")
-    public BaseInfo get(@PathParam("id") String id, HashMap<String, Object> args) {
+    public BaseInfo get(@PathParam("id") String id) {
         return baseInfoService.getById(id);
     }
 
