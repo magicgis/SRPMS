@@ -1,6 +1,7 @@
 package service.imp;
 
 import org.snaker.engine.entity.Order;
+import service.imp.standard.StandardUtil;
 
 import java.io.*;
 import java.util.*;
@@ -24,8 +25,10 @@ public class StandardBase {
     private InputStream in;
     protected final String MESSAGE = "msg";
     protected final String IS_VALID = "valid";
+    private StandardUtil tool;
 
     public StandardBase() throws FileNotFoundException {
+        this.tool = new StandardUtil();
         validInfo.put(MESSAGE, DEFAULT_MSG);
         validInfo.put(IS_VALID, DEFAULT_FLAG);
         this.prop = new Properties();
@@ -60,31 +63,13 @@ public class StandardBase {
         }
         return (Map) map.get(maxKey);
     }
-
-    //乱码问题纠正，str需纠正的字符串，form为原是编码，to目标编码集一般为utf-8
-    public String stringConvert(String str, String from, String to) {
-        try {
-            return new String(str.getBytes(from), to);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    //    排序权重计算
-    public double positionWeight(int n, int i) {
-        double weight = 0;
-        if (i > n || i < 0) return weight;
-        for (int j = 0; j <= n; j++) {
-            weight += j;
-        }
-        weight = (n - i + 1) / weight;
-        return weight;
+    public Map sysValidTime(){
+        return tool.getSysStartAndEndTime();
     }
 
     //stringConvert方法重载，将str从ISO-8859-1变换为utf-8
     public String stringConvert(String str) {
-        return stringConvert(str, SRC_ENCODING, DES_ENCODING);
+        return tool.stringConvert(str, SRC_ENCODING, DES_ENCODING);
     }
 
     //从properties文件中读取相应代码的字符串
@@ -121,7 +106,7 @@ public class StandardBase {
         for (int i = 0; i < pageStructrue.length; i++) {
             String valueStr = (String) map.get(pageStructrue[i]);
             if (valueStr == null || valueStr.trim().equals("")) {
-                validInfo.put("msg", "请填写" + pageElemtName.get(pageStructrue[i]) + "信息，该信息不能为空");
+                validInfo.put(MESSAGE, "请填写" + pageElemtName.get(pageStructrue[i]) + "信息，该信息不能为空");
                 return validInfo;
             }
         }
@@ -138,9 +123,7 @@ public class StandardBase {
         for (Map author : authors) {
             String id = (String) author.get("staff.id");
 //            列表中没有人，或是本校学生（id必然重复）校外人员（id必然重复）
-            if (abAuthors.size() == 0
-                    || id.equals("9998")
-                    || id.equals("9999"))
+            if (abAuthors.size() == 0 || !isMyStaff(author))
                 abAuthors.add(author);
             else {
                 boolean flag = false;
@@ -156,45 +139,54 @@ public class StandardBase {
         return abAuthors;
     }
 
-    //返回参与人员列表
+    //参与人员列表
     public List<Map> getActors(Map map) {
         return (List<Map>) map.get("actors");
     }
 
-    //    我校教师及学生
-    public List<Map> getMyActors(Map map) {
-        List nullList = new ArrayList();
-        if (!(boolean) map.get(IS_VALID))
-            return nullList;
-        else
-            return (List<Map>) map.get("myKeyAuthors");
+    //我校教师及学生
+    public List<Map> getMyActors(List<Map> actors) {
+        List<Map> myActorList = new ArrayList<>();
+        for (Map actor : actors) {
+            String unit = (String) actor.get("unit");
+            String id = (String) actor.get("staff.id");
+//            检查角色的署名单位
+            if (id.equals(STUNDENT_ID)) myActorList.add(actor);
+            else
+                for (int i = 0; i < MY_SCHOOL_NAME.length; i++) {
+                    if (unit.equals(MY_SCHOOL_NAME[i])) {
+                        myActorList.add(actor);
+                        break;
+                    }
+                }
+        }
+        return myActorList;
     }
+
+    //    主要角色列表
+    public List<Map> getChiefActors(List<Map> actors, String chiefRole) {
+        List<Map> chiefActors = new ArrayList<>();
+        for (Map actor : actors) {
+            String role = (String) actor.get("role");
+            if (!(role == null) && role.equals(chiefRole)) chiefActors.add(actor);
+        }
+        return chiefActors;
+    }
+
+    //    我校职工
+    public List<Map> getMyStaffActors(List<Map> actors) {
+        List<Map> myStaffActors = new ArrayList<>();
+        for (Map actor : actors) {
+            if (isMyStaff(actor))
+                myStaffActors.add(actor);
+        }
+        return myStaffActors;
+    }
+    //    我校教师及学生
 
     //    我校教师
-    public List<Map> getMyTchActors(Map map) {
-        List nullList = new ArrayList();
-        if (!(boolean) map.get(IS_VALID))
-            return nullList;
-        else
-            return (List<Map>) map.get("myTchKeyAuthors");
-    }
 
     //    我校学生
-    public List<Map> getMyStuActors(Map map) {
-        List nullList = new ArrayList();
-        if (!(boolean) map.get(IS_VALID))
-            return nullList;
-        else
-            return (List<Map>) map.get("myStuKeyAuthors");
-    }
-
-    public List<Map> getKeyActors(Map map) {
-        List nullList = new ArrayList();
-        if (!(boolean) map.get(IS_VALID))
-            return nullList;
-        else
-            return (List<Map>) map.get("keyAuthors");
-    }
 
     //    检查是否是我校职工
     public boolean isMyStaff(Map actor) {
@@ -202,9 +194,9 @@ public class StandardBase {
         String staffId = (String) actor.get("staff.id");
         boolean flag = false;
         for (int i = 0; i < MY_SCHOOL_NAME.length; i++) {
-            if (unit.equals(MY_SCHOOL_NAME[i])
-                    && !staffId.equals("9999")
-                    & !staffId.equals("9998")) {
+            if (!staffId.equals(PARTNER_ID)
+                    && !staffId.equals(STUNDENT_ID)
+                    && unit.equals(MY_SCHOOL_NAME[i])) {
                 flag = true;
                 break;
             }
@@ -212,64 +204,7 @@ public class StandardBase {
         return flag;
     }
 
-
-    //获取关键角色参与人员列表Map其中包含本校和全部关键角色列表
-    public Map getRoleArray(String cheifRole, Map map) {
-        Map validInfo = new HashMap();
-        validInfo.put(MESSAGE, DEFAULT_MSG);
-        validInfo.put(IS_VALID, DEFAULT_FLAG);
-        List<Map> Authors;
-        List<Map> ChiefAuthors = new ArrayList<>();
-        List<Map> MyChiefAuthors = new ArrayList<>();
-        List<Map> MyTchChiefAuthors = new ArrayList<>();
-        List<Map> MyStuChiefAuthors = new ArrayList<>();
-        Authors = (List<Map>) map.get("actors");
-        if (Authors == null) return validInfo;
-        for (Map author : Authors) {
-            String unit = (String) author.get("unit");
-            String id = (String) author.get("staff.id");
-            String role = (String) author.get("role");
-            if (unit != null && unit.trim().equals("")) {
-                validInfo.put(MESSAGE, getMsg("2121"));
-                return validInfo;
-            }
-//        主要角色列表生成
-            boolean myFlag = false;
-//            检查角色的署名单位
-            for (int i = 0; i < MY_SCHOOL_NAME.length; i++) {
-                if (unit.equals(MY_SCHOOL_NAME[i])) {
-                    myFlag = true;
-                    break;
-                }
-            }
-            if (role.equals(cheifRole)) {
-                ChiefAuthors.add(author);
-//                我校教师
-                if ((id != null && !id.equals("")
-                        && !id.equals("9998")
-                        && !id.equals("9999"))
-                        && myFlag
-                        )
-                    MyTchChiefAuthors.add(author);
-//                我校学生
-                else if (id.equals("9998")) {
-                    MyStuChiefAuthors.add(author);
-                }
-//                我校师生
-                if (myFlag || id.equals("9998"))
-                    MyChiefAuthors.add(author);
-            }
-
-        }
-        validInfo.put("keyAuthors", ChiefAuthors);
-        validInfo.put("myKeyAuthors", MyChiefAuthors);
-        validInfo.put("myTchKeyAuthors", MyTchChiefAuthors);
-        validInfo.put("myStuKeyAuthors", MyStuChiefAuthors);
-        validInfo.put(MESSAGE, getMsg("1001"));
-        validInfo.put(IS_VALID, true);
-        return validInfo;
-    }
-
+    //StandardId适配
     public String selectId(String type) {
         String typeId = "standard.id";
         if (type.equals("newsPaper")) typeId = "newspaper." + typeId;
@@ -277,4 +212,17 @@ public class StandardBase {
         else if (type.equals("conferPaper")) typeId = "confer." + typeId;
         return typeId;
     }
+
+    //    排序权重计算
+    public double positionWeight(int n, int i) {
+//        n代表总数，i代表排位
+        double weight = 0;
+        if (i > n || i < 0) return weight;
+        for (int j = 0; j <= n; j++) {
+            weight += j;
+        }
+        weight = (n - i + 1) / weight;
+        return weight;
+    }
+
 }//the end of the class

@@ -65,12 +65,12 @@ public class project extends StandardBase implements StandardCheckInf {
 //    }
 
     @Override
-    public Map isExtrrmumBand(Map map, int min, int max) {
+    public Map isExtrrmumBand(Map map, double min, double max) {
         return null;
     }
 
     @Override
-    public Map getFinalScore(Map map, int tableScore) {
+    public Map getFinalScore(Map map, double tableScore) {
 //        我校主持我校负责人
 //        非我校主持联合和子课题（自动分配）
 //        我校主持非我校负责人（自动分配）

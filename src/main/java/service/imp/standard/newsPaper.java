@@ -31,7 +31,7 @@ public class newsPaper extends Paper {
 //        return super.getScoreAndExtremumFromTable(standardDao, info, id);
 //    }
 
-    public Map isExtrrmumBand(Map map, int min, int max) {
+    public Map isExtrrmumBand(Map map, double min, double max) {
         Map validInfo = new HashMap();
         validInfo.put(MESSAGE, DEFAULT_MSG);
         validInfo.put(IS_VALID, DEFAULT_FLAG);
