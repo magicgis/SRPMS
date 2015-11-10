@@ -520,14 +520,6 @@
     $('.addActor').click(function () {
         addActor();
     });
-    //监听 编辑成员
-    $('.editActor').click(function () {
-        editActor();
-    });
-    //监听 编辑单位
-    $('.editUnit').click(function () {
-        editUnit();
-    });
     //监听 分配分数
     $('.getScore').click(function () {
         getScore();

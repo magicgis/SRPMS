@@ -70,12 +70,13 @@
                 <div class="row">
                     <form id="project" class="form-horizontal" role="form">
                         <div hidden="hidden">
-                            <input type="text" name="sum" id="score"/>
                             <input type="text" name="standard.id" id="standardId"/>
                             <input type="text" name="id" id="projectId" value="${project.id}"/>
                             <input type="text" name="WF_Type" id="WF_Type" value="project"/>
                         </div>
-                        <div id="projInfo" class="col-xs-12 col-md-7 widget-container-col ui-sortable">
+
+                        <div id="projInfo" class="col-xs-12 col-md-6 widget-container-col ui-sortable">
+
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
                                 <div class="widget-header">
                                     <h4 class="widget-title">项目信息</h4>
@@ -276,8 +277,8 @@
 
                                                             <div class="widget-toolbar no-border">
                                                                 <c:if test="${sessionScope.level == '3'}">
-                                                                <div id="upload">
-                                                                </div>
+                                                                    <div id="upload">
+                                                                    </div>
                                                                 </c:if>
                                                             </div>
                                                         </div>
@@ -295,8 +296,10 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-                        <div id="actorInfo" class="col-xs-12 col-md-5 widget-container-col ui-sortable">
+
+                        <div id="actorInfo" class="col-xs-12 col-md-6 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle col-xs-12" style="opacity: 1;">
                                 <div class="widget-header" id="actorInfoHeader">
                                     <h4 class="widget-title">参与人员</h4>
@@ -306,31 +309,32 @@
                                     <div class="widget-main">
                                         <div class="row">
                                             <div id="actorToolbar">
-                                            <c:choose>
-                                            <c:when test="${sessionScope.level == '3'}">
-                                                <a data-toggle="modal"
-                                                   class="btn btn-primary btn-sm addActor">添加成员</a>
-                                            </c:when>
-                                            <c:when test="${sessionScope.level == '1'}">
-                                                <a data-toggle="modal"
-                                                   class="btn btn-primary btn-sm getScore">计算分数</a>
-                                            </c:when>
-                                            </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${sessionScope.level == '3'}">
+                                                        <a class="btn btn-primary btn-sm addActor">添加成员</a>
+                                                    </c:when>
+                                                </c:choose>
+                                                <span class="giveSum">
+                                                    <button class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</button>
+                                                    <label for="score">原则上可分配总分：</label>
+                                                    <input class="score" type="text" name="score" id="score" value="${patent.score}">
+                                                </span>
                                             </div>
                                             <table id="actorTable"
                                                    data-toolbar="#actorToolbar"
                                                    data-show-footer="true"
-                                                   data-show-columns="true"
-                                                   data-show-toggle="true"></table>
+                                                   data-show-columns="false"
+                                                   data-show-toggle="false"></table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-xs-12" id="msg_alert"></div>
+
                         </div>
 
-                        <div id="fundInfo" class="col-xs-12 col-md-5 widget-container-col ui-sortable">
+                        <div id="fundInfo" class="col-xs-12 col-md-6 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
                                 <div class="widget-header">
                                     <h4 class="widget-title">金额到账信息（单位：万元）</h4>
@@ -352,7 +356,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="unitInfo" class="col-xs-12 col-md-5 col-xs-offset-7 widget-container-col ui-sortable">
+
+                        <div id="unitInfo" class="col-xs-12 col-md-6 col-xs-offset-6 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
                                 <div class="widget-header">
                                     <h4 class="widget-title">共有单位信息</h4>
@@ -373,7 +378,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="reply" class="col-xs-12 col-md-5 col-xs-offset-7 widget-container-col ui-sortable">
+
+                        <div id="reply" class="col-xs-12 col-md-6 col-xs-offset-6 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
                                 <div class="widget-header">
                                     <h4 class="widget-title">批复</h4>
@@ -394,9 +400,11 @@
                                 </div>
                             </div>
                         </div>
+
                     </form>
 
                     <div class="row">
+
                         <div id="formBtn" class="col-xs-12 clearfix">
                             <div class="pull-left onDel">
                                 <c:if test="${sessionScope.level == '3'}">
@@ -440,6 +448,7 @@
                                 </button>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -454,6 +463,19 @@
 </a>
 <!-- /.main-container -->
 </body>
+
+<script>
+
+    var actorTemp = [];
+    var unitTemp = [];
+    var fundTemp = [];
+    var Main_Actor;
+    var Main_ActorName;
+    var filesData = {};
+    var replyByCol, replyByDep;
+
+</script>
+
 <script src='<c:url value="/js/public/public.js"/>'></script>
 <script src='<c:url value="/js/public/pubProject.js"/>'></script>
 
@@ -467,27 +489,51 @@
         });
     });
     // 成员，单位，文件
-    // todo 取出实体内的额外信息，附件信息也应该在其中。
-    var entity = ${ObjectMapper.writeValueAsString(project)};
-    var all = ${ObjectMapper.writeValueAsString(project.argMap)};
-    var standardId = '${ObjectMapper.writeValueAsString(project.standard)}';
-    var dept ='${ObjectMapper.writeValueAsString(project.dept)}';
-    var taskId = '${taskId}';
+    var entity =  '${ObjectMapper.writeValueAsString(achTran)}'; // 获得 entity 或 实体
+    if(isNull(entity)) {
+        entity = {};
+    }
+    var all = entity['argMap']; // 获得 成员，单位，附件，负责人等信息
+    var dept = entity['dept'];
+    var standardId = entity['standard'];
+    var taskId = '${taskId}';  // 获得 task的id
     var taskName = '${taskName}';
-    allSections();
+
+    if (!isNull(all)) {
+        filesData = all['filesData'];
+        unitTemp = all['units'];
+	    fundTemp = all['units'];
+        Main_Actor = all['Main-Actor'];
+        Main_ActorName = all['Main-ActorName'];
+    } else {
+        all = {};
+    }
+
+    var approvalByCol = getApprovalByCol(all);
+    if (approvalByCol !== "") {
+        replyByCol = all[approvalByCol]['replyByCol'];
+    }
+    var approvalByDep = getApprovalByDep(all);
+    if (approvalByDep !== "") {
+        replyByDep = all[approvalByDep]['replyByDep'];
+    }
+
+//    allSections();
     getDept();//选择框
     upToLoadFile();//文件上传
     firstOrOther();//是否是联合单位
     fullUpInfo(all,entity);//tian chon
-    var filesData;
+
     if (filesData == null) {
         filesData = {};
     }
-    if(dept !== null) {  // 显示 所属部门
-        var $dept = $('#dept').selectize();
-        addOptionSelectize($dept, [dept]);
-        DisplayForm($dept, dept['id'], 0);
-    }
+
+//    if(dept !== null) {  // 显示 所属部门
+//        var $dept = $('#dept').selectize();
+//        addOptionSelectize($dept, [dept]);
+//        DisplayForm($dept, dept['id'], 0);
+//    }
+
     $('#actorTable').bootstrapTable({
         columns: [
             {
@@ -499,7 +545,6 @@
                 field: 'rank',
                 title: '排名',
                 sortable: true,
-                //editable: true,
                 footerFormatter: "totalNameFormatter"
             }, {
                 field: 'staff.name',
@@ -513,12 +558,10 @@
                 field: 'score',
                 title: '分数',
                 sortable: true,
-                //editable: true,
                 footerFormatter: "totalMarksFormatter"
             }, {
                 field: 'unit',
                 title: '归属单位',
-                //editable: true,
                 sortable: true
             }, {
                 field: 'operate',
@@ -533,18 +576,15 @@
         columns: [{
             field: 'time',
             title: '到账时间',
-            //editable: true,
             sortable: true
         }, {
             field: 'mny',
             title: '到账金额',
-            //editable: true,
             sortable: true,
             footerFormatter: "totalFundsFormatter"
         }, {
             field: 'outMny',
             title: '外拨金额',
-            // editable: true,
             sortable: true,
             footerFormatter: "totalEFundFormatter"
         }, {
@@ -590,7 +630,7 @@
     });
     //监听 分配分数
     $('.getScore').click(function () {
-        getScore();
+        getScore('project');
     });
     //监听 添加单位
     $('.addUnit').click(function () {
@@ -609,13 +649,13 @@
     });
     $(".orderBack").click(function () {
         orderBack();
-    })
+    });
     $(".del").click(function () {
         delOrder();
     });
     $(".Approve").click(function () {
         Approve();
-    })
+    });
     $(".Refuse").click(function () {
         Refuse();
     });

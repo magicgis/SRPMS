@@ -77,11 +77,11 @@
                 <div class="row">
                     <form id="award" class="form-horizontal" role="form">
                         <div hidden="hidden">
-                            <input type="text" name="sum" id="score"/>
                             <input type="text" name="id" id="awardId" value="${award.id}"/>
                             <input type="text" name="WF_Type" id="WF_Type" value="achAward"/>
                         </div>
-                        <div id="achInfo" class="col-xs-12 col-md-7 widget-container-col ui-sortable">
+
+                        <div id="achInfo" class="col-xs-12 col-md-6 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
                                 <div class="widget-header">
                                     <h4 class="widget-title">成果信息</h4>
@@ -118,7 +118,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="actorInfo" class="col-xs-12 col-md-5 widget-container-col ui-sortable">
+
+                        <div id="actorInfo" class="col-xs-12 col-md-6 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle col-xs-12"
                                  style="opacity: 1;">
                                 <div class="widget-header" id="actorInfoHeader">
@@ -131,16 +132,15 @@
                                             <div id="actorToolbar">
                                                 <c:choose>
                                                     <c:when test="${sessionScope.level == '3'}">
-                                                        <a data-toggle="modal" id="addActor"
-                                                           class="btn btn-primary btn-sm
-                                                           glyphicon glyphicon-plus">添加成员</a>
-                                                    </c:when>
-                                                    <c:when test="${sessionScope.level == '1'}">
-                                                        <a data-toggle="modal" id="getScore"
-                                                           class="btn btn-primary btn-sm">计算分数</a>
-
+                                                        <a class="btn btn-primary btn-sm addActor">添加成员</a>
                                                     </c:when>
                                                 </c:choose>
+
+                                                <span class="giveSum">
+                                                    <button class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</button>
+                                                    <label for="score">原则上可分配总分：</label>
+                                                    <input class="score" type="text" name="score" id="score" value="${patent.score}">
+                                                </span>
                                             </div>
                                             <table id="actorTable"
                                                    data-toolbar="#actorToolbar"
@@ -153,8 +153,9 @@
                                 </div>
                             </div>
                         </div>
+
                         <div id="awardInfo"
-                             class="col-xs-12 col-md-7 widget-container-col ui-sortable">
+                             class="col-xs-12 col-md-6 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
                                 <div class="widget-header">
                                     <h4 class="widget-title">获奖信息</h4>
@@ -228,7 +229,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="unitInfo" class="col-xs-12 col-md-5 widget-container-col ui-sortable">
+
+                        <div id="unitInfo" class="col-xs-12 col-md-6 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
                                 <div class="widget-header">
                                     <h4 class="widget-title">共有单位信息</h4>
@@ -249,7 +251,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="reply" class="col-xs-12 col-md-5 col-xs-offset-7 widget-container-col ui-sortable">
+
+                        <div id="reply" class="col-xs-12 col-md-6 col-xs-offset-6 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
                                 <div class="widget-header">
                                     <h4 class="widget-title">批复</h4>
@@ -270,10 +273,11 @@
                                 </div>
                             </div>
                         </div>
+
                     </form>
 
-
                     <div class="row">
+
                         <div id="formBtn" class="col-xs-12 clearfix">
                             <div class="pull-left onDel">
                                 <c:if test="${sessionScope.level == '3'}">
@@ -317,6 +321,7 @@
                                 </button>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -468,7 +473,7 @@
     });
     //监听 分配分数
     $('#getScore').click(function () {
-        getScore();
+        getScore('award');
     });
     //监听 添加单位
     $('#addUnit').click(function () {

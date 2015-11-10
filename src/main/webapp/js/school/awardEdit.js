@@ -7,13 +7,19 @@ $(function () {
 });
 /**与项目信息有关的 保存||确认||撤回||删除||提交所有**/
 function save() {
-    saveStep1().success(function(data) {
-
-        saveStep2(data).success(function (res) {
-
-            afterSuccess("保存成功！");
-        })
+    var send = getFormData('award');
+    $.ajax({
+        url:'/dskf',
+        type: 'post',
+        data: JSON.stringify(send)
     });
+    //saveStep1().success(function(data) {
+    //
+    //    saveStep2(data).success(function (res) {
+    //
+    //        afterSuccess("保存成功！");
+    //    })
+    //});
 }
 function confirm() {
     //这儿需要先调用save()将信息保存一次
@@ -222,23 +228,23 @@ function editActor(row, index) {
         }
     });
 }
-/*计算分数*/
-function getScore() {
-    var jsonData = getFormData("award");
-    //console.log(jsonData);
-    workflow.getScore(jsonData).success(function (data) {
-        if (data["valid"] == false) {
-            errorMsg(data["msg"]);
-        } else if (data["hasSum"] == false) {
-            $("#actorTable").bootstrapTable('load', data["actors"]);
-            errorMsg(data["msg"]);
-        } else if (data["hasSum"] == true) {
-            $("#score").val(data["sum"]);
-            $("#showSum").html("总分：" + data["sum"] + "分");
-            errorMsg(data["msg"]);
-        }
-    });
-}
+///*计算分数*/
+//function getScore() {
+//    var jsonData = getFormData("award");
+//    //console.log(jsonData);
+//    workflow.getScore(jsonData).success(function (data) {
+//        if (data["valid"] == false) {
+//            errorMsg(data["msg"]);
+//        } else if (data["hasSum"] == false) {
+//            $("#actorTable").bootstrapTable('load', data["actors"]);
+//            errorMsg(data["msg"]);
+//        } else if (data["hasSum"] == true) {
+//            $("#score").val(data["sum"]);
+//            $("#showSum").html("总分：" + data["sum"] + "分");
+//            errorMsg(data["msg"]);
+//        }
+//    });
+//}
 /*****************************有关单位的操作***********************/
 /**
  * 添加单位

@@ -30,6 +30,10 @@
         th.bs-checkbox {
             display: none;
         }
+
+	    .bars {
+		    width: 40%;
+	    }
     </style>
 </head>
 
@@ -82,38 +86,52 @@
                                     <div id="EntityToolbar">
                                         <c:choose>
                                             <c:when test="${sessionScope.level == '3'}">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-primary dropdown-toggle"
-                                                            data-toggle="dropdown">
-                                                        信息添加
-                                                        <span class="ace-icon fa fa-caret-down icon-on-right"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu dropdown-menu-left">
-                                                        <li id="newPatent">
-                                                            <a href="<c:url value="/patent/new"/> ">专利信息</a>
-                                                        </li>
-                                                        <li id="newProject">
-                                                            <a href="<c:url value="/project/new"/> ">项目信息</a>
-                                                        </li>
-                                                        <li id="newBook">
-                                                            <a href="<c:url value="/book/new"/> ">著作信息</a>
-                                                        </li>
-                                                        <li id="newAppaise">
-                                                            <a href="<c:url value="/achAppraisal/new"/> ">鉴定信息</a>
-                                                        </li>
-                                                        <li id="newAchTran">
-                                                            <a href="<c:url value="/achTran/new"/> ">转化信息</a>
-                                                        </li>
-                                                        <li id="newAchAward">
-                                                            <a href="<c:url value="/achAward/new"/> ">获奖信息</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-
-                                                <font size="4" color="black">请输入姓名:</font><input id="keyName"
-                                                                                                 name="keyName"
-                                                                                                 type="text">
-                                                &nbsp;<button class="btn btn-success btn-sm inquiryBtn" type="button">查询</button>
+                                                <form class="form-horizontal" role="form">
+                                                    <div class="form-group col-xs-12">
+                                                        <div class="row">
+                                                            <div class="btn-group col-xs-3">
+                                                                <button class="btn btn-primary dropdown-toggle"
+                                                                        data-toggle="dropdown">
+                                                                    信息添加
+                                                                    <span class="ace-icon fa fa-caret-down icon-on-right"></span>
+                                                                </button>
+                                                                <ul class="dropdown-menu dropdown-menu-left">
+                                                                    <li id="newPatent">
+                                                                        <a href="<c:url value="/patent/new"/> ">专利信息</a>
+                                                                    </li>
+                                                                    <li id="newProject">
+                                                                        <a href="<c:url value="/project/new"/> ">项目信息</a>
+                                                                    </li>
+                                                                    <li id="newBook">
+                                                                        <a href="<c:url value="/book/new"/> ">著作信息</a>
+                                                                    </li>
+                                                                    <li id="newAppaise">
+                                                                        <a href="<c:url value="/achAppraisal/new"/> ">鉴定信息</a>
+                                                                    </li>
+                                                                    <li id="newAchTran">
+                                                                        <a href="<c:url value="/achTran/new"/> ">转化信息</a>
+                                                                    </li>
+                                                                    <li id="newAchAward">
+                                                                        <a href="<c:url value="/achAward/new"/> ">获奖信息</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-xs-9">
+                                                                <label class="col-xs-3 control-label no-padding-right"
+                                                                       for="keyName">
+                                                                    输入姓名:
+                                                                </label>
+                                                                <div class="col-xs-7">
+                                                                    <input id="keyName" name="keyName"
+                                                                           class="col-xs-12 no-padding-right" type="text">
+                                                                </div>
+                                                                <div class="col-xs-2">
+                                                                    <button class="btn btn-success btn-sm inquiryBtn" type="button">查询</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </c:when>
                                             <c:when test="${sessionScope.level == '1'}">
                                                 <div class="btn-group">
@@ -159,8 +177,8 @@
 <!-- /.main-container -->
 <script src='<c:url value="/js/public/public.js"/>'></script>
 <script>
-    var student = [{"id": "9998", "name": "在校学生", "col": {"value": ""}},
-        {"id": "9999", "name": "外校人员", "col": {"value": ""}}];
+    var student = [{"id":"9998","name":"在校学生","col":{"value":""}},
+        {"id":"9999","name":"外校人员","col":{"value":""}}];
     var allTable = $('#allEntityTable');
     //根据url载入不同的API
     var entityType = '${type}';//项目类型
@@ -180,7 +198,7 @@
 
     //链接跳转
     allTable.on('click-row.bs.table', function (e, row) {
-        window.open('/' + entityType + '/' + row['id']);
+        window.location.href = '/' + entityType + '/' + row['id'];
     });
 
     //类别更换
@@ -207,21 +225,17 @@
             ].join('');
         }
     }
-    $('#keyName').change(function () {
-        var keyName = $('#keyName').val();
-        if (keyName == '') {
-            switchEntityView(entityType + "Entity");
-        }
-    });
-    $('.inquiryBtn').click(function () {
-        var keyName = $('#keyName').val();
-        if (keyName == '') {
+
+    $('.inquiryBtn').click(function(){
+        var keyName=$('#keyName').val();
+        console.log(keyName);
+        if(keyName==''){
             messageModal("请输入姓名！");
             return;
         }
-        var keyNumber = keyName;
+        var keyNumber=keyName;
         allTable.bootstrapTable('destroy').bootstrapTable({
-            url: "api/entity/" + keyNumber + "/all/all",
+            url: "api/entity/"+keyNumber+"/all/all",
             sidePagination: "server",
             columns: [{
                 radio: true
@@ -253,24 +267,27 @@
             responseHandler: tableTrans
         });
     });
+
     $('#keyName').selectize({
         valueField: 'id',
         labelField: 'name',
         searchField: 'name',
         create: false,
-        preload: true,
+        preload:true,
         maxItems: 1,
         render: {
-            option: function (item, escape) {
+            option: function(item, escape) {
                 return '<div>' +
+		                '<span class="id">' + escape(item.id) + '</span>' +
+		                '&nbsp;' + '&nbsp;' +
                         '<span class="name">' + escape(item.name) + '</span>' +
                         '&nbsp;' + '&nbsp;' +
                         '<span class="dept">' + escape(item["col"].value || '') + '</span>' +
                         '</div>';
             }
         },
-        load: function (query, callback) {
-            if (!query.length) return callback(student);
+        load: function(query, callback) {
+            if(!query.length) return callback(student);
             $.ajax({
                 url: '../api/staff/json',
                 type: 'get',
@@ -278,11 +295,11 @@
                 data: {
                     query: query
                 },
-                error: function () {
+                error: function() {
                     callback();
                 },
-                success: function (res) {
-                    if (res == undefined || res == null) {
+                success: function(res) {
+                    if(res==undefined||res==null){
                         return;
                     }
                     callback(res);
