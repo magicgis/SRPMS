@@ -489,7 +489,7 @@
         });
     });
     // 成员，单位，文件
-    var entity =  '${ObjectMapper.writeValueAsString(achTran)}'; // 获得 entity 或 实体
+    var entity =  '${ObjectMapper.writeValueAsString(project)}'; // 获得 entity 或 实体
     if(isNull(entity)) {
         entity = {};
     }
@@ -518,11 +518,55 @@
         replyByDep = all[approvalByDep]['replyByDep'];
     }
 
+
+    var StdList = [];
+    var projtypeList = [];
+    function getStdList() { // 拦截standard表的数据
+        $.ajax({
+            type: 'GET',
+            async: false, // false
+            url: '/api/standard/type/项目立项',
+            dataType: 'json',
+            contentType: 'application/json;charset=UTF-8',
+            success: function (data) {
+                StdList = data;
+	            projtypeList = getList(StdList, 'projtype');
+//	            console.log(projtypeList);
+            }
+        });
+    }
+
 //    allSections();
-    getDept();//选择框
+    getStdList(); // 获取成果鉴定的standard待填充
+//    getDept();//选择框
     upToLoadFile();//文件上传
     firstOrOther();//是否是联合单位
     fullUpInfo(all,entity);//tian chon
+
+
+    var $projrank = $("#projrank").selectize({ // 初始化 鉴定等级
+        valueField: 'value',
+        labelField: 'value',
+        maxItems: 1,
+        onChange: function (result) {
+
+        }
+    });
+
+    var $projtype = $("#projtype").selectize({ // 初始化 projtype
+	    valueFieled: 'value',
+	    labelField: 'value',
+	    options: projtypeList,
+	    maxItems: 1,
+	    onChange: function (result) { // onChange时间 绑定级联
+		    console.log(result);
+		    var proRankList = [];
+		    proRankList = getStandardList(StdList, 'projtype', 'projrank', result);
+		    console.log(proRankList);
+		    $projrank[0].selectize.clearOptions();
+		    $projrank[0].selectize.addOption(proRankList);
+	    }
+    });
 
     if (filesData == null) {
         filesData = {};

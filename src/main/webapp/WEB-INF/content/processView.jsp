@@ -103,7 +103,7 @@
                                                 <div class="btn-group">
                                                     <button class="btn btn-primary dropdown-toggle"
                                                             data-toggle="dropdown">
-                                                        信息申报
+                                                        填报信息
                                                         <span class="ace-icon fa fa-caret-down icon-on-right"></span>
                                                     </button>
                                                     <ul class="dropdown-menu dropdown-menu-left">

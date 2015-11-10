@@ -578,7 +578,8 @@
 	var taskId = '${taskId}';  // 获得task的id
 	var orderId = entity['id']; // 获得order的id
 	var status = args['Status']; // 获得状态
-	var dept = latestInfo['dept.id'];
+	var deptId = latestInfo['dept.id'];
+	var dept = {};
 	// 获得批复
 	var replyByCol, replyByDep;
 	var approvalByCol = getApprovalByCol(args);
@@ -650,9 +651,24 @@
 		var $paperType = $("#type").selectize();
 		DisplayForm($paperType, paperType, 0);
 
-		if(!isNull(dept)){
-			DisplayForm($('#dept').selectize(), [dept], 0);
+
+		if (!isNull(deptId)) {
+			$.ajax({
+				url: '/api/baseinfo/id/' + deptId,
+				type: 'GET',
+				dataType: 'json',
+				contentType: 'application/json;charset=UTF-8',
+				success: function (data) {
+					dept = data;
+					addOptionSelectize($('#dept').selectize(), [dept]);
+					DisplayForm($('#dept').selectize(), dept['id'], 0);
+					console.log(dept);
+				}
+			});
 		}
+
+//		if(!isNull(dept)){
+//		}
 
 		//  期刊选择框
 		var $magId = $("#magId").selectize();
