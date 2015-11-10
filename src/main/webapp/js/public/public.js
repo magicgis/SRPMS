@@ -425,7 +425,27 @@ function getStandardList(data, str1, str2, result) {
     return tempList2;
 }
 
-function getStandardList(data, str1, value1, str2, value2, str3, value3, str4) {
+
+function getStandardList1(data, str1, value1, str2, value2, str3) {
+
+    var tempList2 = [];
+    var tempList = $.grep(data, function (obj, index) {
+        return obj['infoMap'][str1] == value1;
+    });
+    tempList = $.grep(data, function (obj, index) {
+        return obj['infoMap'][str2] == value2;
+    });
+
+    $.each(tempList, function (index, obj) {
+        var temp = {};
+        temp['id'] = obj['id'];
+        temp['value'] = obj['infoMap'][str3];
+        tempList2.push(temp);
+    });
+    return tempList2;
+}
+
+function getStandardList2(data, str1, value1, str2, value2, str3, value3, str4) {
 
     var tempList2 = [];
     var tempList = $.grep(data, function (obj, index) {

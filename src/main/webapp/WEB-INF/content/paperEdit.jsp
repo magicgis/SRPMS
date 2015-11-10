@@ -654,7 +654,7 @@
 
 		if (!isNull(deptId)) {
 			$.ajax({
-				url: '/api/baseinfo/' + deptId,
+				url: '/api/baseinfo/id/' + deptId,
 				type: 'GET',
 				dataType: 'json',
 				contentType: 'application/json;charset=UTF-8',
