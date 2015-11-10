@@ -22,7 +22,6 @@ public class BaseInfoApi {
     BaseInfoService baseInfoService;
 
     /**
-     *
      * @param limit
      * @param offset
      * @param search
@@ -73,6 +72,15 @@ public class BaseInfoApi {
         baseInfo.setKeyCode(id);
         return baseInfoService.save(baseInfo);
     }
+
+
+    @GET
+    @Path("/{id}")
+    @Produces("application/json;charset=UTF-8")
+    public BaseInfo get(@PathParam("id") String id, HashMap<String, Object> args) {
+        return baseInfoService.getById(id);
+    }
+
 
     /**
      * 修改
