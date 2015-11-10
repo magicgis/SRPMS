@@ -92,7 +92,7 @@
 </a>
 <!-- /.main-container -->
 <script src='<c:url value="/js/public/public.js"/>'></script>
-<%--<script src='<c:url value="/js/public/pubAllSRInfo.js"/>'></script>--%>
+<script src='<c:url value="/js/public/pubAllSRInfo.js"/>'></script>
 <script type="text/javascript">
     $("#taskTable").bootstrapTable({
         url: '/api/workflow/' + userName + '/confirmTask',
