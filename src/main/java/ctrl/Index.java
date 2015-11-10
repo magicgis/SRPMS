@@ -314,12 +314,14 @@ public class Index {
             case "achAward":
                 AchAward achAward = achAwardService.getById(entityId);
                 achAward.setArgMap(order.getVariableMap());
+                model.addAttribute(achAward);
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "achAwardEdit";
             case "achAppraisal":
                 AchAppraisal achAppraisal = achAppraisalService.getById(entityId);
                 achAppraisal.setArgMap(order.getVariableMap());
+                model.addAttribute(achAppraisal);
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "achAppraisalEdit";
