@@ -317,6 +317,12 @@ public class Index {
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "achAwardEdit";
+            case "AchAppraisal":
+                AchAppraisal achAppraisal = achAppraisalService.getById(entityId);
+                achAppraisal.setArgMap(order.getVariableMap());
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "achAppraisalEdit";
             case "paper":
                 model.addAttribute(order);
                 model.addAttribute("taskId", task.getId());
@@ -327,6 +333,7 @@ public class Index {
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "bookEdit";
+
             default:
                 return "redirect:/allSRInfo";
         }
