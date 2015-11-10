@@ -317,7 +317,7 @@ public class Index {
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "achAwardEdit";
-            case "AchAppraisal":
+            case "achAppraisal":
                 AchAppraisal achAppraisal = achAppraisalService.getById(entityId);
                 achAppraisal.setArgMap(order.getVariableMap());
                 model.addAttribute("taskId", task.getId());
