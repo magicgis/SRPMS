@@ -99,17 +99,27 @@ public class StandardBase {
     }
 
     //    需修改proper中页面结构参数，适配type
-    public Map paramNullCheck(String[] pageStructrue, Map pageElemtName, Map map) {
+    public Map paramNullCheck(Map pageElemtName, Map map) {
         Map validInfo = new HashMap();
         validInfo.put(MESSAGE, DEFAULT_MSG);
         validInfo.put(IS_VALID, DEFAULT_FLAG);
-        for (int i = 0; i < pageStructrue.length; i++) {
-            String valueStr = (String) map.get(pageStructrue[i]);
-            if (valueStr == null || valueStr.trim().equals("")) {
-                validInfo.put(MESSAGE, "请填写" + pageElemtName.get(pageStructrue[i]) + "信息，该信息不能为空");
+        Set keySet = pageElemtName.keySet();
+        Iterator keyIt = keySet.iterator();
+        while(keyIt.hasNext()){
+            String key = (String) keyIt.next();
+            String pageValue = (String) map.get(key);
+            if (pageValue == null|| pageValue.trim().equals("")){
+                validInfo.put(MESSAGE, "请填写" + pageElemtName.get(key) + "信息，该信息不能为空");
                 return validInfo;
             }
         }
+//        for (int i = 0; i < pageStructrue.length; i++) {
+//            String valueStr = (String) map.get(pageStructrue[i]);
+//            if (valueStr == null || valueStr.trim().equals("")) {
+//                validInfo.put(MESSAGE, "请填写" + pageElemtName.get(pageStructrue[i]) + "信息，该信息不能为空");
+//                return validInfo;
+//            }
+//        }
         validInfo.put(IS_VALID, true);
         return validInfo;
     }
@@ -137,6 +147,20 @@ public class StandardBase {
             }
         }
         return abAuthors;
+    }
+//    单位列表
+    public  List<Map> getUnits(Map map){return (List<Map>) map.get("unit");}
+//    我校(及医院)单位排名
+    public int getMySchRank(List<Map> units){
+        for (Map unit : units){
+            String name = (String) unit.get("unit");
+            int i = 0;
+            while (name!=null && i < MY_SCHOOL_NAME.length && !name.equals(MY_SCHOOL_NAME[i]))
+                i++;
+            if (name.equals(MY_SCHOOL_NAME[i]))
+                return Integer.parseInt((String) unit.get("rank"));
+        }
+        return 0;
     }
 
     //参与人员列表

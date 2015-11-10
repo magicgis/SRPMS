@@ -30,7 +30,7 @@ public class project extends StandardBase implements StandardCheckInf {
 
     @Override
     public Map paramNullCheck(Map map) {
-        return super.paramNullCheck(PAGE_STRUCT, PAGE_ELEM_NAME, map);
+        return super.paramNullCheck(PAGE_ELEM_NAME, map);
     }
 
     //未完成
@@ -66,6 +66,7 @@ public class project extends StandardBase implements StandardCheckInf {
 
     @Override
     public Map isExtrrmumBand(Map map, double min, double max) {
+
         return null;
     }
 
