@@ -79,12 +79,12 @@
                     <div class="col-xs-12">
                         <form id="appraise" class="form-horizontal" role="form">
                             <div hidden="hidden">
-                                <input type="text" name="sum" id="score"/>
                                 <input type="text" name="id" id="achAppraiseId" value="${achAppraisal.id}"/>
                                 <input type="text" name="WF_Type" id="WF_Type" value="achAppraisal"/>
                             </div>
 
                             <div class="col-xs-12 col-md-6">
+
                                 <div id="achInfo" class="col-xs-12 widget-container-col ui-sortable">
                                     <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
                                         <div class="widget-header">
@@ -132,7 +132,6 @@
                                         </div>
                                     </div>
                                 </div>
-
 
                                 <div id="appraiseInfo" class="col-xs-12 widget-container-col ui-sortable">
                                     <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
@@ -213,6 +212,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-xs-12 widget-container-col ui-sortable"
                                      id="fileHead">
                                     <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
@@ -234,6 +234,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
                             <div class="col-xs-12 col-md-6">
@@ -252,10 +253,13 @@
                                                             <c:when test="${sessionScope.level == '3'}">
                                                                 <a class="btn btn-primary btn-sm addActor">添加成员</a>
                                                             </c:when>
-                                                            <c:when test="${sessionScope.level == '1' || sessionScope.level == '3'}">
-                                                                <a class="btn btn-primary btn-sm getScore">计算分数</a>
-                                                            </c:when>
                                                         </c:choose>
+
+                                                        <span class="giveSum">
+                                                            <button class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</button>
+                                                            <label for="score">原则上可分配总分：</label>
+                                                            <input class="score" type="text" name="score" id="score" value="${achAppraisal.score}">
+                                                        </span>
                                                     </div>
                                                     <table id="actorTable"
                                                            data-toolbar="#actorToolbar"
@@ -320,11 +324,15 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
                     <div class="col-xs-12" id="info_alert"></div>
+
                 </div>
+
                 <div class="row">
+
                     <div id="formBtn" class="col-xs-12 clearfix">
                         <div class="pull-left onDel">
                             <c:if test="${sessionScope.level == '3'}">
@@ -373,6 +381,7 @@
                             </span>
                         </div>
                     </div>
+
                 </div>
 
 
@@ -580,24 +589,16 @@
         getOrderBack();
     });
     //监听 添加单位
-    $('#addUnit').click(function () {
+    $('.addUnit').click(function () {
         addUnit();
     });
     //监听 添加成员
-    $('#addActor').click(function () {
+    $('.addActor').click(function () {
         addActor();
     });
-    //监听 编辑成员
-    $('#editActor').click(function () {
-        editActor();
-    });
-    //监听 编辑单位
-    $('#editUnit').click(function () {
-        editUnit();
-    });
     //监听 分配分数
-    $('#getScore').click(function () {
-        getScore();
+    $('.getScore').click(function () {
+        getScore('appraise');
     });
 
 

@@ -132,7 +132,7 @@ function subFundInfo(index) {
     var to_acct_time = $('#time').val();
     var to_acct_mny = $('#mny').val();
     var out_mny = $('#outMny').val();
-    fundTemp.push({"to_acct_time": to_acct_time, "to_acct_mny": to_acct_mny, "out_mny": out_mny});
+    fundTemp.push({"time": to_acct_time, "mny": to_acct_mny, "outMny": out_mny});
     if (index == null) {  // 增加一行
         $('#fundTable').bootstrapTable("load", fundTemp);
     } else {    // 替换一行

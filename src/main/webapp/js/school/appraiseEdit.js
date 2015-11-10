@@ -6,16 +6,6 @@ $(function () {
     init(entity,all,replyByDep,3);
 });
 
-function canDoNothing() {
-    uneditableForm();
-    hideActorOperate();
-    hideUnitOperate();
-    $('#upload').hide();
-    $('#getScore').hide();
-    $('.onEdit').hide();
-    $('.onDel').hide();
-    $('.onApproval').hide();
-}
 
 //function cando
 
@@ -140,29 +130,6 @@ function editActor(row, index){
     });
 }
 
-
-/**
- * 计算分数
- */
-function getScore() {
-    var jsonData = getFormData('paper');
-    workflow.getScore(jsonData).success(function(data) {
-        if(data["valid"] == false) {
-            errorMsg(data["msg"]);
-            flag = true;
-        }else if(data["hasSum"] == false) {
-            $("#actorTable").bootstrapTable('load', data["actors"]);
-            flag = false;
-            errorMsg(data["msg"]);
-        }else if(data["hasSum"] == true) {
-            $("#score").val(data["sum"]);
-            $("#showSum").html("可分配总分：" + data["sum"] + "分");
-            errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
-            flag = true;
-        }
-    });
-}
-
 /**
  * 添加单位
  */
@@ -243,23 +210,6 @@ function editUnit(row, index) {
 }
 
 
-
-//鉴定结论******************************************要做级联，还未实现*************************************************
-// var op1=[
-//     {"id":"0001","value":"国际领先"},
-//     {"id":"0002","value":"国际先进"},
-//     {"id":"0003","value":"国内领先"},
-//     {"id":"0004","value":"国内先进"}
-// ];
-//var op2=[
-//    {"id":"1001","value":"国家级优秀"},
-//    {"id":"1002","value":"省部级优秀"},
-//    {"id":"1003","value":"国家级良好"},
-//    {"id":"1004","value":"省部级良好"},
-//    {"id":"1005","value":"国家级合格"},
-//    {"id":"1006","value":"省部级合格"}
-//];
-
 function saveStep1() {
     console.log( $('#appraise').serialize());
     return $.ajax({
@@ -289,12 +239,6 @@ function saveStep2(data) {
 }
 // 保存
 function save() {
-    //var send = getFormData('appraise');
-    //$.ajax({
-    //    url:'/dskf',
-    //    type: 'post',
-    //    data: JSON.stringify(send)
-    //});
     saveStep1().success(function(data) {
 
         saveStep2(data).success(function (res) {

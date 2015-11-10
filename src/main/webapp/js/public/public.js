@@ -788,6 +788,7 @@ function init(entity,all,replyByDep,level) {
 
             uneditableForm();
             hideUnitOperate();
+            $('#score').attr('disabled', 'disabled');
             $('.removeActor').hide();
             $('#upload').hide();
             $('.delFiles').hide();
@@ -863,6 +864,8 @@ function init(entity,all,replyByDep,level) {
             hideActorOperate();
             hideUnitOperate();
             $('#upload').hide();
+            $('.getScore').hide();
+            $('#score').attr('disabled', 'disabled');
             $('.delFiles').hide();
             $('.onEdit').hide();
             $('.onDel').hide();
@@ -906,6 +909,9 @@ function init(entity,all,replyByDep,level) {
                     break;
                 case 311:
                     console.log('311');
+                    $('.getScore').hide();
+                    $('#score').attr('disabled', 'disabled');
+
                     $('#reply').show();
                     $('#reply-display').show();
                     var reply = $('#reply-display').children('p');
@@ -915,6 +921,9 @@ function init(entity,all,replyByDep,level) {
                     break;
                 case 301:
                     console.log('301');
+                    $('.getScore').hide();
+                    $('#score').attr('disabled', 'disabled');
+
                     $('#reply').show();
                     $('#reply-box').hide();
                     $('#reply-display').show();
@@ -928,7 +937,7 @@ function init(entity,all,replyByDep,level) {
             }
             if (process == '1') {
                 $('.onEdit').hide();
-                $('.onDel').hide();
+                $('.onDel').hide(); //todo 流程中以实体进去 能不能撤回和删除
 
                 uneditableForm();
                 $('#upload').hide();
@@ -940,6 +949,7 @@ function init(entity,all,replyByDep,level) {
                 $('.addActor').hide();
                 $('.addUnit').hide();
                 $('.addFund').hide();
+                $('.getScore').hide();
 
             } else if(process == '9') {
                 $('.confirm').hide();
@@ -1006,8 +1016,31 @@ function pubTypeTrans(res){
     var pubType={"1020":"公开出版著作", "1021":"教育部规划教材","1022": "协编教材","1023":"其他教材"};
     return pubType[res];
 }
+
+/**
+ * 计算分数
+ * @param type form的id
+ */
+function getScore(type) {
+    var jsonData = getFormData(type);
+    workflow.getScore(jsonData).success(function (data) {
+        if (data["valid"] == false) { // 检验不合格
+            errorMsg(data["msg"]);
+            flag = true;
+        } else if (data["hasSum"] == false) { // 后台分配分数
+            $("#actorTable").bootstrapTable('load', data["actors"]);
+            flag = false;
+            errorMsg(data["msg"]);
+        } else if (data["hasSum"] == true) {  // 给总分，负责人分配分数
+            $("#score").val(data["sum"]);
+            errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
+            flag = true;
+        }
+    });
+}
+
 /**--------------------------成员表公共方法------------------**/
-//// 将对话框里的值加载进成员表
+// 将对话框里的值加载进成员表
 //function subActorInfo(index,flag) {
 //    var id = $('#actor').val();
 //    var actor = $('#actor').text();
@@ -1015,10 +1048,15 @@ function pubTypeTrans(res){
 //    var units = $('#units').val();
 //    var role = $('#role').val();
 //    var rank = $('#rank').val();
-//    var mark = (marks == "" ? '0.00' : (marks / units.length).toFixed(2));
+//    var mark = (marks == "" ? '0' : (marks / units.length).toFixed(2));
+//    actorTemp = getActorsData();
 //    $.each(units, function (i, value) {
 //        actorTemp.push({"staff.id": id, "rank": rank, "staff.name": actor, "role": role, "score": mark, "unit": value});
 //    });
+//    if(rank == '1' || rank == 1){
+//        Main_Actor = id;
+//        Main_ActorName = actor;
+//    }
 //    if(flag) {  // 增加一行
 //        $('#actorTable').bootstrapTable("load", actorTemp);
 //    } else {    // 替换一行
@@ -1026,6 +1064,7 @@ function pubTypeTrans(res){
 //        $('#actorTable').bootstrapTable('load',actorTemp);
 //    }
 //}
+
 //
 //window.operateEvents = {
 //    'click .removeActor': function (e, value, row, index) {

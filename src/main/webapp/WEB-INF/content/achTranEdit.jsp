@@ -77,10 +77,10 @@
 				<div class="row">
 					<form id="achTran" class="form-horizontal" role="form">
 						<div hidden="hidden">
-							<input type="text" name="sum" id="score"/>
 							<input type="text" name="id" id="achTranId" value="${achTran.id}"/>
 							<input type="text" name="WF_Type" id="WF_Type" value="achTran"/>
 						</div>
+
 						<div class="col-xs-12 col-md-6">
 							<div id="achInfo" class="col-xs-12 widget-container-col ui-sortable">
 								<div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
@@ -92,12 +92,12 @@
 											<div class="row">
 												<div class="form-group col-xs-12">
 													<label class="col-sm-2 control-label no-padding-left"
-														   for="name">成果名称</label>
+													       for="name">成果名称</label>
 
 													<div class="col-sm-9">
 														<input id="name" name="name"
-															   type="text" class="form-control col-xs-12"
-															   placeholder="" value="${achTran.name}"/>
+														       type="text" class="form-control col-xs-12"
+														       placeholder="" value="${achTran.name}"/>
 													</div>
 												</div>
 											</div>
@@ -192,114 +192,120 @@
 
 						</div>
 
+						<div class="col-xs-12 col-md-6">
+
+							<div id="actorInfo" class="col-xs-12 widget-container-col ui-sortable">
+								<div class="widget-box transparent ui-sortable-handle col-xs-12"
+								     style="opacity: 1;">
+									<div class="widget-header" id="actorInfoHeader">
+										<h4 class="widget-title">参与人员</h4>
+										<span id="showSum" style="font-size: 15px"></span>
+									</div>
+									<div class="widget-body">
+										<div class="widget-main">
+											<div class="row">
+												<div id="actorToolbar">
+													<c:choose>
+														<c:when test="${sessionScope.level == '3'}">
+															<a class="btn btn-primary btn-sm addActor">添加成员</a>
+														</c:when>
+													</c:choose>
+
+                                                <span class="giveSum">
+                                                    <button class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</button>
+                                                    <label for="score">原则上可分配总分：</label>
+                                                    <input class="score" type="text" name="score" id="score" value="${patent.score}">
+                                                </span>
+												</div>
+												<table id="actorTable"
+												       data-toolbar="#actorToolbar"
+												       data-show-footer="true"
+												       data-show-columns="false"
+												       data-show-toggle="false">
+
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12" id="msg_alert"></div>
+							</div>
+
+							<div id="unitInfo" class="col-xs-12 widget-container-col ui-sortable">
+								<div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
+									<div class="widget-header">
+										<h4 class="widget-title">共有单位信息</h4>
+									</div>
+									<div class="widget-body">
+										<div class="widget-main">
+											<div class="row">
+												<div id="unitToolbar">
+													<c:if test="${sessionScope.level == '3'}">
+														<a class="btn btn-primary btn-sm addUnit">
+															添加单位</a>
+													</c:if>
+												</div>
+												<table id="unitTable"
+												       data-toolbar="#unitToolbar"
+												       data-show-toggle="false"
+												       data-show-footer="true"></table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
 
 					</form>
 
-					<div class="col-xs-12 col-md-6">
-						<div id="actorInfo" class="col-xs-12 widget-container-col ui-sortable">
-							<div class="widget-box transparent ui-sortable-handle col-xs-12"
-							     style="opacity: 1;">
-								<div class="widget-header" id="actorInfoHeader">
-									<h4 class="widget-title">参与人员</h4>
-									<span id="showSum" style="font-size: 15px"></span>
-								</div>
-								<div class="widget-body">
-									<div class="widget-main">
-										<div class="row">
-											<div id="actorToolbar">
-												<c:choose>
-													<c:when test="${sessionScope.level == '3'}">
-														<a class="btn btn-primary btn-sm addActor">添加成员</a>
-													</c:when>
-													<c:when test="${sessionScope.level == '1' || sessionScope.level == '3'}">
-														<a class="btn btn-primary btn-sm getScore">计算分数</a>
-													</c:when>
-												</c:choose>
-											</div>
-											<table id="actorTable"
-											       data-toolbar="#actorToolbar"
-											       data-show-footer="true"
-											       data-show-columns="false"
-											       data-show-toggle="false">
-
-											</table>
-										</div>
-									</div>
-								</div>
+					<div id="reply" class="col-xs-12 col-sm-offset-6 widget-container-col ui-sortable">
+						<div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
+							<div class="widget-header">
+								<h4 class="widget-title">批复</h4>
 							</div>
-							<div class="col-xs-12" id="msg_alert"></div>
-						</div>
-
-						<div id="unitInfo" class="col-xs-12 widget-container-col ui-sortable">
-							<div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
-								<div class="widget-header">
-									<h4 class="widget-title">共有单位信息</h4>
-								</div>
-								<div class="widget-body">
-									<div class="widget-main">
-										<div class="row">
-											<div id="unitToolbar">
-												<c:if test="${sessionScope.level == '3'}">
-													<a class="btn btn-primary btn-sm addUnit">
-														添加单位</a>
-												</c:if>
-											</div>
-											<table id="unitTable"
-											       data-toolbar="#unitToolbar"
-											       data-show-toggle="false"
-											       data-show-footer="true"></table>
+							<div class="widget-body">
+								<div class="widget-main">
+									<div class="row">
+										<div class="col-xs-12">
+											<textarea class="form-control" id="reply-box"></textarea>
+											<blockquote class="pull-left" id="reply-display" hidden="hidden">
+												<p></p>
+												<small class="pull-right">
+												</small>
+											</blockquote>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-
-
-						<div id="reply" class="col-xs-12 widget-container-col ui-sortable">
-							<div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
-								<div class="widget-header">
-									<h4 class="widget-title">批复</h4>
-								</div>
-								<div class="widget-body">
-									<div class="widget-main">
-										<div class="row">
-											<div class="col-xs-12">
-												<textarea class="form-control" id="reply-box"></textarea>
-												<blockquote class="pull-left" id="reply-display" hidden="hidden">
-													<p></p>
-													<small class="pull-right">
-													</small>
-												</blockquote>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-xs-12" id="info_alert"></div>
 					</div>
 
-					<div class="row">
-						<div id="formBtn" class="col-xs-12 clearfix">
-							<div class="pull-left onDel">
-								<button class="tabOrdBtn btn btn-danger btn-sm del"
-								        type="button">
-									<i class="ace-icon fa fa-trash  bigger-110"></i>
-									删除
-								</button>
-								<button class="tabOrdBtn btn btn-danger btn-sm orderBack"
-								        type="button">
-									<i class="ace-icon fa  fa-repeat bigger-110"></i>
-									撤回
-								</button>
-							</div>
-							<div class="pull-right">
-								<button class="tabOrdBtn btn btn-danger btn-sm back"
-								        type="button">
-									<i class="ace-icon fa fa-reply  bigger-110"></i>
-									返回
-								</button>
+					<div class="col-xs-12" id="info_alert"></div>
+
+				</div>
+
+				<div class="row">
+
+					<div id="formBtn" class="col-xs-12 clearfix">
+						<div class="pull-left onDel">
+							<button class="tabOrdBtn btn btn-danger btn-sm del"
+							        type="button">
+								<i class="ace-icon fa fa-trash  bigger-110"></i>
+								删除
+							</button>
+							<button class="tabOrdBtn btn btn-danger btn-sm orderBack"
+							        type="button">
+								<i class="ace-icon fa  fa-repeat bigger-110"></i>
+								撤回
+							</button>
+						</div>
+						<div class="pull-right">
+							<button class="tabOrdBtn btn btn-danger btn-sm back"
+							        type="button">
+								<i class="ace-icon fa fa-reply  bigger-110"></i>
+								返回
+							</button>
                             <span class="onEdit">
                                 <button class="tabOrdBtn btn btn-primary btn-sm save"
                                         type="button">
@@ -324,16 +330,17 @@
 	                                驳回
                                 </button>
                             </span>
-							</div>
 						</div>
 					</div>
 
 				</div>
 
 			</div>
+
 		</div>
 	</div>
-	<jsp:include page="public/footer.jsp"/>
+</div>
+<jsp:include page="public/footer.jsp"/>
 
 </div>
 
@@ -514,9 +521,9 @@
 		editUnit();
 	});
 	//监听 分配分数
-//	$('#getScore').click(function () {
-//		getScore();
-//	});
+	$('#getScore').click(function () {
+		getScore('achTran');
+	});
 
 </script>
 

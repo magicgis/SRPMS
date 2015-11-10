@@ -262,17 +262,11 @@ function saveStep2(data) {
 }
 // 保存
 function save() {
-    //var send = getFormData('achTran');
-    //$.ajax({
-    //    url:'/dskf',
-    //    type: 'post',
-    //    data: JSON.stringify(send)
-    //});
+
     saveStep1().success(function(data) {
 
         saveStep2(data).success(function (res) {
             afterSuccess("保存成功！");
-            //window.location.href = '/achTran';
         })
     });
 }
@@ -299,7 +293,6 @@ function confirm() {
                     if (result) {
                         workflow.startEntityOrder("achTran", $('#achTranId').val()).success(function (data) {
                             afterSuccess("任务已启动！");
-                            //window.location.href = '/achTran';
                         });
                     }
                 }

@@ -1,22 +1,4 @@
 <script>
-    /**
-     * 1表示论文，2表示著作，3表示项目
-     * @type {Array}
-     */
-//    var allRoles = [
-//                {
-//                "1" : [{"role":"第一作者"},{"role":"通讯作者"},{"role":"第二作者"},{"role":"第三作者"},{"role":"第四作者"},{"role":"其他"}]
-//            },
-//                {
-//                "2" : [{"role":"第一主编"},{"role":"第二主编"},{"role":"第三主编"},{"role":"第四主编"},{"role":"其他"}]
-//            },
-//                {
-//                "3" : [{"role":"第一专利权人"},{"role":"知识产权所有人"}]
-//            }
-//                ,{
-//                "4" : [{"role":""},{"role":""},{"role":""},{"role":""},{"role":""}]
-//            }];
-
 
     var student = [{"id":"9998","name":"在校学生","col":{"value":""}},
         {"id":"9999","name":"外校人员","col":{"value":""}}];
@@ -31,6 +13,8 @@
             render: {
                 option: function(item, escape) {
                     return '<div>' +
+                            '<span class="id">' + escape(item.id) + '</span>' +
+                            '&nbsp;' + '&nbsp;' +
                             '<span class="name">' + escape(item.name) + '</span>' +
                             '&nbsp;' + '&nbsp;' +
                             '<span class="dept">' + escape(item["col"].value || '') + '</span>' +
