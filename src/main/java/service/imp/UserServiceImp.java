@@ -22,7 +22,7 @@ public class UserServiceImp extends BaseServiceImp<User> implements UserService 
         ArrayList<String> keys = new ArrayList<>();
         keys.add("staff.name");
         keys.add("staff.id");
-        keys.add("staff.dept.value");
+        keys.add("staff.col.value");
         keys.add("staff.degree");
         return userDao.findByArrayFuz(keys, keyword, sort, order);
     }

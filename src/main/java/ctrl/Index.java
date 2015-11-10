@@ -89,13 +89,20 @@ public class Index {
     }
 
 
-    @RequestMapping(value = {"userInfo"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"user"}, method = RequestMethod.GET)
     public String userInfo(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, HttpSession session) {
-        User user = (User) session.getAttribute("user");
+        return "user";
+    }
+
+    @RequestMapping(value = {"user/{id}"}, method = RequestMethod.GET)
+    public String userInfo(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, HttpSession session,
+                           @PathVariable("id") String id) {
+//        User user = (User) session.getAttribute("user");
+        User user = userService.getById(id);
         if (user != null) {
             model.addAttribute(user);
         }
-        return "userInfo";
+        return "userEdit";
     }
 
     @RequestMapping(value = {"patent/new"}, method = RequestMethod.GET)
