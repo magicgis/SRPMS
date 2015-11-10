@@ -92,7 +92,7 @@ public class BaseInfoApi {
     @PUT
     @Path("/{id}")
     @Produces("application/json;charset=UTF-8")
-    public boolean update(@PathParam("id") String id) {
+    public boolean update(@PathParam("id") String id, HashMap<String, Object> args) {
         BaseInfo baseInfo = baseInfoService.getById(id);
         baseInfo.setTableName((String) args.get("tableName"));
         baseInfo.setValue((String) args.get("value"));
