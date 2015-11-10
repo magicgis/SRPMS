@@ -28,8 +28,5 @@ public class magPaper extends Paper {
     public Map paramNullCheck(Map map) {
         return super.paramNullCheck(PAGE_STRUCT, PAGE_ELEM_NAME, map);
     }
-//    public Map getScoreAndExtremumFromTable(StandardDao standardDao, Map info){
-//        String id = (String) info.get("mag.standard.id");
-//        return super.getScoreAndExtremumFromTable(standardDao,info,id);
-//    }
+
 }

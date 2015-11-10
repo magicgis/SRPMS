@@ -9,10 +9,9 @@ import service.StandardService;
 import service.imp.standard.StandardCheckInf;
 
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by DELL on 2015/6/8.
@@ -26,16 +25,6 @@ public class StandardServiceImp extends StandardBase implements StandardService 
     public StandardServiceImp() throws FileNotFoundException {
     }
 
-    //功能调试代码!!
-    public void rex() {
-        String test = "WF_95_Submission";
-        Pattern pattern = Pattern.compile("WF_\\d+_Submission");
-        Matcher m = pattern.matcher(test);
-//        List<String> result = new ArrayList<String>();
-        m.find();
-        String res = m.group();
-        System.out.println(res.substring(3, res.length() - 11));
-    }
 
     @Override
     public Map scoreCalculation(Order order, Map map) {
@@ -50,6 +39,7 @@ public class StandardServiceImp extends StandardBase implements StandardService 
         StandardCheckInf standardCheck = null;
         try {
             Class<?> standardCheckClass = Class.forName("service.imp.standard." + type);
+            System.out.print(type);
             standardCheck = (StandardCheckInf) standardCheckClass.newInstance();
         } catch (ClassNotFoundException e) {
 //            validInfo.put(IS_VALID,false);
@@ -75,13 +65,11 @@ public class StandardServiceImp extends StandardBase implements StandardService 
 
 //        获取附表分数与极值
         String stIdType = selectId(type);
-//        System.out.println(type);
         String stId = (String) map.get(stIdType);
-//        System.out.println(stId);
+        System.out.println(stId);
         Standard st = standardDao.getById(stId);
-//        calFlow = standardCheck.getScoreAndExtremumFromTable(standardDao, map);
+        System.out.println(st.getValue());
         if (st == null) {
-//            System.out.println("+++++++++");
             calFlow.put(MESSAGE, "附表中没有相关规定");
             //        极值约束
             calFlow = standardCheck.isExtrrmumBand(map, 0, 0);
@@ -91,9 +79,12 @@ public class StandardServiceImp extends StandardBase implements StandardService 
 //            return calFlow;
         }
         else {
-            int sum = st.getValue();
-            int min = st.getMin() == null ? 0 : st.getMin();
-            int max = st.getMax();
+            BigDecimal sumt = st.getValue();
+            BigDecimal mint = st.getMin() == null ? new BigDecimal(0) : st.getMin();
+            BigDecimal maxt = st.getMax() == null ? new BigDecimal(999):st.getMax();
+            double sum = sumt.doubleValue();
+            double min = mint.doubleValue();
+            double max = maxt.doubleValue();
 //            System.out.println(st.getValue());
             //        极值约束
             calFlow = standardCheck.isExtrrmumBand(map, min, max);

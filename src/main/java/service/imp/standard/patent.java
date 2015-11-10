@@ -48,11 +48,9 @@ public class patent extends StandardBase implements StandardCheckInf {
             validInfo.put(MESSAGE, "请填写参与人信息");
             return validInfo;
         }
-
-        Map firstActorMap = getRoleArray((String) KEY_ROLE.get("firstActor"), map);
-        Map chiefActorMap = getRoleArray((String) KEY_ROLE.get("chiefActor"), map);
-        List<Map> myTchFirstActor = getMyTchActors(firstActorMap);
-        List<Map> myTchChiefActor = getMyTchActors(chiefActorMap);
+        List<Map>myStaffActors = getMyStaffActors(actors);
+        List<Map> myTchFirstActor = getChiefActors(myStaffActors,(String) KEY_ROLE.get("firstActor"));
+        List<Map> myTchChiefActor = getChiefActors(myStaffActors,(String) KEY_ROLE.get("chiefActor"));
         if (myTchChiefActor.size() == 0 && myTchFirstActor.size() == 0) {
             validInfo.put(MESSAGE, "需要我校员工是第一专利权人或者知识产权所有人。");
             return validInfo;
@@ -71,7 +69,7 @@ public class patent extends StandardBase implements StandardCheckInf {
 //    }
 
     @Override
-    public Map isExtrrmumBand(Map map, int min, int max) {
+    public Map isExtrrmumBand(Map map, double min, double max) {
         Map validInfo = new HashMap();
         validInfo.put(MESSAGE, DEFAULT_MSG);
         validInfo.put(IS_VALID, DEFAULT_FLAG);
@@ -86,7 +84,7 @@ public class patent extends StandardBase implements StandardCheckInf {
     }
 
     @Override
-    public Map getFinalScore(Map map, int tableScore) {
+    public Map getFinalScore(Map map, double tableScore) {
         Map validInfo = new HashMap();
         validInfo.put(IS_VALID, true);
         validInfo.put(MESSAGE, "请分配积分");

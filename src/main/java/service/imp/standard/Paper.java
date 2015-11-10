@@ -21,7 +21,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
 
     //    内部方法
     public Map paramNullCheck(Map map, String[] pageStruct, Map pageElemName) {
-        return paramNullCheck(pageStruct, pageElemName, map);
+        return super.paramNullCheck(pageStruct, pageElemName, map);
     }
 
 //    public Map getScoreAndExtremumFromTable(StandardDao standardDao, Map info, String stdId) {
@@ -60,17 +60,18 @@ public class Paper extends StandardBase implements StandardCheckInf {
             String dateStr = (String) info.get("pubDate");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date date = sdf.parse(dateStr);
-            Date after = sdf.parse(getMsg("year1") + "-" + getMsg("2111"));
-            Date before = sdf.parse(getMsg("year2") + "-" + getMsg("2112"));
-            if (date.getTime() < after.getTime() || date.getTime() > before.getTime()) {
-                validInfo.put(MESSAGE, getMsg("2021") + getMsg("year1") + "-" + getMsg("2111") + getMsg("2022")
-                        + getMsg("year2") + "-" + getMsg("2112") + getMsg("2023"));
+            Date before = sdf.parse((String) sysValidTime().get("startTime"));
+            Date after = sdf.parse((String) sysValidTime().get("endTime"));
+
+            if (date.getTime() > after.getTime() || date.getTime() < before.getTime()) {
+                validInfo.put(MESSAGE,"文章录用时间应在"+sysValidTime().get("startTime")+"到"+sysValidTime().get("endTime")+"之间");
                 return validInfo;
-            }
-            Map firstAuthorMap = getRoleArray((String) KEY_ROLE.get("firstAuthor"), info);
-            Map chiefAuthorMap = getRoleArray((String) KEY_ROLE.get("chiefAuthor"), info);
-            List<Map> myFirstAuth = getMyActors(firstAuthorMap);
-            List<Map> myChiefAuth = getMyActors(chiefAuthorMap);
+        }
+            List<Map> actors = getActors(info);
+            List<Map> myActors = getMyActors(actors);
+            List<Map> myFirstAuth = getChiefActors(myActors, (String) KEY_ROLE.get("firstAuthor"));
+            List<Map> myStaffActors = getMyStaffActors(actors);
+            List<Map> myChiefAuth = getChiefActors(myStaffActors,(String) KEY_ROLE.get("chiefAuthor"));
             for (Map author : authors) {
                 String unit = (String) author.get("unit");
                 if (unit == null || unit.trim().equals("")) {
@@ -91,14 +92,8 @@ public class Paper extends StandardBase implements StandardCheckInf {
 
     }
 
-//    @Override
-//    public Map getScoreAndExtremumFromTable(StandardDao standardDao, Map info) {
-//        return null;
-//    }
-
-
     @Override
-    public Map isExtrrmumBand(Map map, int min, int max) {
+    public Map isExtrrmumBand(Map map, double min, double max) {
         Map validInfo = new HashMap();
         validInfo.put(MESSAGE, DEFAULT_MSG);
         validInfo.put(IS_VALID, DEFAULT_FLAG);
@@ -113,20 +108,24 @@ public class Paper extends StandardBase implements StandardCheckInf {
     }
 
     @Override
-    public Map getFinalScore(Map map, int tableScore) {
+    public Map getFinalScore(Map map, double tableScore) {
         Map validInfo = new HashMap();
         validInfo.put(MESSAGE, DEFAULT_MSG);
         validInfo.put(IS_VALID, DEFAULT_FLAG);
         double finalScore = 0.0;
         boolean flag = false;
-        Map firstArthorsMap = getRoleArray((String) KEY_ROLE.get("firstAuthor"), map);
-        List<Map> myTchFirstAuth = getMyTchActors(firstArthorsMap);
-        List<Map> myFirstAuth = getMyActors(firstArthorsMap);
-        List<Map> firstAuth = getKeyActors(firstArthorsMap);
-        Map chiefAuthorsMap = getRoleArray((String) KEY_ROLE.get("chiefAuthor"), map);
-        List<Map> myTchChiefAuth = getMyTchActors(chiefAuthorsMap);
-        List<Map> myChiefAuth = getMyActors(chiefAuthorsMap);
-        List<Map> chiefAuth = getKeyActors(chiefAuthorsMap);
+
+        List<Map> actors = getActors(map);
+        List<Map> myActors = getMyActors(actors);
+        List<Map> myStaffActors = getMyStaffActors(actors);
+
+//        Role Actors
+        List<Map> myTchFirstAuth = getChiefActors(myStaffActors,(String) KEY_ROLE.get("firstAuthor"));
+        List<Map> myFirstAuth = getChiefActors(myActors, (String) KEY_ROLE.get("firstAuthor"));
+        List<Map> firstAuth = getChiefActors(actors, (String) KEY_ROLE.get("firstAuthor"));
+        List<Map> myTchChiefAuth = getChiefActors(myStaffActors, (String) KEY_ROLE.get("chiefAuthor"));
+        List<Map> myChiefAuth =  getChiefActors(myActors, (String) KEY_ROLE.get("chiefAuthor"));
+        List<Map> chiefAuth = getChiefActors(actors, (String) KEY_ROLE.get("chiefAuthor"));
         if (myTchFirstAuth.size() != 0 || myTchChiefAuth.size() != 0)
             flag = true;
         double mySchoolChNum = myChiefAuth.size() + myFirstAuth.size();
@@ -171,10 +170,9 @@ public class Paper extends StandardBase implements StandardCheckInf {
 //        double finalScore = (double) validInfo.get("sum");
         Map tempFirstAuthor, tempChiefAuthor;
         double tempMarks;
-        Map firstAuthMap = getRoleArray((String) KEY_ROLE.get("firstAuthor"), map);
-        List<Map> myTchFirstAuth = getMyTchActors(firstAuthMap);
-        Map chiefAuthMap = getRoleArray((String) KEY_ROLE.get("chiefAuthor"), map);
-        List<Map> myTchChiefAuth = getMyTchActors(chiefAuthMap);
+        List<Map> actors = getActors(map);
+        List<Map> myFirstAuth = getChiefActors(actors,(String) KEY_ROLE.get("firstAuthor"));
+        List<Map> myTchChiefAuth = getChiefActors(actors,(String) KEY_ROLE.get("chiefAuthor"));
 //       求和检测
         if ((boolean) validInfo.get("hasSum")) {
             validInfo.put(IS_VALID, false);
@@ -197,8 +195,8 @@ public class Paper extends StandardBase implements StandardCheckInf {
                 tempMarks = Double.parseDouble((String) tempChiefAuthor.get("score"));
             }
             //       获取第一作者代表分数
-            else if (myTchFirstAuth.size() != 0) {
-                tempFirstAuthor = myTchFirstAuth.get(0);
+            else if (myFirstAuth.size() != 0) {
+                tempFirstAuthor = myFirstAuth.get(0);
                 tempMarks = Double.parseDouble((String) tempFirstAuthor.get("score"));
             }
             else {
@@ -206,8 +204,8 @@ public class Paper extends StandardBase implements StandardCheckInf {
                 return validInfo;
             }
 //        检测第一作者分数必须相同
-            if (myTchFirstAuth.size() != 0)
-                for (Map firstAuthor : myTchFirstAuth) {
+            if (myFirstAuth.size() != 0)
+                for (Map firstAuthor : myFirstAuth) {
 //                    if ((int) firstAuthor.get("score") != tempMarks) {
                     if (Double.parseDouble((String) firstAuthor.get("score")) != tempMarks) {
                         validInfo.put(MESSAGE, getMsg("1024"));
