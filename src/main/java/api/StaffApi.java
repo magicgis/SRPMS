@@ -152,7 +152,6 @@ public class StaffApi {
         if (putMapOnObj(staff, args)) {
             try {
                 staff.setCol(baseInfoService.getById(first.get("col.id").toString()));
-                staff.setDept(baseInfoService.getById(first.get("dept.id").toString()));
                 staff.setRank(baseInfoService.getById(first.get("rank.id").toString()));
             } catch (NullPointerException e) {
                 return false;

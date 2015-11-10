@@ -21,7 +21,6 @@ public class StaffServiceImp extends BaseServiceImp<Staff> implements StaffServi
         keys.add("name");
         keys.add("position");
         keys.add("col.value");
-        keys.add("dept.value");
         return staffDao.findByArrayFuz(keys, keyword, sort, order);
     }
 }
