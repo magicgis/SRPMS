@@ -7,24 +7,6 @@
  * 6表示是否获奖
  * @type {Array}
  */
-
-//var deptValue=Object();
-//var allSelections =
-//    [
-//        {"1": [{"type": "自然科学"}, {"type": "哲学与社会科学"}, {"type": "教育教学改革"}, {"type": ""}, {"type": ""}]},
-//        {"2": [{"pRank": "国家级"}, {"pRank": "省部级"}]},
-//        {"3": [{"attr": "子课题"}, {"attr": "联合项目"}, {"attr": "独立项目"}, {"attr": ""}, {"attr": ""}]},
-//        {"4": [{"rateUnit": "国家科技部"}, {"rateUnit": "国家自然科学基金委员会"}, {"rateUnit": "国家中医药管理局"}, {"rateUnit": "教育部"}, {"rateUnit": "其他部委"}]},
-//        {"5": [{"rateSrc": "“973”计划A类资助"}, {"rateSrc": "“973”计划B类资助"}, {"rateSrc": "“973”计划C类资助"}, {"rateSrc": "“863”计划"}, {"rateSrc": "国家重大科技专项"}]},
-//    ];
-//项目表单中的复选框
-var optionsMenu = {
-    '1': 'type',
-    '2': 'pRank',
-    '3': 'attr',
-    '4': 'rateUnit',
-    '5': 'rateSrc'
-};
 // 将对话框里的值加载进成员表
 function subActorInfo(index, flag) {
     var id = $('#actor').val();
@@ -36,7 +18,14 @@ function subActorInfo(index, flag) {
     //var mark = (marks == "" ? '0' : (marks / units.length).toFixed(2));
     actorTemp = getActorsData();
     $.each(units, function (i, value) {
-        actorTemp.push({"staff.id": id, "rank": rank, "staff.name": actor, "role": role, "score": marks, "unit": value});
+        actorTemp.push({
+            "staff.id": id,
+            "rank": rank,
+            "staff.name": actor,
+            "role": role,
+            "score": marks,
+            "unit": value
+        });
     });
     if (rank == '1' || rank == 1) {
         Main_Actor = id;
@@ -129,10 +118,10 @@ function totalUnitFormatter(data) {
     return "共" + data.length + "个";
 }
 function subFundInfo(index) {
-    var to_acct_time = $('#time').val();
-    var to_acct_mny = $('#mny').val();
-    var out_mny = $('#outMny').val();
-    fundTemp.push({"time": to_acct_time, "mny": to_acct_mny, "outMny": out_mny});
+    var Time = $('#time').val();
+    var Mny = $('#mny').val();
+    var OutMny = $('#outMny').val();
+    fundTemp.push({"time": Time, "mny": Mny, "outMny": OutMny});
     if (index == null) {  // 增加一行
         $('#fundTable').bootstrapTable("load", fundTemp);
     } else {    // 替换一行
@@ -169,7 +158,7 @@ function operateFFormatter(value, row, index) {
 function totalFundsFormatter(data) {
     var total = 0;
     $.each(data, function (i, row) {
-        total += +(row['to_acct_mny'].substring(0));
+        total += +(row['mny'].substring(0));
     });
     return '到账共:' + total + "万元";
 }
@@ -177,7 +166,7 @@ function totalFundsFormatter(data) {
 function totalEFundFormatter(data) {
     var total = 0;
     $.each(data, function (i, row) {
-        total += +(row['out_mny'].substring(0));
+        total += +(row['outMny'].substring(0));
     });
     return '外拨共:' + total + "万元";
 }
@@ -190,11 +179,11 @@ function actorTran(value, row) {
 }
 /*********************表单||表格的动作和行为****************/
 //表单不可编辑
-//function uneditableForm(){
-//    $('form input').attr("disabled", "disabled");
-//    $('form select').attr("disabled", "disabled");
-//    $('.delFiles').hide();
-//}
+function uneditableForm(){
+    $('form input').attr("disabled", "disabled");
+    $('form select').attr("disabled", "disabled");
+    $('.delFiles').hide();
+}
 function view(index, row, value) {
     {
         return [
@@ -203,50 +192,7 @@ function view(index, row, value) {
     }
 }
 /**************************表单中的复选框**********************/
-//复选框 数值与选择
-//function allSections() {
-//    $.each(optionsMenu, function (key, value) {
-//        selectUniversal(value, key);
-//    });
-//    //selectUniversal("aRank",2);
-//}
-//function selectUniversal(Ids, type) {
-//    var num = parseInt(type);
-//    $('#' + Ids).selectize({
-//        valueField: Ids,
-//        labelField: Ids,
-//        options: allSelections[num - 1][type],
-//        create: false,
-//        maxItems: 1
-//    });
-//}
-//复选框能用
-//function selectEnable(flag) {
-//    $.each(optionsMenu, function (key, value) {
-//        if (flag == 1) {
-//            $('#' + optionsMenu[key]).selectize()[0].selectize.enable();
-//        } else if (flag == 0) {
-//            $('#' + optionsMenu[key]).selectize()[0].selectize.disable();
-//        }
-//    });
-//}
-//清除复选框的内容
-var  StdList = [];
-var projectList = [];
-function getStdList(projectSet) {
-    $.ajax({
-        type: 'GET',
-        async: false,
-        url: '/api/standard/type/'+projectSet,
-        dataType: 'json',
-        contentType: 'application/json;charset=UTF-8',
-        success: function(data) {
-            StdList = data;
-            projectList = getList(StdList, 'projtype');
-            console.log(projectList);
-        }
-    });
-}
+
 function allSections(){
     $('#attr').selectize({
         valueField: 'value',
@@ -261,30 +207,15 @@ function allSections(){
         var setProject=$('#isAppr').val();
         if(setProject=='1'){
             var projectSet="项目立项";
-            getStdList(projectSet);
-
+            //getStdList(projectSet);
         }else if(setProject=='0'){
             var projectSet="项目未获立项";
-            getStdList(projectSet);
+            //getStdList(projectSet);
         }
     });
-    var $projrank = $("#projrank").selectize({ // 初始化 鉴定等级
-        valueField: 'id',
-        labelField: 'value',
-        maxItems: 1
-    });
-    var $projtype = $("#projtype").selectize({ // 初始化 projtype
-        valueFieled: 'value',
-        labelField: 'value',
-        options: projectList,
-        maxItems: 1,
-        onChange: function (result) { // onChange时间 绑定级联
-            var proRankList = [];
-            //var proOrigList = [];
-            //var proBelongList = [];
-            proRankList = getStandardList(StdList, 'projrank', 'projtype', result);
-            $projrank[0].selectize.clearOptions();
-            $projrank[0].selectize.addOption(proRankList);
+    $(".projStand").focus(function(){
+        if($('#isAppr').val()==""){
+            messageModal("请选择项目是否获得立项！")
         }
     });
 }
@@ -319,8 +250,7 @@ function firstOrOther() {
     }
 }
 /**************************************************************/
-function fullUpInfo(all,entity){
-    if (!isNull(all)) {
+function fullUpInfo(all, entity) {
         getActors();
         filesData = all['filesData'];
         unitTemp = all['units'];
@@ -341,9 +271,95 @@ function fullUpInfo(all,entity){
         } else {
             $('#unitInfo').hide();
         }
-    }
 }
 
+function standardSelects1(StdList,projtypeList,standard){
+    //initSelect();
+    $('#projbelong').attr("enable", "enable");
+    $('#projrank').attr("enable", "enable");
+    var $projbelong = $("#projbelong").selectize({ // 初始化 鉴定等级
+        valueField: 'id',
+        labelField: 'value',
+        maxItems: 1
+    });
 
+    var $projorig = $("#projorig").selectize({ // 初始化 鉴定等级
+        valueField: 'value',
+        labelField: 'value',
+        maxItems: 1,
+        onChange: function (result) {
+            var projbelongList = [];
+            projbelongList = getStandardList2(StdList, 'projtype', $('#projtype').val(),
+                'projrank',$('#projrank').val(), "projorig", $('#projorig').val(), "projbelong")
+            $projbelong[0].selectize.clearOptions();
+            $projbelong[0].selectize.addOption(projbelongList);
 
+        }
+    });
 
+    var $projrank = $("#projrank").selectize({ // 初始化 鉴定等级
+        valueField: 'value',
+        labelField: 'value',
+        maxItems: 1,
+        onChange: function (result) {
+            var projorigList = [];
+            projorigList = getStandardList1(StdList, 'projtype', $('#projtype').val(), 'projrank',$('#projrank').val(), "projorig");
+            // console.log(projorigList);
+            $projorig[0].selectize.clearOptions();
+            $projorig[0].selectize.addOption(projorigList);
+        }
+    });
+
+    var $projtype = $("#projtype").selectize({ // 初始化 projtype
+        valueFieled: 'value',
+        labelField: 'value',
+        options: projtypeList,
+        maxItems: 1,
+        onChange: function (result) { // onChange时间 绑定级联
+            // console.log(result);
+            var proRankList = [];
+            proRankList = getStandardList(StdList, 'projtype', 'projrank', result);
+            //console.log(proRankList);
+            $projrank[0].selectize.clearOptions();
+            $projrank[0].selectize.addOption(proRankList);
+        }
+    });
+   if(!isNull(standard)){
+       DisplayForm($projtype, standard['infoMap']['projtype'], 0);
+       DisplayForm($projrank, standard['infoMap']['projrank'], 0);
+       DisplayForm($projorig, standard['infoMap']['projorig'], 0);
+       DisplayForm($projbelong, standard['id'], 0);
+   }
+}
+
+function standardSelects0(StdList,standard){
+    var projtypes=[];
+    $.each(StdList, function (index, obj) {
+        var temp = {};
+        temp['id'] = obj['id'];
+        temp['value'] = obj['infoMap']['projtype'];
+        projtypes.push(temp);
+    });
+    //console.log(projtypes);
+    $("#projbelong").val('');
+    $("#projorig0").val('');
+    var $projtype = $("#projtype0").selectize({ // 初始化 projtype
+        valueField: 'id',
+        labelField: 'value',
+        options: projtypes,
+        maxItems: 1,
+        onChange: function (result) { // onChange时间 绑定级联
+            $.each(StdList, function (index, obj) {
+                if(obj['id']==$("#projtype0").val()){
+                    var projorigTemp = obj['infoMap']['projorig'];
+                    $("#projorig0").val(projorigTemp);
+                }
+            });
+        }
+    });
+    $('#projrank0').attr("disabled", "disabled");
+    if(!isNull(standard)){
+        DisplayForm($projtype,standard['id'], 0);
+        $("#projorig0").val(standard['infoMap']['projorig']);
+    }
+}

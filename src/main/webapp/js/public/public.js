@@ -263,10 +263,10 @@ function statusTran(value, row) {
         'RefuseByDep': '管理部门驳回，待学院审核',
         'RefuseByCol': '学院驳回，待修改'
     };
-    for (var key in termArray) {
-        if (value == key) {
-            return termArray[key];
-        }
+    if(!isNull(value)){
+        return termArray[value];
+    }else{
+        return '--';
     }
 }
 
@@ -385,7 +385,6 @@ Array.prototype.unique = function () {
  * @returns {Array}
  */
 function getList(data, str) {
-
     var tempArray = [];
     var tempList = [];
     var i = 0; // 是否可以被添加进去
@@ -432,11 +431,10 @@ function getStandardList1(data, str1, value1, str2, value2, str3) {
     var tempList = $.grep(data, function (obj, index) {
         return obj['infoMap'][str1] == value1;
     });
-    tempList = $.grep(data, function (obj, index) {
+    var tempList1 = $.grep(data, function (obj, index) {
         return obj['infoMap'][str2] == value2;
     });
-
-    $.each(tempList, function (index, obj) {
+    $.each(tempList1, function (index, obj) {
         var temp = {};
         temp['id'] = obj['id'];
         temp['value'] = obj['infoMap'][str3];
@@ -1011,11 +1009,11 @@ function init(entity,all,replyByDep,level) {
 }
 function uneditableForm() {
     $('form input').attr("disabled", "disabled");
-
+    $('form select').attr("disabled", "disabled");
     var elementlist = document.querySelectorAll('.selectized');
     $.each(elementlist, function(index, value) {
         disableSelectize($(value).selectize());
-    });
+    });//select
 }
 
 var wfTypeTans = {
@@ -1039,7 +1037,27 @@ function wfTypeTran(value, row) {
         return '--' ;
     }
 }
-
+function typeTran(value, row){
+    if(!isNull(row['standard'])){
+        return row['standard']['infoMap']['projtype'];
+    }else{
+        return '--'
+    }
+}
+function rankTran(value, row){
+    if(!isNull(row['standard'])){
+        return row['standard']['infoMap']['projrank'];
+    }else{
+        return '--'
+    }
+}
+function projbelong(value, row){
+    if(!isNull(row['standard'])){
+        return row['standard']['infoMap']['projbelong'];
+    }else{
+        return '--'
+    }
+}
 /**
  * 进度
  * @param arg

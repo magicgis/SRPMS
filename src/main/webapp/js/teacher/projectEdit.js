@@ -11,6 +11,11 @@ function save() {
     send['IsComplete'] = 'false';
     send['actors'] = getActorsData();
     send['fund'] = getFundsData();
+    send['Main-Actor'] = Main_Actor;
+    send['Main-ActorName'] = Main_ActorName;
+    if($('#attr').val() == '联合项目'){
+        send['units'] = getUnitsData();
+    }
     workflow.execute(userName, taskId, send).success(function () {
         afterSuccess("保存成功！");
     });
@@ -19,12 +24,14 @@ function save() {
 function confirm() {
     var status = all['Status'];
     var send = new Object();
-    if(status == 'Uncomplete'){
-        send['IsComplete'] = 'true';
-        send['actors'] = getActorsData();
-        send['fund'] = getFundsData();
+    send['IsComplete'] = 'true';
+    send['Main-Actor'] = Main_Actor;
+    send['Main-ActorName'] = Main_ActorName;
+    send['actors'] = getActorsData();
+    send['fund'] = getFundsData();
+    if($('#attr').val() == '联合项目'){
+        send['units'] = getUnitsData();
     }
-    console.log(send);
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '确认?',

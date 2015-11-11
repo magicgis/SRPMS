@@ -2,7 +2,7 @@
  * Created by zheng on 2015/10/3.
  */
 $(function(){
-
+    $('#fundToolbar').hide();
     init(entity,all,replyByDep,2);
 });
 //监听 添加金额信息

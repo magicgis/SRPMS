@@ -83,7 +83,6 @@ function confirm() {
  * 撤回order
  */
 function getOrderBack() {
-
     window.workflow.getBack(userName, orderId).success(function () {
         afterSuccess("已撤回");
         window.location.href = '/process-book-all';
@@ -114,40 +113,6 @@ function delOrder() {
     });
 }
 /**************************编辑成员||计算分数||选择已有获奖著作**************************************/
-function addAwarded() {
-    BootstrapDialog.show({
-        type: BootstrapDialog.TYPE_PRIMARY,
-        message: function (dialog) {
-            var $message = $('<div></div>');
-            var pageToLoad = dialog.getData('pageToLoad');
-            $message.load(pageToLoad);
-            return $message;
-        },
-        title: "著作信息",
-        data: {
-            'pageToLoad': '/dialog/bookAward.html'
-        },
-        closeByBackdrop: false,
-        buttons: [{
-            id: 'btn-oknm',
-            icon: 'glyphicon glyphicon-check',
-            label: '确认',
-            cssClass: 'btn-info',
-            autospin: false,
-            action: function (dialogRef) {
-                //if (!isFull()) {
-                //    messageModal('请将信息填写完整。');
-                //    return;
-                //}
-                awardedInfo();
-                dialogRef.close();
-            }
-        }],
-        onshown: function () {
-
-        }
-    });
-}
 function addActor() {
     BootstrapDialog.show({
         type: BootstrapDialog.TYPE_PRIMARY,
@@ -266,7 +231,6 @@ function editActor(row, index) {
 function getScore() {
     var jsonData = getFormData('book');
     workflow.getScore(jsonData).success(function (data) {
-        console.log(data);
         if (data["valid"] == false) {
             errorMsg(data["msg"]);
             flag = true;

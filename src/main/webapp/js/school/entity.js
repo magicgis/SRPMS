@@ -22,20 +22,20 @@ function switchEntityView(viewType) {
                     title: '名称',
                     sortable: true
                 }, {
-                    field: 'type',
+                    field: 'projtype',
                     title: '类别',
-                    sortable: true
-                    //formatter: "typeTran"
+                    sortable: true,
+                    formatter: "typeTran"
                 }, {
-                    field: 'rank',
+                    field: 'projrank',
                     title: '等级',
-                    sortable: true
-                    //formatter: "rankTran"
+                    sortable: true,
+                    formatter: "rankTran"
                 }, {
-                    field: 'rateUnit',
-                    title: '评分来源',
-                    sortable: true
-                    //formatter: "rateUnitTran"
+                    field: 'projbelong',
+                    title: '评分归属',
+                    sortable: true,
+                    formatter: "projbelong"
                 }, {
                     field: 'realDate',
                     title: '实际结题时间',

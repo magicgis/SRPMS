@@ -70,7 +70,6 @@
                 <div class="row">
                     <form id="project" class="form-horizontal" role="form">
                         <div hidden="hidden">
-                            <input type="text" name="standard.id" id="standardId"/>
                             <input type="text" name="id" id="projectId" value="${project.id}"/>
                             <input type="text" name="WF_Type" id="WF_Type" value="project"/>
                         </div>
@@ -164,14 +163,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row standard1">
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
                                                        for="projtype">项目类别</label>
 
                                                 <div class="col-sm-8">
                                                     <div class="col-sm-13">
-                                                        <input class="form-control" id="projtype"
+                                                        <input class="form-control projStand" id="projtype"
                                                                type="text" name="projtype"
                                                                placeholder="请选择"/>
                                                     </div>
@@ -184,7 +183,7 @@
 
                                                 <div class="col-sm-8">
                                                     <div class="col-sm-13">
-                                                        <input class="form-control"
+                                                        <input class="form-control projStand"
                                                                type="text" id="projrank" name="projrank"
                                                                placeholder="请选择"/>
                                                     </div>
@@ -192,14 +191,14 @@
                                             </div>
                                         </div>
 
-                                        <div class="row">
+                                        <div class="row standard1">
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
                                                        for="projorig">项目来源</label>
 
                                                 <div class="col-sm-8">
                                                     <div class="col-sm-13">
-                                                        <input class="form-control" id="projorig"
+                                                        <input class="form-control projStand" id="projorig"
                                                                type="text" name="projorig"
                                                                value=""
                                                                placeholder="请选择"/>
@@ -214,10 +213,40 @@
 
                                                 <div class="col-sm-8">
                                                     <div class="col-sm-13">
-                                                        <input class="form-control" id="projbelong"
-                                                               type="text" name="projbelong"
+                                                        <input class="form-control projStand" id="projbelong"
+                                                               type="text" name="standard.id"
                                                                placeholder="请选择"/>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row standard0">
+                                            <div class="form-group col-xs-12 col-sm-6">
+                                                <label class="col-sm-4 control-label no-padding-left"
+                                                       for="projtype0">项目类别</label>
+
+                                                <div class="col-sm-8">
+                                                    <div class="col-sm-13">
+                                                        <input class="form-control projStand" id="projtype0"
+                                                               type="text" name="standard.id"
+                                                               placeholder="请选择"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-xs-12 col-sm-6">
+                                                <label class="col-sm-4 control-label no-padding-left"
+                                                       for="projorig0">项目来源</label>
+
+                                                <div class="col-sm-8">
+                                                    <div class="col-sm-13">
+                                                        <input class="form-control projStand" id="projorig0"
+                                                               type="text"
+                                                               value=""
+                                                               placeholder="请选择"/>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -473,7 +502,8 @@
     var Main_ActorName;
     var filesData = {};
     var replyByCol, replyByDep;
-
+    var StdList = [];
+    var projtypeList = [];
 </script>
 
 <script src='<c:url value="/js/public/public.js"/>'></script>
@@ -488,23 +518,23 @@
             $(this).prev().focus();
         });
     });
+    $('.standard0').hide();
     // 成员，单位，文件
-    var entity =  '${ObjectMapper.writeValueAsString(project)}'; // 获得 entity 或 实体
+    var entity =  ${ObjectMapper.writeValueAsString(project)}; // 获得 entity 或 实体
+    console.log(entity);
     if(isNull(entity)) {
         entity = {};
     }
     var all = entity['argMap']; // 获得 成员，单位，附件，负责人等信息
+    var attr=entity['attr'];
     var dept = entity['dept'];
-    var standardId = entity['standard'];
+    var isAppr=entity['isAppr'];
+    var standard = entity['standard'];
     var taskId = '${taskId}';  // 获得 task的id
     var taskName = '${taskName}';
 
     if (!isNull(all)) {
-        filesData = all['filesData'];
-        unitTemp = all['units'];
-	    fundTemp = all['units'];
-        Main_Actor = all['Main-Actor'];
-        Main_ActorName = all['Main-ActorName'];
+        fullUpInfo(all,entity);//
     } else {
         all = {};
     }
@@ -517,66 +547,72 @@
     if (approvalByDep !== "") {
         replyByDep = all[approvalByDep]['replyByDep'];
     }
-
-
-    var StdList = [];
-    var projtypeList = [];
-    function getStdList() { // 拦截standard表的数据
+    function getStdList(projectSet) { // 拦截standard表的数据
+        if(!isNull(StdList)||!isNull(projtypeList)){
+            StdList = [];projtypeList = [];
+        }
         $.ajax({
             type: 'GET',
             async: false, // false
-            url: '/api/standard/type/项目立项',
+            url: '/api/standard/type/'+projectSet,
             dataType: 'json',
             contentType: 'application/json;charset=UTF-8',
             success: function (data) {
                 StdList = data;
 	            projtypeList = getList(StdList, 'projtype');
-//	            console.log(projtypeList);
             }
         });
     }
-
-//    allSections();
-    getStdList(); // 获取成果鉴定的standard待填充
-//    getDept();//选择框
-    upToLoadFile();//文件上传
-    firstOrOther();//是否是联合单位
-    fullUpInfo(all,entity);//tian chon
-
-
-    var $projrank = $("#projrank").selectize({ // 初始化 鉴定等级
-        valueField: 'value',
-        labelField: 'value',
-        maxItems: 1,
-        onChange: function (result) {
-
+    //getStdList();
+    $('#isAppr').change(function(){
+        var setProject=$('#isAppr').val();
+        if(setProject=='1'){
+            $('.standard0').hide();
+            $('.standard1').show();
+            var projectSet="项目立项";
+            getStdList(projectSet);
+            standardSelects1(StdList,projtypeList);
+        }else if(setProject=='0'){
+            $('.standard0').show();
+            $('.standard1').hide();
+            var projectSet="项目未获立项";
+            getStdList(projectSet);
+            standardSelects0(StdList);
         }
     });
-
-    var $projtype = $("#projtype").selectize({ // 初始化 projtype
-	    valueFieled: 'value',
-	    labelField: 'value',
-	    options: projtypeList,
-	    maxItems: 1,
-	    onChange: function (result) { // onChange时间 绑定级联
-		    console.log(result);
-		    var proRankList = [];
-		    proRankList = getStandardList(StdList, 'projtype', 'projrank', result);
-		    console.log(proRankList);
-		    $projrank[0].selectize.clearOptions();
-		    $projrank[0].selectize.addOption(proRankList);
-	    }
-    });
+    allSections();
+    getDept();//选择框
+    upToLoadFile();//文件上传
+    firstOrOther();//是否是联合单位
 
     if (filesData == null) {
         filesData = {};
     }
+    if (dept != null||!isNull(attr)) {  // 显示 所属部门
+        var $dept = $('#dept').selectize();
+        var $attr = $('#attr').selectize();
+        addOptionSelectize($dept, [dept]);
+        DisplayForm($dept, dept['id'], 0);
+        DisplayForm($attr, attr,0);
+    }
+    if(!isNull(standard)){
 
-//    if(dept !== null) {  // 显示 所属部门
-//        var $dept = $('#dept').selectize();
-//        addOptionSelectize($dept, [dept]);
-//        DisplayForm($dept, dept['id'], 0);
-//    }
+        if(standard['type']=='项目立项'){
+            $('#isAppr').val('1');
+            $('.standard0').hide();
+            $('.standard1').show();
+            var projectSet="项目立项";
+            getStdList(projectSet);
+            standardSelects1(StdList,projtypeList,standard);
+        }else{
+            $('#isAppr').val('0');
+            $('.standard0').show();
+            $('.standard1').hide();
+            var projectSet="项目未获立项";
+            getStdList(projectSet);
+            standardSelects0(StdList,standard);
+        }
+    }
 
     $('#actorTable').bootstrapTable({
         columns: [

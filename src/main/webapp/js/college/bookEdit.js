@@ -6,9 +6,7 @@ $(function () {
     unEditTableBook();
     $("#upload").hide();
 });
-
 function init() {
-
     if (status == 'WaitForCol' || status.indexOf('RefuseByDep') >= 0) {
         $('#reply').show();
         $('#reply-box').show();
