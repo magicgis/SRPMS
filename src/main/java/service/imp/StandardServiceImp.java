@@ -66,7 +66,7 @@ public class StandardServiceImp extends StandardBase implements StandardService 
 //        获取附表分数与极值
         String stIdType = selectId(type);
         String stId = (String) map.get(stIdType);
-        System.out.println(stId);
+//        System.out.println(stId);
         Standard st = standardDao.getById(stId);
         System.out.println(st.getValue());
         if (st == null) {

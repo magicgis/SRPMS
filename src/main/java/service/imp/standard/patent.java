@@ -15,9 +15,6 @@ public class patent extends StandardBase implements StandardCheckInf {
         put("firstActor", "第一专利权人");
         put("chiefActor", "知识产权所有人");
     }};
-    final private String[] PAGE_STRUCT
-            = {"name", "dept.value", "patenPubNo", "patenNo", "standard.id",
-            "pubDate", "apprDate", "endfillDate"};
     final private Map PAGE_ELEM_NAME = new HashMap() {{
         put("name", "专利名称");
         put("pubDate", "公开时间");
@@ -34,7 +31,7 @@ public class patent extends StandardBase implements StandardCheckInf {
 
     @Override
     public Map paramNullCheck(Map map) {
-        return super.paramNullCheck(PAGE_STRUCT, PAGE_ELEM_NAME, map);
+        return super.paramNullCheck( PAGE_ELEM_NAME, map);
     }
 
     @Override
@@ -60,14 +57,6 @@ public class patent extends StandardBase implements StandardCheckInf {
         return validInfo;
     }
 
-//    @Override
-//    public Map getScoreAndExtremumFromTable(StandardDao standardDao, Map info) {
-////        if国际发明专利sum=200;max=5
-////        if中国发明专利sum=50;max=3
-////        if外观专利或实用新型专利sum=20;max=1
-//        return null;
-//    }
-
     @Override
     public Map isExtrrmumBand(Map map, double min, double max) {
         Map validInfo = new HashMap();
@@ -87,7 +76,7 @@ public class patent extends StandardBase implements StandardCheckInf {
     public Map getFinalScore(Map map, double tableScore) {
         Map validInfo = new HashMap();
         validInfo.put(IS_VALID, true);
-        validInfo.put(MESSAGE, "请分配积分");
+        validInfo.put(MESSAGE, "分数计算完成");
         validInfo.put("hasSum", true);
         validInfo.put("sum", tableScore);
         return validInfo;

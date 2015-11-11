@@ -20,8 +20,8 @@ public class Paper extends StandardBase implements StandardCheckInf {
     }
 
     //    内部方法
-    public Map paramNullCheck(Map map, String[] pageStruct, Map pageElemName) {
-        return super.paramNullCheck(pageStruct, pageElemName, map);
+    public Map paramNullCheck(Map map,  Map pageElemName) {
+        return super.paramNullCheck(pageElemName, map);
     }
 
 //    public Map getScoreAndExtremumFromTable(StandardDao standardDao, Map info, String stdId) {

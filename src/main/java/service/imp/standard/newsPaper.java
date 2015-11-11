@@ -8,8 +8,7 @@ import java.util.Map;
  * Created by DELL on 2015/7/20.
  */
 public class newsPaper extends Paper {
-    final private String[] PAGE_STRUCT
-            = {"name", "pubDate", "newspaper.name", "numWord", "newspaper.standard.id", "newspaper.period"};
+
     final private Map PAGE_ELEM_NAME = new HashMap() {{
         put("name", "论文名称");
         put("pubDate", "发表时间");
@@ -23,7 +22,7 @@ public class newsPaper extends Paper {
     }
 
     public Map paramNullCheck(Map map) {
-        return super.paramNullCheck(PAGE_STRUCT, PAGE_ELEM_NAME, map);
+        return super.paramNullCheck(PAGE_ELEM_NAME, map);
     }
 
 //    public Map getScoreAndExtremumFromTable(StandardDao standardDao, Map info) {
