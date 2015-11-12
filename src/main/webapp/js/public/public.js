@@ -944,7 +944,7 @@ function init(entity,all,replyByDep,level) {
                     console.log('1');
                     $('.onApprove').hide();
                     $('#reply').hide();
-                    $('.onDel').hide();
+                    //$('.onDel').hide();
                     break;
                 case 311:
                     console.log('311');
@@ -999,9 +999,14 @@ function init(entity,all,replyByDep,level) {
                 $('#upload').show();
                 $('.onEdit').show();
                 $('.onApprove').hide();
-                $('.onDel').hide();
+                $('.orderBack').hide();
                 $('#reply').hide();
                 hideColumnScore();
+                if (process == '0') {
+                    $('.del').show();
+                } else {
+                    $('.del').hide();
+                }
             }
             break;
     }
