@@ -25,8 +25,8 @@
 
         <c:choose>
             <c:when test="${sessionScope.level == '1'}">
-                <li class="">
-                    <a href="<c:url value="/task"/>">
+                <li class="hyperlink task">
+                    <a >
                         <i class="menu-icon fa fa-check-square-o "></i>
                         <span class="menu-text">待确认 </span>
                     </a>
@@ -46,15 +46,15 @@
 
             <ul class="submenu">
 
-                <li class="">
-                    <a href="<c:url value="/process"/>">
+                <li class="process all">
+                    <a>
                         <i class="menu-icon fa fa-home"></i>
                         <span class="menu-text"> 所有 </span>
                     </a>
                     <b class="arrow"></b>
                 </li>
 
-                <li class="processType" id="projectView">
+                <li class="process project">
                     <a>
                         <i class="menu-icon fa fa-flask"></i>
                         <span class="menu-text"> 科研项目 </span>
@@ -62,7 +62,7 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="processType" id="paperView">
+                <li class="process paper">
                     <a>
                         <i class="menu-icon fa fa- fa-file-word-o"></i>
                         <span class="menu-text"> 论文 </span>
@@ -70,7 +70,7 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="processType" id="bookView">
+                <li class="process book">
                     <a>
                         <i class="menu-icon fa fa-book"></i>
                         <span class="menu-text"> 著作 </span>
@@ -78,7 +78,7 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="processType" id="patentView">
+                <li class="process patent">
                     <a>
                         <i class="menu-icon fa fa-file-archive-o"></i>
                         <span class="menu-text"> 专利 </span>
@@ -97,7 +97,7 @@
 
                     <ul class="submenu">
 
-                        <li class="processType" id="achAppraisalView">
+                        <li class="process achAppraisal">
                             <a>
                                 <i class="menu-icon fa fa-legal"></i>
                                 <span class="menu-text">成果鉴定</span>
@@ -106,7 +106,7 @@
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="processType" id="achAwardView">
+                        <li class="process achAward">
                             <a>
                                 <i class="menu-icon fa fa-trophy"></i>
                                 <span class="menu-text"> 成果获奖</span>
@@ -114,7 +114,7 @@
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="processType" id="achTranView">
+                        <li class="process achTran">
                             <a>
                                 <i class="menu-icon fa fa-recycle"></i>
                                 <span class="menu-text"> 成果转化 </span>
@@ -195,7 +195,7 @@
 
             <ul class="submenu">
 
-                <li class="entityType" id="projectEntity">
+                <li class="entity project">
                     <a>
                         <i class="menu-icon fa fa-flask"></i>
                         <span class="menu-text"> 科研项目 </span>
@@ -203,7 +203,7 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="entityType" id="paperEntity">
+                <li class="entity paper">
                     <a>
                         <i class="menu-icon fa fa- fa-file-word-o"></i>
                         <span class="menu-text"> 论文 </span>
@@ -211,7 +211,7 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="entityType" id="bookEntity">
+                <li class="entity book">
                     <a>
                         <i class="menu-icon fa fa-book"></i>
                         <span class="menu-text"> 著作 </span>
@@ -219,7 +219,7 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="entityType" id="patentEntity">
+                <li class="entity patent">
                     <a>
                         <i class="menu-icon fa fa-fax"></i>
                         <span class="menu-text"> 专利 </span>
@@ -238,7 +238,7 @@
 
                     <ul class="submenu">
 
-                        <li class="entityType" id="achAppraisalEntity">
+                        <li class="entity achAppraisal">
                             <a>
                                 <i class="menu-icon fa fa-legal"></i>
                                 <span class="menu-text">成果鉴定</span>
@@ -247,7 +247,7 @@
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="entityType" id="achAwardEntity">
+                        <li class="entity achAward">
                             <a>
                                 <i class="menu-icon fa fa-trophy"></i>
                                 <span class="menu-text"> 成果获奖</span>
@@ -255,7 +255,7 @@
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="entityType" id="achTranEntity">
+                        <li class="entity achTran">
                             <a>
                                 <i class="menu-icon fa fa-recycle"></i>
                                 <span class="menu-text"> 成果转化 </span>
@@ -325,8 +325,8 @@
         </li>
 
 
-        <li>
-            <a href="<c:url value="/magazine"/>">
+        <li class="hyperlink mag">
+            <a>
                 <i class="menu-icon glyphicon glyphicon-bookmark"></i>
                 <span class="menu-text">期刊新增 </span>
             </a>
@@ -337,7 +337,7 @@
         <c:choose>
             <c:when test="${sessionScope.level == '1'}">
                 <li class="">
-                    <a href="<c:url value="/userInfo"/>">
+                    <a>
                         <i class="menu-icon fa fa-user"></i>
                         <span class="menu-text">个人信息 </span>
                     </a>

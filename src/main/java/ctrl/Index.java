@@ -40,6 +40,13 @@ public class Index {
     AchAppraisalService achAppraisalService;
     @Autowired
     AchAwardService achAwardService;
+    @Autowired
+    PaperService paperService;
+
+    @RequestMapping(value = {"index/**", "index"}, method = RequestMethod.GET)
+    public String newindex(Model model, RedirectAttributes redirectAttributes) {
+        return "index";
+    }
 
     @RequestMapping(value = {"login", ""}, method = RequestMethod.GET)
     public String index(Model model, RedirectAttributes redirectAttributes) {
@@ -57,7 +64,7 @@ public class Index {
         else {
             request.getSession().setAttribute("user", u);
             request.getSession().setAttribute("level", u.getPrivilege());
-            return "redirect:process";
+            return "redirect:index#";
         }
     }
 
@@ -68,30 +75,9 @@ public class Index {
         return "redirect:login";
     }
 
-    @RequestMapping(value = {"paper/new"}, method = RequestMethod.GET)
-    public String newPaper(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        model.addAttribute(new Paper());
-        return "paperEdit";
-    }
-
-    @RequestMapping(value = {"magazine"}, method = RequestMethod.GET)
-    public String magazine(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "magazine";
-    }
-
-    @RequestMapping(value = {"magazine/{orderId}"}, method = RequestMethod.GET)
-    public String magazineEdit(Model model, @PathVariable("orderId") String orderId,
-                               HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        List<Task> task = engine.getTaskByOrder(orderId);
-        model.addAttribute(task.get(0));
-//        task.get(0).getVariableMap().get("filesData")
-        return "magazineEdit";
-    }
-
-
-    @RequestMapping(value = {"user"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"user/new"}, method = RequestMethod.GET)
     public String userInfo(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, HttpSession session) {
-        return "user";
+        return "userEdit";
     }
 
     @RequestMapping(value = {"user/{id}"}, method = RequestMethod.GET)
@@ -103,6 +89,31 @@ public class Index {
             model.addAttribute(user);
         }
         return "userEdit";
+    }
+
+    @RequestMapping(value = {"magazine/{orderId}"}, method = RequestMethod.GET)
+    public String magazineEdit(Model model, @PathVariable("orderId") String orderId,
+                               HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        List<Task> task = engine.getTaskByOrder(orderId);
+        model.addAttribute(task.get(0));
+//        task.get(0).getVariableMap().get("filesData")
+        return "magazineEdit";
+    }
+
+    @RequestMapping(value = {"paper/{paperId}"}, method = RequestMethod.GET)
+    public String paperEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                            @PathVariable("paperId") String paperId) {
+        Paper paper = paperService.getById(paperId);
+        model.addAttribute(paper);
+        return "paperEdit";
+    }
+
+    @RequestMapping(value = {"book/{bookId}"}, method = RequestMethod.GET)
+    public String bookEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                           @PathVariable("bookId") String bookId) {
+        Book book = bookService.getById(bookId);
+        model.addAttribute(book);
+        return "bookEdit";
     }
 
     @RequestMapping(value = {"patent/new"}, method = RequestMethod.GET)
@@ -117,20 +128,6 @@ public class Index {
         Patent patent = patentService.getById(patentId);
         model.addAttribute(patent);
         return "patentEdit";
-    }
-
-    @RequestMapping(value = {"book/new"}, method = RequestMethod.GET)
-    public String newBook(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        model.addAttribute(new Book());
-        return "bookEdit";
-    }
-
-    @RequestMapping(value = {"book/{bookId}"}, method = RequestMethod.GET)
-    public String bookEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
-                           @PathVariable("bookId") String bookId) {
-        Book book = bookService.getById(bookId);
-        model.addAttribute(book);
-        return "bookEdit";
     }
 
     @RequestMapping(value = {"project/new"}, method = RequestMethod.GET)
@@ -193,49 +190,6 @@ public class Index {
     @RequestMapping(value = {"sysBaseInfo"}, method = RequestMethod.GET)
     public String sysBaseInfo(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         return "sysBaseInfo";
-    }
-
-    @RequestMapping(value = {"process-{type:\\w+}-{level:\\w+}"}, method = RequestMethod.GET)
-    public String allSRinfo(@PathVariable("type") String type, @PathVariable("level") String level,
-                            Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        model.addAttribute("type", type);
-        model.addAttribute("level", level);
-        return "processView";
-    }
-
-    @RequestMapping(value = {"process-{type:\\w+}"}, method = RequestMethod.GET)
-    public String allSRinfo(@PathVariable("type") String type,
-                            Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "redirect:process-" + type + "-all";
-    }
-
-    @RequestMapping(value = {"process"}, method = RequestMethod.GET)
-    public String allSRinfo(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "redirect:process-all-all";
-    }
-
-    @RequestMapping(value = {"entity-{type:\\w+}-{level:\\w+}"}, method = RequestMethod.GET)
-    public String allEntity(@PathVariable("type") String type, @PathVariable("level") String level,
-                            Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        model.addAttribute("type", type);
-        model.addAttribute("level", level);
-        return "entityView";
-    }
-
-    @RequestMapping(value = {"entity-{type:\\w+}"}, method = RequestMethod.GET)
-    public String allEntity(@PathVariable("type") String type,
-                            Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "redirect:entity-" + type + "-all";
-    }
-
-    @RequestMapping(value = {"entity"}, method = RequestMethod.GET)
-    public String allEntity(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "redirect:entity-all-all";
-    }
-
-    @RequestMapping(value = {"task"}, method = RequestMethod.GET)
-    public String task(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "task";
     }
 
     @RequestMapping(value = {"order/{orderId}"}, method = RequestMethod.GET)

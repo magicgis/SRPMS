@@ -7,7 +7,7 @@ function entityApiUrl(type) {
 function switchEntityView(viewType) {
     switch (viewType) {
         case 'projectEntity':
-            allTable.bootstrapTable('destroy').bootstrapTable({
+            viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityApiUrl('project'),
                 sidePagination: "server",
                 columns: [{
@@ -59,7 +59,7 @@ function switchEntityView(viewType) {
             });
             break;
         case 'patentEntity':
-            allTable.bootstrapTable('destroy').bootstrapTable({
+            viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityApiUrl('patent'),
                 sidePagination: "server",
                 flat: true,
@@ -90,7 +90,7 @@ function switchEntityView(viewType) {
             });
             break;
         case 'paperEntity': //todo
-            allTable.bootstrapTable('destroy').bootstrapTable({
+            viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityApiUrl("paper"),
                 sidePagination: "server",
                 columns: [{
@@ -127,7 +127,7 @@ function switchEntityView(viewType) {
             });
             break;
         case 'bookEntity':
-            allTable.bootstrapTable('destroy').bootstrapTable({
+            viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityApiUrl('book'),
                 sidePagination: "server",
                 flat:true,
@@ -171,7 +171,7 @@ function switchEntityView(viewType) {
             });
             break;
         case 'achAppraisalEntity':
-            allTable.bootstrapTable('destroy').bootstrapTable({
+            viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityApiUrl('achAppraisal'),
                 sidePagination: "server",
                 flat: true,
@@ -198,7 +198,7 @@ function switchEntityView(viewType) {
             });
             break;
         case 'achAwardEntity':
-            allTable.bootstrapTable('destroy').bootstrapTable({
+            viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityApiUrl('achAward'),
                 sidePagination: "server",
                 flat:true,
@@ -239,7 +239,7 @@ function switchEntityView(viewType) {
             });
             break;
         case 'achTranEntity':
-            allTable.bootstrapTable('destroy').bootstrapTable({
+            viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityApiUrl('achTran'),
                 sidePagination: "server",
                 flat: true,
@@ -266,7 +266,7 @@ function switchEntityView(viewType) {
             });
             break;
         case 'newFoodEntity':
-            allTable.bootstrapTable('destroy').bootstrapTable({
+            viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityApiUrl('newFood'),
                 sidePagination: "server",
                 flat: true,
@@ -297,7 +297,7 @@ function switchEntityView(viewType) {
             });
             break;
         case 'newInstruEntity':
-            allTable.bootstrapTable('destroy').bootstrapTable({
+            viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityApiUrl('newInstru'),
                 sidePagination: "server",
                 flat: true,
@@ -328,7 +328,7 @@ function switchEntityView(viewType) {
             });
             break;
         case 'newMedicineEntity':
-            allTable.bootstrapTable('destroy').bootstrapTable({
+            viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityApiUrl('newMedicine'),
                 sidePagination: "server",
                 flat: true,
@@ -359,7 +359,7 @@ function switchEntityView(viewType) {
             });
             break;
         case 'newOtherEntity':
-            allTable.bootstrapTable('destroy').bootstrapTable({
+            viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityApiUrl('newOther'),
                 sidePagination: "server",
                 flat: true,
@@ -390,7 +390,7 @@ function switchEntityView(viewType) {
             });
             break;
         case 'allEntity': //todo
-            allTable.bootstrapTable('destroy').bootstrapTable({
+            viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: apiUrl('all'),
                 sidePagination: "server",
                 columns: [{
