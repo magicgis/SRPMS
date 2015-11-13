@@ -2,8 +2,7 @@ package engine.filter;
 
 import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
-import entity.Paper;
-import entity.Patent;
+import entity.*;
 import org.snaker.engine.SnakerInterceptor;
 import org.snaker.engine.core.Execution;
 import service.*;
@@ -37,6 +36,7 @@ public class Complete implements SnakerInterceptor {
         Map<String, Object> info = (Map<String, Object>) args.get("WF_0_Submission");
 
         Serializable id = null;
+        Map init;
 
         String type = (String) args.get("WF_Type");
         switch (type) {
@@ -76,12 +76,45 @@ public class Complete implements SnakerInterceptor {
                 PatentService patentService = (PatentService) StaticFactory.getBean(PatentService.class);
                 id = (String) args.get("WF_Entity");
                 Patent patent = patentService.getById(id);
-                Map init = patent.getArgMap();
-//todo                patent.setScore();
+                init = patent.getArgMap();
+                //todo 这儿需要把分数给补上               patent.setScore();
                 moveMap(info, init, Arrays.asList("actors"));
                 patent.setArgMap(init);
                 patent.setProcess("9");
                 patentService.update(patent);
+                break;
+            case "achAward":
+                AchAwardService achAwardService = (AchAwardService) StaticFactory.getBean(AchAppraisalService.class);
+                id = (String) args.get("WF_Entity");
+                AchAward achAward = achAwardService.getById(id);
+                init = achAward.getArgMap();
+                //todo 缺少分数
+                moveMap(info, init, Arrays.asList("actors"));
+                achAward.setArgMap(init);
+                achAward.setProcess("9");
+                achAwardService.update(achAward);
+                break;
+            case "achAppraisal":
+                AchAppraisalService achAppraisalService = (AchAppraisalService) StaticFactory.getBean(AchAppraisalService.class);
+                id = (String) args.get("WF_Entity");
+                AchAppraisal achAppraisal = achAppraisalService.getById(id);
+                init = achAppraisal.getArgMap();
+                //todo 缺少分数
+                moveMap(info, init, Arrays.asList("actors"));
+                achAppraisal.setArgMap(init);
+                achAppraisal.setProcess("9");
+                achAppraisalService.update(achAppraisal);
+                break;
+            case "achTran":
+                AchTranService achTranService = (AchTranService) StaticFactory.getBean(AchTranService.class);
+                id = (String) args.get("WF_Entity");
+                AchTran achTran = achTranService.getById(id);
+                init = achTran.getArgMap();
+                //todo 缺少分数
+                moveMap(info, init, Arrays.asList("actors"));
+                achTran.setArgMap(init);
+                achTran.setProcess("9");
+                achTranService.update(achTran);
                 break;
             default:
                 break;
