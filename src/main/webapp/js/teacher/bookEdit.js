@@ -8,6 +8,8 @@ $(function () {
 var flag = true;
 function init() {
     $('#reply-box').hide();
+    $('#score').attr('disabled', 'disabled');
+
     if (status.indexOf('Refuse') >= 0) {
         $('#reply').show();
         $('#reply-display').show();
@@ -33,20 +35,20 @@ function init() {
 function save() {
     $('#IsComplete').val(false);
     var jsonData = getFormData('book');
-    if (awardedData != null) {
-        jsonData['awardedData'] = awardedData;
-    }
+    //if (awardedData != null) {
+    //    jsonData['awardedData'] = awardedData;
+    //}
     workflow.execute(userName, taskId, jsonData).success(function () {
         afterSuccess("保存成功！");
-        window.location.href = '/process-book-all';
+        window.location.href = '/index/process/book/all';
     });
 }
 function confirm() {
     $('#IsComplete').val(true);
     var jsonData = getFormData('book');
-    if (awardedData != null) {
-        jsonData['awardedData'] = awardedData;
-    }
+    //if (awardedData != null) {
+    //    jsonData['awardedData'] = awardedData;
+    //}
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '确认?',
@@ -61,18 +63,18 @@ function confirm() {
              * userName,taskId,status
              */
             if (result) {
-                workflow.execute(userName, $('#WF_Task').val(), jsonData).success(function (data) {
+                workflow.execute(userName, taskId, jsonData).success(function (data) {
                     if ("valid" in data) {
                         if (data["valid"] == true) {
                             afterSuccess("确认成功！");
-                            window.location.href = '/process-book-all';
+                            window.location.href = '/index/process/book/all';
                         } else {
                             errorMsg(data["msg"]);
                             flag = true;
                         }
                     } else {
                         afterSuccess("确认成功！");
-                        window.location.href = '/process-book-all';
+                        window.location.href = '/index/process/book/all';
                     }
                 });
             }
@@ -85,7 +87,7 @@ function confirm() {
 function getOrderBack() {
     window.workflow.getBack(userName, orderId).success(function () {
         afterSuccess("已撤回");
-        window.location.href = '/process-book-all';
+        window.location.href = '/index/process/book/all';
     });
 }
 /**
@@ -106,7 +108,7 @@ function delOrder() {
             if (result) {
                 workflow.delOrder(order).success(function () {
                     afterSuccess("删除成功！");
-                    window.location.href = '/process-book-all';
+                    window.location.href = '/index/process/book/all';
                 });
             }
         }
@@ -183,7 +185,6 @@ function editActor(row, index) {
             cssClass: 'btn-info',
             autospin: false,
             action: function (dialogRef) {
-                //console.log(getActorsData());
                 dialogRef.close();
             }
         }],
@@ -240,9 +241,9 @@ function getScore() {
             errorMsg(data["msg"]);
         } else if (data["hasSum"] == true) {
             $("#score").val(data["sum"]);
-            console.log($("#score").val());
-            console.log(data["sum"]);
-            $("#showSum").html("　可分配总分：" + data["sum"] + "分");
+            //console.log($("#score").val());
+            //console.log(data["sum"]);
+            //$("#showSum").html("　可分配总分：" + data["sum"] + "分");
             errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
             flag = true;
         }

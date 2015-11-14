@@ -90,27 +90,27 @@ function getActorsData() {
     return actorTemp;
 }
 function getPubType() {//awardtype
-    var $bkReward=$('#bkReward').selectize({ // 初始化 鉴定等级
+
+    var $awardtype = $('#awarDtype').selectize({ // 初始化 鉴定等级
         valueField: 'value',
+        labelField: 'value',
+        maxItems: 1,
+        create: true,
+        onFocus: function() {
+            if($('#pubType').val()==""){
+                messageModal("请先选择出版类型");
+            }
+        }
+    });
+
+    var $isAward=$('#isAward').selectize({ // 初始化 鉴定等级
+        valueField: 'id',
         labelField: 'value',
         options: [
             {"id": "0", "value": "否"},
             {"id": "1", "value": "是"}],
         maxItems: 1,
-        create: true,
-        onChange:function(){
-            if($('#bkReward').val()=="0"){
-                disableSelectize($awardtype);
-            }else{
-                enableSelectize($awardtype);
-            }
-        }
-    });
-    var $awardtype = $('#awarDtype').selectize({ // 初始化 鉴定等级
-        valueField: 'id',
-        labelField: 'value',
-        maxItems: 1,
-        create: true
+        create: false
     });
     $('#pubType').selectize({
         valueField: 'id',
@@ -128,12 +128,18 @@ function getPubType() {//awardtype
             $awardtype[0].selectize.addOption(awardtypes);
         }
     });
-    $('#awarDtype').focus(function(){
-        if($('#awarDtype').val()==""){
-            messageModal("请选择出版类型！");
-        }
-    });
+
 }
+
+function IsAward() {
+    if($('#isAward').val() == '1') {
+        enableSelectize($('#awarDtype').selectize());
+    } else {
+        $('#awarDtype').selectize()[0].selectize.setValue("");
+        disableSelectize($('#awarDtype').selectize());
+    }
+}
+
 // 表单不可编辑
 function unEditTableBook() {
     $('form input').attr("disabled", "disabled");
@@ -149,22 +155,7 @@ function unEditTableBook() {
     $('#upload').hide();
     //$('.delAwardeds').hide();
 }
-// 表单可编辑
-function editTableBook() {
-    //enableSelectize($type)
-    $('form input').removeAttr("disabled", "disabled");
-    var elementlist = document.querySelectorAll('.selectized');
-    $.each(elementlist, function(index, value) {
-        enableSelectize($(value).selectize());
-    });
-    $('form select').attr("disabled", "disabled");
-    $('form select').removeAttr("disabled", "disabled");
-    $('#addActor').show();
-    $('#getScore').show();
-    $('.delFiles').show();
-    $('#upload').show();
-    $('#actorTable').bootstrapTable('showColumn', 'operate');
-}
+
 function getUnitsData(){}
 /**
  * 获得最新的批复

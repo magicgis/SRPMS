@@ -386,7 +386,7 @@
 															   class="btn btn-primary btn-sm">计算分数</a>
 															<label for="score">原则上可分配总分：</label>
 															<input class="score" type="text"
-															       name="sum" id="score" value="${paper.sum}">
+															       name="sum" id="score">
 														</div>
 														<table id="actorTable"
 														       data-toolbar="#actorToolbar"

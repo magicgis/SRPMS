@@ -149,11 +149,11 @@
                                         <div class="row">
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
-                                                       for="bkReward" placeholder="请选择"
+                                                       for="isAward" placeholder="请选择"
                                                         >著作获奖</label>
                                                 <div class="col-sm-8">
-                                                    <input class="form-control" id="bkReward"
-                                                           type="text" name="bkReward"
+                                                    <input class="form-control" id="isAward"
+                                                           type="text" name="isAward"
                                                            placeholder="请选择"/>
                                                 </div>
                                             </div>
@@ -251,7 +251,7 @@
                                                 <span class="giveSum">
                                                     <button class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</button>
                                                     <label for="score">原则上可分配总分：</label>
-                                                    <input class="score" type="text" name="score" id="score" value="${patent.score}">
+                                                    <input class="score" type="text" name="sum" id="score">
                                                 </span>
                                             </div>
                                             <table id="actorTable"
@@ -370,18 +370,21 @@
         });
     });
     // 成员，单位，文件
-    // todo 取出实体内的额外信息，附件信息也应该在其中。
     var entity = ${ObjectMapper.writeValueAsString(order)};
+    console.log(entity);
     var all = entity['variableMap']; // 成员，附件等信息都在里面
     var latestInfo = all['WF_Latest'];
     if (latestInfo == undefined) {
         latestInfo = new Object();
     }
+
     var status = all['Status']; // 获得状态
-    var dept = latestInfo['dept.id'];
-    var taskId = '${taskId}';
+    var deptId = latestInfo['dept.id'];
+    var pubType = latestInfo["pubType"];
+    var isAward = latestInfo['isAward'];
+
     var orderId = entity['id'];
-    var pubType=latestInfo["pubType"];
+    var taskId = '${taskId}';
     //获得批复
     var approvalByCol = getApprovalByCol(all);
     if (approvalByCol !== "") {
@@ -394,6 +397,7 @@
     getPubType();//选择框
     upToLoadFile();//文件上传
     getDept();
+
     $('#confirmC').hide();
     var filesData;
     if (filesData == null) {
@@ -447,16 +451,39 @@
         //  赋值 orderId与taskId
         $("#WF_Order").val(orderId);
         $('#WF_Task').val(taskId);
-        console.log("orderId"+$("#WF_Order").val());
-        //  赋值 论文类型
+
+        //  赋值 著作类型
         var $pubType = $("#pubType").selectize();
-        DisplayForm($pubType, pubType, 0);
-        if(!isNull(dept)){
-            DisplayForm($('#dept').selectize(), [dept], 0);
-        }//end if
+        DisplayForm( $pubType, pubType, 0);
+	    // 赋值 是否获奖
+
+	    var $awardtype = $('#awarDtype').selectize();
+	    disableSelectize($awardtype);
+
+	    if( !isNull(isAward) ) { // 用户选择了是否获奖
+		    DisplayForm($('#isAward').selectize(), isAward, 0);
+		    IsAward();
+		    if(isAward == 1) {   // 用户选了“是”
+			    enableSelectize($awardtype);
+			    DisplayForm($awardtype, latestInfo['awardtype'], 0);
+		    }
+	    }
+	    // 赋值 学院
+	    if (!isNull(deptId)) {
+		    $.ajax({
+			    url: '/api/baseinfo/id/' + deptId,
+			    type: 'GET',
+			    dataType: 'json',
+			    contentType: 'application/json;charset=UTF-8',
+			    success: function (data) {
+				    dept = data;
+				    addOptionSelectize($('#dept').selectize(), [dept]);
+				    DisplayForm($('#dept').selectize(), dept['id'], 0);
+			    }
+		    });
+	    }
         // 可编辑状态
         if (status == "Blank" || status == "Uncomplete" || status.indexOf('RefuseByCol') >= 0) {
-            editTableBook();
             $('#confirm').show();
             $('#save').show();
             $('.orderBack').hide();
@@ -478,14 +505,15 @@
             } else {
                 $('#confirm').hide();
             }
-        } // end if
-        // 显示总分
-        var score = latestInfo['sum'];
-        if (score == undefined || score == null || score == "") {
-            $("#showSum").html("");
-        } else {
-            $("#showSum").html("　可分配总分：" + score + "分");
         }
+	    // 显示总分
+	    var score = latestInfo['sum'];
+	    if (score == undefined || score == null || score == "") {
+		    flag = false;
+	    } else {
+		    flag = true;
+		    $('#score').val(score);
+	    }
         // 显示成员信息
         if (latestInfo['actors'] != null) {
             actorTemp = latestInfo['actors'];
@@ -513,10 +541,13 @@
 //        addAwarded();
 //    });
 
-//    //监听 分配分数
-//    $('.getScore').click(function () {
-//        getScore();
-//    });
+    $('#isAward').change(function () {
+	    IsAward();
+    });
+    //监听 分配分数
+    $('.getScore').click(function () {
+        getScore();
+    });
     //监听 点击保存
     $("#save").click(function () {
         save();
@@ -545,6 +576,7 @@
     $("#Refuse").click(function () {
         refuse();
     });
+
 </script>
 <c:choose>
     <c:when test="${sessionScope.level == '1'}">

@@ -305,6 +305,17 @@ function actorTran(value, row) {
         return;
 }
 
+// 著作获奖是否翻译
+function bkAwardTran(value, row){
+    if(value == '0') {
+        return '未获奖';
+    } else if(value == '1') {
+        return row['variableMap.WF_Latest.awardtype'];
+    } else {
+        return '-';
+    }
+}
+
 // 编辑页面获得成员信息
 function getActors() {
     var keyStr = getSubmission(all);
