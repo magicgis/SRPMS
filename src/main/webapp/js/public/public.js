@@ -1108,7 +1108,7 @@ function getScore(type) {
             flag = false;
             errorMsg(data["msg"]);
         } else if (data["hasSum"] == true) {  // 给总分，负责人分配分数
-            $("#score").val(data["sum"]);
+            $("#totalScore").val(data["sum"]);
             errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
             flag = true;
         }
@@ -1120,7 +1120,7 @@ function getScore(type) {
 //function subActorInfo(index,flag) {
 //    var id = $('#actor').val();
 //    var actor = $('#actor').text();
-//    var marks = $('#marks').val();
+//    var marks = $('#score').val();
 //    var units = $('#units').val();
 //    var role = $('#role').val();
 //    var rank = $('#rank').val();

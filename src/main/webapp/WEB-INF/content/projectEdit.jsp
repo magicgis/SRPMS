@@ -345,8 +345,9 @@
                                                 </c:choose>
                                                 <span class="giveSum">
                                                     <button class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</button>
-                                                    <label for="score">原则上可分配总分：</label>
-                                                    <input class="score" type="text" name="score" id="score" value="${patent.score}">
+                                                    <label for="totalScore">原则上可分配总分：</label>
+	                                                <input class="score" type="text"
+	                                                       name="score" id="totalScore" value="${project.score}">
                                                 </span>
                                             </div>
                                             <table id="actorTable"

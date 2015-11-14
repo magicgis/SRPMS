@@ -8,7 +8,7 @@ $(function () {
 var flag = true;
 function init() {
     $('#reply-box').hide();
-    $('#score').attr('disabled', 'disabled');
+    $('#totalScore').attr('disabled', 'disabled');
 
     if (status.indexOf('Refuse') >= 0) {
         $('#reply').show();
@@ -202,7 +202,7 @@ function editActor(row, index) {
             DisplayForm($units, row["unit"], 1);
             //填充其他
             $('#actorsInfo').autofill(row, {
-                findbyname: true,
+                findbyname: false,
                 restrict: false
             });
             disableSelectize($actor);
@@ -215,13 +215,13 @@ function editActor(row, index) {
             //是否可编辑
             if (flag) {//可编辑
                 $("#btn-ok").removeAttr("disabled").show();
-                $("#marks").removeAttr("disabled");
+                $("#score").removeAttr("disabled");
             } else {  //不可编辑
                 $("#btn-ok").attr("disabled", "disabled").hide();
-                $("#marks").attr("disabled", "disabled");
+                $("#score").attr("disabled", "disabled");
             }
             if (row["staff.id"] == "9998" || row["staff.id"] == "9999") {
-                $("#marks").attr("disabled", "disabled");
+                $("#score").attr("disabled", "disabled");
             }
         }
     });
@@ -240,9 +240,7 @@ function getScore() {
             flag = false;
             errorMsg(data["msg"]);
         } else if (data["hasSum"] == true) {
-            $("#score").val(data["sum"]);
-            //console.log($("#score").val());
-            //console.log(data["sum"]);
+            $("#totalScore").val(data["sum"]);
             //$("#showSum").html("　可分配总分：" + data["sum"] + "分");
             errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
             flag = true;

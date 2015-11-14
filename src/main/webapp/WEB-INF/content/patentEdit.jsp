@@ -86,7 +86,6 @@
                                 <form id="patent" class="form-horizontal" role="form">
                                     <div hidden="hidden">
                                         <%--todo 根据需求来添加相应的隐藏输入框--%>
-                                        <input type="text" name="sum" id="score"/>
                                         <input type="text" name="id" id="patentId" value="${patent.id}"/>
                                         <input type="text" name="WF_Type" id="WF_Type" value="patent"/>
                                     </div>
@@ -228,10 +227,14 @@
                                                                 <c:when test="${sessionScope.level == '3'}">
                                                                     <a class="btn btn-primary btn-sm addActor">添加成员</a>
                                                                 </c:when>
-                                                                <c:when test="${sessionScope.level == '1' || sessionScope.level == '3'}">
-                                                                    <a class="btn btn-primary btn-sm getScore">计算分数</a>
-                                                                </c:when>
                                                             </c:choose>
+
+                                                            <span class="giveSum">
+                                                                <button class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</button>
+                                                                <label for="totalScore">原则上可分配总分：</label>
+                                                                <input class="score" type="text"
+                                                                       name="score" id="totalScore" value="${patent.score}">
+                                                            </span>
                                                         </div>
                                                         <table id="actorTable"
                                                                data-toolbar="#actorToolbar"
@@ -522,7 +525,7 @@
     });
     //监听 分配分数
     $('.getScore').click(function () {
-        getScore();
+        getScore('patent');
     });
 
 </script>

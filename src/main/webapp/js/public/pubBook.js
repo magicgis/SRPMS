@@ -20,7 +20,7 @@ var awarDtype= {
 function subActorInfo(index, flag) {
     var id = $('#actor').val();
     var actor = $('#actor').text();
-    var marks = $('#marks').val();
+    var marks = $('#score').val();
     var units = $('#units').val();
     var role = $('#role').val();
     var rank = $('#rank').val();
@@ -147,9 +147,9 @@ function unEditTableBook() {
     var elementlist = document.querySelectorAll('.selectized');
     $.each(elementlist, function(index, value) {
         disableSelectize($(value).selectize());
-    });//select
-    $('#addActor').hide();
-    $('#getScore').hide();
+    });
+    $('.addActor').hide();
+    $('.getScore').hide();
     $('.delFiles').hide();
     $('#actorTable').bootstrapTable('hideColumn', 'operate');
     $('#upload').hide();

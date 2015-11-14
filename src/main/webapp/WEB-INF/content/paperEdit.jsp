@@ -84,10 +84,7 @@
 										<input type="text" name="WF_Order" id="WF_Order"/>
 										<input type="text" name="IsComplete" id="IsComplete"/>
 										<input type="text" name="mag.name" id="magName"/>
-										<%--<input type="text" name="sum" id="score"/>--%>
 										<input type="text" name="mag.standard.id" id="magStandardId"/>
-										<%--<input type="text" name="newspaper.standard.id" id="newsStandardId"/>--%>
-										<%--<input type="text" name="confer.standard.id" id="conferStandardId"/>--%>
 									</div>
 									<div class="col-xs-12 col-md-6">
 										<div id="paperInfo" class="col-xs-12 widget-container-col ui-sortable">
@@ -384,9 +381,9 @@
 
 															<a data-toggle="modal" id="getScore"
 															   class="btn btn-primary btn-sm">计算分数</a>
-															<label for="score">原则上可分配总分：</label>
+															<label for="totalScore">原则上可分配总分：</label>
 															<input class="score" type="text"
-															       name="sum" id="score">
+															       name="score" id="totalScore" value="${paper.score}">
 														</div>
 														<table id="actorTable"
 														       data-toolbar="#actorToolbar"
@@ -732,7 +729,7 @@
 			flag = false;
 		} else {
 			flag = true;
-			$('#score').val(score);
+//			$('#score').val(score);
 		}
 		// 显示成员信息
 		if (latestInfo['actors'] != null) {

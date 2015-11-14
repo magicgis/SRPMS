@@ -42,9 +42,7 @@ function getScore() {
             flag = false;
             errorMsg(data["msg"]);
         } else if (data["hasSum"] == true) {
-            $("#score").val(data["sum"]);
-            console.log($("#score").val());
-            console.log(data["sum"]);
+            $("#totalScore").val(data["sum"]);
             //$("#showSum").html("　可分配总分：" + data["sum"] + "分");
             errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
             flag = true;
@@ -234,7 +232,7 @@ function editActor(row, index) {
             DisplayForm($units, row["unit"], 1);
             //填充其他
             $('#actorsInfo').autofill(row, {
-                findbyname: true,
+                findbyname: false,
                 restrict: false
             });
             $(".editableModal").show();
@@ -244,18 +242,18 @@ function editActor(row, index) {
                 enableSelectize($role);
                 enableSelectize($units);
                 $("#rank").removeAttr("disabled");
-                $("#marks").removeAttr("disabled");
+                $("#score").removeAttr("disabled");
                 $("#btn-ok").show();
             } else {  //不可编辑
                 disableSelectize($actor);
                 disableSelectize($role);
                 disableSelectize($units);
                 $("#rank").attr("disabled", "disabled");
-                $("#marks").attr("disabled", "disabled");
+                $("#score").attr("disabled", "disabled");
                 $("#btn-ok").attr("disabled", "disabled").hide();
             }
             if (row["staff.id"] == "9998" || row["staff.id"] == "9999") {
-                $("#marks").attr("disabled", "disabled");
+                $("#score").attr("disabled", "disabled");
             }
         }
     });

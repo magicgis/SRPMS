@@ -250,8 +250,9 @@
 
                                                 <span class="giveSum">
                                                     <button class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</button>
-                                                    <label for="score">原则上可分配总分：</label>
-                                                    <input class="score" type="text" name="sum" id="score">
+                                                    <label for="totalScore">原则上可分配总分：</label>
+                                                    <input class="score" type="text"
+                                                           name="score" id="totalScore" value="${book.score}">
                                                 </span>
                                             </div>
                                             <table id="actorTable"
@@ -507,12 +508,11 @@
             }
         }
 	    // 显示总分
-	    var score = latestInfo['sum'];
-	    if (score == undefined || score == null || score == "") {
+	    var totalScore = latestInfo['sum'];
+	    if (totalScore == undefined || totalScore == null || totalScore == "") {
 		    flag = false;
 	    } else {
 		    flag = true;
-		    $('#score').val(score);
 	    }
         // 显示成员信息
         if (latestInfo['actors'] != null) {
