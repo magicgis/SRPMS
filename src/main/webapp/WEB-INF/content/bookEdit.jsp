@@ -152,12 +152,9 @@
                                                        for="bkReward" placeholder="请选择"
                                                         >著作获奖</label>
                                                 <div class="col-sm-8">
-                                                    <select class="form-control" id="bkReward"
-                                                            placeholder="请选择">
-                                                        <option value="${book.bkReward}"></option>
-                                                        <option value="1">是</option>
-                                                        <option value="0">否</option>
-                                                    </select>
+                                                    <input class="form-control" id="bkReward"
+                                                           type="text" name="bkReward"
+                                                           placeholder="请选择"/>
                                                 </div>
                                             </div>
 

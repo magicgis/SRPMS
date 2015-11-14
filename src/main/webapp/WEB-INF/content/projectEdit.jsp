@@ -529,6 +529,7 @@
     var attr=entity['attr'];
     var dept = entity['dept'];
     var isAppr=entity['isAppr'];
+    console.log(isAppr);
     var standard = entity['standard'];
     var taskId = '${taskId}';  // 获得 task的id
     var taskName = '${taskName}';
@@ -564,22 +565,47 @@
         });
     }
     //getStdList();
-    $('#isAppr').change(function(){
-        var setProject=$('#isAppr').val();
-        if(setProject=='1'){
-            $('.standard0').hide();
-            $('.standard1').show();
-            var projectSet="项目立项";
-            getStdList(projectSet);
-            standardSelects1(StdList,projtypeList);
-        }else if(setProject=='0'){
-            $('.standard0').show();
-            $('.standard1').hide();
-            var projectSet="项目未获立项";
-            getStdList(projectSet);
-            standardSelects0(StdList);
+    var $isAppr=$('#isAppr').selectize({ // 初始化 鉴定等级
+        valueField: 'id',
+        labelField: 'value',
+        options: [
+            {"id": "0", "value": "否"},
+            {"id": "1", "value": "是"}],
+        maxItems: 1,
+        create: true,
+        onChange:function(){
+            var setProject=$('#isAppr').val();
+            if(setProject=='1'){
+                $('.standard0').hide();
+                $('.standard1').show();
+                var projectSet="项目立项";
+                getStdList(projectSet);
+                standardSelects1(StdList,projtypeList);
+            }else if(setProject=='0'){
+                $('.standard0').show();
+                $('.standard1').hide();
+                var projectSet="项目未获立项";
+                getStdList(projectSet);
+                standardSelects0(StdList);
+            }
         }
     });
+//    $('#isAppr').change(function(){
+//        var setProject=$('#isAppr').val();
+//        if(setProject=='1'){
+//            $('.standard0').hide();
+//            $('.standard1').show();
+//            var projectSet="项目立项";
+//            getStdList(projectSet);
+//            standardSelects1(StdList,projtypeList);
+//        }else if(setProject=='0'){
+//            $('.standard0').show();
+//            $('.standard1').hide();
+//            var projectSet="项目未获立项";
+//            getStdList(projectSet);
+//            standardSelects0(StdList);
+//        }
+//    });
     allSections();
     getDept();//选择框
     upToLoadFile();//文件上传
@@ -588,24 +614,27 @@
     if (filesData == null) {
         filesData = {};
     }
-    if (dept != null||!isNull(attr)) {  // 显示 所属部门
+    if (dept != null||!isNull(attr)||!isNull(isAppr)) {  // 显示 所属部门
         var $dept = $('#dept').selectize();
         var $attr = $('#attr').selectize();
         addOptionSelectize($dept, [dept]);
         DisplayForm($dept, dept['id'], 0);
         DisplayForm($attr, attr,0);
+//        DisplayForm($isAppr, isAppr,0);
     }
     if(!isNull(standard)){
 
         if(standard['type']=='项目立项'){
-            $('#isAppr').val('1');
+            DisplayForm($isAppr, "1",0);
+//            $('#isAppr').val('1');
             $('.standard0').hide();
             $('.standard1').show();
             var projectSet="项目立项";
             getStdList(projectSet);
             standardSelects1(StdList,projtypeList,standard);
         }else{
-            $('#isAppr').val('0');
+            DisplayForm($isAppr, "0",0);
+//            $('#isAppr').val('0');
             $('.standard0').show();
             $('.standard1').hide();
             var projectSet="项目未获立项";
