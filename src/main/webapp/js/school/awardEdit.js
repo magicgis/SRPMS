@@ -51,9 +51,6 @@ function confirm() {
 }
 function orderBack() {
     var order = entity['id'];
-    var jsonData = Object();
-    jsonData['order'] = order;
-    jsonData['user'] = userName;
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
     });

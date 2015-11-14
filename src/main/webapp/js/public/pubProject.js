@@ -179,11 +179,11 @@ function actorTran(value, row) {
 }
 /*********************表单||表格的动作和行为****************/
 //表单不可编辑
-function uneditableForm(){
-    $('form input').attr("disabled", "disabled");
-    $('form select').attr("disabled", "disabled");
-    $('.delFiles').hide();
-}
+//function uneditableForm(){
+//    $('form input').attr("disabled", "disabled");
+//    $('form select').attr("disabled", "disabled");
+//    $('.delFiles').hide();
+//}
 function view(index, row, value) {
     {
         return [

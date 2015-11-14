@@ -311,7 +311,7 @@ function getOrderBack() {
     var order = entity['id'];
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
-        history.go(-1);
+        //history.go(-1);
     });
 }
 

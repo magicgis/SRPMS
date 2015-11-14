@@ -72,7 +72,7 @@ function delOrder() {
             if (result) {
                 workflow.delOrder(entity['id']).success(function (data) {
                     afterSuccess("删除成功！");
-                    history.go(-1);
+                    //history.go(-1);
                     //window.location.href = '/process-project-all';
                 });
             }

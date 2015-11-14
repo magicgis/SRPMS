@@ -505,15 +505,15 @@
 		getOrderBack();
 	});
 	//监听 添加单位
-	$('#addUnit').click(function () {
+	$('.addUnit').click(function () {
 		addUnit();
 	});
 	//监听 添加成员
-	$('#addActor').click(function () {
+	$('.addActor').click(function () {
 		addActor();
 	});
 	//监听 分配分数
-	$('#getScore').click(function () {
+	$('.getScore').click(function () {
 		getScore('achTran');
 	});
 

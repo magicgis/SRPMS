@@ -263,12 +263,19 @@ function saveStep2(data) {
 // 保存
 function save() {
 
-    saveStep1().success(function(data) {
+    $.ajax({
+        url: '/fjksa',
+        data: JSON.stringify(getFormData('achTran')),
+        contentType: 'application/json;charset=UTF-8',
+        type: 'post'
+    })
 
-        saveStep2(data).success(function (res) {
-            afterSuccess("保存成功！");
-        })
-    });
+    //saveStep1().success(function(data) {
+    //
+    //    saveStep2(data).success(function (res) {
+    //        afterSuccess("保存成功！");
+    //    })
+    //});
 }
 // 确认
 function confirm() {
