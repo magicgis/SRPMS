@@ -1,13 +1,10 @@
 package entity;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.HashMap;
 import java.util.Map;
 
 import static util.Trans.argMap;
@@ -16,7 +13,7 @@ import static util.Trans.argMap;
  * Created by guofan on 2015/10/12.
  */
 @Entity
-@Table(name = "ach_award", schema = "", catalog = "srpms")
+@Table(name = "ach_award")
 public class AchAward {
     private String id;
     private String name;
