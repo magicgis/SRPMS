@@ -41,6 +41,8 @@ public class Index {
     @Autowired
     AchAwardService achAwardService;
     @Autowired
+    AchTranService achTranService;
+    @Autowired
     PaperService paperService;
 
     @RequestMapping(value = {"index/**", "index"}, method = RequestMethod.GET)
@@ -184,11 +186,11 @@ public class Index {
         return "achTranEdit";
     }
 
-    @RequestMapping(value = {"achTran/{achAwardId}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"achTran/{achTranId}"}, method = RequestMethod.GET)
     public String achTranEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
-                              @PathVariable("achAwardId") String achAwardId) {
-        AchAward achAward = achAwardService.getById(achAwardId);
-        model.addAttribute(achAward);
+                              @PathVariable("achTranId") String achTranId) {
+        AchTran achTran = achTranService.getById(achTranId);
+        model.addAttribute(achTran);
         return "achTranEdit";
     }
 
