@@ -182,7 +182,7 @@ public class Index {
 
     @RequestMapping(value = {"achTran/new"}, method = RequestMethod.GET)
     public String newachTran(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        model.addAttribute(new AchAward());
+        model.addAttribute(new AchTran());
         return "achTranEdit";
     }
 
