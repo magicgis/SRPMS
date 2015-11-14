@@ -13,7 +13,7 @@ function save() {
     send['fund'] = getFundsData();
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
-    if($('#attr').val() == '联合项目'){
+    if($('#attr').val() == '联合项目' || entity['attr'] == "子课题"){
         send['units'] = getUnitsData();
     }
     workflow.execute(userName, taskId, send).success(function () {
@@ -29,7 +29,7 @@ function confirm() {
     send['Main-ActorName'] = Main_ActorName;
     send['actors'] = getActorsData();
     send['fund'] = getFundsData();
-    if($('#attr').val() == '联合项目'){
+    if($('#attr').val() == '联合项目' || entity['attr'] == "子课题"){
         send['units'] = getUnitsData();
     }
     BootstrapDialog.confirm({

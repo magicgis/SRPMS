@@ -243,10 +243,10 @@ function getFundsData() {
 }
 /*************************项目属性*********************************/
 function firstOrOther() {
-    if ($('#attr').val() == '联合项目') {
-        $('#unitInfo').show();
-    } else {
+    if ($('#attr').val() == '独立项目') {
         $('#unitInfo').hide();
+    } else {
+        $('#unitInfo').show();
     }
 }
 /**************************************************************/
@@ -262,7 +262,7 @@ function fullUpInfo(all, entity) {
         showFiles(filesData);
         $("#fundTable").bootstrapTable('load', fundTemp);
         $("#actorTable").bootstrapTable('load', actorTemp);
-        if (entity['attr'] == "联合项目") {
+        if (entity['attr'] == "联合项目" || entity['attr'] == "子课题") {
             if (all['units'] != null) {
                 unitTemp = all['units'];
             }
