@@ -26,11 +26,9 @@ public class AchTran {
     private Integer score;
     private String process;
     private String arg;
+    private String tranUnit;
 
     private BaseInfo dept;
-    private Standard standard;
-
-
 
 
     @Id
@@ -106,6 +104,16 @@ public class AchTran {
     }
 
     @Basic
+    @Column(name = "tran_unit", nullable = true, insertable = true, updatable = true, length = 255)
+    public String getTranUnit() {
+        return tranUnit;
+    }
+
+    public void setTranUnit(String tranUnit) {
+        this.tranUnit = tranUnit;
+    }
+
+    @Basic
     @Column(name = "arg", nullable = true, insertable = true, updatable = true, length = 2000)
     public String getArg() {
         return arg;
@@ -143,8 +151,8 @@ public class AchTran {
         if (score != null ? !score.equals(achTran.score) : achTran.score != null) return false;
         if (process != null ? !process.equals(achTran.process) : achTran.process != null) return false;
         if (arg != null ? !arg.equals(achTran.arg) : achTran.arg != null) return false;
-        if (dept != null ? !dept.equals(achTran.dept) : achTran.dept != null) return false;
-        return !(standard != null ? !standard.equals(achTran.standard) : achTran.standard != null);
+        if (tranUnit != null ? !tranUnit.equals(achTran.tranUnit) : achTran.tranUnit != null) return false;
+        return !(dept != null ? !dept.equals(achTran.dept) : achTran.dept != null);
 
     }
 
@@ -158,8 +166,8 @@ public class AchTran {
         result = 31 * result + (score != null ? score.hashCode() : 0);
         result = 31 * result + (process != null ? process.hashCode() : 0);
         result = 31 * result + (arg != null ? arg.hashCode() : 0);
+        result = 31 * result + (tranUnit != null ? tranUnit.hashCode() : 0);
         result = 31 * result + (dept != null ? dept.hashCode() : 0);
-        result = 31 * result + (standard != null ? standard.hashCode() : 0);
         return result;
     }
 
@@ -173,14 +181,5 @@ public class AchTran {
         this.dept = dept;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "standard", referencedColumnName = "id")
-    public Standard getStandard() {
-        return standard;
-    }
-
-    public void setStandard(Standard standard) {
-        this.standard = standard;
-    }
 
 }
