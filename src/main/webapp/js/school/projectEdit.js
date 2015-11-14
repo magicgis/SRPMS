@@ -42,19 +42,23 @@ function confirm() {
 
 }
 function orderBack() {
-    var row = $('#ProjectTable').bootstrapTable('getSelections')[0];
-    var order = row['id'];
-    var jsonData = Object();
-    jsonData['order'] = order;
-    jsonData['user'] = userName;
+    //var row = $('#ProjectTable').bootstrapTable('getSelections')[0];
+    //var order = row['id'];
+    //var jsonData = Object();
+    //jsonData['order'] = order;
+    //jsonData['user'] = userName;
+    //window.workflow.getBack(userName, order).success(function () {
+    //    afterSuccess("已撤回");
+    //    showTable();
+    //    $('#del').show();
+    //});
+    var order = entity['id'];
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
-        showTable();
-        $('#del').show();
+        history.go(-1);
     });
 }
 function delOrder() {
-    var order = entity['id'];
     BootstrapDialog.confirm({
         title: '提示！',
         message: '你确定要删除该项吗?',
@@ -66,9 +70,10 @@ function delOrder() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.delOrder(order).success(function () {
+                workflow.delOrder(entity['id']).success(function (data) {
                     afterSuccess("删除成功！");
-                    window.location.href = "/project";
+                    history.go(-1);
+                    //window.location.href = '/process-project-all';
                 });
             }
         }
@@ -91,6 +96,7 @@ function Approve() {
             if (result) {
                 workflow.execute(userName, taskId, approveInfo).success(function () {
                     afterSuccess('已通过！');
+                    history.go(-1);
                 });
             }
         }
@@ -116,7 +122,7 @@ function Refuse() {
             if (result) {
                 workflow.execute(userName, taskId, refuseAwardInfo).success(function () {
                     afterSuccess('已驳回至学院！');
-                    //window.location.href = '/achTran';
+                    history.go(-1);
                 });
             }
         }

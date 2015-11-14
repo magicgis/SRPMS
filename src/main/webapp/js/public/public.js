@@ -701,7 +701,7 @@ var checktime;
 var count = 0;
 var time;
 function errorMsg(msg) {
-    $("#getScore").attr("disabled", "disabled");
+    $(".getScore").attr("disabled", "disabled");
     $('#msg_alert').empty();
     $('<div class="alert alert-block alert-danger" id="msg_info"></div>').appendTo('#msg_alert');
     $('<button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times">' +
@@ -723,7 +723,7 @@ function clearClick() {
     count = 0;
     window.clearInterval(time);  //结束setInterval循环
     window.clearInterval(checktime);
-    $("#getScore").removeAttr("disabled");
+    $(".getScore").removeAttr("disabled");
 }
 
 jQuery(function ($) {
@@ -1080,6 +1080,7 @@ function pubTypeTrans(res){
     var pubType={"1020":"公开出版著作", "1021":"教育部规划教材","1022": "协编教材","1023":"其他教材"};
     return pubType[res];
 }
+
 
 /**
  * 计算分数
