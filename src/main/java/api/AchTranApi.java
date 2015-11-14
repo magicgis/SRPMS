@@ -57,7 +57,7 @@ public class AchTranApi {
             achTran = achTranService.getById((Serializable) args.getFirst("id"));
         }
         putMapOnObj(achTran, x);
-        achTran.setStandard(standardInfoService.getById((Serializable) args.getFirst("standard.id")));
+//        achTran.setStandard(standardInfoService.getById((Serializable) args.getFirst("standard.id")));
         achTran.setDept(baseInfoService.getById((Serializable) args.getFirst("dept.id")));
         if ("".equals(achTran.getId())) {
             achTran.setId(null);
