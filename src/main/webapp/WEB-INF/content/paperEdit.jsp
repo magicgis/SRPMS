@@ -84,7 +84,7 @@
 										<input type="text" name="WF_Order" id="WF_Order"/>
 										<input type="text" name="IsComplete" id="IsComplete"/>
 										<input type="text" name="mag.name" id="magName"/>
-										<input type="text" name="sum" id="score"/>
+										<%--<input type="text" name="sum" id="score"/>--%>
 										<input type="text" name="mag.standard.id" id="magStandardId"/>
 										<%--<input type="text" name="newspaper.standard.id" id="newsStandardId"/>--%>
 										<%--<input type="text" name="confer.standard.id" id="conferStandardId"/>--%>
@@ -381,9 +381,12 @@
 														<div id="actorToolbar">
 															<a data-toggle="modal" id="addActor"
 															   class="btn btn-primary btn-sm">添加成员</a>　
-															<%--<a data-toggle="modal" id="editActor" class="btn btn-primary btn-sm" style="display: none;">编辑成员</a>--%>
+
 															<a data-toggle="modal" id="getScore"
 															   class="btn btn-primary btn-sm">计算分数</a>
+															<label for="score">原则上可分配总分：</label>
+															<input class="score" type="text"
+															       name="sum" id="score" value="${paper.sum}">
 														</div>
 														<table id="actorTable"
 														       data-toolbar="#actorToolbar"
@@ -566,6 +569,8 @@
 	selectData(); // 会议时间插件
 	getPaperType(); // 初始化论文类型插件
 
+	var flag = true;// 当前可不可以分配分数
+
 	$('#confirmC').hide();
 
 	var entity = ${ObjectMapper.writeValueAsString(order)}; // 获得order
@@ -724,9 +729,10 @@
 		// 显示总分
 		var score = latestInfo['sum'];
 		if (score == undefined || score == null || score == "") {
-			$("#showSum").html("");
+			flag = false;
 		} else {
-			$("#showSum").html("　可分配总分：" + score + "分");
+			flag = true;
+			$('#score').val(score);
 		}
 		// 显示成员信息
 		if (latestInfo['actors'] != null) {

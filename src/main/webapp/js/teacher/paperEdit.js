@@ -3,9 +3,9 @@ $(function () {
     init();
 
 });
-var flag = true;
 function init() {
     $('#reply-box').hide();
+    $('#score').attr('disabled', 'disabled');
     if (status.indexOf('Refuse') >= 0) {
         $('#reply').show();
         $('#reply-display').show();
@@ -45,7 +45,7 @@ function getScore() {
             $("#score").val(data["sum"]);
             console.log($("#score").val());
             console.log(data["sum"]);
-            $("#showSum").html("　可分配总分：" + data["sum"] + "分");
+            //$("#showSum").html("　可分配总分：" + data["sum"] + "分");
             errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
             flag = true;
         }
@@ -60,7 +60,7 @@ function save() {
     var jsonData = getFormData('paper');
     workflow.execute(userName, taskId, jsonData).success(function () {
         afterSuccess("保存成功！");
-        window.location.href = '/process-paper-all';
+        window.location.href = '/index/process/paper/all';
     });
     console.log("haha");
 }

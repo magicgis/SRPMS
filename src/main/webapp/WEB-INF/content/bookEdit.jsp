@@ -198,7 +198,7 @@
                                                 <div class="col-sm-8">
                                                     <input type="text" name="sumWord" id="sumWord"
                                                            value="${book.sumWord}"
-                                                           placeholder="" class="col-xs-12"/>
+                                                           placeholder="单位：万字" class="col-xs-12"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -501,17 +501,17 @@
         if (filesData != undefined && filesData != null) {
             showFiles(filesData);
         }
-        if (awardedData != undefined && awardedData != null) {
-            scanAwardInfo(awardedData);
-        }
+//        if (awardedData != undefined && awardedData != null) {
+//            scanAwardInfo(awardedData);
+//        }
     }
     //监听 添加成员
     $('.addActor').click(function () {
         addActor();
     });
-    $('#selectAward').click(function(){
-        addAwarded();
-    });
+//    $('#selectAward').click(function(){
+//        addAwarded();
+//    });
 
 //    //监听 分配分数
 //    $('.getScore').click(function () {

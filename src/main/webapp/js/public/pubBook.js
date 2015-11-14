@@ -91,7 +91,7 @@ function getActorsData() {
 }
 function getPubType() {//awardtype
     var $bkReward=$('#bkReward').selectize({ // 初始化 鉴定等级
-        valueField: 'id',
+        valueField: 'value',
         labelField: 'value',
         options: [
             {"id": "0", "value": "否"},
@@ -147,7 +147,7 @@ function unEditTableBook() {
     $('.delFiles').hide();
     $('#actorTable').bootstrapTable('hideColumn', 'operate');
     $('#upload').hide();
-    $('.delAwardeds').hide();
+    //$('.delAwardeds').hide();
 }
 // 表单可编辑
 function editTableBook() {
@@ -186,44 +186,44 @@ function getApprovalBy(data) {
     return keyStr;
 }
 //增加已获奖著作
-var awardedData;
-if (awardedData == null) {
-    awardedData = {};
-}
-function awardedInfo(){
-    $('#BookAward').on('check.bs.table',function(e, row){
-        awardedData[row["id"]]=row["name"];
-    });
-    $('#BookAward').on('uncheck-all.bs.table',function(e, row){
-        for (var key in awardedData) {
-            if (awardedData[key] == row["id"]) {
-                delete awardedData[key];
-            }
-        }
-    });
-    scanAwardInfo(awardedData);
-}
-function scanAwardInfo(awardedData){
-    for (var key in awardedData) {
-        var bookName = awardedData[key]['name'];
-        $('#downFiles').prepend('<li id="li' + fileId + '" class="dd-item"> ' +
-        '<div class="dd-handle">' +
-        '<font size="1">《' + bookName + '》</font>&nbsp;&nbsp;&nbsp;&nbsp;' +
-        '<div class="pull-right action-buttons">' +
-        '<a class="fd red delAwardeds" style="cursor:pointer" onclick="delAwarded(\'' + key + '\')" >' +
-        '<i class="ace-icon fa fa-trash-o bigger-140"></i>' +
-        '</a>' +
-        '</div>' +
-        '</div> ' +
-        '</li>');
-    }
-}
-function delAwarded(fileId) {
-    /*    $("#li" + fileId).remove();*/
-    for (var key in awardedData) {
-        if (awardedData[key] == fileId) {
-            delete awardedData[key];
-        }
-    }
-    $("#li" + fileId).remove();
-}
+//var awardedData;
+//if (awardedData == null) {
+//    awardedData = {};
+//}
+//function awardedInfo(){
+//    $('#BookAward').on('check.bs.table',function(e, row){
+//        awardedData[row["id"]]=row["name"];
+//    });
+//    $('#BookAward').on('uncheck-all.bs.table',function(e, row){
+//        for (var key in awardedData) {
+//            if (awardedData[key] == row["id"]) {
+//                delete awardedData[key];
+//            }
+//        }
+//    });
+//    scanAwardInfo(awardedData);
+//}
+//function scanAwardInfo(awardedData){
+//    for (var key in awardedData) {
+//        var bookName = awardedData[key]['name'];
+//        $('#downFiles').prepend('<li id="li' + fileId + '" class="dd-item"> ' +
+//        '<div class="dd-handle">' +
+//        '<font size="1">《' + bookName + '》</font>&nbsp;&nbsp;&nbsp;&nbsp;' +
+//        '<div class="pull-right action-buttons">' +
+//        '<a class="fd red delAwardeds" style="cursor:pointer" onclick="delAwarded(\'' + key + '\')" >' +
+//        '<i class="ace-icon fa fa-trash-o bigger-140"></i>' +
+//        '</a>' +
+//        '</div>' +
+//        '</div> ' +
+//        '</li>');
+//    }
+//}
+//function delAwarded(fileId) {
+//    /*    $("#li" + fileId).remove();*/
+//    for (var key in awardedData) {
+//        if (awardedData[key] == fileId) {
+//            delete awardedData[key];
+//        }
+//    }
+//    $("#li" + fileId).remove();
+//}
