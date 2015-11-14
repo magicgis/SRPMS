@@ -249,4 +249,12 @@ public class StandardBase {
         return weight;
     }
 
+    public double totalScore(List<Map> actors){
+        double sum = 0 ;
+        for (Map actor : actors){
+            sum += Double.parseDouble((String) actor.get("score"));
+        }
+        return sum;
+    }
+
 }//the end of the class

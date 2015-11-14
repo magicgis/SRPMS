@@ -73,27 +73,3 @@ function DisplayForm($type, ItemValue) {
         $type[0].selectize.setValue(ItemValue);
     }
 }
-
-function tableTranMags(res) {
-    var ans = res;
-    $.each(res["rows"],function(index,value){
-        /*取出variableMap*/
-        var maps=value['variableMap'];
-        /*把string放入*/
-        for(var key in maps) {
-            if (typeof(maps[key]) == 'string'||typeof(maps[key]) == 'object') {
-                ans["rows"][index][key] = maps[key];
-            }
-        }
-        /*拿出最新的args*/
-        var temp=maps[getSubmission(maps)];
-        /*瞎写都能生效……*/
-        if(temp!=undefined||temp!=null){
-            $.each(temp,function(key,value){
-                ans["rows"][index][key]=temp[key];
-            });
-        }
-    });
-    //console.log(ans);
-    return ans;
-}

@@ -1,6 +1,15 @@
+
+//参与类型切换
+$('.level').click(function () {
+    $('#levelOption').html(this.children[0].text + '<span class="ace-icon fa fa-caret-down icon-on-right"></span>');
+    level = this.id;
+    allTable.bootstrapTable("refresh", {url: entityApiUrl(entityType)});
+    changeUrl();
+});
+
 function entityApiUrl(type) {
     entityType = type;
-    return "/api/" + type + "/all";
+    return "/api/entity/" + userName + "/" + type + "/" + level;
 }
 
 //todo 切换实体视图
@@ -48,13 +57,7 @@ function switchEntityView(viewType) {
                 }, {
                     field: 'operator',
                     align: 'center',
-                    title: '操作',
-                    formatter: view
-                }, {
-                    field: 'process',
-                    title: '流程状态',
-                    sortable: true,
-                    formatter: 'processTran'
+                    title: '操作'
                 }]
             });
             break;
@@ -74,19 +77,16 @@ function switchEntityView(viewType) {
                     field: 'name',
                     title: '专利名称',
                     sortable: true
-                }, {
-                    field: 'state',
-                    title: '专利类型',
-                    sortable: true
-                }, {
-                    field: 'argMap.Main-ActorName',
-                    title: '负责人'
-                }, {
-                    field: 'process',
-                    title: '流程状态',
-                    sortable: true,
-                    formatter: 'processTran'
-                }]
+                },
+                    {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'process',
+                        title: '流程状态',
+                        sortable: true,
+                        formatter: 'processTran'
+                    }]
             });
             break;
         case 'paperEntity': //todo
@@ -132,13 +132,13 @@ function switchEntityView(viewType) {
                 sidePagination: "server",
                 flat:true,
                 columns: [{
-                    radio:true
-                },{
+                    radio: true
+                }, {
                     field: 'id',
                     title: 'id',
                     sortable: true,
-                    visible:false
-                },{
+                    visible: false
+                }, {
                     field:'name',
                     title:'著作名称',
                     sortable:true
@@ -162,7 +162,12 @@ function switchEntityView(viewType) {
                     field:'publisher',
                     title:'出版社',
                     sortable:true
-                },{
+                }, {
+                    field: 'Status',
+                    title: '状态',
+                    sortable: true,
+                    formatter: 'statusTran'
+                }, {
                     field: 'process',
                     title: '流程状态',
                     sortable: true,
@@ -204,7 +209,12 @@ function switchEntityView(viewType) {
                 flat:true,
                 columns: [{
                     radio: true
-                },{
+                }, {
+                    field: 'id',
+                    title: 'id',
+                    sortable: true,
+                    visible: false
+                }, {
                     field: 'id',
                     title: 'id',
                     sortable: true,
@@ -226,10 +236,10 @@ function switchEntityView(viewType) {
                     title: '获奖时间',
                     sortable: true
                 }, {
-                    field:'Status',
-                    title:'状态',
-                    sortable:true,
-                    formatter:'statusTran'
+                    field: 'Status',
+                    title: '状态',
+                    sortable: true,
+                    formatter: 'statusTran'
                 }, {
                     field: 'process',
                     title: '流程状态',
@@ -278,16 +288,16 @@ function switchEntityView(viewType) {
                     sortable: true,
                     visible: false
                 }, {
-                    field:'name',
+                    field:'foodName',
                     title:'食品名称',
                     sortable: true
-                }, {
-                    field: 'argMap.Main-ActorName',
-                    title: '负责人'
-                }, {
-                    field:'date',
+                },{
+                    field:'newFoodDate',
                     title:'获批时间',
                     sortable: true
+                } ,{
+                    field: 'argMap.Main-ActorName',
+                    title: '负责人'
                 },{
                     field: 'process',
                     title: '流程状态',
@@ -310,10 +320,10 @@ function switchEntityView(viewType) {
                     visible: false
                 }, {
                     field:'name',
-                    title:'器械名称',
+                    title:'食品名称',
                     sortable: true
                 },{
-                    field:'date',
+                    field:'newInstruDate',
                     title:'获批时间',
                     sortable: true
                 } ,{
@@ -389,7 +399,7 @@ function switchEntityView(viewType) {
                 }]
             });
             break;
-        case 'allEntity': //todo
+        case 'allEntity':
             allTable.bootstrapTable('destroy').bootstrapTable({
                 url: apiUrl('all'),
                 sidePagination: "server",
@@ -419,11 +429,14 @@ function switchEntityView(viewType) {
                     field: 'operator',
                     align: 'center',
                     title: '操作',
-                    width: 75
+                    width: 75,
+                    formatter: view
                 }],
                 responseHandler: tableTrans
             });
             break;
+
     }
     changeUrl()
 }
+

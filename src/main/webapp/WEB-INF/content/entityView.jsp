@@ -314,6 +314,12 @@
 </script>
 
 <c:choose>
+    <c:when test="${sessionScope.level == '1'}">
+        <script src="<c:url value="/js/teacher/entity.js"/>"></script>
+    </c:when>
+    <c:when test="${sessionScope.level == '2'}">
+        <script src="<c:url value="/js/college/entity.js"/>"></script>
+    </c:when>
     <c:when test="${sessionScope.level == '3'}">
         <script src="<c:url value="/js/school/entity.js"/>"></script>
     </c:when>

@@ -14,11 +14,9 @@ public class project extends StandardBase implements StandardCheckInf {
     final private Map KEY_ROLE = new HashMap() {{
         put("firstActor", "负责人");
     }};
-    final private String[] PAGE_STRUCT
-            = {"name", "pubDate", "newspaper.name", "numWord", "newspaper.standard.id", "newspaper.period"};
     final private Map PAGE_ELEM_NAME = new HashMap() {{
-        put("name", "论文名称");
-        put("pubDate", "发表时间");
+        put("name", "项目名称");
+        put("attr", "项目属性");
         put("newspaper.name", "报刊名称");
         put("newspaper.standard.id", "报刊级别");
         put("newspaper.period", "发表时间");

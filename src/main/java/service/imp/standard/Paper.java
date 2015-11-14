@@ -179,11 +179,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
             List<Map> authors = getActors(map);
 //            Double sum = Double.parseDouble((String) validInfo.get("sum"));
             double sum = (double) validInfo.get("sum");
-            for (Map author : authors) {
-                double temp = Double.parseDouble((String) author.get("score"));
-                sum -= temp;
-            }
-            if (sum < 0) {
+            if (super.totalScore(actors) - sum < 0) {
                 validInfo.put(MESSAGE, "个人分数分配总和超出总分！");
                 return validInfo;
             }
