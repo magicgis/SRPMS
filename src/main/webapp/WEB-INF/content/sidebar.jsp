@@ -346,7 +346,7 @@
             </c:when>
             <c:when test="${sessionScope.level == '2'|| sessionScope.level == '3'}">
                 <li class="">
-                    <a>
+                    <a href="<c:url value="/user"/>">
                         <i class="menu-icon glyphicon glyphicon-user"></i>
                         <span class="menu-text">教师信息 </span>
                     </a>

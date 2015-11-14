@@ -590,22 +590,6 @@
             }
         }
     });
-//    $('#isAppr').change(function(){
-//        var setProject=$('#isAppr').val();
-//        if(setProject=='1'){
-//            $('.standard0').hide();
-//            $('.standard1').show();
-//            var projectSet="项目立项";
-//            getStdList(projectSet);
-//            standardSelects1(StdList,projtypeList);
-//        }else if(setProject=='0'){
-//            $('.standard0').show();
-//            $('.standard1').hide();
-//            var projectSet="项目未获立项";
-//            getStdList(projectSet);
-//            standardSelects0(StdList);
-//        }
-//    });
     allSections();
     getDept();//选择框
     upToLoadFile();//文件上传
@@ -620,13 +604,11 @@
         addOptionSelectize($dept, [dept]);
         DisplayForm($dept, dept['id'], 0);
         DisplayForm($attr, attr,0);
-//        DisplayForm($isAppr, isAppr,0);
     }
     if(!isNull(standard)){
 
         if(standard['type']=='项目立项'){
             DisplayForm($isAppr, "1",0);
-//            $('#isAppr').val('1');
             $('.standard0').hide();
             $('.standard1').show();
             var projectSet="项目立项";

@@ -128,11 +128,11 @@ function getPubType() {//awardtype
             $awardtype[0].selectize.addOption(awardtypes);
         }
     });
-    //$('#awarDtype').blur(function(){
-    //    if($('#awarDtype').val()==""){
-    //        messageModal("请选择出版类型！");
-    //    }
-    //});
+    $('#awarDtype').focus(function(){
+        if($('#awarDtype').val()==""){
+            messageModal("请选择出版类型！");
+        }
+    });
 }
 // 表单不可编辑
 function unEditTableBook() {

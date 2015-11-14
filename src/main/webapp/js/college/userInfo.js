@@ -2,55 +2,8 @@
  * Created by huyuanyuan555 on 2015/4/26.
  */
 
-$(function () {
-    $('#UserTable').bootstrapTable({
-        url: '/api/staff/all',
-        flat: true,
-        sidePagination: "server",
-        columns: [{
-            checkbox: true,
-            visible: true
-        }, {
-            field: 'id',
-            title: 'id',
-            sortable: true,
-            visible: false
-        }, {
-            field: 'name',
-            title: '姓名',
-            sortable: true
-        }, {
-            field: 'idCard',
-            title: '身份证号',
-            sortable: true
-            // formatter:"typeTran"
-        }, {
-            field: 'srank',
-            title: '职称',
-            sortable: true
-        }, {
-            field: 'position',
-            title: '岗位',
-            sortable: true
-        }, {
-            field: 'edu',
-            title: '学历',
-            sortable: true
-        }, {
-            field: 'degree',
-            title: '学位',
-            sortable: true
-        }, {
-            field: 'user.privilege',
-            title: '角色',
-            sortable: true
-        }]
-    });
-    allSelects();
-});
-
 //修改教师信息
-$('#editUser').click(function () {
+function editUser () {
     var row = $('#UserTable').bootstrapTable('getSelections');
     if (row.length != 1) {
         BootstrapDialog.show({
@@ -78,20 +31,11 @@ $('#editUser').click(function () {
         restrict: false
     });
     userFormShow();
-});
+};
 
-//重置用户密码
-$('#resetPwd').click(function () {
-    rePassword();
-});
-
-//返回到教师信息主页面
-$('#canEdit').click(function () {
-    showTable();
-});
 //*********************************************样式显示********************************
 //保存修改后的数据
-$('#save').click(function () {
+function saveEdit() {
     var staff = $('#staffInfo').serializeJSON();
     var id = $('#staffId').val();
     $.ajax({
@@ -113,7 +57,7 @@ $('#save').click(function () {
             failInfo('信息修改失败！');
         }
     });
-});
+};
 
 //重置密码
 function rePassword() {

@@ -3,19 +3,19 @@
  */
 function allSelects() {
     //学院
-    $('#colName').selectize({
-        valueField: 'id',
-        labelField: 'value',
-        searchField: 'value',
-        options: [],
-        maxItems: 1,
-        create: false,
-        preload: true,
-        load: function (query, callback) {
-            var queryItem = "院系";
-            realTimeQuery(query, queryItem, callback);
-        }
-    });
+    //$('#colName').selectize({
+    //    valueField: 'id',
+    //    labelField: 'value',
+    //    searchField: 'value',
+    //    options: [],
+    //    maxItems: 1,
+    //    create: false,
+    //    preload: true,
+    //    load: function (query, callback) {
+    //        var queryItem = "院系";
+    //        realTimeQuery(query, queryItem, callback);
+    //    }
+    //});
     //部门
     $('#deptName').selectize({
         valueField: 'id',
@@ -118,21 +118,14 @@ function realTimeQuery(query, queryItem, callback) {
 function selectFill(staff) {
     //定义一个条件数组函数
     var termArray = {
-        'colName': staff['col.id'],
-        'deptName': staff['dept.id'],
-        'rankName': staff['rank.id'],
-        'role': staff['user.privilege'],
-        'edu': staff['edu'],
-        'degree': staff['degree'],
-        'position': staff['position']
+        'deptName': staff['staff.dept.id'],
+        'rankName': staff['staff.rank'],
+        'degree': staff['staff.degree'],
+        'position': staff['staff.position']
     };
     for (var key in termArray) {
-        var $type = $('#' + key);
-        if (termArray[key] == null || termArray[key] == "") {
-            $type.selectize()[0].selectize.setValue("");
-        } else {
-            $type.selectize()[0].selectize.setValue(termArray[key]);
-        }
+        var $type = $('#' + key).selectize();
+        DisplayForm($type, termArray[key], 1);
     }
 }
 //启用或禁用
@@ -182,15 +175,20 @@ function disableOrEnableUser(id, ableType, TipInfo) {
     });
 }
 //显示教师信息
-function userFormShow() {
-    $('#userTable-box').addClass('collapsed');
-    $('#user-box').removeClass('collapsed');
+function enableditForm() {
+    $('form input').removeAttr("disabled", "disabled");
+    var elementlist = document.querySelectorAll('.selectized');
+    $.each(elementlist, function(index, value) {
+        enableSelectize($(value).selectize());
+    });
 }
-//显示教师信息列表
-function showTable() {
-    $('#UserTable').bootstrapTable('refresh', {silent: true});
-    $('#userTable-box').removeClass('collapsed');
-    $('#user-box').addClass('collapsed');
+function uneditableForm() {
+    $('form input').attr("disabled", "disabled");
+    $('form select').attr("disabled", "disabled");
+    var elementlist = document.querySelectorAll('.selectized');
+    $.each(elementlist, function(index, value) {
+        disableSelectize($(value).selectize());
+    });//select
 }
 function failInfo(info) {
     BootstrapDialog.show({
@@ -206,4 +204,22 @@ function successInfo(info) {
         type: BootstrapDialog.TYPE_SUCCESS,
         message: info
     });
+}
+function disableSelectize($type) {
+    $type[0].selectize.disable();
+}
+function enableSelectize($type) {
+    $type[0].selectize.enable();
+}
+function DisplayForm($type, ItemValue, flag) {
+    if (!isNull(ItemValue)) {
+        $type[0].selectize.setValue("");
+    } else if (flag == '0') {
+        $type[0].selectize.setValue(ItemValue);
+    } else {
+        $type[0].selectize.createItem(ItemValue);
+    }
+}
+function isNull(str) {
+    return (str == '' || str == undefined || str == null || str == {} || jQuery.isEmptyObject(str));
 }

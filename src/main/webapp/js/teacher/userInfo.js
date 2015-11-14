@@ -11,16 +11,10 @@ $(function () {
 
 //账号管理
 $('#editInfo').click(function () {
-    formShow();
-    $('#staId').focus();
-});
-$('#save').click(function () {
-    save();
+    $('#account').show();
+    $('#pwd').focus();
 });
 
-$('#cancel').click(function () {
-    cancel();
-});
 //表单填充信息
 function staffInfoFill() {
     $.ajax({
@@ -50,7 +44,7 @@ function dataTrans(data) {
     return currUser;
 }
 //保存修改的账号信息
-function save() {
+function saveEdit() {
     var accountInfo = $('#account').serializeJSON();
     accountInfo['user'] = $('#id').val();
     console.log(accountInfo);
@@ -70,14 +64,4 @@ function save() {
 
         }
     });
-}
-
-
-//取消按钮功能
-function cancel() {
-    $('#account').hide();
-}
-
-function formShow() {
-    $('#account').show();
 }

@@ -83,7 +83,7 @@
                                            data-single-select="true"
                                            data-click-to-select="true">
                                     </table>
-                                    <div id="EntityToolbar">
+                                    <div id="EntityToolbar" class="bootstrap-table">
                                         <c:choose>
                                             <c:when test="${sessionScope.level == '3'}">
                                                 <form class="form-horizontal" role="form">
