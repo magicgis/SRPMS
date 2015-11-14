@@ -75,6 +75,12 @@ public class Index {
         return "redirect:login";
     }
 
+    @RequestMapping(value = {"user"}, method = RequestMethod.GET)
+    public String userInfo(Model model, HttpServletRequest request, HttpSession session) {
+//        User user = (User) session.getAttribute("user");
+        return "user";
+    }
+
     @RequestMapping(value = {"user/new"}, method = RequestMethod.GET)
     public String userInfo(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, HttpSession session) {
         return "userEdit";
