@@ -31,6 +31,8 @@ public class AchTran {
     private Standard standard;
 
 
+
+
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -109,7 +111,7 @@ public class AchTran {
         return arg;
     }
 
-    public void setArgs(String arg) {
+    public void setArg(String arg) {
         this.arg = arg;
     }
 
