@@ -279,22 +279,37 @@ function processTran(arg) {
     return t[arg];
 }
 
+//function typeTran(value) {
+//    var termArray = {
+//        "paper": "论文",
+//        "book": "著作",
+//        "project": "项目",
+//        "patent":"专利",
+//        "medicine":"新药",
+//        "food":"功能性食品",
+//        "instrument":"医疗器械",
+//        "other":"其他"
+//    };
+//    if(isNull(value)){
+//        return '';
+//    }
+//    return termArray[value];
+//}
 
-function typeTran(value) {
-    var termArray = {
-        "paper": "论文",
-        "book": "著作",
-        "project": "项目",
-        "patent":"专利",
-        "medicine":"新药",
-        "food":"功能性食品",
-        "instrument":"医疗器械",
-        "other":"其他"
-    };
-    if(isNull(value)){
+function paperTypeTran(value) {
+    if (value == 'conferPaper') {
+        return '会议论文';
+    } else if (value == 'magPaper') {
+        return '期刊论文';
+    } else if (value == 'newsPaper') {
+        return '报刊论文';
+    } else {
         return '';
     }
-    return termArray[value];
+}
+
+function sumWordTran(value) {
+    return value + '万字';
 }
 
 // 成员翻译
@@ -713,6 +728,7 @@ var count = 0;
 var time;
 function errorMsg(msg) {
     $(".getScore").attr("disabled", "disabled");
+    $("#getScore").attr("disabled", "disabled");
     $('#msg_alert').empty();
     $('<div class="alert alert-block alert-danger" id="msg_info"></div>').appendTo('#msg_alert');
     $('<button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times">' +
@@ -735,6 +751,7 @@ function clearClick() {
     window.clearInterval(time);  //结束setInterval循环
     window.clearInterval(checktime);
     $(".getScore").removeAttr("disabled");
+    $("#getScore").removeAttr("disabled");
 }
 
 jQuery(function ($) {
@@ -838,7 +855,7 @@ function init(entity,all,replyByDep,level) {
 
             uneditableForm();
             hideUnitOperate();
-            $('#score').attr('disabled', 'disabled');
+            $('#totalScore').attr('disabled', 'disabled');
             $('.removeActor').hide();
             $('#upload').hide();
             $('.delFiles').hide();
@@ -915,7 +932,7 @@ function init(entity,all,replyByDep,level) {
             hideUnitOperate();
             $('#upload').hide();
             $('.getScore').hide();
-            $('#score').attr('disabled', 'disabled');
+            $('#totalScore').attr('disabled', 'disabled');
             $('.delFiles').hide();
             $('.onEdit').hide();
             $('.onDel').hide();
@@ -960,7 +977,7 @@ function init(entity,all,replyByDep,level) {
                 case 311:
                     console.log('311');
                     $('.getScore').hide();
-                    $('#score').attr('disabled', 'disabled');
+                    $('#totalScore').attr('disabled', 'disabled');
 
                     $('#reply').show();
                     $('#reply-display').show();
@@ -972,7 +989,7 @@ function init(entity,all,replyByDep,level) {
                 case 301:
                     console.log('301');
                     $('.getScore').hide();
-                    $('#score').attr('disabled', 'disabled');
+                    $('#totalScore').attr('disabled', 'disabled');
 
                     $('#reply').show();
                     $('#reply-box').hide();
@@ -1141,7 +1158,7 @@ function getScore(type) {
 //    }
 //}
 
-//
+
 //window.operateEvents = {
 //    'click .removeActor': function (e, value, row, index) {
 //        $('#actorTable').bootstrapTable('remove', {

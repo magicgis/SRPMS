@@ -116,9 +116,9 @@ function processView() {
                         field: 'variableMap.WF_0_Submission.name',
                         title: '论文名称'
                     }, {
-                        field: 'variableMap.type',
+                        field: 'variableMap.WF_0_Submission.type',
                         title: '论文类别',
-                        formatter: "typeTran"
+                        formatter: "paperTypeTran"
                     }, {
                         field: 'variableMap.WF_0_Submission.pubDate',
                         title: '发表日期'
@@ -164,7 +164,8 @@ function processView() {
                     }, {
                         field: 'sumWord',
                         title: '著作总字数',
-                        sortable: true
+                        sortable: true,
+                        formatter: 'sumWordTran'
                     }, {
                         field: 'isAward',
                         title: '著作获奖情况',
@@ -203,13 +204,14 @@ function processView() {
                         visible: false
                     }, {
                         field: 'name',
-                        title: '成果名称',
+                        title: '成果鉴定名称',
                         sortable: true
                     }, {
-                        field: 'achType',
-                        title: '成果类型',
-                        sortable: true,
-                        formatter: "typeTran"
+                        field: 'standard.infoMap.jdprop',
+                        title:'鉴定类别'
+                    }, {
+                        field: 'standard.infoMap.jdtype',
+                        title:'鉴定等级'
                     }, {
                         field: 'certifyUnit',
                         title: '鉴定单位',
@@ -249,13 +251,8 @@ function processView() {
                         visible: false
                     }, {
                         field: 'name',
-                        title: '成果名称',
+                        title: '成果获奖名称',
                         sortable: true
-                    }, {
-                        field: 'achType',
-                        title: '成果类型',
-                        sortable: true,
-                        formatter: 'typeTran'
                     }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
@@ -288,13 +285,8 @@ function processView() {
                         visible: false
                     }, {
                         field: 'name',
-                        title: '成果名称',
+                        title: '成果转化名称',
                         sortable: true
-                    }, {
-                        field: 'achType',
-                        title: '成果类型',
-                        sortable: true,
-                        formatter: "typeTran"
                     }, {
                         field: 'tranUnit',
                         title: '转让单位',
@@ -651,7 +643,7 @@ function entityView() {
                     }, {
                         field: 'type',
                         title: '论文类别',
-                        formatter: "typeTran"
+                        formatter: "paperTypeTran"
                     }, {
                         field: 'pubDate',
                         title: '发表日期'
@@ -697,7 +689,8 @@ function entityView() {
                     }, {
                         field: 'sumWord',
                         title: '著作总字数',
-                        sortable: true
+                        sortable: true,
+                        formatter: 'sumWordTran'
                     }, {
                         field: 'bkReward',
                         title: '著作获奖情况',
@@ -732,7 +725,21 @@ function entityView() {
                         visible: false
                     }, {
                         field: 'name',
-                        title: '成果名称',
+                        title: '成果鉴定名称',
+                        sortable: true
+                    }, {
+                        field: 'standard.infoMap.jdprop',
+                        title:'鉴定类别'
+                    }, {
+                        field: 'standard.infoMap.jdtype',
+                        title:'鉴定等级'
+                    }, {
+                        field: 'certifyUnit',
+                        title: '鉴定单位',
+                        sortable: 'true'
+                    }, {
+                        field: 'date',
+                        title: '鉴定日期',
                         sortable: true
                     }, {
                         field: 'argMap.Main-ActorName',
@@ -760,13 +767,8 @@ function entityView() {
                         visible: false
                     }, {
                         field: 'name',
-                        title: '成果名称',
+                        title: '成果获奖名称',
                         sortable: true
-                    }, {
-                        field: 'achType',
-                        title: '成果类型',
-                        sortable: true,
-                        formatter: 'typeTran'
                     }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
@@ -802,7 +804,7 @@ function entityView() {
                         visible: false
                     }, {
                         field: 'name',
-                        title: '成果名称',
+                        title: '成果转化名称',
                         sortable: true
                     }, {
                         field: 'argMap.Main-ActorName',

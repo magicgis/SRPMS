@@ -664,13 +664,9 @@
 					dept = data;
 					addOptionSelectize($('#dept').selectize(), [dept]);
 					DisplayForm($('#dept').selectize(), dept['id'], 0);
-					console.log(dept);
 				}
 			});
 		}
-
-//		if(!isNull(dept)){
-//		}
 
 		//  期刊选择框
 		var $magId = $("#magId").selectize();
@@ -729,7 +725,6 @@
 			flag = false;
 		} else {
 			flag = true;
-//			$('#score').val(score);
 		}
 		// 显示成员信息
 		if (latestInfo['actors'] != null) {

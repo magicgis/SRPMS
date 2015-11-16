@@ -1,17 +1,17 @@
 var $actorTable = $('#actorTable');
 
 // 类型翻译
-function typeTran(value, row) {
-    if (value == 'conferPaper') {
-        return '会议论文';
-    } else if (value == 'magPaper') {
-        return '期刊论文';
-    } else if (value == 'newsPaper') {
-        return '报刊论文';
-    } else {
-        return '';
-    }
-}
+//function typeTran(value, row) {
+//    if (value == 'conferPaper') {
+//        return '会议论文';
+//    } else if (value == 'magPaper') {
+//        return '期刊论文';
+//    } else if (value == 'newsPaper') {
+//        return '报刊论文';
+//    } else {
+//        return '';
+//    }
+//}
 // 显示Mag、Confer还是newsPaper
 function magOrConfer() {
     if ($('#type').val() == "conferPaper") {
@@ -106,7 +106,7 @@ function subActorInfo(index,flag) {
     var units = $('#units').val();
     var role = $('#role').val();
     var rank = $('#rank').val();
-    var mark = (marks == "" ? '0.00' : (marks / units.length).toFixed(2));
+    var mark = (marks == "" ? '0' : (marks / units.length).toFixed(2));
     actorTemp = getActorsData();
     $.each(units, function (i, value) {
         actorTemp.push({"staff.id": id, "rank": rank, "staff.name": actor, "role": role, "score": mark, "unit": value});
