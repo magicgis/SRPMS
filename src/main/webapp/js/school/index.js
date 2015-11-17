@@ -2,7 +2,7 @@ var level = 'all';
 var objType;
 
 
-//申报流程相关
+/*申报流程相关开始*/
 function processUrl() {
     return "/api/workflow/order/" + userName + "/" + objType + "/" + level;
 }
@@ -208,10 +208,10 @@ function processView() {
                         sortable: true
                     }, {
                         field: 'standard.infoMap.jdprop',
-                        title:'鉴定类别'
+                        title: '鉴定类别'
                     }, {
                         field: 'standard.infoMap.jdtype',
-                        title:'鉴定等级'
+                        title: '鉴定等级'
                     }, {
                         field: 'certifyUnit',
                         title: '鉴定单位',
@@ -485,7 +485,6 @@ function processView() {
     }
 }
 
-
 var processStates = {
     "process": {
         url: "process",
@@ -533,8 +532,9 @@ var processStates = {
         }
     }
 };
+/*申报流程相关结束*/
 
-// 实体相关
+/*实体相关开始*/
 function entityUrl() {
     return "/api/" + objType + "/all";
 }
@@ -734,10 +734,10 @@ function entityView() {
                         sortable: true
                     }, {
                         field: 'standard.infoMap.jdprop',
-                        title:'鉴定类别'
+                        title: '鉴定类别'
                     }, {
                         field: 'standard.infoMap.jdtype',
-                        title:'鉴定等级'
+                        title: '鉴定等级'
                     }, {
                         field: 'certifyUnit',
                         title: '鉴定单位',
@@ -1040,10 +1040,11 @@ var entityStates = {
         }
     }
 };
+/*实体相关结束*/
 
+/*根据用户搜索开始*/
 var viewUser;
 
-// 实体相关
 function searchUrl() {
     return "/api/entity/" + viewUser + "/" + objType + "/all";
 }
@@ -1510,7 +1511,7 @@ var searchStates = {
                 create: false,
                 maxItems: 1,
                 render: {
-                    option: function(item, escape) {
+                    option: function (item, escape) {
                         return '<div>' +
                             '<span class="name">' + escape(item.name) + '</span>' +
                             '&nbsp;' + '&nbsp;' +
@@ -1520,7 +1521,7 @@ var searchStates = {
                             '</div>';
                     }
                 },
-                load: function(query, callback) {
+                load: function (query, callback) {
                     //if(!query.length) return callback(student);
                     $.ajax({
                         url: '/api/staff/json',
@@ -1529,11 +1530,11 @@ var searchStates = {
                         data: {
                             query: query
                         },
-                        error: function() {
+                        error: function () {
                             callback();
                         },
-                        success: function(res) {
-                            if(res==undefined||res==null){
+                        success: function (res) {
+                            if (res == undefined || res == null) {
                                 return;
                             }
                             callback(res);
@@ -1573,7 +1574,9 @@ var searchStates = {
 
 };
 
+/*根据用户搜索结束*/
 
+/*期刊新增开始*/
 var magStates = {
     "mag": {
         url: "mag",
@@ -1631,6 +1634,248 @@ var magStates = {
         }
     }
 };
+/*期刊新增结束*/
+
+/*用户管理开始*/
+var userStates = {
+    "user": {
+        url: "user",
+        enter: function () {
+            $('#UserToolbar').show();
+
+            viewTable.bootstrapTable('destroy').bootstrapTable({
+                url: '/api/staff/all',
+                sidePagination: "server",
+                toolbar: '#UserToolbar',
+                flat: "true",
+                columns: [
+                    {
+                        checkbox: true,
+                        visible: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '姓名',
+                        sortable: true
+                    }, {
+                        field: 'idCard',
+                        title: '身份证号',
+                        sortable: true
+                    }, {
+                        field: 'rank.value',
+                        title: '职称',
+                        sortable: true
+                    }, {
+                        field: 'position',
+                        title: '岗位',
+                        sortable: true
+                    }, {
+                        field: 'edu',
+                        title: '学历',
+                        sortable: true
+                    }, {
+                        field: 'degree',
+                        title: '学位',
+                        sortable: true
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: disableOrEnable,
+                        events: operateEvents
+                    }]
+            });
+
+            //viewTable.on('click-row.bs.table', function (e, row) {
+            //    window.location.href = '/user/' + row["id"];
+            //});
+        },
+        leave: function () {
+            $('#UserToolbar').hide();
+        }
+    }
+};
+/*用户管理结束*/
+
+/*基础表管理开始*/
+var sysBaseStates = {
+    "sysBase": {
+        url: "sysBase",
+        enter: function () {
+            $('#SysBaseToolbar').show();
+
+            viewTable.bootstrapTable('destroy').bootstrapTable({
+                url: '/api/baseinfo/all',
+                toolbar: '#SysBaseToolbar',
+                sidePagination: "server",
+                columns: [{
+                    radio: true,
+                    visible: true
+                }, {
+                    field: 'id',
+                    title: 'id',
+                    visible: false
+                }, {
+                    field: 'tableName',
+                    title: '类型',
+                    align: 'center',
+                    sortable: true
+                }, {
+                    field: 'value',
+                    title: '值',
+                    sortable: true
+                }]
+            });
+            //添加
+            $("#add").click(function () {
+                addItem();
+            });
+            $("#edit").click(function () {
+                editItem();
+            });
+            $("#delete").click(function () {
+                delItem();
+            });
+
+        },
+        leave: function () {
+            $('#SysBaseToolbar').hide();
+        }
+    }
+};
+function addItem() {
+    BootstrapDialog.show({
+        type: BootstrapDialog.TYPE_PRIMARY,
+        message: function (dialog) {
+            var $message = $('<div></div>');
+            var pageToLoad = dialog.getData('pageToLoad');
+            $message.load(pageToLoad);
+
+            return $message;
+        },
+        title: "成员信息",
+        data: {
+            'pageToLoad': '/dialog/baseInfo.html'
+        },
+        buttons: [{
+            id: 'btn-add',
+            icon: 'glyphicon glyphicon-check',
+            label: '保存(S)',
+            cssClass: 'btn-info',
+            hotkey: 83,
+            autospin: false,
+            action: function (dialogRef) {
+                if (!isFull()) {
+                    BootstrapDialog.show({
+                        title: '通知',
+                        type: BootstrapDialog.TYPE_INFO,
+                        message: '请将信息填写完整。'
+                    });
+                    return;
+                }
+                var JsonData = viewTable.serializeJSON();
+                saveOrUpdate('/api/baseinfo/new', JSON.stringify(JsonData), 'post').success(function () {
+                    $("#baseInfoTable").bootstrapTable('refresh');
+                    dialogRef.close();
+                });
+            }
+        }]
+    });
+}
+
+function editItem() {
+    var row = viewTable.bootstrapTable('getSelections');
+    if (row.length != 1) {
+        BootstrapDialog.show({
+            title: '温馨提示：',
+            message: '请选择一条要编辑的数据！'
+        });
+        return;
+    }
+    BootstrapDialog.show({
+        type: BootstrapDialog.TYPE_PRIMARY,
+        message: function (dialog) {
+            var $message = $('<div></div>');
+            var pageToLoad = dialog.getData('pageToLoad');
+            $message.load(pageToLoad);
+
+            return $message;
+        },
+        title: "成员信息",
+        data: {
+            'pageToLoad': '/dialog/baseInfo.html'
+        },
+        buttons: [{
+            id: 'btn-edit',
+            icon: 'glyphicon glyphicon-check',
+            label: '保存(S)',
+            cssClass: 'btn-info',
+            hotkey: 83,
+            autospin: false,
+            action: function (dialogRef) {
+                if (!isFull()) {
+                    BootstrapDialog.show({
+                        title: '通知',
+                        type: BootstrapDialog.TYPE_INFO,
+                        message: '请将信息填写完整。'
+                    });
+                    return;
+                }
+                var JsonData = $("#baseInfo").serializeJSON();
+                var url = '/api/baseinfo/' + row.id;
+                saveOrUpdate(url, JSON.stringify(JsonData), 'put').success(function () {
+                    $("#baseInfoTable").bootstrapTable('refresh');
+                    dialogRef.close();
+                });
+            }
+        }],
+        onshown: function () {
+            $("#baseInfo").autofill(row[0], {
+                findbyname: true
+            });
+        }
+    });
+}
+
+function delItem() {
+    var row = viewTable.bootstrapTable('getSelections');
+    if (row.length != 1) {
+        BootstrapDialog.show({
+            title: '温馨提示：',
+            message: '请选择一条要编辑的数据！'
+        });
+        return;
+    }
+    $.ajax({
+        url: '/api/baseinfo/' + row[0].id,
+        type: 'delete',
+        success: function () {
+            $("#baseInfoTable").bootstrapTable('refresh');
+        },
+        error: function () {
+            BootstrapDialog.show({
+                title: '通知',
+                type: BootstrapDialog.TYPE_INFO,
+                message: '该条数据正被使用，删除失败。'
+            });
+        }
+    });
+}
+
+function saveOrUpdate(url, args, method) {
+    return $.ajax({
+        url: url,
+        type: method,
+        data: args,
+        contentType: 'application/json;charset=UTF-8'
+    });
+}
+
+/*基础表管理结束*/
 
 var stateman = new StateMan();
 
@@ -1639,6 +1884,8 @@ stateman
     .state(entityStates)
     .state(magStates)
     .state(searchStates)
+    .state(userStates)
+    .state(sysBaseStates)
     .on("notfound", function (path) {
         stateman.go("home", {replace: true});
     })
@@ -1646,7 +1893,6 @@ stateman
 
     })
     .start({html5: true, "root": "/index"});
-
 
 
 $('.viewtype').click(function () {

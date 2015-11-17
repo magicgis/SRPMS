@@ -64,7 +64,7 @@
                                     <table id="mainTable"
                                            data-show-columns="true"
                                            data-show-refresh="true"
-                                           data-page-list="[10,15,20]"
+                                           data-page-list="[10,20,ALL]"
                                            data-pagination="true"
                                            data-single-select="true"
                                            data-click-to-select="true">
@@ -204,7 +204,7 @@
                                                             <li class="viewType "><a>成果获奖</a></li>
                                                         </ul>
                                                     </div><!-- /btn-group -->
-                                                    <select  class="form-control" id="viewUser"
+                                                    <select class="form-control" id="viewUser"
                                                             aria-label="...">
                                                     </select>
                                                 </div>
@@ -212,6 +212,42 @@
 
                                             </c:when>
                                         </c:choose>
+                                    </div>
+                                    <div id="UserToolbar" style="display: none;">
+                                        <c:choose>
+                                            <c:when test="${sessionScope.level == '3'}">
+                                                <button id="addUser" class="btn btn-primary">
+                                                    <i class="fa fa-plus"></i> 添&nbsp;&nbsp;加
+                                                </button>
+                                                <button id="scanUser" class="btn btn-primary">
+                                                    <i class="fa fa-lock"></i> 查&nbsp;&nbsp;看
+                                                </button>
+
+                                                <button id="resetPwd" class="btn btn-primary">
+                                                    <i class="fa fa-lock"></i> 密码重置
+                                                </button>
+                                            </c:when>
+                                            <c:when test="${sessionScope.level == '2'}">
+                                                <button id="editUser" class="btn btn-primary">
+                                                    <i class="fa fa-pencil"></i> 修改
+                                                </button>
+                                                <button id="resetPwd" class="btn btn-primary">
+                                                    <i class="fa fa-lock"></i> 密码重置
+                                                </button>
+                                            </c:when>
+                                        </c:choose>
+
+                                    </div>
+                                    <div id="SysBaseToolbar" style="display:none;">
+                                        <button id="add" class="btn btn-primary">
+                                            <i class="fa fa-plus"></i> 添加
+                                        </button>
+                                        <button id="edit" class="btn btn-primary">
+                                            <i class="fa fa-check"></i> 编辑
+                                        </button>
+                                        <button id="delete" class="btn btn-primary">
+                                            <i class="fa fa-remove"></i> 删除
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -232,6 +268,7 @@
 <!-- /.main-container -->
 <script src='<c:url value="/js/public/public.js"/>'></script>
 <script src='<c:url value="/js/public/pubAllSRInfo.js"/>'></script>
+<script src='<c:url value="/js/public/pubIndex.js"/>'></script>
 
 
 <script>

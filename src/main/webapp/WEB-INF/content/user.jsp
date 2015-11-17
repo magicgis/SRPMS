@@ -313,36 +313,7 @@
   });
 </script>
 <script>
-  $('#scanUser').click(function(){
-    //console.log($('#UserTable').bootstrapTable('getSelections')[0]["id"]);
-    window.location.href = '/user/' + $('#UserTable').bootstrapTable('getSelections')[0]["id"];
-  });
-  $('#resetPwd').click(function(){
-    var staff = $('#UserTable').bootstrapTable('getSelections')[0];
-    if (staff == null) {
-      BootstrapDialog.show({
-        title: '温馨提示：',
-        message: '请选择一条要重置密码的数据！'
-      });
-      return;
-    }
-    $.ajax({
-      type: 'put',
-      url: '../api/staff/reset/' + staff['id'],
-      contentType: 'application/json;charset=UTF-8',
-      success: function (result) {
-        if (result.errmsg) {
-          //失败提示
-          failInfo('密码重置失败！');
-          return;
-        } else {
-          /*//成功提示
-           successInfo('信息修改成功!');*/
-          showTable();
-        }
-      }
-    });
-  })
+
 </script>
 <c:choose>
   <c:when test="${sessionScope.level == '1'}">

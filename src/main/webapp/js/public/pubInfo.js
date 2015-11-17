@@ -128,52 +128,8 @@ function selectFill(staff) {
         DisplayForm($type, termArray[key], 1);
     }
 }
-//启用或禁用
-function disableOrEnable(index, row, value) {
-    //测试区
-    if (row['user.status'] == 1) {
-        return [
-            '<label><input class="UserEnableChange ace ace-switch ace-switch-7" type="checkbox" ' +
-            'checked name="switch-field-1"><span class="lbl"></span></label>'
-        ].join('');
-    } else {
-        return [
-            '<label><input class="UserDisableChange ace ace-switch ace-switch-7" type="checkbox" ' +
-            'name="switch-field-1"><span class="lbl"></span></label>'
-        ].join('');
-    }
-}
-//启用或禁用 操作
-window.operateEvents = {
-    //测试
-    'change .UserEnableChange': function (e, value, row, index) {
-        var ableType = 'disable';
-        var TipInfo = '已禁用';
-        disableOrEnableUser(row['id'], ableType, TipInfo);
-    },
-    'change .UserDisableChange': function (e, value, row, index) {
-        $('#UserTable').bootstrapTable('resetView', {'clickToSelect': false});
-        var ableType = 'enable';
-        var TipInfo = '已起用';
-        disableOrEnableUser(row['id'], ableType, TipInfo);
-    }
-};
-function disableOrEnableUser(id, ableType, TipInfo) {
-    $.ajax({
-        type: 'POST',
-        url: '../api/staff/' + ableType + '/' + id,
-        contentType: 'application/json;charset=UTF-8',
-        success: function (result) {
-            if (result.errmsg) {
-                //失败提示
-                failInfo('操作失败！');
-                return;
-            } else {
-                showTable();
-            }
-        }
-    });
-}
+
+
 //显示教师信息
 function enableditForm() {
     $('form input').removeAttr("disabled", "disabled");

@@ -344,20 +344,9 @@
             </a>
             <b class="arrow"></b>
         </li>
-
-
         <c:choose>
-            <c:when test="${sessionScope.level == '1'}">
-                <li class="">
-                    <a>
-                        <i class="menu-icon fa fa-user"></i>
-                        <span class="menu-text">个人信息 </span>
-                    </a>
-                    <b class="arrow"></b>
-                </li>
-            </c:when>
             <c:when test="${sessionScope.level == '2'|| sessionScope.level == '3'}">
-                <li class="">
+                <li class="hyperlink user">
                     <a>
                         <i class="menu-icon glyphicon glyphicon-user"></i>
                         <span class="menu-text">教师信息 </span>
@@ -372,8 +361,8 @@
             <c:when test="${sessionScope.level == '2'}">
             </c:when>
             <c:when test="${sessionScope.level == '3'}">
-                <li>
-                    <a href="<c:url value="/sysBaseInfo"/>">
+                <li class="hyperlink sysBase">
+                    <a>
                         <i class="menu-icon glyphicon glyphicon-bookmark"></i>
                         <span class="menu-text">基础表管理 </span>
                     </a>
