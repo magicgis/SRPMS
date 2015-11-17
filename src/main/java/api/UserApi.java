@@ -25,43 +25,6 @@ public class UserApi {
     StaffService staffService;
 
     /**
-     * 获取所有的帐号信息
-     *
-     * @param limit  每页数量
-     * @param offset 偏移值
-     * @param search 关键字
-     * @param sort   排序关键字
-     * @param ord    升序或者降序
-     * @return 所有帐号信息
-     */
-    @GET
-    @Path("/all")
-    @Produces("application/json;charset=UTF-8")
-    public Map getAll(@QueryParam("limit") Integer limit,
-                      @QueryParam("offset") Integer offset,
-                      @QueryParam("search") String search,
-                      @QueryParam("sort") String sort,
-                      @QueryParam("order") String ord) {
-        if (sort != null) {
-            sort = sort.replace('_', '.');
-        }
-        return getSubMap(userService.search(search, sort, ord), limit, offset);
-    }
-
-    /**
-     * 新增帐号
-     *
-     * @param args 新增的帐号信息
-     * @return TorF
-     */
-    @POST
-    @Path("/new")
-    @Consumes("application/json;charset=UTF-8")
-    public boolean add(HashMap<String, Object> args) {
-        return false;//todo
-    }
-
-    /**
      * 修改
      *
      * @param id
