@@ -141,14 +141,9 @@
                                                        for="isAppr">获得立项</label>
 
                                                 <div class="col-sm-8">
-                                                    <div class="col-sm-13">
-                                                        <select class="form-control" id="isAppr" value="${project.isAppr}">
-                                                            <option value=""></option>
-                                                            <option value="1">是</option>
-                                                            <option value="0">否</option>
-                                                        </select>
-                                                    </div>
-
+                                                    <input class="form-control col-sm-12" id="isAppr"
+                                                           type="text" name="isAppr" value="${project.isAppr}"
+                                                           placeholder="请选择"/>
                                                 </div>
                                             </div>
 
@@ -570,19 +565,19 @@
         valueField: 'id',
         labelField: 'value',
         options: [
-            {"id": "0", "value": "否"},
-            {"id": "1", "value": "是"}],
+            {"id": "false", "value": "否"},
+            {"id": "true", "value": "是"}],
         maxItems: 1,
         create: true,
         onChange:function(){
             var setProject=$('#isAppr').val();
-            if(setProject=='1'){
+            if(setProject=='true'){
                 $('.standard0').hide();
                 $('.standard1').show();
                 var projectSet="项目立项";
                 getStdList(projectSet);
                 standardSelects1(StdList,projtypeList);
-            }else if(setProject=='0'){
+            }else if(setProject=='false'){
                 $('.standard0').show();
                 $('.standard1').hide();
                 var projectSet="项目未获立项";
@@ -609,14 +604,14 @@
     if(!isNull(standard)){
 
         if(standard['type']=='项目立项'){
-            DisplayForm($isAppr, "1",0);
+            DisplayForm($isAppr, "true",0);
             $('.standard0').hide();
             $('.standard1').show();
             var projectSet="项目立项";
             getStdList(projectSet);
             standardSelects1(StdList,projtypeList,standard);
         }else{
-            DisplayForm($isAppr, "0",0);
+            DisplayForm($isAppr, "false",0);
 //            $('#isAppr').val('0');
             $('.standard0').show();
             $('.standard1').hide();

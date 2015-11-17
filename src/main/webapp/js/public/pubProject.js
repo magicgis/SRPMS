@@ -205,10 +205,10 @@ function allSections(){
     });
     $('#isAppr').change(function(){
         var setProject=$('#isAppr').val();
-        if(setProject=='1'){
+        if(setProject=='true'){
             var projectSet="项目立项";
             //getStdList(projectSet);
-        }else if(setProject=='0'){
+        }else if(setProject=='false'){
             var projectSet="项目未获立项";
             //getStdList(projectSet);
         }
