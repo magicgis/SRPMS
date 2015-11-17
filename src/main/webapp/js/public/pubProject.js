@@ -243,7 +243,7 @@ function getFundsData() {
 }
 /*************************项目属性*********************************/
 function firstOrOther() {
-    if ($('#attr').val() == '独立项目') {
+    if ($('#attr').val() == '独立项目' || isNull($('#attr').val())) {
         $('#unitInfo').hide();
     } else {
         $('#unitInfo').show();
