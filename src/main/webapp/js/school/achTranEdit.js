@@ -30,24 +30,22 @@ function addActor() {
             cssClass: 'btn-info',
             autospin: false,
             action: function (dialogRef) {
-                //if (!isFull()) {
-                //    messageModal('请将信息填写完整。');
-                //    return;
-                //}
+                if (!isFull()) {
+                    messageModal('请将信息填写完整。');
+                    return;
+                }
                 subActorInfo(null, 1);
                 dialogRef.close();
             }
         }],
         onshown: function () {
             fillRoles(achTranRoles);
-            $(".editableModal").show();
         }
     });
 }
 /**
  * 编辑成员
  */
-//var flag=true;
 
 function editActor(row, index){
     BootstrapDialog.show({
@@ -101,57 +99,14 @@ function editActor(row, index){
             DisplayForm($units, row["unit"], 1);
             //填充其他
             $('#actorsInfo').autofill(row, {
-                findbyname: true,
+                findbyname: false,
                 restrict: false
             });
-            //是否可编辑
-            //if(flag) {//可编辑
-            //    enableSelectize($actor);
-            //    enableSelectize($role);
-            //    enableSelectize($units);
-            //    $("#rank").removeAttr("disabled");
-            //    $("#marks").removeAttr("disabled");
-            //    $("#btn-ok").show();
-            //    $(".editableModal").show();
-            //} else {  //不可编辑
-            //    disableSelectize($actor);
-            //    disableSelectize($role);
-            //    disableSelectize($units);
-            //    $("#rank").attr("disabled", "disabled");
-            //    $("#marks").attr("disabled", "disabled");
-            //    $("#btn-ok").attr("disabled", "disabled").hide();
-            //    $(".editableModal").show();
-            //}
-            //if(row["staff.id"] == "9998" || row["staff.id"] == "9999"){
-            //    $("#marks").attr("disabled", "disabled");
-            //}
+
         }
     });
 }
 
-
-/**
- /**
- * 计算分数
- */
-//function getScore() {
-//    var jsonData = getFormData('paper');
-//    workflow.getScore(jsonData).success(function(data) {
-//        if(data["valid"] == false) {
-//            errorMsg(data["msg"]);
-//            flag = true;
-//        }else if(data["hasSum"] == false) {
-//            $("#actorTable").bootstrapTable('load', data["actors"]);
-//            flag = false;
-//            errorMsg(data["msg"]);
-//        }else if(data["hasSum"] == true) {
-//            $("#score").val(data["sum"]);
-//            $("#showSum").html("可分配总分：" + data["sum"] + "分");
-//            errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
-//            flag = true;
-//        }
-//    });
-//}
 
 /**
  * 添加单位

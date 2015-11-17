@@ -35,7 +35,7 @@ function totalMarksFormatter(data) {
 function subActorInfo(index,flag) {
     var id = $('#actor').val();
     var actor = $('#actor').text();
-    var marks = $('#marks').val();
+    var marks = $('#score').val();
     var units = $('#units').val();
     var role = $('#role').val();
     var rank = $('#rank').val();

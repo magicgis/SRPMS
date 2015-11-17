@@ -1,5 +1,5 @@
 /**
- * Created by zheng on 2015/10/12.
+ * Created by zheng on 2015/10/2.
  */
 $(function () {
 
@@ -7,19 +7,11 @@ $(function () {
 });
 /**与项目信息有关的 保存||确认||撤回||删除||提交所有**/
 function save() {
-    var send = getFormData('award');
-    $.ajax({
-        url:'/dskf',
-        type: 'post',
-        data: JSON.stringify(send)
+    saveStep1().success(function(data) {
+        saveStep2(data).success(function (res) {
+            afterSuccess("保存成功！");
+        })
     });
-    //saveStep1().success(function(data) {
-    //
-    //    saveStep2(data).success(function (res) {
-    //
-    //        afterSuccess("保存成功！");
-    //    })
-    //});
 }
 function confirm() {
     //这儿需要先调用save()将信息保存一次
@@ -39,7 +31,7 @@ function confirm() {
                      * userName,taskId,status
                      */
                     if (result) {
-                        workflow.startEntityOrder("achAward", $('#awardId').val()).success(function (data) {
+                        workflow.startEntityOrder("project", $('#projectId').val()).success(function (data) {
                             afterSuccess("任务已启动！");
                         });
                     }
@@ -50,13 +42,23 @@ function confirm() {
 
 }
 function orderBack() {
+    //var row = $('#ProjectTable').bootstrapTable('getSelections')[0];
+    //var order = row['id'];
+    //var jsonData = Object();
+    //jsonData['order'] = order;
+    //jsonData['user'] = userName;
+    //window.workflow.getBack(userName, order).success(function () {
+    //    afterSuccess("已撤回");
+    //    showTable();
+    //    $('#del').show();
+    //});
     var order = entity['id'];
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
+        history.go(-1);
     });
 }
 function delOrder() {
-    var order = entity['id'];
     BootstrapDialog.confirm({
         title: '提示！',
         message: '你确定要删除该项吗?',
@@ -68,8 +70,10 @@ function delOrder() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.delOrder(order).success(function () {
+                workflow.delOrder(entity['id']).success(function (data) {
                     afterSuccess("删除成功！");
+                    //history.go(-1);
+                    //window.location.href = '/process-project-all';
                 });
             }
         }
@@ -90,8 +94,9 @@ function Approve() {
         btnOKClass: 'btn-ok',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep',taskId, approveInfo).success(function () {
-                    afterSuccess('审批通过！');
+                workflow.execute(userName, taskId, approveInfo).success(function () {
+                    afterSuccess('已通过！');
+                    history.go(-1);
                 });
             }
         }
@@ -115,8 +120,9 @@ function Refuse() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep', taskId, refuseInfo).success(function () {
-                    afterSuccess('审批驳回！');
+                workflow.execute(userName, taskId, refuseAwardInfo).success(function () {
+                    afterSuccess('已驳回至学院！');
+                    history.go(-1);
                 });
             }
         }
@@ -153,7 +159,7 @@ function addActor() {
             }
         }],
         onshown: function () {
-            fillRoles(awardRoles);
+            fillRoles(projectRoles);
         }
     });
 }
@@ -198,14 +204,13 @@ function editActor(row, index) {
             icon: 'glyphicon glyphicon-check',
             label: '关闭',
             cssClass: 'btn-info',
-            //hotkey: 68,
             autospin: false,
             action: function (dialogRef) {
                 dialogRef.close();
             }
         }],
         onshown: function () {
-            fillRoles(awardRoles);
+            fillRoles(projectRoles);
             //填充名字
             var $actor = $("#actor").selectize();
             $actor[0].selectize.addOption([{'id': row["staff.id"], 'name': row["staff.name"], "col": {"value": ""}}]);
@@ -221,27 +226,10 @@ function editActor(row, index) {
                 findbyname: false,
                 restrict: false
             });
-
         }
     });
 }
-///*计算分数*/
-//function getScore() {
-//    var jsonData = getFormData("award");
-//    //console.log(jsonData);
-//    workflow.getScore(jsonData).success(function (data) {
-//        if (data["valid"] == false) {
-//            errorMsg(data["msg"]);
-//        } else if (data["hasSum"] == false) {
-//            $("#actorTable").bootstrapTable('load', data["actors"]);
-//            errorMsg(data["msg"]);
-//        } else if (data["hasSum"] == true) {
-//            $("#score").val(data["sum"]);
-//            $("#showSum").html("总分：" + data["sum"] + "分");
-//            errorMsg(data["msg"]);
-//        }
-//    });
-//}
+
 /*****************************有关单位的操作***********************/
 /**
  * 添加单位
@@ -320,32 +308,105 @@ function editUnit(row, index) {
         }
     });
 }
+/****************************有关金额的****************************/
+function addFund() {
+    BootstrapDialog.show({
+        type: BootstrapDialog.TYPE_PRIMARY,
+        message: function (dialog) {
+            var $message = $('<div></div>');
+            var pageToLoad = dialog.getData('pageToLoad');
+            $message.load(pageToLoad);
+            return $message;
+        },
+        title: "项目金额信息",
+        data: {
+            'pageToLoad': '../dialog/addFund.html'
+        },
+        closeByBackdrop: false,
+        buttons: [{
+            id: 'btn-ok',
+            icon: 'glyphicon glyphicon-check',
+            label: '添加',
+            cssClass: 'btn-info',
+            autospin: false,
+            action: function (dialogRef) {
+                // console.log($("#rank").val());
+                if (!isFull()) {
+                    messageModal('请将信息填写完整。');
+                    return;
+                }
+                subFundInfo(null);
+                dialogRef.close();
+            }
+        }]
+    });
+}
+//编辑金额
+function editFund(row, index) {
+    BootstrapDialog.show({
+        type: BootstrapDialog.TYPE_PRIMARY,
+        message: function (dialog) {
+            var $message = $('<div></div>');
+            var pageToLoad = dialog.getData('pageToLoad');
+            $message.load(pageToLoad);
+            return $message;
+        },
+        title: "项目金额信息",
+        data: {
+            'pageToLoad': '../dialog/addFund.html'
+        },
+        closeByBackdrop: false,
+        buttons: [{
+            id: 'btn-ok',
+            icon: 'glyphicon glyphicon-check',
+            label: '保存',
+            cssClass: 'btn-info',
+            autospin: false,
+            action: function (dialogRef) {
+                if (!isFull()) {
+                    messageModal('请将信息填写完整。');
+                    return;
+                }
+                subUnitInfo(index);
+                dialogRef.close();
+            }
+        }],
+        onshown: function () {
+            //var $unit = $("#unit").selectize();
+            //填充单位
+            //DisplayForm($unit, row["unit"], 1);
+            //填充其他
+            $('#fundInfo').autofill(row, {
+                findbyname: true,
+                restrict: false
+            });
+        }
+    });
+}
 /********************************保存***************************/
 function saveStep1() {
     return $.ajax({
-        url: '/api/achAward/achAward',
-        data: $('#award').serialize(),
+        url: '/api/project/project',
+        data: $('#project').serialize(),
         type: 'POST',
         dataType: 'text'
-    })
+    });
 }
 function saveStep2(data) {
     var send = new Object();
     //避免新建的时候多次点击保存多次新建
-    $('#awardId').val(data);
+    $('#projectId').val(data);
     send['actors'] = getActorsData();
+    send['fund'] = getFundsData();
     send['filesData'] = filesData;
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
-    send['units'] = getUnitsData();
-    send['achName']= Main_ActorName;
-    send['name']= $('#name').val();
-    send['awardType']=$('#achType').val();
-    send['date']=$('#date').val();
-    console.log(send);
+    if($('#attr').val() == '联合项目' || entity['attr'] == "子课题"){
+        send['units'] = getUnitsData();
+    }
     return $.ajax({
         type: 'put',
-        url: '/api/achAward/' + data,
+        url: '/api/project/' + data,
         data: JSON.stringify(send),
         dataType: 'json',
         contentType: 'application/json;charset=UTF-8'

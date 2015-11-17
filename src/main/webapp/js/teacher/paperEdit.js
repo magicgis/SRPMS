@@ -3,9 +3,9 @@ $(function () {
     init();
 
 });
-var flag = true;
 function init() {
     $('#reply-box').hide();
+    $('#totalScore').attr('disabled', 'disabled');
     if (status.indexOf('Refuse') >= 0) {
         $('#reply').show();
         $('#reply-display').show();
@@ -33,19 +33,16 @@ function init() {
 function getScore() {
     var jsonData = getFormData('paper');
     workflow.getScore(jsonData).success(function (data) {
-        console.log(data);
         if (data["valid"] == false) {
             errorMsg(data["msg"]);
-            flag = true;
+            flag = false;
         } else if (data["hasSum"] == false) {
             $("#actorTable").bootstrapTable('load', data["actors"]);
             flag = false;
             errorMsg(data["msg"]);
         } else if (data["hasSum"] == true) {
-            $("#score").val(data["sum"]);
-            console.log($("#score").val());
-            console.log(data["sum"]);
-            $("#showSum").html("　可分配总分：" + data["sum"] + "分");
+            $("#totalScore").val(data["sum"]);
+            //$("#showSum").html("　可分配总分：" + data["sum"] + "分");
             errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
             flag = true;
         }
@@ -60,9 +57,8 @@ function save() {
     var jsonData = getFormData('paper');
     workflow.execute(userName, taskId, jsonData).success(function () {
         afterSuccess("保存成功！");
-        window.location.href = '/process-paper-all';
+        window.location.href = '/index/process/paper/all';
     });
-    console.log("haha");
 }
 /**
  * 确认
@@ -88,14 +84,14 @@ function confirm() {
                     if ("valid" in data) {
                         if (data["valid"] == true) {
                             afterSuccess("确认成功！");
-                            window.location.href = '/process-paper-all';
+                            window.location.href = '/index/process/paper/all';
                         } else {
                             errorMsg(data["msg"]);
                             flag = true;
                         }
                     } else {
                         afterSuccess("确认成功！");
-                        window.location.href = '/process-paper-all';
+                        window.location.href = '/index/process/paper/all';
                     }
                 });
             }
@@ -114,7 +110,7 @@ function getOrderBack() {
     //send['user'] = userName;
     window.workflow.getBack(userName, orderId).success(function () {
         afterSuccess("已撤回");
-        window.location.href = '/process-paper-all';
+        window.location.href = '/index/process/paper/all';
     });
 }
 /**
@@ -135,7 +131,7 @@ function delOrder() {
             if (result) {
                 workflow.delOrder(order).success(function () {
                     afterSuccess("删除成功！");
-                    window.location.href = '/process-paper-all';
+                    window.location.href = '/index/process/paper/all';
                 });
             }
         }
@@ -234,7 +230,7 @@ function editActor(row, index) {
             DisplayForm($units, row["unit"], 1);
             //填充其他
             $('#actorsInfo').autofill(row, {
-                findbyname: true,
+                findbyname: false,
                 restrict: false
             });
             $(".editableModal").show();
@@ -244,18 +240,19 @@ function editActor(row, index) {
                 enableSelectize($role);
                 enableSelectize($units);
                 $("#rank").removeAttr("disabled");
-                $("#marks").removeAttr("disabled");
+                $("#score").removeAttr("disabled");
                 $("#btn-ok").show();
             } else {  //不可编辑
                 disableSelectize($actor);
                 disableSelectize($role);
                 disableSelectize($units);
                 $("#rank").attr("disabled", "disabled");
-                $("#marks").attr("disabled", "disabled");
+                $("#score").attr("disabled", "disabled");
                 $("#btn-ok").attr("disabled", "disabled").hide();
+                messageModal("请先点击“计算分数”按钮获得总分，再分配分数。");
             }
             if (row["staff.id"] == "9998" || row["staff.id"] == "9999") {
-                $("#marks").attr("disabled", "disabled");
+                $("#score").attr("disabled", "disabled");
             }
         }
     });

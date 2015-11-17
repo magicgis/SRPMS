@@ -8,7 +8,7 @@ import javax.persistence.*;
  * Created by guofan on 2015/5/9.
  */
 @Entity
-@Table(name = "permission", schema = "", catalog = "srpms")
+@Table(name = "permission")
 public class Permission {
     private String id;
     private Role role;

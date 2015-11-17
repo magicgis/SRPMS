@@ -138,8 +138,9 @@
 
                                                 <span class="giveSum">
                                                     <button class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</button>
-                                                    <label for="score">原则上可分配总分：</label>
-                                                    <input class="score" type="text" name="score" id="score" value="${patent.score}">
+                                                    <label for="totalScore">原则上可分配总分：</label>
+	                                                <input class="score" type="text"
+	                                                       name="score" id="totalScore" value="${achAward.score}">
                                                 </span>
                                             </div>
                                             <table id="actorTable"
@@ -239,8 +240,8 @@
                                     <div class="widget-main">
                                         <div class="row">
                                             <div id="unitToolbar">
-                                                <a class="btn btn-primary btn-sm" id="addUnit"><i
-                                                        class="glyphicon glyphicon-plus"></i> 添加单位</a>
+                                                <a class="btn btn-primary btn-sm addUnit">
+                                                    <i class="glyphicon glyphicon-plus"></i> 添加单位</a>
                                             </div>
                                             <table id="unitTable"
                                                    data-toolbar="#unitToolbar"
@@ -468,15 +469,15 @@
         history.go(-1);
     });
     //监听 添加成员
-    $('#addActor').click(function () {
+    $('.addActor').click(function () {
         addActor();
     });
     //监听 分配分数
-    $('#getScore').click(function () {
+    $('.getScore').click(function () {
         getScore('award');
     });
     //监听 添加单位
-    $('#addUnit').click(function () {
+    $('.addUnit').click(function () {
         addUnit();
     });
     //监听 点击保存||确认||撤回||删除

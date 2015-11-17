@@ -11,7 +11,7 @@
 function subActorInfo(index, flag) {
     var id = $('#actor').val();
     var actor = $('#actor').text();
-    var marks = $('#marks').val();
+    var marks = $('#score').val();
     var units = $('#units').val();
     var role = $('#role').val();
     var rank = $('#rank').val();
@@ -179,11 +179,11 @@ function actorTran(value, row) {
 }
 /*********************表单||表格的动作和行为****************/
 //表单不可编辑
-function uneditableForm(){
-    $('form input').attr("disabled", "disabled");
-    $('form select').attr("disabled", "disabled");
-    $('.delFiles').hide();
-}
+//function uneditableForm(){
+//    $('form input').attr("disabled", "disabled");
+//    $('form select').attr("disabled", "disabled");
+//    $('.delFiles').hide();
+//}
 function view(index, row, value) {
     {
         return [
@@ -243,10 +243,10 @@ function getFundsData() {
 }
 /*************************项目属性*********************************/
 function firstOrOther() {
-    if ($('#attr').val() == '联合项目') {
-        $('#unitInfo').show();
-    } else {
+    if ($('#attr').val() == '独立项目') {
         $('#unitInfo').hide();
+    } else {
+        $('#unitInfo').show();
     }
 }
 /**************************************************************/
@@ -262,7 +262,7 @@ function fullUpInfo(all, entity) {
         showFiles(filesData);
         $("#fundTable").bootstrapTable('load', fundTemp);
         $("#actorTable").bootstrapTable('load', actorTemp);
-        if (entity['attr'] == "联合项目") {
+        if (entity['attr'] == "联合项目" || entity['attr'] == "子课题") {
             if (all['units'] != null) {
                 unitTemp = all['units'];
             }

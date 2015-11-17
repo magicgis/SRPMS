@@ -6,6 +6,7 @@
   Time: 16:56
   To change this template use File | Settings | File Templates.
 --%>
+<jsp:useBean id="ObjectMapper" scope="application" class="com.fasterxml.jackson.databind.ObjectMapper"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -108,7 +109,7 @@
 
 													<div class="col-sm-8"><!--选择框-->
 														<input class="form-control" id="dept"
-														       name="dept" placeholder="请选择"/>
+														       name="dept.id" placeholder="请选择"/>
 													</div>
 												</div>
 
@@ -119,7 +120,7 @@
 
 													<div class="col-sm-8">
 														<input type="text" id="changeUnits" name="tranUnit"
-														       placeholder="" class="col-xs-12 confer-input"
+														       placeholder="" class="form-control col-xs-12"
 														       value="${achTran.tranUnit}"/>
 													</div>
 												</div>
@@ -143,7 +144,7 @@
 
 													<div class="col-sm-8">
 														<input type="text" id="money" name="money"
-														       placeholder="" class="col-xs-12 confer-input"
+														       placeholder="单位：万元" class="form-control col-xs-12"
 														       value="${achTran.money}"/>
 													</div>
 												</div>
@@ -156,7 +157,7 @@
 
 													<div class="col-sm-8">
 														<input type="text" id="actualMoney" name="actualMoney"
-														       placeholder="" class="col-xs-12"
+														       placeholder="单位：万元" class="col-xs-12"
 														       value="${achTran.actualMoney}"/>
 													</div>
 												</div>
@@ -211,11 +212,12 @@
 														</c:when>
 													</c:choose>
 
-                                                <span class="giveSum">
-                                                    <button class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</button>
-                                                    <label for="score">原则上可分配总分：</label>
-                                                    <input class="score" type="text" name="score" id="score" value="${patent.score}">
-                                                </span>
+	                                                <span class="giveSum">
+	                                                    <button class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</button>
+	                                                    <label for="totalScore">原则上可分配总分：</label>
+		                                                <input class="score" type="text"
+		                                                       name="score" id="totalScore" value="${achTran.score}">
+	                                                </span>
 												</div>
 												<table id="actorTable"
 												       data-toolbar="#actorToolbar"
@@ -371,15 +373,14 @@
 	upToLoadFile(); // 初始化 上传文件的
 
 	// 成员，单位，文件
-	var entity =  '${ObjectMapper.writeValueAsString(achTran)}'; // 获得 entity 或 实体
-	if(isNull(entity)) {
-		entity = {};
-	}
+	var entity =  ${ObjectMapper.writeValueAsString(achTran)}; // 获得 entity 或 实体
+
+	console.log(entity);
 	var userLevel = ${sessionScope.level};
 	var isMain = 0;
 	var all = entity['argMap']; // 获得 成员，单位，附件，负责人等信息
 	var dept = entity['dept'];
-	//	var standard = entity['standard'];
+
 	var taskId = '${taskId}';  // 获得 task的id
 	var taskName = '${taskName}';
 
@@ -410,6 +411,13 @@
 		filesData = {};
 	}
 	showFiles(filesData);
+
+
+	if (!isNull(dept)) {  // 显示 所属部门
+		var $dept = $('#dept').selectize();
+		addOptionSelectize($dept, [dept]);
+		DisplayForm($dept, dept['id'], 0);
+	}
 
 	getActors(); // 这是取成员的
 	$('#actorTable').bootstrapTable({
@@ -505,15 +513,15 @@
 		getOrderBack();
 	});
 	//监听 添加单位
-	$('#addUnit').click(function () {
+	$('.addUnit').click(function () {
 		addUnit();
 	});
 	//监听 添加成员
-	$('#addActor').click(function () {
+	$('.addActor').click(function () {
 		addActor();
 	});
 	//监听 分配分数
-	$('#getScore').click(function () {
+	$('.getScore').click(function () {
 		getScore('achTran');
 	});
 

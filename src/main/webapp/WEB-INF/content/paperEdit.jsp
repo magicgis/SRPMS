@@ -84,10 +84,7 @@
 										<input type="text" name="WF_Order" id="WF_Order"/>
 										<input type="text" name="IsComplete" id="IsComplete"/>
 										<input type="text" name="mag.name" id="magName"/>
-										<input type="text" name="sum" id="score"/>
 										<input type="text" name="mag.standard.id" id="magStandardId"/>
-										<%--<input type="text" name="newspaper.standard.id" id="newsStandardId"/>--%>
-										<%--<input type="text" name="confer.standard.id" id="conferStandardId"/>--%>
 									</div>
 									<div class="col-xs-12 col-md-6">
 										<div id="paperInfo" class="col-xs-12 widget-container-col ui-sortable">
@@ -381,9 +378,12 @@
 														<div id="actorToolbar">
 															<a data-toggle="modal" id="addActor"
 															   class="btn btn-primary btn-sm">添加成员</a>　
-															<%--<a data-toggle="modal" id="editActor" class="btn btn-primary btn-sm" style="display: none;">编辑成员</a>--%>
+
 															<a data-toggle="modal" id="getScore"
 															   class="btn btn-primary btn-sm">计算分数</a>
+															<label for="totalScore">原则上可分配总分：</label>
+															<input class="score" type="text"
+															       name="score" id="totalScore" value="${paper.score}">
 														</div>
 														<table id="actorTable"
 														       data-toolbar="#actorToolbar"
@@ -566,6 +566,8 @@
 	selectData(); // 会议时间插件
 	getPaperType(); // 初始化论文类型插件
 
+	var flag = true;// 当前可不可以分配分数
+
 	$('#confirmC').hide();
 
 	var entity = ${ObjectMapper.writeValueAsString(order)}; // 获得order
@@ -662,13 +664,9 @@
 					dept = data;
 					addOptionSelectize($('#dept').selectize(), [dept]);
 					DisplayForm($('#dept').selectize(), dept['id'], 0);
-					console.log(dept);
 				}
 			});
 		}
-
-//		if(!isNull(dept)){
-//		}
 
 		//  期刊选择框
 		var $magId = $("#magId").selectize();
@@ -724,9 +722,9 @@
 		// 显示总分
 		var score = latestInfo['sum'];
 		if (score == undefined || score == null || score == "") {
-			$("#showSum").html("");
+			flag = false;
 		} else {
-			$("#showSum").html("　可分配总分：" + score + "分");
+			flag = true;
 		}
 		// 显示成员信息
 		if (latestInfo['actors'] != null) {

@@ -102,30 +102,9 @@ function editActor(row, index){
             DisplayForm($units, row["unit"], 1);
             //填充其他
             $('#actorsInfo').autofill(row, {
-                findbyname: true,
+                findbyname: false,
                 restrict: false
             });
-            //是否可编辑
-            if(flag) {//可编辑
-                enableSelectize($actor);
-                enableSelectize($role);
-                enableSelectize($units);
-                $("#rank").removeAttr("disabled");
-                $("#marks").removeAttr("disabled");
-                $("#btn-ok").show();
-                $(".editableModal").show();
-            } else {  //不可编辑
-                disableSelectize($actor);
-                disableSelectize($role);
-                disableSelectize($units);
-                $("#rank").attr("disabled", "disabled");
-                $("#marks").attr("disabled", "disabled");
-                $("#btn-ok").attr("disabled", "disabled").hide();
-                $(".editableModal").show();
-            }
-            if(row["staff.id"] == "9998" || row["staff.id"] == "9999"){
-                $("#marks").attr("disabled", "disabled");
-            }
         }
     });
 }
@@ -311,7 +290,7 @@ function getOrderBack() {
     var order = entity['id'];
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
-        history.go(-1);
+        //history.go(-1);
     });
 }
 
@@ -406,7 +385,7 @@ function editActor(row, index) {
             DisplayForm($units, row["unit"], 1);
             //填充其他
             $('#actorsInfo').autofill(row, {
-                findbyname: true,
+                findbyname: false,
                 restrict: false
             });
         }
