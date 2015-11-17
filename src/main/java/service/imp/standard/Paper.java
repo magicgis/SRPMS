@@ -154,20 +154,23 @@ public class Paper extends StandardBase implements StandardCheckInf {
     }
 
     @Override
-    public Map confirmCheck(Map map, Map validInfo) {
-//        double finalScore = (double) validInfo.get("sum");
+    public Map confirmCheck(Map map) {
+//        double finalScore = Double.parseDouble((String) map.get("score"));
+        Map validInfo = new HashMap();
         Map tempFirstAuthor, tempChiefAuthor;
         double tempMarks;
         List<Map> actors = getActors(map);
         List<Map> myFirstAuth = getChiefActors(actors,(String) KEY_ROLE.get("firstAuthor"));
         List<Map> myTchChiefAuth = getChiefActors(actors,(String) KEY_ROLE.get("chiefAuthor"));
+        boolean flag = false;
+        if (map.get("score")!=null) flag = true;
 //       求和检测
-        if ((boolean) validInfo.get("hasSum")) {
+        if (flag) {
             validInfo.put(IS_VALID, false);
             List<Map> authors = getActors(map);
 //            Double sum = Double.parseDouble((String) validInfo.get("sum"));
-            double sum = (double) validInfo.get("sum");
-            if (super.totalScore(actors) - sum < 0) {
+            double sum = Double.parseDouble((String) map.get("score"));
+            if (!isSumCheckPass(sum,actors)) {
                 validInfo.put(MESSAGE, "个人分数分配总和超出总分！");
                 return validInfo;
             }

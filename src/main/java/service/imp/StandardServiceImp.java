@@ -131,7 +131,7 @@ public class StandardServiceImp extends StandardBase implements StandardService 
         }
         validInfo = scoreCalculation(order, map);
         if (!(boolean) validInfo.get(IS_VALID)) return validInfo;
-        validInfo = standardCheck.confirmCheck(map, validInfo);
+        validInfo = standardCheck.confirmCheck(map);
         if (!(boolean) validInfo.get(IS_VALID)) return validInfo;
         validInfo.put(MESSAGE, "已经确认，如需修改请撤销！");
         validInfo.put(IS_VALID, true);

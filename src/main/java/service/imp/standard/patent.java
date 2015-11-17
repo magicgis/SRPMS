@@ -83,20 +83,21 @@ public class patent extends StandardBase implements StandardCheckInf {
     }
 
     @Override
-    public Map confirmCheck(Map map, Map score) {
+    public Map confirmCheck(Map map) {
+        Map validInfo = new HashMap();
         List<Map> actors = getActors(map);
-        double sum = (double) score.get("sum");
-        for (Map actor : actors) {
-            double temp = Double.parseDouble((String) actor.get("score"));
-            sum -= temp;
+        double sum = Double.parseDouble((String) map.get("score"));
+//        for (Map actor : actors) {
+//            double temp = Double.parseDouble((String) actor.get("score"));
+//            sum -= temp;
+//        }
+        if (!isSumCheckPass(sum,actors)) {
+            validInfo.put(IS_VALID, false);
+            validInfo.put(MESSAGE, "个人分数分配总和超出总分！");
+            return validInfo;
         }
-        if (sum < 0) {
-            score.put(IS_VALID, false);
-            score.put(MESSAGE, "个人分数分配总和超出总分！");
-            return score;
-        }
-        score.put(IS_VALID, true);
-        score.put(MESSAGE, "是否确认？");
-        return score;
+        validInfo.put(IS_VALID, true);
+        validInfo.put(MESSAGE, "是否确认？");
+        return validInfo;
     }
 }

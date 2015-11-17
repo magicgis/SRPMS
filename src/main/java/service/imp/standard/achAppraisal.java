@@ -79,7 +79,7 @@ public class achAppraisal extends StandardBase implements StandardCheckInf{
     }
 
     @Override
-    public Map confirmCheck(Map map, Map score) {
+    public Map confirmCheck(Map map) {
         return null;
     }
 }

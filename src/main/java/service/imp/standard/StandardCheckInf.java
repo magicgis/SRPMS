@@ -22,5 +22,6 @@ public interface StandardCheckInf {
     Map getFinalScore(Map map, double tableScore, double tableScore2);
 
     //    确认检测，考察分数分配是否符合规定
-    Map confirmCheck(Map map, Map score);
+    Map confirmCheck(Map map);
+//    Map confirmCheck(Map map, Map score);
 }

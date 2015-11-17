@@ -257,6 +257,11 @@ public class StandardBase {
         }
         return sum;
     }
+    public boolean isSumCheckPass(double sum , List<Map> actors){
+        if (totalScore(actors) - sum <= 0) return true;
+        return false;
+    }
+//    确定时间为有效时段
     public  boolean isVaildTime(String testedTime){
         boolean flag = false;
         Date before = tool.stringToDate((String) sysValidTime().get("startTime"));
