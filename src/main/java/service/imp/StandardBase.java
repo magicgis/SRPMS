@@ -149,7 +149,7 @@ public class StandardBase {
         return abAuthors;
     }
 //    单位列表
-    public  List<Map> getUnits(Map map){return (List<Map>) map.get("unit");}
+    public  List<Map> getUnits(Map map){return (List<Map>) map.get("units");}
 //    我校(及医院)单位排名
     public int getMySchRank(List<Map> units){
         for (Map unit : units){
@@ -227,7 +227,8 @@ public class StandardBase {
         }
         return flag;
     }
-
+//  我校所在的位置
+//  获取到账列表
     //StandardId适配
     public String selectId(String type) {
         String typeId = "standard.id";
@@ -247,6 +248,14 @@ public class StandardBase {
         }
         weight = (n - i + 1) / weight;
         return weight;
+    }
+
+    public double totalScore(List<Map> actors){
+        double sum = 0 ;
+        for (Map actor : actors){
+            sum += Double.parseDouble((String) actor.get("score"));
+        }
+        return sum;
     }
 
 }//the end of the class

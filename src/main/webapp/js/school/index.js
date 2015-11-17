@@ -545,6 +545,7 @@ function entityView() {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
                 sidePagination: "server",
+                toolbar: "#EntityToolbar",
                 columns: [
                     {
                         radio: true
@@ -598,6 +599,7 @@ function entityView() {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
                 sidePagination: "server",
+                toolbar: "#EntityToolbar",
                 flat: true,
                 columns: [
                     {
@@ -630,6 +632,7 @@ function entityView() {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
                 sidePagination: "server",
+                toolbar: "#EntityToolbar",
                 columns: [
                     {
                         radio: true
@@ -668,6 +671,7 @@ function entityView() {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
                 sidePagination: "server",
+                toolbar: "#EntityToolbar",
                 flat: true,
                 columns: [
                     {
@@ -714,6 +718,7 @@ function entityView() {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
                 sidePagination: "server",
+                toolbar: "#EntityToolbar",
                 flat: true,
                 columns: [
                     {
@@ -756,6 +761,7 @@ function entityView() {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
                 sidePagination: "server",
+                toolbar: "#EntityToolbar",
                 flat: true,
                 columns: [
                     {
@@ -793,6 +799,7 @@ function entityView() {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
                 sidePagination: "server",
+                toolbar: "#EntityToolbar",
                 flat: true,
                 columns: [
                     {
@@ -821,163 +828,168 @@ function entityView() {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
                 sidePagination: "server",
+                toolbar: "#EntityToolbar",
                 flat: true,
                 columns: [
                     {
-                    radio: true
-                }, {
-                    field: 'id',
-                    title: 'id',
-                    sortable: true,
-                    visible: false
-                }, {
-                    field: 'name',
-                    title: '食品名称',
-                    sortable: true
-                }, {
-                    field: 'argMap.Main-ActorName',
-                    title: '负责人'
-                }, {
-                    field: 'date',
-                    title: '获批时间',
-                    sortable: true
-                }, {
-                    field: 'process',
-                    title: '流程状态',
-                    sortable: true,
-                    formatter: 'processTran'
-                }]
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '食品名称',
+                        sortable: true
+                    }, {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'date',
+                        title: '获批时间',
+                        sortable: true
+                    }, {
+                        field: 'process',
+                        title: '流程状态',
+                        sortable: true,
+                        formatter: 'processTran'
+                    }]
             });
             break;
         case 'newInstru':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
                 sidePagination: "server",
+                toolbar: "#EntityToolbar",
                 flat: true,
                 columns: [
                     {
-                    radio: true
-                }, {
-                    field: 'id',
-                    title: 'id',
-                    sortable: true,
-                    visible: false
-                }, {
-                    field: 'name',
-                    title: '器械名称',
-                    sortable: true
-                }, {
-                    field: 'date',
-                    title: '获批时间',
-                    sortable: true
-                }, {
-                    field: 'argMap.Main-ActorName',
-                    title: '负责人'
-                }, {
-                    field: 'process',
-                    title: '流程状态',
-                    sortable: true,
-                    formatter: 'processTran'
-                }]
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '器械名称',
+                        sortable: true
+                    }, {
+                        field: 'date',
+                        title: '获批时间',
+                        sortable: true
+                    }, {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'process',
+                        title: '流程状态',
+                        sortable: true,
+                        formatter: 'processTran'
+                    }]
             });
             break;
         case 'newMedicine':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
                 sidePagination: "server",
+                toolbar: "#EntityToolbar",
                 flat: true,
                 columns: [
                     {
-                    radio: true
-                }, {
-                    field: 'id',
-                    title: 'id',
-                    sortable: true,
-                    visible: false
-                }, {
-                    field: 'name',
-                    title: '药品名称',
-                    sortable: true
-                }, {
-                    field: 'date',
-                    title: '获批时间',
-                    sortable: true
-                }, {
-                    field: 'argMap.Main-ActorName',
-                    title: '负责人'
-                }, {
-                    field: 'process',
-                    title: '流程状态',
-                    sortable: true,
-                    formatter: 'processTran'
-                }]
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '药品名称',
+                        sortable: true
+                    }, {
+                        field: 'date',
+                        title: '获批时间',
+                        sortable: true
+                    }, {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'process',
+                        title: '流程状态',
+                        sortable: true,
+                        formatter: 'processTran'
+                    }]
             });
             break;
         case 'newOther':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
                 sidePagination: "server",
+                toolbar: "#EntityToolbar",
                 flat: true,
                 columns: [
                     {
-                    radio: true
-                }, {
-                    field: 'id',
-                    title: 'id',
-                    sortable: true,
-                    visible: false
-                }, {
-                    field: 'name',
-                    title: '产品名称',
-                    sortable: true
-                }, {
-                    field: 'date',
-                    title: '获批时间',
-                    sortable: true
-                }, {
-                    field: 'argMap.Main-ActorName',
-                    title: '负责人'
-                }, {
-                    field: 'process',
-                    title: '流程状态',
-                    sortable: true,
-                    formatter: 'processTran'
-                }]
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '产品名称',
+                        sortable: true
+                    }, {
+                        field: 'date',
+                        title: '获批时间',
+                        sortable: true
+                    }, {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'process',
+                        title: '流程状态',
+                        sortable: true,
+                        formatter: 'processTran'
+                    }]
             });
             break;
         case 'all': //todo
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
                 sidePagination: "server",
+
                 columns: [
                     {
-                    radio: true
-                    //visible:false
-                }, {
-                    field: 'id',
-                    title: 'id',
-                    visible: false
-                }, {
-                    field: 'name',
-                    title: '科研名称'
-                }, {
-                    field: 'WF_Type',
-                    title: '科研类型',
-                    formatter: "wfTypeTran"
-                }, {
-                    field: 'ActorList',
-                    title: '人员',
-                    formatter: "actorTran"
-                }, {
-                    field: 'Status',
-                    title: '状态',
-                    formatter: 'statusTran'
-                }, {
-                    field: 'operator',
-                    align: 'center',
-                    title: '操作',
-                    width: 75
-                }],
+                        radio: true
+                        //visible:false
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '科研名称'
+                    }, {
+                        field: 'WF_Type',
+                        title: '科研类型',
+                        formatter: "wfTypeTran"
+                    }, {
+                        field: 'ActorList',
+                        title: '人员',
+                        formatter: "actorTran"
+                    }, {
+                        field: 'Status',
+                        title: '状态',
+                        formatter: 'statusTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        width: 75
+                    }],
                 responseHandler: tableTrans
             });
             break;
@@ -1029,6 +1041,537 @@ var entityStates = {
     }
 };
 
+var viewUser;
+
+// 实体相关
+function searchUrl() {
+    return "/api/entity/" + viewUser + "/" + objType + "/all";
+}
+
+function searchView() {
+    console.log(objType);
+    switch (objType) {
+        case 'project':
+            viewTable.bootstrapTable('destroy').bootstrapTable({
+                url: searchUrl(),
+                sidePagination: "server",
+                toolbar: '#SearchToolbar',
+                columns: [
+                    {
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '名称',
+                        sortable: true
+                    }, {
+                        field: 'projtype',
+                        title: '类别',
+                        sortable: true,
+                        formatter: "typeTran"
+                    }, {
+                        field: 'projrank',
+                        title: '等级',
+                        sortable: true,
+                        formatter: "rankTran"
+                    }, {
+                        field: 'projbelong',
+                        title: '评分归属',
+                        sortable: true,
+                        formatter: "projbelong"
+                    }, {
+                        field: 'realDate',
+                        title: '实际结题时间',
+                        sortable: true
+                    }, {
+                        field: 'Status',
+                        title: '状态',
+                        sortable: true,
+                        formatter: 'statusTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作'
+                    }]
+            });
+            break;
+        case 'patent':
+            viewTable.bootstrapTable('destroy').bootstrapTable({
+                url: searchUrl(),
+                sidePagination: "server",
+                flat: true,
+                toolbar: '#SearchToolbar',
+                columns: [
+                    {
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '专利名称',
+                        sortable: true
+                    },
+                    {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'process',
+                        title: '流程状态',
+                        sortable: true,
+                        formatter: 'processTran'
+                    }]
+            });
+            break;
+        case 'paper': //todo
+            viewTable.bootstrapTable('destroy').bootstrapTable({
+                url: searchUrl(),
+                sidePagination: "server",
+                toolbar: '#SearchToolbar',
+                columns: [
+                    {
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '论文名称'
+                    }, {
+                        field: 'type',
+                        title: '论文类别',
+                        formatter: "typeTran"
+                    }, {
+                        field: 'pubDate',
+                        title: '发表日期'
+                    }, {
+                        field: 'ActorList',
+                        title: '参与者',
+                        formatter: "actorTran"
+                    }, {
+                        field: 'Status',
+                        title: '状态',
+                        formatter: 'statusTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
+                    }],
+                responseHandler: tableTrans
+            });
+            break;
+        case 'book':
+            viewTable.bootstrapTable('destroy').bootstrapTable({
+                url: searchUrl(),
+                sidePagination: "server",
+                toolbar: '#SearchToolbar',
+                flat: true,
+                columns: [
+                    {
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '著作名称',
+                        sortable: true
+                    }, {
+                        field: 'pubType',
+                        title: '出版类型',
+                        sortable: true,
+                        formatter: 'pubTypeTrans'
+                    }, {
+                        field: 'sumWord',
+                        title: '著作总字数',
+                        sortable: true
+                    }, {
+                        field: 'bkReward',
+                        title: '著作获奖情况',
+                        sortable: true
+                    }, {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'publisher',
+                        title: '出版社',
+                        sortable: true
+                    }, {
+                        field: 'Status',
+                        title: '状态',
+                        sortable: true,
+                        formatter: 'statusTran'
+                    }, {
+                        field: 'process',
+                        title: '流程状态',
+                        sortable: true,
+                        formatter: 'processTran'
+                    }]
+            });
+            break;
+        case 'achAppraisal':
+            viewTable.bootstrapTable('destroy').bootstrapTable({
+                url: searchUrl(),
+                sidePagination: "server",
+                toolbar: '#SearchToolbar',
+                flat: true,
+                columns: [
+                    {
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '成果名称',
+                        sortable: true
+                    }, {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'process',
+                        title: '流程状态',
+                        sortable: true,
+                        formatter: 'processTran'
+                    }]
+            });
+            break;
+        case 'achAward':
+            viewTable.bootstrapTable('destroy').bootstrapTable({
+                url: searchUrl(),
+                sidePagination: "server",
+                toolbar: '#SearchToolbar',
+                flat: true,
+                columns: [
+                    {
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '成果名称',
+                        sortable: true
+                    }, {
+                        field: 'achType',
+                        title: '成果类型',
+                        sortable: true,
+                        formatter: 'typeTran'
+                    }, {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'date',
+                        title: '获奖时间',
+                        sortable: true
+                    }, {
+                        field: 'Status',
+                        title: '状态',
+                        sortable: true,
+                        formatter: 'statusTran'
+                    }, {
+                        field: 'process',
+                        title: '流程状态',
+                        sortable: true,
+                        formatter: 'processTran'
+                    }]
+            });
+            break;
+        case 'achTran':
+            viewTable.bootstrapTable('destroy').bootstrapTable({
+                url: searchUrl(),
+                sidePagination: "server",
+                toolbar: '#SearchToolbar',
+                flat: true,
+                columns: [
+                    {
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '成果名称',
+                        sortable: true
+                    }, {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'process',
+                        title: '流程状态',
+                        sortable: true,
+                        formatter: 'processTran'
+                    }]
+            });
+            break;
+        case 'newFood':
+            viewTable.bootstrapTable('destroy').bootstrapTable({
+                url: searchUrl(),
+                sidePagination: "server",
+                toolbar: '#SearchToolbar',
+                flat: true,
+                columns: [
+                    {
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'foodName',
+                        title: '食品名称',
+                        sortable: true
+                    }, {
+                        field: 'newFoodDate',
+                        title: '获批时间',
+                        sortable: true
+                    }, {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'process',
+                        title: '流程状态',
+                        sortable: true,
+                        formatter: 'processTran'
+                    }]
+            });
+            break;
+        case 'newInstru':
+            viewTable.bootstrapTable('destroy').bootstrapTable({
+                url: searchUrl(),
+                sidePagination: "server",
+                toolbar: '#SearchToolbar',
+                flat: true,
+                columns: [
+                    {
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '食品名称',
+                        sortable: true
+                    }, {
+                        field: 'newInstruDate',
+                        title: '获批时间',
+                        sortable: true
+                    }, {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'process',
+                        title: '流程状态',
+                        sortable: true,
+                        formatter: 'processTran'
+                    }]
+            });
+            break;
+        case 'newMedicine':
+            viewTable.bootstrapTable('destroy').bootstrapTable({
+                url: searchUrl(),
+                sidePagination: "server",
+                toolbar: '#SearchToolbar',
+                flat: true,
+                columns: [
+                    {
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '药品名称',
+                        sortable: true
+                    }, {
+                        field: 'date',
+                        title: '获批时间',
+                        sortable: true
+                    }, {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'process',
+                        title: '流程状态',
+                        sortable: true,
+                        formatter: 'processTran'
+                    }]
+            });
+            break;
+        case 'newOther':
+            viewTable.bootstrapTable('destroy').bootstrapTable({
+                url: searchUrl(),
+                sidePagination: "server",
+                toolbar: '#SearchToolbar',
+                flat: true,
+                columns: [
+                    {
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '产品名称',
+                        sortable: true
+                    }, {
+                        field: 'date',
+                        title: '获批时间',
+                        sortable: true
+                    }, {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'process',
+                        title: '流程状态',
+                        sortable: true,
+                        formatter: 'processTran'
+                    }]
+            });
+            break;
+        case 'all':
+            viewTable.bootstrapTable('destroy').bootstrapTable({
+                url: searchUrl(),
+                sidePagination: "server",
+                toolbar: '#SearchToolbar',
+                columns: [
+                    {
+                        radio: true
+                        //visible:false
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '科研名称'
+                    }, {
+                        field: 'WF_Type',
+                        title: '科研类型',
+                        formatter: "wfTypeTran"
+                    }, {
+                        field: 'ActorList',
+                        title: '人员',
+                        formatter: "actorTran"
+                    }, {
+                        field: 'Status',
+                        title: '状态',
+                        formatter: 'statusTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        width: 75,
+                        formatter: view
+                    }],
+                responseHandler: tableTrans
+            });
+            break;
+    }
+}
+
+var searchStates = {
+    "search": {
+        url: "search",
+        enter: function (option) {
+            $('#SearchToolbar').show();
+            $('#viewUser').selectize({
+                valueField: 'id',
+                labelField: 'name',
+                searchField: 'name',
+                create: false,
+                maxItems: 1,
+                render: {
+                    option: function(item, escape) {
+                        return '<div>' +
+                            '<span class="name">' + escape(item.name) + '</span>' +
+                            '&nbsp;' + '&nbsp;' +
+                            '<span class="id">' + escape(item.id) + '</span>' +
+                            '&nbsp;' + '&nbsp;' +
+                            '<span class="dept">' + escape(item["col"].value || '') + '</span>' +
+                            '</div>';
+                    }
+                },
+                load: function(query, callback) {
+                    //if(!query.length) return callback(student);
+                    $.ajax({
+                        url: '/api/staff/json',
+                        type: 'get',
+                        dataType: 'json',
+                        data: {
+                            query: query
+                        },
+                        error: function() {
+                            callback();
+                        },
+                        success: function(res) {
+                            if(res==undefined||res==null){
+                                return;
+                            }
+                            callback(res);
+                        }
+                    });
+                }
+            });
+        },
+        leave: function () {
+            $('#SearchToolbar').hide();
+        }
+    },
+    "search.username": {
+        url: ':username',
+        enter: function (option) {
+            console.log("enter: " + this.name + "; param: " + JSON.stringify(option.param));
+            viewUser = option.param['username'];
+        },
+        update: function (option) {
+            console.log("update: " + this.name + "; param: " + JSON.stringify(option.param));
+            viewUser = option.param['username'];
+            searchView();
+        }
+    },
+    "search.username.type": {
+        url: ':type',
+        enter: function (option) {
+            console.log("enter: " + this.name + "; param: " + JSON.stringify(option.param));
+            objType = option.param['type'];
+            searchView();
+        },
+        update: function (option) {
+            console.log("update: " + this.name + "; param: " + JSON.stringify(option.param));
+            objType = option.param['type'];
+        }
+    }
+
+};
 
 
 var magStates = {
@@ -1095,6 +1638,7 @@ stateman
     .state(processStates)
     .state(entityStates)
     .state(magStates)
+    .state(searchStates)
     .on("notfound", function (path) {
         stateman.go("home", {replace: true});
     })
@@ -1104,14 +1648,14 @@ stateman
     .start({html5: true, "root": "/index"});
 
 
-//参与类型切换
-$('.level').click(function () {
-    $('.levelOption').html(this.children[0].text + '<span class="ace-icon fa fa-caret-down icon-on-right"></span>');
 
-    var cls = $(this).attr('class').replace("level", "").trim();
+$('.viewtype').click(function () {
+    $('.viewOption').html(this.children[0].text + '<span class="ace-icon fa fa-caret-down icon-on-right"></span>');
+
+    var cls = $(this).attr('class').replace("viewType", "").trim();
 
     console.log(stateman.current);
     console.log(cls);
-
-    stateman.go('^.' + cls, {param: {obj: objType}});
+    //
+    //stateman.go('^.' + cls, {param: {obj: objType}});
 });

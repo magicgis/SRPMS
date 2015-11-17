@@ -17,7 +17,6 @@ public class magPaper extends Paper {
         put("vol", "卷号");
         put("iss", "期号");
         put("bgPage", "起止页码");
-
     }};
 
     public magPaper() throws FileNotFoundException {

@@ -26,7 +26,7 @@
         <c:choose>
             <c:when test="${sessionScope.level == '1'}">
                 <li class="hyperlink task">
-                    <a >
+                    <a>
                         <i class="menu-icon fa fa-check-square-o "></i>
                         <span class="menu-text">待确认 </span>
                     </a>
@@ -325,6 +325,18 @@
         </li>
 
 
+        <c:choose>
+            <c:when test="${sessionScope.level == '3'}">
+                <li class="hyperlink search">
+                    <a>
+                        <i class="menu-icon fa fa-search "></i>
+                        <span class="menu-text">查找 </span>
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+            </c:when>
+        </c:choose>
+
         <li class="hyperlink mag">
             <a>
                 <i class="menu-icon glyphicon glyphicon-bookmark"></i>
@@ -346,7 +358,7 @@
             </c:when>
             <c:when test="${sessionScope.level == '2'|| sessionScope.level == '3'}">
                 <li class="">
-                    <a href="<c:url value="/user"/>">
+                    <a>
                         <i class="menu-icon glyphicon glyphicon-user"></i>
                         <span class="menu-text">教师信息 </span>
                     </a>

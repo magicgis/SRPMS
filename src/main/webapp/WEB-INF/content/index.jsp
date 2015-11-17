@@ -103,9 +103,6 @@
                                                         <li id="newBook">
                                                             <a>著作</a>
                                                         </li>
-                                                        <li class="newMag">
-                                                            <a>新增期刊</a>
-                                                        </li>
                                                     </ul>
                                                 </div>
                                                 <button class="btn btn-success allSubmit">
@@ -125,53 +122,34 @@
                                     <div id="EntityToolbar" style="display: none">
                                         <c:choose>
                                             <c:when test="${sessionScope.level == '3'}">
-                                                <form class="form-horizontal" role="form">
-                                                    <div class="form-group col-xs-12">
-                                                        <div class="row">
-                                                            <div class="btn-group col-xs-3">
-                                                                <button class="btn btn-primary dropdown-toggle"
-                                                                        data-toggle="dropdown">
-                                                                    信息添加
-                                                                    <span class="ace-icon fa fa-caret-down icon-on-right"></span>
-                                                                </button>
-                                                                <ul class="dropdown-menu dropdown-menu-left">
-                                                                    <li id="newPatent">
-                                                                        <a href="<c:url value="/patent/new"/> ">专利信息</a>
-                                                                    </li>
-                                                                    <li id="newProject">
-                                                                        <a href="<c:url value="/project/new"/> ">项目信息</a>
-                                                                    </li>
-                                                                    <li id="newAppaise">
-                                                                        <a href="<c:url value="/achAppraisal/new"/> ">鉴定信息</a>
-                                                                    </li>
-                                                                    <li id="newAchTran">
-                                                                        <a href="<c:url value="/achTran/new"/> ">转化信息</a>
-                                                                    </li>
-                                                                    <li id="newAchAward">
-                                                                        <a href="<c:url value="/achAward/new"/> ">获奖信息</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="col-xs-9">
-                                                                <label class="col-xs-3 control-label no-padding-right"
-                                                                       for="keyName">
-                                                                    输入姓名:
-                                                                </label>
-
-                                                                <div class="col-xs-7">
-                                                                    <input id="keyName" name="keyName"
-                                                                           class="col-xs-12 no-padding-right"
-                                                                           type="text">
-                                                                </div>
-                                                                <div class="col-xs-2">
-                                                                    <button class="btn btn-success btn-sm inquiryBtn"
-                                                                            type="button">查询
-                                                                    </button>
-                                                                </div>
-                                                            </div>
+                                                <div class="form-group col-xs-12">
+                                                    <div class="row">
+                                                        <div class="col-xs-6">
+                                                            <button class="btn btn-primary dropdown-toggle"
+                                                                    data-toggle="dropdown">
+                                                                信息添加
+                                                                <span class="ace-icon fa fa-caret-down icon-on-right"></span>
+                                                            </button>
+                                                            <ul class="dropdown-menu dropdown-menu-left">
+                                                                <li id="newPatent">
+                                                                    <a href="<c:url value="/patent/new"/> ">专利信息</a>
+                                                                </li>
+                                                                <li id="newProject">
+                                                                    <a href="<c:url value="/project/new"/> ">项目信息</a>
+                                                                </li>
+                                                                <li id="newAppaise">
+                                                                    <a href="<c:url value="/achAppraisal/new"/> ">鉴定信息</a>
+                                                                </li>
+                                                                <li id="newAchTran">
+                                                                    <a href="<c:url value="/achTran/new"/> ">转化信息</a>
+                                                                </li>
+                                                                <li id="newAchAward">
+                                                                    <a href="<c:url value="/achAward/new"/> ">获奖信息</a>
+                                                                </li>
+                                                            </ul>
                                                         </div>
                                                     </div>
-                                                </form>
+                                                </div>
                                             </c:when>
                                             <c:when test="${sessionScope.level == '1'}">
                                                 <div class="btn-group">
@@ -201,6 +179,37 @@
                                                 <button class=" newMag btn btn-primary btn-sm">
                                                     <i class="ace-icon fa fa-plus bigger-160"></i>添加期刊
                                                 </button>
+                                            </c:when>
+                                        </c:choose>
+                                    </div>
+                                    <div id="SearchToolbar" style="display: none">
+                                        <c:choose>
+                                            <c:when test="${sessionScope.level == '3'}">
+
+                                                <div class="input-group">
+                                                    <div class="input-group-btn">
+                                                        <button type="button"
+                                                                class="btn-sm btn dropdown-toggle viewOption"
+                                                                data-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                            类别 <span class="caret"></span></button>
+                                                        <ul class="dropdown-menu">
+                                                            <li class="viewType all"><a>所有</a></li>
+                                                            <li class="viewType project"><a>科研项目</a></li>
+                                                            <li class="viewType paper"><a>论文</a></li>
+                                                            <li class="viewType book"><a>著作</a></li>
+                                                            <li class="viewType patent"><a>专利</a></li>
+                                                            <li class="viewType "><a>成果鉴定</a></li>
+                                                            <li class="viewType "><a>成果转化</a></li>
+                                                            <li class="viewType "><a>成果获奖</a></li>
+                                                        </ul>
+                                                    </div><!-- /btn-group -->
+                                                    <select  class="form-control" id="viewUser"
+                                                            aria-label="...">
+                                                    </select>
+                                                </div>
+                                                <!-- /input-group -->
+
                                             </c:when>
                                         </c:choose>
                                     </div>

@@ -68,7 +68,7 @@ public class StandardServiceImp extends StandardBase implements StandardService 
         String stId = (String) map.get(stIdType);
 //        System.out.println(stId);
         Standard st = standardDao.getById(stId);
-        System.out.println(st.getValue());
+//        System.out.println(st.getValue());
         if (st == null) {
             calFlow.put(MESSAGE, "附表中没有相关规定");
             //        极值约束
@@ -137,3 +137,11 @@ public class StandardServiceImp extends StandardBase implements StandardService 
         return validInfo;
     }
 }//the end of the class
+
+
+
+
+
+
+
+

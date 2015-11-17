@@ -20,14 +20,9 @@ public class Paper extends StandardBase implements StandardCheckInf {
     }
 
     //    内部方法
-    public Map paramNullCheck(Map map,  Map pageElemName) {
+    public Map paramNullCheck(Map pageElemName, Map map) {
         return super.paramNullCheck(pageElemName, map);
     }
-
-//    public Map getScoreAndExtremumFromTable(StandardDao standardDao, Map info, String stdId) {
-//        return super.getScoreAndExtremumFromTable(standardDao, info, stdId);
-//    }
-
 
     @Override
     public Map paramNullCheck(Map map) {
@@ -80,6 +75,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
             }
 //            第一作者及通讯作者非我校职工
             if (myFirstAuth.size() == 0 && myChiefAuth.size() == 0) {
+
                 validInfo.put("msg", getMsg("2031"));
                 return validInfo;
             }
@@ -179,11 +175,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
             List<Map> authors = getActors(map);
 //            Double sum = Double.parseDouble((String) validInfo.get("sum"));
             double sum = (double) validInfo.get("sum");
-            for (Map author : authors) {
-                double temp = Double.parseDouble((String) author.get("score"));
-                sum -= temp;
-            }
-            if (sum < 0) {
+            if (super.totalScore(actors) - sum < 0) {
                 validInfo.put(MESSAGE, "个人分数分配总和超出总分！");
                 return validInfo;
             }
@@ -230,7 +222,6 @@ public class Paper extends StandardBase implements StandardCheckInf {
                 }
             }
         }
-//        List<Map> authors = getActors(map);
 
         validInfo.put(IS_VALID, true);
         validInfo.put(MESSAGE, "是否确认？");
