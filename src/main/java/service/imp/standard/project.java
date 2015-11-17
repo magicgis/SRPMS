@@ -72,32 +72,62 @@ public class project extends StandardBase implements StandardCheckInf {
     }
 
     @Override
-    public Map getFinalScore(Map map, double tableScore) {
+    public Map getFinalScore(Map map, double tableScore, double tableScore2) {
+        double calScore = 0;
+        Map validInfo = new HashMap();
+        validInfo.put(MESSAGE, DEFAULT_MSG);
+        validInfo.put(IS_VALID, DEFAULT_FLAG);
         int caseSlct = 0;
         List<Map> actors = new ArrayList<>();
-        List<Map> myActors = new ArrayList<>();
+        List<Map> myCheifActors = new ArrayList<>();
         List<Map> cheifActors = new ArrayList<>();
         List<Map> units = new ArrayList<>();
         units = getUnits(map);
         actors = getActors(map);
         cheifActors = getChiefActors(actors, (String) KEY_ROLE.get("cheifActor"));
-       myActors = getMyStaffActors(cheifActors);
-        if (map.get("attr").equals("联合项目") || map.get("attr").equals("子课题"))
-            if (myActors.size() != 0) caseSlct =1;//我校负责联合
-            else caseSlct =2;//非我校负责联合
-        else
-            if (myActors.size()!=0)
-
-            caseSlct = 3;//我校主持且负责
-            else
-            caseSlct = 4;//我校主持但不负责
+        myCheifActors = getMyStaffActors(cheifActors);
+//        立项
+        if (isVaildTime((String) map.get("apprDate"))) calScore += tableScore;
+//        结题
+        if ( map.get("realDate")!=null &&isVaildTime((String) map.get("realDate")))
+            calScore += tableScore2;
+//        到账
+        List<Map> funds = new ArrayList<>();
 
 
-////        我校主持我校负责人
-//        if(myActors.size()!=0 && !map.get("attr").equals("联合项目")) caseSlct = 1;
-////        非我校主持联合和子课题（自动分配）
-//        else if (map.get("attr").equals("联合项目")) caseSlct=2;
-////        我校主持非我校负责人（自动分配）
+//        是否是独立项目
+        if (map.get("attr").equals("独立项目")) caseSlct += 101;
+//        是否是负责人
+        if (myCheifActors.size() != 0) caseSlct += 10;
+//        是否是主持单位
+        if (units != null && units.size() != 0 && getMySchRank(units) == 1) caseSlct += 100;
+        boolean flag = false;
+        switch (caseSlct) {
+            case 0://不主持不负责不独立（自动）
+            case 10://不主持负责不独立
+                calScore = calScore / units.size();
+//                break;
+            case 100://主持不负责不独立（自动）
+            case 101://主持不负责独立
+                List<Map> resActors = new ArrayList<>();
+                map.put("hasSum", flag);
+                for (Map actor : actors) {
+                    int i = Integer.parseInt((String) actor.get("rank"));
+                    if (isMyStaff(actor))
+                        actor.put("score", calScore * positionWeight(actors.size(), i));
+                    else actor.put("score", 0);
+                    resActors.add(actor);
+                }
+                break;
+            case 11://不主持负责独立（分配）
+            case 111://主持负责独立
+                break;
+            case 110://主持负责不独立（分配/(n+1)）
+                break;
+            default://001不主持不负责独立
+                validInfo.put(MESSAGE, "文件未对此情况进行规定。");
+        }
+
         return null;
     }
 

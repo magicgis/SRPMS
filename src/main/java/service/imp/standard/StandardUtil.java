@@ -2,8 +2,10 @@ package service.imp.standard;
 
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,6 +63,15 @@ public class StandardUtil {
         m.find();
         String res = m.group();
         System.out.println(res.substring(3, res.length() - 11));
+    }
+    public Date stringToDate(String time){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return sdf.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     //获取关键角色参与人员列表Map其中包含本校和全部关键角色列表
