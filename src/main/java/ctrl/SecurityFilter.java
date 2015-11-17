@@ -19,7 +19,7 @@ public class SecurityFilter implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         Start = System.currentTimeMillis();
         if (httpServletRequest.getSession().getAttribute("user") == null) {
-            httpServletResponse.sendRedirect("login");
+            httpServletResponse.sendRedirect("/login");
             return false;
         }
         return true;
