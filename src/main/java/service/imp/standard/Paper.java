@@ -222,7 +222,6 @@ public class Paper extends StandardBase implements StandardCheckInf {
                 }
             }
         }
-//        List<Map> authors = getActors(map);
 
         validInfo.put(IS_VALID, true);
         validInfo.put(MESSAGE, "是否确认？");
