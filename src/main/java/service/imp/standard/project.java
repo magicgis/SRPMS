@@ -3,6 +3,7 @@ package service.imp.standard;
 import service.imp.StandardBase;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,15 +13,14 @@ import java.util.Map;
  */
 public class project extends StandardBase implements StandardCheckInf {
     final private Map KEY_ROLE = new HashMap() {{
-        put("firstActor", "负责人");
+        put("cheifActor", "负责人");
     }};
     final private Map PAGE_ELEM_NAME = new HashMap() {{
         put("name", "项目名称");
         put("attr", "项目属性");
-        put("newspaper.name", "报刊名称");
-        put("newspaper.standard.id", "报刊级别");
-        put("newspaper.period", "发表时间");
-        put("numWord", "论文字数");
+        put("apprDate", "立项时间");
+        put("projtype", "项目类别");
+        put("projrank", "项目等级");
     }};
 
     public project() throws FileNotFoundException {
@@ -36,7 +36,7 @@ public class project extends StandardBase implements StandardCheckInf {
     public Map isValid(Map map) {
         Map validInfo = new HashMap();
         validInfo.put(IS_VALID, false);
-        validInfo.put(MESSAGE, "未处理");
+        validInfo.put(MESSAGE, "有效性未处理");
         List<Map> actors = getActors(map);
 //        人员列表不能为空
         if (actors == null || actors.size() == 0) {
@@ -64,15 +64,40 @@ public class project extends StandardBase implements StandardCheckInf {
 
     @Override
     public Map isExtrrmumBand(Map map, double min, double max) {
-
+        Map validInfo = new HashMap();
+        validInfo.put(IS_VALID, false);
+        validInfo.put(MESSAGE, "约束未处理");
+        validInfo.put(IS_VALID, true);
         return null;
     }
 
     @Override
     public Map getFinalScore(Map map, double tableScore) {
-//        我校主持我校负责人
-//        非我校主持联合和子课题（自动分配）
-//        我校主持非我校负责人（自动分配）
+        int caseSlct = 0;
+        List<Map> actors = new ArrayList<>();
+        List<Map> myActors = new ArrayList<>();
+        List<Map> cheifActors = new ArrayList<>();
+        List<Map> units = new ArrayList<>();
+        units = getUnits(map);
+        actors = getActors(map);
+        cheifActors = getChiefActors(actors, (String) KEY_ROLE.get("cheifActor"));
+       myActors = getMyStaffActors(cheifActors);
+        if (map.get("attr").equals("联合项目") || map.get("attr").equals("子课题"))
+            if (myActors.size() != 0) caseSlct =1;//我校负责联合
+            else caseSlct =2;//非我校负责联合
+        else
+            if (myActors.size()!=0)
+
+            caseSlct = 3;//我校主持且负责
+            else
+            caseSlct = 4;//我校主持但不负责
+
+
+////        我校主持我校负责人
+//        if(myActors.size()!=0 && !map.get("attr").equals("联合项目")) caseSlct = 1;
+////        非我校主持联合和子课题（自动分配）
+//        else if (map.get("attr").equals("联合项目")) caseSlct=2;
+////        我校主持非我校负责人（自动分配）
         return null;
     }
 

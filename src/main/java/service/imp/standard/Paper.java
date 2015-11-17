@@ -20,7 +20,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
     }
 
     //    内部方法
-    public Map paramNullCheck(Map map,  Map pageElemName) {
+    public Map paramNullCheck(Map pageElemName, Map map) {
         return super.paramNullCheck(pageElemName, map);
     }
 
@@ -80,6 +80,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
             }
 //            第一作者及通讯作者非我校职工
             if (myFirstAuth.size() == 0 && myChiefAuth.size() == 0) {
+
                 validInfo.put("msg", getMsg("2031"));
                 return validInfo;
             }
