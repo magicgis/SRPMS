@@ -24,11 +24,6 @@ public class Paper extends StandardBase implements StandardCheckInf {
         return super.paramNullCheck(pageElemName, map);
     }
 
-//    public Map getScoreAndExtremumFromTable(StandardDao standardDao, Map info, String stdId) {
-//        return super.getScoreAndExtremumFromTable(standardDao, info, stdId);
-//    }
-
-
     @Override
     public Map paramNullCheck(Map map) {
         return null;
