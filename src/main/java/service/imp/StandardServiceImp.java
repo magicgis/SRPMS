@@ -74,22 +74,23 @@ public class StandardServiceImp extends StandardBase implements StandardService 
             //        极值约束
             calFlow = standardCheck.isExtrrmumBand(map, 0, 0);
             if (!(boolean) calFlow.get(IS_VALID)) return calFlow;
-            calFlow = standardCheck.getFinalScore(map, 0);
+            calFlow = standardCheck.getFinalScore(map, 0, 0);
             return calFlow;
 //            return calFlow;
         }
         else {
             BigDecimal sumt = st.getValue();
+            BigDecimal sumt2 = st.getValue();
             BigDecimal mint = st.getMin() == null ? new BigDecimal(0) : st.getMin();
             BigDecimal maxt = st.getMax() == null ? new BigDecimal(999):st.getMax();
             double sum = sumt.doubleValue();
+            double sum2 = sumt2.doubleValue();
             double min = mint.doubleValue();
             double max = maxt.doubleValue();
-//            System.out.println(st.getValue());
             //        极值约束
             calFlow = standardCheck.isExtrrmumBand(map, min, max);
             if (!(boolean) calFlow.get(IS_VALID)) return calFlow;
-            calFlow = standardCheck.getFinalScore(map, sum);
+            calFlow = standardCheck.getFinalScore(map, sum, sum2);
             return calFlow;
         }
     }

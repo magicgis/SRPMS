@@ -19,7 +19,7 @@ public interface StandardCheckInf {
     Map isExtrrmumBand(Map map, double min, double max);
 
     //    根据完整信息确定权重，并且根据文件决定分数是自动分配还是给出总分
-    Map getFinalScore(Map map, double tableScore);
+    Map getFinalScore(Map map, double tableScore, double tableScore2);
 
     //    确认检测，考察分数分配是否符合规定
     Map confirmCheck(Map map, Map score);

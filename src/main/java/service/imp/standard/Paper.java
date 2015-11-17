@@ -3,9 +3,10 @@ package service.imp.standard;
 import service.imp.StandardBase;
 
 import java.io.FileNotFoundException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by DELL on 2015/7/20.
@@ -43,47 +44,38 @@ public class Paper extends StandardBase implements StandardCheckInf {
         Map validInfo = new HashMap();
         validInfo.put(IS_VALID, DEFAULT_FLAG);
         validInfo.put(MESSAGE, DEFAULT_MSG);
-        try {
-//            初始化
-            validInfo.put(MESSAGE, getMsg("1001"));
+        //            初始化
+        validInfo.put(MESSAGE, getMsg("1001"));
 //           作者列表有效性检验
-            List<Map> authors = getActors(info);
-            if (authors == null || authors.size() == 0) {
-                validInfo.put(MESSAGE, getValidMsg("2001", "actors", "2002"));
-                return validInfo;
-            }
-            String dateStr = (String) info.get("pubDate");
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = sdf.parse(dateStr);
-            Date before = sdf.parse((String) sysValidTime().get("startTime"));
-            Date after = sdf.parse((String) sysValidTime().get("endTime"));
-
-            if (date.getTime() > after.getTime() || date.getTime() < before.getTime()) {
-                validInfo.put(MESSAGE,"文章录用时间应在"+sysValidTime().get("startTime")+"到"+sysValidTime().get("endTime")+"之间");
-                return validInfo;
+        List<Map> authors = getActors(info);
+        if (authors == null || authors.size() == 0) {
+            validInfo.put(MESSAGE, getValidMsg("2001", "actors", "2002"));
+            return validInfo;
         }
-            List<Map> actors = getActors(info);
-            List<Map> myActors = getMyActors(actors);
-            List<Map> myFirstAuth = getChiefActors(myActors, (String) KEY_ROLE.get("firstAuthor"));
-            List<Map> myStaffActors = getMyStaffActors(actors);
-            List<Map> myChiefAuth = getChiefActors(myStaffActors,(String) KEY_ROLE.get("chiefAuthor"));
-            for (Map author : authors) {
-                String unit = (String) author.get("unit");
-                if (unit == null || unit.trim().equals("")) {
-                    validInfo.put(MESSAGE, "请填写作者所属单位");
-                }
+        String dateStr = (String) info.get("pubDate");
+        if (isVaildTime(dateStr)){
+            validInfo.put(MESSAGE,"文章录用时间应在"+sysValidTime().get("startTime")+"到"+sysValidTime().get("endTime")+"之间");
+            return validInfo;
+    }
+        List<Map> actors = getActors(info);
+        List<Map> myActors = getMyActors(actors);
+        List<Map> myFirstAuth = getChiefActors(myActors, (String) KEY_ROLE.get("firstAuthor"));
+        List<Map> myStaffActors = getMyStaffActors(actors);
+        List<Map> myChiefAuth = getChiefActors(myStaffActors,(String) KEY_ROLE.get("chiefAuthor"));
+        for (Map author : authors) {
+            String unit = (String) author.get("unit");
+            if (unit == null || unit.trim().equals("")) {
+                validInfo.put(MESSAGE, "请填写作者所属单位");
             }
+        }
 //            第一作者及通讯作者非我校职工
-            if (myFirstAuth.size() == 0 && myChiefAuth.size() == 0) {
+        if (myFirstAuth.size() == 0 && myChiefAuth.size() == 0) {
 
-                validInfo.put("msg", getMsg("2031"));
-                return validInfo;
-            }
-            validInfo.put(IS_VALID, true);
-            validInfo.put(MESSAGE, getMsg("1001"));
-        } catch (ParseException e) {
-            e.printStackTrace();
+            validInfo.put("msg", getMsg("2031"));
+            return validInfo;
         }
+        validInfo.put(IS_VALID, true);
+        validInfo.put(MESSAGE, getMsg("1001"));
         return validInfo;
 
     }
@@ -104,7 +96,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
     }
 
     @Override
-    public Map getFinalScore(Map map, double tableScore) {
+    public Map getFinalScore(Map map, double tableScore, double tableScore2) {
         Map validInfo = new HashMap();
         validInfo.put(MESSAGE, DEFAULT_MSG);
         validInfo.put(IS_VALID, DEFAULT_FLAG);

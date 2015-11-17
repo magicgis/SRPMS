@@ -73,7 +73,7 @@ public class patent extends StandardBase implements StandardCheckInf {
     }
 
     @Override
-    public Map getFinalScore(Map map, double tableScore) {
+    public Map getFinalScore(Map map, double tableScore, double tableScore2) {
         Map validInfo = new HashMap();
         validInfo.put(IS_VALID, true);
         validInfo.put(MESSAGE, "分数计算完成");

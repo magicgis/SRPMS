@@ -257,5 +257,15 @@ public class StandardBase {
         }
         return sum;
     }
+    public  boolean isVaildTime(String testedTime){
+        boolean flag = false;
+        Date before = tool.stringToDate((String) sysValidTime().get("startTime"));
+        Date after = tool.stringToDate((String) sysValidTime().get("endTime"));
+        Date date = tool.stringToDate(testedTime);
+        if (date.getTime() > after.getTime() || date.getTime() < before.getTime())
+            flag = true;
+        return flag;
+    }
+
 
 }//the end of the class

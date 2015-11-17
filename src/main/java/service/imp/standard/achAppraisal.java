@@ -60,7 +60,7 @@ public class achAppraisal extends StandardBase implements StandardCheckInf{
     }
 
     @Override
-    public Map getFinalScore(Map map, double tableScore) {
+    public Map getFinalScore(Map map, double tableScore, double tableScore2) {
         Map validInfo = new HashMap();
         validInfo.put(IS_VALID, false);
         validInfo.put(MESSAGE, "算分未处理");
