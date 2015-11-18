@@ -2,6 +2,7 @@ package entity;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Map;
@@ -26,6 +27,8 @@ public class Food {
     private Standard standard;
 
     @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "id", nullable = false, length = 255)
     public String getId() {
         return id;

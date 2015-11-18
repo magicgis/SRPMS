@@ -1,10 +1,12 @@
 package service.imp;
 
+import dao.FoodDao;
 import entity.Food;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.FoodService;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -12,8 +14,12 @@ import java.util.List;
  */
 @Service
 public class FoodServiceImp extends BaseServiceImp<Food> implements FoodService {
+    @Autowired
+    FoodDao foodDao;
+
     @Override
     public List<Food> search(String keyword, String sort, String order) {
-        return new ArrayList<>();
+        List<String> keys = Arrays.asList("name", "date");
+        return foodDao.findByArrayFuz(keys, keyword, sort, order);
     }
 }
