@@ -716,9 +716,10 @@ function entityView() {
                         sortable: true,
                         formatter: 'sumWordTran'
                     }, {
-                        field: 'bkReward',
+                        field: 'isAward',
                         title: '著作获奖情况',
-                        sortable: true
+                        sortable: true,
+                        formatter: 'bkAwardTran'
                     }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'

@@ -327,9 +327,9 @@ function actorTran(value, row) {
 
 // 著作获奖是否翻译
 function bkAwardTran(value, row){
-    if(value == '0') {
+    if(value == 'false') {
         return '未获奖';
-    } else if(value == '1') {
+    } else if(value == 'true') {
         return row['variableMap.WF_Latest.awardtype'];
     } else {
         return '-';

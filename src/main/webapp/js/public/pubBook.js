@@ -93,7 +93,7 @@ function getActorsData() {
 function getPubType() {//awardtype
 
     var $awardtype = $('#awarDtype').selectize({ // 初始化 鉴定等级
-        valueField: 'id',
+        valueField: 'value',
         labelField: 'value',
         maxItems: 1,
         create: true,
