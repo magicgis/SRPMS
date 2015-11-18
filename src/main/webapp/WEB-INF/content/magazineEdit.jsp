@@ -199,6 +199,7 @@
 <!-- /.main-container -->
 <script src='<c:url value="/js/public/public.js"/>'></script>
 <script src='<c:url value="/js/public/pubMag.js"/>'></script>
+<script src='<c:url value="/js/public/route.js"/>'></script>
 
 <c:choose>
     <c:when test="${sessionScope.level == '1'}">

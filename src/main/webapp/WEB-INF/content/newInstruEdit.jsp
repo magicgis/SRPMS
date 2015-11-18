@@ -337,6 +337,8 @@
 </body>
 <script src='<c:url value="/js/public/public.js"/>'></script>
 <script src='<c:url value="/js/public/pubInstru.js"/>'></script>
+<script src='<c:url value="/js/public/route.js"/>'></script>
+
 <script type="text/javascript">
     $(function ($) {
         $('.date-picker').datepicker({
