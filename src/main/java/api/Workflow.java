@@ -154,7 +154,8 @@ public class Workflow {
             for (Map<String, Object> u : actors) {
                 //获取用户id
                 String aId = (String) u.get("staff.id");
-                if (aList.contains(aId)) {
+                //避免多次分发任务以及跳过校外人员和学生
+                if (aList.contains(aId) || "9998".equals(aId) || "9999".equals(aId)) {
                     continue;
                 }
                 aList.add(aId);
