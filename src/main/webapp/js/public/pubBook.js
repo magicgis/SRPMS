@@ -108,8 +108,8 @@ function getPubType() {//awardtype
         valueField: 'id',
         labelField: 'value',
         options: [
-            {"id": "0", "value": "否"},
-            {"id": "1", "value": "是"}],
+            {"id": "false", "value": "否"},
+            {"id": "true", "value": "是"}],
         maxItems: 1,
         create: false
     });
@@ -134,7 +134,7 @@ function getPubType() {//awardtype
 }
 
 function IsAward() {
-    if($('#isAward').val() == '1') {
+    if($('#isAward').val() == 'true') {
         enableSelectize($('#awarDtype').selectize());
     } else {
         $('#awarDtype').selectize()[0].selectize.setValue("");

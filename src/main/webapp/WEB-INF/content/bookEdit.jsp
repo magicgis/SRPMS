@@ -465,7 +465,7 @@
 	    if( !isNull(isAward) ) { // 用户选择了是否获奖
 		    DisplayForm($('#isAward').selectize(), isAward, 0);
 		    IsAward();
-		    if(isAward == 1) {   // 用户选了“是”
+		    if(isAward == 'true') {   // 用户选了“是”
 			    enableSelectize($awardtype);
 			    DisplayForm($awardtype, latestInfo['awardtype'], 0);
 		    }
