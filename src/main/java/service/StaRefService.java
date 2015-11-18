@@ -31,13 +31,15 @@ public interface StaRefService extends BaseService<StaRef> {
 
     /**
      * todo
+     * 根据表现层数据
      * 这儿基本没有考虑特殊情况，以后需要添加
      * 比如学生，比如挂名多个单位
      *
-     * @param entity
-     * @param type
+     * @param entity 实体信息
+     * @param type   类型
      * @param actors
      */
     void insertRelation(String entity, String type, List<Map> actors);
+
 
 }

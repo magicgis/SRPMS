@@ -151,11 +151,16 @@ public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefSe
             StaRef staRef = new StaRef();
             staRef.setEntityId(entity);
             staRef.setType(type);
-            staRef.setScore(BigDecimal.valueOf(Double.valueOf((String) actor.get("score"))));
+            BigDecimal score = BigDecimal.valueOf(Double.valueOf((String) actor.get("score")));
+            if (score.compareTo(BigDecimal.ZERO) == 0) {
+                continue;
+            }
+            staRef.setScore(score);
             staRef.setRole("1".equals(actor.get("rank")) ? 1 : 0);
             staRef.setStaff(staffDao.getById((String) actor.get("staff.id")));
             staRef.setUnit((String) actor.get("unit"));
             staRefDao.save(staRef);
         }
     }
+
 }

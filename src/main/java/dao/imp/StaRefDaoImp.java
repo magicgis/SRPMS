@@ -32,7 +32,7 @@ public class StaRefDaoImp extends BaseDaoImp<StaRef> implements StaRefDao {
 
     @Override
     public void removeRelation(String entity, String type) {
-        String hql = "delete StaRef where entity = '" + entity + "' and type = '" + type + "'";
+        String hql = "delete StaRef where entityId = '" + entity + "' and type = '" + type + "'";
         try {
             getCurrentSession().createQuery(hql);
         } catch (Exception e) {

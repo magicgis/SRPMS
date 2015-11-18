@@ -2,6 +2,7 @@ package api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
+import service.DeptRefService;
 import service.StaRefService;
 
 import javax.ws.rs.GET;
@@ -18,6 +19,8 @@ import java.util.List;
 public class EntityApi {
     @Autowired
     StaRefService staRefService;
+    @Autowired
+    DeptRefService deptRefService;
 
     /**
      * todo wtf!
@@ -47,6 +50,18 @@ public class EntityApi {
         }
         else {
             return staRefService.getEntity(id, type, real);
+        }
+    }
+
+    @GET
+    @Path("/col/{id}/{type}")
+    @Produces("application/json;charset=UTF-8")
+    public List<Object> getDeptList(@PathParam("id") String id, @PathParam("type") String type) {
+        if ("all".equals(type)) {
+            return deptRefService.getEntity(id, null);
+        }
+        else {
+            return deptRefService.getEntity(id, type);
         }
     }
 }
