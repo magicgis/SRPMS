@@ -309,7 +309,12 @@ function paperTypeTran(value) {
 }
 
 function sumWordTran(value) {
-    return value + '万字';
+    if(!isNull(value)){
+        return value + '万字';
+    }else{
+        return;
+    }
+
 }
 
 // 成员翻译
