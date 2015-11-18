@@ -16,7 +16,7 @@ public class StaffDaoImp extends BaseDaoImp<Staff> implements StaffDao {
             for (String s : keys) {
                 where = where + s + " LIKE " + "'%" + keyword + "%' OR ";
             }
-            hql += " and " + where;
+            hql += " and " + where.substring(0,where.length()-3);
         }
         if (sort != null) {
             hql = hql + " order by " + sort + " " + order;
