@@ -382,6 +382,8 @@
 </script>
 <script src='<c:url value="/js/public/public.js"/>'></script>
 <script src='<c:url value="/js/public/pubPatent.js"/>'></script>
+<script src='<c:url value="/js/public/route.js"/>'></script>
+
 <script>
 
     getPatType(); // 初始化 专利类型
