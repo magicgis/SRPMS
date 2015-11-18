@@ -35,11 +35,27 @@
             </a>
         </div>
 
-        <div class="navbar-buttons  nav navbar-top-links navbar-right navbar-header pull-right" role="navigation">
-                    <button>
-                        <span class="user-info" style="font-size: 18px">${sessionScope.user.staff.name}</span>
-                    </button>
-        </div>
+        <ul class="nav ace-nav pull-right">
+            <li class="light-blue">
+                <a href="#">
+                    <span class="user-info">
+                        <small> 当前用户:<br></small>
+                        ${sessionScope.user.staff.name}
+                    </span>
+                </a>
+            </li>
+            <li class="light-blue">
+                <a href="#">
+                    <i class="ace-icon fa fa-cog"></i>
+                </a>
+            </li>
+
+            <li class="light-blue">
+                <a href="<c:url value="/logout"/>">
+                    <i class="ace-icon fa fa-power-off"></i>
+                </a>
+            </li>
+        </ul>
     </div>
     <!-- /.navbar-container -->
 </div>
