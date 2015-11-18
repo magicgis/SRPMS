@@ -86,36 +86,48 @@ public class project extends StandardBase implements StandardCheckInf {
         actors = getActors(map);
         cheifActors = getChiefActors(actors, (String) KEY_ROLE.get("cheifActor"));
         myCheifActors = getMyStaffActors(cheifActors);
+        boolean isAppr = (boolean) map.get("isAppr");
+//        是否立项
+        if (isAppr) {
 //        立项
-        if (!map.get("projrank").equals("横向")
-                && isVaildTime((String) map.get("apprDate")))
-            calScore += tableScore;
+            if (!map.get("projrank").equals("横向")
+                    && isVaildTime((String) map.get("apprDate")))
+                calScore += tableScore;
 //        结题
-        if (!map.get("projrank").equals("横向")
-                && map.get("realDate") != null
-                && isVaildTime((String) map.get("realDate")))
-            calScore += tableScore2;
+            if (!map.get("projrank").equals("横向")
+                    && map.get("realDate") != null
+                    && isVaildTime((String) map.get("realDate")))
+                calScore += tableScore2;
 //        到账
-        List<Map> funds = new ArrayList<>();
-        funds = (List<Map>) map.get("fund");
-        for (Map fund : funds) {
-            if (isVaildTime((String) fund.get("time"))) {
-                double res = Double.parseDouble((String) map.get("mny"))
-                        - Double.parseDouble((String) map.get("outMny"));
-                calScore += getMoneyWeight(map, res);
+            List<Map> funds = new ArrayList<>();
+            funds = (List<Map>) map.get("fund");
+            for (Map fund : funds) {
+                if (isVaildTime((String) fund.get("time"))) {
+                    double res = Double.parseDouble((String) map.get("mny"))
+                            - Double.parseDouble((String) map.get("outMny"));
+                    calScore += getMoneyWeight(map, res);
+                }
             }
-        }
+
 //        是否是独立项目
-        if (map.get("attr").equals("独立项目")) caseSlct += 101;
+            if (map.get("attr").equals("独立项目")) caseSlct += 101;
 //        是否是负责人
-        if (myCheifActors.size() != 0) caseSlct += 10;
+            if (myCheifActors.size() != 0) caseSlct += 10;
 //        是否是主持单位
-        if (units != null && units.size() != 0 && getMySchRank(units) == 1) caseSlct += 100;
+            if (units != null && units.size() != 0 && getMySchRank(units) == 1) caseSlct += 100;
+        }
+//        未立项
+        else {
+            calScore = tableScore;
+            if (!map.get("attr").equals("独立项目"))
+                calScore /= 5;
+            caseSlct = 111;
+        }
         boolean flag = false;
         switch (caseSlct) {
             case 0://不主持不负责不独立（自动）
             case 10://不主持负责不独立
-                calScore = calScore / (units.size()+1);
+                calScore = calScore / (units.size() + 1);
 //                break;
             case 100://主持不负责不独立（自动）
             case 101://主持不负责独立
@@ -128,29 +140,29 @@ public class project extends StandardBase implements StandardCheckInf {
                     else actor.put("score", 0);
                     resActors.add(actor);
                 }
-                validInfo.put(MESSAGE,"按照文件规定分数为自动分配");
-                validInfo.put(IS_VALID,true);
-                validInfo.put("actors",resActors);
+                validInfo.put(MESSAGE, "按照文件规定分数为自动分配");
+                validInfo.put(IS_VALID, true);
+                validInfo.put("actors", resActors);
                 return validInfo;
 //                break;
             case 11://不主持负责独立（分配）
             case 111://主持负责独立
-                validInfo.put(IS_VALID,true);
-                validInfo.put(MESSAGE,"分数需要分配");
-                validInfo.put("hasSum",true);
-                validInfo.put("sum",calScore);
-                return  validInfo;
+                validInfo.put(IS_VALID, true);
+                validInfo.put(MESSAGE, "分数需要分配");
+                validInfo.put("hasSum", true);
+                validInfo.put("sum", calScore);
+                return validInfo;
 //                break;
             case 110://主持负责不独立（分配/(n+1)）
-                validInfo.put(IS_VALID,true);
-                validInfo.put(MESSAGE,"分数需要分配");
-                validInfo.put("hasSum",true);
-                validInfo.put("sum",calScore/(units.size()+1));
-                return  validInfo;
+                validInfo.put(IS_VALID, true);
+                validInfo.put(MESSAGE, "分数需要分配");
+                validInfo.put("hasSum", true);
+                validInfo.put("sum", calScore / (units.size() + 1));
+                return validInfo;
 //                break;
             default://001不主持不负责独立
                 validInfo.put(MESSAGE, "文件未对此情况进行规定。");
-                validInfo.put(IS_VALID,false);
+                validInfo.put(IS_VALID, false);
                 return validInfo;
         }
 //        return null;
@@ -161,47 +173,60 @@ public class project extends StandardBase implements StandardCheckInf {
         Map validInfo = new HashMap();
         validInfo.put(IS_VALID, false);
         List<Map> actors = (List<Map>) map.get("actors");
-        if (map.get("score")!=null){
+        boolean isAppr = (boolean) map.get("isAppr");
+        if (map.get("score") != null) {
             double sum = Double.parseDouble((String) map.get("score"));
-            if (!isSumCheckPass(sum,actors)){
-                validInfo.put(MESSAGE,"分配分数超出总分。");
+
+            if (!isSumCheckPass(sum, actors)) {
+                validInfo.put(MESSAGE, "分配分数超出总分。");
                 return validInfo;
             }
             int count = 0;
-            for (Map actor : actors){
-                if (Double.parseDouble((String) actor.get("score"))!=0 ) count++;
+            for (Map actor : actors) {
+                if (Double.parseDouble((String) actor.get("score")) != 0) count++;
             }
-            String rank = (String) map.get("projrank");
             int limit = 0;
-            if (rank.equals("国家级")) limit=9;
-            else if (rank.equals("省部级"))limit=6;
-            else if (rank.equals("厅局级"))limit=5;
-            else if (rank.equals("校级"))limit=3;
-            else limit=999;
-            if (count>limit){
-                validInfo.put(MESSAGE,"本项目至多为"+limit+"个人分配分数");
-                return validInfo;
-            }
-            int actorNum = actors.size();
-            List<Map> cheifActors = getChiefActors(actors, (String) KEY_ROLE.get("cheifActor"));
-            for (Map cheifActor : cheifActors){
-                double chScore = Double.parseDouble((String) cheifActor.get("score"));
-                if (actorNum<=3&&(chScore/sum)>0.7){
-                    validInfo.put(MESSAGE,"负责人分数不应超过70%.");
+            if (isAppr) {
+                String rank = (String) map.get("projrank");
+                if (rank.equals("国家级")) limit = 9;
+                else if (rank.equals("省部级")) limit = 6;
+                else if (rank.equals("厅局级")) limit = 5;
+                else if (rank.equals("校级")) limit = 3;
+                else limit = 999;
+                if (count > limit) {
+                    validInfo.put(MESSAGE, "本项目至多为" + limit + "个人分配分数");
                     return validInfo;
                 }
-                if (actorNum<=6&&(chScore/sum)>0.6){
-                    validInfo.put(MESSAGE,"负责人分数不应超过60%.");
-                    return validInfo;
+                int actorNum = actors.size();
+                List<Map> cheifActors = getChiefActors(actors, (String) KEY_ROLE.get("cheifActor"));
+                for (Map cheifActor : cheifActors) {
+                    double chScore = Double.parseDouble((String) cheifActor.get("score"));
+                    if (actorNum <= 3 && (chScore / sum) > 0.7) {
+                        validInfo.put(MESSAGE, "负责人分数不应超过70%.");
+                        return validInfo;
+                    }
+                    if (actorNum <= 6 && (chScore / sum) > 0.6) {
+                        validInfo.put(MESSAGE, "负责人分数不应超过60%.");
+                        return validInfo;
+                    }
+                    if ((chScore / sum) > 0.5) {
+                        validInfo.put(MESSAGE, "负责人分数不应超过50%.");
+                        return validInfo;
+                    }
                 }
-                if ((chScore/sum)>0.5){
-                    validInfo.put(MESSAGE,"负责人分数不应超过50%.");
+            } else {
+                if (map.get("projtype").equals("科研项目"))
+                    limit = 3;
+                else
+                    limit = 5;
+                if (count > limit) {
+                    validInfo.put(MESSAGE, "本项目至多为" + limit + "个人分配分数");
                     return validInfo;
                 }
             }
         }
-        validInfo.put(IS_VALID,true);
-        validInfo.put(MESSAGE,"确认提交？");
+        validInfo.put(IS_VALID, true);
+        validInfo.put(MESSAGE, "确认提交？");
         return validInfo;
     }
 
