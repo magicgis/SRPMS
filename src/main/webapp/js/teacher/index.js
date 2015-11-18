@@ -159,8 +159,8 @@ function processView() {
                     }, {
                         field: 'pubType',
                         title: '出版类型',
-                        sortable: true,
-                        formatter: 'pubTypeTrans'
+                        sortable: true
+                        //formatter: 'pubTypeTrans'
                     }, {
                         field: 'sumWord',
                         title: '著作总字数',

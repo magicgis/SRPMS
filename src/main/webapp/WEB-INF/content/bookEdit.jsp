@@ -398,6 +398,7 @@
     getPubType();//选择框
     upToLoadFile();//文件上传
     getDept();
+    //IsAward();
 
     $('#confirmC').hide();
     var filesData;
@@ -542,6 +543,7 @@
 //    });
 
     $('#isAward').change(function () {
+        console.log($('#isAward').val());
 	    IsAward();
     });
     //监听 分配分数

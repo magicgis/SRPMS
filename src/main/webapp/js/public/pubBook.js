@@ -7,15 +7,16 @@ var Main_ActorName;
 var replyByCol, replyByDep;
 var $actorTable = $('#actorTable');
 var awarDtype= {
-     "1020":
+     "公开出版著作":
             [{"id":"10201","value":"国家图书奖"},{"id":"10202","value":"全国优秀科技图书奖（科技进步奖科技著作）一等奖"},{"id":"10203","value":"全国优秀科技图书奖（科技进步奖科技著作）二等奖"},{"id":"10204","value":"全国优秀科技图书奖（科技进步奖科技著作）三等奖"}],
-    "1021":
+    "教育部规划教材":
             [{"id":"10211","value":"国家优秀教材一等奖"},{"id":"10212","value":"国家优秀教材二等奖"},{"id":"10213","value":"国家优秀教材三等奖"}],
 
-    "1022":
+    "行业规划教材":
             [{"id":"10221","value":"“新世纪全国高等中医药优秀教材”奖一等奖"},{"id":"10222","value":"“新世纪全国高等中医药优秀教材”奖二等奖"},{"id":"10223","value":"“新世纪全国高等中医药优秀教材”奖三等奖"}],
 
-    "1023":[{"id":"1023","value":""}]};
+    "协编教材":[{"id":"10231","value":""}],
+    "其他教材":[{"id":"10241","value":""}]};
 // 将对话框里的值加载进成员表
 function subActorInfo(index, flag) {
     var id = $('#actor').val();
@@ -92,7 +93,7 @@ function getActorsData() {
 function getPubType() {//awardtype
 
     var $awardtype = $('#awarDtype').selectize({ // 初始化 鉴定等级
-        valueField: 'value',
+        valueField: 'id',
         labelField: 'value',
         maxItems: 1,
         create: true,
@@ -113,14 +114,15 @@ function getPubType() {//awardtype
         create: false
     });
     $('#pubType').selectize({
-        valueField: 'id',
+        valueField: 'value',
         labelField: 'value',
         create: true,
         options: [
             {"id": "1020", "value": "公开出版著作"},
             {"id": "1021", "value": "教育部规划教材"},
-            {"id": "1022", "value": "协编教材"},
-            {"id": "1023", "value": "其他教材"}],
+            {"id": "1022", "value": "行业规划教材"},
+            {"id": "1023", "value": "协编教材"},
+            {"id": "1024", "value": "其他教材"}],
         maxItems: 1,
         onChange: function () {
             var awardtypes = awarDtype[$('#pubType').val()];
