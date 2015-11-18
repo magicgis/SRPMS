@@ -1,5 +1,6 @@
 package service;
 
+import entity.BaseInfo;
 import entity.DeptRef;
 
 import java.util.List;
@@ -20,5 +21,7 @@ public interface DeptRefService extends BaseService<DeptRef> {
     Object getEntity(DeptRef deptRef);
 
     List<Object> getEntity(String id, String type);
+
+    void insertRelation(String entityId, String type, BaseInfo dept);
 
 }

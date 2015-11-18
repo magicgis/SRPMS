@@ -2,6 +2,7 @@ package service.imp;
 
 import dao.BaseDao;
 import dao.DeptRefDao;
+import entity.BaseInfo;
 import entity.DeptRef;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -81,5 +82,13 @@ public class DeptRefServiceImp extends BaseServiceImp<DeptRef> implements DeptRe
         return ans;
     }
 
-
+    @Override
+    public void insertRelation(String entityId, String type, BaseInfo dept) {
+        deptRefDao.removeRelation(entityId, type);
+        DeptRef deptRef = new DeptRef();
+        deptRef.setDept(dept);
+        deptRef.setEntityId(entityId);
+        deptRef.setType(type);
+        deptRefDao.save(deptRef);
+    }
 }

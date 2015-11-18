@@ -28,6 +28,7 @@ public class Complete implements SnakerInterceptor {
 
         BaseInfoService baseInfoService = (BaseInfoService) StaticFactory.getBean(BaseInfoService.class);
         StaRefService staRefService = (StaRefService) StaticFactory.getBean(StaRefService.class);
+        DeptRefService deptRefService = (DeptRefService) StaticFactory.getBean(DeptRefService.class);
 
         String orderId = execution.getOrder().getId();
         Map<String, Object> args = execution.getOrder().getVariableMap();
@@ -37,6 +38,8 @@ public class Complete implements SnakerInterceptor {
 
         Serializable id = null;
         Map init;
+
+        BaseInfo dept = null;
 
         String type = (String) args.get("WF_Type");
         switch (type) {
@@ -69,19 +72,19 @@ public class Complete implements SnakerInterceptor {
                     //todo 这儿也需要特殊处理，
                 }
                 id = paperService.add(paper);
-                break;
-            case "book":
+                dept = paper.getDept();
                 break;
             case "patent":
                 PatentService patentService = (PatentService) StaticFactory.getBean(PatentService.class);
                 id = (String) args.get("WF_Entity");
                 Patent patent = patentService.getById(id);
                 init = patent.getArgMap();
-                //todo 这儿需要把分数给补上               patent.setScore();
+                //todo 这儿需要把分数给补上   patent.setScore();
                 moveMap(info, init, Arrays.asList("actors"));
                 patent.setArgMap(init);
                 patent.setProcess("9");
                 patentService.update(patent);
+                dept = patent.getDept();
                 break;
             case "achAward":
                 AchAwardService achAwardService = (AchAwardService) StaticFactory.getBean(AchAppraisalService.class);
@@ -93,6 +96,7 @@ public class Complete implements SnakerInterceptor {
                 achAward.setArgMap(init);
                 achAward.setProcess("9");
                 achAwardService.update(achAward);
+                dept = achAward.getDept();
                 break;
             case "achAppraisal":
                 AchAppraisalService achAppraisalService = (AchAppraisalService) StaticFactory.getBean(AchAppraisalService.class);
@@ -104,6 +108,7 @@ public class Complete implements SnakerInterceptor {
                 achAppraisal.setArgMap(init);
                 achAppraisal.setProcess("9");
                 achAppraisalService.update(achAppraisal);
+                dept = achAppraisal.getDept();
                 break;
             case "achTran":
                 AchTranService achTranService = (AchTranService) StaticFactory.getBean(AchTranService.class);
@@ -115,6 +120,7 @@ public class Complete implements SnakerInterceptor {
                 achTran.setArgMap(init);
                 achTran.setProcess("9");
                 achTranService.update(achTran);
+                dept = achTran.getDept();
                 break;
             default:
                 break;
@@ -122,6 +128,7 @@ public class Complete implements SnakerInterceptor {
         }
 
         staRefService.insertRelation((String) id, type, (ArrayList) info.get("actors"));
+        deptRefService.insertRelation((String) id, type, dept);
 
         OrderActorDao orderActorDao = (OrderActorDao) util.StaticFactory.getBean(OrderActorDao.class);
         List<OrderActor> x = orderActorDao.getByOrder(orderId);
