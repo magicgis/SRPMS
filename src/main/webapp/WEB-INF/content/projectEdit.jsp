@@ -722,10 +722,6 @@
     $('.addActor').click(function () {
         addActor();
     });
-    //监听 分配分数
-    $('.getScore').click(function () {
-        getScore('project');
-    });
     //监听 添加单位
     $('.addUnit').click(function () {
         addUnit();
@@ -752,6 +748,15 @@
     });
     $(".Refuse").click(function () {
         Refuse();
+    });
+    //监听 分配分数
+    $('.getScore').click(function () {
+        saveStep1().success(function(data) {
+
+            saveStep2(data).success(function (res) {
+                getScore('project');
+            });
+        });
     });
     //选择
 </script>

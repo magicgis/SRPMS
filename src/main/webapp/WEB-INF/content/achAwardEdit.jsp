@@ -476,7 +476,13 @@
     });
     //监听 分配分数
     $('.getScore').click(function () {
-        getScore('award');
+        saveStep1().success(function(data) {
+
+            saveStep2(data).success(function (res) {
+                getScore('award');
+            });
+        });
+
     });
     //监听 添加单位
     $('.addUnit').click(function () {

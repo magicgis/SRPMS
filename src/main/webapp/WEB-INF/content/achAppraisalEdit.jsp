@@ -600,7 +600,12 @@
     });
     //监听 分配分数
     $('.getScore').click(function () {
-        getScore('appraise');
+        saveStep1().success(function(data) {
+
+            saveStep2(data).success(function (res) {
+                getScore('appraise');
+            });
+        });
     });
 
 
