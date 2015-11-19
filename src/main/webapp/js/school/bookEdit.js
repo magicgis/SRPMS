@@ -41,6 +41,7 @@ function Approve() {
             if (result) {
                 workflow.execute('dep', taskId, approveInfo).success(function () {
                     afterSuccess('审批通过！');
+                    window.location.href = '/index/process/book/all';
                 });
             }
         }
@@ -63,7 +64,7 @@ function Refuse() {
             if (result) {
                 workflow.execute('dep', taskId, refuseInfo).success(function () {
                     afterSuccess('审批驳回！');
-                    // window.location.href = "/book";
+                    window.location.href = '/index/process/book/all';
                 });
             }
         }

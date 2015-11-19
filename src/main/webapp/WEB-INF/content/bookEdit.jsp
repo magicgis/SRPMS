@@ -171,18 +171,18 @@
 
                                         </div>
                                         <div class="row">
+                                            <%--<div class="form-group col-xs-12 col-sm-6">--%>
+                                                <%--<label class="col-sm-4 control-label no-padding-left"--%>
+                                                       <%--for="year">计分年度</label>--%>
+                                                <%--<div class="col-sm-8">--%>
+                                                    <%--<input type="text" name="year" id="year"--%>
+                                                           <%--value="${book.year}"--%>
+                                                           <%--placeholder="" class="col-xs-12"/>--%>
+                                                <%--</div>--%>
+                                            <%--</div>--%>
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
-                                                       for="year">计分年度</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" name="year" id="year"
-                                                           value="${book.year}"
-                                                           placeholder="" class="col-xs-12"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="bulDate">公告时间</label>
+                                                       for="bulDate">获奖时间</label>
                                                 <div class="col-sm-8">
                                                     <input class="form-control date-picker" type="text" id="bulDate"
                                                            name="bulDate" value="${book.bulDate}"
@@ -190,8 +190,8 @@
                                                            class="col-xs-12"/>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
+                                        <%--</div>--%>
+                                        <%--<div class="row">--%>
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
                                                        for="sumWord">著作总字数</label>
@@ -249,7 +249,7 @@
                                                 </c:choose>
 
                                                 <span class="giveSum">
-                                                    <button class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</button>
+                                                    <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
                                                     <label for="totalScore">总分：</label>
                                                     <input class="score" type="text"
                                                            name="score" id="totalScore" value="${book.score}">
@@ -265,6 +265,8 @@
                                     </div>
                                 </div>
                             </div>
+
+	                        <div class="col-xs-12" id="msg_alert"></div>
                         </div>
                         <div id="reply" class="col-xs-12 col-md-5 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
@@ -288,7 +290,7 @@
                             </div>
                         </div>
                     </form>
-                    <div class="col-xs-12" id="msg_alert"></div>
+	                <div class="col-xs-12" id="info_alert"></div>
                     <div class="row">
                         <div id="formBtn" class="col-xs-12 clearfix">
                             <c:choose>
@@ -400,7 +402,7 @@
     getPubType();//选择框
     upToLoadFile();//文件上传
     getDept();
-    //IsAward();
+//    IsAward();
 
     $('#confirmC').hide();
     var filesData;
@@ -463,12 +465,14 @@
 
 	    var $awardtype = $('#awarDtype').selectize();
 	    disableSelectize($awardtype);
+	    $('#bulDate').attr('disabled', 'disabled');
 
 	    if( !isNull(isAward) ) { // 用户选择了是否获奖
 		    DisplayForm($('#isAward').selectize(), isAward, 0);
 		    IsAward();
 		    if(isAward == 'true') {   // 用户选了“是”
-			    enableSelectize($awardtype);
+//			    $('#bulDate').removeAttr('disabled');
+//			    enableSelectize($awardtype);
 			    DisplayForm($awardtype, latestInfo['awardtype'], 0);
 		    }
 	    }
@@ -545,7 +549,6 @@
 //    });
 
     $('#isAward').change(function () {
-        console.log($('#isAward').val());
 	    IsAward();
     });
     //监听 分配分数

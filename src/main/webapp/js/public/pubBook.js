@@ -134,9 +134,14 @@ function getPubType() {//awardtype
 }
 
 function IsAward() {
+    console.log('is'+$('#isAward').val());
     if($('#isAward').val() == 'true') {
         enableSelectize($('#awarDtype').selectize());
+        $('#bulDate').removeAttr('disabled');
     } else {
+        $('#bulDate').val('');
+        console.log("no");
+        $('#bulDate').attr('disabled', 'disabled');
         $('#awarDtype').selectize()[0].selectize.setValue("");
         disableSelectize($('#awarDtype').selectize());
     }

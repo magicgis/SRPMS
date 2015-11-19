@@ -235,20 +235,20 @@ function editActor(row, index) {
             });
             $(".editableModal").show();
             //是否可编辑
-            if (flag) {//可编辑
+            if (flag) {//可编辑所有
                 enableSelectize($actor);
                 enableSelectize($role);
                 enableSelectize($units);
                 $("#rank").removeAttr("disabled");
                 $("#score").removeAttr("disabled");
                 $("#btn-ok").show();
-            } else {  //不可编辑
-                disableSelectize($actor);
-                disableSelectize($role);
-                disableSelectize($units);
-                $("#rank").attr("disabled", "disabled");
+            } else {  //不可编辑分数，可编辑其他
+                //disableSelectize($actor);
+                //disableSelectize($role);
+                //disableSelectize($units);
+                //$("#rank").attr("disabled", "disabled");
                 $("#score").attr("disabled", "disabled");
-                $("#btn-ok").attr("disabled", "disabled").hide();
+                //$("#btn-ok").attr("disabled", "disabled").hide();
                 messageModal("请先点击“计算分数”按钮获得总分，再分配分数。");
             }
             if (row["staff.id"] == "9998" || row["staff.id"] == "9999") {

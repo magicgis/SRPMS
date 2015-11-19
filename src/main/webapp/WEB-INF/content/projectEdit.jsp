@@ -339,7 +339,7 @@
                                                     </c:when>
                                                 </c:choose>
                                                 <span class="giveSum">
-                                                    <button class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</button>
+                                                    <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
                                                     <label for="totalScore">总分：</label>
 	                                                <input class="score" type="text"
 	                                                       name="score" id="totalScore" value="${project.score}">

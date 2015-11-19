@@ -369,6 +369,8 @@ function messageModal(message) {
 /**--------------------------获取编辑页面的数据------------------**/
 function getFormData(type) {
     var jsonData = $("#" + type).serializeJSON();
+    jsonData['score'] = $('#totalScore').val();
+    console.log(jsonData);
     $.each(jsonData, function (key, value) {
         if (isNull(value)) {
             delete jsonData[key];
