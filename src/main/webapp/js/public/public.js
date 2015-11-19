@@ -370,14 +370,19 @@ function messageModal(message) {
 function getFormData(type) {
     var jsonData = $("#" + type).serializeJSON();
     jsonData['score'] = $('#totalScore').val();
-    console.log(jsonData);
+
     $.each(jsonData, function (key, value) {
         if (isNull(value)) {
             delete jsonData[key];
         }
     });
+
+    console.log(jsonData);
     if (filesData != null) {
         jsonData['filesData'] = filesData;
+    }
+    if (type == 'project') {
+        jsonData['fund'] == getFundsData();
     }
     jsonData["actors"] = getActorsData();
     jsonData["units"] = getUnitsData();
