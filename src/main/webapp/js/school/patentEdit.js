@@ -74,7 +74,7 @@ function confirm() {
                      */
                     if (result) {
                         workflow.startEntityOrder("patent", $('#patentId').val()).success(function (data) {
-                            afterSuccess('任务已分发给相关教师！');
+                            afterSuccess('任务已启动！');
                             window.location.href = '/index/entity/patent/all';
                         });
                     }

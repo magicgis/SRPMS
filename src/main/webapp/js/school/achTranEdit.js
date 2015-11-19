@@ -222,6 +222,8 @@ function save() {
 
         saveStep2(data).success(function (res) {
             afterSuccess("保存成功！");
+            window.location.href = '/index/entity/achTran/all';
+
         })
     });
 }
@@ -248,6 +250,7 @@ function confirm() {
                     if (result) {
                         workflow.startEntityOrder("achTran", $('#achTranId').val()).success(function (data) {
                             afterSuccess("任务已启动！");
+                            window.location.href = '/index/entity/achTran/all';
                         });
                     }
                 }
@@ -274,7 +277,7 @@ function delOrder() {
             if (result) {
                 workflow.delOrder(entity['id']).success(function (data) {
                     afterSuccess("删除成功！");
-                    //window.location.href = '/achTran';
+                    window.location.href = '/index/entity/achTran/all';
                 });
             }
         }
@@ -288,7 +291,7 @@ function getOrderBack() {
     var order = entity['id'];
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
-        //window.location.href = '/achTran';
+        window.location.href = '/index/entity/achTran/all';
     });
 }
 
@@ -312,6 +315,7 @@ function approve() {
             if (result) {
                 workflow.execute(userName, taskId, approveInfo).success(function () {
                     afterSuccess('已通过！');
+                    window.location.href = '/index/process/achTran/all';
                 });
             }
         }
@@ -337,7 +341,7 @@ function refuse() {
             if (result) {
                 workflow.execute(userName, taskId, refuseAwardInfo).success(function () {
                     afterSuccess('已驳回至学院！');
-                    //window.location.href = '/achTran';
+                    window.location.href = '/index/process/achTran/all';
                 });
             }
         }
