@@ -74,6 +74,7 @@ public class project extends StandardBase implements StandardCheckInf {
     @Override
     public Map getFinalScore(Map map, double tableScore, double tableScore2) {
         double calScore = 0;
+        double moneyScore = 0;
         Map validInfo = new HashMap();
         validInfo.put(MESSAGE, DEFAULT_MSG);
         validInfo.put(IS_VALID, DEFAULT_FLAG);
@@ -89,25 +90,34 @@ public class project extends StandardBase implements StandardCheckInf {
         boolean isAppr = (boolean) map.get("isAppr");
 //        是否立项
         if (isAppr) {
+//           到账
+            List<Map> funds = new ArrayList<>();
+            funds = (List<Map>) map.get("fund");
+            double res = 0;
+            for (Map fund : funds) {
+                if (isVaildTime((String) fund.get("time"))) {
+                    res = Double.parseDouble((String) map.get("mny"))
+                            - Double.parseDouble((String) map.get("outMny"));
+                    moneyScore += getMoneyWeight(map, res);
+                }
+            }
 //        立项
             if (!map.get("projrank").equals("横向")
                     && isVaildTime((String) map.get("apprDate")))
                 calScore += tableScore;
+            if (map.get("projrank").equals("横向")
+                    && isVaildTime((String) map.get("apprDate")))
+                calScore +=tableScore*res;
 //        结题
             if (!map.get("projrank").equals("横向")
                     && map.get("realDate") != null
                     && isVaildTime((String) map.get("realDate")))
                 calScore += tableScore2;
-//        到账
-            List<Map> funds = new ArrayList<>();
-            funds = (List<Map>) map.get("fund");
-            for (Map fund : funds) {
-                if (isVaildTime((String) fund.get("time"))) {
-                    double res = Double.parseDouble((String) map.get("mny"))
-                            - Double.parseDouble((String) map.get("outMny"));
-                    calScore += getMoneyWeight(map, res);
-                }
-            }
+            if (map.get("projrank").equals("横向")
+                    && map.get("realDate") != null
+                    && isVaildTime((String) map.get("realDate")))
+                calScore += tableScore2*res;
+
 
 //        是否是独立项目
             if (map.get("attr").equals("独立项目")) caseSlct += 101;
@@ -150,14 +160,14 @@ public class project extends StandardBase implements StandardCheckInf {
                 validInfo.put(IS_VALID, true);
                 validInfo.put(MESSAGE, "分数需要分配");
                 validInfo.put("hasSum", true);
-                validInfo.put("sum", calScore);
+                validInfo.put("sum", calScore+moneyScore);
                 return validInfo;
 //                break;
             case 110://主持负责不独立（分配/(n+1)）
                 validInfo.put(IS_VALID, true);
                 validInfo.put(MESSAGE, "分数需要分配");
                 validInfo.put("hasSum", true);
-                validInfo.put("sum", calScore / (units.size() + 1));
+                validInfo.put("sum", moneyScore+calScore / (units.size() + 1));
                 return validInfo;
 //                break;
             default://001不主持不负责独立
@@ -201,16 +211,9 @@ public class project extends StandardBase implements StandardCheckInf {
                 List<Map> cheifActors = getChiefActors(actors, (String) KEY_ROLE.get("cheifActor"));
                 for (Map cheifActor : cheifActors) {
                     double chScore = Double.parseDouble((String) cheifActor.get("score"));
-                    if (actorNum <= 3 && (chScore / sum) > 0.7) {
-                        validInfo.put(MESSAGE, "负责人分数不应超过70%.");
-                        return validInfo;
-                    }
-                    if (actorNum <= 6 && (chScore / sum) > 0.6) {
-                        validInfo.put(MESSAGE, "负责人分数不应超过60%.");
-                        return validInfo;
-                    }
-                    if ((chScore / sum) > 0.5) {
-                        validInfo.put(MESSAGE, "负责人分数不应超过50%.");
+                    Map info = cheifAcrorScoreCheck(actorNum, chScore, sum);
+                    if (!(boolean) info.get("flag")) {
+                        validInfo.put(MESSAGE, info.get(MESSAGE));
                         return validInfo;
                     }
                 }
