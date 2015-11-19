@@ -205,11 +205,11 @@ function editActor(row, index) {
                 findbyname: false,
                 restrict: false
             });
-            disableSelectize($actor);
-            disableSelectize($role);
-            disableSelectize($units);
-            $("#rank").attr("disabled", "disabled");
-            $("#textNumber").attr("disabled", "disabled");
+            //disableSelectize($actor);
+            //disableSelectize($role);
+            //disableSelectize($units);
+            //$("#rank").attr("disabled", "disabled");
+            //$("#textNumber").attr("disabled", "disabled");
             $('.bookTextNumber').show();
             $(".editableModal").show();
             //是否可编辑
@@ -217,7 +217,7 @@ function editActor(row, index) {
                 $("#btn-ok").removeAttr("disabled").show();
                 $("#score").removeAttr("disabled");
             } else {  //不可编辑
-                $("#btn-ok").attr("disabled", "disabled").hide();
+                //$("#btn-ok").attr("disabled", "disabled").hide();
                 $("#score").attr("disabled", "disabled");
             }
             if (row["staff.id"] == "9998" || row["staff.id"] == "9999") {
