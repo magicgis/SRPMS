@@ -20,7 +20,7 @@ function save() {
     send['actors'] = getActorsData();
     workflow.execute(userName, taskId, send).success(function () {
         afterSuccess("保存成功！");
-        //window.location.href = "/appraise";
+        window.location.href = '/index/process/achAppraisal/all';
     });
 }
 /*
@@ -52,13 +52,13 @@ function confirm() {
                     if ("valid" in data) {
                         if (data["valid"] == true) {
                             afterSuccess("确认成功！");
-                            //window.location.href = "/appraise";
+                            window.location.href = '/index/process/achAppraisal/all';
                         } else {
                             errorMsg(data["msg"]);
                         }
                     } else {
                         afterSuccess("确认成功！");
-                        //window.location.href = "/appraise";
+                        window.location.href = '/index/process/achAppraisal/all';
                     }
                 });
             }

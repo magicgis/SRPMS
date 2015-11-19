@@ -585,15 +585,15 @@ function entityView() {
                     //    formatter: 'statusTran'
                     //},
                     {
-                        field: 'operator',
-                        align: 'center',
-                        title: '操作',
-                        formatter: view
-                    }, {
                         field: 'process',
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;

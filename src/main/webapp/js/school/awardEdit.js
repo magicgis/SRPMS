@@ -7,19 +7,14 @@ $(function () {
 });
 /**与项目信息有关的 保存||确认||撤回||删除||提交所有**/
 function save() {
-    var send = getFormData('award');
-    $.ajax({
-        url:'/dskf',
-        type: 'post',
-        data: JSON.stringify(send)
+
+    saveStep1().success(function(data) {
+
+        saveStep2(data).success(function (res) {
+
+            afterSuccess("保存成功！");
+        })
     });
-    //saveStep1().success(function(data) {
-    //
-    //    saveStep2(data).success(function (res) {
-    //
-    //        afterSuccess("保存成功！");
-    //    })
-    //});
 }
 function confirm() {
     //这儿需要先调用save()将信息保存一次
@@ -41,6 +36,7 @@ function confirm() {
                     if (result) {
                         workflow.startEntityOrder("achAward", $('#awardId').val()).success(function (data) {
                             afterSuccess("任务已启动！");
+                            window.location.href = '/index/entity/achAward/all';
                         });
                     }
                 }
@@ -53,6 +49,7 @@ function orderBack() {
     var order = entity['id'];
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
+        window.location.href = '/index/entity/achAward/all';
     });
 }
 function delOrder() {
@@ -70,6 +67,7 @@ function delOrder() {
             if (result) {
                 workflow.delOrder(order).success(function () {
                     afterSuccess("删除成功！");
+                    window.location.href = '/index/entity/achAward/all';
                 });
             }
         }
@@ -92,6 +90,7 @@ function Approve() {
             if (result) {
                 workflow.execute('dep',taskId, approveInfo).success(function () {
                     afterSuccess('审批通过！');
+                    window.location.href = '/index/process/achAward/all';
                 });
             }
         }
@@ -117,6 +116,7 @@ function Refuse() {
             if (result) {
                 workflow.execute('dep', taskId, refuseInfo).success(function () {
                     afterSuccess('审批驳回！');
+                    window.location.href = '/index/process/achAward/all';
                 });
             }
         }

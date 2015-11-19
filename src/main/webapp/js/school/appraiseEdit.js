@@ -222,7 +222,7 @@ function save() {
 
         saveStep2(data).success(function (res) {
             afterSuccess("保存成功！");
-            history.go(-1);
+            window.location.href = '/index/entity/achAppraisal/all';
         })
     });
 }
@@ -249,7 +249,7 @@ function confirm() {
                     if (result) {
                         workflow.startEntityOrder("achAppraisal", $('#achAppraiseId').val()).success(function (data) {
                             afterSuccess("任务已启动！");
-                            history.go(-1);
+                            window.location.href = '/index/entity/achAppraisal/all';
                         });
                     }
                 }
@@ -276,7 +276,7 @@ function delOrder() {
             if (result) {
                 workflow.delOrder(entity['id']).success(function (data) {
                     afterSuccess("删除成功！");
-                    //window.location.href = '/appraise';
+                    window.location.href = '/index/entity/achAppraisal/all';
                 });
             }
         }
@@ -290,7 +290,7 @@ function getOrderBack() {
     var order = entity['id'];
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
-        //history.go(-1);
+        window.location.href = '/index/entity/achAppraisal/all';
     });
 }
 
@@ -488,7 +488,7 @@ function approve() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, approveInfo).success(function () {
-                    //window.location.href = '/appraise';
+                    window.location.href = '/index/process/achAppraisal/all';
                 });
             }
         }
@@ -513,7 +513,7 @@ function refuse() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, refuseAwardInfo).success(function () {
-                    history.go(-1);
+                    window.location.href = '/index/process/achAppraisal/all';
                 });
             }
         }

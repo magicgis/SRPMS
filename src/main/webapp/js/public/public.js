@@ -1082,7 +1082,7 @@ function wfTypeTran(value, row) {
         return '--' ;
     }
 }
-function typeTran(value, row){
+function projtypeTran(value, row){
     if(!isNull(row['standard'])){
         return row['standard']['infoMap']['projtype'];
     }else{
