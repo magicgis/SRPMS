@@ -45,7 +45,7 @@ function save() {
 
         saveStep2(data).success(function (res) {
             afterSuccess('保存成功！');
-            //history.go(-1);
+            window.location.href = '/index/entity/patent/all';
         })
     });
 }
@@ -75,7 +75,7 @@ function confirm() {
                     if (result) {
                         workflow.startEntityOrder("patent", $('#patentId').val()).success(function (data) {
                             afterSuccess('任务已分发给相关教师！');
-                            //history.go(-1);
+                            window.location.href = '/index/entity/patent/all';
                         });
                     }
                 }
@@ -103,7 +103,7 @@ function delOrder() {
             if (result) {
                 workflow.delOrder(entity['id']).success(function (data) {
                     afterSuccess("删除成功！");
-                    //window.location.href = '/patent';
+                    window.location.href = '/index/entity/patent/all';
                 });
             }
         }
@@ -117,7 +117,7 @@ function orderBack() {
     var order = entity['id'];
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
-        //window.location.href = '/patent';
+        window.location.href = '/index/entity/patent/all';
     });
 }
 
@@ -316,7 +316,7 @@ function approve() {
             if (result) {
                 workflow.execute(userName, taskId, approveInfo).success(function () {
                     afterSuccess('已通过！');
-                    //window.location.href = "/patent";
+                    window.location.href = '/index/process/patent/all';
                 });
             }
         }
@@ -342,7 +342,7 @@ function refuse() {
             if (result) {
                 workflow.execute(userName, taskId, refuseAwardInfo).success(function () {
                     afterSuccess('已驳回至学院！');
-                    //window.location.href = "/patent";
+                    window.location.href = '/index/process/patent/all';
                 });
             }
         }

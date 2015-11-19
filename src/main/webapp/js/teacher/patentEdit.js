@@ -25,8 +25,8 @@ function save() {
     send['actors'] = getActorsData();
     workflow.execute(userName, taskId, send).success(function () {
         afterSuccess("保存成功！");
+        window.location.href = '/index/process/patent/all';
     });
-    console.log(send);
 }
 /*
  * 确认
@@ -57,13 +57,13 @@ function confirm() {
                     if ("valid" in data) {
                         if (data["valid"] == true) {
                             afterSuccess("确认成功！");
-                            //window.location.href = "/patent";
+                            window.location.href = '/index/process/patent/all';
                         } else {
                             errorMsg(data["msg"]);
                         }
                     } else {
                         afterSuccess("确认成功！");
-                        //window.location.href = "/patent";
+                        window.location.href = '/index/process/patent/all';
                     }
                 });
             }

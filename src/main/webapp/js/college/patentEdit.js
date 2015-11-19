@@ -11,6 +11,7 @@ function approve(){
     approveInfo["replyByCol"]=$('#reply-box').val();
     workflow.execute(userName,taskId,approveInfo).success(function(){
         afterSuccess('已审批通过！');
+        window.location.href = '/index/process/patent/all';
     });
 }
 
@@ -20,5 +21,6 @@ function refuse(){
     refuseAwardInfo["replyByCol"]=$('#reply-box').val();
     workflow.execute(userName,taskId,refuseAwardInfo).success(function(){
         afterSuccess('已驳回给教师！');
+        window.location.href = '/index/process/patent/all';
     });
 }
