@@ -591,7 +591,7 @@ function entityView() {
                         field: 'projtype',
                         title: '类别',
                         sortable: true,
-                        formatter: "typeTran"
+                        formatter: "projtypeTran"
                     }, {
                         field: 'projrank',
                         title: '等级',

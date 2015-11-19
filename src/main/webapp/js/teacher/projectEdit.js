@@ -18,8 +18,8 @@ function save() {
     }
     workflow.execute(userName, taskId, send).success(function () {
         afterSuccess("保存成功！");
+        window.location.href = '/index/process/project/all';
     });
-    console.log(send);
 }
 function confirm() {
     var status = all['Status'];
@@ -50,11 +50,13 @@ function confirm() {
                     if ("valid" in data) {
                         if (data["valid"] == true) {
                             afterSuccess("确认成功！");
+                            window.location.href = '/index/process/project/all';
                         } else {
                             errorMsg(data["msg"]);
                         }
                     } else {
                         afterSuccess("确认成功！");
+                        window.location.href = '/index/process/project/all';
                     }
                 });
             }

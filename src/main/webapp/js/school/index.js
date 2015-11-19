@@ -562,7 +562,7 @@ function entityView() {
                         field: 'projtype',
                         title: '类别',
                         sortable: true,
-                        formatter: "typeTran"
+                        formatter: "projtypeTran"
                     }, {
                         field: 'projrank',
                         title: '等级',
@@ -577,12 +577,14 @@ function entityView() {
                         field: 'realDate',
                         title: '实际结题时间',
                         sortable: true
-                    }, {
-                        field: 'Status',
-                        title: '状态',
-                        sortable: true,
-                        formatter: 'statusTran'
-                    }, {
+                    },
+                    //{
+                    //    field: 'Status',
+                    //    title: '状态',
+                    //    sortable: true,
+                    //    formatter: 'statusTran'
+                    //},
+                    {
                         field: 'operator',
                         align: 'center',
                         title: '操作',
@@ -1074,7 +1076,7 @@ function searchView() {
                         field: 'projtype',
                         title: '类别',
                         sortable: true,
-                        formatter: "typeTran"
+                        formatter: "projtypeTran"
                     }, {
                         field: 'projrank',
                         title: '等级',

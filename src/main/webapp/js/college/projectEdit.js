@@ -12,6 +12,7 @@ function Approve(){
     approveInfo["replyByCol"]=$('#reply-box').val();
     workflow.execute('col',taskId,approveInfo).success(function(){
         afterSuccess('已审批通过！');
+        window.location.href = '/index/process/project/all';
     });
 }
 function Refuse(){
@@ -20,5 +21,6 @@ function Refuse(){
     refuseInfo["replyByCol"]=$('#reply-box').val();
     workflow.execute('col',taskId,refuseInfo).success(function(){
         afterSuccess('已驳回给教师！');
+        window.location.href = '/index/process/project/all';
     });
 }

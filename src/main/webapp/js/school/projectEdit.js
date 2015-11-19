@@ -10,6 +10,7 @@ function save() {
     saveStep1().success(function(data) {
         saveStep2(data).success(function (res) {
             afterSuccess("保存成功！");
+            window.location.href = '/index/entity/project/all';
         })
     });
 }
@@ -33,6 +34,7 @@ function confirm() {
                     if (result) {
                         workflow.startEntityOrder("project", $('#projectId').val()).success(function (data) {
                             afterSuccess("任务已启动！");
+                            window.location.href = '/index/entity/project/all';
                         });
                     }
                 }
@@ -55,7 +57,7 @@ function orderBack() {
     var order = entity['id'];
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
-        history.go(-1);
+        window.location.href = '/index/entity/project/all';
     });
 }
 function delOrder() {
@@ -72,8 +74,7 @@ function delOrder() {
             if (result) {
                 workflow.delOrder(entity['id']).success(function (data) {
                     afterSuccess("删除成功！");
-                    //history.go(-1);
-                    //window.location.href = '/process-project-all';
+                    window.location.href = '/index/entity/project/all';
                 });
             }
         }
@@ -96,7 +97,7 @@ function Approve() {
             if (result) {
                 workflow.execute(userName, taskId, approveInfo).success(function () {
                     afterSuccess('已通过！');
-                    history.go(-1);
+                    window.location.href = '/index/process/project/all';
                 });
             }
         }
@@ -122,7 +123,7 @@ function Refuse() {
             if (result) {
                 workflow.execute(userName, taskId, refuseAwardInfo).success(function () {
                     afterSuccess('已驳回至学院！');
-                    history.go(-1);
+                    window.location.href = '/index/process/project/all';
                 });
             }
         }
