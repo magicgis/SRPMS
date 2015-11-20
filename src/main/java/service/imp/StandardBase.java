@@ -271,6 +271,26 @@ public class StandardBase {
             flag = true;
         return flag;
     }
+    public Map cheifAcrorScoreCheck(int actorNum,double chScore,double sum){
+        Map map = new HashMap();
+        map.put("flag",false);
+        map.put(MESSAGE,DEFAULT_MSG);
+        if (actorNum <= 3 && (chScore / sum) > 0.7) {
+            map.put(MESSAGE, "负责人分数不应超过70%.");
+            return map;
+        }
+        if (actorNum <= 6 && (chScore / sum) > 0.6) {
+            map.put(MESSAGE, "负责人分数不应超过60%.");
+            return map;
+        }
+        if ((chScore / sum) > 0.5) {
+            map.put(MESSAGE, "负责人分数不应超过50%.");
+            return map;
+        }
+        map.put("flag",true);
+        map.put(MESSAGE,"文件未限定");
+        return map;
+    }
 
 
 }//the end of the class

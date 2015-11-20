@@ -81,6 +81,7 @@ public class book extends StandardBase implements StandardCheckInf {
             actor.put("score", staticActorScore(actor,map));
             resActors.add(actor);
         }
+        validInfo.put("hasSum",false);
         validInfo.put("actors",resActors);
         validInfo.put(IS_VALID,true);
         validInfo.put(MESSAGE,"请确认分数。");
