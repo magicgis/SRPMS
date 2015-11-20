@@ -2,16 +2,17 @@
  * Created by zheng on 2015/10/12.
  */
 $(function () {
-    //TODO
-    $('#reply').hide();
-    init(entity,all,replyByDep,3);
+
+    init(entity, all, replyByDep, 3);
+
 });
-/**与项目信息有关的 保存||确认||撤回||删除||提交所有**/
+/**与新食品信息有关的 保存||确认||撤回||删除||提交所有**/
 function save() {
     saveStep1().success(function(data) {
 
         saveStep2(data).success(function (res) {
-
+            afterSuccess('保存成功！');
+            window.location.href = '/index/process/newFood/all';
         })
     });
 }
@@ -34,7 +35,8 @@ function confirm() {
                      */
                     if (result) {
                         workflow.startEntityOrder("newFood", $('#foodId').val()).success(function (data) {
-                            //history.go(-1);
+                            afterSuccess('任务已启动！');
+                            window.location.href = '/index/entity/newFood/all';
                         });
                     }
                 }
@@ -45,11 +47,10 @@ function confirm() {
 }
 function orderBack() {
     var order = entity['id'];
-    var jsonData = Object();
-    jsonData['order'] = order;
-    jsonData['user'] = userName;
+
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
+        window.location.href = '/index/entity/newFood/all';
     });
 }
 function delOrder() {
@@ -67,6 +68,7 @@ function delOrder() {
             if (result) {
                 workflow.delOrder(order).success(function () {
                     afterSuccess("删除成功！");
+                    window.location.href = '/index/entity/newFood/all';
                 });
             }
         }
@@ -87,9 +89,9 @@ function Approve() {
         btnOKClass: 'btn-ok',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep',taskId, approveInfo).success(function () {
+                workflow.execute(userName, taskId, approveInfo).success(function () {
                     afterSuccess('审批通过！');
-                    //window.location.href = "/award";
+                    window.location.href = '/index/process/newFood/all';
                 });
             }
         }
@@ -113,9 +115,9 @@ function Refuse() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep', taskId, refuseInfo).success(function () {
+                workflow.execute(userName, taskId, refuseInfo).success(function () {
                     afterSuccess('审批驳回！');
-                    // window.location.href = "/award";
+                    window.location.href = '/index/process/newFood/all';
                 });
             }
         }
@@ -220,47 +222,11 @@ function editActor(row, index) {
                 findbyname: true,
                 restrict: false
             });
-            //是否可编辑
-            var flag = true;    //todo
-            if (flag) {//可编辑
-                enableSelectize($actor);
-                enableSelectize($role);
-                enableSelectize($units);
-                $("#rank").removeAttr("disabled");
-                $("#marks").removeAttr("disabled");
-                //$("#btn-cancel").hide();
-                $("#btn-ok").show();
-                $(".editableModal").show();
-            } else {  //不可编辑
-                disableSelectize($actor);
-                disableSelectize($role);
-                disableSelectize($units);
-                $("#aRank").attr("disabled", "disabled");
-                $("#marks").attr("disabled", "disabled");
-                $("#btn-ok").attr("disabled", "disabled").hide();
-                //$("#btn-cancel").show();
-                $(".editableModal").show();
-            }
+
         }
     });
 }
-/*计算分数*/
-function getScore() {
-    var jsonData = getFormData("food");
-    //console.log(jsonData);
-    workflow.getScore(jsonData).success(function (data) {
-        if (data["valid"] == false) {
-            errorMsg(data["msg"]);
-        } else if (data["hasSum"] == false) {
-            $("#actorTable").bootstrapTable('load', data["actors"]);
-            errorMsg(data["msg"]);
-        } else if (data["hasSum"] == true) {
-            $("#score").val(data["sum"]);
-            $("#showSum").html("总分：" + data["sum"] + "分");
-            errorMsg(data["msg"]);
-        }
-    });
-}
+
 /*****************************有关单位的操作***********************/
 /**
  * 添加单位
@@ -357,9 +323,7 @@ function saveStep2(data) {
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
     send['units'] = getUnitsData();
-    send['achName']= Main_ActorName;
-    send['name']= $('#name').val();
-    console.log(send);
+
     return $.ajax({
         type: 'put',
         url: '/api/newFood/' + data,

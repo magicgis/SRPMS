@@ -338,10 +338,9 @@ function saveStep2(data) {
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
     send['units'] = getUnitsData();
-    send['achName']= Main_ActorName;
-    send['name']= $('#name').val();
-    send['awardType']=$('#achType').val();
-    send['date']=$('#date').val();
+    //send['name']= $('#name').val();
+    //send['awardType']=$('#achType').val();
+    //send['date']=$('#date').val();
     console.log(send);
     return $.ajax({
         type: 'put',
