@@ -11,8 +11,9 @@ function save() {
     saveStep1().success(function(data) {
 
         saveStep2(data).success(function (res) {
+
             afterSuccess('保存成功！');
-            window.location.href = '/index/process/food/all';
+            window.location.href = '/index/entity/food/all';
         })
     });
 }
@@ -90,7 +91,7 @@ function Approve() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, approveInfo).success(function () {
-                    afterSuccess('审批通过！');
+                    afterSuccess('已通过！');
                     window.location.href = '/index/process/food/all';
                 });
             }
@@ -116,7 +117,7 @@ function Refuse() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, refuseInfo).success(function () {
-                    afterSuccess('审批驳回！');
+                    afterSuccess('已驳回！');
                     window.location.href = '/index/process/food/all';
                 });
             }
@@ -219,7 +220,7 @@ function editActor(row, index) {
             DisplayForm($units, row["unit"], 1);
             //填充其他
             $('#actorsInfo').autofill(row, {
-                findbyname: true,
+                findbyname: false,
                 restrict: false
             });
 

@@ -2,7 +2,7 @@
  * Created by Administrator on 2015/10/3.
  */
 
-var flag = true;
+//var flag = true;
 
 $(function () {
     // 在教师界面的argMap，基本等同于order中的arg，
@@ -135,13 +135,13 @@ function editActor(row, index) {
             $("#rank").attr("disabled", "disabled");
             $(".editableModal").show();
             //是否可编辑
-            if (flag) {//可编辑
-                $("#btn-ok").removeAttr("disabled").show();
-                $("#score").removeAttr("disabled");
-            } else {  //不可编辑
-                $("#btn-ok").attr("disabled", "disabled").hide();
-                $("#score").attr("disabled", "disabled");
-            }
+            //if (flag) {//可编辑
+            //    $("#btn-ok").removeAttr("disabled").show();
+            //    $("#score").removeAttr("disabled");
+            //} else {  //不可编辑
+            //    $("#btn-ok").attr("disabled", "disabled").hide();
+            //    $("#score").attr("disabled", "disabled");
+            //}
             if (row["staff.id"] == "9998" || row["staff.id"] == "9999") {
                 $("#score").attr("disabled", "disabled");
             }

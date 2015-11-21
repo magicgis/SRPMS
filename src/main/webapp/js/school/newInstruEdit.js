@@ -2,8 +2,7 @@
  * Created by zheng on 2015/10/12.
  */
 $(function () {
-    //TODO
-    $('#reply').hide();
+
     init(entity,all,replyByDep,3);
 });
 /**与项目信息有关的 保存||确认||撤回||删除||提交所有**/
@@ -11,7 +10,8 @@ function save() {
     saveStep1().success(function(data) {
 
         saveStep2(data).success(function (res) {
-
+            afterSuccess('保存成功！');
+            window.location.href = '/index/entity/instrument/all';
         })
     });
 }
@@ -34,7 +34,8 @@ function confirm() {
                      */
                     if (result) {
                         workflow.startEntityOrder("instrument", $('#instrumentId').val()).success(function (data) {
-                            //history.go(-1);
+                            afterSuccess('任务已启动！');
+                            window.location.href = '/index/entity/instrument/all';
                         });
                     }
                 }
@@ -50,6 +51,7 @@ function orderBack() {
     jsonData['user'] = userName;
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
+        window.location.href = '/index/entity/instrument/all';
     });
 }
 function delOrder() {
@@ -67,7 +69,7 @@ function delOrder() {
             if (result) {
                 entity.delEntity('instrument', $('#instrumentId').val()).success(function () {
                     afterSuccess("删除成功！");
-                    window.location.href = '/index/entity/project/all';
+                    window.location.href = '/index/entity/instrument/all';
                 });
             }
         }
@@ -90,7 +92,7 @@ function Approve() {
             if (result) {
                 workflow.execute('dep',taskId, approveInfo).success(function () {
                     afterSuccess('已通过！');
-                    window.location.href = '/index/process/project/all';
+                    window.location.href = '/index/process/instrument/all';
                 });
             }
         }
@@ -115,8 +117,8 @@ function Refuse() {
         callback: function (result) {
             if (result) {
                 workflow.execute('dep', taskId, refuseInfo).success(function () {
-                    afterSuccess('已驳回至学院！');
-                    window.location.href = '/index/process/project/all';
+                    afterSuccess('已驳回！');
+                    window.location.href = '/index/process/instrument/all';
                 });
             }
         }
@@ -218,7 +220,7 @@ function editActor(row, index) {
             DisplayForm($units, row["unit"], 1);
             //填充其他
             $('#actorsInfo').autofill(row, {
-                findbyname: true,
+                findbyname: false,
                 restrict: false
             });
         }
@@ -306,7 +308,7 @@ function editUnit(row, index) {
 function saveStep1() {
     return $.ajax({
         url: '/api/instrument/instrument',
-        data: $('#instru').serialize(),
+        data: $('#instrument').serialize(),
         type: 'POST',
         dataType: 'text'
     })
@@ -320,10 +322,7 @@ function saveStep2(data) {
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
     send['units'] = getUnitsData();
-    send['achName']= Main_ActorName;
-    send['name']= $('#name').val();
-    send['date']=$('#date').val();
-    console.log(send);
+
     return $.ajax({
         type: 'put',
         url: '/api/instrument/' + data,

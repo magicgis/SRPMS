@@ -721,14 +721,14 @@
 		magOrConfer();
 
 		// 显示总分
-		var score = latestInfo['score'];
-		if (score == undefined || score == null || score == "") {
-			flag = false;
-			console.log('null' + flag);
-		} else {
-			flag = true;
-			console.log('notnull' + flag);
-		}
+//		var score = latestInfo['score'];
+//		if (score == undefined || score == null || score == "") {
+//			flag = false;
+//			console.log('null' + flag);
+//		} else {
+//			flag = true;
+//			console.log('notnull' + flag);
+//		}
 		// 显示成员信息
 		if (latestInfo['actors'] != null) {
 			actorTemp = latestInfo['actors'];

@@ -35,16 +35,16 @@ function getScore() {
     workflow.getScore(jsonData).success(function (data) {
         if (data["valid"] == false) {
             errorMsg(data["msg"]);
-            flag = false;
+            //flag = false;
         } else if (data["hasSum"] == false) {
             $("#actorTable").bootstrapTable('load', data["actors"]);
-            flag = false;
+            //flag = false;
             errorMsg(data["msg"]);
         } else if (data["hasSum"] == true) {
             $("#totalScore").val(data["sum"]);
             //$("#showSum").html("　可分配总分：" + data["sum"] + "分");
             errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
-            flag = true;
+            //flag = true;
         }
     });
 }
@@ -87,7 +87,7 @@ function confirm() {
                             window.location.href = '/index/process/paper/all';
                         } else {
                             errorMsg(data["msg"]);
-                            flag = true;
+                            //flag = true;
                         }
                     } else {
                         afterSuccess("确认成功！");
@@ -235,22 +235,22 @@ function editActor(row, index) {
             });
             $(".editableModal").show();
             //是否可编辑
-            if (flag) {//可编辑所有
-                enableSelectize($actor);
-                enableSelectize($role);
-                enableSelectize($units);
-                $("#rank").removeAttr("disabled");
-                $("#score").removeAttr("disabled");
-                $("#btn-ok").show();
-            } else {  //不可编辑分数，可编辑其他
-                //disableSelectize($actor);
-                //disableSelectize($role);
-                //disableSelectize($units);
-                //$("#rank").attr("disabled", "disabled");
-                $("#score").attr("disabled", "disabled");
-                //$("#btn-ok").attr("disabled", "disabled").hide();
-                messageModal("请先点击“计算分数”按钮获得总分，再分配分数。");
-            }
+            //if (flag) {//可编辑所有
+            //    enableSelectize($actor);
+            //    enableSelectize($role);
+            //    enableSelectize($units);
+            //    $("#rank").removeAttr("disabled");
+            //    $("#score").removeAttr("disabled");
+            //    $("#btn-ok").show();
+            //} else {  //不可编辑分数，可编辑其他
+            //    //disableSelectize($actor);
+            //    //disableSelectize($role);
+            //    //disableSelectize($units);
+            //    //$("#rank").attr("disabled", "disabled");
+            //    $("#score").attr("disabled", "disabled");
+            //    //$("#btn-ok").attr("disabled", "disabled").hide();
+            //    messageModal("请先点击“计算分数”按钮获得总分，再分配分数。");
+            //}
             if (row["staff.id"] == "9998" || row["staff.id"] == "9999") {
                 $("#score").attr("disabled", "disabled");
             }

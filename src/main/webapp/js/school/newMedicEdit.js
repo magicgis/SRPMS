@@ -11,7 +11,8 @@ function save() {
     saveStep1().success(function(data) {
 
         saveStep2(data).success(function (res) {
-
+            afterSuccess('保存成功！');
+            window.location.href = '/index/entity/medicine/all';
         })
     });
 }
@@ -33,8 +34,9 @@ function confirm() {
                      * userName,taskId,status
                      */
                     if (result) {
-                        workflow.startEntityOrder("newMedicine", $('#MedicineId').val()).success(function (data) {
-                            //history.go(-1);
+                        workflow.startEntityOrder("medicine", $('#medicineId').val()).success(function (data) {
+                            afterSuccess('任务已启动！');
+                            window.location.href = '/index/entity/medicine/all';
                         });
                     }
                 }
@@ -50,6 +52,7 @@ function orderBack() {
     jsonData['user'] = userName;
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
+        window.location.href = '/index/entity/medicine/all';
     });
 }
 function delOrder() {
@@ -65,8 +68,9 @@ function delOrder() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.delOrder(order).success(function () {
+                entity.delEntity('medicine',$('#medicineId').val()).success(function () {
                     afterSuccess("删除成功！");
+                    window.location.href = '/index/entity/medicine/all';
                 });
             }
         }
@@ -89,7 +93,7 @@ function Approve() {
             if (result) {
                 workflow.execute('dep',taskId, approveInfo).success(function () {
                     afterSuccess('审批通过！');
-                    //window.location.href = "/award";
+                    window.location.href = '/index/process/medicine/all';
                 });
             }
         }
@@ -115,7 +119,7 @@ function Refuse() {
             if (result) {
                 workflow.execute('dep', taskId, refuseInfo).success(function () {
                     afterSuccess('审批驳回！');
-                    // window.location.href = "/award";
+                    window.location.href = '/index/process/medicine/all';
                 });
             }
         }
@@ -217,50 +221,34 @@ function editActor(row, index) {
             DisplayForm($units, row["unit"], 1);
             //填充其他
             $('#actorsInfo').autofill(row, {
-                findbyname: true,
+                findbyname: false,
                 restrict: false
             });
             //是否可编辑
-            var flag = true;    //todo
-            if (flag) {//可编辑
-                enableSelectize($actor);
-                enableSelectize($role);
-                enableSelectize($units);
-                $("#rank").removeAttr("disabled");
-                $("#marks").removeAttr("disabled");
-                //$("#btn-cancel").hide();
-                $("#btn-ok").show();
-                $(".editableModal").show();
-            } else {  //不可编辑
-                disableSelectize($actor);
-                disableSelectize($role);
-                disableSelectize($units);
-                $("#aRank").attr("disabled", "disabled");
-                $("#marks").attr("disabled", "disabled");
-                $("#btn-ok").attr("disabled", "disabled").hide();
-                //$("#btn-cancel").show();
-                $(".editableModal").show();
-            }
+            //var flag = true;    //todo
+            //if (flag) {//可编辑
+            //    enableSelectize($actor);
+            //    enableSelectize($role);
+            //    enableSelectize($units);
+            //    $("#rank").removeAttr("disabled");
+            //    $("#marks").removeAttr("disabled");
+            //    //$("#btn-cancel").hide();
+            //    $("#btn-ok").show();
+            //    $(".editableModal").show();
+            //} else {  //不可编辑
+            //    disableSelectize($actor);
+            //    disableSelectize($role);
+            //    disableSelectize($units);
+            //    $("#aRank").attr("disabled", "disabled");
+            //    $("#marks").attr("disabled", "disabled");
+            //    $("#btn-ok").attr("disabled", "disabled").hide();
+            //    //$("#btn-cancel").show();
+            //    $(".editableModal").show();
+            //}
         }
     });
 }
-/*计算分数*/
-function getScore() {
-    var jsonData = getFormData("medicine");
-    //console.log(jsonData);
-    workflow.getScore(jsonData).success(function (data) {
-        if (data["valid"] == false) {
-            errorMsg(data["msg"]);
-        } else if (data["hasSum"] == false) {
-            $("#actorTable").bootstrapTable('load', data["actors"]);
-            errorMsg(data["msg"]);
-        } else if (data["hasSum"] == true) {
-            $("#score").val(data["sum"]);
-            $("#showSum").html("总分：" + data["sum"] + "分");
-            errorMsg(data["msg"]);
-        }
-    });
-}
+
 /*****************************有关单位的操作***********************/
 /**
  * 添加单位
@@ -342,7 +330,7 @@ function editUnit(row, index) {
 /********************************保存***************************/
 function saveStep1() {
     return $.ajax({
-        url: '/api/newMedicine/newMedicine',
+        url: '/api/medicine/medicine',
         data: $('#medicine').serialize(),
         type: 'POST',
         dataType: 'text'
@@ -357,13 +345,11 @@ function saveStep2(data) {
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
     send['units'] = getUnitsData();
-    send['achName']= Main_ActorName;
-    send['name']= $('#name').val();
-    send['date']=$('#date').val();
+
     console.log(send);
     return $.ajax({
         type: 'put',
-        url: '/api/newMedicine/' + data,
+        url: '/api/medicine/' + data,
         data: JSON.stringify(send),
         dataType: 'json',
         contentType: 'application/json;charset=UTF-8'

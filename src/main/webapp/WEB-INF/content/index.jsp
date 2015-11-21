@@ -146,6 +146,18 @@
                                                                 <li id="newAchAward">
                                                                     <a href="<c:url value="/achAward/new"/> ">获奖信息</a>
                                                                 </li>
+                                                                <li id="newFood">
+                                                                    <a href="<c:url value="/food/new"/> ">食品信息</a>
+                                                                </li>
+                                                                <li id="newInstrument">
+                                                                    <a href="<c:url value="/instrument/new"/> ">医疗器械信息</a>
+                                                                </li>
+                                                                <li id="newMedicine">
+                                                                    <a href="<c:url value="/medicine/new"/> ">药品信息</a>
+                                                                </li>
+                                                                <li id="newOthers">
+                                                                    <a href="<c:url value="/others/new"/> ">其他信息</a>
+                                                                </li>
                                                             </ul>
                                                         </div>
                                                     </div>

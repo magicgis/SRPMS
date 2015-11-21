@@ -318,7 +318,7 @@ function saveStep2(data) {
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
     send['units'] = getUnitsData();
-    console.log(send);
+
     return $.ajax({
         type: 'put',
         url: '/api/others/' + data,

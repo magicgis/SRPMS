@@ -3,7 +3,7 @@
  */
 $(function () {
 
-    init(entity,all,replyByDep,1);
+    init(entity, all, replyByDep, 1);
 
 });
 
@@ -13,7 +13,7 @@ function save() {
     send['actors'] = getActorsData();
     workflow.execute(userName, taskId, send).success(function () {
         afterSuccess("保存成功！");
-        window.location.href = '/index/process/newFood/all';
+        window.location.href = '/index/process/food/all';
     });
 
 }
@@ -39,13 +39,13 @@ function confirm() {
                     if ("valid" in data) {
                         if (data["valid"] == true) {
                             afterSuccess("确认成功！");
-                            window.location.href = '/index/process/newFood/all';
+                            window.location.href = '/index/process/food/all';
                         } else {
                             errorMsg(data["msg"]);
                         }
                     } else {
                         afterSuccess("确认成功！");
-                        window.location.href = '/index/process/newFood/all';
+                        window.location.href = '/index/process/food/all';
                     }
                 });
             }
@@ -107,25 +107,15 @@ function editActor(row, index) {
             DisplayForm($units, row["unit"], 1);
             //填充其他
             $('#actorsInfo').autofill(row, {
-                findbyname: true,
+                findbyname: false,
                 restrict: false
             });
-            disableSelectize($actor);
-            disableSelectize($role);
-            disableSelectize($units);
-            $("#rank").attr("disabled", "disabled");
+
             $("#textNumber").attr("disabled", "disabled");
             $(".editableModal").show();
-            //是否可编辑
-            //if (flag) {//可编辑
-            //    $("#btn-ok").removeAttr("disabled").show();
-            //    $("#marks").removeAttr("disabled");
-            //} else {  //不可编辑
-            //    $("#btn-ok").attr("disabled", "disabled").hide();
-            //    $("#marks").attr("disabled", "disabled");
-            //}
+
             if (row["staff.id"] == "9998" || row["staff.id"] == "9999") {
-                $("#marks").attr("disabled", "disabled");
+                $("#score").attr("disabled", "disabled");
             }
         }
     });

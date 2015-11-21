@@ -12,8 +12,8 @@ function Approve(){
     approveInfo["DecByCol"]=true;
     approveInfo["replyByCol"]=$('#reply-box').val();
     workflow.execute(userName, taskId, approveInfo).success(function(){
-        afterSuccess('已审批通过！');
-        window.location.href = '/index/process/newFood/all';
+        afterSuccess('已通过！');
+        window.location.href = '/index/process/food/all';
     });
 }
 function Refuse(){
@@ -21,7 +21,7 @@ function Refuse(){
     refuseInfo["DecByCol"]=false;
     refuseInfo["replyByCol"]=$('#reply-box').val();
     workflow.execute(userName, taskId, refuseInfo).success(function(){
-        afterSuccess('已驳回给教师！');
-        window.location.href = '/index/process/newFood/all';
+        afterSuccess('已驳回！');
+        window.location.href = '/index/process/food/all';
     });
 }
