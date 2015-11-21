@@ -333,7 +333,6 @@
 </script>
 
 <script src='<c:url value="/js/public/public.js"/>'></script>
-<%--<script src='<c:url value="/js/public/pubFood.js"/>'></script>--%>
 <script src='<c:url value="/js/public/pubEdit.js"/>'></script>
 <script src='<c:url value="/js/public/route.js"/>'></script>
 
@@ -346,7 +345,6 @@
 
 	var all = entity['argMap']; // 获得 成员，单位，附件，负责人等信息
 	var dept = entity['dept'];
-//	var standard = entity['standard'];
 	var taskId = '${taskId}';  // 获得 task的id
 	var taskName = '${taskName}';
 
@@ -436,11 +434,6 @@
 		}],
 		data: unitTemp
 	});
-
-//	if (!isNull(standard)) {
-//		DisplayForm($appType, standard['infoMap']['jdprop'], 0);
-//		DisplayForm($appRank, standard['id'], 0);
-//	}
 
 	if (!isNull(dept)) {  // 显示 所属部门
 		var $dept = $('#dept').selectize();

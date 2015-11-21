@@ -310,7 +310,7 @@ function processView() {
 
             });
             break;
-        case 'newFood':
+        case 'food':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
                 sidePagination: "server",
@@ -332,7 +332,7 @@ function processView() {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
                     }, {
-                        field: 'newFoodDate',
+                        field: 'date',
                         title: '获批时间',
                         sortable: true
                     }, {
@@ -344,7 +344,7 @@ function processView() {
                 responseHandler: tableTrans
             });
             break;
-        case 'newInstru':
+        case 'instrument':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
                 sidePagination: "server",
@@ -363,7 +363,7 @@ function processView() {
                         title: '食品名称',
                         sortable: true
                     }, {
-                        field: 'newInstruDate',
+                        field: 'date',
                         title: '获批时间',
                         sortable: true
                     }, {
@@ -378,7 +378,7 @@ function processView() {
                 responseHandler: tableTrans
             });
             break;
-        case 'newMedicine':
+        case 'medicine':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
                 sidePagination: "server",
@@ -412,7 +412,7 @@ function processView() {
                 responseHandler: tableTrans
             });
             break;
-        case 'newOther':
+        case 'others':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
                 sidePagination: "server",
@@ -862,44 +862,11 @@ function entityView() {
                     }]
             });
             break;
-        case 'newFood':
+        case 'food':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
                 sidePagination: "server",
-                toolbar: '#EntityToolbar',
-                flat: true,
-                columns: [
-                    {
-                        radio: true
-                    }, {
-                        field: 'id',
-                        title: 'id',
-                        sortable: true,
-                        visible: false
-                    }, {
-                        field: 'foodName',
-                        title: '食品名称',
-                        sortable: true
-                    }, {
-                        field: 'newFoodDate',
-                        title: '获批时间',
-                        sortable: true
-                    }, {
-                        field: 'argMap.Main-ActorName',
-                        title: '负责人'
-                    }, {
-                        field: 'process',
-                        title: '流程状态',
-                        sortable: true,
-                        formatter: 'processTran'
-                    }]
-            });
-            break;
-        case 'newInstru':
-            viewTable.bootstrapTable('destroy').bootstrapTable({
-                url: entityUrl(),
-                sidePagination: "server",
-                toolbar: '#EntityToolbar',
+                toolbar: "#EntityToolbar",
                 flat: true,
                 columns: [
                     {
@@ -914,7 +881,40 @@ function entityView() {
                         title: '食品名称',
                         sortable: true
                     }, {
-                        field: 'newInstruDate',
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'date',
+                        title: '获批时间',
+                        sortable: true
+                    }, {
+                        field: 'process',
+                        title: '流程状态',
+                        sortable: true,
+                        formatter: 'processTran'
+                    }]
+            });
+            break;
+        case 'instrument':
+            viewTable.bootstrapTable('destroy').bootstrapTable({
+                url: entityUrl(),
+                sidePagination: "server",
+                toolbar: "#EntityToolbar",
+                flat: true,
+                columns: [
+                    {
+                        radio: true
+                    }, {
+                        field: 'id',
+                        title: 'id',
+                        sortable: true,
+                        visible: false
+                    }, {
+                        field: 'name',
+                        title: '器械名称',
+                        sortable: true
+                    }, {
+                        field: 'date',
                         title: '获批时间',
                         sortable: true
                     }, {
@@ -928,11 +928,11 @@ function entityView() {
                     }]
             });
             break;
-        case 'newMedicine':
+        case 'medicine':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
                 sidePagination: "server",
-                toolbar: '#EntityToolbar',
+                toolbar: "#EntityToolbar",
                 flat: true,
                 columns: [
                     {
@@ -961,11 +961,11 @@ function entityView() {
                     }]
             });
             break;
-        case 'newOther':
+        case 'others':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
                 sidePagination: "server",
-                toolbar: '#EntityToolbar',
+                toolbar: "#EntityToolbar",
                 flat: true,
                 columns: [
                     {

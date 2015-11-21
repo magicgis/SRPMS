@@ -139,7 +139,7 @@
                     <ul class="submenu">
 
 
-                        <li class="processType" id="newMedicineView">
+                        <li class="process medicine">
                             <a>
                                 <i class="menu-icon fa fa-medkit"></i>
 
@@ -150,7 +150,7 @@
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="processType" id="newFoodView">
+                        <li class="process food">
                             <a>
                                 <i class="menu-icon fa fa-birthday-cake"></i>
                                 <span class="menu-text"> 新功能性食品</span>
@@ -158,7 +158,7 @@
 
                             <b class="arrow"></b>
                         </li>
-                        <li class="processType" id="newInstruView">
+                        <li class="process instrument">
                             <a>
 
                                 <i class="menu-icon fa fa-stethoscope"></i>
@@ -169,7 +169,7 @@
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="processType" id="newOtherView">
+                        <li class="process others">
                             <a>
                                 <i class="menu-icon fa fa-cubes"></i>
                                 <span class="menu-text"> 其他新产品 </span>
@@ -279,7 +279,7 @@
                     <ul class="submenu">
 
 
-                        <li class="entityType" id="newMedicineEntity">
+                        <li class="entity medicine">
                             <a>
                                 <i class="menu-icon fa fa-medkit"></i>
 
@@ -290,7 +290,7 @@
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="entityType" id="newFoodEntity">
+                        <li class="entity food">
                             <a>
                                 <i class="menu-icon fa fa-birthday-cake"></i>
                                 <span class="menu-text"> 新功能性食品</span>
@@ -298,7 +298,7 @@
 
                             <b class="arrow"></b>
                         </li>
-                        <li class="entityType" id="newInstruEntity">
+                        <li class="entity instrument">
                             <a>
 
                                 <i class="menu-icon fa fa-stethoscope"></i>
@@ -309,7 +309,7 @@
                             <b class="arrow"></b>
                         </li>
 
-                        <li class="entityType" id="newOtherEntity">
+                        <li class="entity others">
                             <a>
                                 <i class="menu-icon fa fa-cubes"></i>
                                 <span class="menu-text"> 其他新产品 </span>
