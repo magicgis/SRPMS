@@ -43,6 +43,7 @@ function approve() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, req).success(function () {
+                    afterSuccess('已通过！');
                     window.location.href = '/index/process/paper/all';
                 });
             }
@@ -68,6 +69,7 @@ function refuse() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, req).success(function () {
+                    afterSuccess('已驳回！');
                     window.location.href = '/index/process/paper/all';
                 });
             }

@@ -45,12 +45,8 @@ function approve() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, req).success(function () {
-                    window.location.href = '/process-paper-all';
-                });
-            } else {
-                BootstrapDialog.show({
-                    title: '通知',
-                    message: '你已取消。'
+                    afterSuccess('已通过！');
+                    window.location.href = '/index/process/paper/all';
                 });
             }
         }
@@ -75,12 +71,8 @@ function refuse() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, req).success(function () {
-                    window.location.href = '/process-paper-all';
-                });
-            } else {
-                BootstrapDialog.show({
-                    title: '通知',
-                    message: '你已取消。'
+                    afterSuccess('已驳回！');
+                    window.location.href = '/index/process/paper/all';
                 });
             }
         }
