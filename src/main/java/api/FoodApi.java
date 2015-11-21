@@ -1,5 +1,6 @@
 package api;
 
+import engine.Engine;
 import entity.Food;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,8 @@ public class FoodApi {
     StandardInfoService standardInfoService;
     @Autowired
     BaseInfoService baseInfoService;
+    @Autowired
+    Engine engine;
 
     @GET
     @Path("/all")
@@ -75,5 +78,16 @@ public class FoodApi {
         Food food = foodService.getById(id);
         food.setArgMap(args);
         return foodService.update(food);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public boolean delete(@PathParam("id") String id) {
+        Food food = foodService.getById(id);
+        String orderId = (String) food.getArgMap().get("WF_OrderId");
+        if (orderId != null) {
+            engine.stopOrder(orderId);
+        }
+        return foodService.delete(food);
     }
 }

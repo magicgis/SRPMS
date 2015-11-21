@@ -1,5 +1,6 @@
 package api;
 
+import engine.Engine;
 import entity.Patent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,8 @@ public class PatentApi {
     StandardInfoService standardInfoService;
     @Autowired
     BaseInfoService baseInfoService;
+    @Autowired
+    Engine engine;
 
     @GET
     @Path("/all")
@@ -80,9 +83,13 @@ public class PatentApi {
 
     @DELETE
     @Path("/{id}")
-    @Consumes("application/json;charset=UTF-8")
     public boolean delete(@PathParam("id") String id) {
-        return false;//todo
+        Patent patent = patentService.getById(id);
+        String orderId = (String) patent.getArgMap().get("WF_OrderId");
+        if (orderId != null) {
+            engine.stopOrder(orderId);
+        }
+        return patentService.delete(patent);
     }
 
     @GET

@@ -8,7 +8,6 @@ import org.snaker.engine.entity.Order;
 import org.snaker.engine.entity.Process;
 import org.snaker.engine.entity.Task;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import service.PatentService;
 import service.ProjectService;
@@ -198,7 +197,7 @@ public class Workflow {
     }
 
 
-    @POST
+    @POST //todo
     @Path("/getScore")
     @Consumes("application/json;charset=UTF-8")
     @Produces("application/json;charset=UTF-8")
@@ -271,16 +270,6 @@ public class Workflow {
         return getSubMap(ans, limit, offset);
     }
 
-
-    @POST
-    @Path("/proj")
-    @Consumes("application/json;charset=UTF-8")
-    public String startProject(@RequestParam("staff") String staff, @QueryParam("project") String project) {
-
-        String processId = engine.getProcessByName("basicProcess_Beta").getId();
-        engine.startInstanceById(processId, staff, new HashMap<String, Object>());
-        return null;
-    }
 
     /**
      * 获取order的最新任务

@@ -1,5 +1,6 @@
 package api;
 
+import engine.Engine;
 import entity.AchAppraisal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,8 @@ public class AchAppraisalApi {
     BaseInfoService baseInfoService;
     @Autowired
     StandardInfoService standardInfoService;
+    @Autowired
+    Engine engine;
 
     @GET
     @Path("/all")
@@ -79,9 +82,13 @@ public class AchAppraisalApi {
 
     @DELETE
     @Path("/{id}")
-    @Consumes("application/json;charset=UTF-8")
     public boolean delete(@PathParam("id") String id) {
-        return false;//todo
+        AchAppraisal achAppraisal = achAppraisalService.getById(id);
+        String orderId = (String) achAppraisal.getArgMap().get("WF_OrderId");
+        if (orderId != null) {
+            engine.stopOrder(orderId);
+        }
+        return achAppraisalService.delete(achAppraisal);
     }
 
     @GET

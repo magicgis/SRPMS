@@ -1,5 +1,6 @@
 package api;
 
+import engine.Engine;
 import entity.AchTran;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,11 +25,12 @@ import static util.Trans.putMapOnObj;
 public class AchTranApi {
     @Autowired
     AchTranService achTranService;
-
     @Autowired
     BaseInfoService baseInfoService;
     @Autowired
     StandardInfoService standardInfoService;
+    @Autowired
+    Engine engine;
 
     @GET
     @Path("/all")
@@ -77,4 +79,16 @@ public class AchTranApi {
         achTran.setArgMap(args);
         return achTranService.update(achTran);
     }
+
+    @DELETE
+    @Path("/{id}")
+    public boolean delete(@PathParam("id") String id) {
+        AchTran achTran = achTranService.getById(id);
+        String orderId = (String) achTran.getArgMap().get("WF_OrderId");
+        if (orderId != null) {
+            engine.stopOrder(orderId);
+        }
+        return achTranService.delete(achTran);
+    }
+
 }

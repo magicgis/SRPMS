@@ -1,5 +1,6 @@
 package api;
 
+import engine.Engine;
 import entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,8 @@ public class BookApi {
     BookService bookService;
     @Autowired
     BaseInfoService baseInfoService;
+    @Autowired
+    Engine engine;
 
     @GET
     @Path("/all")
@@ -76,9 +79,13 @@ public class BookApi {
 
     @DELETE
     @Path("/{id}")
-    @Consumes("application/json;charset=UTF-8")
     public boolean delete(@PathParam("id") String id) {
-        return false;//todo
+        Book book = bookService.getById(id);
+        String orderId = (String) book.getArgMap().get("WF_OrderId");
+        if (orderId != null) {
+            engine.stopOrder(orderId);
+        }
+        return bookService.delete(book);
     }
 
     @GET

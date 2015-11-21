@@ -1,5 +1,6 @@
 package api;
 
+import engine.Engine;
 import entity.Project;
 import entity.StaRef;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ public class ProjectApi {
     StandardInfoService standardInfoService;
     @Autowired
     BaseInfoService baseInfoService;
+    @Autowired
+    Engine engine;
 
     @GET
     @Path("/all")
@@ -101,9 +104,13 @@ public class ProjectApi {
 
     @DELETE
     @Path("/{id}")
-    @Consumes("application/json;charset=UTF-8")
     public boolean delete(@PathParam("id") String id) {
-        return false;//todo
+        Project project = projectService.getById(id);
+        String orderId = (String) project.getArgMap().get("WF_OrderId");
+        if (orderId != null) {
+            engine.stopOrder(orderId);
+        }
+        return projectService.delete(project);
     }
 
     @GET

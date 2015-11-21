@@ -1,5 +1,6 @@
 package api;
 
+import engine.Engine;
 import entity.AchAward;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,11 +25,12 @@ import static util.Trans.putMapOnObj;
 public class AchAwardApi {
     @Autowired
     AchAwardService achAwardService;
-
     @Autowired
     BaseInfoService baseInfoService;
     @Autowired
     StandardInfoService standardInfoService;
+    @Autowired
+    Engine engine;
 
     @GET
     @Path("/all")
@@ -80,9 +82,13 @@ public class AchAwardApi {
 
     @DELETE
     @Path("/{id}")
-    @Consumes("application/json;charset=UTF-8")
     public boolean delete(@PathParam("id") String id) {
-        return false;//todo
+        AchAward achAward = achAwardService.getById(id);
+        String orderId = (String) achAward.getArgMap().get("WF_OrderId");
+        if (orderId != null) {
+            engine.stopOrder(orderId);
+        }
+        return achAwardService.delete(achAward);
     }
 
     @GET
