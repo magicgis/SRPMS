@@ -12,7 +12,7 @@ function save() {
 
         saveStep2(data).success(function (res) {
             afterSuccess('保存成功！');
-            window.location.href = '/index/process/newFood/all';
+            window.location.href = '/index/process/food/all';
         })
     });
 }
@@ -34,9 +34,9 @@ function confirm() {
                      * userName,taskId,status
                      */
                     if (result) {
-                        workflow.startEntityOrder("newFood", $('#foodId').val()).success(function (data) {
+                        workflow.startEntityOrder("food", $('#foodId').val()).success(function (data) {
                             afterSuccess('任务已启动！');
-                            window.location.href = '/index/entity/newFood/all';
+                            window.location.href = '/index/entity/food/all';
                         });
                     }
                 }
@@ -50,7 +50,7 @@ function orderBack() {
 
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
-        window.location.href = '/index/entity/newFood/all';
+        window.location.href = '/index/entity/food/all';
     });
 }
 function delOrder() {
@@ -66,9 +66,9 @@ function delOrder() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.delOrder(order).success(function () {
+                entity.delEntity('food', $('#foodId').val()).success(function () {
                     afterSuccess("删除成功！");
-                    window.location.href = '/index/entity/newFood/all';
+                    window.location.href = '/index/entity/food/all';
                 });
             }
         }
@@ -91,7 +91,7 @@ function Approve() {
             if (result) {
                 workflow.execute(userName, taskId, approveInfo).success(function () {
                     afterSuccess('审批通过！');
-                    window.location.href = '/index/process/newFood/all';
+                    window.location.href = '/index/process/food/all';
                 });
             }
         }
@@ -117,7 +117,7 @@ function Refuse() {
             if (result) {
                 workflow.execute(userName, taskId, refuseInfo).success(function () {
                     afterSuccess('审批驳回！');
-                    window.location.href = '/index/process/newFood/all';
+                    window.location.href = '/index/process/food/all';
                 });
             }
         }
@@ -308,7 +308,7 @@ function editUnit(row, index) {
 /********************************保存***************************/
 function saveStep1() {
     return $.ajax({
-        url: '/api/newFood/newFood',
+        url: '/api/food/food',
         data: $('#food').serialize(),
         type: 'POST',
         dataType: 'text'
@@ -326,7 +326,7 @@ function saveStep2(data) {
 
     return $.ajax({
         type: 'put',
-        url: '/api/newFood/' + data,
+        url: '/api/food/' + data,
         data: JSON.stringify(send),
         dataType: 'json',
         contentType: 'application/json;charset=UTF-8'

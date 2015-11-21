@@ -33,7 +33,7 @@ function confirm() {
                      * userName,taskId,status
                      */
                     if (result) {
-                        workflow.startEntityOrder("newInstru", $('#instruId').val()).success(function (data) {
+                        workflow.startEntityOrder("instrument", $('#instrumentId').val()).success(function (data) {
                             //history.go(-1);
                         });
                     }
@@ -65,8 +65,9 @@ function delOrder() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.delOrder(order).success(function () {
+                entity.delEntity('instrument', $('#instrumentId').val()).success(function () {
                     afterSuccess("删除成功！");
+                    window.location.href = '/index/entity/project/all';
                 });
             }
         }
@@ -88,8 +89,8 @@ function Approve() {
         callback: function (result) {
             if (result) {
                 workflow.execute('dep',taskId, approveInfo).success(function () {
-                    afterSuccess('审批通过！');
-                    //window.location.href = "/award";
+                    afterSuccess('已通过！');
+                    window.location.href = '/index/process/project/all';
                 });
             }
         }
@@ -114,8 +115,8 @@ function Refuse() {
         callback: function (result) {
             if (result) {
                 workflow.execute('dep', taskId, refuseInfo).success(function () {
-                    afterSuccess('审批驳回！');
-                    // window.location.href = "/award";
+                    afterSuccess('已驳回至学院！');
+                    window.location.href = '/index/process/project/all';
                 });
             }
         }
@@ -220,47 +221,10 @@ function editActor(row, index) {
                 findbyname: true,
                 restrict: false
             });
-            //是否可编辑
-            var flag = true;    //todo
-            if (flag) {//可编辑
-                enableSelectize($actor);
-                enableSelectize($role);
-                enableSelectize($units);
-                $("#rank").removeAttr("disabled");
-                $("#marks").removeAttr("disabled");
-                //$("#btn-cancel").hide();
-                $("#btn-ok").show();
-                $(".editableModal").show();
-            } else {  //不可编辑
-                disableSelectize($actor);
-                disableSelectize($role);
-                disableSelectize($units);
-                $("#aRank").attr("disabled", "disabled");
-                $("#marks").attr("disabled", "disabled");
-                $("#btn-ok").attr("disabled", "disabled").hide();
-                //$("#btn-cancel").show();
-                $(".editableModal").show();
-            }
         }
     });
 }
-/*计算分数*/
-function getScore() {
-    var jsonData = getFormData("instru");
-    //console.log(jsonData);
-    workflow.getScore(jsonData).success(function (data) {
-        if (data["valid"] == false) {
-            errorMsg(data["msg"]);
-        } else if (data["hasSum"] == false) {
-            $("#actorTable").bootstrapTable('load', data["actors"]);
-            errorMsg(data["msg"]);
-        } else if (data["hasSum"] == true) {
-            $("#score").val(data["sum"]);
-            $("#showSum").html("总分：" + data["sum"] + "分");
-            errorMsg(data["msg"]);
-        }
-    });
-}
+
 /*****************************有关单位的操作***********************/
 /**
  * 添加单位
@@ -286,7 +250,6 @@ function addUnit() {
             cssClass: 'btn-info',
             autospin: false,
             action: function (dialogRef) {
-                //console.log($("#rank").val());
                 if (!isFull()) {
                     messageModal('请将信息填写完整。');
                     return;
@@ -342,7 +305,7 @@ function editUnit(row, index) {
 /********************************保存***************************/
 function saveStep1() {
     return $.ajax({
-        url: '/api/newInstru/newInstru',
+        url: '/api/instrument/instrument',
         data: $('#instru').serialize(),
         type: 'POST',
         dataType: 'text'
@@ -351,7 +314,7 @@ function saveStep1() {
 function saveStep2(data) {
     var send = new Object();
     //避免新建的时候多次点击保存多次新建
-    $('#instruId').val(data);
+    $('#instrumentId').val(data);
     send['actors'] = getActorsData();
     send['filesData'] = filesData;
     send['Main-Actor'] = Main_Actor;
@@ -363,7 +326,7 @@ function saveStep2(data) {
     console.log(send);
     return $.ajax({
         type: 'put',
-        url: '/api/newInstru/' + data,
+        url: '/api/instrument/' + data,
         data: JSON.stringify(send),
         dataType: 'json',
         contentType: 'application/json;charset=UTF-8'

@@ -381,19 +381,20 @@
 
 </script>
 <script src='<c:url value="/js/public/public.js"/>'></script>
-<script src='<c:url value="/js/public/pubPatent.js"/>'></script>
+<%--<script src='<c:url value="/js/public/pubPatent.js"/>'></script>--%>
+<script src='<c:url value="/js/public/pubEdit.js"/>'></script>
 <script src='<c:url value="/js/public/route.js"/>'></script>
 
 <script>
 
-    getPatType(); // 初始化 专利类型
+    getPatentType(); // 初始化 专利类型
     getDept();   // 初始化 学院
 
     // 成员，单位，文件
     var entity =  ${ObjectMapper.writeValueAsString(patent)}; // 获得 entity 或 实体
     var all = entity['argMap']; // 获得 成员，单位，附件，负责人等信息
     var dept = entity['dept'];
-    var standardId = entity['standard'];
+    var standard = entity['standard'];
     var taskId = '${taskId}';  // 获得 task的id
     var taskName = '${taskName}';
     if (!isNull(all)) {
@@ -482,7 +483,7 @@
 
     upToLoadFile(); // 上传文件的
 
-    DisplayForm($('#patType').selectize(), standardId, 0); // 显示 专利类型
+    DisplayForm($('#patType').selectize(), standard['id'], 0); // 显示 专利类型
 
     if(dept !== null) {  // 显示 所属部门
         var $dept = $('#dept').selectize();

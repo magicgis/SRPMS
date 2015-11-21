@@ -29,8 +29,8 @@ function init() {
  * */
 function approve() {
     var req = Object();
-    req["DecByCol"] = true;
-    req["replyByCol"] = $('#reply-box').val();
+    req["DecByDept"] = true;
+    req["replyByDept"] = $('#reply-box').val();
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '你确认通过吗?',
@@ -42,11 +42,8 @@ function approve() {
         btnOKClass: 'btn-ok',
         callback: function (result) {
             if (result) {
-                alert("确认还没做");
-            } else {
-                BootstrapDialog.show({
-                    title: '通知',
-                    message: '你已取消。'
+                workflow.execute(userName, taskId, req).success(function () {
+                    window.location.href = '/index/process/paper/all';
                 });
             }
         }
@@ -57,8 +54,8 @@ function approve() {
  * */
 function refuse() {
     var req = Object();
-    req["DecByCol"] = false;
-    req["replyByCol"] = $('#reply-box').val();
+    req["DecByDept"] = false;
+    req["replyByDept"] = $('#reply-box').val();
     BootstrapDialog.confirm({
         title: '警告！',
         message: '你确定要驳回吗?',
@@ -71,12 +68,7 @@ function refuse() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, req).success(function () {
-                    window.location.href = '/process-paper-all';
-                });
-            } else {
-                BootstrapDialog.show({
-                    title: '通知',
-                    message: '你已取消。'
+                    window.location.href = '/index/process/paper/all';
                 });
             }
         }

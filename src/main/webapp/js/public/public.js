@@ -145,6 +145,17 @@ workflow.getScore = function (args) {
     });
 };
 
+/**--------------------------实体类公共方法------------------**/
+var entity = window.entity || {};
+
+entity.delEntity = function(type, id) {
+    return $.ajax({
+        type: 'DELETE',
+        url: '/api/'+ type +'/'+ id,
+        contentType: 'application/json;charset=UTF-8'
+    });
+};
+
 /**--------------------------处理数据公共方法 table相关的------------------**/
 /**
  * 对获取到的数据进行处理
@@ -1016,7 +1027,7 @@ function init(entity,all,replyByDep,level) {
             }
             if (process == '1') {
                 $('.onEdit').hide();
-                $('.onDel').hide(); //todo 流程中以实体进去 能不能撤回和删除
+                //$('.onDel').hide();
 
                 uneditableForm();
                 $('#upload').hide();

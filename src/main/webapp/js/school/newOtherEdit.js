@@ -2,16 +2,17 @@
  * Created by zheng on 2015/10/12.
  */
 $(function () {
-    //TODO
-    $('#reply').hide();
-    init(entity,all,replyByDep,3);
+
+    init(entity, all, replyByDep, 3);
 });
-/**与项目信息有关的 保存||确认||撤回||删除||提交所有**/
+/**与其他新产品信息有关的 保存||确认||撤回||删除||提交所有**/
 function save() {
+
     saveStep1().success(function(data) {
 
         saveStep2(data).success(function (res) {
-
+            afterSuccess("保存成功！");
+            window.location.href = '/index/entity/others/all';
         })
     });
 }
@@ -33,8 +34,9 @@ function confirm() {
                      * userName,taskId,status
                      */
                     if (result) {
-                        workflow.startEntityOrder("newOther", $('#otherId').val()).success(function (data) {
-                            //history.go(-1);
+                        workflow.startEntityOrder("others", $('#othersId').val()).success(function (data) {
+                            afterSuccess('任务已启动！');
+                            window.location.href = '/index/entity/others/all';
                         });
                     }
                 }
@@ -45,15 +47,12 @@ function confirm() {
 }
 function orderBack() {
     var order = entity['id'];
-    var jsonData = Object();
-    jsonData['order'] = order;
-    jsonData['user'] = userName;
     window.workflow.getBack(userName, order).success(function () {
         afterSuccess("已撤回");
+        window.location.href = '/index/entity/others/all';
     });
 }
 function delOrder() {
-    var order = entity['id'];
     BootstrapDialog.confirm({
         title: '提示！',
         message: '你确定要删除该项吗?',
@@ -65,8 +64,9 @@ function delOrder() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.delOrder(order).success(function () {
+                entity.delEntity('others',$('#othersId').val()).success(function () {
                     afterSuccess("删除成功！");
+                    window.location.href = '/index/entity/others/all';
                 });
             }
         }
@@ -87,9 +87,9 @@ function Approve() {
         btnOKClass: 'btn-ok',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep',taskId, approveInfo).success(function () {
-                    afterSuccess('审批通过！');
-                    //window.location.href = "/award";
+                workflow.execute(userName, taskId, approveInfo).success(function () {
+                    afterSuccess('已通过！');
+                    window.location.href = '/index/process/others/all';
                 });
             }
         }
@@ -113,9 +113,9 @@ function Refuse() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep', taskId, refuseInfo).success(function () {
-                    afterSuccess('审批驳回！');
-                    // window.location.href = "/award";
+                workflow.execute(userName, taskId, refuseInfo).success(function () {
+                    afterSuccess('已驳回至学院！');
+                    window.location.href = '/index/process/others/all';
                 });
             }
         }
@@ -217,47 +217,9 @@ function editActor(row, index) {
             DisplayForm($units, row["unit"], 1);
             //填充其他
             $('#actorsInfo').autofill(row, {
-                findbyname: true,
+                findbyname: false,
                 restrict: false
             });
-            //是否可编辑
-            var flag = true;    //todo
-            if (flag) {//可编辑
-                enableSelectize($actor);
-                enableSelectize($role);
-                enableSelectize($units);
-                $("#rank").removeAttr("disabled");
-                $("#marks").removeAttr("disabled");
-                //$("#btn-cancel").hide();
-                $("#btn-ok").show();
-                $(".editableModal").show();
-            } else {  //不可编辑
-                disableSelectize($actor);
-                disableSelectize($role);
-                disableSelectize($units);
-                $("#aRank").attr("disabled", "disabled");
-                $("#marks").attr("disabled", "disabled");
-                $("#btn-ok").attr("disabled", "disabled").hide();
-                //$("#btn-cancel").show();
-                $(".editableModal").show();
-            }
-        }
-    });
-}
-/*计算分数*/
-function getScore() {
-    var jsonData = getFormData("other");
-    //console.log(jsonData);
-    workflow.getScore(jsonData).success(function (data) {
-        if (data["valid"] == false) {
-            errorMsg(data["msg"]);
-        } else if (data["hasSum"] == false) {
-            $("#actorTable").bootstrapTable('load', data["actors"]);
-            errorMsg(data["msg"]);
-        } else if (data["hasSum"] == true) {
-            $("#score").val(data["sum"]);
-            $("#showSum").html("总分：" + data["sum"] + "分");
-            errorMsg(data["msg"]);
         }
     });
 }
@@ -286,7 +248,6 @@ function addUnit() {
             cssClass: 'btn-info',
             autospin: false,
             action: function (dialogRef) {
-                //console.log($("#rank").val());
                 if (!isFull()) {
                     messageModal('请将信息填写完整。');
                     return;
@@ -342,8 +303,8 @@ function editUnit(row, index) {
 /********************************保存***************************/
 function saveStep1() {
     return $.ajax({
-        url: '/api/newOther/newOther',
-        data: $('#other').serialize(),
+        url: '/api/others/others',
+        data: $('#others').serialize(),
         type: 'POST',
         dataType: 'text'
     })
@@ -351,19 +312,16 @@ function saveStep1() {
 function saveStep2(data) {
     var send = new Object();
     //避免新建的时候多次点击保存多次新建
-    $('#otherId').val(data);
+    $('#othersId').val(data);
     send['actors'] = getActorsData();
     send['filesData'] = filesData;
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
     send['units'] = getUnitsData();
-    send['achName']= Main_ActorName;
-    send['name']= $('#name').val();
-    send['date']=$('#date').val();
     console.log(send);
     return $.ajax({
         type: 'put',
-        url: '/api/newOther/' + data,
+        url: '/api/others/' + data,
         data: JSON.stringify(send),
         dataType: 'json',
         contentType: 'application/json;charset=UTF-8'

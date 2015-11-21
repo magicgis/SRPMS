@@ -65,7 +65,7 @@ function delOrder() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.delOrder(order).success(function () {
+                entity.delEntity('achAward', $('#awardId').val()).success(function () {
                     afterSuccess("删除成功！");
                     window.location.href = '/index/entity/achAward/all';
                 });

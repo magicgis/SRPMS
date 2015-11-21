@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: zheng
-  Date: 2015/11/1
-  Time: 23:53
+  Date: 2015/11/2
+  Time: 14:50
   To change this template use File | Settings | File Templates.
 --%>
 <jsp:useBean id="ObjectMapper" scope="application" class="com.fasterxml.jackson.databind.ObjectMapper"/>
@@ -13,7 +13,7 @@
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<meta charset="utf-8"/>
-	<title>新功能食品-
+	<title>新药品-
 		<c:choose>
 			<c:when test="${sessionScope.level == '1'}">
 				教师
@@ -69,35 +69,35 @@
 						<i class="ace-icon fa fa-home home-icon"></i>
 						<a href="#">Home</a>
 					</li>
-					<li class="active">新功能食品</li>
+					<li class="active">新药品</li>
 				</ul>
 				<!-- /.breadcrumb -->
 			</div>
 			<div class="page-content">
 				<div class="row">
-					<form id="newFood" class="form-horizontal" role="form">
+					<form id="medicine" class="form-horizontal" role="form">
 						<div hidden="hidden">
-							<input type="text" name="id" id="foodId" value="${newFood.id}"/>
-							<input type="text" name="WF_Type" id="WF_Type" value="newFood"/>
+							<input type="text" name="id" id="medicineId" value="${medicine.id}"/>
+							<input type="text" name="WF_Type" id="WF_Type" value="medicine"/>
 						</div>
 						<div class="col-xs-12 col-md-6">
 
-							<div id="newFoodInfo" class="col-xs-12 widget-container-col ui-sortable">
+							<div id="medicineInfo" class="col-xs-12 widget-container-col ui-sortable">
 								<div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
 									<div class="widget-header">
-										<h4 class="widget-title">新功能食品</h4>
+										<h4 class="widget-title">新药品信息</h4>
 									</div>
 									<div class="widget-body ">
 										<div class="widget-main">
 											<div class="row">
 												<div class="form-group col-xs-12">
 													<label class="col-sm-2 control-label no-padding-left"
-													       for="name">食品名称</label>
+													       for="name">药品名称</label>
 
 													<div class="col-sm-9">
 														<input id="name" name="name"
 														       type="text" class="form-control col-xs-12"
-														       placeholder="" value="${newFood.name}"/>
+														       placeholder="" value="${medicine.name}"/>
 													</div>
 												</div>
 											</div>
@@ -106,52 +106,86 @@
 													<label class="col-sm-4 control-label no-padding-left"
 													       for="dept">所属部门</label>
 
-													<div class="col-sm-8">
-														<div class="col-sm-13">
-															<input id="dept" name="dept.id"
-															       type="text" class="form-control col-xs-12"
-															       placeholder="请选择"/>
-														</div>
+													<div class="col-sm-8"><!--选择框-->
+														<input type="text" name="dept.id"
+														       id="dept" class="form-control"
+														       placeholder="请选择"/>
 													</div>
 												</div>
-												<label class="col-sm-4 control-label no-padding-left"
-												       for="productNo">生产许可编号</label>
 
-												<div class="col-sm-8">
-													<div class="col-sm-13">
-														<input type="text" id="productNo" name="productNo"
-														       class="form-control col-xs-12"
-														       placeholder="" value="${newFood.productNo}"/>
+												<div class="form-group col-xs-12 col-sm-6">
+													<label class="col-sm-4 control-label no-padding-left"
+													       for="medCertId">证书号</label>
+
+													<div class="col-sm-8">
+														<input type="text" name="medCertid"
+														       id="medCertid" class="form-control col-xs-12"
+														       placeholder="" value="${medicine.medCertid}"/>
 													</div>
 												</div>
 											</div>
+
 											<div class="row">
+
+												<div class="form-group col-xs-12 col-sm-6">
+													<label class="col-sm-4 control-label no-padding-left"
+													       for="clinCode">临床批号</label>
+
+													<div class="col-sm-8">
+														<input type="text" name="clinCode"
+														       id="clinCode" class="form-control col-xs-12"
+														       placeholder="" value="${medicine.clinCode}"/>
+													</div>
+												</div>
+
+												<div class="form-group col-xs-12 col-sm-6">
+													<label class="col-sm-4 control-label no-padding-left"
+													       for="prodCode">生产批号</label>
+
+													<div class="col-sm-8">
+														<input type="text" name="prodCode"
+														       id="prodCode" class="col-xs-12"
+														       placeholder="" value="${medicine.prodCode}"/>
+													</div>
+												</div>
+											</div>
+
+
+											<div class="row">
+
 												<div class="form-group col-xs-12 col-sm-6">
 													<label class="col-sm-4 control-label no-padding-left"
 													       for="date">获批时间</label>
 
 													<div class="col-sm-8">
-														<input class="form-control date-picker" id="date"
-														       type="text" name="date"
-														       data-date-format="yyyy-mm-dd" value="${newFood.date}" />
+														<input type="text" name="date"
+														       id="date" class="form-control date-picker"
+														       data-date-format="yyyy-mm-dd" value="${medicine.date}"/>
 													</div>
 												</div>
-												<%--<div class="form-group col-xs-12 col-sm-6">--%>
-												<%--<label class="col-sm-4 control-label no-padding-left"--%>
-												<%--for="firstUnit">第一研发单位</label>--%>
+												<div class="form-group col-xs-12 col-sm-6">
+													<label class="col-sm-4 control-label no-padding-left"
+													       for="standardId">新药类别</label>
 
-												<%--<div class="col-sm-8">--%>
-												<%--<div class="col-sm-13">--%>
-												<%--<select class="form-control" id="firstUnit" name="firstUnit"--%>
-												<%--placeholder="请选择">--%>
-												<%--<option value=""></option>--%>
-												<%--<option value="1">是</option>--%>
-												<%--<option value="0">否</option>--%>
-												<%--</select>--%>
-												<%--</div>--%>
+													<div class="col-sm-8"><!--选择框-->
+														<input type="text" class="form-control"
+														       id="standardId" name="standard.id"
+														       placeholder="请选择"/>
+													</div>
+												</div>
+											</div>
 
-												<%--</div>--%>
-												<%--</div>--%>
+											<div class="row">
+												<div class="form-group col-xs-12 col-sm-6">
+													<label class="col-sm-4 control-label no-padding-left"
+													       for="stage">研发阶段</label>
+
+													<div class="col-sm-8"><!--选择框-->
+														<input type="text" class="form-control"
+														       id="stage" name="stage"
+														       placeholder="请选择"/>
+													</div>
+												</div>
 											</div>
 
 										</div>
@@ -183,6 +217,7 @@
 						</div>
 
 						<div class="col-xs-12 col-md-6">
+
 							<div id="actorInfo" class="col-xs-12 widget-container-col ui-sortable">
 								<div class="widget-box transparent ui-sortable-handle col-xs-12"
 								     style="opacity: 1;">
@@ -200,18 +235,19 @@
 														</c:when>
 													</c:choose>
 
-                                                <span class="giveSum">
-                                                    <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
-                                                    <label for="totalScore">总分：</label>
-                                                    <input class="score" type="text"
-                                                           name="score" id="totalScore" value="${achAppraisal.score}">
-                                                </span>
+	                                                <span class="giveSum">
+	                                                    <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
+	                                                    <label for="totalScore">总分：</label>
+	                                                    <input class="score" type="text"
+	                                                           name="score" id="totalScore" value="${medicine.score}">
+	                                                </span>
 												</div>
 												<table id="actorTable"
 												       data-toolbar="#actorToolbar"
 												       data-show-footer="true"
 												       data-show-columns="false"
-												       data-show-toggle="false"></table>
+												       data-show-toggle="false">
+												</table>
 											</div>
 										</div>
 									</div>
@@ -225,21 +261,17 @@
 									<div class="widget-header">
 										<h4 class="widget-title">共有单位信息</h4>
 									</div>
-
 									<div class="widget-body">
 										<div class="widget-main">
 											<div class="row">
 												<div id="unitToolbar">
-													<c:if test="${sessionScope.level == '3'}">
-														<a class="btn btn-primary btn-sm addUnit">
-															添加单位</a>
-													</c:if>
+													<a class="btn btn-primary btn-sm" id="addUnit"><i
+															class="glyphicon glyphicon-plus"></i> 添加单位</a>
 												</div>
 												<table id="unitTable"
 												       data-toolbar="#unitToolbar"
-												       data-show-footer="true"
-												       data-show-columns="false"
-												       data-show-toggle="false"></table>
+												       data-show-toggle="false"
+												       data-show-footer="true"></table>
 											</div>
 										</div>
 									</div>
@@ -250,7 +282,7 @@
 
 					</form>
 
-					<div id="reply" class="col-xs-12 col-md-6 col-xs-offset-6 widget-container-col ui-sortable">
+					<div id="reply" class="col-xs-12 col-md-6 col-md-offset-6 widget-container-col ui-sortable">
 						<div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
 							<div class="widget-header">
 								<h4 class="widget-title">批复</h4>
@@ -297,30 +329,30 @@
 									<i class="ace-icon fa fa-reply  bigger-110"></i>
 									返回
 								</button>
-                            <span class="onEdit">
-                                <button class="tabOrdBtn btn btn-primary btn-sm save"
-                                        type="button">
-	                                <i class="ace-icon fa fa-save bigger-110"></i>
-	                                保存
-                                </button>
-                                <button class="tabOrdBtn btn btn-success btn-sm confirm"
-                                        type="button">
-	                                <i class="ace-icon fa fa-check bigger-110"></i>
-	                                确认
-                                </button>
-                            </span>
-                            <span class="onApprove">
-                                <button class="tabOrdBtn btn btn-success btn-sm approve"
-                                        type="button">
-	                                <i class="ace-icon fa fa-check bigger-110"></i>
-	                                通过
-                                </button>
-                                <button class="tabOrdBtn btn btn-warning btn-sm refuse"
-                                        type="button">
-	                                <i class="ace-icon fa fa-remove bigger-110"></i>
-	                                驳回
-                                </button>
-                            </span>
+	                            <span class="onEdit">
+	                                <button class="tabOrdBtn btn btn-primary btn-sm save"
+	                                        type="button">
+		                                <i class="ace-icon fa fa-save bigger-110"></i>
+		                                保存
+	                                </button>
+	                                <button class="tabOrdBtn btn btn-success btn-sm confirm"
+	                                        type="button">
+		                                <i class="ace-icon fa fa-check bigger-110"></i>
+		                                确认
+	                                </button>
+	                            </span>
+	                            <span class="onApprove">
+	                                <button class="tabOrdBtn btn btn-success btn-sm approve"
+	                                        type="button">
+		                                <i class="ace-icon fa fa-check bigger-110"></i>
+		                                通过
+	                                </button>
+	                                <button class="tabOrdBtn btn btn-warning btn-sm refuse"
+	                                        type="button">
+		                                <i class="ace-icon fa fa-remove bigger-110"></i>
+		                                驳回
+	                                </button>
+	                            </span>
 							</div>
 						</div>
 					</div>
@@ -338,7 +370,6 @@
 </a>
 <!-- /.main-container -->
 </body>
-
 <script>
 
 	var actorTemp = [];
@@ -346,34 +377,63 @@
 	var Main_Actor;
 	var Main_ActorName;
 	var filesData = {};
-	var status;
 	var replyByCol, replyByDep;
 
 </script>
-
 <script src='<c:url value="/js/public/public.js"/>'></script>
-<script src='<c:url value="/js/public/pubFood.js"/>'></script>
+<%--<script src='<c:url value="/js/public/pubMedic.js"/>'></script>--%>
+<script src='<c:url value="/js/public/pubEdit.js"/>'></script>
 <script src='<c:url value="/js/public/route.js"/>'></script>
 
 <script type="text/javascript">
-	var entity =  ${ObjectMapper.writeValueAsString(achAppraisal)}; // 获得 order 或 实体
-	var userLevel = ${sessionScope.level};
-	var isMain = 0;
+	var StdList = [];
+	var medicineType = [];
 
+	function getStdList() { // 拦截standard表的数据
+		$.ajax({
+			type: 'GET',
+			async: false, // false
+			url: '/api/standard/type/新产品',
+			dataType: 'json',
+			contentType: 'application/json;charset=UTF-8',
+			success: function (data) {
+				StdList = data;
+				medicineType = getStandardList(StdList, 'prodtype', 'cat', '新药');
+				console.log(medicineType);
+			}
+		});
+	}
+
+	var $standard = $('#standardId').selectize({
+		valueField: 'id',
+		labelField: 'value',
+		maxItems: 1,
+		options: instrumentType
+	});
+
+	getStdList(); // 获取成果鉴定的standard待填充
+	getDept();   // 初始化 学院
+
+	var $stage = $('#stage').selectize({
+		valueField: 'value',
+		labelField: 'value',
+		maxItems: 1,
+		options: [
+			{'value': '临床前研究'},
+			{'value': '临床研究'}]
+	});
+
+	// 成员，单位，文件
+	var entity =  ${ObjectMapper.writeValueAsString(medicine)}; // 获得 entity 或 实体
 	var all = entity['argMap']; // 获得 成员，单位，附件，负责人等信息
 	var dept = entity['dept'];
 	var standard = entity['standard'];
 	var taskId = '${taskId}';  // 获得 task的id
 	var taskName = '${taskName}';
-
 	if (!isNull(all)) {
 		filesData = all['filesData'];
 		unitTemp = all['units'];
 		Main_Actor = all['Main-Actor'];
-		if (Main_Actor == userName) {
-			isMain = 1;
-		}
-		status = all['Status'];
 		Main_ActorName = all['Main-ActorName'];
 	}
 
@@ -385,7 +445,7 @@
 	if (approvalByDep !== "") {
 		replyByDep = all[approvalByDep]['replyByDep'];
 	}
-
+	console.log(entity);
 	// 显示 附件
 	if (filesData == null) {
 		filesData = {};
@@ -432,16 +492,17 @@
 			}],
 		data: actorTemp
 	});
-
 	$('#unitTable').bootstrapTable({
 		columns: [{
 			field: 'rank',
 			title: '排名',
+			editable: false,
 			sortable: true,
 			footerFormatter: "totalUnitFormatter"
 		}, {
 			field: 'unit',
 			title: '单位名称',
+			editable: false,
 			sortable: true
 		}, {
 			field: 'operate',
@@ -453,15 +514,19 @@
 		data: unitTemp
 	});
 
-	if (!isNull(standard)) {
-//		DisplayForm($appType, standard['infoMap']['jdprop'], 0);
-//		DisplayForm($appRank, standard['id'], 0);
-	}
+	upToLoadFile(); // 上传文件的
 
-	if (!isNull(dept)) {  // 显示 所属部门
+	if(dept !== null) {  // 显示 所属部门
 		var $dept = $('#dept').selectize();
 		addOptionSelectize($dept, [dept]);
 		DisplayForm($dept, dept['id'], 0);
+	}
+
+	if(standard !== null) {  // 显示 药品类型
+		DisplayForm($standard, standard['id'], 0);
+	}
+	if(all['stage'] !== null) {  // 显示 药品类型
+		DisplayForm($stage, all['stage'], 0);
 	}
 
 	//监听 确认
@@ -504,23 +569,25 @@
 		saveStep1().success(function(data) {
 
 			saveStep2(data).success(function (res) {
-				getScore('newFood');
+				getScore('medicine');
 			});
 		});
 	});
 </script>
 <c:choose>
 	<c:when test="${sessionScope.level == '1'}">
-		<script src="<c:url value="/js/teacher/newFoodEdit.js"/>"></script>
+		<script src="<c:url value="/js/teacher/newMedicEdit.js"/>"></script>
 	</c:when>
 	<c:when test="${sessionScope.level == '2'}">
-		<script src="<c:url value="/js/college/newFoodEdit.js"/>"></script>
+		<script src="<c:url value="/js/college/newMedicEdit.js"/>"></script>
 	</c:when>
 	<c:when test="${sessionScope.level == '3'}">
-		<script src="<c:url value="/js/school/newFoodEdit.js"/>"></script>
+		<script src="<c:url value="/js/school/newMedicEdit.js"/>"></script>
 	</c:when>
 </c:choose>
 </html>
+
+
 
 
 
