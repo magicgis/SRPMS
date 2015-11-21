@@ -38,7 +38,7 @@ public class Confirm implements SnakerInterceptor {
         String order = execution.getOrder().getId();
         String creator = execution.getOrder().getCreator();
         String type = orderActorDao.getByOrder(order).get(0).getType();
-        if (!orderActorDao.areTheyAlreadyIn(order, actor)) {
+        if (!orderActorDao.areTeacherAlreadyIn(order, actor)) {
             /*负责人为1，参与者为0*/
             if (creator.equals(actor)) {
                 orderActorDao.save(order, actor, 1, type);

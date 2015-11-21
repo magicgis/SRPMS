@@ -19,6 +19,7 @@ public class NewMag implements SnakerInterceptor {
         Mag mag = new Mag();
         StandardInfoService standardInfoService = (StandardInfoService) util.StaticFactory.getBean(StandardInfoService.class);
         MagService magService = (MagService) util.StaticFactory.getBean(MagService.class);
+        //todo wtf
         mag.setStandard(standardInfoService.getById("1013"));
         Map<String, Object> info = (Map) args.get("WF_0_Submission");
         util.Trans.putMapOnObj(mag, info);

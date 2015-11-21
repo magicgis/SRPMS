@@ -22,7 +22,7 @@ public class SubmitByCol implements SnakerInterceptor {
             Map<String, Object> args = new HashMap<>();
             args.put("Status", "WaitForDep");
             execution.getEngine().order().addVariable(order, args);
-            orderActorDao.save(order, "10003", 3, type);
+            orderActorDao.save(order, (String) execution.getArgs().get("WF_Type"), 3, type);
         }
     }
 }

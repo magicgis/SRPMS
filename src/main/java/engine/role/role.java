@@ -20,11 +20,12 @@ public class role extends Assignment {
         String taskName = model.getName();
         if (taskName.equals("ApprovalByCol") || taskName.equals("SubmitByCol")) {
             /*TODO 根据order里的变量来分配任务*/
-            return "10002";
+            String colId = (String) execution.getArgs().get("WF_Col_Id");
+            return colId;
         }
         else if (model.getName().equals("ApprovalByDep")) {
             /*TODO 根据order里的变量来分配任务*/
-            return "10003";
+            return (String) execution.getArgs().get("WF_Type");
         }
         else if (execution.getArgs().containsKey("Main-Actor")) {
             return execution.getArgs().get("Main-Actor");

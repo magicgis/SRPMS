@@ -3,6 +3,7 @@ package api;
 import engine.Engine;
 import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
+import entity.Staff;
 import org.snaker.engine.entity.HistoryTask;
 import org.snaker.engine.entity.Order;
 import org.snaker.engine.entity.Process;
@@ -41,7 +42,7 @@ public class Workflow {
     @Autowired
     PatentService patentService;
     @Autowired
-    StaffService StaffService;
+    StaffService staffService;
     @Autowired
     ProjectService projectService;
 
@@ -252,17 +253,35 @@ public class Workflow {
                         @PathParam("member") String member,
                         @QueryParam("limit") Integer limit,
                         @QueryParam("offset") Integer offset) {
+        Staff staff = staffService.getById(user);
+        String actorId = null;
         Integer role = null;
-        if (member.equals("1st")) {
-            role = 1;
+        if ("1".equals(staff.getUser().getPrivilege())) {
+            actorId = user;
+            if (member.equals("1st")) {
+                role = 1;
+            }
+            else if (member.equals("2nd")) {
+                role = 0;
+            }
+            else {
+                // magic number
+                role = 10;
+            }
         }
-        else if (member.equals("2nd")) {
-            role = 0;
+        else if ("2".equals(staff.getUser().getPrivilege())) {
+            actorId = staff.getCol().getId();
+            role = 2;
+        }
+        else if ("3".equals(staff.getUser().getPrivilege())) {
+            //todo 此处实际是可以区分出各类管理员的，此时暂时不管这些
+            actorId = null;
+            role = 3;
         }
         if (type.equals("all")) {
             type = null;
         }
-        List<OrderActor> list = orderActorDao.getByAll(user, type, role);
+        List<OrderActor> list = orderActorDao.getByAll(actorId, type, role);
         List<Order> ans = new ArrayList<>();
         for (OrderActor u : list) {
             ans.add(engine.getOrder(u.getOrder()));
@@ -333,9 +352,12 @@ public class Workflow {
         }
         Map<String, Object> args = new HashMap<>();
         args.put("WF_Memo", "Submit By Program");
+        //todo 需要改进
         for (Order u : list) {
             List<Task> tasks = engine.getTaskByOrder(u.getId());
-            engine.execute(tasks.get(0).getId(), user, args);
+            if (tasks.get(0).getTaskName().equals("SubmitByTeacher")) {
+                engine.execute(tasks.get(0).getId(), user, args);
+            }
         }
         return true;
     }
@@ -350,7 +372,9 @@ public class Workflow {
     @Path("/submitByCol")
     @Produces("text/plain;charset=UTF-8")
     public boolean colSubmit(@FormParam("WF_User") String user) {
-        List<Order> list = engine.getAllOrderByActor(user);
+        Staff staff = staffService.getById(user);
+        String actorId = staff.getCol().getId();
+        List<Order> list = engine.getAllOrderByActor(actorId);
         List<String> colFlag = Arrays.asList("Submission", "Confirm", "SubmitByTeacher", "ApprovalByCol");
         for (Order u : list) {
             List<Task> tasks = engine.getTaskByOrder(u.getId());
@@ -363,7 +387,9 @@ public class Workflow {
         args.put("WF_Memo", "Submit By Program");
         for (Order u : list) {
             List<Task> tasks = engine.getTaskByOrder(u.getId());
-            engine.execute(tasks.get(0).getId(), user, args);
+            if (tasks.get(0).getTaskName().equals("SubmitByCol")) {
+                engine.execute(tasks.get(0).getId(), actorId, args);
+            }
         }
         return true;
     }

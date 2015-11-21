@@ -32,34 +32,34 @@ public class OrderActorDao {
         this.getCurrentSession().save(orderActor);
     }
 
-    public boolean areTheyAlreadyIn(String order, String actor) {
-        return (get(order, actor) != null);
+    public boolean areTeacherAlreadyIn(String order, String actor) {
+        if (this.get(order, actor, 1) != null) {
+            return true;
+        }
+        if (this.get(order, actor, 0) != null) {
+            return true;
+        }
+        return false;
     }
 
-    OrderActor get(String order, String actor) {
-        OrderActor ans = null;
-        String hql = "from OrderActor where actor = '" + actor + "' and order = '" + order + "' and status = 1";
-        List<OrderActor> list = this.getCurrentSession().createQuery(hql).list();
-        if (list != null && list.size() != 0) {
-            ans = list.get(0);
-        }
-        return ans;
+    OrderActor get(String order, String actor, Integer role) {
+        String id = actor + "-" + order + "-" + String.valueOf(role);
+        return (OrderActor) this.getCurrentSession().get(OrderActor.class, id);
     }
 
     public void save(String order, String actor, int role, String type) {
+        String id = actor + "-" + order + "-" + String.valueOf(role);
+        if (this.get(order, actor, role) != null) {
+            return;
+        }
         OrderActor OA = new OrderActor();
         OA.setActor(actor);
         OA.setOrder(order);
-        OA.setIdoa(actor + "-" + order);
+        OA.setIdoa(id);
         OA.setRole(role);
         OA.setType(type);
         OA.setStatus(1);
         save(OA);
-    }
-
-    public void delete(String order, String actor) {
-        OrderActor orderActor = get(order, actor);
-        this.getCurrentSession().delete(orderActor);
     }
 
     public void deleteAllOrder(String order) {
@@ -94,7 +94,13 @@ public class OrderActorDao {
             where.add("type = '" + type + "'");
         }
         if (role != null) {
-            where.add("role = " + role);
+            //magic number
+            if (role != 10) {
+                where.add("role = " + role);
+            }
+            else {
+                where.add("role < 2");
+            }
         }
         if (where.size() > 0) {
             hql = hql + " where ";
