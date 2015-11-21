@@ -69,7 +69,6 @@ public class BaseInfoApi {
         baseInfo.setTableName(tableName);
         baseInfo.setValue(args.get("value"));
         baseInfo.setId(id);
-        baseInfo.setKeyCode(id);
         return baseInfoService.save(baseInfo);
     }
 

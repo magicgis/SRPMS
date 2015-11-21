@@ -10,7 +10,6 @@ import javax.persistence.*;
 public class BaseInfo {
     private String id;
     private String tableName;
-    private String keyCode;
     private String value;
 
     @Id
@@ -33,15 +32,6 @@ public class BaseInfo {
         this.tableName = tableName;
     }
 
-    @Basic
-    @Column(name = "key_code")
-    public String getKeyCode() {
-        return keyCode;
-    }
-
-    public void setKeyCode(String keyCode) {
-        this.keyCode = keyCode;
-    }
 
     @Basic
     @Column(name = "value")
@@ -62,7 +52,6 @@ public class BaseInfo {
 
         if (id != null ? !id.equals(baseInfo.id) : baseInfo.id != null) return false;
         if (tableName != null ? !tableName.equals(baseInfo.tableName) : baseInfo.tableName != null) return false;
-        if (keyCode != null ? !keyCode.equals(baseInfo.keyCode) : baseInfo.keyCode != null) return false;
         return !(value != null ? !value.equals(baseInfo.value) : baseInfo.value != null);
 
     }
@@ -71,7 +60,6 @@ public class BaseInfo {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (tableName != null ? tableName.hashCode() : 0);
-        result = 31 * result + (keyCode != null ? keyCode.hashCode() : 0);
         result = 31 * result + (value != null ? value.hashCode() : 0);
         return result;
     }
