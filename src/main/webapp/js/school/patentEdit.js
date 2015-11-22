@@ -101,7 +101,7 @@ function delOrder() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                entity.delEntity('patent', $('#patentId').val()).success(function (data) {
+                workflow.delEntity('patent', $('#patentId').val()).success(function (data) {
                     afterSuccess("删除成功！");
                     window.location.href = '/index/entity/patent/all';
                 });

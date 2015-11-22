@@ -275,7 +275,7 @@ function delOrder() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                entity.delEntity('achTran', $('#achTranId').val()).success(function (data) {
+                workflow.delEntity('achTran', $('#achTranId').val()).success(function (data) {
                     afterSuccess("删除成功！");
                     window.location.href = '/index/entity/achTran/all';
                 });

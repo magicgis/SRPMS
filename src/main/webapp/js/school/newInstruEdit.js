@@ -67,7 +67,7 @@ function delOrder() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                entity.delEntity('instrument', $('#instrumentId').val()).success(function () {
+                workflow.delEntity('instrument', $('#instrumentId').val()).success(function () {
                     afterSuccess("删除成功！");
                     window.location.href = '/index/entity/instrument/all';
                 });
