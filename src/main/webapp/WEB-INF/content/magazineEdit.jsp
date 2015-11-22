@@ -76,7 +76,7 @@
                                                 <div class="col-sm-8">
                                                     <input type="text" name="name" id="name"
                                                            value="${task.variableMap.get("name")}"
-                                                           class="col-xs-12 mag-input"/>
+                                                           class="form-control col-xs-12 mag-input"/>
                                                 </div>
                                             </div>
                                             <div class="form-group col-xs-12 col-sm-6">
@@ -86,7 +86,7 @@
                                                 <div class="col-sm-8">
                                                     <input type="text" id="issn" name="issn"
                                                            value="${task.variableMap.get("issn")}" placeholder=""
-                                                           class="col-xs-12 mag-input"/>
+                                                           class="form-control col-xs-12 mag-input"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -98,39 +98,49 @@
                                                 <div class="col-sm-8">
                                                     <input type="text" id="cn" name="cn" placeholder=""
                                                            value="${task.variableMap.get("cn")}"
-                                                           class="col-xs-12 mag-input"/>
+                                                           class="form-control col-xs-12 mag-input"/>
                                                 </div>
                                             </div>
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
-                                                       for="magLevel">刊物类别</label>
+                                                       for="sub">期刊主题</label>
 
                                                 <div class="col-sm-8">
-                                                    <input type="text" id="magLevel" name="sub"
+                                                    <input type="text" id="sub" name="sub"
                                                            value="${task.variableMap.get("sub")}" placeholder=""
-                                                           class="col-xs-12 mag-input"/>
+                                                           class="form-control col-xs-12 mag-input"/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
-                                                       for="type">收录类型</label>
+                                                       for="type">期刊等级</label>
 
                                                 <div class="col-sm-8">
                                                     <input type="text" id="type" name="type"
                                                            value="${task.variableMap.get("type")}" placeholder=""
-                                                           class="col-xs-12 mag-input"/>
+                                                           class="form-control mag-input"/>
                                                 </div>
                                             </div>
+	                                        <div class="form-group col-xs-12 col-sm-6">
+		                                        <label class="col-sm-4 control-label no-padding-left"
+		                                               for="standardId">期刊类型</label>
+
+		                                        <div class="col-sm-8">
+			                                        <input type="text" id="standardId" name="standard.id"
+			                                               placeholder=""
+			                                               class="form-control mag-input"/>
+		                                        </div>
+	                                        </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-xs-12">
-                            <div class="col-xs-12 col-md-6 widget-container-col ui-sortable" id="fileHead">
+                        <div class="col-xs-12 col-md-10">
+                            <div class="col-xs-12 widget-container-col ui-sortable" id="fileHead">
                                 <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
                                     <div class="widget-header">
                                         <h4 class="widget-title">附件信息</h4>
@@ -158,24 +168,24 @@
                             <div id="magPaperBtn" class="pull-left" hidden="hidden">
                             </div>
                             <div class="pull-right">
-                                <button class="btn btn-info btn-sm back" type="button">
+                                <button class="tabOrdBtn btn btn-info btn-sm back" type="button">
                                     <i class="ace-icon fa fa-reply  bigger-110"></i>
                                     返回
                                 </button>
                                 <c:choose>
                                     <c:when test="${sessionScope.level == '1'}">
-                                        <button class="confirm btn btn-success btn-sm teacher" type="button">
+                                        <button class="tabOrdBtn confirm btn btn-success btn-sm teacher" type="button">
                                             <i class="ace-icon fa fa-check bigger-110"></i>
                                             提交
                                         </button>
                                     </c:when>
                                     <c:when test="${sessionScope.level == '3'}">
-                                        <button class="confirm btn btn-success btn-sm school" type="button">
+                                        <button class="tabOrdBtn confirm btn btn-success btn-sm school" type="button">
                                             <i class="ace-icon fa fa-check bigger-110"></i>
                                             通过
                                         </button>
 
-                                        <button class="btn btn-danger btn-sm refuse" type="button">
+                                        <button class="tabOrdBtn btn btn-danger btn-sm refuse" type="button">
                                             <i class="ace-icon fa fa-plus bigger-110"></i>
                                             驳回
                                         </button>
@@ -212,13 +222,55 @@
 
 </body>
 <script>
+	var StdList = [];
+	var magTypeList = [];
+	var magColTypeList = [];
+
+	var $standard = $('#standardId').selectize({
+		valueField: 'id',
+		labelField: 'value',
+		maxItems: 1,
+		create: false
+	});
+
+	function getStdList() { // 拦截standard表的数据
+
+		$.ajax({
+			type: 'GET',
+			async: false, // false
+			url: '/api/standard/type/论文',
+			dataType: 'json',
+			contentType: 'application/json;charset=UTF-8',
+			success: function (data) {
+				StdList = data;
+				magTypeList = getList(StdList, 'type');
+				$('#type').selectize({
+					valueField: 'value',
+					labelField: 'value',
+					maxItems: 1,
+					create: false,
+					options: magTypeList,
+					onChange: function (result) {
+						magColTypeList = getStandardList(StdList, 'type', 'col_type', result);
+						$standard[0].selectize.clearOptions();
+						$standard[0].selectize.addOption(magColTypeList);
+					}
+				});
+			}
+		});
+	}
+
+//	if(!isNull()) //todo standard不知道怎么取得
+
+	getStdList();
 
     var status = '${task.taskName}';
 
     if (status == 'ApprovalByDep') {
         $('input').attr('disabled', 'disabled');
         $('.teacher').hide();
-        // todo 禁用上传按钮
+        $('#upload').hide();
+        $('.delFiles').hide();
     }
 
     upToLoadFile();
