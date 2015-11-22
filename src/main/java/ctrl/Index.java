@@ -44,6 +44,14 @@ public class Index {
     AchTranService achTranService;
     @Autowired
     PaperService paperService;
+    @Autowired
+    OthersService othersService;
+    @Autowired
+    FoodService foodService;
+    @Autowired
+    InstrumentService instrumentService;
+    @Autowired
+    MedicineService medicineService;
 
     @RequestMapping(value = {"index/**", "index"}, method = RequestMethod.GET)
     public String newindex(Model model, RedirectAttributes redirectAttributes) {
@@ -194,20 +202,51 @@ public class Index {
         return "achTranEdit";
     }
 
-
-    @RequestMapping(value = {"sysBaseInfo"}, method = RequestMethod.GET)
-    public String sysBaseInfo(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        return "sysBaseInfo";
-    }
-
     @RequestMapping(value = {"order/{orderId}"}, method = RequestMethod.GET)
     public String OrderEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
                             @PathVariable("orderId") String orderId) {
+        //获取order
         Order order = engine.getOrder(orderId);
+        //获取order的最新任务
         Task task = engine.getTaskByOrder(orderId).get(0);
+        //获取业务类型
         String type = (String) order.getVariableMap().get("WF_Type");
+        //获取实体id（如果有）
         String entityId = (String) order.getVariableMap().get("WF_Entity");
         switch (type) {
+            case "achAppraisal":
+                AchAppraisal achAppraisal = achAppraisalService.getById(entityId);
+                achAppraisal.setArgMap(order.getVariableMap());
+                model.addAttribute(achAppraisal);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "achAppraisalEdit";
+            case "achAward":
+                AchAward achAward = achAwardService.getById(entityId);
+                achAward.setArgMap(order.getVariableMap());
+                model.addAttribute(achAward);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "achAwardEdit";
+            case "achTran":
+                AchTran achTran = achTranService.getById(entityId);
+                achTran.setArgMap(order.getVariableMap());
+                model.addAttribute(achTran);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "achTranEdit";
+            case "book":
+                Book book = bookService.getById(entityId);
+                book.setArgMap(order.getVariableMap());
+                model.addAttribute(book);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "bookEdit";
+            case "paper":
+                model.addAttribute(order);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "paperEdit";
             case "patent":
                 Patent patent = patentService.getById(entityId);
                 patent.setArgMap(order.getVariableMap());
@@ -222,43 +261,83 @@ public class Index {
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "projectEdit";
-            case "achAward":
-                AchAward achAward = achAwardService.getById(entityId);
-                achAward.setArgMap(order.getVariableMap());
-                model.addAttribute(achAward);
+            case "others":
+                Others others = othersService.getById(entityId);
+                others.setArgMap(order.getVariableMap());
+                model.addAttribute(others);
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
-                return "achAwardEdit";
-            case "achAppraisal":
-                AchAppraisal achAppraisal = achAppraisalService.getById(entityId);
-                achAppraisal.setArgMap(order.getVariableMap());
-                model.addAttribute(achAppraisal);
+                return "othersEdit";
+            case "food":
+                Food food = foodService.getById(entityId);
+                food.setArgMap(order.getVariableMap());
+                model.addAttribute(food);
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
-                return "achAppraisalEdit";
-            case "paper":
-                model.addAttribute(order);
+                return "foodEdit";
+            case "instrument":
+                Instrument instrument = instrumentService.getById(entityId);
+                instrument.setArgMap(order.getVariableMap());
+                model.addAttribute(instrument);
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
-                return "paperEdit";
-            case "book":
-                model.addAttribute(order);
+                return "instrumentEdit";
+            case "medicine":
+                Medicine medicine = medicineService.getById(entityId);
+                medicine.setArgMap(order.getVariableMap());
+                model.addAttribute(medicine);
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
-                return "bookEdit";
+                return "medicineEdit";
             default:
-                return "redirect:/allSRInfo";
+                return "redirect:/index";
         }
     }
 
     @RequestMapping(value = {"task/{taskId}"}, method = RequestMethod.GET)
     public String taskEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
                            @PathVariable("taskId") String taskId) {
+        //获取任务
         Task task = engine.getTask(taskId);
+        //获取order
         Order order = engine.getOrder(task.getOrderId());
+        //获取业务类型
         String type = (String) order.getVariableMap().get("WF_Type");
+        //获取业务实体（如果有）
         String entityId = (String) order.getVariableMap().get("WF_Entity");
         switch (type) {
+            case "achAppraisal":
+                AchAppraisal achAppraisal = achAppraisalService.getById(entityId);
+                achAppraisal.setArgMap(order.getVariableMap());
+                model.addAttribute(achAppraisal);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "achAppraisalEdit";
+            case "achAward":
+                AchAward achAward = achAwardService.getById(entityId);
+                achAward.setArgMap(order.getVariableMap());
+                model.addAttribute(achAward);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "achAwardEdit";
+            case "achTran":
+                AchTran achTran = achTranService.getById(entityId);
+                achTran.setArgMap(order.getVariableMap());
+                model.addAttribute(achTran);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+            case "book":
+                Book book = bookService.getById(entityId);
+                book.setArgMap(order.getVariableMap());
+                model.addAttribute(book);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "bookEdit";
+            case "paper":
+                model.addAttribute(order);
+                model.addAttribute("taskId", task.getId());
+                model.addAttribute("taskName", task.getTaskName());
+                return "paperEdit";
             case "patent":
                 Patent patent = patentService.getById(entityId);
                 patent.setArgMap(order.getVariableMap());
@@ -273,33 +352,36 @@ public class Index {
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
                 return "projectEdit";
-            case "achAward":
-                AchAward achAward = achAwardService.getById(entityId);
-                achAward.setArgMap(order.getVariableMap());
-                model.addAttribute(achAward);
+            case "others":
+                Others others = othersService.getById(entityId);
+                others.setArgMap(order.getVariableMap());
+                model.addAttribute(others);
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
-                return "achAwardEdit";
-            case "achAppraisal":
-                AchAppraisal achAppraisal = achAppraisalService.getById(entityId);
-                achAppraisal.setArgMap(order.getVariableMap());
-                model.addAttribute(achAppraisal);
+                return "othersEdit";
+            case "food":
+                Food food = foodService.getById(entityId);
+                food.setArgMap(order.getVariableMap());
+                model.addAttribute(food);
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
-                return "achAppraisalEdit";
-            case "paper":
-                model.addAttribute(order);
+                return "foodEdit";
+            case "instrument":
+                Instrument instrument = instrumentService.getById(entityId);
+                instrument.setArgMap(order.getVariableMap());
+                model.addAttribute(instrument);
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
-                return "paperEdit";
-            case "book":
-                model.addAttribute(order);
+                return "instrumentEdit";
+            case "medicine":
+                Medicine medicine = medicineService.getById(entityId);
+                medicine.setArgMap(order.getVariableMap());
+                model.addAttribute(medicine);
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
-                return "bookEdit";
-
+                return "medicineEdit";
             default:
-                return "redirect:/allSRInfo";
+                return "redirect:/index";
         }
     }
 
