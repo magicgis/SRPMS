@@ -274,7 +274,7 @@ function delOrder() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                entity.delEntity('achAppraisal', $('#achAppraiseId').val()).success(function (data) {
+                workflow.delEntity('achAppraisal', $('#achAppraiseId').val()).success(function (data) {
                     afterSuccess("删除成功！");
                     window.location.href = '/index/entity/achAppraisal/all';
                 });

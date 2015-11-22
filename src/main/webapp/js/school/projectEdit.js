@@ -54,13 +54,14 @@ function orderBack() {
     //    showTable();
     //    $('#del').show();
     //});
-    var order = entity['id'];
-    window.workflow.getBack(userName, order).success(function () {
+    var orderId = entity['id'];
+    window.workflow.getBack(userName, orderId).success(function () {
         afterSuccess("已撤回");
         window.location.href = '/index/entity/project/all';
     });
 }
 function delOrder() {
+    console.log($('#projectId').val());
     BootstrapDialog.confirm({
         title: '提示！',
         message: '你确定要删除该项吗?',
@@ -72,7 +73,7 @@ function delOrder() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                entity.delEntity('project', $('#projectId').val()).success(function (data) {
+                workflow.delEntity('project', $('#projectId').val()).success(function (data) {
                     afterSuccess("删除成功！");
                     window.location.href = '/index/entity/project/all';
                 });

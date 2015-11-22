@@ -146,9 +146,9 @@ workflow.getScore = function (args) {
 };
 
 /**--------------------------实体类公共方法------------------**/
-var entity = window.entity || {};
+//var entity = window.entity || {};
 
-entity.delEntity = function(type, id) {
+workflow.delEntity = function(type, id) {
     return $.ajax({
         type: 'DELETE',
         url: '/api/'+ type +'/'+ id,
