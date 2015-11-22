@@ -15,7 +15,7 @@ import static util.Trans.argMap;
  */
 @Entity
 @Table(name = "paper")
-public class Paper {
+public class Paper implements VirtualEntity {
     private String id;
     private String type;
     private String name;
@@ -241,5 +241,29 @@ public class Paper {
 
     public void setDept(BaseInfo dept) {
         this.dept = dept;
+    }
+
+    @Override
+    @Transient
+    @Deprecated
+    public Standard getStandard() {
+        return null;
+    }
+
+    @Override
+    public void setStandard(Standard standard) {
+
+    }
+
+    @Override
+    @Transient
+    @Deprecated
+    public String getProcess() {
+        return null;
+    }
+
+    @Override
+    public void setProcess(String process) {
+
     }
 }

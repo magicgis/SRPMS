@@ -14,7 +14,7 @@ import static util.Trans.argMap;
  */
 @Entity
 @Table(name = "book")
-public class Book {
+public class Book implements VirtualEntity {
     private String id;
     private String name;
     private String pubDate;
@@ -215,5 +215,18 @@ public class Book {
 
     public void setDept(BaseInfo dept) {
         this.dept = dept;
+    }
+
+
+    @Override
+    @Transient
+    @Deprecated
+    public Standard getStandard() {
+        return null;
+    }
+
+    @Override
+    public void setStandard(Standard standard) {
+
     }
 }

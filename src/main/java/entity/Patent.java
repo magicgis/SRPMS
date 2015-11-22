@@ -14,7 +14,7 @@ import static util.Trans.argMap;
  */
 @Entity
 @Table(name = "patent")
-public class Patent {
+public class Patent implements VirtualEntity {
     private String id;
     private String name;
     private String patentPubNo;

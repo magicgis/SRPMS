@@ -15,7 +15,7 @@ import static util.Trans.argMap;
  */
 @Entity
 @Table(name = "project")
-public class Project {
+public class Project implements VirtualEntity {
     private String id;
     private String code;
     private String name;

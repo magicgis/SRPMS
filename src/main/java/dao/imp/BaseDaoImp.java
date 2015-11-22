@@ -105,7 +105,7 @@ public class BaseDaoImp<T> implements BaseDao<T> {
     }
 
     public List<T> getAll() {
-//        log.debug("BaseDAO Get All " + entityClass.getName());
+        log.debug("BaseDAO Get All " + entityClass.getName());
         List<T> res = null;
         try {
             res = this.getCurrentSession().createCriteria(entityClass.getName()).list();
@@ -204,6 +204,7 @@ public class BaseDaoImp<T> implements BaseDao<T> {
 
     @Override
     public List<T> findByArrayFuz(List<String> keys, String keyword, String sort, String order) {
+        log.debug("BaseDAO findByArrayFuz(F) " + keyword + " From " + entityClass.getName());
         String hql = "from " + entityClass.getName();
         String where = "";
         if (keyword != null && !keyword.equals("")) {

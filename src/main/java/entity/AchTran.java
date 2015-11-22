@@ -14,7 +14,7 @@ import static util.Trans.argMap;
  */
 @Entity
 @Table(name = "ach_tran")
-public class AchTran {
+public class AchTran implements VirtualEntity {
     private String id;
     private String name;
     private String date;
@@ -178,5 +178,15 @@ public class AchTran {
         this.dept = dept;
     }
 
+    @Override
+    @Transient
+    @Deprecated
+    public Standard getStandard() {
+        return null;
+    }
 
+    @Override
+    public void setStandard(Standard standard) {
+
+    }
 }

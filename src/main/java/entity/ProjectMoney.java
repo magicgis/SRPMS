@@ -73,16 +73,16 @@ public class ProjectMoney {
 
     @Override
     public boolean equals(Object o) {
-        if(this == o) return true;
-        if(o == null || getClass() != o.getClass()) return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
         ProjectMoney that = (ProjectMoney) o;
 
-        if(id != null ? !id.equals(that.id) : that.id != null) return false;
-        if(time != null ? !time.equals(that.time) : that.time != null) return false;
-        if(mny != null ? !mny.equals(that.mny) : that.mny != null) return false;
-        if(outMny != null ? !outMny.equals(that.outMny) : that.outMny != null) return false;
-        if(step != null ? !step.equals(that.step) : that.step != null) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (time != null ? !time.equals(that.time) : that.time != null) return false;
+        if (mny != null ? !mny.equals(that.mny) : that.mny != null) return false;
+        if (outMny != null ? !outMny.equals(that.outMny) : that.outMny != null) return false;
+        if (step != null ? !step.equals(that.step) : that.step != null) return false;
         return !(project != null ? !project.equals(that.project) : that.project != null);
 
     }

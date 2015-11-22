@@ -14,7 +14,7 @@ import static util.Trans.argMap;
  */
 @Entity
 @Table(name = "ach_appraisal")
-public class AchAppraisal {
+public class AchAppraisal implements VirtualEntity {
     private String id;
     private String name;
     private String regNo;

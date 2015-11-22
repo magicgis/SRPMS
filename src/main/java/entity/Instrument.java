@@ -13,7 +13,7 @@ import static util.Trans.argMap;
  */
 @Entity
 @Table(name = "instrument")
-public class Instrument {
+public class Instrument implements VirtualEntity {
     private String id;
     private String name;
     private String productionNo;

@@ -13,7 +13,7 @@ import static util.Trans.argMap;
  */
 @Entity
 @Table(name = "others")
-public class Others {
+public class Others implements VirtualEntity {
     private String id;
     private String name;
     private String productionNo;
