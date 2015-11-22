@@ -49,7 +49,8 @@ public class DynamicEntity {
         return getSubMap(baseService.search(search, sort, ord), limit, offset);
     }
 
-    @POST@SuppressWarnings("unchecked")
+    @POST
+    @SuppressWarnings("unchecked")
     @Path("/{entity:achAppraisal|achAward|achTran|book|paper|patent|project|others|food|instrument|medicine}")
     public Serializable add(MultivaluedMap args) {
         HashMap<String, Object> x = new HashMap<>();
@@ -116,6 +117,13 @@ public class DynamicEntity {
                 }
                 break;
             case "others":
+                if ("".equals(args.getFirst("id"))) {
+                    entityObject = new Others();
+                    entityObject.setProcess("0");//表示刚填表
+                }
+                else {
+                    entityObject = (Others) baseService.getById((Serializable) args.getFirst("id"));
+                }
                 break;
             case "food":
                 if ("".equals(args.getFirst("id"))) {
@@ -127,8 +135,22 @@ public class DynamicEntity {
                 }
                 break;
             case "instrument":
+                if ("".equals(args.getFirst("id"))) {
+                    entityObject = new Instrument();
+                    entityObject.setProcess("0");//表示刚填表
+                }
+                else {
+                    entityObject = (Instrument) baseService.getById((Serializable) args.getFirst("id"));
+                }
                 break;
             case "medicine":
+                if ("".equals(args.getFirst("id"))) {
+                    entityObject = new Medicine();
+                    entityObject.setProcess("0");//表示刚填表
+                }
+                else {
+                    entityObject = (Medicine) baseService.getById((Serializable) args.getFirst("id"));
+                }
                 break;
             default:
                 return null;
