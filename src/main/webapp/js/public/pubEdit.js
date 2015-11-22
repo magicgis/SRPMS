@@ -128,18 +128,26 @@ function getUnitsData(){
  * 专利的standard
  */
 function getPatentType() {
+    var patentTypeList = [];
 
-
-
-    $('#patType').selectize({
-        valueField: 'id',
-        labelField: 'value',
-        maxItems: 1,
-        //todo 需要换成真实数据
-        options: [
-            {"id": "1023", "value": "国际发明专利"},
-            {"id": "1024", "value": "中国发明专利"},
-            {"id": "1025", "value": "外观专利"},
-            {"id": "1026", "value": "实用新型专利"}]
+    $.ajax({
+        type: 'GET',
+        async: false, // false
+        url: '/api/standard/type/专利',
+        dataType: 'json',
+        contentType: 'application/json;charset=UTF-8',
+        success: function (data) {
+            var StdList = data;
+            patentTypeList = getListWithId(StdList, 'patenttype');
+            console.log(patentTypeList);
+            $('#patType').selectize({
+                valueField: 'id',
+                labelField: 'value',
+                maxItems: 1,
+                options: patentTypeList
+            });
+        }
     });
+
+
 }

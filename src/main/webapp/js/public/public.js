@@ -450,6 +450,17 @@ function getList(data, str) {
     return tempList;
 }
 
+function getListWithId(data ,str){
+    var tempList = [];
+    $.each(data, function (index, obj) {
+        var temp = {};
+        temp['id'] = obj['id'];
+        temp['value'] = obj['infoMap'][str];
+        tempList.push(temp);
+    });
+    return tempList;
+}
+
 /**
  *
  * @param data standard表中的数据

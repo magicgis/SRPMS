@@ -394,7 +394,7 @@
     var entity =  ${ObjectMapper.writeValueAsString(patent)}; // 获得 entity 或 实体
     var all = entity['argMap']; // 获得 成员，单位，附件，负责人等信息
     var dept = entity['dept'];
-//    var standard = entity['standard'];
+    var standard = entity['standard'];
     var taskId = '${taskId}';  // 获得 task的id
     var taskName = '${taskName}';
     if (!isNull(all)) {
@@ -482,9 +482,9 @@
     });
 
     upToLoadFile(); // 上传文件的
-
-//    DisplayForm($('#patType').selectize(), standard['id'], 0); // 显示 专利类型
-
+    if(standard !== null) {
+        DisplayForm($('#patType').selectize(), standard['id'], 0); // 显示 专利类型
+    }
     if(dept !== null) {  // 显示 所属部门
         var $dept = $('#dept').selectize();
         addOptionSelectize($dept, [dept]);
