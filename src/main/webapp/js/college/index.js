@@ -74,7 +74,7 @@ function processView() {
                         title: '专利名称',
                         sortable: true
                     }, {
-                        field: 'standard.value',
+                        field: 'standard.infoMap.patenttype',
                         title: '专利类型',
                         sortable: true
                     }, {
@@ -312,9 +312,9 @@ function processView() {
             break;
         case 'food':
             viewTable.bootstrapTable('destroy').bootstrapTable({
-                url: searchUrl(),
+                url: processUrl(),
                 sidePagination: "server",
-                toolbar: '#SearchToolbar',
+                toolbar: '#ProcessToolbar',
                 flat: true,
                 columns: [
                     {
@@ -345,9 +345,9 @@ function processView() {
             break;
         case 'instrument':
             viewTable.bootstrapTable('destroy').bootstrapTable({
-                url: searchUrl(),
+                url: processUrl(),
                 sidePagination: "server",
-                toolbar: '#SearchToolbar',
+                toolbar: '#ProcessToolbar',
                 flat: true,
                 columns: [
                     {
@@ -378,9 +378,9 @@ function processView() {
             break;
         case 'medicine':
             viewTable.bootstrapTable('destroy').bootstrapTable({
-                url: searchUrl(),
+                url: processUrl(),
                 sidePagination: "server",
-                toolbar: '#SearchToolbar',
+                toolbar: '#ProcessToolbar',
                 flat: true,
                 columns: [
                     {
@@ -411,9 +411,9 @@ function processView() {
             break;
         case 'others':
             viewTable.bootstrapTable('destroy').bootstrapTable({
-                url: searchUrl(),
+                url: processUrl(),
                 sidePagination: "server",
-                toolbar: '#SearchToolbar',
+                toolbar: '#ProcessToolbar',
                 flat: true,
                 columns: [
                     {
@@ -632,8 +632,11 @@ function entityView() {
                         field: 'name',
                         title: '专利名称',
                         sortable: true
-                    },
-                    {
+                    }, {
+                        field: 'standard.infoMap.patenttype',
+                        title: '专利类型',
+                        sortable: true
+                    }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
                     }, {
