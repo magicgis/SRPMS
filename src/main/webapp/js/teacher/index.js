@@ -74,7 +74,7 @@ function processView() {
                         title: '专利名称',
                         sortable: true
                     }, {
-                        field: 'standard.value',
+                        field: 'standard.infoMap.patenttype',
                         title: '专利类型',
                         sortable: true
                     }, {
@@ -648,8 +648,11 @@ function entityView() {
                         field: 'name',
                         title: '专利名称',
                         sortable: true
-                    },
-                    {
+                    }, {
+                        field: 'standard.infoMap.patenttype',
+                        title: '专利类型',
+                        sortable: true
+                    }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
                     }, {
