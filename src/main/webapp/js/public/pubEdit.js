@@ -128,6 +128,9 @@ function getUnitsData(){
  * 专利的standard
  */
 function getPatentType() {
+
+
+
     $('#patType').selectize({
         valueField: 'id',
         labelField: 'value',
