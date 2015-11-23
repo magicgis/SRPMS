@@ -46,10 +46,14 @@ function confirm() {
 
 }
 function orderBack() {
-    var order = entity['id'];
-    window.workflow.getBack(userName, order).success(function () {
-        afterSuccess("已撤回");
-        window.location.href = '/index/entity/others/all';
+    window.workflow.getEntityBack('others',$('#othersId').val()).success(function (data) {
+        if (data == 'true') {
+            afterSuccess("已撤回");
+            window.location.href = '/index/entity/others/all';
+        } else {
+            afterSuccess('撤回失败');
+        }
+
     });
 }
 function delOrder() {
@@ -114,7 +118,7 @@ function Refuse() {
         callback: function (result) {
             if (result) {
                 workflow.execute(userName, taskId, refuseInfo).success(function () {
-                    afterSuccess('已驳回至学院！');
+                    afterSuccess('已驳回！');
                     window.location.href = '/index/process/others/all';
                 });
             }

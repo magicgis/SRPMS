@@ -82,6 +82,7 @@
 									<div hidden="hidden">
 										<input type="text" name="WF_Task" id="WF_Task"/>
 										<input type="text" name="WF_Order" id="WF_Order"/>
+										<input type="text" name="WF_Type" id="WF_Type" value="paper"/>
 										<input type="text" name="IsComplete" id="IsComplete"/>
 										<input type="text" name="mag.name" id="magName"/>
 										<input type="text" name="mag.standard.id" id="magStandardId"/>

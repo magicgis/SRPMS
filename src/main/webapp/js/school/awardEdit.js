@@ -46,10 +46,14 @@ function confirm() {
 
 }
 function orderBack() {
-    var order = entity['id'];
-    window.workflow.getBack(userName, order).success(function () {
-        afterSuccess("已撤回");
-        window.location.href = '/index/entity/achAward/all';
+    workflow.getEntityBack('achAward', $('#awardId').val()).success(function (data) {
+        if (data == 'true') {
+            afterSuccess("已撤回");
+            window.location.href = '/index/entity/achAward/all';
+        } else {
+            afterSuccess('撤回失败');
+        }
+
     });
 }
 function delOrder() {

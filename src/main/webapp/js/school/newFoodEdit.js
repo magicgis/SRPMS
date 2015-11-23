@@ -47,11 +47,14 @@ function confirm() {
 
 }
 function orderBack() {
-    var order = entity['id'];
+    workflow.getEntityBack('food', $('#foodId').val()).success(function (data) {
+        if (data == 'true') {
+            afterSuccess("已撤回");
+            window.location.href = '/index/entity/food/all';
+        } else {
+            afterSuccess('撤回失败');
+        }
 
-    window.workflow.getBack(userName, order).success(function () {
-        afterSuccess("已撤回");
-        window.location.href = '/index/entity/food/all';
     });
 }
 function delOrder() {

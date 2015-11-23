@@ -46,13 +46,14 @@ function confirm() {
 
 }
 function orderBack() {
-    var order = entity['id'];
-    var jsonData = Object();
-    jsonData['order'] = order;
-    jsonData['user'] = userName;
-    window.workflow.getBack(userName, order).success(function () {
-        afterSuccess("已撤回");
-        window.location.href = '/index/entity/medicine/all';
+    window.workflow.getEntityBack('medicine',$('#medicineId').val()).success(function (data) {
+        if (data == 'true') {
+            afterSuccess("已撤回");
+            window.location.href = '/index/entity/medicine/all';
+        } else {
+            afterSuccess('撤回失败');
+        }
+
     });
 }
 function delOrder() {
@@ -91,7 +92,7 @@ function Approve() {
         btnOKClass: 'btn-ok',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep',taskId, approveInfo).success(function () {
+                workflow.execute(userName,taskId, approveInfo).success(function () {
                     afterSuccess('审批通过！');
                     window.location.href = '/index/process/medicine/all';
                 });
@@ -117,7 +118,7 @@ function Refuse() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep', taskId, refuseInfo).success(function () {
+                workflow.execute(userName, taskId, refuseInfo).success(function () {
                     afterSuccess('审批驳回！');
                     window.location.href = '/index/process/medicine/all';
                 });

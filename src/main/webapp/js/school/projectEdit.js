@@ -44,20 +44,14 @@ function confirm() {
 
 }
 function orderBack() {
-    //var row = $('#ProjectTable').bootstrapTable('getSelections')[0];
-    //var order = row['id'];
-    //var jsonData = Object();
-    //jsonData['order'] = order;
-    //jsonData['user'] = userName;
-    //window.workflow.getBack(userName, order).success(function () {
-    //    afterSuccess("已撤回");
-    //    showTable();
-    //    $('#del').show();
-    //});
-    var orderId = entity['id'];
-    window.workflow.getBack(userName, orderId).success(function () {
-        afterSuccess("已撤回");
-        window.location.href = '/index/entity/project/all';
+    window.workflow.getEntityBack('project', $('#projectId').val()).success(function (data) {
+        if (data == 'true') {
+            afterSuccess("已撤回");
+            window.location.href = '/index/entity/project/all';
+        } else {
+            afterSuccess('撤回失败');
+        }
+
     });
 }
 function delOrder() {

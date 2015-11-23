@@ -287,10 +287,14 @@ function delOrder() {
  * 撤回
  */
 function getOrderBack() {
-    var order = entity['id'];
-    window.workflow.getBack(userName, order).success(function () {
-        afterSuccess("已撤回");
-        window.location.href = '/index/entity/achAppraisal/all';
+    workflow.getEntityBack('achAppraisal', $('#achAppraiseId').val()).success(function (data) {
+        if (data == 'true') {
+            afterSuccess("已撤回");
+            window.location.href = '/index/entity/achAppraisal/all';
+        } else {
+            afterSuccess('撤回失败');
+        }
+
     });
 }
 

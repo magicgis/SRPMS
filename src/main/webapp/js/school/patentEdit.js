@@ -114,10 +114,14 @@ function delOrder() {
  * 撤回
  */
 function orderBack() {
-    var order = entity['id'];
-    window.workflow.getBack(userName, order).success(function () {
-        afterSuccess("已撤回");
-        window.location.href = '/index/entity/patent/all';
+    window.workflow.getEntityBack('patent', $('#patentId').val()).success(function (data) {
+        if (data == 'true') {
+            afterSuccess("已撤回");
+            window.location.href = '/index/entity/patent/all';
+        } else {
+            afterSuccess('撤回失败');
+        }
+
     });
 }
 

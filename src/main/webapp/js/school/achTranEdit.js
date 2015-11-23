@@ -288,10 +288,14 @@ function delOrder() {
  * 撤回
  */
 function getOrderBack() {
-    var order = entity['id'];
-    window.workflow.getBack(userName, order).success(function () {
-        afterSuccess("已撤回");
-        window.location.href = '/index/entity/achTran/all';
+    workflow.getEntityBack('achTran', $('#achTranId').val()).success(function (data) {
+        if (data == 'true') {
+            afterSuccess("已撤回");
+            window.location.href = '/index/entity/achTran/all';
+        } else {
+            afterSuccess('撤回失败');
+        }
+
     });
 }
 

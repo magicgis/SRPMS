@@ -71,6 +71,13 @@ workflow.getBack = function (user, order) {
         contentType: 'application/json;charset=UTF-8'
     })
 };
+workflow.getEntityBack = function (type, entityId) {
+    return $.ajax({
+        type: 'POST',
+        url: '/api/workflow/'+ type +'/'+entityId,
+        contentType: 'application/json;charset=UTF-8'
+    })
+}
 /**
  * 执行任务
  * @param user 用户
@@ -155,6 +162,7 @@ workflow.delEntity = function(type, id) {
         contentType: 'application/json;charset=UTF-8'
     });
 };
+
 
 /**--------------------------处理数据公共方法 table相关的------------------**/
 /**
