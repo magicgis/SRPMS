@@ -118,13 +118,6 @@ public class Workflow {
     }
 
 
-    @POST
-    @Path("/reset/{orderId}")
-    public boolean resetProcess(@PathParam("orderId") String orderId) {
-        return engine.resetEntityProcess(orderId);
-    }
-
-
     /**
      * 执行任务
      *
@@ -242,7 +235,6 @@ public class Workflow {
      * @param type   order类型，如book，paper
      * @param member 是主导还是参与
      * @param limit  获取数量（分页用）
-     * @param offset 起始数量（分页用）
      * @return order
      */
     @GET
@@ -405,6 +397,18 @@ public class Workflow {
     @Consumes("application/json;charset=UTF-8")
     public boolean getBack_beta(HashMap<String, String> args) {
         return engine.setOrderRestart(args.get("order"), args.get("user"));
+    }
+
+    @POST
+    @Path("/reset/{type}/{entityId}")
+    public boolean getBack(@PathParam("type") String type, @PathParam("entityId") String entityId) {
+        return engine.resetEntityProcess(type, entityId);
+    }
+
+    @POST
+    @Path("/reset/{orderId}")
+    public boolean resetProcess(@PathParam("orderId") String orderId) {
+        return engine.resetEntityProcess(orderId);
     }
 
     /**

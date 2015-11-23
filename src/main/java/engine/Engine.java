@@ -67,6 +67,8 @@ public interface Engine {
      */
     boolean resetEntityProcess(String orderId);
 
+    boolean resetEntityProcess(String type, String entityId);
+
     /**
      * 根据orderId获取活跃任务
      *

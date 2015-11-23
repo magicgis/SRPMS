@@ -1,5 +1,6 @@
 package util;
 
+import dao.*;
 import entity.User;
 import service.*;
 
@@ -26,6 +27,22 @@ public class Args {
             put("food", FoodService.class);
             put("instrument", InstrumentService.class);
             put("medicine", MedicineService.class);
+        }
+    };
+
+    public static HashMap<String, Class> DAOS = new HashMap<String, Class>() {
+        {
+            put("achAppraisal", AchAppraisalDao.class);
+            put("achAward", AchAwardDao.class);
+            put("achTran", AchTranDao.class);
+            put("book", BookDao.class);
+            put("paper", PaperDao.class);
+            put("patent", PatentDao.class);
+            put("project", ProjectDao.class);
+            put("others", OthersDao.class);
+            put("food", FoodDao.class);
+            put("instrument", InstrumentDao.class);
+            put("medicine", MedicineDao.class);
         }
     };
 }

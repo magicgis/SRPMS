@@ -14,7 +14,9 @@ import org.snaker.engine.entity.Process;
 import org.snaker.engine.entity.Task;
 import org.snaker.engine.helper.StreamHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
+import util.Args;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,17 +40,10 @@ public class SnakerEngineUtils implements Engine {
     @Autowired
     private SnakerEngine snakerEngine;
     @Autowired
-    private PatentDao patentDao;
-    @Autowired
-    private ProjectDao projectDao;
-    @Autowired
     private StaffDao staffDao;
+
     @Autowired
-    private BookDao bookDao;
-    @Autowired
-    private AchAwardDao achAwardDao;
-    @Autowired
-    private AchAppraisalDao achAppraisalDao;
+    ApplicationContext applicationContext;
 
     public void initFlows() {
         snakerEngine.process().deploy(StreamHelper.getStreamFromClasspath("workflow/easy.snaker"));
@@ -118,101 +113,20 @@ public class SnakerEngineUtils implements Engine {
         Staff staff;
         String processId = getProcessByName("basicProcess_Beta").getId();
         Order order = null;
-        switch (type) {
-            case "patent":
-                //找到实体
-                Patent patent = patentDao.getById(entityId);
-                //取出信息
-                args = (HashMap<String, Object>) patent.getArgMap();
-                entityInfo = (HashMap) args.clone();
-                //从信息找到负责人
-                staff = staffDao.getById((Serializable) args.get("Main-Actor"));
+        BaseDao baseDao = (BaseDao) applicationContext.getBean(Args.DAOS.get(type));
+        VirtualEntity virtualEntity = (VirtualEntity) baseDao.getById(entityId);
+        args = (HashMap<String, Object>) virtualEntity.getArgMap();
+        entityInfo = (HashMap) args.clone();
+        staff = staffDao.getById((Serializable) args.get("Main-Actor"));
+        args.put("WF_Type", type);
+        args.put("WF_Entity", entityId);
+        args.put("name", virtualEntity.getName());
+        order = startInstanceById(processId, staff.getId(), args);
+        entityInfo.put("WF_OrderId", order.getId());
+        virtualEntity.setArgMap(entityInfo);
+        virtualEntity.setProcess("1");
+        baseDao.update(virtualEntity);
 
-                args.put("WF_Type", "patent");
-                args.put("WF_Entity", entityId);
-                args.put("name", patent.getName());
-
-                order = startInstanceById(processId, staff.getId(), args);
-
-                entityInfo.put("WF_OrderId", order.getId());
-                patent.setArgMap(entityInfo);
-                patent.setProcess("1");
-                patentDao.update(patent);
-                break;
-
-            case "project":
-                Project project = projectDao.getById(entityId);
-                args = (HashMap<String, Object>) project.getArgMap();
-                entityInfo = (HashMap) args.clone();
-                staff = staffDao.getById((Serializable) args.get("Main-Actor"));
-
-                args.put("WF_Type", "project");
-                args.put("WF_Entity", entityId);
-                args.put("name", project.getName());
-
-                order = startInstanceById(processId, staff.getId(), args);
-
-                entityInfo.put("WF_OrderId", order.getId());
-                project.setArgMap(entityInfo);
-                project.setProcess("1");
-                projectDao.update(project);
-                break;
-
-            case "book":
-                Book book = bookDao.getById(entityId);
-                args = (HashMap<String, Object>) book.getArgMap();
-                entityInfo = (HashMap) args.clone();
-                staff = staffDao.getById((Serializable) args.get("Main-Actor"));
-
-                args.put("WF_Type", "book");
-                args.put("WF_Entity", entityId);
-                args.put("name", book.getName());
-
-                order = startInstanceById(processId, staff.getId(), args);
-
-                entityInfo.put("WF_OrderId", order.getId());
-                book.setArgMap(entityInfo);
-                book.setProcess("1");
-                bookDao.update(book);
-                break;
-
-            case "achAward":
-                AchAward achAward = achAwardDao.getById(entityId);
-                args = (HashMap<String, Object>) achAward.getArgMap();
-                entityInfo = (HashMap) args.clone();
-                staff = staffDao.getById((Serializable) args.get("Main-Actor"));
-
-                args.put("WF_Type", "achAward");
-                args.put("WF_Entity", entityId);
-                args.put("name", achAward.getName());
-
-                order = startInstanceById(processId, staff.getId(), args);
-
-                entityInfo.put("WF_OrderId", order.getId());
-                achAward.setArgMap(entityInfo);
-                achAward.setProcess("1");
-                achAwardDao.update(achAward);
-                break;
-
-            case "achAppraisal":
-                AchAppraisal achAppraisal = achAppraisalDao.getById(entityId);
-                args = (HashMap<String, Object>) achAppraisal.getArgMap();
-                entityInfo = (HashMap) args.clone();
-                staff = staffDao.getById((Serializable) args.get("Main-Actor"));
-
-                args.put("WF_Type", "achAppraisal");
-                args.put("WF_Entity", entityId);
-                args.put("name", achAppraisal.getName());
-
-                order = startInstanceById(processId, staff.getId(), args);
-
-                entityInfo.put("WF_OrderId", order.getId());
-                achAppraisal.setArgMap(entityInfo);
-                achAppraisal.setProcess("1");
-                achAppraisalDao.update(achAppraisal);
-                break;
-
-        }
         return order;
     }
 
@@ -227,33 +141,38 @@ public class SnakerEngineUtils implements Engine {
             snakerEngine.order().cascadeRemove(orderId);
             orderActorDao.deleteAllOrder(orderId);
             HashMap args;
-            switch (type) {
-                case "patent":
-                    //找到实体
-                    Patent patent = patentDao.getById(entityId);
-                    //取出信息
-                    args = (HashMap<String, Object>) patent.getArgMap();
-
-                    args.remove("WF_OrderId");
-                    patent.setArgMap(args);
-
-                    patent.setProcess("0");
-                    patentDao.update(patent);
-                    break;
-                case "project":
-                    Project project = projectDao.getById(entityId);
-                    args = (HashMap<String, Object>) project.getArgMap();
-
-                    args.remove("WF_OrderId");
-                    project.setArgMap(args);
-
-                    project.setProcess("0");
-                    projectDao.update(project);
-                    break;
-            }
+            BaseDao baseDao = (BaseDao) applicationContext.getBean(Args.DAOS.get(type));
+            VirtualEntity virtualEntity = (VirtualEntity) baseDao.getById(entityId);
+            args = (HashMap<String, Object>) virtualEntity.getArgMap();
+            args.remove("WF_OrderId");
+            virtualEntity.setArgMap(args);
+            virtualEntity.setProcess("0");
+            baseDao.update(virtualEntity);
         } catch (RuntimeException ex) {
             ex.printStackTrace();
             log.error("传入的OrderId有误，或者不是实体工作流程,Id:" + orderId);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean resetEntityProcess(String type, String entityId) {
+        BaseDao baseDao = (BaseDao) applicationContext.getBean(Args.DAOS.get(type));
+        VirtualEntity virtualEntity = (VirtualEntity) baseDao.getById(entityId);
+        HashMap args = (HashMap) virtualEntity.getArgMap();
+        String orderId = (String) args.remove("WF_OrderId");
+        try {
+            if (orderId != null) {
+                snakerEngine.order().cascadeRemove(orderId);
+                orderActorDao.deleteAllOrder(orderId);
+            }
+            args.remove("WF_OrderId");
+            virtualEntity.setArgMap(args);
+            virtualEntity.setProcess("0");
+            baseDao.update(virtualEntity);
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
+            log.error("传入的Entity有误，或者不是实体工作流程,Id:" + entityId);
             return false;
         }
         return true;
