@@ -74,10 +74,10 @@ workflow.getBack = function (user, order) {
 workflow.getEntityBack = function (type, entityId) {
     return $.ajax({
         type: 'POST',
-        url: '/api/workflow/'+ type +'/'+entityId,
+        url: '/api/workflow/reset/'+ type +'/'+entityId,
         contentType: 'application/json;charset=UTF-8'
     })
-}
+};
 /**
  * 执行任务
  * @param user 用户
@@ -386,6 +386,14 @@ function messageModal(message) {
     });
 }
 /**--------------------------获取编辑页面的数据------------------**/
+function getFormJSON(type) {
+    var jsonData = $("#" + type).serializeJSON();
+    jsonData['score'] = $('#totalScore').val();
+    console.log(jsonData);
+    return jsonData;
+}
+
+
 function getFormData(type) {
     var jsonData = $("#" + type).serializeJSON();
     jsonData['score'] = $('#totalScore').val();
@@ -1059,6 +1067,7 @@ function init(entity,all,replyByDep,level) {
                 $('.addUnit').hide();
                 $('.addFund').hide();
                 $('.getScore').hide();
+                $('#totalScore').attr('disabled', 'disabled');
 
             } else if(process == '9') {
                 $('.confirm').hide();

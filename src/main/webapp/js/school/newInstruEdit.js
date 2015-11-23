@@ -309,7 +309,7 @@ function editUnit(row, index) {
 function saveStep1() {
     return $.ajax({
         url: '/api/instrument/instrument',
-        data: $('#instrument').serialize(),
+        data: getFormJSON('instrument'),
         type: 'POST',
         dataType: 'text'
     })

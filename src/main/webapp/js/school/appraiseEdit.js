@@ -193,7 +193,7 @@ function saveStep1() {
     console.log( $('#appraise').serialize());
     return $.ajax({
         url: '/api/achAppraisal/achAppraisal',
-        data: $('#appraise').serialize(),
+        data: getFormJSON('appraise'),
         type: 'POST',
         dataType: 'text'
     })

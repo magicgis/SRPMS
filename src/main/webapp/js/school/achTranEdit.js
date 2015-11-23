@@ -192,7 +192,7 @@ function editUnit(row, index) {
 function saveStep1() {
     return $.ajax({
         url: '/api/achTran/achTran',
-        data: $('#achTran').serialize(),
+        data: getFormJSON('achTran'),
         type: 'POST',
         dataType: 'text'
     })

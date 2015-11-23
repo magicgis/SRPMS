@@ -383,7 +383,7 @@ function editFund(row, index) {
 function saveStep1() {
     return $.ajax({
         url: '/api/project/project',
-        data: $('#project').serialize(),
+        data: getFormJSON('project'),
         type: 'POST',
         dataType: 'text'
     });

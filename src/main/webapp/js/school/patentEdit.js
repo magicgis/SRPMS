@@ -16,7 +16,7 @@ $(function () {
 function saveStep1() {
     return $.ajax({
         url: '/api/patent/patent',
-        data: $('#patent').serialize(),
+        data: getFormJSON('patent'),
         type: 'POST',
         dataType: 'text'
     })
@@ -41,6 +41,7 @@ function saveStep2(data) {
 }
 
 function save() {
+
     saveStep1().success(function(data) {
 
         saveStep2(data).success(function (res) {

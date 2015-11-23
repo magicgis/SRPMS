@@ -313,7 +313,7 @@ function editUnit(row, index) {
 function saveStep1() {
     return $.ajax({
         url: '/api/food/food',
-        data: $('#food').serialize(),
+        data: getFormJSON('food'),
         type: 'POST',
         dataType: 'text'
     })

@@ -328,7 +328,7 @@ function editUnit(row, index) {
 function saveStep1() {
     return $.ajax({
         url: '/api/achAward/achAward',
-        data: $('#award').serialize(),
+        data: getFormJSON('award'),
         type: 'POST',
         dataType: 'text'
     })
