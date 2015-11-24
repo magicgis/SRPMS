@@ -7,6 +7,7 @@ $(function () {
 });
 /**与项目信息有关的 保存||确认||撤回||删除||提交所有**/
 function save() {
+
     saveStep1().success(function(data) {
         saveStep2(data).success(function (res) {
             afterSuccess("保存成功！");
@@ -381,9 +382,11 @@ function editFund(row, index) {
 }
 /********************************保存***************************/
 function saveStep1() {
+    var data = getFormJSON('project');
+    data['standard.id'] = $('#projbelong').val();
     return $.ajax({
         url: '/api/project/project',
-        data: getFormJSON('project'),
+        data: data,
         type: 'POST',
         dataType: 'text'
     });
