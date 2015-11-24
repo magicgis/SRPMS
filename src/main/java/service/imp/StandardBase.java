@@ -17,7 +17,7 @@ public class StandardBase {
     protected final boolean DEFAULT_FLAG = false;
     final String SRC_ENCODING = "ISO-8859-1";
     final String DES_ENCODING = "utf-8";
-    protected final String[] MY_SCHOOL_NAME = {"湖北中医药大学", "湖北省中医院"};
+    protected final String[] MY_SCHOOL_NAME = {"湖北中医药大学", "湖北省中医院","中医院"};
     protected final String PARTNER_ID = "9999";
     protected final String STUNDENT_ID = "9998";
     Map validInfo = new HashMap();
@@ -85,7 +85,11 @@ public class StandardBase {
     //   检测页面结构返回页面类型
     public String getPageType(Order order, Map map) {
         String type = null;
-        Map variableMap = order.getVariableMap();
+        Map variableMap;
+        if (order != null)
+            variableMap = order.getVariableMap();
+        else
+            variableMap = map;
         if (map == null) return type;
 //        Map map = getMaxMap(order);
         if ("paper".equals(variableMap.get("WF_Type")))

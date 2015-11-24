@@ -10,6 +10,8 @@ import java.util.Map;
 public interface StandardService {
     Map scoreCalculation(Order order, Map map);
 
+    Map scoreCalculation(Map map);
+
     Map confirmChecking(Order order);
 
     Map confirmChecking(Order order, Map map);

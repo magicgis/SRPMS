@@ -96,6 +96,12 @@ public class StandardServiceImp extends StandardBase implements StandardService 
     }
 
     @Override
+    public Map scoreCalculation(Map map) {
+        Order order  = null;
+        return scoreCalculation(order,map);
+    }
+
+    @Override
     public Map confirmChecking(Order order) {
         return confirmChecking(order, getMaxMap(order));
     }
