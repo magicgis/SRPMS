@@ -2,11 +2,8 @@ package api.filter;
 
 
 import entity.User;
-import entity.security.Permission;
 import org.glassfish.jersey.server.ExtendedUriInfo;
 import org.glassfish.jersey.uri.UriTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import service.security.SecurityService;
 import util.CrunchifyInMemoryCache;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +22,7 @@ import static util.Args.TokenUser;
  * Created by guofan on 2015/5/9.
  */
 public class All implements ContainerRequestFilter {
-    @Autowired
-    SecurityService securityService;
+
     @Context
     private ExtendedUriInfo uriInfo;
     @Context
@@ -43,7 +39,6 @@ public class All implements ContainerRequestFilter {
         }
         /*请求类型*/
         String type = requestContext.getMethod();
-        securityService.addUrl(path.toString(), type, null);
         /*获取token*/
         String token = requestContext.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (token != null) {
@@ -56,11 +51,9 @@ public class All implements ContainerRequestFilter {
             /*获取用户以及其权限*/
             User loginUser = TokenUser.get(token);
             String role = loginUser.getPrivilege();
-            Permission x = new Permission();
             if (PermissionCache == null) {
                 /*创建权限缓存，并从表导入*/
                 PermissionCache = new CrunchifyInMemoryCache<>(0, 0, 3000);
-                securityService.loadIntoCache();
             }
             /*在缓存内寻找用户的权限*/
             Boolean flag = PermissionCache.get(role + "-" + path + "-" + type);
@@ -71,16 +64,19 @@ public class All implements ContainerRequestFilter {
 //                        .status(Response.Status.UNAUTHORIZED)
 //                        .entity("User cannot access the resource.")
 //                        .build());
-            }else{
+            }
+            else {
                 /*正常通行*/
             }
         /*如果未登陆*/
-        } else {
+        }
+        else {
             /*登陆api属于特殊放行的特例,下载由于前台原因，临时放行*/
             String url = path.toString().trim();
             if (url.equals("/user/login") || url.equals("/file/{id}")) {
                 /*正常通行*/
-            } else {
+            }
+            else {
                 /*打断，返回401*/
                 requestContext.abortWith(Response
                         .status(Response.Status.UNAUTHORIZED)

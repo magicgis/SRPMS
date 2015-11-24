@@ -45,9 +45,6 @@
         <mapping class="entity.Others"/>
         <mapping class="entity.Instrument"/>
         <mapping class="entity.Medicine"/>
-        <mapping class="entity.security.Permission"/>
-        <mapping class="entity.security.Role"/>
-        <mapping class="entity.security.Url"/>
 
     </session-factory>
 </hibernate-configuration>
