@@ -117,7 +117,6 @@ public class Trans {
                 try {
                     if (!(map.get(fdname) instanceof Map)) {
                         Class type = method.getParameterTypes()[0];
-                        System.out.println(type.getSimpleName());
                         if (String.class.equals(type)) {
                             method.invoke(obj, (String) map.get(fdname));
                         }

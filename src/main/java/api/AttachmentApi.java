@@ -23,7 +23,7 @@ import static util.Args.StrorePath;
  */
 @Path("/file")
 @RestController
-public class AttachmentApi {
+public class    AttachmentApi {
     @Context
     ServletContext context;
     @Autowired

@@ -167,7 +167,7 @@ public class Workflow {
         /*获取当前order*/
             Order order = engine.getOrder(task.getOrderId());
             Map re = standardService.confirmChecking(order, args);
-            if ((boolean) re.get("valid") || !task.getVariableMap().get("WF_Type").equals("paper")) {
+            if ((boolean) re.get("valid")) {
                 tasks = engine.execute(taskId, user, (Map) args);
             }
             else {
@@ -196,8 +196,12 @@ public class Workflow {
     @Consumes("application/json;charset=UTF-8")
     @Produces("application/json;charset=UTF-8")
     public Object getScore(HashMap<String, Object> args) {
-        String taskId = (String) args.get("WF_Task");
-        Order x = engine.getOrder(engine.getTask(taskId).getOrderId());
+        Order x = null;
+        try {
+            String taskId = (String) args.get("WF_Task");
+            x = engine.getOrder(engine.getTask(taskId).getOrderId());
+        } catch (Exception e) {
+        }
         return standardService.scoreCalculation(x, args);
     }
 
