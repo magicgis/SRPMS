@@ -13,6 +13,7 @@ function save() {
         saveStep2(data).success(function (res) {
 
             afterSuccess("保存成功！");
+            window.location.href = '/index/entity/achAward/all';
         })
     });
 }

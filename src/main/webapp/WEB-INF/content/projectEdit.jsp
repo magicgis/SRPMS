@@ -71,6 +71,7 @@
                     <form id="project" class="form-horizontal" role="form">
                         <div hidden="hidden">
                             <input type="text" name="id" id="projectId" value="${project.id}"/>
+                            <input type="text" name="standard.id" id="standardId" value="${project.standard.id}"/>
                             <input type="text" name="WF_Type" id="WF_Type" value="project"/>
                         </div>
 
@@ -209,7 +210,7 @@
                                                 <div class="col-sm-8">
                                                     <div class="col-sm-13">
                                                         <input class="form-control projStand" id="projbelong"
-                                                               type="text" name="standard.id"
+                                                               type="text" name="projbelong"
                                                                placeholder="请选择"/>
                                                     </div>
                                                 </div>
@@ -224,7 +225,7 @@
                                                 <div class="col-sm-8">
                                                     <div class="col-sm-13">
                                                         <input class="form-control projStand" id="projtype0"
-                                                               type="text" name="standard.id"
+                                                               type="text" name="projtype0"
                                                                placeholder="请选择"/>
                                                     </div>
                                                 </div>
@@ -584,12 +585,17 @@
                 var projectSet="项目立项";
                 getStdList(projectSet);
                 standardSelects1(StdList,projtypeList);
+	            DisplayForm($('#projtype').selectize(), '', 0);
+	            $('#standardId').val('');
             }else if(setProject=='false'){
                 $('.standard0').show();
                 $('.standard1').hide();
                 var projectSet="项目未获立项";
                 getStdList(projectSet);
                 standardSelects0(StdList);
+	            DisplayForm($('#projtype0').selectize(), '', 0);
+	            $('#standardId').val('');
+
             }
         }
     });
@@ -751,12 +757,13 @@
     });
     //监听 分配分数
     $('.getScore').click(function () {
-        saveStep1().success(function(data) {
-
-            saveStep2(data).success(function (res) {
-                getScore('project');
-            });
-        });
+        getFormData('project');
+//        saveStep1().success(function(data) {
+//
+//            saveStep2(data).success(function (res) {
+//                getScore('project');
+//            });
+//        });
     });
     //选择
 </script>

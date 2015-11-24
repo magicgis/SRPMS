@@ -222,7 +222,7 @@ function save() {
 
         saveStep2(data).success(function (res) {
             afterSuccess("保存成功！");
-            window.location.href = '/index/process/achAppraisal/all';
+            window.location.href = '/index/entity/achAppraisal/all';
         })
     });
 }

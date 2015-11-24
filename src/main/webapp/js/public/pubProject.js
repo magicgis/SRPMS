@@ -203,16 +203,19 @@ function allSections(){
         create: false,
         maxItems: 1
     });
-    $('#isAppr').change(function(){
-        var setProject=$('#isAppr').val();
-        if(setProject=='true'){
-            var projectSet="项目立项";
-            //getStdList(projectSet);
-        }else if(setProject=='false'){
-            var projectSet="项目未获立项";
-            //getStdList(projectSet);
-        }
-    });
+    //$('#isAppr').change(function(){
+    //    var setProject=$('#isAppr').val();
+    //    if(setProject=='true'){
+    //        var projectSet="项目立项";
+    //        DisplayForm($('#projtype0').selectize(), '', 0);
+    //        //getStdList(projectSet);
+    //    }else if(setProject=='false'){
+    //        var projectSet="项目未获立项";
+    //        console.log(projectSet);
+    //        //DisplayForm($('#projbelong').selectize(), '', 0);
+    //        //getStdList(projectSet);
+    //    }
+    //});
     $(".projStand").focus(function(){
         if($('#isAppr').val()==""){
             messageModal("请选择项目是否获得立项！")
@@ -251,26 +254,26 @@ function firstOrOther() {
 }
 /**************************************************************/
 function fullUpInfo(all, entity) {
-        getActors();
-        filesData = all['filesData'];
-        unitTemp = all['units'];
-        fundTemp = all['fund'];
-        Main_Actor = all['Main-Actor'];
-        Main_ActorName = all['Main-ActorName'];
-        replyByCol = all['replyByCol'];
-        replyByDep = all['replyByDep'];
-        showFiles(filesData);
-        $("#fundTable").bootstrapTable('load', fundTemp);
-        $("#actorTable").bootstrapTable('load', actorTemp);
-        if (entity['attr'] == "联合项目" || entity['attr'] == "子课题") {
-            if (all['units'] != null) {
-                unitTemp = all['units'];
-            }
-            $('#unitTable').bootstrapTable("load", unitTemp);
-            $('#unitInfo').show();
-        } else {
-            $('#unitInfo').hide();
+    getActors();
+    filesData = all['filesData'];
+    unitTemp = all['units'];
+    fundTemp = all['fund'];
+    Main_Actor = all['Main-Actor'];
+    Main_ActorName = all['Main-ActorName'];
+    replyByCol = all['replyByCol'];
+    replyByDep = all['replyByDep'];
+    showFiles(filesData);
+    $("#fundTable").bootstrapTable('load', fundTemp);
+    $("#actorTable").bootstrapTable('load', actorTemp);
+    if (entity['attr'] == "联合项目" || entity['attr'] == "子课题") {
+        if (all['units'] != null) {
+            unitTemp = all['units'];
         }
+        $('#unitTable').bootstrapTable("load", unitTemp);
+        $('#unitInfo').show();
+    } else {
+        $('#unitInfo').hide();
+    }
 }
 
 function standardSelects1(StdList,projtypeList,standard){
@@ -280,7 +283,10 @@ function standardSelects1(StdList,projtypeList,standard){
     var $projbelong = $("#projbelong").selectize({ // 初始化 鉴定等级
         valueField: 'id',
         labelField: 'value',
-        maxItems: 1
+        maxItems: 1,
+        onChange: function (result) { // onChange时间 绑定级联
+            $('#standardId').val(result);
+        }
     });
 
     var $projorig = $("#projorig").selectize({ // 初始化 鉴定等级
@@ -324,12 +330,12 @@ function standardSelects1(StdList,projtypeList,standard){
             $projrank[0].selectize.addOption(proRankList);
         }
     });
-   if(!isNull(standard)){
-       DisplayForm($projtype, standard['infoMap']['projtype'], 0);
-       DisplayForm($projrank, standard['infoMap']['projrank'], 0);
-       DisplayForm($projorig, standard['infoMap']['projorig'], 0);
-       DisplayForm($projbelong, standard['id'], 0);
-   }
+    if(!isNull(standard)){
+        DisplayForm($projtype, standard['infoMap']['projtype'], 0);
+        DisplayForm($projrank, standard['infoMap']['projrank'], 0);
+        DisplayForm($projorig, standard['infoMap']['projorig'], 0);
+        DisplayForm($projbelong, standard['id'], 0);
+    }
 }
 
 function standardSelects0(StdList,standard){
@@ -349,6 +355,7 @@ function standardSelects0(StdList,standard){
         options: projtypes,
         maxItems: 1,
         onChange: function (result) { // onChange时间 绑定级联
+            $('#standardId').val(result);
             $.each(StdList, function (index, obj) {
                 if(obj['id']==$("#projtype0").val()){
                     var projorigTemp = obj['infoMap']['projorig'];

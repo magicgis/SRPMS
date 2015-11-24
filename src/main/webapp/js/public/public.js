@@ -410,7 +410,7 @@ function getFormData(type) {
     }
     if (type == 'project') {
         jsonData['fund'] == getFundsData();
-        jsonData['standard.id'] = $('#projbelong').val();
+        //jsonData['standard.id'] = $('#projbelong').val();
     }
     jsonData["actors"] = getActorsData();
     jsonData["units"] = getUnitsData();
