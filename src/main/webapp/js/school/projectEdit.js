@@ -384,6 +384,7 @@ function editFund(row, index) {
 function saveStep1() {
     var data = getFormJSON('project');
     data['standard.id'] = $('#projbelong').val();
+    console.log(data);
     return $.ajax({
         url: '/api/project/project',
         data: data,

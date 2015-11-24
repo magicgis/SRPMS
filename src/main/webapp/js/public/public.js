@@ -389,7 +389,7 @@ function messageModal(message) {
 function getFormJSON(type) {
     var jsonData = $("#" + type).serializeJSON();
     jsonData['score'] = $('#totalScore').val();
-    console.log(jsonData);
+
     return jsonData;
 }
 
@@ -410,6 +410,7 @@ function getFormData(type) {
     }
     if (type == 'project') {
         jsonData['fund'] == getFundsData();
+        jsonData['standard.id'] = $('#projbelong').val();
     }
     jsonData["actors"] = getActorsData();
     jsonData["units"] = getUnitsData();
