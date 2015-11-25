@@ -17,6 +17,7 @@ public class Instrument implements VirtualEntity {
     private String id;
     private String name;
     private String productionNo;
+    private String date;
     private Integer score;
     private String process;
     private String arg;
@@ -54,6 +55,16 @@ public class Instrument implements VirtualEntity {
 
     public void setProductionNo(String productionNo) {
         this.productionNo = productionNo;
+    }
+
+    @Basic
+    @Column(name = "date", nullable = true, length = 255)
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @Basic
@@ -96,6 +107,7 @@ public class Instrument implements VirtualEntity {
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (productionNo != null ? !productionNo.equals(that.productionNo) : that.productionNo != null) return false;
+        if (date != null ? !date.equals(that.date) : that.date != null) return false;
         if (score != null ? !score.equals(that.score) : that.score != null) return false;
         if (process != null ? !process.equals(that.process) : that.process != null) return false;
         if (arg != null ? !arg.equals(that.arg) : that.arg != null) return false;
@@ -109,6 +121,7 @@ public class Instrument implements VirtualEntity {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (productionNo != null ? productionNo.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (score != null ? score.hashCode() : 0);
         result = 31 * result + (process != null ? process.hashCode() : 0);
         result = 31 * result + (arg != null ? arg.hashCode() : 0);
