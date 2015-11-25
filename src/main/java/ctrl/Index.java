@@ -93,6 +93,7 @@ public class Index {
 
     @RequestMapping(value = {"user/new"}, method = RequestMethod.GET)
     public String userInfo(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes, HttpSession session) {
+        model.addAttribute(new User());
         return "userEdit";
     }
 
@@ -200,6 +201,63 @@ public class Index {
         AchTran achTran = achTranService.getById(achTranId);
         model.addAttribute(achTran);
         return "achTranEdit";
+    }
+
+
+    @RequestMapping(value = {"others/new"}, method = RequestMethod.GET)
+    public String newOthers(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        model.addAttribute(new Others());
+        return "othersEdit";
+    }
+
+    @RequestMapping(value = {"others/{id}"}, method = RequestMethod.GET)
+    public String othersEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                             @PathVariable("id") String id) {
+        Others others = othersService.getById(id);
+        model.addAttribute(others);
+        return "othersEdit";
+    }
+
+    @RequestMapping(value = {"food/new"}, method = RequestMethod.GET)
+    public String newFood(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        model.addAttribute(new Food());
+        return "foodEdit";
+    }
+
+    @RequestMapping(value = {"food/{id}"}, method = RequestMethod.GET)
+    public String foodEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                           @PathVariable("id") String id) {
+        Food food = foodService.getById(id);
+        model.addAttribute(food);
+        return "foodEdit";
+    }
+
+    @RequestMapping(value = {"medcine/new"}, method = RequestMethod.GET)
+    public String newMedicine(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        model.addAttribute(new Medicine());
+        return "medicineEdit";
+    }
+
+    @RequestMapping(value = {"medcine/{id}"}, method = RequestMethod.GET)
+    public String medicineEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                               @PathVariable("id") String id) {
+        Medicine medicine = medicineService.getById(id);
+        model.addAttribute(medicine);
+        return "medicineEdit";
+    }
+
+    @RequestMapping(value = {"instrument/new"}, method = RequestMethod.GET)
+    public String newInstrument(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        model.addAttribute(new Instrument());
+        return "instrumentEdit";
+    }
+
+    @RequestMapping(value = {"instrument/{id}"}, method = RequestMethod.GET)
+    public String instrumentEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
+                                 @PathVariable("id") String id) {
+        Instrument instrument = instrumentService.getById(id);
+        model.addAttribute(instrument);
+        return "instrumentEdit";
     }
 
     @RequestMapping(value = {"order/{orderId}"}, method = RequestMethod.GET)
