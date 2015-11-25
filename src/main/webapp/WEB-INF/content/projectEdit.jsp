@@ -340,7 +340,9 @@
                                                     </c:when>
                                                 </c:choose>
                                                 <span class="giveSum">
-                                                    <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
+                                                    <c:if test="${sessionScope.level == '3'}">
+                                                        <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
+                                                    </c:if>
                                                     <label for="totalScore">总分：</label>
 	                                                <input class="score" type="text"
 	                                                       name="score" id="totalScore" value="${project.score}">
@@ -752,12 +754,11 @@
     //监听 分配分数
     $('.getScore').click(function () {
         getFormData('project');
-//        saveStep1().success(function(data) {
-//
-//            saveStep2(data).success(function (res) {
-//                getScore('project');
-//            });
-//        });
+        saveStep1().success(function(data) {
+            saveStep2(data).success(function (res) {
+                getScore('project');
+            });
+        });
     });
     //选择
 </script>
