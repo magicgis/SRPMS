@@ -55,6 +55,9 @@ function save() {
  *
  * */
 function confirm() {
+    var Info = getMainActor();
+    Main_Actor = Info['Main-Actor'];
+    Main_ActorName = Info['Main-ActorName'];
     //这儿需要先调用save()将信息保存一次
     saveStep1().success(function(data) {
 
