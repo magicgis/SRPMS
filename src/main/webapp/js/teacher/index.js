@@ -487,6 +487,7 @@ function processView() {
 
 $('#newPaper').click(function () {
     workflow.startOrder(userName, "basicProcess_Beta", "paper").success(function (data) {
+        window.location.href="/index/process/paper/all";
         afterSuccess("新建成功！,请切换到论文查看");
         viewTable.bootstrapTable("refresh");
     });
