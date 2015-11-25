@@ -102,6 +102,59 @@ function totalUnitFormatter(data) {
     return "共" + data.length + "个";
 }
 
+function subFundInfo(index) {
+    var Time = $('#time').val();
+    var Mny = $('#mny').val();
+    var OutMny = $('#outMny').val();
+    fundTemp.push({"time": Time, "mny": Mny, "outMny": OutMny});
+    if (index == null) {  // 增加一行
+        $('#fundTable').bootstrapTable("load", fundTemp);
+    } else {    // 替换一行
+        fundTemp.remove(index);
+        $('#fundTable').bootstrapTable('load', fundTemp);
+    }
+    $('#fundTable').bootstrapTable('load', fundTemp);
+}
+window.operateFEvents = {
+    'click .removeFund': function (e, value, row, index) {
+        $('#fundTable').bootstrapTable('remove', {
+            field: 'to_acct_time',
+            values: [row["to_acct_time"]]
+        });
+    },
+    'click .editFund': function (e, value, row, index) {
+        editFund(row, index);
+    }
+};
+
+function operateFFormatter(value, row, index) {
+    return [
+        '<a class="editFund" href="javascript:void(0)" title="edit" >',
+        '<i class="ace-icon fa fa-pencil bigger-110"></i>',
+        '</a>&nbsp;&nbsp;&nbsp;',
+        '<a class="removeFund" href="javascript:void(0)" title="Remove" >',
+        '<i class="glyphicon glyphicon-remove"></i>',
+        '</a>'
+    ].join('');
+}
+
+
+//到账表
+function totalFundsFormatter(data) {
+    var total = 0;
+    $.each(data, function (i, row) {
+        total += +(row['mny'].substring(0));
+    });
+    return '到账共:' + total + "元";
+}
+//外拨金额
+function totalEFundFormatter(data) {
+    var total = 0;
+    $.each(data, function (i, row) {
+        total += +(row['outMny'].substring(0));
+    });
+    return '外拨共:' + total + "元";
+}
 /*
  * 获取人员信息
  *
@@ -121,6 +174,13 @@ function getUnitsData(){
     return $("#unitTable").bootstrapTable('getData');
 }
 
+//获取资金到账信息
+function getFundsData() {
+    var fundTemp = $("#fundTable").bootstrapTable('getData');
+    return fundTemp;
+}
+
+
 /**
  * 专利的standard
  */
@@ -136,7 +196,7 @@ function getPatentType() {
         success: function (data) {
             var StdList = data;
             patentTypeList = getListWithId(StdList, 'patenttype');
-            console.log(patentTypeList);
+            //console.log(patentTypeList);
             $('#patType').selectize({
                 valueField: 'id',
                 labelField: 'value',
@@ -147,4 +207,164 @@ function getPatentType() {
     });
 
 
+}
+
+// 项目
+function allSections(){
+    $('#attr').selectize({
+        valueField: 'value',
+        labelField: 'value',
+        options: [{"id":"1","value": "子课题"},
+            {"id":"2","value": "联合项目"},
+            {"id":"3","value":"独立项目"}],
+        create: false,
+        maxItems: 1
+    });
+    //$('#isAppr').change(function(){
+    //    var setProject=$('#isAppr').val();
+    //    if(setProject=='true'){
+    //        var projectSet="项目立项";
+    //        DisplayForm($('#projtype0').selectize(), '', 0);
+    //        //getStdList(projectSet);
+    //    }else if(setProject=='false'){
+    //        var projectSet="项目未获立项";
+    //        console.log(projectSet);
+    //        //DisplayForm($('#projbelong').selectize(), '', 0);
+    //        //getStdList(projectSet);
+    //    }
+    //});
+    $(".projStand").focus(function(){
+        if($('#isAppr').val()==""){
+            messageModal("请选择项目是否获得立项！")
+        }
+    });
+}
+
+/*************************项目属性*********************************/
+function firstOrOther() {
+    if ($('#attr').val() == '独立项目' || isNull($('#attr').val())) {
+        $('#unitInfo').hide();
+    } else {
+        $('#unitInfo').show();
+    }
+}
+/**************************************************************/
+function fullUpInfoProject(all, entity) {
+    getActors();
+    filesData = all['filesData'];
+    unitTemp = all['units'];
+    fundTemp = all['fund'];
+    Main_Actor = all['Main-Actor'];
+    Main_ActorName = all['Main-ActorName'];
+    replyByCol = all['replyByCol'];
+    replyByDep = all['replyByDep'];
+    showFiles(filesData);
+    $("#fundTable").bootstrapTable('load', fundTemp);
+    $("#actorTable").bootstrapTable('load', actorTemp);
+    if (entity['attr'] == "联合项目" || entity['attr'] == "子课题") {
+        if (all['units'] != null) {
+            unitTemp = all['units'];
+        }
+        $('#unitTable').bootstrapTable("load", unitTemp);
+        $('#unitInfo').show();
+    } else {
+        $('#unitInfo').hide();
+    }
+}
+
+function standardSelects1(StdList,projtypeList,standard){
+    //initSelect();
+    $('#standardId').val('');
+    $('#projbelong').attr("enable", "enable");
+    $('#projrank').attr("enable", "enable");
+    var $projbelong = $("#projbelong").selectize({ // 初始化 鉴定等级
+        valueField: 'id',
+        labelField: 'value',
+        maxItems: 1,
+        onChange: function (result) { // onChange时间 绑定级联
+            $('#standardId').val(result);
+        }
+    });
+
+    var $projorig = $("#projorig").selectize({ // 初始化 鉴定等级
+        valueField: 'value',
+        labelField: 'value',
+        maxItems: 1,
+        onChange: function (result) {
+            var projbelongList = [];
+            projbelongList = getStandardList2(StdList, 'projtype', $('#projtype').val(),
+                'projrank',$('#projrank').val(), "projorig", $('#projorig').val(), "projbelong")
+            $projbelong[0].selectize.clearOptions();
+            $projbelong[0].selectize.addOption(projbelongList);
+
+        }
+    });
+
+    var $projrank = $("#projrank").selectize({ // 初始化 鉴定等级
+        valueField: 'value',
+        labelField: 'value',
+        maxItems: 1,
+        onChange: function (result) {
+            var projorigList = [];
+            projorigList = getStandardList1(StdList, 'projtype', $('#projtype').val(), 'projrank',$('#projrank').val(), "projorig");
+            // console.log(projorigList);
+            $projorig[0].selectize.clearOptions();
+            $projorig[0].selectize.addOption(projorigList);
+        }
+    });
+
+    var $projtype = $("#projtype").selectize({ // 初始化 projtype
+        valueFieled: 'value',
+        labelField: 'value',
+        options: projtypeList,
+        maxItems: 1,
+        onChange: function (result) { // onChange时间 绑定级联
+            // console.log(result);
+            var proRankList = [];
+            proRankList = getStandardList(StdList, 'projtype', 'projrank', result);
+            //console.log(proRankList);
+            $projrank[0].selectize.clearOptions();
+            $projrank[0].selectize.addOption(proRankList);
+        }
+    });
+    if(!isNull(standard)){
+        DisplayForm($projtype, standard['infoMap']['projtype'], 0);
+        DisplayForm($projrank, standard['infoMap']['projrank'], 0);
+        DisplayForm($projorig, standard['infoMap']['projorig'], 0);
+        DisplayForm($projbelong, standard['id'], 0);
+    }
+}
+
+function standardSelects0(StdList,standard){
+    var projtypes=[];
+    $.each(StdList, function (index, obj) {
+        var temp = {};
+        temp['id'] = obj['id'];
+        temp['value'] = obj['infoMap']['projtype'];
+        projtypes.push(temp);
+    });
+    //console.log(projtypes);
+    $("#projbelong").val('');
+    $("#projorig0").val('');
+    $('#standardId').val('');
+    var $projtype = $("#projtype0").selectize({ // 初始化 projtype
+        valueField: 'id',
+        labelField: 'value',
+        options: projtypes,
+        maxItems: 1,
+        onChange: function (result) { // onChange时间 绑定级联
+            $('#standardId').val($("#projtype0").val());
+            $.each(StdList, function (index, obj) {
+                if(obj['id']==$("#projtype0").val()){
+                    var projorigTemp = obj['infoMap']['projorig'];
+                    $("#projorig0").val(projorigTemp);
+                }
+            });
+        }
+    });
+    $('#projrank0').attr("disabled", "disabled");
+    if(!isNull(standard)){
+        DisplayForm($projtype,standard['id'], 0);
+        $("#projorig0").val(standard['infoMap']['projorig']);
+    }
 }

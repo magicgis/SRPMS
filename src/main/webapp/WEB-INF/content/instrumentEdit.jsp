@@ -346,6 +346,19 @@
 </a>
 <!-- /.main-container -->
 </body>
+
+<script>
+
+	var actorTemp = [];
+	var unitTemp = [];
+	var Main_Actor;
+	var Main_ActorName;
+	var filesData = {};
+	var status;
+	var replyByCol, replyByDep;
+
+</script>
+
 <script src='<c:url value="/js/public/public.js"/>'></script>
 <script src='<c:url value="/js/public/pubEdit.js"/>'></script>
 <script src='<c:url value="/js/public/route.js"/>'></script>

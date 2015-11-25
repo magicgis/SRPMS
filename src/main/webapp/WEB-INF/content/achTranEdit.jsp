@@ -365,7 +365,8 @@
 </script>
 
 <script src='<c:url value="/js/public/public.js"/>'></script>
-<script src='<c:url value="/js/public/pubAchTran.js"/>'></script>
+<%--<script src='<c:url value="/js/public/pubAchTran.js"/>'></script>--%>
+<script src='<c:url value="/js/public/pubEdit.js"/>'></script>
 <script src='<c:url value="/js/public/route.js"/>'></script>
 
 <script>
