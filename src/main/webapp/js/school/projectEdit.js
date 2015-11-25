@@ -7,6 +7,10 @@ $(function () {
 });
 /**与项目信息有关的 保存||确认||撤回||删除||提交所有**/
 function save() {
+    var Info = getMainActor();
+    Main_Actor = Info['Main-Actor'];
+    Main_ActorName = Info['Main-ActorName'];
+
     saveStep1().success(function(data) {
         saveStep2(data).success(function (res) {
             afterSuccess("保存成功！");
@@ -15,6 +19,15 @@ function save() {
     });
 }
 function confirm() {
+    var Info = getMainActor();
+
+    if(!isNull(Info['Main-Actor'])) {
+        Main_Actor = Info['Main-Actor'];
+        Main_ActorName = Info['Main-ActorName'];
+    } else {
+        messageModal('请填写我校参与职工');
+        return;
+    }
     //这儿需要先调用save()将信息保存一次
     saveStep1().success(function(data) {
         saveStep2(data).success(function (res) {
