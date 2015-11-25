@@ -291,16 +291,18 @@
 
 					<div id="formBtn" class="col-xs-12 clearfix">
 						<div class="pull-left onDel">
-							<button class="tabOrdBtn btn btn-danger btn-sm del"
-							        type="button">
-								<i class="ace-icon fa fa-trash  bigger-110"></i>
-								删除
-							</button>
-							<button class="tabOrdBtn btn btn-danger btn-sm orderBack"
-							        type="button">
-								<i class="ace-icon fa  fa-repeat bigger-110"></i>
-								撤回
-							</button>
+							<c:if test="${sessionScope.level == '3'}">
+								<button class="tabOrdBtn btn btn-danger btn-sm del"
+								        type="button">
+									<i class="ace-icon fa fa-trash  bigger-110"></i>
+									删除
+								</button>
+								<button class="tabOrdBtn btn btn-danger btn-sm orderBack"
+								        type="button">
+									<i class="ace-icon fa  fa-repeat bigger-110"></i>
+									撤回
+								</button>
+							</c:if>
 						</div>
 						<div class="pull-right">
 							<button class="tabOrdBtn btn btn-danger btn-sm back"

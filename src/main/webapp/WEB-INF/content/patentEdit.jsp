@@ -305,7 +305,7 @@
                                             <div id="formBtn" class="col-xs-12 clearfix">
                                                 <div class="pull-left onDel">
 
-                                                    <%--<c:if test="${sessionScope.level == '3'}">--%>
+                                                    <c:if test="${sessionScope.level == '3'}">
                                                         <button class="tabOrdBtn btn btn-danger btn-sm del"
                                                                 type="button">
                                                             <i class="ace-icon fa fa-trash  bigger-110"></i>
@@ -316,7 +316,7 @@
                                                             <i class="ace-icon fa fa-repeat bigger-110"></i>
                                                             撤回
                                                         </button>
-                                                    <%--</c:if>--%>
+                                                    </c:if>
                                                 </div>
                                                 <div class="pull-right">
                                                     <button class="tabOrdBtn btn btn-danger btn-sm back"
