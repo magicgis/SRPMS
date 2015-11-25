@@ -232,13 +232,13 @@ public class Index {
         return "foodEdit";
     }
 
-    @RequestMapping(value = {"medcine/new"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"medicine/new"}, method = RequestMethod.GET)
     public String newMedicine(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         model.addAttribute(new Medicine());
         return "medicineEdit";
     }
 
-    @RequestMapping(value = {"medcine/{id}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"medicine/{id}"}, method = RequestMethod.GET)
     public String medicineEdit(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes,
                                @PathVariable("id") String id) {
         Medicine medicine = medicineService.getById(id);
