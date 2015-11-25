@@ -509,19 +509,13 @@
 </script>
 
 <script src='<c:url value="/js/public/public.js"/>'></script>
-<script src='<c:url value="/js/public/pubProject.js"/>'></script>
+<%--<script src='<c:url value="/js/public/pubProject.js"/>'></script>--%>
+<script src='<c:url value="/js/public/pubEdit.js"/>'></script>
 <script src='<c:url value="/js/public/route.js"/>'></script>
 
 
 <script type="text/javascript">
-    $(function ($) {
-        $('.date-picker').datepicker({
-            autoclose: true,
-            todayHighlight: true
-        }).next().on(ace.click_event, function () {
-            $(this).prev().focus();
-        });
-    });
+
     $('.standard0').hide();
     // 成员，单位，文件
     var entity =  ${ObjectMapper.writeValueAsString(project)}; // 获得 entity 或 实体
@@ -539,7 +533,7 @@
     var taskName = '${taskName}';
 
     if (!isNull(all)) {
-        fullUpInfo(all,entity);//
+        fullUpInfoProject(all,entity);//
     } else {
         all = {};
     }

@@ -411,11 +411,11 @@
 </script>
 
 <script src='<c:url value="/js/public/public.js"/>'></script>
-<script src='<c:url value="/js/public/pubAppraise.js"/>'></script>
+<%--<script src='<c:url value="/js/public/pubAppraise.js"/>'></script>--%>
+<script src='<c:url value="/js/public/pubEdit.js"/>'></script>
 <script src='<c:url value="/js/public/route.js"/>'></script>
 
 <script>
-
 
     var StdList = [];
     var appTypeList = [];
