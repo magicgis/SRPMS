@@ -77,7 +77,7 @@
                 <div class="row">
                     <form id="award" class="form-horizontal" role="form">
                         <div hidden="hidden">
-                            <input type="text" name="id" id="awardId" value="${award.id}"/>
+                            <input type="text" name="id" id="awardId" value="${achAward.id}"/>
                             <input type="text" name="WF_Type" id="WF_Type" value="achAward"/>
                         </div>
 
@@ -388,6 +388,8 @@
     // 成员，单位，文件
     // todo 取出实体内的额外信息，附件信息也应该在其中。
     var entity = ${ObjectMapper.writeValueAsString(achAward)};
+    console.log(entity['id']);
+    console.log("*******************");
     var all = ${ObjectMapper.writeValueAsString(achAward.argMap)};
     var standard=entity['standard'];
     var dept = entity['dept'];

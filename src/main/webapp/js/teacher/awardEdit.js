@@ -12,6 +12,8 @@ function save() {
     var send = new Object();
     send['IsComplete'] = 'false';
     send['actors'] = getActorsData();
+    send['Main-Actor'] = Main_Actor;
+    send['Main-ActorName'] = Main_ActorName;
     workflow.execute(userName, taskId, send).success(function () {
         afterSuccess("保存成功！");
         window.location.href = '/index/process/achAward/all';
@@ -22,6 +24,8 @@ function confirm() {
     var status = all['Status'];
     var send = new Object();
     send['IsComplete'] = 'true';
+    send['Main-Actor'] = Main_Actor;
+    send['Main-ActorName'] = Main_ActorName;
     send['actors'] = getActorsData();
     BootstrapDialog.confirm({
         title: '确认信息',
@@ -38,6 +42,7 @@ function confirm() {
              */
             if (result) {
                 workflow.execute(userName, taskId, send).success(function (data) {
+
                     if ("valid" in data) {
                         if (data["valid"] == true) {
                             afterSuccess("确认成功！");

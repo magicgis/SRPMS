@@ -56,7 +56,6 @@ function orderBack() {
     });
 }
 function delOrder() {
-    console.log($('#projectId').val());
     BootstrapDialog.confirm({
         title: '提示！',
         message: '你确定要删除该项吗?',

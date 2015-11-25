@@ -63,6 +63,81 @@ function confirm() {
         }
     });
 }
+/****************************有关金额的****************************/
+function addFund() {
+    BootstrapDialog.show({
+        type: BootstrapDialog.TYPE_PRIMARY,
+        message: function (dialog) {
+            var $message = $('<div></div>');
+            var pageToLoad = dialog.getData('pageToLoad');
+            $message.load(pageToLoad);
+            return $message;
+        },
+        title: "项目金额信息",
+        data: {
+            'pageToLoad': '../dialog/addFund.html'
+        },
+        closeByBackdrop: false,
+        buttons: [{
+            id: 'btn-ok',
+            icon: 'glyphicon glyphicon-check',
+            label: '添加',
+            cssClass: 'btn-info',
+            autospin: false,
+            action: function (dialogRef) {
+                // console.log($("#rank").val());
+                if (!isFull()) {
+                    messageModal('请将信息填写完整。');
+                    return;
+                }
+                subFundInfo(null);
+                dialogRef.close();
+            }
+        }]
+    });
+}
+//编辑金额
+function editFund(row, index) {
+    BootstrapDialog.show({
+        type: BootstrapDialog.TYPE_PRIMARY,
+        message: function (dialog) {
+            var $message = $('<div></div>');
+            var pageToLoad = dialog.getData('pageToLoad');
+            $message.load(pageToLoad);
+            return $message;
+        },
+        title: "项目金额信息",
+        data: {
+            'pageToLoad': '../dialog/addFund.html'
+        },
+        closeByBackdrop: false,
+        buttons: [{
+            id: 'btn-ok',
+            icon: 'glyphicon glyphicon-check',
+            label: '保存',
+            cssClass: 'btn-info',
+            autospin: false,
+            action: function (dialogRef) {
+                if (!isFull()) {
+                    messageModal('请将信息填写完整。');
+                    return;
+                }
+                subUnitInfo(index);
+                dialogRef.close();
+            }
+        }],
+        onshown: function () {
+            //var $unit = $("#unit").selectize();
+            //填充单位
+            //DisplayForm($unit, row["unit"], 1);
+            //填充其他
+            $('#fundInfo').autofill(row, {
+                findbyname: true,
+                restrict: false
+            });
+        }
+    });
+}
 /**************************编辑成员||计算分数||**************************************/
 function editActor(row, index) {
     BootstrapDialog.show({
