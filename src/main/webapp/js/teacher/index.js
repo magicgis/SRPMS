@@ -208,10 +208,10 @@ function processView() {
                         sortable: true
                     }, {
                         field: 'standard.infoMap.jdprop',
-                        title:'鉴定类别'
+                        title: '鉴定类别'
                     }, {
                         field: 'standard.infoMap.jdtype',
-                        title:'鉴定等级'
+                        title: '鉴定等级'
                     }, {
                         field: 'certifyUnit',
                         title: '鉴定单位',
@@ -491,12 +491,7 @@ $('#newPaper').click(function () {
         viewTable.bootstrapTable("refresh");
     });
 });
-$('#newBook').click(function () {
-    workflow.startOrder(userName, "basicProcess_Beta", "book").success(function (data) {
-        afterSuccess("新建成功！,请切换到著作查看");
-        viewTable.bootstrapTable("refresh");
-    });
-});
+
 $('.allSubmit').click(function () {
     BootstrapDialog.confirm({
         title: '统一提交',
@@ -544,33 +539,40 @@ var processStates = {
     "process.something": {
         url: ':obj',
         enter: function (option) {
-            console.log("enter: " + this.name + "; param: " + JSON.stringify(option.param));
+            console.log("enter: " + this.name + "; param: " + option.param['obj']);
             objType = option.param['obj'];
-            processView();
 
         },
         update: function (option) {
-            console.log("update: " + this.name + "; param: " + JSON.stringify(option.param));
-            objType = option.param['obj'];
-            processView();
+            console.log("update: " + this.name + "; param: " + option.param['obj']);
+            if (objType != option.param['obj']) {
+                objType = option.param['obj'];
+                processView();
+            }
         }
     },
     "process.something.all": {
         url: 'all',
         enter: function (option) {
+            console.log("enter: " + this.name);
             level = "all";
+            processView();
         }
     },
     "process.something.1st": {
         url: '1st',
         enter: function (option) {
+            console.log("enter: " + this.name);
             level = "1st";
+            processView();
         }
     },
     "process.something.2nd": {
         url: '2nd',
         enter: function (option) {
+            console.log("enter: " + this.name);
             level = "2nd";
+            processView();
         }
     }
 };
@@ -775,10 +777,10 @@ function entityView() {
                         sortable: true
                     }, {
                         field: 'standard.infoMap.jdprop',
-                        title:'鉴定类别'
+                        title: '鉴定类别'
                     }, {
                         field: 'standard.infoMap.jdtype',
-                        title:'鉴定等级'
+                        title: '鉴定等级'
                     }, {
                         field: 'certifyUnit',
                         title: '鉴定单位',
@@ -1211,15 +1213,11 @@ stateman
     .start({html5: true, "root": "/index"});
 
 
-
 //参与类型切换
 $('.level').click(function () {
     $('.levelOption').html(this.children[0].text + '<span class="ace-icon fa fa-caret-down icon-on-right"></span>');
 
     var cls = $(this).attr('class').replace("level", "").trim();
-
-    console.log(stateman.current);
-    console.log(cls);
 
     stateman.go('^.' + cls, {param: {obj: objType}});
 });
