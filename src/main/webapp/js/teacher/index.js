@@ -466,8 +466,8 @@ function processView() {
                         title: '科研类型',
                         formatter: "wfTypeTran"
                     }, {
-                        field: 'Main-ActorName',
-                        title: '负责人'
+                        field: 'ActorList',
+                        title: '参与者'
                     }, {
                         field: 'Status',
                         title: '状态',
