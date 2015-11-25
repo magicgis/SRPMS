@@ -17,6 +17,7 @@ public class Others implements VirtualEntity {
     private String id;
     private String name;
     private String productionNo;
+    private String date;
     private Integer score;
     private String process;
     private String arg;
@@ -54,6 +55,17 @@ public class Others implements VirtualEntity {
         this.productionNo = productionNo;
     }
 
+
+    @Basic
+    @Column(name = "date", nullable = true, length = 255)
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     @Basic
     @Column(name = "score", nullable = true)
     public Integer getScore() {
@@ -75,7 +87,7 @@ public class Others implements VirtualEntity {
     }
 
     @Basic
-    @Column(name = "arg", nullable = true, length = 2000)
+    @Column(name = "arg", nullable = true, length = 3000)
     public String getArg() {
         return arg;
     }
@@ -93,27 +105,28 @@ public class Others implements VirtualEntity {
 
         if (id != null ? !id.equals(others.id) : others.id != null) return false;
         if (name != null ? !name.equals(others.name) : others.name != null) return false;
-        if (dept != null ? !dept.equals(others.dept) : others.dept != null) return false;
-        if (standard != null ? !standard.equals(others.standard) : others.standard != null) return false;
         if (productionNo != null ? !productionNo.equals(others.productionNo) : others.productionNo != null)
             return false;
+        if (date != null ? !date.equals(others.date) : others.date != null) return false;
         if (score != null ? !score.equals(others.score) : others.score != null) return false;
         if (process != null ? !process.equals(others.process) : others.process != null) return false;
         if (arg != null ? !arg.equals(others.arg) : others.arg != null) return false;
+        if (dept != null ? !dept.equals(others.dept) : others.dept != null) return false;
+        return !(standard != null ? !standard.equals(others.standard) : others.standard != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (dept != null ? dept.hashCode() : 0);
-        result = 31 * result + (standard != null ? standard.hashCode() : 0);
         result = 31 * result + (productionNo != null ? productionNo.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (score != null ? score.hashCode() : 0);
         result = 31 * result + (process != null ? process.hashCode() : 0);
         result = 31 * result + (arg != null ? arg.hashCode() : 0);
+        result = 31 * result + (dept != null ? dept.hashCode() : 0);
+        result = 31 * result + (standard != null ? standard.hashCode() : 0);
         return result;
     }
 
@@ -124,6 +137,15 @@ public class Others implements VirtualEntity {
 
     public void setArgMap(Map argMap) {
         try {
+            Map<String, Object> map = null;
+            try {
+                map = new ObjectMapper().convertValue(this, Map.class);
+            } catch (Exception x) {
+                x.printStackTrace();
+            }
+            if (map != null) {
+                argMap.put("View", map);
+            }
             this.arg = new ObjectMapper().writeValueAsString(argMap);
         } catch (JsonProcessingException e) {
             e.printStackTrace();

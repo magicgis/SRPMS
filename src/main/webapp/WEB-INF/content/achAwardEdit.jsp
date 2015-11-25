@@ -338,19 +338,27 @@
 </a>
 <!-- /.main-container -->
 </body>
+
+<script>
+
+	var actorTemp = [];
+	var unitTemp = [];
+	var Main_Actor;
+	var Main_ActorName;
+	var filesData = {};
+	var status;
+	var replyByCol, replyByDep;
+
+</script>
+
 <script src='<c:url value="/js/public/public.js"/>'></script>
-<script src='<c:url value="/js/public/pubAward.js"/>'></script>
+<%--<script src='<c:url value="/js/public/pubAward.js"/>'></script>--%>
+<script src='<c:url value="/js/public/pubEdit.js"/>'></script>
 <script src='<c:url value="/js/public/route.js"/>'></script>
 
 <script type="text/javascript">
-    $(function ($) {
-        $('.date-picker').datepicker({
-            autoclose: true,
-            todayHighlight: true
-        }).next().on(ace.click_event, function () {
-            $(this).prev().focus();
-        });
-    });
+
+
     var  StdList = [];
     var apppropList = [];
     function getStdList() {
@@ -386,10 +394,8 @@
     });
 
     // 成员，单位，文件
-    // todo 取出实体内的额外信息，附件信息也应该在其中。
     var entity = ${ObjectMapper.writeValueAsString(achAward)};
     console.log(entity['id']);
-    console.log("*******************");
     var all = ${ObjectMapper.writeValueAsString(achAward.argMap)};
     var standard=entity['standard'];
     var dept = entity['dept'];
@@ -398,7 +404,7 @@
     upToLoadFile();//文件上传
     allSelection();
     getDept();
-    fullUpInfo(all, entity);//填充
+    fullUpInfoAward(all, entity);//填充
     var filesData;
     if (filesData == null) {
         filesData = {};

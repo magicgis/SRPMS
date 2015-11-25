@@ -142,7 +142,7 @@ public class Medicine implements VirtualEntity {
     }
 
     @Basic
-    @Column(name = "arg", nullable = true, length = 2000)
+    @Column(name = "arg", nullable = true, length = 3000)
     public String getArg() {
         return arg;
     }
@@ -203,6 +203,15 @@ public class Medicine implements VirtualEntity {
 
     public void setArgMap(Map argMap) {
         try {
+            Map<String, Object> map = null;
+            try {
+                map = new ObjectMapper().convertValue(this, Map.class);
+            } catch (Exception x) {
+                x.printStackTrace();
+            }
+            if (map != null) {
+                argMap.put("View", map);
+            }
             this.arg = new ObjectMapper().writeValueAsString(argMap);
         } catch (JsonProcessingException e) {
             e.printStackTrace();

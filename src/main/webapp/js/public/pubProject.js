@@ -369,3 +369,19 @@ function standardSelects0(StdList,standard){
         $("#projorig0").val(standard['infoMap']['projorig']);
     }
 }
+
+// 成果获奖
+function fullUpInfoAward(all,entity){
+    if (!isNull(all)) {
+        getActors();
+        filesData = all['filesData'];
+        unitTemp = all['units'];
+        Main_Actor = all['Main-Actor'];
+        Main_ActorName = all['Main-ActorName'];
+        replyByCol = all['replyByCol'];
+        replyByDep = all['replyByDep'];
+        $("#actorTable").bootstrapTable('load', actorTemp);
+        $('#unitTable').bootstrapTable("load", unitTemp);
+        showFiles(filesData);
+    }
+}
