@@ -41,6 +41,9 @@ function saveStep2(data) {
 }
 
 function save() {
+    var Info = getMainActor();
+    Main_Actor = Info['Main-Actor'];
+    Main_ActorName = Info['Main-ActorName'];
 
     saveStep1().success(function(data) {
 
@@ -56,8 +59,14 @@ function save() {
  * */
 function confirm() {
     var Info = getMainActor();
-    Main_Actor = Info['Main-Actor'];
-    Main_ActorName = Info['Main-ActorName'];
+
+    if(!isNull(Info['Main-Actor'])) {
+        Main_Actor = Info['Main-Actor'];
+        Main_ActorName = Info['Main-ActorName'];
+    } else {
+        messageModal('请填写我校参与职工');
+        return;
+    }
     //这儿需要先调用save()将信息保存一次
     saveStep1().success(function(data) {
 

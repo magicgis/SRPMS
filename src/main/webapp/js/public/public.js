@@ -1263,11 +1263,10 @@ function getMainActor() {
     }
 
     $.each(actorInfo, function(index, value) {
-        console.log('one');
         if(value['staff.id'] !== '9999' && value['staff.id'] !== '9998'
             && parseInt(value['rank']) < parseInt(Main_ActorRank)
             && (value['unit'] == '湖北中医药大学' || value['unit'] == '中医院')) { //TODO
-            console.log('two');
+
             Info['Main-Actor'] = value['staff.id'];
             Info['Main-ActorName'] = value['staff.name'];
             Main_ActorRank = value['rank'];
