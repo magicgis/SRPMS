@@ -23,10 +23,12 @@ function save() {
 function confirm() {
     var status = all['Status'];
     var send = new Object();
-    send['IsComplete'] = 'true';
-    send['Main-Actor'] = Main_Actor;
-    send['Main-ActorName'] = Main_ActorName;
-    send['actors'] = getActorsData();
+    if(status == 'Uncomplete' || status == 'RefuseByCol'){
+        send['IsComplete'] = 'true';
+        send['Main-Actor'] = Main_Actor;
+        send['Main-ActorName'] = Main_ActorName;
+        send['actors'] = getActorsData();
+    }
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '确认?',

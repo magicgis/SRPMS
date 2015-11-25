@@ -7,13 +7,12 @@ $(function () {
 });
 /**与项目信息有关的 保存||确认||撤回||删除||提交所有**/
 function save() {
-    console.log(getFormJSON('project'));
-    //saveStep1().success(function(data) {
-    //    saveStep2(data).success(function (res) {
-    //        afterSuccess("保存成功！");
-    //        window.location.href = '/index/entity/project/all';
-    //    })
-    //});
+    saveStep1().success(function(data) {
+        saveStep2(data).success(function (res) {
+            afterSuccess("保存成功！");
+            window.location.href = '/index/entity/project/all';
+        })
+    });
 }
 function confirm() {
     //这儿需要先调用save()将信息保存一次

@@ -278,6 +278,7 @@ function fullUpInfo(all, entity) {
 
 function standardSelects1(StdList,projtypeList,standard){
     //initSelect();
+    $('#standardId').val('');
     $('#projbelong').attr("enable", "enable");
     $('#projrank').attr("enable", "enable");
     var $projbelong = $("#projbelong").selectize({ // 初始化 鉴定等级
@@ -349,13 +350,14 @@ function standardSelects0(StdList,standard){
     //console.log(projtypes);
     $("#projbelong").val('');
     $("#projorig0").val('');
+    $('#standardId').val('');
     var $projtype = $("#projtype0").selectize({ // 初始化 projtype
         valueField: 'id',
         labelField: 'value',
         options: projtypes,
         maxItems: 1,
         onChange: function (result) { // onChange时间 绑定级联
-            $('#standardId').val(result);
+            $('#standardId').val($("#projtype0").val());
             $.each(StdList, function (index, obj) {
                 if(obj['id']==$("#projtype0").val()){
                     var projorigTemp = obj['infoMap']['projorig'];

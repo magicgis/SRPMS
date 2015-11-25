@@ -573,13 +573,13 @@
         valueField: 'id',
         labelField: 'value',
         options: [
-            {"id": "false", "value": "否"},
-            {"id": "true", "value": "是"}],
+            {"id": "0", "value": "否"},
+            {"id": "1", "value": "是"}],
         maxItems: 1,
         create: true,
         onChange:function(){
             var setProject=$('#isAppr').val();
-            if(setProject=='true'){
+            if(setProject=='1'){
                 $('.standard0').hide();
                 $('.standard1').show();
                 var projectSet="项目立项";
@@ -587,7 +587,7 @@
                 standardSelects1(StdList,projtypeList);
 	            DisplayForm($('#projtype').selectize(), '', 0);
 	            $('#standardId').val('');
-            }else if(setProject=='false'){
+            }else if(setProject=='0'){
                 $('.standard0').show();
                 $('.standard1').hide();
                 var projectSet="项目未获立项";
@@ -617,14 +617,14 @@
     if(!isNull(standard)){
 
         if(standard['type']=='项目立项'){
-            DisplayForm($isAppr, "true",0);
+            DisplayForm($isAppr, "1",0);
             $('.standard0').hide();
             $('.standard1').show();
             var projectSet="项目立项";
             getStdList(projectSet);
             standardSelects1(StdList,projtypeList,standard);
         }else{
-            DisplayForm($isAppr, "false",0);
+            DisplayForm($isAppr, "0",0);
 //            $('#isAppr').val('0');
             $('.standard0').show();
             $('.standard1').hide();

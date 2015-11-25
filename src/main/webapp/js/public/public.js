@@ -550,8 +550,8 @@ function getStandardList2(data, str1, value1, str2, value2, str3, value3, str4) 
 function upToLoadFile() {
     $('#upload').Huploadify({
         header: {"Authorization": $.cookie('srpms_token')},
-        auto: true,
-        fileTypeExts: '*.txt;*.jpg;*.jpeg;*.JPG;*.JPEG;*.png;*.pdf;*.doc;*.docx;',
+        auto: true,//xls,xlsx
+        fileTypeExts: '*.txt;*.jpg;*.jpeg;*.JPG;*.JPEG;*.png;*.pdf;*.doc;*.docx;*.zip;*.ZIP;*.xsl;*.xlsx',
         multi: true,
         fileSizeLimit: 99999,
         showUploadedPercent: true,//是否实时显示上传的百分比，如20%
@@ -900,6 +900,9 @@ function isMainActor(MainActor, userName) {
  * 教师1||学院2||学校3
  * */
 function init(entity,all,replyByDep,level) {
+    if(entity['creator']!=userName){
+        $('.delFiles').hide();
+    }
     var process = entity['process'];
     switch (level){
         case 1:
@@ -1183,7 +1186,70 @@ function getScore(type) {
         }
     });
 }
+//修改密码
+function amend(){
+    //todo 修改密码的dialog
+    BootstrapDialog.show({
+        type: BootstrapDialog.TYPE_PRIMARY,
+        message: function (dialog) {
+            var $message = $('<div></div>');
+            var pageToLoad = dialog.getData('pageToLoad');
+            $message.load(pageToLoad);
+            return $message;
+        },
+        title: "密码修改",
+        data: {
+            'pageToLoad': '../dialog/amend.html'
+        },
+        closeByBackdrop: false,
+        buttons: [{
+            id: 'btn-oknm',
+            icon: 'glyphicon glyphicon-check',
+            label: '确定',
+            cssClass: 'btn-info',
+            autospin: false,
+            action: function (dialogRef) {
+                if (!isFull()) {
+                    messageModal('请将信息填写完整。');
+                    return;
+                }
+                editPassWord();
+                dialogRef.close();
+            }
+        },{
+            id: 'btn-cancel',
+            icon: 'glyphicon glyphicon-remove',
+            label: '关闭',
+            cssClass: 'btn-danger',
+            autospin: false,
+            action: function (dialogRef) {
+                dialogRef.close();
+            }
+        }]
+//                    onshown: function () {
+//                        fillRoles(projectRoles);
+//                    }
+    });
+}
 
+function editPassWord(){
+    //todo 修改密码
+    var accountInfo = $('#pwdInfo').serializeJSON();
+    accountInfo['user'] = userName;
+    $.ajax({
+        url: '/api/user/password',
+        type: 'put',
+        data: JSON.stringify(accountInfo),
+        contentType: 'application/json;charset=UTF-8',
+        success: function (data) {
+            if (data == 'true') {
+                messageModal("修改成功。");
+            } else if (data == 'false') {
+                messageModal("修改失败。");
+            }
+        }
+    });
+}
 /**--------------------------成员表公共方法------------------**/
 // 将对话框里的值加载进成员表
 //function subActorInfo(index,flag) {
