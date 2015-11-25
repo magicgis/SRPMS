@@ -650,16 +650,11 @@ function entityView() {
                         title: '参与者',
                         formatter: "actorTran"
                     }, {
-                        field: 'Status',
-                        title: '状态',
-                        formatter: 'statusTran'
-                    }, {
                         field: 'operator',
                         align: 'center',
                         title: '操作',
                         formatter: view
-                    }],
-                responseHandler: tableTrans
+                    }]
             });
             break;
         case 'book':
