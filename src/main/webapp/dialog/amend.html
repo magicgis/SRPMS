@@ -1,0 +1,49 @@
+<script>
+    function isFull() {
+        if ($('#oldPwd').val() == "" || $('#newPwd').val() == "") {
+            return false;
+        }
+        return true;
+    }
+</script>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel-body">
+            <!--<div class="row">-->
+            <div class="col-lg-12">
+                <form id="pwdInfo">
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-md-10">
+                            <label class="col-sm-2 control-label no-padding-right"
+                                   for="oldPwd">旧密码</label>
+
+                            <div class="col-sm-10">
+                                <input class="form-control col-xs-10"
+                                        id="oldPwd" name="oldPwd" type="password">
+                                    <span class="help-inline col-xs-12">
+                                        <span class="middle">*请输入旧密码</span>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-md-10">
+                            <label class="col-sm-2 control-label no-padding-right"
+                                   for="newPwd">新密码</label>
+
+                            <div class="col-sm-10">
+                                <input type="password" id="newPwd" name="newPwd"
+                                       placeholder=""
+                                       class="form-control col-xs-10"/>
+                                    <span class="help-inline col-xs-12">
+                                        <span class="middle">*请输入新密码</span>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--</div>-->
+        </div>
+    </div>
+</div>
