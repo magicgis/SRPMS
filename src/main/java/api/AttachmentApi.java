@@ -23,7 +23,7 @@ import static util.Args.StrorePath;
  */
 @Path("/file")
 @RestController
-public class    AttachmentApi {
+public class AttachmentApi {
     @Context
     ServletContext context;
     @Autowired
@@ -75,6 +75,7 @@ public class    AttachmentApi {
 
     @GET
     @Path("/{id}")
+    @Produces("application/octet-stream")
     public Response downloadFile(@PathParam("id") String id) {
         /*只是一个示范*/
         String fileName = attachmentService.getById(id).getPath();
@@ -91,7 +92,8 @@ public class    AttachmentApi {
         File file = new File(StrorePath, fileName);
         if (file.exists()) {
             return attachmentService.delete(data) && file.delete();
-        } else {
+        }
+        else {
             return false;
         }
     }
