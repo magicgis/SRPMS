@@ -1250,102 +1250,29 @@ function editPassWord(){
         }
     });
 }
-/**--------------------------成员表公共方法------------------**/
-// 将对话框里的值加载进成员表
-//function subActorInfo(index,flag) {
-//    var id = $('#actor').val();
-//    var actor = $('#actor').text();
-//    var marks = $('#score').val();
-//    var units = $('#units').val();
-//    var role = $('#role').val();
-//    var rank = $('#rank').val();
-//    var mark = (marks == "" ? '0' : (marks / units.length).toFixed(2));
-//    actorTemp = getActorsData();
-//    $.each(units, function (i, value) {
-//        actorTemp.push({"staff.id": id, "rank": rank, "staff.name": actor, "role": role, "score": mark, "unit": value});
-//    });
-//    if(rank == '1' || rank == 1){
-//        Main_Actor = id;
-//        Main_ActorName = actor;
-//    }
-//    if(flag) {  // 增加一行
-//        $('#actorTable').bootstrapTable("load", actorTemp);
-//    } else {    // 替换一行
-//        actorTemp.remove(index);
-//        $('#actorTable').bootstrapTable('load',actorTemp);
-//    }
-//}
 
+function getMainActor() {
+    var Main_ActorRank = 9999;
+    var actorInfo = getActorsData();
+    var Info = {};
+    Info['Main-Actor'] = '';
+    Info['Main-ActorName'] = '';
 
-//window.operateEvents = {
-//    'click .removeActor': function (e, value, row, index) {
-//        $('#actorTable').bootstrapTable('remove', {
-//            field: 'staff.id',
-//            values: [row["staff.id"]]
-//        });
-//    },
-//    'click .editActor': function (e, value, row, index) {
-//        editActor(row, index);
-//    }
-//};
-//// 操作
-//function operateFormatter(value, row, index) {
-//    return [
-//        '<a class="editActor" href="javascript:void(0)" title="edit" >',
-//        '<i class="ace-icon fa fa-pencil bigger-110"></i>',
-//        '</a>&nbsp;&nbsp;&nbsp;',
-//        '<a class="removeActor" href="javascript:void(0)" title="Remove" >',
-//        '<i class="glyphicon glyphicon-remove"></i>',
-//        '</a>'
-//    ].join('');
-//}
-//// 总人数
-//function totalNameFormatter(data) {
-//    return "共" + data.length + "人";
-//}
-//// 总分
-//function totalMarksFormatter(data) {
-//    var total = 0;
-//    $.each(data, function (i, row) {
-//        if(row.score !== null && row.score !== undefined && row.score !=="") {
-//            total += +(row.score.toString().substring(0));
-//        }
-//    });
-//    return '共' + total.toFixed(0) + "分";
-//}
-/**--------------------------单位表公共方法------------------**/
-////将对话框里的值加载进单位表
-//function subUnitInfo() {
-//    var unit = $('#unit').val();
-//    var rank = $('#rank').val();
-//    unitTemp.push({"rank": rank, "unit": unit});
-//    console.log(unitTemp);
-//    $('#unitTable').bootstrapTable('load',unitTemp);
-//}
-//
-//window.operateEventsUnit = {
-//    'click .removeUnit': function (e, value, row, index) {
-//        $('#unitTable').bootstrapTable('remove', {
-//            field: 'unit',
-//            values: [row["unit"]]
-//        });
-//    },
-//    'click .editUnit': function (e, value, row, index) {
-//        editUnit(row, index);
-//    }
-//};
-//// 操作
-//function operateFormatterUnit(value, row, index) {
-//    return [
-//        '<a class="editUnit" href="javascript:void(0)" title="edit" >',
-//        '<i class="ace-icon fa fa-pencil bigger-110"></i>',
-//        '</a>&nbsp;&nbsp;&nbsp;',
-//        '<a class="removeUnit" href="javascript:void(0)" title="Remove" >',
-//        '<i class="glyphicon glyphicon-remove"></i>',
-//        '</a>'
-//    ].join('');
-//}
-//// 总个数
-//function totalUnitFormatter(data) {
-//    return "共" + data.length + "个";
-//}
+    if(actorInfo.length == 0 ) { //如果表空了 或者主负责人被删了
+        return Info;
+    }
+
+    $.each(actorInfo, function(index, value) {
+        if(value['staff.id'] !== '9999' && value['staff.id'] !== '9998'
+            && parseInt(value['rank']) < parseInt(Main_ActorRank)
+            && (value['unit'] == '湖北中医药大学' || value['unit'] == '中医院')) { //TODO
+
+            Info['Main-Actor'] = value['staff.id'];
+            Info['Main-ActorName'] = value['staff.name'];
+            Main_ActorRank = value['rank'];
+        }
+    });
+    return Info;
+
+}
+
