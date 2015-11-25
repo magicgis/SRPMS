@@ -183,7 +183,7 @@ public class project extends StandardBase implements StandardCheckInf {
         Map validInfo = new HashMap();
         validInfo.put(IS_VALID, false);
         List<Map> actors = (List<Map>) map.get("actors");
-        boolean isAppr = (boolean) map.get("isAppr");
+        boolean isAppr = (Integer) map.get("isAppr")==1;
         if (map.get("score") != null) {
             double sum = Double.parseDouble((String) map.get("score"));
 
