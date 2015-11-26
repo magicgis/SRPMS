@@ -67,8 +67,12 @@ public class achTran extends StandardBase implements StandardCheckInf {
         validInfo.put(MESSAGE,DEFAULT_MSG);
         double sum = Double.parseDouble((String) map.get("score"));
         List<Map> actors = getActors(map);
-        if (!isSumCheckPass(sum,actors)){
-            validInfo.put(MESSAGE,"分配分数超出总分。");
+        if (SumCheckPass(sum,actors)<0) {
+            validInfo.put(MESSAGE, "个人分数分配总和超出总分！");
+            return validInfo;
+        }
+        if (SumCheckPass(sum,actors)<0.01&&SumCheckPass(sum,actors)>=0) {
+            validInfo.put(MESSAGE, "还有"+SumCheckPass(sum,actors)+"！");
             return validInfo;
         }
         int count = 0;

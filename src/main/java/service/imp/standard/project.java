@@ -187,9 +187,12 @@ public class project extends StandardBase implements StandardCheckInf {
         int isAppr = Integer.parseInt((String) map.get("isAppr"));
         if (map.get("score") != null) {
             double sum = Double.parseDouble((String) map.get("score"));
-
-            if (!isSumCheckPass(sum, actors)) {
-                validInfo.put(MESSAGE, "分配分数超出总分。");
+            if (SumCheckPass(sum,actors)<0) {
+                validInfo.put(MESSAGE, "个人分数分配总和超出总分！");
+                return validInfo;
+            }
+            if (SumCheckPass(sum,actors)<0.01&&SumCheckPass(sum,actors)>=0) {
+                validInfo.put(MESSAGE, "还有"+SumCheckPass(sum,actors)+"！");
                 return validInfo;
             }
             int count = 0;

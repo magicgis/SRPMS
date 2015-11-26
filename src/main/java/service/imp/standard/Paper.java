@@ -53,6 +53,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
             return validInfo;
         }
         String dateStr = (String) info.get("pubDate");
+        System.out.println("++++++++++++++" + isVaildTime(dateStr));
         if (!isVaildTime(dateStr)){
             validInfo.put(MESSAGE,"文章录用时间应在"+sysValidTime().get("startTime")+"到"+sysValidTime().get("endTime")+"之间");
             return validInfo;
@@ -170,12 +171,14 @@ public class Paper extends StandardBase implements StandardCheckInf {
             List<Map> authors = getActors(map);
 //            Double sum = Double.parseDouble((String) validInfo.get("sum"));
             double sum = Double.parseDouble((String) map.get("score"));
-            if (!isSumCheckPass(sum,actors)) {
+            if (SumCheckPass(sum,actors)<0) {
                 validInfo.put(MESSAGE, "个人分数分配总和超出总分！");
                 return validInfo;
             }
-
-
+            if (SumCheckPass(sum,actors)<0.01&&SumCheckPass(sum,actors)>=0) {
+                validInfo.put(MESSAGE, "还有"+SumCheckPass(sum,actors)+"！");
+                return validInfo;
+            }
 //        获取通讯作者代表分数（通讯作者重要性高于一作，所以分数参照通讯作者）
             if (myTchChiefAuth.size() != 0) {
                 tempChiefAuthor = myTchChiefAuth.get(0);

@@ -261,9 +261,8 @@ public class StandardBase {
         }
         return sum;
     }
-    public boolean isSumCheckPass(double sum , List<Map> actors){
-        if (totalScore(actors) - sum <= 0) return true;
-        return false;
+    public double SumCheckPass(double sum , List<Map> actors){
+       return totalScore(actors) - sum;
     }
 //    确定时间为有效时段
     public  boolean isVaildTime(String testedTime){
