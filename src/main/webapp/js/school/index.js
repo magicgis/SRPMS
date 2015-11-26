@@ -1684,9 +1684,8 @@ var userStates = {
                     }]
             });
 
-            //viewTable.on('click-row.bs.table', function (e, row) {
-            //    window.location.href = '/user/' + row["id"];
-            //});
+            viewTable.on('click-row.bs.table', function (e, row) {
+            });
         },
         leave: function () {
             $('#UserToolbar').hide();
