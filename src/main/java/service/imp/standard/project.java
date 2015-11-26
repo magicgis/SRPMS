@@ -87,9 +87,9 @@ public class project extends StandardBase implements StandardCheckInf {
         actors = getActors(map);
         cheifActors = getChiefActors(actors, (String) KEY_ROLE.get("cheifActor"));
         myCheifActors = getMyStaffActors(cheifActors);
-        boolean isAppr = Boolean.parseBoolean((String) map.get("isAppr"));
+        int isAppr = Integer.parseInt((String) map.get("isAppr"));
 //        是否立项
-        if (isAppr) {
+        if (isAppr == 1) {
 //           到账
             List<Map> funds = new ArrayList<>();
             funds = (List<Map>) map.get("fund");
@@ -184,7 +184,7 @@ public class project extends StandardBase implements StandardCheckInf {
         Map validInfo = new HashMap();
         validInfo.put(IS_VALID, false);
         List<Map> actors = (List<Map>) map.get("actors");
-        boolean isAppr = Boolean.parseBoolean((String) map.get("isAppr"));
+        int isAppr = Integer.parseInt((String) map.get("isAppr"));
         if (map.get("score") != null) {
             double sum = Double.parseDouble((String) map.get("score"));
 
@@ -197,7 +197,7 @@ public class project extends StandardBase implements StandardCheckInf {
                 if (Double.parseDouble((String) actor.get("score")) != 0) count++;
             }
             int limit = 0;
-            if (isAppr) {
+            if (isAppr == 1) {
                 String rank = (String) map.get("projrank");
                 if (rank.equals("国家级")) limit = 9;
                 else if (rank.equals("省部级")) limit = 6;
