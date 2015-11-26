@@ -270,9 +270,8 @@ public class StandardBase {
         boolean flag = false;
         Date before = tool.stringToDate((String) sysValidTime().get("startTime"));
         Date after = tool.stringToDate((String) sysValidTime().get("endTime"));
-
         Date date = tool.stringToDate(testedTime);
-        if (date.getTime() <= after.getTime() || date.getTime() >= before.getTime())
+        if (date.getTime() <= after.getTime() && date.getTime() >= before.getTime())
             flag = true;
         return flag;
     }

@@ -53,7 +53,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
             return validInfo;
         }
         String dateStr = (String) info.get("pubDate");
-        if (isVaildTime(dateStr)){
+        if (!isVaildTime(dateStr)){
             validInfo.put(MESSAGE,"文章录用时间应在"+sysValidTime().get("startTime")+"到"+sysValidTime().get("endTime")+"之间");
             return validInfo;
     }
