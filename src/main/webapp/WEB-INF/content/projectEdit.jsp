@@ -663,8 +663,8 @@
                 field: 'operate',
                 title: '操作',
                 sortable: true,
-                formatter: "operateAFormatter",
-                events: "operateAEvents"
+                formatter: "operateFormatter",
+                events: "operateEvents"
             }],
         data: actorTemp
     });
