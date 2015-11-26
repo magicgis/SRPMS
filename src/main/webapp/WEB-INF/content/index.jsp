@@ -100,9 +100,6 @@
                                                         <li id="newPaper">
                                                             <a>论文</a>
                                                         </li>
-                                                        <li id="newBook">
-                                                            <a>著作</a>
-                                                        </li>
                                                     </ul>
                                                 </div>
                                                 <button class="btn btn-success allSubmit">
