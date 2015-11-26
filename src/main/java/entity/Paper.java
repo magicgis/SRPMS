@@ -145,6 +145,7 @@ public class Paper implements VirtualEntity {
             Map<String, Object> map = null;
             try {
                 map = new ObjectMapper().convertValue(this, Map.class);
+                map.remove("arg");
             } catch (Exception x) {
                 x.printStackTrace();
             }
