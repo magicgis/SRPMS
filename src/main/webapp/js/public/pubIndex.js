@@ -4,34 +4,17 @@
 function disableOrEnable(index, row, value) {
     //测试区
     var status=row['user.status'];
-   switch (status){
-       case 1:
-           return [
-               '<label><input class="UserChange ace ace-switch ace-switch-7" type="checkbox" ' +
-               'checked name="switch-field-1"><span class="lbl"></span></label>'
-           ].join('');
-       break;
-       case 0:
-           return [
-               '<label><input class="UserChange ace ace-switch ace-switch-7" type="checkbox" ' +
-               'name="switch-field-1"><span class="lbl"></span></label>'
-           ].join('');
-       break;
-   }
-
-
-
-    //if (row['user.status'] == 1) {
-    //    return [
-    //        '<label><input class="UserEnableChange ace ace-switch ace-switch-7" type="checkbox" ' +
-    //        'checked name="switch-field-1"><span class="lbl"></span></label>'
-    //    ].join('');
-    //} else {
-    //    return [
-    //        '<label><input class="UserDisableChange ace ace-switch ace-switch-7" type="checkbox" ' +
-    //        'name="switch-field-1"><span class="lbl"></span></label>'
-    //    ].join('');
-    //}
+    if(status=='1'){
+        return [
+            '<label><input class="UserChange ace ace-switch ace-switch-7" type="checkbox" ' +
+            'checked name="switch-field-1"><span class="lbl"></span></label>'
+        ].join('');
+    }else{
+        return [
+            '<label><input class="UserChange ace ace-switch ace-switch-7" type="checkbox" ' +
+            'name="switch-field-1"><span class="lbl"></span></label>'
+        ].join('');
+    }
 }
 
 //启用或禁用 操作

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <script>
     jQuery(function ($) {
         $('.date-picker').datepicker({
@@ -6,6 +7,8 @@
         }).next().on(ace.click_event, function () {
             $(this).prev().focus();
         });
+        $('.date-picker').style.zIndex=1050;//modal
+        $('.modal').style.zIndex=1000;
     });
     function isFull() {
         if ($('#time').val() == "" || $('#mny').val() == "" || $('#outMny').val() == "") {
@@ -24,6 +27,7 @@
         obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
     }
 </script>
+
 <div class="row">
     <div class="col-lg-12">
         <div class="panel-body">
@@ -81,3 +85,39 @@
         </div>
     </div>
 </div>
+<!--<style>-->
+    <!--@media screen and (-webkit-min-device-pixel-ratio:0){-->
+        <!--.datepicker.dropdown-menu {-->
+            <!--position: fixed;-->
+            <!--top: 100%;-->
+            <!--left: 0px;-->
+            <!--z-index: 1050;-->
+            <!--float: left;-->
+            <!--display: none;-->
+            <!--min-width: 160px;-->
+            <!--list-style: outside none none;-->
+            <!--background-color: #FFF;-->
+            <!--border: 1px solid rgba(0, 0, 0, 0.2);-->
+            <!--border-radius: 5px;-->
+            <!--box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);-->
+            <!--background-clip: padding-box;-->
+            <!--color: #333;-->
+            <!--font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;-->
+            <!--font-size: 13px;-->
+            <!--line-height: 1.42857;-->
+        <!--}-->
+        <!--.modal {-->
+            <!--display: none;-->
+            <!--overflow: hidden;-->
+            <!--position: fixed;-->
+            <!--top: 0px;-->
+            <!--right: 0px;-->
+            <!--bottom: 0px;-->
+            <!--left: 0px;-->
+            <!--z-index: 800;-->
+            <!--outline: 0px none;-->
+        <!--}-->
+    <!--}-->
+    <!--/**html  body:nth-of-type(1)*/-->
+    <!--/**html  body:nth-of-type(1)*/-->
+<!--</style>-->
