@@ -10,7 +10,6 @@ function save() {
     var Info = getMainActor();
     Main_Actor = Info['Main-Actor'];
     Main_ActorName = Info['Main-ActorName'];
-
     saveStep1().success(function(data) {
         saveStep2(data).success(function (res) {
             afterSuccess("保存成功！");

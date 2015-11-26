@@ -1199,7 +1199,7 @@ function amend(){
         },
         title: "密码修改",
         data: {
-            'pageToLoad': '../dialog/amend.html'
+            'pageToLoad': '/dialog/amend.html'
         },
         closeByBackdrop: false,
         buttons: [{

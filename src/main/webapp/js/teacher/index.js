@@ -466,8 +466,8 @@ function processView() {
                         title: '科研类型',
                         formatter: "wfTypeTran"
                     }, {
-                        field: 'Main-ActorName',
-                        title: '负责人'
+                        field: 'ActorList',
+                        title: '参与者'
                     }, {
                         field: 'Status',
                         title: '状态',
@@ -487,6 +487,7 @@ function processView() {
 
 $('#newPaper').click(function () {
     workflow.startOrder(userName, "basicProcess_Beta", "paper").success(function (data) {
+        window.location.href="/index/process/paper/all";
         afterSuccess("新建成功！,请切换到论文查看");
         viewTable.bootstrapTable("refresh");
     });

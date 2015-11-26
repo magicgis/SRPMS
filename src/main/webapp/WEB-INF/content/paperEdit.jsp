@@ -601,8 +601,13 @@
 		filesData = {};
 	}
 	upToLoadFile(); // 初始化上传插件
-	console.log(entity);
 
+	// 显示文件信息
+	if (filesData != undefined && filesData != null) {
+		showFiles(filesData);
+	}
+
+	console.log(entity);
 	$('#actorTable').bootstrapTable({
 		columns: [
 			{
@@ -702,6 +707,7 @@
 		// 不可编辑
 		else {
 			uneditableForm();
+			console.log('fyh');
 
 			$('#del').hide();
 			$('#save').hide();
@@ -722,14 +728,7 @@
 		magOrConfer();
 
 		// 显示总分
-//		var score = latestInfo['score'];
-//		if (score == undefined || score == null || score == "") {
-//			flag = false;
-//			console.log('null' + flag);
-//		} else {
-//			flag = true;
-//			console.log('notnull' + flag);
-//		}
+
 		// 显示成员信息
 		if (latestInfo['actors'] != null) {
 			actorTemp = latestInfo['actors'];
@@ -747,12 +746,13 @@
 			restrict: false
 		});
 
-		// 显示文件信息
-		if (filesData != undefined && filesData != null) {
-			showFiles(filesData);
-		}
 	} // end if order非空
-
+	//参与者不能删除上传的附件
+	if(entity['creator']!=userName){//todo 判断是否是参与者
+		$('.delFiles').hide();
+	}else if(entity['creator']==userName){
+		$('.delFiles').show();
+	}
 	//监听 更换论文类型
 	$('#type').change(function () {
 		magOrConfer();
@@ -803,8 +803,6 @@
 	$(".uneditableInput").focus(function () {
 		this.blur();
 	});
-
-
 </script>
 
 

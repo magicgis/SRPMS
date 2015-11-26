@@ -67,16 +67,16 @@ function uneditableForm() {
     $('#upload').hide();
 }
 // 表单可编辑
-function editableForm() {
-    $('form input').removeAttr("disabled", "disabled");
-    $('form select').removeAttr("disabled", "disabled");
-    $('#addDiff').show();
-    $('#addActor').show();
-    $('#getScore').show();
-    $('.delFiles').show();
-    $('#actorTable').bootstrapTable('showColumn', 'operate');
-    $('.type').show();
-}
+//function editableForm() {
+//    $('form input').removeAttr("disabled", "disabled");
+//    $('form select').removeAttr("disabled", "disabled");
+//    $('#addDiff').show();
+//    $('#addActor').show();
+//    $('#getScore').show();
+//    $('.delFiles').show();
+//    $('#actorTable').bootstrapTable('showColumn', 'operate');
+//    $('.type').show();
+//}
 // 显示总览
 function showTable(newUrl, tableTypes) {
     $('#' + tableTypes).bootstrapTable('refresh', {url: newUrl});
