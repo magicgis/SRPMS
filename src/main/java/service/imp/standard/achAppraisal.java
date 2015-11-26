@@ -18,7 +18,7 @@ public class achAppraisal extends StandardBase implements StandardCheckInf{
     final private Map PAGE_ELEM_NAME = new HashMap() {{
         put("name", "专利名称");
         put("appType", "鉴定类别");
-        put("appRank", "鉴定等级");
+        put("standard.id", "鉴定等级");
         put("certificateNo", "证书编号");
     }};
 

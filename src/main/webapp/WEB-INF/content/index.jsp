@@ -100,9 +100,6 @@
                                                         <li id="newPaper">
                                                             <a>论文</a>
                                                         </li>
-                                                        <li id="newBook">
-                                                            <a>著作</a>
-                                                        </li>
                                                     </ul>
                                                 </div>
                                                 <button class="btn btn-success allSubmit">
@@ -131,6 +128,9 @@
                                                                 <span class="ace-icon fa fa-caret-down icon-on-right"></span>
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-left">
+                                                                <li id="newBook">
+                                                                    <a href="<c:url value="/book/new"/> ">期刊信息</a>
+                                                                </li>
                                                                 <li id="newPatent">
                                                                     <a href="<c:url value="/patent/new"/> ">专利信息</a>
                                                                 </li>

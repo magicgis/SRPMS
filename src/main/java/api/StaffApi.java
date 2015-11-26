@@ -82,8 +82,8 @@ public class StaffApi {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            //TODO 设置权限
-            user.setPrivilege(null);
+            //TODO 设置权限 默认给1
+            user.setPrivilege("1");
             user.setStaff(staff);
             user.setStatus(1);
             return userService.save(user);

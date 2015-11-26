@@ -65,9 +65,13 @@ public class StandardServiceImp extends StandardBase implements StandardService 
 
 //        获取附表分数与极值
         String stIdType = selectId(type);
+//        System.out.println("+++++++++++++="+stIdType);
         String stId = (String) map.get(stIdType);
-//        System.out.println(stId);
-        Standard st = standardDao.getById(stId);
+//        System.out.println("+++++++++++++="+map);
+        System.out.println("+++++++++++++=" + stId);
+        Standard st = null;
+        if (stId != null)
+            st = standardDao.getById(stId);
 //        System.out.println(st.getValue());
         if (st == null) {
             calFlow.put(MESSAGE, "附表中没有相关规定");
@@ -77,12 +81,11 @@ public class StandardServiceImp extends StandardBase implements StandardService 
             calFlow = standardCheck.getFinalScore(map, 0, 0);
             return calFlow;
 //            return calFlow;
-        }
-        else {
+        } else {
             BigDecimal sumt = st.getValue();
             BigDecimal sumt2 = st.getValue();
             BigDecimal mint = st.getMin() == null ? new BigDecimal(0) : st.getMin();
-            BigDecimal maxt = st.getMax() == null ? new BigDecimal(999):st.getMax();
+            BigDecimal maxt = st.getMax() == null ? new BigDecimal(999) : st.getMax();
             double sum = sumt.doubleValue();
             double sum2 = sumt2.doubleValue();
             double min = mint.doubleValue();
@@ -97,8 +100,8 @@ public class StandardServiceImp extends StandardBase implements StandardService 
 
     @Override
     public Map scoreCalculation(Map map) {
-        Order order  = null;
-        return scoreCalculation(order,map);
+        Order order = null;
+        return scoreCalculation(order, map);
     }
 
     @Override
