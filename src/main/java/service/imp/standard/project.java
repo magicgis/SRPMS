@@ -68,7 +68,7 @@ public class project extends StandardBase implements StandardCheckInf {
         validInfo.put(IS_VALID, false);
         validInfo.put(MESSAGE, "约束未处理");
         validInfo.put(IS_VALID, true);
-        return null;
+        return validInfo;
     }
 
     @Override
@@ -87,27 +87,28 @@ public class project extends StandardBase implements StandardCheckInf {
         actors = getActors(map);
         cheifActors = getChiefActors(actors, (String) KEY_ROLE.get("cheifActor"));
         myCheifActors = getMyStaffActors(cheifActors);
-        boolean isAppr = (boolean) map.get("isAppr");
+        boolean isAppr = Boolean.parseBoolean((String) map.get("isAppr"));
 //        是否立项
         if (isAppr) {
 //           到账
             List<Map> funds = new ArrayList<>();
             funds = (List<Map>) map.get("fund");
             double res = 0;
-            for (Map fund : funds) {
-                if (isVaildTime((String) fund.get("time"))) {
-                    res = Double.parseDouble((String) map.get("mny"))
-                            - Double.parseDouble((String) map.get("outMny"));
-                    moneyScore += getMoneyWeight(map, res);
+            if (funds != null && funds.size() != 0)
+                for (Map fund : funds) {
+                    if (isVaildTime((String) fund.get("time"))) {
+                        res = Double.parseDouble((String) map.get("mny"))
+                                - Double.parseDouble((String) map.get("outMny"));
+                        moneyScore += getMoneyWeight(map, res);
+                    }
                 }
-            }
 //        立项
-            if (!map.get("projrank").equals("横向")
+            if (!(map.get("projrank").equals("横向"))
                     && isVaildTime((String) map.get("apprDate")))
                 calScore += tableScore;
             if (map.get("projrank").equals("横向")
                     && isVaildTime((String) map.get("apprDate")))
-                calScore +=tableScore*res;
+                calScore += tableScore * res;
 //        结题
             if (!map.get("projrank").equals("横向")
                     && map.get("realDate") != null
@@ -116,7 +117,7 @@ public class project extends StandardBase implements StandardCheckInf {
             if (map.get("projrank").equals("横向")
                     && map.get("realDate") != null
                     && isVaildTime((String) map.get("realDate")))
-                calScore += tableScore2*res;
+                calScore += tableScore2 * res;
 
 
 //        是否是独立项目
@@ -129,7 +130,7 @@ public class project extends StandardBase implements StandardCheckInf {
 //        未立项
         else {
             calScore = tableScore;
-            if (!map.get("attr").equals("独立项目"))
+            if (!(map.get("attr").equals("独立项目")))
                 calScore /= 5;
             caseSlct = 111;
         }
@@ -160,14 +161,14 @@ public class project extends StandardBase implements StandardCheckInf {
                 validInfo.put(IS_VALID, true);
                 validInfo.put(MESSAGE, "分数需要分配");
                 validInfo.put("hasSum", true);
-                validInfo.put("sum", calScore+moneyScore);
+                validInfo.put("sum", calScore + moneyScore);
                 return validInfo;
 //                break;
             case 110://主持负责不独立（分配/(n+1)）
                 validInfo.put(IS_VALID, true);
                 validInfo.put(MESSAGE, "分数需要分配");
                 validInfo.put("hasSum", true);
-                validInfo.put("sum", moneyScore+calScore / (units.size() + 1));
+                validInfo.put("sum", moneyScore + calScore / (units.size() + 1));
                 return validInfo;
 //                break;
             default://001不主持不负责独立
@@ -183,7 +184,7 @@ public class project extends StandardBase implements StandardCheckInf {
         Map validInfo = new HashMap();
         validInfo.put(IS_VALID, false);
         List<Map> actors = (List<Map>) map.get("actors");
-        boolean isAppr = (Integer) map.get("isAppr")==1;
+        boolean isAppr = Boolean.parseBoolean((String) map.get("isAppr"));
         if (map.get("score") != null) {
             double sum = Double.parseDouble((String) map.get("score"));
 

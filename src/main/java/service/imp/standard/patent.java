@@ -21,9 +21,9 @@ public class patent extends StandardBase implements StandardCheckInf {
         put("dept.value", "所属部门");
         put("standard.id", "专利级别");
         put("apprDate", "获批时间");
-        put("endfillDate", "终止填写时间");
-        put("patenPubNo", "公开专利号");
-        put("patenNo", "专利号");
+//        put("endfillDate", "终止填写时间");
+//        put("patenPubNo", "公开专利号");
+        put("patentNo", "专利号");
     }};
 
     public patent() throws FileNotFoundException {
