@@ -5,7 +5,7 @@
 // 将对话框里的值加载进成员表
 function subActorInfo(index,flag) {
     var id = $('#actor').val();
-    var actor = $('#actor').text();
+    var actor = $('#actor').text();//+"("+id+")"
     var marks = $('#score').val();
     var units = $('#units').val();
     var role = $('#role').val();

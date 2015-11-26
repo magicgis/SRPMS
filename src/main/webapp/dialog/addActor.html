@@ -61,7 +61,13 @@
                         callback();
                     },
                     success: function(res) {
-                        callback(res);
+                        var baseUnit=res;
+                        $.each(baseUnit, function (index, obj) {
+                            if(baseUnit[index]['id']=='90002'||baseUnit[index]['id']=='130002'){
+                                delete baseUnit[index];
+                            }
+                        });
+                        callback(baseUnit);
                     }
                 });
             }

@@ -207,37 +207,6 @@
                 </div>
               </div>
             </form>
-            <c:if test="${sessionScope.level == '1'}">
-              <form id="account" class="col-md-offset-4 " style="display: none">
-                <hr/>
-                <h4>密码修改</h4>
-                <br/>
-
-                <div class="row">
-                  <div class="form-group col-xs-12 col-sm-6">
-                    <label class="col-sm-4 control-label no-padding-left"
-                           for="pwd">原&nbsp;&nbsp;密&nbsp;&nbsp;码：</label>
-
-                    <div class="col-sm-8">
-                      <input type="password" id="pwd" name="oldPwd"
-                             placeholder="" class="col-xs-12" value="************"/>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="form-group col-xs-12 col-sm-6">
-                    <label class="col-sm-4 control-label no-padding-left"
-                           for="newPwd">新&nbsp;&nbsp;密&nbsp;&nbsp;码：</label>
-
-                    <div class="col-sm-8">
-                      <input type="password" id="newPwd" name="newPwd"
-                             placeholder="" class="col-xs-12"/>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </c:if>
 
             <div class="row">
               <div class="form-group col-xs-12 col-sm-6 ">

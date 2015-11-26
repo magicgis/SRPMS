@@ -566,6 +566,9 @@ function upToLoadFile() {
             tempFileData[file.name] = fileInfo;
             filesData[file.name] = fileInfo;
             scanFiles(tempFileData);
+        },
+        onUploadError:function (file, data){
+            messageModal("上传失败！")
         }
     });
 }
@@ -625,21 +628,34 @@ function delFile(fileId) {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                $.ajax({
-                    type: 'DELETE',
-                    url: '/api/file/' + fileId,
-                    success: function () {
-                        for (var key in filesData) {
-                            if (filesData[key]['fileKey'] == fileId) {
-                                delete filesData[key];
+                if(!(fileInData(filesData,fileId))){
+                    $("#li" + fileId).remove();
+                }else{
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/api/file/' + fileId,
+                        success: function () {
+                            for (var key in filesData) {
+                                if (filesData[key]['fileKey'] == fileId) {
+                                    delete filesData[key];
+                                }
                             }
+                            $("#li" + fileId).remove();
                         }
-                        $("#li" + fileId).remove();
-                    }
-                });
+                    });
+                }
             }
         }
     });
+}
+function fileInData(filesData,fileId){
+    for (var key in filesData) {
+        if (filesData[key]['fileKey'] == fileId) {
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
 /**
  * 文件大小

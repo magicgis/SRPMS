@@ -430,7 +430,7 @@
 				field: 'staff.id',
 				title: '工号',
 				sortable: true,
-				visible: false
+				visible: true
 			}, {
 				field: 'rank',
 				title: '排名',
