@@ -17,7 +17,7 @@ public class StandardBase {
     protected final boolean DEFAULT_FLAG = false;
     final String SRC_ENCODING = "ISO-8859-1";
     final String DES_ENCODING = "utf-8";
-    protected final String[] MY_SCHOOL_NAME = {"湖北中医药大学", "湖北省中医院","中医院"};
+    protected final String[] MY_SCHOOL_NAME = {"湖北中医药大学"};//, "湖北省中医院","中医院"};
     protected final String PARTNER_ID = "9999";
     protected final String STUNDENT_ID = "9998";
     Map validInfo = new HashMap();
@@ -294,6 +294,5 @@ public class StandardBase {
         map.put(MESSAGE,"文件未限定");
         return map;
     }
-
 
 }//the end of the class

@@ -47,12 +47,8 @@ public class Paper extends StandardBase implements StandardCheckInf {
         validInfo.put(MESSAGE, DEFAULT_MSG);
         //            初始化
         validInfo.put(MESSAGE, getMsg("1001"));
-//           作者列表有效性检验
         List<Map> authors = getActors(info);
-        if (authors == null || authors.size() == 0) {
-            validInfo.put(MESSAGE, getValidMsg("2001", "actors", "2002"));
-            return validInfo;
-        }
+
         String dateStr = (String) info.get("pubDate");
 //        System.out.println("++++++++++++++" + isVaildTime(dateStr));
         if (!isVaildTime(dateStr)){
@@ -64,6 +60,20 @@ public class Paper extends StandardBase implements StandardCheckInf {
         List<Map> myFirstAuth = getChiefActors(myActors, (String) KEY_ROLE.get("firstAuthor"));
         List<Map> myStaffActors = getMyStaffActors(actors);
         List<Map> myChiefAuth = getChiefActors(myStaffActors,(String) KEY_ROLE.get("chiefAuthor"));
+
+        String bgPage= (String) info.get("bgPage");
+        if(!bgPage.matches("[0-9]+-[0-9]+")){
+            validInfo.put(MESSAGE,"页码范围应用XXX-XXX格式。");
+            return validInfo;
+        }
+//        List<Map> actors = getActors(info);
+//        List<Map> myAbAcotrs =getAbsoluteAuthors(info);
+
+        //           作者列表有效性检验
+        if (authors == null || authors.size() == 0) {
+            validInfo.put(MESSAGE, getValidMsg("2001", "actors", "2002"));
+            return validInfo;
+        }
         for (Map author : authors) {
             String unit = (String) author.get("unit");
             if (unit == null || unit.trim().equals("")) {
@@ -76,24 +86,52 @@ public class Paper extends StandardBase implements StandardCheckInf {
             validInfo.put("msg", getMsg("2031"));
             return validInfo;
         }
-//        List<Map> actors = getActors(info);
-//        List<Map> myAbAcotrs =getAbsoluteAuthors(info);
         List<Map> myAbAcotrs = getMyActors(authors);
-        List<Map> sameActor = new ArrayList<>();
+
         for (Map myAbActor : myAbAcotrs){
+                int count = 0;
             String unit = (String) myAbActor.get("unit");
             String staffId = (String) myAbActor.get("staff.id");
-
             for (Map temp : myAbAcotrs){
-                if (unit!=null||unit.equals(temp.get("unit"))&&staffId.equals(temp.get("staff.id")))
-                    sameActor.add(temp);
+                if (unit!=null&&(unit.equals(temp.get("unit"))&&staffId.equals(temp.get("staff.id")))) {
+                    count++;
+                }  }
+
+            if (count>1){
+                validInfo.put(MESSAGE,"人员不能重复填写！");
+                return validInfo;
             }
-//            System.out.println("aaaaaaaaaaaaaaaa" + sameActor.size());
         }
-        if (sameActor.size()>1){
-            validInfo.put(MESSAGE,"人员不能重复填写！");
-            return validInfo;
+        String editor = (String) info.get("WF_User");
+        System.out.println(editor);
+        if (myChiefAuth.size()>0){
+            boolean flag = false;
+            for (Map temp : myChiefAuth){
+                if (editor.equals(temp.get("staff.id"))){
+                    flag =true;
+                    break;
+                }
+            }
+            if (!flag){
+                 validInfo.put(MESSAGE,"请由本校通讯作者填写。");
+                return validInfo;
+            }
         }
+
+        if (myFirstAuth.size()>0){
+            boolean flag = false;
+            for (Map temp : myFirstAuth){
+                if (editor.equals(temp.get("staff.id"))){
+                    flag =true;
+                    break;
+                }
+            }
+            if (!flag){
+                validInfo.put(MESSAGE,"请由本校第一作者填写。");
+                return validInfo;
+            }
+        }
+
         validInfo.put(IS_VALID, true);
         validInfo.put(MESSAGE, getMsg("1001"));
         return validInfo;
@@ -187,17 +225,6 @@ public class Paper extends StandardBase implements StandardCheckInf {
             return isValid(map);
         }
         boolean flag = false;
-//        for (Map myAbActor : myAbAcotrs){
-//            String unit = (String) myAbActor.get("unit");
-//            List<Map> sameActor = new ArrayList<>();
-//            for (Map temp : myAbAcotrs){
-//                if (unit!=null||unit.equals(temp))
-//                    sameActor.add(temp);
-//            }
-//            if (sameActor.size()>1){
-//                validInfo.put(MESSAGE,"人员不能重复填写！");
-//            }
-//        }
         if (map.get("score")!=null) flag = true;
 //       求和检测
         if (flag) {
