@@ -262,7 +262,7 @@ public class StandardBase {
         return sum;
     }
     public double SumCheckPass(double sum , List<Map> actors){
-       return totalScore(actors) - sum;
+       return sum - totalScore(actors) ;
     }
 //    确定时间为有效时段
     public  boolean isVaildTime(String testedTime){

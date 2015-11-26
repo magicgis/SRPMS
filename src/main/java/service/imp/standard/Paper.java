@@ -3,6 +3,7 @@ package service.imp.standard;
 import service.imp.StandardBase;
 
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +54,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
             return validInfo;
         }
         String dateStr = (String) info.get("pubDate");
-        System.out.println("++++++++++++++" + isVaildTime(dateStr));
+//        System.out.println("++++++++++++++" + isVaildTime(dateStr));
         if (!isVaildTime(dateStr)){
             validInfo.put(MESSAGE,"文章录用时间应在"+sysValidTime().get("startTime")+"到"+sysValidTime().get("endTime")+"之间");
             return validInfo;
@@ -73,6 +74,24 @@ public class Paper extends StandardBase implements StandardCheckInf {
         if (myFirstAuth.size() == 0 && myChiefAuth.size() == 0) {
 
             validInfo.put("msg", getMsg("2031"));
+            return validInfo;
+        }
+//        List<Map> actors = getActors(info);
+//        List<Map> myAbAcotrs =getAbsoluteAuthors(info);
+        List<Map> myAbAcotrs = getMyActors(authors);
+        List<Map> sameActor = new ArrayList<>();
+        for (Map myAbActor : myAbAcotrs){
+            String unit = (String) myAbActor.get("unit");
+            String staffId = (String) myAbActor.get("staff.id");
+
+            for (Map temp : myAbAcotrs){
+                if (unit!=null||unit.equals(temp.get("unit"))&&staffId.equals(temp.get("staff.id")))
+                    sameActor.add(temp);
+            }
+//            System.out.println("aaaaaaaaaaaaaaaa" + sameActor.size());
+        }
+        if (sameActor.size()>1){
+            validInfo.put(MESSAGE,"人员不能重复填写！");
             return validInfo;
         }
         validInfo.put(IS_VALID, true);
@@ -161,9 +180,24 @@ public class Paper extends StandardBase implements StandardCheckInf {
         Map tempFirstAuthor, tempChiefAuthor;
         double tempMarks;
         List<Map> actors = getActors(map);
+//        List<Map> myAbAcotrs =getAbsoluteAuthors(map);
         List<Map> myFirstAuth = getChiefActors(actors,(String) KEY_ROLE.get("firstAuthor"));
         List<Map> myTchChiefAuth = getChiefActors(actors,(String) KEY_ROLE.get("chiefAuthor"));
+        if(!((boolean)isValid(map).get(IS_VALID))){
+            return isValid(map);
+        }
         boolean flag = false;
+//        for (Map myAbActor : myAbAcotrs){
+//            String unit = (String) myAbActor.get("unit");
+//            List<Map> sameActor = new ArrayList<>();
+//            for (Map temp : myAbAcotrs){
+//                if (unit!=null||unit.equals(temp))
+//                    sameActor.add(temp);
+//            }
+//            if (sameActor.size()>1){
+//                validInfo.put(MESSAGE,"人员不能重复填写！");
+//            }
+//        }
         if (map.get("score")!=null) flag = true;
 //       求和检测
         if (flag) {
@@ -175,8 +209,12 @@ public class Paper extends StandardBase implements StandardCheckInf {
                 validInfo.put(MESSAGE, "个人分数分配总和超出总分！");
                 return validInfo;
             }
-            if (SumCheckPass(sum,actors)<0.01&&SumCheckPass(sum,actors)>=0) {
-                validInfo.put(MESSAGE, "还有"+SumCheckPass(sum,actors)+"！");
+//            System.out.println("--------"+SumCheckPass(sum,actors));
+            if (SumCheckPass(sum,actors) > 0.01) {
+                double tSum = SumCheckPass(sum,actors);
+                DecimalFormat df = new DecimalFormat("####0.000");
+//                System.out.println("--------------"+df.format(tSum));
+                validInfo.put(MESSAGE, "还有" + df.format(tSum) + "分未分配！");
                 return validInfo;
             }
 //        获取通讯作者代表分数（通讯作者重要性高于一作，所以分数参照通讯作者）
