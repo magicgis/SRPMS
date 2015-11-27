@@ -48,29 +48,8 @@
             searchField: 'value',
             delimiter: ',',
             persist: false,
-            options: [],
-            maxItems: 2,
-            create: true,
-            preload: true,
-            load: function(query, callback) {
-                $.ajax({
-                    url: '../api/baseinfo/单位',
-                    type: 'GET',
-                    dataType: 'json',
-                    error: function() {
-                        callback();
-                    },
-                    success: function(res) {
-                        var baseUnit=res;
-                        $.each(baseUnit, function (index, obj) {
-                            if(baseUnit[index]['id']=='90002'||baseUnit[index]['id']=='130002'){
-                                delete baseUnit[index];
-                            }
-                        });
-                        callback(baseUnit);
-                    }
-                });
-            }
+            options: [{"id": "130001", "value": "湖北中医药大学"}],
+            maxItems: 1
         });
         $('#rank').change(function(){
             console.log($('#rank').lo)

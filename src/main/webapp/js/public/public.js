@@ -559,11 +559,13 @@ function upToLoadFile() {
         onUploadSuccess: function (file, data) {
             var fileInfo = {};
             var tempFileData = {};
-            fileInfo['size'] = formatFileSize(file.size, false);
-            fileInfo['fileKey'] = data;
-            tempFileData[file.name] = fileInfo;
-            filesData[file.name] = fileInfo;
-            scanFiles(tempFileData);
+            if(!isNull(data)){
+                fileInfo['size'] = formatFileSize(file.size, false);
+                fileInfo['fileKey'] = data;
+                tempFileData[file.name] = fileInfo;
+                filesData[file.name] = fileInfo;
+                scanFiles(tempFileData);
+            }
         },
         onUploadError:function (file, data){
             messageModal("上传失败！")

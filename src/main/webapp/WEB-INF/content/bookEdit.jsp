@@ -70,10 +70,8 @@
                 <div class="row">
                     <form id="book" class="form-horizontal" role="form">
                         <div hidden="hidden">
-                            <input type="text" name="standard.id" id="standardId"/>
-                            <input type="text" name="WF_Task" id="WF_Task"/>
-                            <input type="text" name="WF_Order" id="WF_Order"/>
-                            <input type="text" name="IsComplete" id="IsComplete"/>
+                            <input type="text" name="id" id="bookId" value="${book.id}"/>
+                            <input type="text" name="WF_Type" id="WF_Type" value="book"/>
                         </div>
                         <div id="newInstrumentsInfo" class="col-xs-12 col-md-6 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
@@ -210,7 +208,7 @@
                                                         <div class="widget-header">
                                                             <h4 class="widget-title">附件信息</h4>
                                                             <div class="widget-toolbar no-border">
-                                                                <c:if test="${sessionScope.level == '1'}">
+                                                                <c:if test="${sessionScope.level == '3'}">
                                                                     <div id="upload">
                                                                     </div>
                                                                 </c:if>
@@ -243,13 +241,15 @@
                                         <div class="row">
                                             <div id="actorToolbar">
                                                 <c:choose>
-                                                    <c:when test="${sessionScope.level == '1'}">
+                                                    <c:when test="${sessionScope.level == '3'}">
                                                         <a class="btn btn-primary btn-sm addActor">添加成员</a>
                                                     </c:when>
                                                 </c:choose>
 
                                                 <span class="giveSum">
-                                                    <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
+                                                    <c:if test="${sessionScope.level == '3'}">
+                                                        <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
+                                                    </c:if>
                                                     <label for="totalScore">总分：</label>
                                                     <input class="score" type="text"
                                                            name="score" id="totalScore" value="${book.score}">
@@ -293,69 +293,61 @@
 	                <div class="col-xs-12" id="info_alert"></div>
                     <div class="row">
                         <div id="formBtn" class="col-xs-12 clearfix">
-                            <c:choose>
-                                <c:when test="${sessionScope.level == '1'}">
-                                    <div class="pull-left delAndBack">
-                                        <button class="tabOrdBtn btn btn-danger btn-sm" type="button"
-                                                id="del">
-                                            <i class="ace-icon fa fa-trash  bigger-110"></i>
-                                            删除
-                                        </button>
-                                        <button class="tabOrdBtn btn btn-danger btn-sm orderBack"
-                                                type="button">
-                                            <i class="ace-icon fa  fa-repeat bigger-110"></i>
-                                            撤回
-                                        </button>
-                                    </div>
-                                    <div id="bookBtn" class="pull-right">
-                                        <button class="tabOrdBtn btn btn-info btn-sm back" type="button">
-                                            <i class="ace-icon fa fa-reply  bigger-110"></i>
-                                            返回
-                                        </button>
-                                        <button class="tabOrdBtn btn btn-success btn-sm" type="button"
-                                                id="confirm">
-                                            <i class="ace-icon fa fa-check bigger-110"></i>
-                                            确认
-                                        </button>
-                                        <button class="tabOrdBtn btn btn-primary btn-sm" type="button"
-                                                id="save">
-                                            <i class="ace-icon fa fa-save bigger-110"></i>
-                                            保存
-                                        </button>
-                                        <button class="tabOrdBtn btn btn-success btn-sm" type="button"
-                                                id="confirmC">
-                                            <i class="ace-icon fa fa-check bigger-110"></i>
-                                            确认
-                                        </button>
-                                    </div>
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="col-md-offset-4 col-md-8">
-                                        <button class="tabOrdBtn btn btn-success" type="button"
-                                                id="Approve">
-                                            <i class="ace-icon fa fa-check bigger-110"></i>
-                                            通过
-                                        </button>
-                                        <button class="tabOrdBtn btn back" type="button">
-                                            <i class="ace-icon fa fa-reply  bigger-110"></i>
-                                            返回
-                                        </button>
-                                        <button class="tabOrdBtn btn btn-danger" type="button" id="Refuse">
-                                            <i class="ace-icon fa fa-remove bigger-110"></i>
-                                            驳回
-                                        </button>
-                                    </div>
-                                </c:otherwise>
-                            </c:choose>
+                            <div class="pull-left onDel">
+                                <c:if test="${sessionScope.level == '3'}">
+                                    <button class="tabOrdBtn btn btn-danger btn-sm del"
+                                            type="button">
+                                        <i class="ace-icon fa fa-trash  bigger-110"></i>
+                                        删除
+                                    </button>
+                                    <button class="tabOrdBtn btn btn-danger btn-sm orderBack"
+                                            type="button">
+                                        <i class="ace-icon fa  fa-repeat bigger-110"></i>
+                                        撤回
+                                    </button>
+                                </c:if>
+                            </div>
+
+                            <div class="pull-right">
+                                <button class="tabOrdBtn btn btn-danger btn-sm back"
+                                        type="button">
+                                    <i class="ace-icon fa fa-reply  bigger-110"></i>
+                                    返回
+                                </button>
+                            <span class="onEdit">
+                                <button class="tabOrdBtn btn btn-primary btn-sm save"
+                                        type="button">
+                                    <i class="ace-icon fa fa-save bigger-110"></i>
+                                    保存
+                                </button>
+                                <button class="tabOrdBtn btn btn-success btn-sm confirm"
+                                        type="button">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    确认
+                                </button>
+                            </span>
+                            <span class="onApprove">
+                                <button class="tabOrdBtn btn btn-success btn-sm Approve"
+                                        type="button">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    通过
+                                </button>
+                                <button class="tabOrdBtn btn btn-warning btn-sm Refuse"
+                                        type="button">
+                                    <i class="ace-icon fa fa-remove bigger-110"></i>
+                                    驳回
+                                </button>
+                            </span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <jsp:include page="public/footer.jsp"/>
 </div>
-<!-- /.main-content -->
-<jsp:include page="public/footer.jsp"/>
+
 <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
     <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 </a>
@@ -363,6 +355,7 @@
 </body>
 <script src='<c:url value="/js/public/public.js"/>'></script>
 <script src='<c:url value="/js/public/pubBook.js"/>'></script>
+<%--<script src='<c:url value="/js/public/pubEdit.js"/>'></script>--%>
 <script src='<c:url value="/js/public/route.js"/>'></script>
 
 <script type="text/javascript">
@@ -374,40 +367,44 @@
             $(this).prev().focus();
         });
     });
-    // 成员，单位，文件
-    var entity = ${ObjectMapper.writeValueAsString(order)};
+    var entity = ${ObjectMapper.writeValueAsString(book)};
     console.log(entity);
-    var all = entity['variableMap']; // 成员，附件等信息都在里面
-    var latestInfo = all['WF_Latest'];
-    if (latestInfo == undefined) {
-        latestInfo = new Object();
+    if(isNull(entity)) {
+        entity = {};
     }
+    var all = entity['argMap']; // 获得 成员，单位，附件，负责人等信息
+    var isAward=all['isAward'];
+    var dept = entity['dept'];
+    var taskId = '${taskId}';  // 获得 task的id
+    var taskName = '${taskName}';
 
-    var status = all['Status']; // 获得状态
-    var deptId = latestInfo['dept.id'];
-    var pubType = latestInfo["pubType"];
-    var isAward = latestInfo['isAward'];
 
-    var orderId = entity['id'];
-    var taskId = '${taskId}';
-    //获得批复
-    var approvalByCol = getApprovalByCol(all);
-    if (approvalByCol !== "") {
-        replyByCol = all[approvalByCol]['replyByCol'];
-    }
-    var approvalByDep = getApprovalByDep(all);
-    if (approvalByDep !== "") {
-        replyByDep = all[approvalByDep]['replyByDep'];
+    if (!isNull(all)) {
+        fullUpInfoBook(all,entity);//
+    } else {
+        all = {};
     }
     getPubType();//选择框
     upToLoadFile();//文件上传
     getDept();
-//    IsAward();
 
-    $('#confirmC').hide();
-    var filesData;
+    //获得批复
+    var approvalByCol = getApprovalByCol(all);
+    if (approvalByCol != "") {
+        replyByCol = all[approvalByCol]['replyByCol'];
+    }
+    var approvalByDep = getApprovalByDep(all);
+    if (approvalByDep != "") {
+        replyByDep = all[approvalByDep]['replyByDep'];
+    }
+    //IsAward();
     if (filesData == null) {
         filesData = {};
+    }
+    if (dept != null) {  // 显示 所属部门
+        var $dept = $('#dept').selectize();
+        addOptionSelectize($dept, [dept]);
+        DisplayForm($dept, dept['id'], 0);
     }
     $('#actorTable').bootstrapTable({
         columns: [
@@ -451,109 +448,9 @@
             }],
         data: actorTemp
     });
-    if (entity != null || !$.isEmptyObject(entity)) {
-        $('form input').val();
-        actorTemp = [];
-        //  赋值 orderId与taskId
-        $("#WF_Order").val(orderId);
-        $('#WF_Task').val(taskId);
-
-        //  赋值 著作类型
-        var $pubType = $("#pubType").selectize();
-        DisplayForm( $pubType, pubType, 0);
-	    // 赋值 是否获奖
-
-	    var $awardtype = $('#awarDtype').selectize();
-	    disableSelectize($awardtype);
-	    $('#bulDate').attr('disabled', 'disabled');
-
-	    if( !isNull(isAward) ) { // 用户选择了是否获奖
-		    DisplayForm($('#isAward').selectize(), isAward, 0);
-		    IsAward();
-		    if(isAward == 'true') {   // 用户选了“是”
-//			    $('#bulDate').removeAttr('disabled');
-//			    enableSelectize($awardtype);
-			    DisplayForm($awardtype, latestInfo['awardtype'], 0);
-		    }
-	    }
-	    // 赋值 学院
-	    if (!isNull(deptId)) {
-		    $.ajax({
-			    url: '/api/baseinfo/id/' + deptId,
-			    type: 'GET',
-			    dataType: 'json',
-			    contentType: 'application/json;charset=UTF-8',
-			    success: function (data) {
-				    dept = data;
-				    addOptionSelectize($('#dept').selectize(), [dept]);
-				    DisplayForm($('#dept').selectize(), dept['id'], 0);
-			    }
-		    });
-	    }
-        // 可编辑状态
-        if (status == "Blank" || status == "Uncomplete" || status.indexOf('RefuseByCol') >= 0) {
-            $('#confirm').show();
-            $('#save').show();
-            $('.orderBack').hide();
-            $('#del').show();
-        }
-        // 不可编辑
-        else {
-            unEditTableBook();
-            $('#del').hide();
-            $('#save').hide();
-            if (status == 'Complete' || status == 'WaitForSubmit') { // 确认后和待统一提交还可以撤回
-                $('.orderBack').show();
-            } else {
-                $('.orderBack').hide();
-            }
-            if (status == 'Complete' && window.location.href.indexOf('task')>=0) { // 主负责人确认后，参与人可以确认
-                $('#confirm').show();
-                $('.orderBack').hide();
-            } else {
-                $('#confirm').hide();
-            }
-        }
-	    // 显示总分
-	    var totalScore = latestInfo['sum'];
-	    if (totalScore == undefined || totalScore == null || totalScore == "") {
-		    flag = false;
-	    } else {
-		    flag = true;
-	    }
-        // 显示成员信息
-        if (latestInfo['actors'] != null) {
-            actorTemp = latestInfo['actors'];
-        }
-        $("#actorTable").bootstrapTable('load', actorTemp);
-        // 填充表单input
-        $('#book').autofill(latestInfo, {
-            findbyname: true,
-            restrict: false
-        });
-//        filesData=latestInfo['filesData'];
-        // 显示文件信息
-        if (filesData != undefined && filesData != null) {
-            showFiles(filesData);
-        }
-//        if (awardedData != undefined && awardedData != null) {
-//            scanAwardInfo(awardedData);
-//        }
-    }
-    //参与者不能删除上传的附件
-    if(entity['creator']!=userName){//todo 判断是否是参与者
-        $('.delFiles').hide();
-    }else if(entity['creator']==userName){
-        $('.delFiles').show();
-    }
-    //监听 添加成员
     $('.addActor').click(function () {
         addActor();
     });
-//    $('#selectAward').click(function(){
-//        addAwarded();
-//    });
-
     $('#isAward').change(function () {
 	    IsAward();
     });
@@ -562,11 +459,11 @@
         getScore();
     });
     //监听 点击保存
-    $("#save").click(function () {
+    $(".save").click(function () {
         save();
     });
     //监听 点击确认
-    $("#confirm").click(function () {
+    $(".confirm").click(function () {
         confirm();
     });
     //监听 点击返回
@@ -574,7 +471,7 @@
         history.go(-1);
     });
     //监听 删除
-    $("#del").click(function () {
+    $(".del").click(function () {
         delOrder();
     });
     //监听 点击撤回
@@ -582,14 +479,21 @@
         getOrderBack();
     });
     //监听 点击通过
-    $("#Approve").click(function () {
+    $(".Approve").click(function () {
         Approve();
     });
     //监听 点击驳回
-    $("#Refuse").click(function () {
+    $(".Refuse").click(function () {
         refuse();
     });
-
+    $('.getScore').click(function () {
+//        getFormData('project');
+        saveStep1().success(function(data) {
+            saveStep2(data).success(function (res) {
+                getScore('book');
+            });
+        });
+    });
 </script>
 <c:choose>
     <c:when test="${sessionScope.level == '1'}">
