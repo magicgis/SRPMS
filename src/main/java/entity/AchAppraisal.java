@@ -143,13 +143,17 @@ public class AchAppraisal implements VirtualEntity {
             try {
                 map = new ObjectMapper().convertValue(this, Map.class);
                 map.remove("arg");
+                map.remove("argMap");
             } catch (Exception x) {
                 x.printStackTrace();
             }
             if (map != null) {
                 argMap.put("View", map);
             }
-            this.arg = new ObjectMapper().writeValueAsString(argMap);
+            String x = new ObjectMapper().writeValueAsString(argMap);
+            System.out.println(x.length());
+            this.arg = null;
+            this.arg = x;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
