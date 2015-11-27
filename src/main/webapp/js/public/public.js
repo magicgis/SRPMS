@@ -404,13 +404,11 @@ function getFormData(type) {
         }
     });
 
-    console.log(jsonData);
     if (filesData != null) {
         jsonData['filesData'] = filesData;
     }
     if (type == 'project') {
-        jsonData['fund'] == getFundsData();
-        //jsonData['standard.id'] = $('#projbelong').val();
+        jsonData['fund'] = getFundsData();
     }
     jsonData["actors"] = getActorsData();
     jsonData["units"] = getUnitsData();
@@ -1187,6 +1185,7 @@ function processTran(arg) {
  */
 function getScore(type) {
     var jsonData = getFormData(type);
+    //console.log(jsonData);
     workflow.getScore(jsonData).success(function (data) {
         if (data["valid"] == false) { // 检验不合格
             errorMsg(data["msg"]);
