@@ -29,16 +29,6 @@ public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefSe
     @Autowired
     PaperDao paperDao;
     @Autowired
-    BookDao bookDao;
-    @Autowired
-    PatentDao patentDao;
-    @Autowired
-    ProjectDao projectDao;
-    @Autowired
-    AchAppraisalDao achAppraisalDao;
-    @Autowired
-    AchAwardDao achAwardDao;
-    @Autowired
     AbstractBeanFactory abstractBeanFactory;
 
 
@@ -102,7 +92,7 @@ public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefSe
             StringBuilder meType = new StringBuilder(type);
             meType.setCharAt(0, Character.toUpperCase(meType.charAt(0)));
             x = Class.forName(StaRefDao.class.getPackage().getName() + "." + meType.toString() + "Dao");
-            BaseDao dao = (BaseDao) StaticFactory.getBean(x);
+            BaseDao dao = (BaseDao) abstractBeanFactory.getBean(x);
 
             for (StaRef re : res) {
                 ans.add(dao.getById(re.getEntityId()));
