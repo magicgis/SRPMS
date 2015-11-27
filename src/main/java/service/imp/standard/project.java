@@ -91,9 +91,9 @@ public class project extends StandardBase implements StandardCheckInf {
 //        是否立项
         if (isAppr == 1) {
 //           到账
-            List<Map> funds = new ArrayList<>();
-            funds = (List<Map>) map.get("fund");
+            List<Map> funds =  (List<Map>) map.get("fund");
             double res = 0;
+            System.out.println("+++++++"+ map);
             if (funds != null && funds.size() != 0)
                 for (Map fund : funds) {
                     if (isVaildTime((String) fund.get("time"))) {
