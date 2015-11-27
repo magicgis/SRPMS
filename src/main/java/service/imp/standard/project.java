@@ -121,11 +121,12 @@ public class project extends StandardBase implements StandardCheckInf {
 
 
 //        是否是独立项目
-            if (map.get("attr").equals("独立项目")) caseSlct += 101;
+            if (map.get("attr").equals("独立项目")) caseSlct += 100;
+            else calScore = calScore / (units.size() + 1);
 //        是否是负责人
-            if (myCheifActors.size() != 0) caseSlct += 10;
+            if (myCheifActors.size() != 0) caseSlct += 1;
 //        是否是主持单位
-            if (units != null && units.size() != 0 && getMySchRank(units) == 1) caseSlct += 100;
+            if (units != null && units.size() != 0 && getMySchRank(units) == 1) caseSlct += 10;
         }
 //        未立项
         else {
@@ -136,12 +137,8 @@ public class project extends StandardBase implements StandardCheckInf {
         }
         boolean flag = false;
         switch (caseSlct) {
-            case 0://不主持不负责不独立（自动）
-            case 10://不主持负责不独立
-                calScore = calScore / (units.size() + 1);
-//                break;
-            case 100://主持不负责不独立（自动）
-            case 101://主持不负责独立
+            case 10:
+            case 110:
                 List<Map> resActors = new ArrayList<>();
                 validInfo.put("hasSum", flag);
                 for (Map actor : actors) {
@@ -155,23 +152,14 @@ public class project extends StandardBase implements StandardCheckInf {
                 validInfo.put(IS_VALID, true);
                 validInfo.put("actors", resActors);
                 return validInfo;
-//                break;
-            case 11://不主持负责独立（分配）
-            case 111://主持负责独立
+            case 11:
+            case 111:
                 validInfo.put(IS_VALID, true);
                 validInfo.put(MESSAGE, "分数需要分配");
                 validInfo.put("hasSum", true);
                 validInfo.put("sum", calScore + moneyScore);
                 return validInfo;
-//                break;
-            case 110://主持负责不独立（分配/(n+1)）
-                validInfo.put(IS_VALID, true);
-                validInfo.put(MESSAGE, "分数需要分配");
-                validInfo.put("hasSum", true);
-                validInfo.put("sum", moneyScore + calScore / (units.size() + 1));
-                return validInfo;
-//                break;
-            default://001不主持不负责独立
+            default:
                 validInfo.put(MESSAGE, "文件未对此情况进行规定。");
                 validInfo.put(IS_VALID, false);
                 return validInfo;
@@ -187,12 +175,12 @@ public class project extends StandardBase implements StandardCheckInf {
         int isAppr = Integer.parseInt((String) map.get("isAppr"));
         if (map.get("score") != null) {
             double sum = Double.parseDouble((String) map.get("score"));
-            if (SumCheckPass(sum,actors)<0) {
+            if (SumCheckPass(sum, actors) < 0) {
                 validInfo.put(MESSAGE, "个人分数分配总和超出总分！");
                 return validInfo;
             }
-            if (SumCheckPass(sum,actors)<0.01&&SumCheckPass(sum,actors)>=0) {
-                validInfo.put(MESSAGE, "还有"+SumCheckPass(sum,actors)+"！");
+            if (SumCheckPass(sum, actors) < 0.01 && SumCheckPass(sum, actors) >= 0) {
+                validInfo.put(MESSAGE, "还有" + SumCheckPass(sum, actors) + "！");
                 return validInfo;
             }
             int count = 0;
