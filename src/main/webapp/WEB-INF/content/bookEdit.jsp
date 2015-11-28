@@ -521,7 +521,7 @@
     });
     //监听 点击撤回
     $(".orderBack").click(function () {
-        getOrderBack();
+        orderBack();
     });
     //监听 点击通过
     $(".Approve").click(function () {

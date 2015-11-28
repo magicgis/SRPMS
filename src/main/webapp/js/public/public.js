@@ -329,10 +329,10 @@ function paperTypeTran(value) {
 
 function sumWordTran(value, row) {
     var wordSum=row['variableMap.View.sumWord'];
-    if(wordSum!=undefined||wordSum!=''||wordSum!=null){
+    if(!isNull(wordSum)){
         return wordSum + '万字';
-    }else{
-        return;
+    }else if(!isNull(row['sumWord'])){
+        return row['sumWord']+ '万字';
     }
 
 }
