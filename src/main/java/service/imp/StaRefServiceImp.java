@@ -1,6 +1,9 @@
 package service.imp;
 
-import dao.*;
+import dao.BaseDao;
+import dao.PaperDao;
+import dao.StaRefDao;
+import dao.StaffDao;
 import entity.StaRef;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.AbstractBeanFactory;
 import org.springframework.stereotype.Service;
 import service.StaRefService;
-import util.StaticFactory;
+import util.Args;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -16,8 +19,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import static util.Trans.changeTypeName;
 
 @Service
 public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefService {
@@ -71,10 +72,8 @@ public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefSe
         Object ans = new Object();
         String type = staRef.getType();
         try {
-            Class x = Class.forName(staRefDao.getClass().getPackage() + "." + changeTypeName(type) + "Dao");
-            Object dao = StaticFactory.getBean(x);
-            Method getById = x.getMethod("getById");
-            ans = getById.invoke(dao, staRef.getEntityId());
+            BaseDao dao = (BaseDao) abstractBeanFactory.getBean(Args.DAOS.get(type));
+            ans = dao.getById(staRef.getEntityId());
         } catch (Exception e) {
             e.printStackTrace();
             log.error("哪儿好像出错了");
@@ -86,21 +85,10 @@ public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefSe
     public List<Object> getEntity(String id, String type, Integer role) {
         List<StaRef> res = staRefDao.getByTypeAndRole(id, type, role);
         List<Object> ans = new LinkedList<>();
-
-        Class x = null;
-        try {
-            StringBuilder meType = new StringBuilder(type);
-            meType.setCharAt(0, Character.toUpperCase(meType.charAt(0)));
-            x = Class.forName(StaRefDao.class.getPackage().getName() + "." + meType.toString() + "Dao");
-            BaseDao dao = (BaseDao) abstractBeanFactory.getBean(x);
-
-            for (StaRef re : res) {
-                ans.add(dao.getById(re.getEntityId()));
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        BaseDao dao = (BaseDao) abstractBeanFactory.getBean(Args.DAOS.get(type));
+        for (StaRef re : res) {
+            ans.add(dao.getById(re.getEntityId()));
         }
-
         return ans;
     }
 
@@ -115,21 +103,10 @@ public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefSe
     public List<Object> getEntity(String id, Integer role) {
         List<StaRef> res = staRefDao.getByTypeAndRole(id, null, role);
         List<Object> ans = new LinkedList<>();
-
-        Class x = null;
-        try {
-            for (StaRef re : res) {
-                StringBuilder meType = new StringBuilder(re.getType());
-                meType.setCharAt(0, Character.toUpperCase(meType.charAt(0)));
-
-                x = Class.forName(StaRefDao.class.getPackage().getName() + "." + meType.toString() + "Dao");
-
-                BaseDao dao = (BaseDao) abstractBeanFactory.getBean(x);
-                ans.add(dao.getById(re.getEntityId()));
-
-            }
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
+        for (StaRef re : res) {
+            String meType = re.getType();
+            BaseDao dao = (BaseDao) abstractBeanFactory.getBean(Args.DAOS.get(meType));
+            ans.add(dao.getById(re.getEntityId()));
         }
         return ans;
     }
