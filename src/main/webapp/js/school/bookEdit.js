@@ -18,7 +18,7 @@ function save() {
     saveStep1().success(function(data) {
         saveStep2(data).success(function (res) {
             afterSuccess("保存成功！");
-            //window.location.href = '/index/entity/project/all';
+            window.location.href = '/index/entity/book/all';
         })
     });
 }
