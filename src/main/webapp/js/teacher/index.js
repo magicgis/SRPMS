@@ -1,10 +1,14 @@
 var level = 'all';
 var objType;
 
+/**
+ * 教师的流程和实体都不会太多，所以在教师界面分页交由js来做
+ * 新增期刊的分页统一由server做
+ **/
 
 //申报流程相关
 function processUrl() {
-    return "/api/workflow/order/" + userName + "/" + objType + "/" + level;
+    return "/api/workflow/order/" + userName + "/" + objType + "/" + level + "/noPag";
 }
 
 function processView() {
@@ -12,8 +16,12 @@ function processView() {
         case "project":
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
-                sidePagination: "server",
                 toolbar: '#ProcessToolbar',
+                showColumns: true,
+                showRefresh: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
                         radio: true
@@ -59,8 +67,12 @@ function processView() {
         case 'patent':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
-                sidePagination: "server",
                 toolbar: '#ProcessToolbar',
+                showColumns: true,
+                showRefresh: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
                         radio: true
@@ -102,8 +114,12 @@ function processView() {
         case 'paper':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
-                sidePagination: "server",
                 toolbar: '#ProcessToolbar',
+                showColumns: true,
+                showRefresh: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 flat: "true",
                 columns: [
                     {
@@ -141,9 +157,13 @@ function processView() {
         case 'book':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
-                sidePagination: "server",
-                flat: true,
                 toolbar: '#ProcessToolbar',
+                showColumns: true,
+                showRefresh: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
+                flat: true,
                 columns: [
                     {
                         radio: true
@@ -191,8 +211,12 @@ function processView() {
         case 'achAppraisal':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
-                sidePagination: "server",
                 toolbar: '#ProcessToolbar',
+                showColumns: true,
+                showRefresh: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
                         radio: true
@@ -238,9 +262,15 @@ function processView() {
         case 'achAward':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
-                sidePagination: "server",
-                flat: true,
                 toolbar: '#ProcessToolbar',
+                showColumns: true,
+                showRefresh: true,
+
+                pagination: true,
+                sidePagination: "client",
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
+                flat: true,
                 columns: [
                     {
                         radio: true
@@ -272,8 +302,12 @@ function processView() {
         case 'achTran':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
-                sidePagination: "server",
                 toolbar: '#ProcessToolbar',
+                showColumns: true,
+                showRefresh: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
                         radio: true
@@ -313,9 +347,13 @@ function processView() {
         case 'food':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
-                sidePagination: "server",
-                flat: true,
                 toolbar: '#ProcessToolbar',
+                showColumns: true,
+                showRefresh: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
+                flat: true,
                 columns: [
                     {
                         radio: true
@@ -347,9 +385,13 @@ function processView() {
         case 'instrument':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
-                sidePagination: "server",
-                flat: true,
                 toolbar: '#ProcessToolbar',
+                showColumns: true,
+                showRefresh: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
+                flat: true,
                 columns: [
                     {
                         radio: true
@@ -381,9 +423,13 @@ function processView() {
         case 'medicine':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
-                sidePagination: "server",
-                flat: true,
                 toolbar: '#ProcessToolbar',
+                showColumns: true,
+                showRefresh: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
+                flat: true,
                 columns: [
                     {
                         radio: true
@@ -415,9 +461,13 @@ function processView() {
         case 'others':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
-                sidePagination: "server",
-                flat: true,
                 toolbar: '#ProcessToolbar',
+                showColumns: true,
+                showRefresh: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
+                flat: true,
                 columns: [
                     {
                         radio: true
@@ -449,8 +499,12 @@ function processView() {
         case 'all':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
-                sidePagination: "server",
                 toolbar: '#ProcessToolbar',
+                showColumns: true,
+                showRefresh: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
                         radio: true
@@ -487,7 +541,7 @@ function processView() {
 
 $('#newPaper').click(function () {
     workflow.startOrder(userName, "basicProcess_Beta", "paper").success(function (data) {
-        window.location.href="/index/process/paper/all";
+        window.location.href = "/index/process/paper/all";
         afterSuccess("新建成功！,请切换到论文查看");
         viewTable.bootstrapTable("refresh");
     });
@@ -580,7 +634,7 @@ var processStates = {
 
 // 实体相关
 function entityUrl() {
-    return "/api/entity/" + userName + "/" + objType + "/" + level;
+    return "/api/entity/" + userName + "/" + objType + "/" + level + "/noPag";
 }
 
 function entityView() {
@@ -588,8 +642,13 @@ function entityView() {
         case 'project':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
-                sidePagination: "server",
                 toolbar: '#EntityToolbar',
+                showColumns: true,
+                showRefresh: true,
+                search: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
                         radio: true
@@ -622,11 +681,6 @@ function entityView() {
                         title: '实际结题时间',
                         sortable: true
                     }, {
-                        field: 'Status',
-                        title: '状态',
-                        sortable: true,
-                        formatter: 'statusTran'
-                    }, {
                         field: 'operator',
                         align: 'center',
                         title: '操作'
@@ -636,9 +690,14 @@ function entityView() {
         case 'patent':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
-                sidePagination: "server",
-                flat: true,
                 toolbar: '#EntityToolbar',
+                showColumns: true,
+                showRefresh: true,
+                search: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
+                flat: true,
                 columns: [
                     {
                         radio: true
@@ -669,8 +728,13 @@ function entityView() {
         case 'paper': //todo
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
-                sidePagination: "server",
                 toolbar: '#EntityToolbar',
+                showColumns: true,
+                showRefresh: true,
+                search: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
                         radio: true
@@ -708,8 +772,14 @@ function entityView() {
         case 'book':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
-                sidePagination: "server",
                 toolbar: '#EntityToolbar',
+                showColumns: true,
+                showRefresh: true,
+                search: true,
+
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
@@ -761,8 +831,14 @@ function entityView() {
         case 'achAppraisal':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
-                sidePagination: "server",
                 toolbar: '#EntityToolbar',
+                showColumns: true,
+                showRefresh: true,
+                search: true,
+
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
@@ -804,8 +880,13 @@ function entityView() {
         case 'achAward':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
-                sidePagination: "server",
                 toolbar: '#EntityToolbar',
+                showColumns: true,
+                showRefresh: true,
+                search: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
@@ -842,8 +923,15 @@ function entityView() {
         case 'achTran':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
-                sidePagination: "server",
                 toolbar: '#EntityToolbar',
+                showColumns: true,
+                showRefresh: true,
+                search: true,
+
+                pagination: true,
+                sidePagination: "client",
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
@@ -871,8 +959,13 @@ function entityView() {
         case 'food':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
-                sidePagination: "server",
-                toolbar: "#EntityToolbar",
+                toolbar: '#EntityToolbar',
+                showColumns: true,
+                showRefresh: true,
+                search: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
@@ -904,8 +997,13 @@ function entityView() {
         case 'instrument':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
-                sidePagination: "server",
-                toolbar: "#EntityToolbar",
+                toolbar: '#EntityToolbar',
+                showColumns: true,
+                showRefresh: true,
+                search: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
@@ -937,8 +1035,14 @@ function entityView() {
         case 'medicine':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
-                sidePagination: "server",
-                toolbar: "#EntityToolbar",
+                toolbar: '#EntityToolbar',
+                showColumns: true,
+                showRefresh: true,
+                search: true,
+
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
@@ -970,8 +1074,13 @@ function entityView() {
         case 'others':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
-                sidePagination: "server",
-                toolbar: "#EntityToolbar",
+                toolbar: '#EntityToolbar',
+                showColumns: true,
+                showRefresh: true,
+                search: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
@@ -1003,8 +1112,13 @@ function entityView() {
         case 'all':
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
-                sidePagination: "server",
                 toolbar: '#EntityToolbar',
+                showColumns: true,
+                showRefresh: true,
+                search: true,
+
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
                         radio: true
@@ -1104,7 +1218,10 @@ var magStates = {
 
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: '/api/workflow/allMagOrder',
+                pagination: true,
                 sidePagination: "server",
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 toolbar: '#MagToolbar',
                 columns: [{
                     radio: true
@@ -1161,7 +1278,10 @@ var taskStates = {
         enter: function () {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: '/api/workflow/' + userName + '/confirmTask',
-                sidePagination: "server",
+                pagination: true,
+                sidePagination: "client",
+                pageSize: 15,
+                pageList: [20, 30, 50, 'ALL'],
                 flat: 'true',
                 columns: [{
                     radio: true
