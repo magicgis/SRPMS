@@ -10,8 +10,6 @@ import org.snaker.engine.entity.Process;
 import org.snaker.engine.entity.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-import service.PatentService;
-import service.ProjectService;
 import service.StaffService;
 import service.StandardService;
 
@@ -40,11 +38,7 @@ public class Workflow {
     @Autowired
     StandardService standardService;
     @Autowired
-    PatentService patentService;
-    @Autowired
     StaffService staffService;
-    @Autowired
-    ProjectService projectService;
 
     /**
      * 初始化部署
@@ -191,7 +185,7 @@ public class Workflow {
     }
 
 
-    @POST //todo
+    @POST
     @Path("/getScore")
     @Consumes("application/json;charset=UTF-8")
     @Produces("application/json;charset=UTF-8")
@@ -234,6 +228,7 @@ public class Workflow {
 
     /**
      * 获取用户各种类型的order
+     * 分页
      *
      * @param user   用户
      * @param type   order类型，如book，paper
@@ -287,33 +282,60 @@ public class Workflow {
 
 
     /**
-     * 获取order的最新任务
+     * 获取用户各种类型的order
+     * 不分页
      *
-     * @param orderId orderid
-     * @return 该order发展到的最新任务
+     * @param user   用户
+     * @param type   order类型，如book，paper
+     * @param member 是主导还是参与
+     * @return order
      */
     @GET
-    @Path("/ord{order}/task")
+    @Path("/order/{user}/{type}/{member}/noPag")
     @Produces("application/json;charset=UTF-8")
-    public List<Task> getTaskByOrder(@PathParam("order") String orderId) {
-        return engine.getTaskByOrder(orderId);
+    public List getOrder(@PathParam("user") String user,
+                         @PathParam("type") String type,
+                         @PathParam("member") String member) {
+        Staff staff = staffService.getById(user);
+        String actorId = null;
+        Integer role = null;
+        if ("1".equals(staff.getUser().getPrivilege())) {
+            actorId = user;
+            if (member.equals("1st")) {
+                role = 1;
+            }
+            else if (member.equals("2nd")) {
+                role = 0;
+            }
+            else {
+                // magic number
+                role = 10;
+            }
+        }
+        else if ("2".equals(staff.getUser().getPrivilege())) {
+            actorId = staff.getCol().getId();
+            role = 2;
+        }
+        else if ("3".equals(staff.getUser().getPrivilege())) {
+            //todo 此处实际是可以区分出各类管理员的，此时暂时不管这些
+            actorId = null;
+            role = 3;
+        }
+        if (type.equals("all")) {
+            type = null;
+        }
+        List<OrderActor> list = orderActorDao.getByAll(actorId, type, role);
+        List<Order> ans = new ArrayList<>();
+        for (OrderActor u : list) {
+            ans.add(engine.getOrder(u.getOrder()));
+        }
+        return ans;
     }
 
-    /**
-     * 获取order已完成的任务列表
-     *
-     * @param orderId orderId
-     * @return 已完成列表
-     */
-    @GET
-    @Path("/ord{order}/hisTask")
-    @Produces("application/json;charset=UTF-8")
-    public List<HistoryTask> getHisTaskByOrder(@PathParam("order") String orderId) {
-        return engine.getHisTaskByOrder(orderId);
-    }
 
     /**
      * 获取用户待确认任务
+     * 不分页！
      *
      * @param user 用户
      * @return 待确认任务列表
@@ -321,10 +343,8 @@ public class Workflow {
     @GET
     @Path("/{user}/confirmTask")
     @Produces("application/json;charset=UTF-8")
-    public Map getConfirmTask(@PathParam("user") String user,
-                              @QueryParam("limit") Integer limit,
-                              @QueryParam("offset") Integer offset) {
-        return getSubMap(engine.getConfirmTask(user), limit, offset);
+    public List getConfirmTask(@PathParam("user") String user) {
+        return engine.getConfirmTask(user);
     }
 
     /**

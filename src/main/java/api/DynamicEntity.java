@@ -47,7 +47,18 @@ public class DynamicEntity {
                       @QueryParam("order") String ord) {
         BaseService baseService = (BaseService) webApplicationContext.getBean(Args.SERVICES.get(entity));
         return getSubMap(baseService.search(search, sort, ord), limit, offset);
+
+
     }
+
+    @GET
+    @Path("/all/noPag")
+    @Produces("application/json;charset=UTF-8")
+    public Object getAll() {
+        BaseService baseService = (BaseService) webApplicationContext.getBean(Args.SERVICES.get(entity));
+        return baseService.getAll();
+    }
+
 
     @POST
     @SuppressWarnings("unchecked")

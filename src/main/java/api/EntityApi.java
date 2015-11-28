@@ -23,7 +23,8 @@ public class EntityApi {
     DeptRefService deptRefService;
 
     /**
-     * todo wtf!
+     * 普通教师使用
+     * 无分页
      *
      * @param id
      * @param type
@@ -31,7 +32,7 @@ public class EntityApi {
      * @return
      */
     @GET
-    @Path("/{id}/{type}/{member}")
+    @Path("/{id}/{type}/{member}/noPag")
     @Produces("application/json;charset=UTF-8")
     public List<Object> getUserList(@PathParam("id") String id, @PathParam("type") String type,
                                     @PathParam("member") String member) {
@@ -53,8 +54,16 @@ public class EntityApi {
         }
     }
 
+    /**
+     * 学院使用
+     * 无分页
+     *
+     * @param id
+     * @param type
+     * @return
+     */
     @GET
-    @Path("/col/{id}/{type}")
+    @Path("/col/{id}/{type}/noPag")
     @Produces("application/json;charset=UTF-8")
     public List<Object> getDeptList(@PathParam("id") String id, @PathParam("type") String type) {
         if ("all".equals(type)) {
