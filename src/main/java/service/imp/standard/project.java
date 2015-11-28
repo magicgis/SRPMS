@@ -93,12 +93,12 @@ public class project extends StandardBase implements StandardCheckInf {
 //           到账
             List<Map> funds =  (List<Map>) map.get("fund");
             double res = 0;
-            System.out.println("+++++++"+ map);
+//            System.out.println("+++++++"+ map);
             if (funds != null && funds.size() != 0)
                 for (Map fund : funds) {
                     if (isVaildTime((String) fund.get("time"))) {
-                        res = Double.parseDouble((String) map.get("mny"))
-                                - Double.parseDouble((String) map.get("outMny"));
+                        res = Double.parseDouble((String) fund.get("mny"))
+                                - Double.parseDouble((String) fund.get("outMny"));
                         moneyScore += getMoneyWeight(map, res);
                     }
                 }
@@ -116,12 +116,24 @@ public class project extends StandardBase implements StandardCheckInf {
                 calScore += tableScore2;
             if (map.get("projrank").equals("横向")
                     && map.get("realDate") != null
-                    && isVaildTime((String) map.get("realDate")))
-                calScore += tableScore2 * res;
+                    && isVaildTime((String) map.get("realDate"))){
+                double sumRes = 0;
+                if (funds != null && funds.size() != 0)
+                    for (Map fund : funds) {
+//                        if (isVaildTime((String) fund.get("time"))) {
+                            res = Double.parseDouble((String) fund.get("mny"))
+                                    - Double.parseDouble((String) fund.get("outMny"));
+                            moneyScore += getMoneyWeight(map, res);
+                            sumRes += res;
+//                        }
+                    }
+                calScore += tableScore2 * sumRes;
+            }
+
 
 
 //        是否是独立项目
-            if (map.get("attr").equals("独立项目")) caseSlct += 100;
+            if (map.get("attr").equals("独立项目")) caseSlct += 110;
             else calScore = calScore / (units.size() + 1);
 //        是否是负责人
             if (myCheifActors.size() != 0) caseSlct += 1;
@@ -135,6 +147,8 @@ public class project extends StandardBase implements StandardCheckInf {
                 calScore /= 5;
             caseSlct = 111;
         }
+        System.out.println("--------"+calScore);
+        System.out.println("--------"+caseSlct);
         boolean flag = false;
         switch (caseSlct) {
             case 10:
