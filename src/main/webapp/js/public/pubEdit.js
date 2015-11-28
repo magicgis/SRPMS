@@ -118,8 +118,8 @@ function subFundInfo(index) {
 window.operateFEvents = {
     'click .removeFund': function (e, value, row, index) {
         $('#fundTable').bootstrapTable('remove', {
-            field: 'to_acct_time',
-            values: [row["to_acct_time"]]
+            field: 'time',
+            values: [row["time"]]
         });
     },
     'click .editFund': function (e, value, row, index) {
@@ -220,19 +220,6 @@ function allSections(){
         create: false,
         maxItems: 1
     });
-    //$('#isAppr').change(function(){
-    //    var setProject=$('#isAppr').val();
-    //    if(setProject=='true'){
-    //        var projectSet="项目立项";
-    //        DisplayForm($('#projtype0').selectize(), '', 0);
-    //        //getStdList(projectSet);
-    //    }else if(setProject=='false'){
-    //        var projectSet="项目未获立项";
-    //        console.log(projectSet);
-    //        //DisplayForm($('#projbelong').selectize(), '', 0);
-    //        //getStdList(projectSet);
-    //    }
-    //});
     $(".projStand").focus(function(){
         if($('#isAppr').val()==""){
             messageModal("请选择项目是否获得立项！")
@@ -273,7 +260,6 @@ function fullUpInfoProject(all, entity) {
 }
 
 function standardSelects1(StdList,projtypeList,standard){
-    //initSelect();
     $('#standardId').val('');
     $('#projbelong').attr("enable", "enable");
     $('#projrank').attr("enable", "enable");

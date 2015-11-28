@@ -122,15 +122,11 @@ function editFund(row, index) {
                     messageModal('请将信息填写完整。');
                     return;
                 }
-                subUnitInfo(index);
+                subFundInfo(index);
                 dialogRef.close();
             }
         }],
         onshown: function () {
-            //var $unit = $("#unit").selectize();
-            //填充单位
-            //DisplayForm($unit, row["unit"], 1);
-            //填充其他
             $('#fundInfo').autofill(row, {
                 findbyname: true,
                 restrict: false

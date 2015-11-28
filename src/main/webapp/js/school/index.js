@@ -678,8 +678,7 @@ function entityView() {
                     }, {
                         field: 'pubType',
                         title: '出版类型',
-                        sortable: true,
-                        formatter: 'pubTypeTrans'
+                        sortable: true
                     }, {
                         field: 'sumWord',
                         title: '著作总字数',
@@ -691,7 +690,7 @@ function entityView() {
                         sortable: true,
                         formatter: 'bkAwardTran'
                     }, {
-                        field: 'argMap.Main-ActorName',
+                        field: 'variableMap.Main-ActorName',
                         title: '负责人'
                     }, {
                         field: 'publisher',

@@ -234,6 +234,7 @@ function editActor(row, index) {
                     messageModal('请将信息填写完整。');
                     return;
                 }
+                console.log("***********");
                 subActorInfo(index, 0);
                 $('.removeActor').hide();
                 dialogRef.close();
@@ -259,7 +260,7 @@ function editActor(row, index) {
             DisplayForm($role, row["role"], 0);
             $("#role").val(row["role"]);
             //填充单位
-            DisplayForm($units, row["unit"], 1);
+            DisplayForm($units, row["unit"], 0);
             //填充其他
             $('#actorsInfo').autofill(row, {
                 findbyname: false,
@@ -268,8 +269,8 @@ function editActor(row, index) {
             disableSelectize($actor);
             disableSelectize($role);
             disableSelectize($units);
-            //$("#rank").attr("disabled", "disabled");
-            //$("#textNumber").attr("disabled", "disabled");
+            $("#rank").attr("disabled", "disabled");
+            $("#textNumber").attr("disabled", "disabled");
             $('.bookTextNumber').show();
             $(".editableModal").show();
             //是否可编辑

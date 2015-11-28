@@ -327,9 +327,10 @@ function paperTypeTran(value) {
     }
 }
 
-function sumWordTran(value) {
-    if(!isNull(value)){
-        return value + '万字';
+function sumWordTran(value, row) {
+    var wordSum=row['variableMap.View.sumWord'];
+    if(wordSum!=undefined||wordSum!=''||wordSum!=null){
+        return wordSum + '万字';
     }else{
         return;
     }
@@ -346,10 +347,12 @@ function actorTran(value, row) {
 
 // 著作获奖是否翻译
 function bkAwardTran(value, row){
-    if(value == 'false') {
+   // console.log(row);
+    var awarded=row['variableMap.isAward'];
+    if(awarded == 'false') {
         return '未获奖';
-    } else if(value == 'true') {
-        return row['variableMap.WF_Latest.awardtype'];
+    } else if(awarded == 'true') {
+        return row['variableMap.awarDtype'];
     } else {
         return '-';
     }
@@ -916,9 +919,9 @@ function isMainActor(MainActor, userName) {
  * 教师1||学院2||学校3
  * */
 function init(entity,all,replyByDep,level) {
-    if(entity['creator']!=userName){
-        $('.delFiles').hide();
-    }
+    //if(entity['creator']!=userName){
+    //    $('.delFiles').hide();
+    //}
     var process = entity['process'];
     switch (level){
         case 1:
@@ -1039,7 +1042,7 @@ function init(entity,all,replyByDep,level) {
             var statusCode = parseInt(processStatus(status, 0, level));
             switch (statusCode) {
                 case 1:
-                    console.log('1');
+                   // console.log('1');
                     $('.onApprove').hide();
                     $('#reply').hide();
                     //$('.onDel').hide();

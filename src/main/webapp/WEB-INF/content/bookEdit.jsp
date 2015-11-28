@@ -374,20 +374,13 @@
     }
     var all = entity['argMap']; // 获得 成员，单位，附件，负责人等信息
     var isAward=all['isAward'];
+    var awardType=all['awarDtype'];
     var dept = entity['dept'];
     var taskId = '${taskId}';  // 获得 task的id
     var taskName = '${taskName}';
 
-
-    if (!isNull(all)) {
-        fullUpInfoBook(all,entity);//
-    } else {
-        all = {};
-    }
-    getPubType();//选择框
-    upToLoadFile();//文件上传
-    getDept();
-
+    var pubTyValue=entity['pubType'];
+    fullUpInfoBook(all,entity);//
     //获得批复
     var approvalByCol = getApprovalByCol(all);
     if (approvalByCol != "") {
@@ -397,15 +390,70 @@
     if (approvalByDep != "") {
         replyByDep = all[approvalByDep]['replyByDep'];
     }
-    //IsAward();
+    var $awardtype = $('#awarDtype').selectize({ // 初始化 鉴定等级
+        valueField: 'value',
+        labelField: 'value',
+        maxItems: 1,
+        create: true,
+        onFocus: function () {
+            if ($('#pubType').val() == "") {
+                messageModal("请先选择出版类型");
+            }
+        }
+    });
+    var $isAward=$('#isAward').selectize({ // 初始化 鉴定等级
+        valueField: 'id',
+        labelField: 'value',
+        options: [
+            {"id": "false", "value": "否"},
+            {"id": "true", "value": "是"}],
+        maxItems: 1,
+        create: true,
+        onChange:function(){
+            var setAward=$('#isAward').val();
+            if (setAward == 'true') {
+                enableSelectize($awardtype);
+                //awardTypeSelect($('#pubType').val());
+                $('#bulDate').removeAttr('disabled');
+            } else if(setAward == 'false'){
+                $('#bulDate').val('');
+                $('#bulDate').attr('disabled', 'disabled');
+                $awardtype[0].selectize.setValue("");
+                disableSelectize($awardtype);
+            }
+        }
+    });
+
+    getPubType();//选择框
+    upToLoadFile();//文件上传
+    getDept();
+
     if (filesData == null) {
         filesData = {};
     }
-    if (dept != null) {  // 显示 所属部门
+
+    if (!isNull(dept)) {  // 显示 所属部门
         var $dept = $('#dept').selectize();
         addOptionSelectize($dept, [dept]);
         DisplayForm($dept, dept['id'], 0);
     }
+    if(!isNull(pubTyValue)){
+        var $pubType=$('#pubType').selectize();
+        DisplayForm($pubType, pubTyValue, 0);
+    }
+    if(!isNull(awarDtype)||!isNull(pubTyValue)){
+        DisplayForm($isAward, "true",0);
+        //awardTypeSelect(pubTyValue,awarDtype);
+//        DisplayForm($awardtype, awardType,0);
+        if(isNull(all['Status'])){
+            $('#bulDate').removeAttr('disabled');
+        }
+    }else{
+        DisplayForm($isAward, "false",0);
+        $('#bulDate').attr('disabled', 'disabled');
+        disableSelectize($awardtype);
+    }
+    console.log(pubTyValue);
     $('#actorTable').bootstrapTable({
         columns: [
             {
@@ -451,9 +499,6 @@
     $('.addActor').click(function () {
         addActor();
     });
-    $('#isAward').change(function () {
-	    IsAward();
-    });
     //监听 分配分数
     $('.getScore').click(function () {
         getScore();
@@ -487,7 +532,6 @@
         refuse();
     });
     $('.getScore').click(function () {
-//        getFormData('project');
         saveStep1().success(function(data) {
             saveStep2(data).success(function (res) {
                 getScore('book');

@@ -24,7 +24,6 @@ function save() {
 }
 function confirm() {
     var Info = getMainActor();
-
     if(!isNull(Info['Main-Actor'])) {
         Main_Actor = Info['Main-Actor'];
         Main_ActorName = Info['Main-ActorName'];
@@ -49,9 +48,9 @@ function confirm() {
                      * userName,taskId,status
                      */
                     if (result) {
-                        workflow.startEntityOrder("project", $('#projectId').val()).success(function (data) {
+                        workflow.startEntityOrder("book", $('#bookId').val()).success(function (data) {
                             afterSuccess("任务已启动！");
-                            window.location.href = '/index/entity/project/all';
+                            window.location.href = '/index/entity/book/all';
                         });
                     }
                 }
@@ -61,7 +60,7 @@ function confirm() {
 
 }
 function orderBack() {
-    window.workflow.getEntityBack('project', $('#projectId').val()).success(function (data) {
+    window.workflow.getEntityBack('book', $('#bookId').val()).success(function (data) {
         if (data == 'true') {
             afterSuccess("已撤回");
             window.location.href = '/index/entity/book/all';
@@ -91,22 +90,6 @@ function delOrder() {
         }
     });
 }
-//function init() {
-//    if (status == 'WaitForDep') {
-//        $('#reply').show();
-//        $('#reply-box').show();
-//        $('#reply-display').show();
-//        var reply = $('#reply-display').children('p');
-//        var who = $('#reply-display').children('small');
-//        reply.append(replyByCol);
-//        who.append("学院批复");
-//    } else {
-//        $('#reply').hide();
-//        $("#Approve").hide();
-//        $("#Refuse").hide();
-//    }
-//}
-
 function Approve() {
     var approveInfo = Object();
     approveInfo["DecByDep"] = true;
@@ -277,6 +260,7 @@ function saveStep2(data) {
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
     send['isAward']=$('#isAward').val();
+    send['awarDtype']=$('#awarDtype').val();
     //if($('#attr').val() == '联合项目' || entity['attr'] == "子课题"){
     //    send['units'] = getUnitsData();
     //}

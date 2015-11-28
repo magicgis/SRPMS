@@ -34,9 +34,7 @@ function subActorInfo(index, flag) {
     var role = $('#role').val();
     var rank = $('#rank').val();
     var textNumber = $('#textNumber').val();
-    //var mark = (marks == "" ? '0' : (marks / units.length).toFixed(2));
-    //测试专用
-    //scorelatestInfoocation(marks,index);
+    var mark = (marks == "" ? '0' : (marks / units.length).toFixed(2));
     actorTemp = getActorsData();
     $.each(units, function (i, value) {
         actorTemp.push({
@@ -100,29 +98,20 @@ function getActorsData() {
     });
     return actorTemp;
 }
+function awardTypeSelect(pubType,awarded){
+    var awardtypes;
+    if(!isNull(pubType)){
+        awardtypes= awarDtype[pubType];
+        $awardtype[0].selectize.clearOptions();
+        $awardtype[0].selectize.addOption(awardtypes);
+    }
+    if(!isNull(awarded)){
+        console.log("***************");
+        console.log(awarded);
+        DisplayForm($awardtype, awarded, 0);
+    }
+}
 function getPubType() {
-    var $awardtype = $('#awarDtype').selectize({ // 初始化 鉴定等级
-        valueField: 'value',
-        labelField: 'value',
-        maxItems: 1,
-        create: true,
-        onFocus: function () {
-            if ($('#pubType').val() == "") {
-                messageModal("请先选择出版类型");
-            }
-        }
-    });
-
-    $('#isAward').selectize({ // 初始化 鉴定等级
-        valueField: 'id',
-        labelField: 'value',
-        options: [
-            {"id": "false", "value": "否"},
-            {"id": "true", "value": "是"}],
-        maxItems: 1,
-        create: false
-    });
-
     $('#pubType').selectize({
         valueField: 'value',
         labelField: 'value',
@@ -135,44 +124,24 @@ function getPubType() {
             {"id": "1024", "value": "其他教材"}],
         maxItems: 1,
         onChange: function () {
-            var awardtypes = awarDtype[$('#pubType').val()];
-            $awardtype[0].selectize.clearOptions();
-            $awardtype[0].selectize.addOption(awardtypes);
+            console.log($('#pubType').val());
+            awardTypeSelect($('#pubType').val(),awardType);
         }
     });
-}
-
-function IsAward() {
-    if ($('#isAward').val() == 'true') {
-        enableSelectize($('#awarDtype').selectize());
-        $('#bulDate').removeAttr('disabled');
-    } else {
-        $('#bulDate').val('');
-        $('#bulDate').attr('disabled', 'disabled');
-        $('#awarDtype').selectize()[0].selectize.setValue("");
-        disableSelectize($('#awarDtype').selectize());
-    }
 }
 function getUnitsData() {
 }
 /**************************************************************/
 
 function fullUpInfoBook(all, entity) {
-    getActors();
-    filesData = all['filesData'];
-    Main_Actor = all['Main-Actor'];
-    Main_ActorName = all['Main-ActorName'];
-    replyByCol = all['replyByCol'];
-    replyByDep = all['replyByDep'];
-    DisplayForm($("#pubType").selectize(), entity["pubType"], 1);
-    showFiles(filesData);
-    $("#actorTable").bootstrapTable('load', actorTemp);
-    console.log(isAward+"____******************************");
-    if (!isNull(isAward)) { // 用户选择了是否获奖
-        DisplayForm($('#isAward').selectize(), isAward, 0);
-        IsAward();
-        if (isAward == 'true') {   // 用户选了“是”
-            DisplayForm($('#awarDtype').selectize(), entity['awardtype'], 0);
-        }
+    if(!isNull(entity)||!isNull(all)){
+        getActors();
+        filesData = all['filesData'];
+        Main_Actor = all['Main-Actor'];
+        Main_ActorName = all['Main-ActorName'];
+        replyByCol = all['replyByCol'];
+        replyByDep = all['replyByDep'];
+        showFiles(filesData);
+        $("#actorTable").bootstrapTable('load', actorTemp);
     }
 }
