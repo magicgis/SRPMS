@@ -145,7 +145,7 @@ function totalFundsFormatter(data) {
     $.each(data, function (i, row) {
         total += +(row['mny'].substring(0));
     });
-    return '到账共:' + total + "元";
+    return '到账共:' + total + "万元";
 }
 //外拨金额
 function totalEFundFormatter(data) {
@@ -153,7 +153,7 @@ function totalEFundFormatter(data) {
     $.each(data, function (i, row) {
         total += +(row['outMny'].substring(0));
     });
-    return '外拨共:' + total + "元";
+    return '外拨共:' + total + "万元";
 }
 /*
  * 获取人员信息

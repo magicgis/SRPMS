@@ -753,7 +753,7 @@
     });
     //监听 分配分数
     $('.getScore').click(function () {
-        getFormData('project');
+//        getFormData('project');
         saveStep1().success(function(data) {
             saveStep2(data).success(function (res) {
                 getScore('project');

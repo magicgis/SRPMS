@@ -133,6 +133,11 @@ public class Index {
         return "bookEdit";
     }
 
+    @RequestMapping(value = {"book/new"},method = RequestMethod.GET)
+    public String newBook(Model model, HttpServletRequest request,RedirectAttributes redirectAttributes){
+        model.addAttribute(new Book());
+        return "bookEdit";
+    }
     @RequestMapping(value = {"patent/new"}, method = RequestMethod.GET)
     public String newPatent(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         model.addAttribute(new Patent());

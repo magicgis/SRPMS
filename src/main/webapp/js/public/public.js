@@ -404,13 +404,11 @@ function getFormData(type) {
         }
     });
 
-    console.log(jsonData);
     if (filesData != null) {
         jsonData['filesData'] = filesData;
     }
     if (type == 'project') {
-        jsonData['fund'] == getFundsData();
-        //jsonData['standard.id'] = $('#projbelong').val();
+        jsonData['fund'] = getFundsData();
     }
     jsonData["actors"] = getActorsData();
     jsonData["units"] = getUnitsData();
@@ -561,11 +559,13 @@ function upToLoadFile() {
         onUploadSuccess: function (file, data) {
             var fileInfo = {};
             var tempFileData = {};
-            fileInfo['size'] = formatFileSize(file.size, false);
-            fileInfo['fileKey'] = data;
-            tempFileData[file.name] = fileInfo;
-            filesData[file.name] = fileInfo;
-            scanFiles(tempFileData);
+            if(!isNull(data)){
+                fileInfo['size'] = formatFileSize(file.size, false);
+                fileInfo['fileKey'] = data;
+                tempFileData[file.name] = fileInfo;
+                filesData[file.name] = fileInfo;
+                scanFiles(tempFileData);
+            }
         },
         onUploadError:function (file, data){
             messageModal("上传失败！")
@@ -1187,6 +1187,7 @@ function processTran(arg) {
  */
 function getScore(type) {
     var jsonData = getFormData(type);
+    //console.log(jsonData);
     workflow.getScore(jsonData).success(function (data) {
         if (data["valid"] == false) { // 检验不合格
             errorMsg(data["msg"]);
