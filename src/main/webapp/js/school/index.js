@@ -613,6 +613,7 @@ function entityView() {
                 sidePagination: "server",
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
+                flat: true,
                 columns: [
                     {
                         radio: true
@@ -644,6 +645,9 @@ function entityView() {
                         field: 'realDate',
                         title: '实际结题时间',
                         sortable: true
+                    }, {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
                     }, {
                         field: 'process',
                         title: '流程状态',
