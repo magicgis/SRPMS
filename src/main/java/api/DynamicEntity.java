@@ -14,7 +14,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MultivaluedMap;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Map;
 
 import static util.Trans.getSubMap;
 import static util.Trans.putMapOnObj;
@@ -40,14 +39,20 @@ public class DynamicEntity {
     @GET
     @Path("/all")
     @Produces("application/json;charset=UTF-8")
-    public Map getAll(@QueryParam("limit") Integer limit,
-                      @QueryParam("offset") Integer offset,
-                      @QueryParam("search") String search,
-                      @QueryParam("sort") String sort,
-                      @QueryParam("order") String ord) {
+    public Object getAll(@QueryParam("limit") Integer limit,
+                           @QueryParam("offset") Integer offset,
+                           @QueryParam("search") String search,
+                           @QueryParam("sort") String sort,
+                           @QueryParam("order") String ord) {
         BaseService baseService = (BaseService) webApplicationContext.getBean(Args.SERVICES.get(entity));
-        return getSubMap(baseService.search(search, sort, ord), limit, offset);
+        if (limit != null) {
+            return getSubMap(baseService.search(search, sort, ord), limit, offset);
+        }
+        else {
+            return baseService.search(search, sort, ord);
+        }
     }
+
 
     @POST
     @SuppressWarnings("unchecked")

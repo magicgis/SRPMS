@@ -39,35 +39,58 @@
 
     <div class="main-content">
         <div class="main-content-inner">
-            <div class="breadcrumbs" id="breadcrumbs">
-                <script type="text/javascript">
-                    try {
-                        ace.settings.check('breadcrumbs', 'fixed')
-                    } catch (e) {
-                    }
-                </script>
-                <ul class="breadcrumb">
-                    <li>
-                        <i class="ace-icon fa fa-home home-icon"></i>
-                        <a href="#">Home</a>
-                    </li>
-                    <li class="active" id="title">科研概况</li>
-                </ul>
-                <!-- /.breadcrumb -->
-            </div>
+            <%--<div class="breadcrumbs" id="breadcrumbs">--%>
+            <%--<script type="text/javascript">--%>
+            <%--try {--%>
+            <%--ace.settings.check('breadcrumbs', 'fixed')--%>
+            <%--} catch (e) {--%>
+            <%--}--%>
+            <%--</script>--%>
+            <%--<ul class="breadcrumb">--%>
+            <%--<li>--%>
+            <%--<i class="ace-icon fa fa-home home-icon"></i>--%>
+            <%--<a href="#">Home</a>--%>
+            <%--</li>--%>
+            <%--<li class="active" id="title">科研概况</li>--%>
+            <%--</ul>--%>
+            <%--<!-- /.breadcrumb -->--%>
+            <%--</div>--%>
             <div class="page-content">
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div id="SearchToolbar" class="col-xs-3" style="display: none">
+                        <c:choose>
+                            <c:when test="${sessionScope.level == '3'}">
+                                <form>
+                                    <div class="input-group">
+                                        <row>
+                                            <select class="form-control" id="form-field-select-1">
+                                                <option value="all"><a>所有</a></option>
+                                                <option value="project"><a>科研项目</a></option>
+                                                <option value="paper"><a>论文</a></option>
+                                                <option value="book"><a>著作</a></option>
+                                                <option value="patent"><a>专利</a></option>
+                                                <option value=""><a>成果鉴定</a></option>
+                                                <option value=""><a>成果转化</a></option>
+                                                <option value=""><a>成果获奖</a></option>
+                                            </select>
+                                        </row>
+                                        <row>
+                                            <select class="form-control" id="viewUser"
+                                                    aria-label="...">
+                                            </select>
+                                        </row>
+                                    </div>
+                                </form>
+                                <!-- /input-group -->
+
+                            </c:when>
+                        </c:choose>
+                    </div>
+                    <div class="col-xs-12" id="main">
                         <div class="widget-box transparent " style="opacity: 1;" id="confirmTable-box">
                             <div class="widget-body">
                                 <div id="tableCon">
-                                    <table id="mainTable"
-                                           data-show-columns="true"
-                                           data-show-refresh="true"
-                                           data-page-list="[10,20,ALL]"
-                                           data-pagination="true"
-                                           data-single-select="true"
-                                           data-click-to-select="true">
+                                    <table id="mainTable">
                                     </table>
                                     <div id="ProcessToolbar" style="display: none">
                                         <c:choose>
@@ -192,37 +215,6 @@
                                                 <button class=" newMag btn btn-primary btn-sm">
                                                     <i class="ace-icon fa fa-plus bigger-160"></i>添加期刊
                                                 </button>
-                                            </c:when>
-                                        </c:choose>
-                                    </div>
-                                    <div id="SearchToolbar" style="display: none">
-                                        <c:choose>
-                                            <c:when test="${sessionScope.level == '3'}">
-
-                                                <div class="input-group">
-                                                    <div class="input-group-btn">
-                                                        <button type="button"
-                                                                class="btn-sm btn dropdown-toggle viewOption"
-                                                                data-toggle="dropdown" aria-haspopup="true"
-                                                                aria-expanded="false">
-                                                            类别 <span class="caret"></span></button>
-                                                        <ul class="dropdown-menu">
-                                                            <li class="viewType all"><a>所有</a></li>
-                                                            <li class="viewType project"><a>科研项目</a></li>
-                                                            <li class="viewType paper"><a>论文</a></li>
-                                                            <li class="viewType book"><a>著作</a></li>
-                                                            <li class="viewType patent"><a>专利</a></li>
-                                                            <li class="viewType "><a>成果鉴定</a></li>
-                                                            <li class="viewType "><a>成果转化</a></li>
-                                                            <li class="viewType "><a>成果获奖</a></li>
-                                                        </ul>
-                                                    </div><!-- /btn-group -->
-                                                    <select class="form-control" id="viewUser"
-                                                            aria-label="...">
-                                                    </select>
-                                                </div>
-                                                <!-- /input-group -->
-
                                             </c:when>
                                         </c:choose>
                                     </div>
