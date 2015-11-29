@@ -379,6 +379,7 @@
     var taskId = '${taskId}';  // 获得 task的id
     var taskName = '${taskName}';
 
+    console.log(isAward);
     var pubTyValue=entity['pubType'];
     fullUpInfoBook(all,entity);//
     //获得批复
@@ -441,10 +442,10 @@
         var $pubType=$('#pubType').selectize();
         DisplayForm($pubType, pubTyValue, 0);
     }
-    if(!isNull(awarDtype)||!isNull(pubTyValue)){
+    console.log("**********");
+    console.log(awardType);
+    if(!isNull(awardType)){
         DisplayForm($isAward, "true",0);
-        //awardTypeSelect(pubTyValue,awarDtype);
-//        DisplayForm($awardtype, awardType,0);
         if(isNull(all['Status'])){
             $('#bulDate').removeAttr('disabled');
         }
@@ -453,7 +454,6 @@
         $('#bulDate').attr('disabled', 'disabled');
         disableSelectize($awardtype);
     }
-    console.log(pubTyValue);
     $('#actorTable').bootstrapTable({
         columns: [
             {
