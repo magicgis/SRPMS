@@ -39,22 +39,6 @@
 
     <div class="main-content">
         <div class="main-content-inner">
-            <%--<div class="breadcrumbs" id="breadcrumbs">--%>
-            <%--<script type="text/javascript">--%>
-            <%--try {--%>
-            <%--ace.settings.check('breadcrumbs', 'fixed')--%>
-            <%--} catch (e) {--%>
-            <%--}--%>
-            <%--</script>--%>
-            <%--<ul class="breadcrumb">--%>
-            <%--<li>--%>
-            <%--<i class="ace-icon fa fa-home home-icon"></i>--%>
-            <%--<a href="#">Home</a>--%>
-            <%--</li>--%>
-            <%--<li class="active" id="title">科研概况</li>--%>
-            <%--</ul>--%>
-            <%--<!-- /.breadcrumb -->--%>
-            <%--</div>--%>
             <div class="page-content">
                 <div class="row">
                     <div id="SearchToolbar" class="col-xs-3" style="display: none">

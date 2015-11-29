@@ -4,7 +4,6 @@ import engine.Engine;
 import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
 import entity.Staff;
-import org.snaker.engine.entity.HistoryTask;
 import org.snaker.engine.entity.Order;
 import org.snaker.engine.entity.Process;
 import org.snaker.engine.entity.Task;
@@ -59,34 +58,6 @@ public class Workflow {
         }
     }
 
-    /**
-     * 获取对应名称process的id
-     *
-     * @param name process名称
-     * @return process Id
-     */
-    @GET
-    @Path("/process/{name}")
-    @Produces("text/plain;charset=UTF-8")
-    public String getProcessName(@PathParam("name") String name) {
-        return engine.getProcessByName(name).getId();
-    }
-
-    /**
-     * 获取所有process Id
-     *
-     * @return 所有的process id
-     */
-    @GET
-    @Path("/allProcess")
-    @Produces("application/json;charset=UTF-8")
-    public Map<String, String> getProcessId() {
-        Map<String, String> rs = new HashMap<>();
-        for (Process u : engine.getAllProcess()) {
-            rs.put(u.getName(), u.getId());
-        }
-        return rs;
-    }
 
 
     /**
@@ -212,18 +183,6 @@ public class Workflow {
         return engine.getTaskByActor(user);
     }
 
-    /**
-     * 获取用户所有已完成任务
-     *
-     * @param user 用户
-     * @return 已完成任务
-     */
-    @GET
-    @Path("/{user}/hisTask")
-    @Produces("application/json;charset=UTF-8")
-    public List<HistoryTask> getHisTask(@PathParam("user") String user) {
-        return engine.getHisTaskByActor(user);
-    }
 
 
     /**

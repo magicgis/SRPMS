@@ -8,10 +8,8 @@ import service.UserService;
 
 import javax.ws.rs.*;
 import java.util.HashMap;
-import java.util.Map;
 
-import static util.Args.TokenUser;
-import static util.Trans.*;
+import static util.Trans.putMapOnObj;
 
 /**
  * Created by guofan on 2015/5/6.
@@ -39,16 +37,6 @@ public class UserApi {
         return putMapOnObj(user, args) && userService.update(user);
     }
 
-
-    @DELETE
-    @Path("/{id}")
-    @Consumes("application/json;charset=UTF-8")
-    public boolean delete(@PathParam("id") String id) {
-        User temp = userService.getById(id);
-        temp.setStatus(0);
-        return userService.update(temp);
-    }
-
     @GET
     @Path("/{id}")
     @Consumes("application/json;charset=UTF-8")
@@ -56,34 +44,6 @@ public class UserApi {
         return userService.getById(id);
     }
 
-    @POST
-    @Path("/login")
-    @Consumes("application/json;charset=UTF-8")
-    public String login(Map<String, String> args) {
-        String staId = args.get("username");
-        String pwd = args.get("password");
-        User u = userService.getUser(staId, pwd);
-        if (u == null || u.getStatus() == null || u.getStatus() == 0) {
-            return null;
-        } else {
-            Long time = System.currentTimeMillis() / 1000;
-            String token = null;
-            try {
-                token = MD5(staId + pwd + String.valueOf(time));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            TokenUser.put(token, u);
-            return token;
-        }
-    }
-
-    @GET
-    @Path("/current")
-    @Produces("application/json;charset=UTF-8")
-    public User getCurrentUser(@HeaderParam("Authorization") String token) {
-        return TokenUser.get(token);
-    }
 
     /**
      * 修改密码
