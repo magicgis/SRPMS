@@ -270,20 +270,24 @@ function getApprovalByDep(pData) {
  * */
 function statusTran(value, row) {
     //定义一个条件数组函数  所有状态项
+    //审核中蓝颜色
+    //已通过绿色
+    //未审核红色
     var termArray = {
-        'Blank': '待填写',
-        'Uncomplete': '已保存',
-        'Complete': '等待他人确认',
-        'ApprovedByCol': '待学院统一提交',
-        'WaitForSubmit': '待统一提交',
-        'WaitForCol': '学院审核中',
-        'WaitForCollegeSubmit': '待学院统一提交',
-        'WaitForDep': '管理部门审核中',
-        'RefuseByDep': '管理部门驳回，待学院审核',
-        'RefuseByCol': '学院驳回，待修改'
+        'Blank': '<span class="label label-lg label-danger arrowed-in">待填写</span>',
+        'Uncomplete': '<span class="label label-lg label-danger arrowed-in">已保存</span>',
+        'Complete': '<span class="label label-lg label-danger arrowed-in">等待他人确认</span>',
+        'ApprovedByCol': '<span class="label label-lg label-danger arrowed-in">待学院统一提交</span>',
+        'WaitForSubmit': '<span class="label label-lg label-danger arrowed-in">待统一提交</span>',
+        'WaitForCol': '<span class="label label-lg label-info arrowed-in">学院审核中</span>',
+        'WaitForCollegeSubmit': '<span class="label label-lg label-danger arrowed-in">待学院统一提交</span>',
+        'WaitForDep': '<span class="label label-lg label-info arrowed-in">管理部门审核中</span>',
+        'RefuseByDep': '<span class="label label-lg label-danger arrowed-in">管理部门驳回，待学院审核</span>',
+        'RefuseByCol': '<span class="label label-lg label-danger arrowed-in">待填写</span>'
     };
     if(!isNull(value)){
-        return termArray[value];
+        var status=termArray[value];
+        return status;
     }else{
         return '--';
     }
@@ -291,10 +295,13 @@ function statusTran(value, row) {
 
 function processTran(arg) {
     var t = {
-        "0": "未启动",
-        "1": "流程中",
-        "9": "已结束"
+        "0": '<span class="label label-lg label-danger arrowed-in">未启动</span>',
+        "1": '<span class="label label-lg label-info arrowed-in">流程中</span>',
+        "9": '<span class="label label-lg label-success label-white middle">已结束</span>'
     };
+    if(!isNull(arg)){
+
+    }
     return t[arg];
 }
 
