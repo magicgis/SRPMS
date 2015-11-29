@@ -136,7 +136,7 @@ public class project extends StandardBase implements StandardCheckInf {
                 leftMoneyScore = historyMnoey
                         *( getMoneyWeight(map,historyMnoey,true)- getMoneyWeight(map,historyMnoey,false));
             }
-            moneyScore += leftMoneyScor
+            moneyScore += leftMoneyScore;
 //            未统计到账分数
             calScore = startScore + endScore;
 //        是否是独立项目
