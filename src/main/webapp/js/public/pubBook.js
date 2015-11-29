@@ -106,7 +106,6 @@ function awardTypeSelect(pubType,awarded){
         $awardtype[0].selectize.addOption(awardtypes);
     }
     if(!isNull(awarded)){
-        console.log("***************");
         console.log(awarded);
         DisplayForm($awardtype, awarded, 0);
     }

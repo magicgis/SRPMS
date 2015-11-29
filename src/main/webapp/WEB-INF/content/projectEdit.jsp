@@ -517,7 +517,6 @@
 
 
 <script type="text/javascript">
-
     $('.standard0').hide();
     // 成员，单位，文件
     var entity =  ${ObjectMapper.writeValueAsString(project)}; // 获得 entity 或 实体

@@ -293,15 +293,17 @@ function statusTran(value, row) {
     }
 }
 
+/**
+ * 进度
+ * @param arg
+ * @returns {*}
+ */
 function processTran(arg) {
     var t = {
         "0": '<span class="label label-lg label-danger arrowed-in">未启动</span>',
         "1": '<span class="label label-lg label-info arrowed-in">流程中</span>',
         "9": '<span class="label label-lg label-success label-white middle">已结束</span>'
     };
-    if(!isNull(arg)){
-
-    }
     return t[arg];
 }
 
@@ -926,9 +928,6 @@ function isMainActor(MainActor, userName) {
  * 教师1||学院2||学校3
  * */
 function init(entity,all,replyByDep,level) {
-    //if(entity['creator']!=userName){
-    //    $('.delFiles').hide();
-    //}
     var process = entity['process'];
     switch (level){
         case 1:
@@ -1092,7 +1091,7 @@ function init(entity,all,replyByDep,level) {
 
                 hideActorOperate();
                 hideUnitOperate();
-                hideColumnScore(); // 还在流程中 分数不给看
+                //hideColumnScore(); // 还在流程中 分数不给看
                 $('.addActor').hide();
                 $('.addUnit').hide();
                 $('.addFund').hide();
@@ -1110,7 +1109,7 @@ function init(entity,all,replyByDep,level) {
                 $('.onApprove').hide();
                 $('.orderBack').hide();
                 $('#reply').hide();
-                hideColumnScore();
+               // hideColumnScore();
                 if (process == '0') {
                     $('.del').show();
                 } else {
@@ -1119,7 +1118,7 @@ function init(entity,all,replyByDep,level) {
             }
             break;
     }
-    console.log('process:', process, 'status:', status, 'level:', level, 'isMain:', isMain, 'statusCode:', statusCode);
+    //console.log('process:', process, 'status:', status, 'level:', level, 'isMain:', isMain, 'statusCode:', statusCode);
 }
 function uneditableForm() {
     $('form input').attr("disabled", "disabled");
@@ -1172,24 +1171,6 @@ function projbelong(value, row){
         return '--'
     }
 }
-/**
- * 进度
- * @param arg
- * @returns {*}
- */
-function processTran(arg) {
-    var t = {
-        "0": "未启动",
-        "1": "流程中",
-        "9": "已结束"
-    };
-    return t[arg];
-}
-//function pubTypeTrans(res){
-//    var pubType={"1020":"公开出版著作", "1021":"教育部规划教材","1022": "协编教材","1023":"其他教材"};
-//    return pubType[res];
-//}
-
 
 /**
  * 计算分数
@@ -1300,6 +1281,5 @@ function getMainActor() {
         }
     });
     return Info;
-
 }
 

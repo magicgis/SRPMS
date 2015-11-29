@@ -103,11 +103,6 @@ function confirm() {
  * 撤回order
  */
 function getOrderBack() {
-    //var row = $('#PaperTable').bootstrapTable('getSelections')[0];
-    //var order = row['id'];
-    //var send = new Object();
-    //send['order'] = orderId;
-    //send['user'] = userName;
     window.workflow.getBack(userName, orderId).success(function () {
         afterSuccess("已撤回");
         window.location.href = '/index/process/paper/all';

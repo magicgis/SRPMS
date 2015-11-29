@@ -1,17 +1,4 @@
 var $actorTable = $('#actorTable');
-
-// 类型翻译
-//function typeTran(value, row) {
-//    if (value == 'conferPaper') {
-//        return '会议论文';
-//    } else if (value == 'magPaper') {
-//        return '期刊论文';
-//    } else if (value == 'newsPaper') {
-//        return '报刊论文';
-//    } else {
-//        return '';
-//    }
-//}
 // 显示Mag、Confer还是newsPaper
 function magOrConfer() {
     if ($('#type').val() == "conferPaper") {
