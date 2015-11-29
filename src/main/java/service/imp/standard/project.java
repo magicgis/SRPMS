@@ -73,8 +73,6 @@ public class project extends StandardBase implements StandardCheckInf {
 
     @Override
     public Map getFinalScore(Map map, double tableScore, double tableScore2) {
-        double calScore = 0;
-        double moneyScore = 0;
         Map validInfo = new HashMap();
         validInfo.put(MESSAGE, DEFAULT_MSG);
         validInfo.put(IS_VALID, DEFAULT_FLAG);
@@ -88,50 +86,59 @@ public class project extends StandardBase implements StandardCheckInf {
         cheifActors = getChiefActors(actors, (String) KEY_ROLE.get("cheifActor"));
         myCheifActors = getMyStaffActors(cheifActors);
         int isAppr = Integer.parseInt((String) map.get("isAppr"));
+        double calScore = 0;
+        double startScore = 0;
+        double moneyScore = 0;
+        double endScore = 0;
+        double currentMoney = 0;
+        double historyMnoey = 0;
+        double leftMoneyScore = 0;//补差
+        boolean isMoneyProject = false;
 //        是否立项
         if (isAppr == 1) {
-//           到账
-            List<Map> funds =  (List<Map>) map.get("fund");
-            double res = 0;
-//            System.out.println("+++++++"+ map);
-            if (funds != null && funds.size() != 0)
+//            今年到账金额以及历史到账金额
+            List<Map> funds = (List<Map>) map.get("fund");
+            if (funds != null && funds.size() != 0) {
                 for (Map fund : funds) {
-                    if (isVaildTime((String) fund.get("time"))) {
-                        res = Double.parseDouble((String) fund.get("mny"))
-                                - Double.parseDouble((String) fund.get("outMny"));
-                        moneyScore += getMoneyWeight(map, res);
-                    }
+                    double res = 0;
+                    res = Double.parseDouble((String) fund.get("mny"))
+                            - Double.parseDouble((String) fund.get("outMny"));
+                    historyMnoey += res;
+                    if (isVaildTime((String) fund.get("time")))
+                        currentMoney += res;
                 }
-//        立项
-            if (!(map.get("projrank").equals("横向"))
-                    && isVaildTime((String) map.get("apprDate")))
-                calScore += tableScore;
-            if (map.get("projrank").equals("横向")
-                    && isVaildTime((String) map.get("apprDate")))
-                calScore += tableScore * res;
-//        结题
-            if (!map.get("projrank").equals("横向")
-                    && map.get("realDate") != null
-                    && isVaildTime((String) map.get("realDate")))
-                calScore += tableScore2;
-            if (map.get("projrank").equals("横向")
+            }
+            if (map.get("projrank").equals("横向"))
+                isMoneyProject = true;
+//            计算到账积分
+            moneyScore = getMoneyWeight(map, currentMoney, false) * currentMoney;
+//            计算立项积分
+            if (!isMoneyProject
+                    && isVaildTime((String) map.get("apprDate"))) {
+                startScore = tableScore;
+            }
+            if (isMoneyProject) {
+                //  && isVaildTime((String) map.get("apprDate"))){
+                startScore = tableScore * currentMoney;
+            }
+//            计算结题积分
+            if (!isMoneyProject
                     && map.get("realDate") != null
                     && isVaildTime((String) map.get("realDate"))){
-                double sumRes = 0;
-                if (funds != null && funds.size() != 0)
-                    for (Map fund : funds) {
-//                        if (isVaildTime((String) fund.get("time"))) {
-                            res = Double.parseDouble((String) fund.get("mny"))
-                                    - Double.parseDouble((String) fund.get("outMny"));
-                            moneyScore += getMoneyWeight(map, res);
-                            sumRes += res;
-//                        }
-                    }
-                calScore += tableScore2 * sumRes;
+                endScore = tableScore2;
+                leftMoneyScore = historyMnoey
+                        *( getMoneyWeight(map,historyMnoey,true)- getMoneyWeight(map,historyMnoey,false));
             }
-
-
-
+            if (isMoneyProject
+                    && map.get("realDate") != null
+                    && isVaildTime((String) map.get("realDate"))) {
+                endScore = historyMnoey * tableScore2;
+                leftMoneyScore = historyMnoey
+                        *( getMoneyWeight(map,historyMnoey,true)- getMoneyWeight(map,historyMnoey,false));
+            }
+            moneyScore += leftMoneyScore;
+//            未统计到账分数
+            calScore = startScore + endScore;
 //        是否是独立项目
             if (map.get("attr").equals("独立项目")) caseSlct += 110;
             else calScore = calScore / (units.size() + 1);
@@ -147,8 +154,8 @@ public class project extends StandardBase implements StandardCheckInf {
                 calScore /= 5;
             caseSlct = 111;
         }
-        System.out.println("--------"+calScore);
-        System.out.println("--------"+caseSlct);
+        System.out.println("--------" + calScore);
+        System.out.println("--------" + caseSlct);
         boolean flag = false;
         switch (caseSlct) {
             case 10:
@@ -158,7 +165,10 @@ public class project extends StandardBase implements StandardCheckInf {
                 for (Map actor : actors) {
                     int i = Integer.parseInt((String) actor.get("rank"));
                     if (isMyStaff(actor))
-                        actor.put("score", calScore * positionWeight(actors.size(), i));
+                        if (!isMoneyProject)
+                            actor.put("score", calScore * positionWeight(actors.size(), i) + moneyScore);
+                        else
+                            actor.put("score", calScore + moneyScore);
                     else actor.put("score", 0);
                     resActors.add(actor);
                 }
@@ -239,17 +249,17 @@ public class project extends StandardBase implements StandardCheckInf {
         return validInfo;
     }
 
-    private double getMoneyWeight(Map map, double money) {
-
+    private double getMoneyWeight(Map map, double money,boolean finalCal) {
+//          分/万元
         String type = (String) map.get("projtype");
         if (type.equals("自然科学")) {
-            if (money <= 60) return 15;
+            if (!finalCal || money <= 60) return 15;
             else return 18;
         } else if (type.equals("社会服务项目")) {
-            if (money <= 30) return 8;
+            if (!finalCal ||money <= 30) return 8;
             else return 10;
         } else {
-            if (money <= 15) return 20;
+            if (!finalCal ||money <= 15) return 20;
             else return 25;
         }
 
