@@ -23,6 +23,11 @@ import static util.Trans.moveMap;
  */
 public class Complete implements SnakerInterceptor {
 
+    /**
+     * without any test
+     *
+     * @param execution
+     */
     @Override
     public void intercept(Execution execution) {
 
@@ -46,8 +51,6 @@ public class Complete implements SnakerInterceptor {
             case "paper":
                 PaperService paperService = (PaperService) StaticFactory.getBean(PaperService.class);
                 Paper paper = new Paper();
-                //todo 临时措施
-                info.put("score", info.get("sum"));
                 util.Trans.putMapOnObj(paper, info);
                 //处理附件信息
                 paper.setAttachment(getFileData(info.get("filesData")));
@@ -74,17 +77,18 @@ public class Complete implements SnakerInterceptor {
                 id = paperService.add(paper);
                 dept = paper.getDept();
                 break;
-            case "patent":
-                PatentService patentService = (PatentService) StaticFactory.getBean(PatentService.class);
+
+            case "achAppraisal":
+                AchAppraisalService achAppraisalService = (AchAppraisalService) StaticFactory.getBean(AchAppraisalService.class);
                 id = (String) args.get("WF_Entity");
-                Patent patent = patentService.getById(id);
-                init = patent.getArgMap();
-                //todo 这儿需要把分数给补上   patent.setScore();
+                AchAppraisal achAppraisal = achAppraisalService.getById(id);
+                init = achAppraisal.getArgMap();
+                //todo 缺少分数
                 moveMap(info, init, Arrays.asList("actors"));
-                patent.setArgMap(init);
-                patent.setProcess("9");
-                patentService.update(patent);
-                dept = patent.getDept();
+                achAppraisal.setArgMap(init);
+                achAppraisal.setProcess("9");
+                achAppraisalService.update(achAppraisal);
+                dept = achAppraisal.getDept();
                 break;
             case "achAward":
                 AchAwardService achAwardService = (AchAwardService) StaticFactory.getBean(AchAppraisalService.class);
@@ -98,18 +102,6 @@ public class Complete implements SnakerInterceptor {
                 achAwardService.update(achAward);
                 dept = achAward.getDept();
                 break;
-            case "achAppraisal":
-                AchAppraisalService achAppraisalService = (AchAppraisalService) StaticFactory.getBean(AchAppraisalService.class);
-                id = (String) args.get("WF_Entity");
-                AchAppraisal achAppraisal = achAppraisalService.getById(id);
-                init = achAppraisal.getArgMap();
-                //todo 缺少分数
-                moveMap(info, init, Arrays.asList("actors"));
-                achAppraisal.setArgMap(init);
-                achAppraisal.setProcess("9");
-                achAppraisalService.update(achAppraisal);
-                dept = achAppraisal.getDept();
-                break;
             case "achTran":
                 AchTranService achTranService = (AchTranService) StaticFactory.getBean(AchTranService.class);
                 id = (String) args.get("WF_Entity");
@@ -122,9 +114,89 @@ public class Complete implements SnakerInterceptor {
                 achTranService.update(achTran);
                 dept = achTran.getDept();
                 break;
+            case "book":
+                BookService bookService = (BookService) StaticFactory.getBean(BookService.class);
+                id = (String) args.get("WF_Entity");
+                Book book = bookService.getById(id);
+                init = book.getArgMap();
+                //todo 这儿需要把分数给补上   patent.setScore();
+                moveMap(info, init, Arrays.asList("actors"));
+                book.setArgMap(init);
+                book.setProcess("9");
+                bookService.update(book);
+                dept = book.getDept();
+                break;
+            case "patent":
+                PatentService patentService = (PatentService) StaticFactory.getBean(PatentService.class);
+                id = (String) args.get("WF_Entity");
+                Patent patent = patentService.getById(id);
+                init = patent.getArgMap();
+                //todo 这儿需要把分数给补上   patent.setScore();
+                moveMap(info, init, Arrays.asList("actors"));
+                patent.setArgMap(init);
+                patent.setProcess("9");
+                patentService.update(patent);
+                dept = patent.getDept();
+                break;
+            case "project":
+                ProjectService projectService = (ProjectService) StaticFactory.getBean(ProjectService.class);
+                id = (String) args.get("WF_Entity");
+                Project project = projectService.getById(id);
+                init = project.getArgMap();
+                //todo 这儿需要把分数给补上   patent.setScore();
+                moveMap(info, init, Arrays.asList("actors"));
+                project.setArgMap(init);
+                project.setProcess("9");
+                projectService.update(project);
+                dept = project.getDept();
+                break;
+            case "others":
+                OthersService othersService = (OthersService) StaticFactory.getBean(OthersService.class);
+                id = (String) args.get("WF_Entity");
+                Others others = othersService.getById(id);
+                init = others.getArgMap();
+                //todo 这儿需要把分数给补上   patent.setScore();
+                moveMap(info, init, Arrays.asList("actors"));
+                others.setArgMap(init);
+                others.setProcess("9");
+                othersService.update(others);
+                dept = others.getDept();
+                break;
+            case "food":
+                FoodService foodService = (FoodService) StaticFactory.getBean(FoodService.class);
+                id = (String) args.get("WF_Entity");
+                Food food = foodService.getById(id);
+                init = food.getArgMap();
+                //todo 这儿需要把分数给补上   patent.setScore();
+                moveMap(info, init, Arrays.asList("actors"));
+                food.setArgMap(init);
+                food.setProcess("9");
+                foodService.update(food);
+                dept = food.getDept();
+            case "instrument":
+                InstrumentService instrumentService = (InstrumentService) StaticFactory.getBean(InstrumentService.class);
+                id = (String) args.get("WF_Entity");
+                Instrument instrument = instrumentService.getById(id);
+                init = instrument.getArgMap();
+                //todo 这儿需要把分数给补上   patent.setScore();
+                moveMap(info, init, Arrays.asList("actors"));
+                instrument.setArgMap(init);
+                instrument.setProcess("9");
+                instrumentService.update(instrument);
+                dept = instrument.getDept();
+            case "medicine":
+                MedicineService medicineService = (MedicineService) StaticFactory.getBean(MedicineService.class);
+                id = (String) args.get("WF_Entity");
+                Medicine medicine = medicineService.getById(id);
+                init = medicine.getArgMap();
+                //todo 这儿需要把分数给补上   patent.setScore();
+                moveMap(info, init, Arrays.asList("actors"));
+                medicine.setArgMap(init);
+                medicine.setProcess("9");
+                medicineService.update(medicine);
+                dept = medicine.getDept();
             default:
                 break;
-
         }
 
         staRefService.insertRelation((String) id, type, (ArrayList) info.get("actors"));
@@ -142,13 +214,5 @@ public class Complete implements SnakerInterceptor {
         fxxk.put("Status", "AllCompelete");
         execution.getEngine().order().addVariable(orderId, fxxk);
 
-
-//        Order order = execution.getOrder();
-//        HistoryOrder hisOrder = execution.getEngine().query().getHistOrder(order.getId());
-//        hisOrder.setVariable(order.getVariable());
-//        execution.getEngine().order().
-//        execution.getEngine().
-
-//        System.out.println();
     }
 }
