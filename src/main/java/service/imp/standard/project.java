@@ -92,6 +92,7 @@ public class project extends StandardBase implements StandardCheckInf {
         double endScore = 0;
         double currentMoney = 0;
         double historyMnoey = 0;
+        double leftMoneyScore = 0;//补差
         boolean isMoneyProject = false;
 //        是否立项
         if (isAppr == 1) {
@@ -110,7 +111,7 @@ public class project extends StandardBase implements StandardCheckInf {
             if (map.get("projrank").equals("横向"))
                 isMoneyProject = true;
 //            计算到账积分
-            moneyScore = getMoneyWeight(map, currentMoney) * currentMoney;
+            moneyScore = getMoneyWeight(map, currentMoney, false) * currentMoney;
 //            计算立项积分
             if (!isMoneyProject
                     && isVaildTime((String) map.get("apprDate"))) {
@@ -123,13 +124,19 @@ public class project extends StandardBase implements StandardCheckInf {
 //            计算结题积分
             if (!isMoneyProject
                     && map.get("realDate") != null
-                    && isVaildTime((String) map.get("realDate")))
+                    && isVaildTime((String) map.get("realDate"))){
                 endScore = tableScore2;
+                leftMoneyScore = historyMnoey
+                        *( getMoneyWeight(map,historyMnoey,true)- getMoneyWeight(map,historyMnoey,false));
+            }
             if (isMoneyProject
                     && map.get("realDate") != null
                     && isVaildTime((String) map.get("realDate"))) {
                 endScore = historyMnoey * tableScore2;
+                leftMoneyScore = historyMnoey
+                        *( getMoneyWeight(map,historyMnoey,true)- getMoneyWeight(map,historyMnoey,false));
             }
+            moneyScore += leftMoneyScor
 //            未统计到账分数
             calScore = startScore + endScore;
 //        是否是独立项目
@@ -242,17 +249,17 @@ public class project extends StandardBase implements StandardCheckInf {
         return validInfo;
     }
 
-    private double getMoneyWeight(Map map, double money) {
+    private double getMoneyWeight(Map map, double money,boolean finalCal) {
 //          分/万元
         String type = (String) map.get("projtype");
         if (type.equals("自然科学")) {
-            if (money <= 60) return 15;
+            if (!finalCal || money <= 60) return 15;
             else return 18;
         } else if (type.equals("社会服务项目")) {
-            if (money <= 30) return 8;
+            if (!finalCal ||money <= 30) return 8;
             else return 10;
         } else {
-            if (money <= 15) return 20;
+            if (!finalCal ||money <= 15) return 20;
             else return 25;
         }
 
