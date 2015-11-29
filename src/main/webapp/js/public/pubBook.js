@@ -112,6 +112,16 @@ function awardTypeSelect(pubType,awarded){
     }
 }
 function getPubType() {
+    $('#isTrans').selectize({ // 初始化 鉴定等级
+        valueField: 'id',
+        labelField: 'value',
+        options: [
+            {"id": "false", "value": "否"},
+            {"id": "true", "value": "是"}],
+        maxItems: 1,
+        create: true
+    });
+
     $('#pubType').selectize({
         valueField: 'value',
         labelField: 'value',
@@ -121,7 +131,8 @@ function getPubType() {
             {"id": "1021", "value": "教育部规划教材"},
             {"id": "1022", "value": "行业规划教材"},
             {"id": "1023", "value": "协编教材"},
-            {"id": "1024", "value": "其他教材"}],
+            {"id": "1024", "value": "其他教材"},
+        ],
         maxItems: 1,
         onChange: function () {
             console.log($('#pubType').val());

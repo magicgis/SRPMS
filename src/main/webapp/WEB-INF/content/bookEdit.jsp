@@ -147,6 +147,25 @@
                                         <div class="row">
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
+                                                       for="sumWord">著作总字数</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" name="sumWord" id="sumWord"
+                                                           value="${book.sumWord}"
+                                                           placeholder="单位：万字" class="col-xs-12"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-sm-6">
+                                                <label class="col-sm-4 control-label no-padding-left"
+                                                       for="isTrans">是否译著</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" name="isTrans" id="isTrans"
+                                                           class="col-xs-12"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-12 col-sm-6">
+                                                <label class="col-sm-4 control-label no-padding-left"
                                                        for="isAward" placeholder="请选择"
                                                         >著作获奖</label>
                                                 <div class="col-sm-8">
@@ -169,15 +188,6 @@
 
                                         </div>
                                         <div class="row">
-                                            <%--<div class="form-group col-xs-12 col-sm-6">--%>
-                                                <%--<label class="col-sm-4 control-label no-padding-left"--%>
-                                                       <%--for="year">计分年度</label>--%>
-                                                <%--<div class="col-sm-8">--%>
-                                                    <%--<input type="text" name="year" id="year"--%>
-                                                           <%--value="${book.year}"--%>
-                                                           <%--placeholder="" class="col-xs-12"/>--%>
-                                                <%--</div>--%>
-                                            <%--</div>--%>
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
                                                        for="bulDate">获奖时间</label>
@@ -190,16 +200,9 @@
                                             </div>
                                         <%--</div>--%>
                                         <%--<div class="row">--%>
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="sumWord">著作总字数</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" name="sumWord" id="sumWord"
-                                                           value="${book.sumWord}"
-                                                           placeholder="单位：万字" class="col-xs-12"/>
-                                                </div>
-                                            </div>
+
                                         </div>
+
                                         <div class="row">
                                             <div class="col-xs-12">
                                                 <div class="col-xs-12 widget-container-col ui-sortable" id="fileHead">
@@ -368,18 +371,18 @@
         });
     });
     var entity = ${ObjectMapper.writeValueAsString(book)};
-    console.log(entity);
+
     if(isNull(entity)) {
         entity = {};
     }
     var all = entity['argMap']; // 获得 成员，单位，附件，负责人等信息
     var isAward=all['isAward'];
     var awardType=all['awarDtype'];
+    var isTrans=all['isTrans'];
     var dept = entity['dept'];
     var taskId = '${taskId}';  // 获得 task的id
     var taskName = '${taskName}';
 
-    console.log(isAward);
     var pubTyValue=entity['pubType'];
     fullUpInfoBook(all,entity);//
     //获得批复
@@ -442,8 +445,9 @@
         var $pubType=$('#pubType').selectize();
         DisplayForm($pubType, pubTyValue, 0);
     }
-    console.log("**********");
-    console.log(awardType);
+    if(!isNull(isTrans)){
+        DisplayForm($('#isTrans').selectize(),isTrans,0);
+    }
     if(!isNull(awardType)){
         DisplayForm($isAward, "true",0);
         if(isNull(all['Status'])){

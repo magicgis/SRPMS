@@ -261,6 +261,7 @@ function saveStep2(data) {
     send['Main-ActorName'] = Main_ActorName;
     send['isAward']=$('#isAward').val();
     send['awarDtype']=$('#awarDtype').val();
+    send['isTrans']=$('#isTrans').val();
     //if($('#attr').val() == '联合项目' || entity['attr'] == "子课题"){
     //    send['units'] = getUnitsData();
     //}
