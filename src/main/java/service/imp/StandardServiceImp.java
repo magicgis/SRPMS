@@ -32,7 +32,9 @@ public class StandardServiceImp extends StandardBase implements StandardService 
         calFlow.put(IS_VALID, DEFAULT_FLAG);
         calFlow.put(MESSAGE, DEFAULT_MSG);
         String type = getPageType(order, map);
+
         if (type == null) {
+            System.out.println("^^^^^"+type);
             validInfo.put(MESSAGE, getMsg("1023"));
             return validInfo;
         }
@@ -116,7 +118,9 @@ public class StandardServiceImp extends StandardBase implements StandardService 
         validInfo.put(MESSAGE, DEFAULT_MSG);
         validInfo.put(IS_VALID, DEFAULT_FLAG);
         String type = getPageType(order, map);
+
         if (type == null) {
+            System.out.println("+++++"+type);
             validInfo.put(MESSAGE, getMsg("1023"));
             return validInfo;
         }

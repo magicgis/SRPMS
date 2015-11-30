@@ -86,19 +86,21 @@ public class StandardBase {
     public String getPageType(Order order, Map map) {
         String type = null;
         Map variableMap;
+
         if (order != null)
             variableMap = order.getVariableMap();
-        else
+        else {
             variableMap = map;
+        }
         if (map == null) return type;
 //        Map map = getMaxMap(order);
+        System.out.println("88888888"+variableMap.get("WF_Type"));
         if ("paper".equals(variableMap.get("WF_Type")))
             type = (String) map.get("type");
         else
             type = (String) variableMap.get("WF_Type");
-        if (type == null || type.trim().equals("")) {
-            type = null;
-        }
+        System.out.println("88888888"+variableMap);
+        System.out.println("88888888"+type);
         return type;
     }
 

@@ -109,15 +109,18 @@ public class book extends StandardBase implements StandardCheckInf {
     }
     private double staticActorScore(Map actor,Map map){
         double award = 0;
-        double inchargeText = 0;
-        double unInchargeText = 0;
+        double inchargeText ;
+        double unInchargeText ;
         double sumWord = Double.parseDouble((String) map.get("sumWord"));
         String awardtype = (String) map.get("awardtype");
         String time = (String) map.get("pubDate");
         String awardDate = (String) map.get("bulDate");
-        boolean isAward = (boolean) map.get("isAward");
+        boolean isAward = Boolean.parseBoolean((String) map.get("isAward"));
+        System.out.println(isAward);
         String pubType = (String) map.get("pubType");
-        String role = (String) actor.get("rple");
+        String role = (String) actor.get("role");
+        boolean isTrns = Boolean.parseBoolean((String) map.get("isTrans"));
+//        System.out.println("99999"+isTrns);
         double textNumber= Double.parseDouble((String) actor.get("textNumber"));
 
         if (isAward){
@@ -145,6 +148,8 @@ public class book extends StandardBase implements StandardCheckInf {
         else if (pubType.equals("协编教材"))tyoe =40;
         else if (pubType.equals("其他教材"))tyoe =50;
         else tyoe=0;
+        System.out.println(role);
+        System.out.print(KEY_ROLE.get("firstCheifActor"));
         if (role.equals(KEY_ROLE.get("firstCheifActor")))tyoe+= 1;
         else if (role.equals(KEY_ROLE.get("secondCheifActor"))) tyoe+=2;
         else if (role.equals(KEY_ROLE.get("viceCheifActor"))) tyoe+= 3;
@@ -235,8 +240,11 @@ public class book extends StandardBase implements StandardCheckInf {
                 inchargeText =0;
                 unInchargeText =0;
         }
+
         double res = textNumber*inchargeText + (sumWord-textNumber)*unInchargeText;
+        if (isTrns) res *= 2;
         double awardRes = res*award;
+
         if (!isVaildTime(time)&&isVaildTime(awardDate)){
             return awardRes;
         }
