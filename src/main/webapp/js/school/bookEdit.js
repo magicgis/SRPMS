@@ -186,7 +186,7 @@ function editActor(row, index) {
         },
         title: "成员信息",
         data: {
-            'pageToLoad': '../dialog/addActor.html'
+            'pageToLoad': '/dialog/addActor.html'
         },
         closeByBackdrop: false,
         buttons: [{
@@ -194,18 +194,14 @@ function editActor(row, index) {
             icon: 'glyphicon glyphicon-check',
             label: '保存',
             cssClass: 'btn-info',
-            //hotkey: 83,
             autospin: false,
             action: function (dialogRef) {
                 if (!isFull()) {
-                    BootstrapDialog.show({
-                        title: '通知',
-                        type: BootstrapDialog.TYPE_INFO,
-                        message: '请将信息填写完整。'
-                    });
+                    messageModal('请将信息填写完整。');
                     return;
                 }
                 subActorInfo(index, 0);
+                $('.removeActor').hide();
                 dialogRef.close();
             }
         }, {
@@ -220,21 +216,33 @@ function editActor(row, index) {
         }],
         onshown: function () {
             fillRoles(bookRoles);
-            //填充名字
             var $actor = $("#actor").selectize();
-            $actor[0].selectize.addOption([{'id': row["staff.id"], 'name': row["staff.name"], "col": {"value": ""}}]);
+            var $role = $("#role").selectize();
+            var $units = $("#units").selectize();
+            addOptionSelectize($actor, [{'id': row["staff.id"], 'name': row["staff.name"], "col": {"value": ""}}]);
             $actor[0].selectize.setValue(row["staff.id"]);
             //填充角色
-            var $role = $("#role").selectize();
             DisplayForm($role, row["role"], 0);
+            $("#role").val(row["role"]);
             //填充单位
-            var $units = $("#units").selectize();
             DisplayForm($units, row["unit"], 0);
             //填充其他
             $('#actorsInfo').autofill(row, {
                 findbyname: false,
                 restrict: false
             });
+            $('.bookTextNumber').show();
+            //是否可编辑
+            if (flag) {//可编辑
+                $("#btn-ok").removeAttr("disabled").show();
+                $("#score").removeAttr("disabled");
+            } else {  //不可编辑
+                //$("#btn-ok").attr("disabled", "disabled").hide();
+                $("#score").attr("disabled", "disabled");
+            }
+            if (row["staff.id"] == "9998" || row["staff.id"] == "9999") {
+                $("#score").attr("disabled", "disabled");
+            }
         }
     });
 }
