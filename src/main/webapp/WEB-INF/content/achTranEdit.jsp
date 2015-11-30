@@ -213,7 +213,9 @@
 													</c:choose>
 
 	                                                <span class="giveSum">
-	                                                    <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
+	                                                   <c:if test="${sessionScope.level == '3'}">
+														   <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
+													   </c:if>
 	                                                    <label for="totalScore">总分：</label>
 		                                                <input class="score" type="text"
 		                                                       name="score" id="totalScore" value="${achTran.score}">
@@ -282,9 +284,6 @@
 							</div>
 						</div>
 					</div>
-
-					<div class="col-xs-12" id="info_alert"></div>
-
 				</div>
 
 				<div class="row">

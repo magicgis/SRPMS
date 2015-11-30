@@ -75,7 +75,6 @@
             </div>
             <div class="page-content">
                 <div class="row">
-
                     <div class="col-xs-12">
                         <form id="appraise" class="form-horizontal" role="form">
                             <div hidden="hidden">
@@ -256,7 +255,9 @@
                                                         </c:choose>
 
                                                         <span class="giveSum">
-                                                            <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
+                                                             <c:if test="${sessionScope.level == '3'}">
+                                                                <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
+                                                             </c:if>
                                                             <label for="totalScore">总分：</label>
                                                             <input class="score" type="text"
                                                                    name="score" id="totalScore" value="${achAppraisal.score}">
@@ -284,8 +285,8 @@
                                                 <div class="row">
                                                     <div id="unitToolbar">
                                                         <c:if test="${sessionScope.level == '3'}">
-                                                            <a class="btn btn-primary btn-sm addUnit">
-                                                                添加单位</a>
+                                                            <a class="btn btn-primary btn-sm addUnit"><i
+                                                                    class="glyphicon glyphicon-plus"></i> 添加单位</a>
                                                         </c:if>
                                                     </div>
                                                     <table id="unitTable"
@@ -327,11 +328,8 @@
                         </div>
 
                     </div>
-
                     <div class="col-xs-12" id="info_alert"></div>
-
                 </div>
-
                 <div class="row">
 
                     <div id="formBtn" class="col-xs-12 clearfix">

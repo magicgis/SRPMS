@@ -14,7 +14,6 @@ function save() {
     saveStep1().success(function(data) {
 
         saveStep2(data).success(function (res) {
-
             afterSuccess("保存成功！");
             window.location.href = '/index/entity/achAward/all';
         })
@@ -242,23 +241,6 @@ function editActor(row, index) {
         }
     });
 }
-///*计算分数*/
-//function getScore() {
-//    var jsonData = getFormData("award");
-//    //console.log(jsonData);
-//    workflow.getScore(jsonData).success(function (data) {
-//        if (data["valid"] == false) {
-//            errorMsg(data["msg"]);
-//        } else if (data["hasSum"] == false) {
-//            $("#actorTable").bootstrapTable('load', data["actors"]);
-//            errorMsg(data["msg"]);
-//        } else if (data["hasSum"] == true) {
-//            $("#score").val(data["sum"]);
-//            $("#showSum").html("总分：" + data["sum"] + "分");
-//            errorMsg(data["msg"]);
-//        }
-//    });
-//}
 /*****************************有关单位的操作***********************/
 /**
  * 添加单位

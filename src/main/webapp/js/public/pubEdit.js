@@ -238,6 +238,7 @@ function firstOrOther() {
 }
 /**************************************************************/
 function fullUpInfoProject(all, entity) {
+    console.log(all['filesData']);
     getActors();
     filesData = all['filesData'];
     Main_Actor = all['Main-Actor'];

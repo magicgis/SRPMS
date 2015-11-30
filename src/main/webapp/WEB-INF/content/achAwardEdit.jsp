@@ -137,7 +137,9 @@
                                                 </c:choose>
 
                                                 <span class="giveSum">
-                                                    <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
+                                                    <c:if test="${sessionScope.level == '3'}">
+                                                        <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
+                                                    </c:if>
                                                     <label for="totalScore">总分：</label>
 	                                                <input class="score" type="text"
 	                                                       name="score" id="totalScore" value="${achAward.score}">
@@ -240,8 +242,10 @@
                                     <div class="widget-main">
                                         <div class="row">
                                             <div id="unitToolbar">
-                                                <a class="btn btn-primary btn-sm addUnit">
-                                                    <i class="glyphicon glyphicon-plus"></i> 添加单位</a>
+                                                <c:if test="${sessionScope.level == '3'}">
+                                                    <a class="btn btn-primary btn-sm addUnit"><i
+                                                            class="glyphicon glyphicon-plus"></i> 添加单位</a>
+                                                </c:if>
                                             </div>
                                             <table id="unitTable"
                                                    data-toolbar="#unitToolbar"
@@ -282,48 +286,53 @@
                         <div id="formBtn" class="col-xs-12 clearfix">
                             <div class="pull-left onDel">
                                 <c:if test="${sessionScope.level == '3'}">
-                                    <button class="btn btn-danger del" type="button">
-                                        <i class="ace-icon fa fa-trash  bigger-100"></i>
+                                    <button class="tabOrdBtn btn btn-danger btn-sm del"
+                                            type="button">
+                                        <i class="ace-icon fa fa-trash  bigger-110"></i>
                                         删除
                                     </button>
-                                    &nbsp;
-                                    <button class="btn btn-danger orderBack" type="button">
-                                        <i class="ace-icon fa  fa-repeat bigger-100"></i>
+                                    <button class="tabOrdBtn btn btn-danger btn-sm orderBack"
+                                            type="button">
+                                        <i class="ace-icon fa  fa-repeat bigger-110"></i>
                                         撤回
                                     </button>
                                 </c:if>
                             </div>
                             <div class="pull-right">
-                                <span class="onEdit">
-                                    <button class="confirm btn btn-success" type="button">
-                                        <i class="ace-icon fa fa-check bigger-110"></i>
-                                        确认
-                                    </button>
-                                    &nbsp;
-                                    <button class="btn btn-info save" type="button">
-                                        <i class="ace-icon fa fa-save bigger-110"></i>
-                                        保存
-                                    </button>
-                                </span>
-                                <span class="onApprove">
-                                    <button class="btn btn-success Approve" type="button">
-                                        <i class="ace-icon fa fa-check bigger-110"></i>
-                                        通过
-                                    </button>
-                                    &nbsp;
-                                    <button class="btn btn-danger Refuse" type="button">
-                                        <i class="ace-icon fa fa-remove bigger-110"></i>
-                                        驳回
-                                    </button>
-                                </span>
-                                <button class="btn btn-success back" type="button">
+                                <button class="tabOrdBtn btn btn-danger btn-sm back"
+                                        type="button">
                                     <i class="ace-icon fa fa-reply  bigger-110"></i>
                                     返回
                                 </button>
+                              <span class="onEdit">
+                                <button class="tabOrdBtn btn btn-primary btn-sm save"
+                                        type="button">
+                                    <i class="ace-icon fa fa-save bigger-110"></i>
+                                    保存
+                                </button>
+                                <button class="tabOrdBtn btn btn-success btn-sm confirm"
+                                        type="button">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    确认
+                                </button>
+                              </span>
+                              <span class="onApprove">
+                                <button class="tabOrdBtn btn btn-success btn-sm approve"
+                                        type="button">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    通过
+                                </button>
+                                <button class="tabOrdBtn btn btn-warning btn-sm refuse"
+                                        type="button">
+                                    <i class="ace-icon fa fa-remove bigger-110"></i>
+                                    驳回
+                                </button>
+                              </span>
                             </div>
                         </div>
 
                     </div>
+                    <div class="col-xs-12" id="info_alert"></div>
                 </div>
             </div>
         </div>

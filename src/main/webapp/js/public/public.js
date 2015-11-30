@@ -788,7 +788,6 @@ function isNull(str) {
  */
 function afterSuccess(msg) {
     $('form input').val(null);
-    $('#paper-box').addClass('collapsed');
     $('#info_alert').empty();
     $('<div class="alert alert-block alert-success" id="success_info"></div>').appendTo('#info_alert');
     $('<button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times">' +
@@ -796,7 +795,7 @@ function afterSuccess(msg) {
     $('#success_icon').append(msg);
     setTimeout(function () {
         $('#info_alert').empty();
-    }, 2000);
+    }, 2100);
 }
 /**
  * 错误信息

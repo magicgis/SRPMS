@@ -265,8 +265,10 @@
 										<div class="widget-main">
 											<div class="row">
 												<div id="unitToolbar">
-													<a class="btn btn-primary btn-sm" id="addUnit"><i
-															class="glyphicon glyphicon-plus"></i> 添加单位</a>
+													<c:if test="${sessionScope.level == '3'}">
+														<a class="btn btn-primary btn-sm addUnit"><i
+																class="glyphicon glyphicon-plus"></i> 添加单位</a>
+													</c:if>
 												</div>
 												<table id="unitTable"
 												       data-toolbar="#unitToolbar"
