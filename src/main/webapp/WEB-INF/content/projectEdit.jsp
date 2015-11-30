@@ -620,7 +620,6 @@
             standardSelects1(StdList,projtypeList,standard);
         }else{
             DisplayForm($isAppr, "0",0);
-//            $('#isAppr').val('0');
             $('.standard0').show();
             $('.standard1').hide();
             var projectSet="项目未获立项";
@@ -628,7 +627,11 @@
             standardSelects0(StdList,standard);
         }
     }
-
+    if($('#attr').val()!='子课题'){
+        $('#unitInfo').show();
+    }else{
+        $('#unitInfo').hide();
+    }
     $('#actorTable').bootstrapTable({
         columns: [
             {

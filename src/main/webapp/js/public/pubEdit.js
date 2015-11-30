@@ -65,6 +65,7 @@ function totalMarksFormatter(data) {
 function subUnitInfo(index) {
     var unit = $('#unit').val();
     var rank = $('#rank').val();
+    unitTemp=getUnitsData();
     unitTemp.push({"rank": rank, "unit": unit});
     if(index == null) {  // 增加一行
         $('#unitTable').bootstrapTable("load", unitTemp);
@@ -239,7 +240,6 @@ function firstOrOther() {
 function fullUpInfoProject(all, entity) {
     getActors();
     filesData = all['filesData'];
-    unitTemp = all['units'];
     fundTemp = all['fund'];
     Main_Actor = all['Main-Actor'];
     Main_ActorName = all['Main-ActorName'];
