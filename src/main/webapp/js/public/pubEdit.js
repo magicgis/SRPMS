@@ -248,7 +248,7 @@ function fullUpInfoProject(all, entity) {
     showFiles(filesData);
     $("#fundTable").bootstrapTable('load', fundTemp);
     $("#actorTable").bootstrapTable('load', actorTemp);
-    if (entity['attr'] == "联合项目" || entity['attr'] == "子课题") {
+    if (entity['attr'] != "独立项目") {
         if (all['units'] != null) {
             unitTemp = all['units'];
         }
