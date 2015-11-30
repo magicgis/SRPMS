@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class project extends StandardBase implements StandardCheckInf {
     final private Map KEY_ROLE = new HashMap() {{
-        put("cheifActor", "负责人");
+        put("chiefActor", "负责人");
     }};
     final private Map PAGE_ELEM_NAME = new HashMap() {{
         put("name", "项目名称");
@@ -38,9 +38,14 @@ public class project extends StandardBase implements StandardCheckInf {
         validInfo.put(IS_VALID, false);
         validInfo.put(MESSAGE, "有效性未处理");
         List<Map> actors = getActors(map);
+        List<Map> chiefActors = getChiefActors(actors, (String) KEY_ROLE.get("chiefActor"));
 //        人员列表不能为空
         if (actors == null || actors.size() == 0) {
             validInfo.put(MESSAGE, "请填写参与人信息");
+            return validInfo;
+        }
+        if (chiefActors.size()>1){
+            validInfo.put(MESSAGE,"项目中只能有一个负责人。");
             return validInfo;
         }
         validInfo.put(IS_VALID, true);
@@ -78,13 +83,13 @@ public class project extends StandardBase implements StandardCheckInf {
         validInfo.put(IS_VALID, DEFAULT_FLAG);
         int caseSlct = 0;
         List<Map> actors = new ArrayList<>();
-        List<Map> myCheifActors = new ArrayList<>();
-        List<Map> cheifActors = new ArrayList<>();
+        List<Map> myChiefActors = new ArrayList<>();
+        List<Map> chiefActors = new ArrayList<>();
         List<Map> units = new ArrayList<>();
         units = getUnits(map);
         actors = getActors(map);
-        cheifActors = getChiefActors(actors, (String) KEY_ROLE.get("cheifActor"));
-        myCheifActors = getMyStaffActors(cheifActors);
+        chiefActors = getChiefActors(actors, (String) KEY_ROLE.get("chiefActor"));
+        myChiefActors = getMyStaffActors(chiefActors);
         int isAppr = Integer.parseInt((String) map.get("isAppr"));
         double calScore = 0;
         double startScore = 0;
@@ -143,7 +148,7 @@ public class project extends StandardBase implements StandardCheckInf {
             if (map.get("attr").equals("独立项目")) caseSlct += 110;
             else calScore = calScore / (units.size() + 1);
 //        是否是负责人
-            if (myCheifActors.size() != 0) caseSlct += 1;
+            if (myChiefActors.size() != 0) caseSlct += 1;
 //        是否是主持单位
             if (units != null && units.size() != 0 && getMySchRank(units) == 1) caseSlct += 10;
         }
@@ -224,10 +229,10 @@ public class project extends StandardBase implements StandardCheckInf {
                     return validInfo;
                 }
                 int actorNum = actors.size();
-                List<Map> cheifActors = getChiefActors(actors, (String) KEY_ROLE.get("cheifActor"));
-                for (Map cheifActor : cheifActors) {
-                    double chScore = Double.parseDouble((String) cheifActor.get("score"));
-                    Map info = cheifAcrorScoreCheck(actorNum, chScore, sum);
+                List<Map> chiefActors = getChiefActors(actors, (String) KEY_ROLE.get("chiefActor"));
+                for (Map chiefActor : chiefActors) {
+                    double chScore = Double.parseDouble((String) chiefActor.get("score"));
+                    Map info = chiefAcrorScoreCheck(actorNum, chScore, sum);
                     if (!(boolean) info.get("flag")) {
                         validInfo.put(MESSAGE, info.get(MESSAGE));
                         return validInfo;

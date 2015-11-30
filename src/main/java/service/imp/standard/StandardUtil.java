@@ -39,7 +39,7 @@ public class StandardUtil {
         int month = (int) getSystemTime().get("month");
         if(month <= 6 && month >= 1) currentYear = year-1;
         else currentYear = year;
-        String startTime = currentYear +"-01-01";
+        String startTime = currentYear-1 +"-12-1";
         String endTime = currentYear +"-11-30";
         map.put("startTime",startTime);
         map.put("endTime",endTime);
@@ -75,7 +75,7 @@ public class StandardUtil {
     }
 
     //获取关键角色参与人员列表Map其中包含本校和全部关键角色列表
-//    public Map getRoleArray(String cheifRole, Map map) {
+//    public Map getRoleArray(String chiefRole, Map map) {
 //        Map validInfo = new HashMap();
 //        validInfo.put(MESSAGE, DEFAULT_MSG);
 //        validInfo.put(IS_VALID, DEFAULT_FLAG);
@@ -103,7 +103,7 @@ public class StandardUtil {
 //                    break;
 //                }
 //            }
-//            if (role.equals(cheifRole)) {
+//            if (role.equals(chiefRole)) {
 //                ChiefAuthors.add(author);
 ////                我校教师
 //                if ((id != null && !id.equals("")

@@ -276,7 +276,7 @@ public class StandardBase {
             flag = true;
         return flag;
     }
-    public Map cheifAcrorScoreCheck(int actorNum,double chScore,double sum){
+    public Map chiefAcrorScoreCheck(int actorNum,double chScore,double sum){
         Map map = new HashMap();
         map.put("flag",false);
         map.put(MESSAGE,DEFAULT_MSG);
