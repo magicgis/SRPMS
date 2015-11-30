@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class achTran extends StandardBase implements StandardCheckInf {
     final private Map KEY_ROLE = new HashMap() {{
-        put("cheifActor", "负责人");
+        put("chiefActor", "负责人");
     }};
     final private Map PAGE_ELEM_NAME = new HashMap() {{
         put("name", "成果名称");
@@ -76,13 +76,13 @@ public class achTran extends StandardBase implements StandardCheckInf {
             return validInfo;
         }
         int count = 0;
-        List<Map> cheifActors = getChiefActors(actors, (String) KEY_ROLE.get("cheifActor"));
+        List<Map> chiefActors = getChiefActors(actors, (String) KEY_ROLE.get("chiefActor"));
         for (Map actor : actors) {
             if (Double.parseDouble((String) actor.get("score")) != 0) count++;
         }
-        for (Map actor:cheifActors){
+        for (Map actor:chiefActors){
             double chScore = Double.parseDouble((String) actor.get("score"));
-            Map info = cheifAcrorScoreCheck(count,chScore,sum);
+            Map info = chiefAcrorScoreCheck(count,chScore,sum);
             if (!(boolean)info.get("flag")){
                 validInfo.put(MESSAGE,info.get(MESSAGE));
                 return validInfo;

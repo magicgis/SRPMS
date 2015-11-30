@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class achAward extends StandardBase implements StandardCheckInf {
     final private Map KEY_ROLE = new HashMap() {{
-        put("cheifActor", "负责人");
+        put("chiefActor", "负责人");
     }};
     final private Map PAGE_ELEM_NAME = new HashMap() {{
         put("name", "成果名称");

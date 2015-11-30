@@ -13,9 +13,9 @@ import java.util.Map;
  */
 public class book extends StandardBase implements StandardCheckInf {
     final private Map KEY_ROLE = new HashMap() {{
-        put("firstCheifActor", "主编或第一主编");
-        put("secondCheifActor", "第二及以下编");
-        put("viceCheifActor", "副主编");
+        put("firstChiefActor", "主编或第一主编");
+        put("secondChiefActor", "第二及以下编");
+        put("viceChiefActor", "副主编");
         put("actor", "参编");
     }};
     final private Map PAGE_ELEM_NAME = new HashMap() {{
@@ -72,9 +72,9 @@ public class book extends StandardBase implements StandardCheckInf {
         validInfo.put(IS_VALID,DEFAULT_FLAG);
         validInfo.put(MESSAGE,DEFAULT_MSG);
         List<Map>actors = getActors(map);
-//        List<Map>firstCheifActors = getChiefActors(actors,"firstCheifActor");
-//        List<Map>secondCheifActors = getChiefActors(actors,"secondCheifActor");
-//        List<Map>viceCheifActors = getChiefActors(actors,"viceCheifActor");
+//        List<Map>firstChiefActors = getChiefActors(actors,"firstChiefActor");
+//        List<Map>secondChiefActors = getChiefActors(actors,"secondChiefActor");
+//        List<Map>viceChiefActors = getChiefActors(actors,"viceChiefActor");
 //        List<Map>Actors = getChiefActors(actors,"actor");
         List<Map> resActors = new ArrayList<>();
         for (Map actor:actors){
@@ -149,10 +149,10 @@ public class book extends StandardBase implements StandardCheckInf {
         else if (pubType.equals("其他教材"))tyoe =50;
         else tyoe=0;
         System.out.println(role);
-        System.out.print(KEY_ROLE.get("firstCheifActor"));
-        if (role.equals(KEY_ROLE.get("firstCheifActor")))tyoe+= 1;
-        else if (role.equals(KEY_ROLE.get("secondCheifActor"))) tyoe+=2;
-        else if (role.equals(KEY_ROLE.get("viceCheifActor"))) tyoe+= 3;
+        System.out.print(KEY_ROLE.get("firstChiefActor"));
+        if (role.equals(KEY_ROLE.get("firstChiefActor")))tyoe+= 1;
+        else if (role.equals(KEY_ROLE.get("secondChiefActor"))) tyoe+=2;
+        else if (role.equals(KEY_ROLE.get("viceChiefActor"))) tyoe+= 3;
         else if (role.equals(KEY_ROLE.get("actor"))) tyoe+=4;
         switch (tyoe){
             case 11:

@@ -85,7 +85,7 @@ public class StandardServiceImp extends StandardBase implements StandardService 
 //            return calFlow;
         } else {
             BigDecimal sumt = st.getValue();
-            BigDecimal sumt2 = st.getValue();
+            BigDecimal sumt2 = st.getValue2();
             BigDecimal mint = st.getMin() == null ? new BigDecimal(0) : st.getMin();
             BigDecimal maxt = st.getMax() == null ? new BigDecimal(999) : st.getMax();
             double sum = sumt.doubleValue();
