@@ -102,6 +102,7 @@
 
 																<div class="col-sm-9">
 																	<input id="paperName" name="name"
+																		   onblur=$('#paperName').val($('#paperName').val().replace(/\"/g,"“"))
 																	       type="text" class="form-control col-xs-12"
 																	       placeholder="请输入"/>
 																</div>

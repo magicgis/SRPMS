@@ -262,8 +262,13 @@ function getApprovalByDep(pData) {
     }
     return keyStr;
 }
-
 /**
+ * 对英文双引号限制
+ * */
+$('#name').blur(function(){
+    $('#name').val($('#name').val().replace(/\"/g,"“"));
+});
+ /**
  * 公共方法 对任务的完成状态进行翻译
  * @param value
  * @return String
@@ -795,7 +800,7 @@ function afterSuccess(msg) {
     $('#success_icon').append(msg);
     setTimeout(function () {
         $('#info_alert').empty();
-    }, 2100);
+    }, 2000);
 }
 /**
  * 错误信息
