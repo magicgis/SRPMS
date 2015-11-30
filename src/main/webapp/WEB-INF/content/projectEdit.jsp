@@ -627,7 +627,7 @@
             standardSelects0(StdList,standard);
         }
     }
-    if($('#attr').val()!='子课题'){
+    if($('#attr').val()!='独立项目'){
         $('#unitInfo').show();
     }else{
         $('#unitInfo').hide();
