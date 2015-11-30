@@ -231,7 +231,7 @@ function editActor(row, index) {
             DisplayForm($role, row["role"], 0);
             //填充单位
             var $units = $("#units").selectize();
-            DisplayForm($units, row["unit"], 1);
+            DisplayForm($units, row["unit"], 0);
             //填充其他
             $('#actorsInfo').autofill(row, {
                 findbyname: false,

@@ -32,13 +32,13 @@
 
   <jsp:include page="public/jsHeader.jsp"/>
   <style>
-    td.bs-checkbox {
-      display: none;
-    }
+    /*td.bs-checkbox {*/
+      /*display: inline;*/
+    /*}*/
 
-    th.bs-checkbox {
-      display: none;
-    }
+    /*th.bs-checkbox {*/
+      /*display: inline;*/
+    /*}*/
 
   </style>
 </head>

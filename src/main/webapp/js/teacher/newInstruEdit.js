@@ -100,7 +100,7 @@ function editActor(row, index) {
             DisplayForm($role, row["role"], 0);
             $("#role").val(row["role"]);
             //填充单位
-            DisplayForm($units, row["unit"], 1);
+            DisplayForm($units, row["unit"], 0);
             //填充其他
             $('#actorsInfo').autofill(row, {
                 findbyname: false,

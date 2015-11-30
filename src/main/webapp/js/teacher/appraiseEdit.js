@@ -123,7 +123,7 @@ function editActor(row, index) {
             //填充角色
             DisplayForm($role, row["role"], 0);
             //填充单位
-            DisplayForm($units, row["unit"], 1);
+            DisplayForm($units, row["unit"], 0);
             //填充其他
             $('#actorsInfo').autofill(row, {
                 findbyname: false,

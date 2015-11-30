@@ -240,13 +240,15 @@ function firstOrOther() {
 function fullUpInfoProject(all, entity) {
     getActors();
     filesData = all['filesData'];
-    fundTemp = all['fund'];
     Main_Actor = all['Main-Actor'];
     Main_ActorName = all['Main-ActorName'];
     replyByCol = all['replyByCol'];
     replyByDep = all['replyByDep'];
     showFiles(filesData);
-    $("#fundTable").bootstrapTable('load', fundTemp);
+    if(!isNull(all['fund'])){
+        fundTemp = all['fund'];
+        $("#fundTable").bootstrapTable('load', fundTemp);
+    }
     $("#actorTable").bootstrapTable('load', actorTemp);
     if (entity['attr'] != "独立项目") {
         if (all['units'] != null) {

@@ -402,9 +402,9 @@
     var taskId = '${taskId}';
     var taskName = '${taskName}';
     upToLoadFile();//文件上传
-    allSelection();
+    allSections();
     getDept();
-    fullUpInfoAward(all, entity);//填充
+    fullUpInfoProject(all, entity);//填充
     var filesData;
     if (filesData == null) {
         filesData = {};
