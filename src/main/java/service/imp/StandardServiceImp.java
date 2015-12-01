@@ -123,7 +123,7 @@ public class StandardServiceImp extends StandardBase implements StandardService 
         String type = getPageType(order, map);
 
         if (type == null) {
-            System.out.println("+++++"+type);
+//            System.out.println("+++++"+type);
             validInfo.put(MESSAGE, getMsg("1023"));
             return validInfo;
         }
@@ -145,8 +145,8 @@ public class StandardServiceImp extends StandardBase implements StandardService 
             e.printStackTrace();
             return validInfo;
         }
-        validInfo = scoreCalculation(order, map);
-        if (!(boolean) validInfo.get(IS_VALID)) return validInfo;
+//        validInfo = scoreCalculation(order, map);
+//        if (!(boolean) validInfo.get(IS_VALID)) return validInfo;
         validInfo = standardCheck.confirmCheck(map);
         if (!(boolean) validInfo.get(IS_VALID)) return validInfo;
         validInfo.put(MESSAGE, "已经确认，如需修改请撤销！");

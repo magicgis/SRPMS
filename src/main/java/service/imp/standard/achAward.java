@@ -15,7 +15,7 @@ public class achAward extends StandardBase implements StandardCheckInf {
     }};
     final private Map PAGE_ELEM_NAME = new HashMap() {{
         put("name", "成果名称");
-        put("dept.id", "成果名称");
+//        put("dept.id", "成果名称");
         put("awdprop", "奖励性质");
         put("date", "获奖时间");
     }};
@@ -50,7 +50,7 @@ public class achAward extends StandardBase implements StandardCheckInf {
         validInfo.put("actors",tableScore);
         validInfo.put(IS_VALID,true);
         validInfo.put(MESSAGE,"请确认分数。");
-        return null;
+        return map;
     }
 
     @Override

@@ -18,7 +18,7 @@ public class patent extends StandardBase implements StandardCheckInf {
     final private Map PAGE_ELEM_NAME = new HashMap() {{
         put("name", "专利名称");
         put("pubDate", "公开时间");
-        put("dept.value", "所属部门");
+        put("dept.id", "所属部门");
         put("standard.id", "专利级别");
         put("apprDate", "获批时间");
 //        put("endfillDate", "终止填写时间");
