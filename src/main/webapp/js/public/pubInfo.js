@@ -2,20 +2,6 @@
  * Created by zheng on 2015/6/12.
  */
 function allSelects() {
-    //学院
-    //$('#colName').selectize({
-    //    valueField: 'id',
-    //    labelField: 'value',
-    //    searchField: 'value',
-    //    options: [],
-    //    maxItems: 1,
-    //    create: false,
-    //    preload: true,
-    //    load: function (query, callback) {
-    //        var queryItem = "院系";
-    //        realTimeQuery(query, queryItem, callback);
-    //    }
-    //});
     //部门
     $('#deptName').selectize({
         valueField: 'id',
@@ -26,16 +12,22 @@ function allSelects() {
         create: false,
         preload: true,
         load: function (query, callback) {
-            var queryItem = "部门";
-            realTimeQuery(query, queryItem, callback);
+            $.ajax({
+                url: '/api/baseinfo/院系',
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    query: query
+                },
+                error: function () {
+                    callback();
+                },
+                success: function (res) {
+                    callback(res);
+                }
+            });
         }
     });
-
-    //职称
-    /* {"id": "讲师", "value": "讲师"},
-     {"id": "副教授", "value": "副教授"},
-     {"id": "教授", "value": "教授"}
-     */
     $('#rankName').selectize({
         valueField: 'id',
         labelField: 'value',
@@ -95,21 +87,7 @@ function allSelects() {
 }
 //实时请求的数据
 function realTimeQuery(query, queryItem, callback) {
-    $.ajax({
-        url: '/api/baseinfo/' + queryItem,
-        type: 'get',
-        dataType: 'json',
-        data: {
-            query: query
-        },
-        error: function () {
-            callback();
-        },
-        success: function (res) {
-            callback(res);
 
-        }
-    });
 };
 /**
  * select的数据填充

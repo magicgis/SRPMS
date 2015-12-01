@@ -208,19 +208,19 @@
                                                 <button id="addUser" class="btn btn-primary">
                                                     <i class="fa fa-plus"></i> 添&nbsp;&nbsp;加
                                                 </button>
-                                                <button id="scanUser" class="btn btn-primary">
+                                                <button class="btn btn-primary scanUser">
                                                     <i class="fa fa-lock"></i> 查&nbsp;&nbsp;看
                                                 </button>
 
-                                                <button id="resetPwd" class="btn btn-primary">
+                                                <button class="btn btn-primary resetPwd">
                                                     <i class="fa fa-lock"></i> 密码重置
                                                 </button>
                                             </c:when>
                                             <c:when test="${sessionScope.level == '2'}">
-                                                <button id="editUser" class="btn btn-primary">
+                                                <button class="btn btn-primary editUser">
                                                     <i class="fa fa-pencil"></i> 修改
                                                 </button>
-                                                <button id="resetPwd" class="btn btn-primary">
+                                                <button class="btn btn-primary resetPwd">
                                                     <i class="fa fa-lock"></i> 密码重置
                                                 </button>
                                             </c:when>

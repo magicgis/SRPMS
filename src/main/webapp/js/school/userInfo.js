@@ -2,16 +2,18 @@
  * Created by huyuanyuan555 on 2015/4/26.
  */
 $(function(){
-    //selectFill(user);
-    //$('#staffInfo').autofill(user, {
-    //    findbyname: true,
-    //    restrict: false
-    //});
-    uneditableForm();
+    if(!isNull(user['id'])){
+        uneditableForm();
+    }else{
+        $('.editUser').hide();
+        $('.saveAdd').show();
+        enableditForm()
+    }
 });
 //添加教师信息
 function addUser(){
     //清空表单中的数据
+    //window.location.href=''
     $('form input').val(null).removeAttr('selected');
     $('#staffId').removeAttr("disabled", 'disabled');
     enableditForm();
@@ -24,7 +26,7 @@ function saveAdd() {
     var staff = $('#staffInfo').serializeJSON();
     $.ajax({
         url: '/api/user/new',
-        type: 'post',
+        type: 'put',
         data: JSON.stringify(staff),
         contentType: 'application/json;charset=UTF-8',
         success: function (result) {
