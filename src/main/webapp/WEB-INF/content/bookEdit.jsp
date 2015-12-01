@@ -86,7 +86,7 @@
                                                        for="bkName">著作名称</label>
                                                 <div class="col-sm-8">
                                                     <input type="text" id="bkName" name="name"
-                                                           onblur=$('#bkName').val($('#bkName').val().replace(/\"/g,"“"))
+                                                           onkeyup=$('#bkName').val($('#bkName').val().replace(/\"/g,"“"))
                                                            value="${book.name}"
                                                            placeholder="" class="col-xs-12"/>
                                                 </div>
@@ -152,6 +152,7 @@
                                                 <div class="col-sm-8">
                                                     <input type="text" name="sumWord" id="sumWord"
                                                            value="${book.sumWord}"
+                                                           precision="4"
                                                            placeholder="单位：万字" class="col-xs-12"/>
                                                 </div>
                                             </div>
@@ -372,7 +373,6 @@
         });
     });
     var entity = ${ObjectMapper.writeValueAsString(book)};
-
     if(isNull(entity)) {
         entity = {};
     }

@@ -3,6 +3,7 @@
  */
 $(function(){
     if(!isNull(user['id'])){
+        $('.editUser').show();
         uneditableForm();
     }else{
         $('.editUser').hide();
@@ -10,33 +11,22 @@ $(function(){
         enableditForm()
     }
 });
-//添加教师信息
-function addUser(){
-    //清空表单中的数据
-    //window.location.href=''
-    $('form input').val(null).removeAttr('selected');
-    $('#staffId').removeAttr("disabled", 'disabled');
-    enableditForm();
-    $('.saveEdit').hide();
-    $('.saveAdd').show();
-}
 //*********************************************样式显示和具体功能函数********************************
 //保存添加的数据
 function saveAdd() {
     var staff = $('#staffInfo').serializeJSON();
     $.ajax({
-        url: '/api/user/new',
-        type: 'put',
+        url: '/api/staff/new',
+        type: 'POST',
         data: JSON.stringify(staff),
         contentType: 'application/json;charset=UTF-8',
         success: function (result) {
-            if (result.errmsg) {
-                //失败提示
-                failInfo('信息添加失败！');
-                return;
+            console.log(result);
+            if (!result) {
+                successInfo('信息添加成功!');
+                window.location.href = '/index/user/all';
             } else {
-                /* //成功提示
-                 successInfo('信息添加成功!');*/
+                failInfo('信息添加失败！');
             }
         },
         error: function (msg) {
@@ -57,16 +47,7 @@ function editUser() {
         uneditableForm();
         $('.saveEdit').hide();
     }
-
-    //$('form input').val(null);
-    ////选择框数据加载
-    ////console.log(staff);
     selectFill(user);
-    ////选中记录加载到表单中
-    //$('#staffInfo').autofill(user, {
-    //    findbyname: true,
-    //    restrict: false
-    //});
 }
 
 
@@ -102,33 +83,3 @@ function saveEdit() {
     });
 }
 
-/*
- * 教师密码重置
- *
- * */
-function rePassword() {
-    var staff = user;
-    if (staff == null) {
-        BootstrapDialog.show({
-            title: '温馨提示：',
-            message: '请选择一条要重置密码的数据！'
-        });
-        return;
-    }
-    $.ajax({
-        type: 'put',
-        url: '../api/staff/reset/' + staff['staff.id'],
-        contentType: 'application/json;charset=UTF-8',
-        success: function (result) {
-            if (result.errmsg) {
-                //失败提示
-                failInfo('密码重置失败！');
-                return;
-            } else {
-                /*//成功提示
-                 successInfo('信息修改成功!');*/
-                showTable();
-            }
-        }
-    });
-}

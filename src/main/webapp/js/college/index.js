@@ -1130,7 +1130,28 @@ var magStates = {
         }
     }
 };
-
+$('.resetPwd').click(function(){
+    var $userTable=$('#mainTable');
+    var staId=$userTable.bootstrapTable('getSelections')[0]['id'];
+    if (isNull(staId)) {
+        BootstrapDialog.show({
+            title: '温馨提示：',
+            message: '请选择一条要重置密码的数据！'
+        });
+        return;
+    }
+    $.ajax({
+        type: 'put',
+        url: '../api/staff/reset/' + staId,
+        contentType: 'application/json;charset=UTF-8',
+        success: function (result) {
+            successInfo("密码重置成功！");
+        },
+        error:function(){
+            failInfo("密码重置失败!")
+        }
+    });
+});
 var stateman = new StateMan();
 
 stateman

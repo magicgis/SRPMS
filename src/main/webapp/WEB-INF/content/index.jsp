@@ -12,16 +12,6 @@
 
     <jsp:include page="public/jsHeader.jsp"/>
     <script src="<c:url value="/plugin/stateman/stateman.js"/>"></script>
-
-    <style>
-        td.bs-checkbox {
-            display: none;
-        }
-
-        th.bs-checkbox {
-            display: none;
-        }
-    </style>
 </head>
 
 <body class="no-skin">
@@ -205,7 +195,7 @@
                                     <div id="UserToolbar" style="display: none;">
                                         <c:choose>
                                             <c:when test="${sessionScope.level == '3'}">
-                                                <button id="addUser" class="btn btn-primary">
+                                                <button class="btn btn-primary addUser">
                                                     <i class="fa fa-plus"></i> 添&nbsp;&nbsp;加
                                                 </button>
                                                 <button class="btn btn-primary scanUser">
@@ -256,6 +246,7 @@
 </a>
 <!-- /.main-container -->
 <script src='<c:url value="/js/public/public.js"/>'></script>
+<script src='<c:url value="/js/public/pubInfo.js"/>'></script>
 <script src='<c:url value="/js/public/pubAllSRInfo.js"/>'></script>
 <script src='<c:url value="/js/public/pubIndex.js"/>'></script>
 
@@ -301,7 +292,6 @@
         stateman.go(cls);
     });
 </script>
-
 
 </body>
 </html>

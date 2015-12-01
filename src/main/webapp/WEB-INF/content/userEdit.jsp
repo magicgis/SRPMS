@@ -264,10 +264,6 @@
     //清空表单中的数据
     $('form input').val(null).removeAttr('selected');
   });
-  //重置用户密码
-  $('.resetPwd').click(function () {
-    rePassword();
-  });
   //修改教师信息
   $('.editUser').click(function () {
     // $('#saveEdit').show();//只是测试 根据用户状态判断用户信息是否可编辑

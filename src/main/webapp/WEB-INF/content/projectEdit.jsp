@@ -401,7 +401,7 @@
                                             </div>
                                             <table id="unitTable"
                                                    data-toolbar="#unitToolbar"
-                                                   data-show-toggle="false"
+                                                   data-show-toggle="true"
                                                    data-show-footer="true"></table>
                                         </div>
                                     </div>
@@ -629,7 +629,7 @@
             standardSelects0(StdList,standard);
         }
     }
-    if($('#attr').val()!='独立项目'){
+    if($('#attr').val()!='独立项目'&&!isNull($('#attr').val())){
         $('#unitInfo').show();
     }else{
         $('#unitInfo').hide();

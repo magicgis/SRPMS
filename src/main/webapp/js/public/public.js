@@ -265,7 +265,7 @@ function getApprovalByDep(pData) {
 /**
  * 对英文双引号限制
  * */
-$('#name').blur(function(){
+$('#name').keyup(function(){
     $('#name').val($('#name').val().replace(/\"/g,"“"));
 });
  /**
@@ -390,6 +390,9 @@ function hideActorOperate() {
 }
 function hideUnitOperate() {
     $('#unitTable').bootstrapTable('hideColumn', 'operate');
+}
+function hideFundOperate() {
+    $('#fundTable').bootstrapTable('hideColumn', 'operate');
 }
 function hideColumnScore() {
     $('#actorTable').bootstrapTable('hideColumn', 'score');
@@ -1013,6 +1016,7 @@ function init(entity,all,replyByDep,level) {
             uneditableForm();
             hideActorOperate();
             hideUnitOperate();
+            hideFundOperate();
             $('#upload').hide();
             $('.getScore').hide();
             $('#totalScore').attr('disabled', 'disabled');
@@ -1095,6 +1099,7 @@ function init(entity,all,replyByDep,level) {
 
                 hideActorOperate();
                 hideUnitOperate();
+                hideFundOperate();
                 //hideColumnScore(); // 还在流程中 分数不给看
                 $('.addActor').hide();
                 $('.addUnit').hide();
@@ -1103,6 +1108,9 @@ function init(entity,all,replyByDep,level) {
                 $('#totalScore').attr('disabled', 'disabled');
 
             } else if(process == '9') {
+                hideActorOperate();
+                hideUnitOperate();
+                hideFundOperate();
                 $('.confirm').hide();
                 $('.onApprove').hide();
                 $('.orderBack').hide();

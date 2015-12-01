@@ -18,7 +18,7 @@ function save() {
     saveStep1().success(function(data) {
         saveStep2(data).success(function (res) {
             afterSuccess("保存成功！");
-            window.location.href = '/index/entity/book/all';
+            //window.location.href = '/index/entity/book/all';
         })
     });
 }
@@ -249,7 +249,6 @@ function editActor(row, index) {
 /********************************保存***************************/
 function saveStep1() {
     var data = getFormJSON('book');
-    //data['standard.id'] = $('#projbelong').val();
     console.log(data);
     return $.ajax({
         url: '/api/book/book',

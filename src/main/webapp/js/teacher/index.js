@@ -24,7 +24,8 @@ function processView() {
                 pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
-                        radio: true
+                        radio: false,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
