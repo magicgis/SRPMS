@@ -253,11 +253,7 @@
 
 <script type="text/javascript">
   var user=${ObjectMapper.writeValueAsString(user)};
-
   allSelects();
-  $('.addUser').click(function(){
-      addUser();
-  });
   $('.saveEdit').click(function(){
     saveEdit();
     //清空表单中的数据

@@ -1831,8 +1831,10 @@ var userStates = {
         }
     }
 };
+$('#addUser').click(function () {
+    window.location.href='/user/new'
+});
 /*用户管理结束*/
-
 /*基础表管理开始*/
 var sysBaseStates = {
     "sysBase": {

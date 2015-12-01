@@ -27,7 +27,6 @@ window.operateEvents = {
 };
 
 function disableOrEnableUser(id, currentStatus) {
-    console.log(currentStatus);
     var url='';
     if(currentStatus){
          url='';
