@@ -126,7 +126,10 @@ public class Trans {
                         else if (Integer.class.equals(type)) {
                             method.invoke(obj, Integer.valueOf((String) map.get(fdname)));
                         }
-                        else {
+                        else if (Double.class.equals(type)){
+                            method.invoke(obj, Double.valueOf((String) map.get(fdname)));
+                        }
+                        else  {
                             method.invoke(obj, map.get(fdname));
                         }
                     }

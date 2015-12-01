@@ -23,7 +23,7 @@ public class Book implements VirtualEntity {
     private String isbn;
     private String year;
     private String score;
-    private Integer sumWord;
+    private Double sumWord;
     private String bulDate;
     private String process;
     private String arg;
@@ -113,11 +113,11 @@ public class Book implements VirtualEntity {
 
     @Basic
     @Column(name = "sum_word", nullable = true, insertable = true, updatable = true, precision = 0)
-    public Integer getSumWord() {
+    public Double getSumWord() {
         return sumWord;
     }
 
-    public void setSumWord(Integer sumWord) {
+    public void setSumWord(Double sumWord) {
         this.sumWord = sumWord;
     }
 
