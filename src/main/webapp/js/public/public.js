@@ -408,7 +408,7 @@ function messageModal(message) {
 /**--------------------------获取编辑页面的数据------------------**/
 function getFormJSON(type) {
     var jsonData = $("#" + type).serializeJSON();
-    jsonData['score'] = $('#totalScore').val();
+    jsonData['score'] = Math.floor($('#totalScore').val());
 
     return jsonData;
 }
@@ -416,7 +416,7 @@ function getFormJSON(type) {
 
 function getFormData(type) {
     var jsonData = $("#" + type).serializeJSON();
-    jsonData['score'] = $('#totalScore').val();
+    jsonData['score'] = Math.floor($('#totalScore').val());
 
     $.each(jsonData, function (key, value) {
         if (isNull(value)) {
@@ -1130,7 +1130,7 @@ function init(entity,all,replyByDep,level) {
             }
             break;
     }
-    //console.log('process:', process, 'status:', status, 'level:', level, 'isMain:', isMain, 'statusCode:', statusCode);
+    console.log('process:', process, 'status:', status, 'level:', level, 'isMain:', isMain, 'statusCode:', statusCode);
 }
 function uneditableForm() {
     $('form input').attr("disabled", "disabled");
@@ -1190,7 +1190,7 @@ function projbelong(value, row){
  */
 function getScore(type) {
     var jsonData = getFormData(type);
-    //console.log(jsonData);
+    console.log(jsonData);
     workflow.getScore(jsonData).success(function (data) {
         if (data["valid"] == false) { // 检验不合格
             errorMsg(data["msg"]);
@@ -1200,7 +1200,7 @@ function getScore(type) {
             flag = false;
             errorMsg(data["msg"]);
         } else if (data["hasSum"] == true) {  // 给总分，负责人分配分数
-            $("#totalScore").val(data["sum"]);
+            $("#totalScore").val(Math.floor(data["sum"]));
             errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
             flag = true;
         }
