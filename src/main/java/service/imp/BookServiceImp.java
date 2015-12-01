@@ -19,7 +19,7 @@ public class BookServiceImp extends BaseServiceImp<Book> implements BookService 
 
     @Override
     public List<Book> search(String keyword, String sort, String order) {
-        List<String> keys = Arrays.asList("name", "patentNo", "patentPubNo");
+        List<String> keys = Arrays.asList("name", "isbn");
         return bookDao.findByArrayFuz(keys, keyword, sort, order);
     }
 }
