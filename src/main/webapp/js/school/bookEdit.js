@@ -263,16 +263,12 @@ function saveStep2(data) {
     //避免新建的时候多次点击保存多次新建
     $('#bookId').val(data);
     send['actors'] = getActorsData();
-    //send['fund'] = getFundsData();
     send['filesData'] = filesData;
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
     send['isAward']=$('#isAward').val();
     send['awarDtype']=$('#awarDtype').val();
     send['isTrans']=$('#isTrans').val();
-    //if($('#attr').val() == '联合项目' || entity['attr'] == "子课题"){
-    //    send['units'] = getUnitsData();
-    //}
     return $.ajax({
         type: 'put',
         url: '/api/book/' + data,

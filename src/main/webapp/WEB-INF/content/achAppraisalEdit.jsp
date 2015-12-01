@@ -601,7 +601,7 @@
         saveStep1().success(function(data) {
 
             saveStep2(data).success(function (res) {
-                getScore('appraise');
+                getScore('achAppraisal');
             });
         });
     });

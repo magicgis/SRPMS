@@ -504,10 +504,6 @@
     $('.addActor').click(function () {
         addActor();
     });
-    //监听 分配分数
-    $('.getScore').click(function () {
-        getScore();
-    });
     //监听 点击保存
     $(".save").click(function () {
         save();
