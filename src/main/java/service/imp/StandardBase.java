@@ -94,13 +94,13 @@ public class StandardBase {
         }
         if (map == null) return type;
 //        Map map = getMaxMap(order);
-        System.out.println("88888888"+variableMap.get("WF_Type"));
+//        System.out.println("88888888"+variableMap.get("WF_Type"));
         if ("paper".equals(variableMap.get("WF_Type")))
             type = (String) map.get("type");
         else
             type = (String) variableMap.get("WF_Type");
-        System.out.println("88888888"+variableMap);
-        System.out.println("88888888"+type);
+//        System.out.println("88888888"+variableMap);
+//        System.out.println("88888888"+type);
         return type;
     }
 

@@ -31,10 +31,10 @@ public class StandardServiceImp extends StandardBase implements StandardService 
         Map calFlow = new HashMap();
         calFlow.put(IS_VALID, DEFAULT_FLAG);
         calFlow.put(MESSAGE, DEFAULT_MSG);
+        System.out.println("__________"+map);
         String type = getPageType(order, map);
-
         if (type == null) {
-            System.out.println("^^^^^"+type);
+//            System.out.println("^^^^^"+type);
             validInfo.put(MESSAGE, getMsg("1023"));
             return validInfo;
         }
@@ -70,7 +70,7 @@ public class StandardServiceImp extends StandardBase implements StandardService 
 //        System.out.println("+++++++++++++="+stIdType);
         String stId = (String) map.get(stIdType);
 //        System.out.println("+++++++++++++="+map);
-        System.out.println("+++++++++++++=" + stId);
+//        System.out.println("+++++++++++++=" + stId);
         Standard st = null;
         if (stId != null)
             st = standardDao.getById(stId);
@@ -84,10 +84,12 @@ public class StandardServiceImp extends StandardBase implements StandardService 
             return calFlow;
 //            return calFlow;
         } else {
-            BigDecimal sumt = st.getValue();
-            BigDecimal sumt2 = st.getValue2();
+//            BigDecimal sumt = st.getValue();
+//            BigDecimal sumt2 = st.getValue2();
             BigDecimal mint = st.getMin() == null ? new BigDecimal(0) : st.getMin();
             BigDecimal maxt = st.getMax() == null ? new BigDecimal(999) : st.getMax();
+            BigDecimal sumt = st.getValue() == null ? new BigDecimal(0) : st.getValue();
+            BigDecimal sumt2 = st.getValue2() == null ? new BigDecimal(0) : st.getValue2();
             double sum = sumt.doubleValue();
             double sum2 = sumt2.doubleValue();
             double min = mint.doubleValue();
@@ -96,6 +98,7 @@ public class StandardServiceImp extends StandardBase implements StandardService 
             calFlow = standardCheck.isExtrrmumBand(map, min, max);
             if (!(boolean) calFlow.get(IS_VALID)) return calFlow;
             calFlow = standardCheck.getFinalScore(map, sum, sum2);
+            System.out.println("000000000000"+calFlow);
             return calFlow;
         }
     }

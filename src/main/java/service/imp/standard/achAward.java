@@ -44,6 +44,12 @@ public class achAward extends StandardBase implements StandardCheckInf {
 
     @Override
     public Map getFinalScore(Map map, double tableScore, double tableScore2) {
+
+        Map validInfo = new HashMap();
+        validInfo.put("hasSum",true);
+        validInfo.put("actors",tableScore);
+        validInfo.put(IS_VALID,true);
+        validInfo.put(MESSAGE,"请确认分数。");
         return null;
     }
 
