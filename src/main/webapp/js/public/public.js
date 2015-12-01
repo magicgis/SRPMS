@@ -413,6 +413,30 @@ function getFormJSON(type) {
     return jsonData;
 }
 
+function getForm_notSerialize(){
+    var jsonData = new Object();
+
+    var elementlist = document.querySelectorAll('input');
+    $.each(elementlist, function(index, value) {
+        var attrName = $(value).attr('name');
+        var attrVal = $(value).attr('value');
+        if( !isNull(attrName)) {
+            jsonData[attrName] = attrVal;
+        }
+    });// 表单的序列化 不能用时 调用这个方法
+    jsonData['score'] = Math.floor($('#totalScore').val());
+
+    if (filesData != null) {
+        jsonData['filesData'] = filesData;
+    }
+    if ($("form").attr('name') == 'project') {
+        jsonData['fund'] = getFundsData();
+    }
+    jsonData["actors"] = getActorsData();
+    jsonData["units"] = getUnitsData();
+    jsonData["WF_User"] = userName;
+    return jsonData;
+}
 
 function getFormData(type) {
     var jsonData = $("#" + type).serializeJSON();

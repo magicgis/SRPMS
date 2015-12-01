@@ -90,7 +90,7 @@
 
 												<div class="col-sm-8">
 													<input type="text" id="code" name="code"
-													       placeholder="" class="col-xs-12" value="${project.code}"/>
+													       placeholder="" class="form-control col-xs-12" value="${project.code}"/>
 												</div>
 											</div>
 
@@ -100,7 +100,7 @@
 
 												<div class="col-sm-8">
 													<input type="text" id="name" name="name"
-													       placeholder="" class="col-xs-12" value="${project.name}"/>
+													       placeholder="" class="form-control col-xs-12" value="${project.name}"/>
 												</div>
 											</div>
 										</div>
@@ -111,11 +111,11 @@
 												       for="dept">所属部门</label>
 
 												<div class="col-sm-8">
-													<div class="col-sm-13">
+													<%--<div class="col-sm-13">--%>
 														<input id="dept" name="dept.id"
 														       type="text" class="form-control col-xs-12"
 														       placeholder="请选择"/>
-													</div>
+													<%--</div>--%>
 												</div>
 											</div>
 
@@ -124,12 +124,12 @@
 												       for="attr">项目属性</label>
 
 												<div class="col-sm-8">
-													<div class="col-sm-13">
-														<input class="form-control" id="attr"
+													<%--<div class="col-sm-13">--%>
+														<input class="form-control col-xs-12" id="attr"
 														       type="text" name="attr"
 														       value=""
 														       placeholder="请选择"/>
-													</div>
+													<%--</div>--%>
 
 												</div>
 											</div>
@@ -165,11 +165,11 @@
 												       for="projtype">项目类别</label>
 
 												<div class="col-sm-8">
-													<div class="col-sm-13">
-														<input class="form-control projStand" id="projtype"
+													<%--<div class="col-sm-13">--%>
+														<input class="form-control col-xs-12 projStand" id="projtype"
 														       type="text" name="projtype"
 														       placeholder="请选择"/>
-													</div>
+													<%--</div>--%>
 												</div>
 											</div>
 
@@ -178,11 +178,11 @@
 												       for="projrank">项目等级</label>
 
 												<div class="col-sm-8">
-													<div class="col-sm-13">
-														<input class="form-control projStand"
+													<%--<div class="col-sm-13">--%>
+														<input class="form-control col-xs-12 projStand"
 														       type="text" id="projrank" name="projrank"
 														       placeholder="请选择"/>
-													</div>
+													<%--</div>--%>
 												</div>
 											</div>
 										</div>
@@ -193,12 +193,12 @@
 												       for="projorig">项目来源</label>
 
 												<div class="col-sm-8">
-													<div class="col-sm-13">
-														<input class="form-control projStand" id="projorig"
+													<%--<div class="col-sm-13">--%>
+														<input class="form-control col-xs-12 projStand" id="projorig"
 														       type="text" name="projorig"
 														       value=""
 														       placeholder="请选择"/>
-													</div>
+													<%--</div>--%>
 
 												</div>
 											</div>
@@ -208,11 +208,11 @@
 												       for="projbelong">项目归属</label>
 
 												<div class="col-sm-8">
-													<div class="col-sm-13">
-														<input class="form-control projStand" id="projbelong"
+													<%--<div class="col-sm-13">--%>
+														<input class="form-control col-xs-12 projStand" id="projbelong"
 														       type="text" name="projbelong"
 														       placeholder="请选择"/>
-													</div>
+													<%--</div>--%>
 												</div>
 											</div>
 										</div>
@@ -223,11 +223,11 @@
 												       for="projtype0">项目类别</label>
 
 												<div class="col-sm-8">
-													<div class="col-sm-13">
-														<input class="form-control projStand" id="projtype0"
+													<%--<div class="col-sm-13">--%>
+														<input class="form-control col-xs-12 projStand" id="projtype0"
 														       type="text" name="projtype0"
 														       placeholder="请选择"/>
-													</div>
+													<%--</div>--%>
 												</div>
 											</div>
 
@@ -236,12 +236,12 @@
 												       for="projorig0">项目来源</label>
 
 												<div class="col-sm-8">
-													<div class="col-sm-13">
-														<input class="form-control projStand" id="projorig0"
+													<%--<div class="col-sm-13">--%>
+														<input class="form-control col-xs-12 projStand" id="projorig0"
 														       type="text"
 														       value=""
 														       placeholder="请选择"/>
-													</div>
+													<%--</div>--%>
 
 												</div>
 											</div>
@@ -292,39 +292,43 @@
 										<%--</div>--%>
 										<%--</div>--%>
 
-										<div class="row">
-											<div class="col-xs-12">
-												<div class="col-xs-12 widget-container-col ui-sortable" id="fileHead">
-													<div class="widget-box transparent ui-sortable-handle"
-													     style="opacity: 1;">
-														<div class="widget-header">
-															<h4 class="widget-title">附件信息</h4>
 
-															<div class="widget-toolbar no-border">
-																<c:if test="${sessionScope.level == '3'}">
-																	<div id="upload">
-																	</div>
-																</c:if>
-															</div>
-														</div>
-														<div class="widget-body">
-															<div class="widget-main">
-																<div class="dd" id="nestable">
-																	<ol class="dd-list" id="downFiles"></ol>
-																</div>
-															</div>
-														</div>
-													</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="col-xs-12 widget-container-col ui-sortable" id="fileHead">
+								<div class="widget-box transparent ui-sortable-handle"
+								     style="opacity: 1;">
+									<div class="widget-header">
+										<h4 class="widget-title">附件信息</h4>
+
+										<div class="widget-toolbar no-border">
+											<c:if test="${sessionScope.level == '3'}">
+												<div id="upload">
 												</div>
+											</c:if>
+										</div>
+									</div>
+									<div class="widget-body">
+										<div class="widget-main">
+											<div class="dd" id="nestable">
+												<ol class="dd-list" id="downFiles"></ol>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 
+
+
 						</div>
 
-						<div id="actorInfo" class="col-xs-12 col-md-6 widget-container-col ui-sortable">
+					</form>
+
+					<div class="col-xs-12 col-sm-6">
+						<div id="actorInfo" class="col-xs-12 widget-container-col ui-sortable">
 							<div class="widget-box transparent ui-sortable-handle col-xs-12" style="opacity: 1;">
 								<div class="widget-header" id="actorInfoHeader">
 									<h4 class="widget-title">参与人员</h4>
@@ -339,14 +343,14 @@
 														<a class="btn btn-primary btn-sm addActor">添加成员</a>
 													</c:when>
 												</c:choose>
-                                                <span class="giveSum">
-                                                    <%--<c:if test="${sessionScope.level == '3'}">--%>
-                                                        <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
-                                                    <%--</c:if>--%>
-                                                    <label for="totalScore">总分：</label>
+	                                            <span class="giveSum">
+	                                                <%--<c:if test="${sessionScope.level == '3'}">--%>
+	                                                    <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
+	                                                <%--</c:if>--%>
+	                                                <label for="totalScore">总分：</label>
 	                                                <input class="score" type="text"
 	                                                       name="score" id="totalScore" value="${project.score}">
-                                                </span>
+	                                            </span>
 											</div>
 											<table id="actorTable"
 											       data-toolbar="#actorToolbar"
@@ -362,7 +366,7 @@
 
 						</div>
 
-						<div id="fundInfo" class="col-xs-12 col-md-6 widget-container-col ui-sortable">
+						<div id="fundInfo" class="col-xs-12 widget-container-col ui-sortable">
 							<div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
 								<div class="widget-header">
 									<h4 class="widget-title">金额到账信息（单位：万元）</h4>
@@ -377,7 +381,7 @@
 											</div>
 											<table id="fundTable"
 											       data-toolbar="#fundToolbar"
-											       data-show-toggle="true"
+											       data-show-toggle="false"
 											       data-show-footer="true"></table>
 										</div>
 									</div>
@@ -385,7 +389,7 @@
 							</div>
 						</div>
 
-						<div id="unitInfo" class="col-xs-12 col-md-6 col-xs-offset-6 widget-container-col ui-sortable">
+						<div id="unitInfo" class="col-xs-12 widget-container-col ui-sortable">
 							<div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
 								<div class="widget-header">
 									<h4 class="widget-title">共有单位信息</h4>
@@ -401,7 +405,7 @@
 											</div>
 											<table id="unitTable"
 											       data-toolbar="#unitToolbar"
-											       data-show-toggle="true"
+											       data-show-toggle="false"
 											       data-show-footer="true"></table>
 										</div>
 									</div>
@@ -409,7 +413,7 @@
 							</div>
 						</div>
 
-						<div id="reply" class="col-xs-12 col-md-6 col-xs-offset-6 widget-container-col ui-sortable">
+						<div id="reply" class="col-xs-12 widget-container-col ui-sortable">
 							<div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
 								<div class="widget-header">
 									<h4 class="widget-title">批复</h4>
@@ -430,8 +434,7 @@
 								</div>
 							</div>
 						</div>
-
-					</form>
+					</div>
 
 					<div class="row">
 
