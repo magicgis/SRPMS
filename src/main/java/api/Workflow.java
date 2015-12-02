@@ -131,13 +131,19 @@ public class Workflow {
         if (task.getTaskName().equals("Submission") && "true".equals(args.get("IsComplete"))) {
         /*获取当前order*/
             Order order = engine.getOrder(task.getOrderId());
-            Map re = standardService.confirmChecking(order, args);
-            if ((boolean) re.get("valid")) {
-                tasks = engine.execute(taskId, user, (Map) args);
-            }
-            else {
-                return re;
-            }
+            /* 使用检验 开始*/
+//            Map re = standardService.confirmChecking(order, args);
+//            if ((boolean) re.get("valid")) {
+//                tasks = engine.execute(taskId, user, (Map) args);
+//            }
+//            else {
+//                return re;
+//            }
+            /* 使用检验 结束*/
+
+            /* 不使用检验 开始*/
+            tasks = engine.execute(taskId, user, (Map) args);
+            /* 不使用检验 结束*/
         }
         else {
             tasks = engine.execute(taskId, user, (Map) args);
