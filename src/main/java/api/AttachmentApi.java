@@ -98,4 +98,35 @@ public class AttachmentApi {
         }
     }
 
+
+    //todo 文件导出！
+    @GET
+    @Path("/output/{arg}")
+    @Produces({"application/vnd.ms-excel"})
+    public Response getOutPutFile(@PathParam("arg") String arg) {
+        File file = null;
+        String fileName = null;
+        //根据arg，即前台传来的参数，生成不同的文件和文件名
+        //最好使用英文名
+        switch (arg) {
+            case "allCol":
+                //do something
+                //生成的文件赋值给file
+                file = null;
+                fileName = "全校总览.xls";
+                break;
+            case "xxgc":
+                //do somethin
+                file = null;
+                fileName = "信息工程学院.xls";
+                break;
+        }
+        try {
+            fileName = new String(file.getName().getBytes("gbk"), "iso-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return Response.ok(file).header("Content-Disposition", "attachment;filename=" + fileName).build();
+    }
+
 }

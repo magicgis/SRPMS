@@ -1,5 +1,6 @@
 package service;
 
+import VE.ExpandRelation;
 import entity.StaRef;
 
 import java.util.List;
@@ -29,6 +30,15 @@ public interface StaRefService extends BaseService<StaRef> {
 
     List<Object> getEntity(String id, Integer role);
 
+    /**
+     * 获取用户所关联的所有信息
+     *
+     * @param staffId 员工id 必选
+     * @param type    类型 可选
+     * @param role    角色 可选
+     * @return
+     */
+    List<ExpandRelation> getRelation(String staffId, String type, Integer role);
     /**
      * todo
      * 根据表现层数据
