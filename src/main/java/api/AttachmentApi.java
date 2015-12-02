@@ -103,7 +103,7 @@ public class AttachmentApi {
     @GET
     @Path("/output/{arg}")
     @Produces({"application/vnd.ms-excel"})
-    public Response getNewStudentBooklist(@PathParam("arg") String arg) {
+    public Response getOutPutFile(@PathParam("arg") String arg) {
         File file = null;
         String fileName = null;
         //根据arg，即前台传来的参数，生成不同的文件和文件名
@@ -128,6 +128,5 @@ public class AttachmentApi {
         }
         return Response.ok(file).header("Content-Disposition", "attachment;filename=" + fileName).build();
     }
-
 
 }
