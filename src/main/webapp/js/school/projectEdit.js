@@ -418,9 +418,9 @@ function saveStep2(data) {
     send['filesData'] = filesData;
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
-    if($('#attr').val() == '联合项目' || entity['attr'] == "子课题"){
-        send['units'] = getUnitsData();
-    }
+    //if($('#attr').val() == '联合项目' || entity['attr'] == "子课题"){
+    send['units'] = getUnitsData();
+    //}
     return $.ajax({
         type: 'put',
         url: '/api/project/' + data,

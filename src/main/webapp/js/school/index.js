@@ -12,7 +12,7 @@ $('.enableAll').click(function() {
 
 /*申报流程相关开始*/
 function processUrl() {
-    return "/api/workflow/order/" + userName + "/" + objType + "/" + level;
+    return "/api/workflow/order/" + userName + "/" + objType + "/" + level + "noPag";
 }
 
 function processView() {
@@ -23,10 +23,10 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-                pagination: true,
-                sidePagination: "server",
-                pageSize: 15,
-                pageList: [20, 30, 50, 'ALL'],
+                //pagination: true,
+                sidePagination: "client",
+                //pageSize: 15,
+                //pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
                         radio: false,
@@ -76,10 +76,10 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-                pagination: true,
-                sidePagination: "server",
-                pageSize: 15,
-                pageList: [20, 30, 50, 'ALL'],
+                //pagination: true,
+                sidePagination: "client",
+                //pageSize: 15,
+                //pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
                         radio: false,
@@ -125,10 +125,10 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-                pagination: true,
-                sidePagination: "server",
-                pageSize: 15,
-                pageList: [20, 30, 50, 'ALL'],
+                //pagination: true,
+                sidePagination: "client",
+                //pageSize: 15,
+                //pageList: [20, 30, 50, 'ALL'],
                 flat: "true",
                 columns: [
                     {
@@ -170,10 +170,10 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-                pagination: true,
-                sidePagination: "server",
-                pageSize: 15,
-                pageList: [20, 30, 50, 'ALL'],
+                //pagination: true,
+                sidePagination: "client",
+                //pageSize: 15,
+                //pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
@@ -226,10 +226,10 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-                pagination: true,
-                sidePagination: "server",
-                pageSize: 15,
-                pageList: [20, 30, 50, 'ALL'],
+                //pagination: true,
+                sidePagination: "client",
+                //pageSize: 15,
+                //pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
                         radio: false,
@@ -278,10 +278,10 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-                pagination: true,
-                sidePagination: "server",
-                pageSize: 15,
-                pageList: [20, 30, 50, 'ALL'],
+                //pagination: true,
+                sidePagination: "client",
+                //pageSize: 15,
+                //pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
@@ -318,10 +318,10 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-                pagination: true,
-                sidePagination: "server",
-                pageSize: 15,
-                pageList: [20, 30, 50, 'ALL'],
+                //pagination: true,
+                sidePagination: "client",
+                //pageSize: 15,
+                //pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
                         radio: false,
@@ -364,10 +364,10 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-                pagination: true,
-                sidePagination: "server",
-                pageSize: 15,
-                pageList: [20, 30, 50, 'ALL'],
+                //pagination: true,
+                sidePagination: "client",
+                //pageSize: 15,
+                //pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
@@ -404,10 +404,10 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-                pagination: true,
-                sidePagination: "server",
-                pageSize: 15,
-                pageList: [20, 30, 50, 'ALL'],
+                //pagination: true,
+                sidePagination: "client",
+                //pageSize: 15,
+                //pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
@@ -444,10 +444,10 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-                pagination: true,
-                sidePagination: "server",
-                pageSize: 15,
-                pageList: [20, 30, 50, 'ALL'],
+                //pagination: true,
+                sidePagination: "client",
+                //pageSize: 15,
+                //pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
@@ -484,10 +484,10 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-                pagination: true,
-                sidePagination: "server",
-                pageSize: 15,
-                pageList: [20, 30, 50, 'ALL'],
+                //pagination: true,
+                sidePagination: "client",
+                //pageSize: 15,
+                //pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
@@ -524,10 +524,10 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-                pagination: true,
-                sidePagination: "server",
-                pageSize: 15,
-                pageList: [20, 30, 50, 'ALL'],
+                //pagination: true,
+                sidePagination: "client",
+                //pageSize: 15,
+                //pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
                         radio: false,
