@@ -424,7 +424,7 @@ function getForm_notSerialize(){
             jsonData[attrName] = attrVal;
         }
     });// 表单的序列化 不能用时 调用这个方法
-    jsonData['score'] = Math.floor($('#totalScore').val());
+    jsonData['score'] = (Math.floor($('#totalScore').val())).toString();
 
     if (filesData != null) {
         jsonData['filesData'] = filesData;
