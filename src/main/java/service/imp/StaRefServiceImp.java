@@ -1,10 +1,12 @@
 package service.imp;
 
+import VE.ExpandRelation;
 import dao.BaseDao;
 import dao.PaperDao;
 import dao.StaRefDao;
 import dao.StaffDao;
 import entity.StaRef;
+import entity.VirtualEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,4 +132,22 @@ public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefSe
         }
     }
 
+    @Override
+    public List<ExpandRelation> getRelation(String staffId, String type, Integer role) {
+        List<StaRef> res = staRefDao.getByTypeAndRole(staffId, type, role);
+        List<ExpandRelation> ans = new LinkedList<>();
+        BaseDao dao = (BaseDao) abstractBeanFactory.getBean(Args.DAOS.get(type));
+        for (StaRef re : res) {
+            ExpandRelation expandRelation = new ExpandRelation();
+            expandRelation.setId(re.getId());
+            expandRelation.setStaff(re.getStaff());
+            expandRelation.setType(re.getType());
+            expandRelation.setVirtualEntity((VirtualEntity) dao.getById(re.getEntityId()));
+            expandRelation.setRole(re.getRole());
+            expandRelation.setScore(re.getScore());
+            expandRelation.setUnit(re.getUnit());
+            ans.add(expandRelation);
+        }
+        return ans;
+    }
 }
