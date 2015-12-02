@@ -39,10 +39,9 @@ function save() {
     if($('#attr').val() == '联合项目' || entity['attr'] == "子课题"){
         send['units'] = getUnitsData();
     }
-    //console.log(send);
     workflow.execute(userName, taskId, send).success(function () {
         afterSuccess("保存成功！");
-        //window.location.href = '/index/process/project/all';
+        window.location.href = '/index/process/project/all';
     });
 }
 function confirm() {

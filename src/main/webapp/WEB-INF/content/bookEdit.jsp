@@ -373,6 +373,7 @@
         });
     });
     var entity = ${ObjectMapper.writeValueAsString(book)};
+    console.log(entity);
     if(isNull(entity)) {
         entity = {};
     }

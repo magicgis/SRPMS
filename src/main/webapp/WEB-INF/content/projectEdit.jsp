@@ -25,13 +25,6 @@
 
 	<jsp:include page="public/jsHeader.jsp"/>
 	<style>
-		td.bs-checkbox {
-			display: none;
-		}
-
-		th.bs-checkbox {
-			display: none;
-		}
 
 	</style>
 </head>
