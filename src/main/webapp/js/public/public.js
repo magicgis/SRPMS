@@ -408,7 +408,7 @@ function messageModal(message) {
 /**--------------------------获取编辑页面的数据------------------**/
 function getFormJSON(type) {
     var jsonData = $("#" + type).serializeJSON();
-    jsonData['score'] = Math.floor($('#totalScore').val());
+    jsonData['score'] = (Math.round($('#totalScore').val())).toString();
 
     return jsonData;
 }
@@ -424,7 +424,7 @@ function getForm_notSerialize(){
             jsonData[attrName] = attrVal;
         }
     });// 表单的序列化 不能用时 调用这个方法
-    jsonData['score'] = (Math.floor($('#totalScore').val())).toString();
+    jsonData['score'] = (Math.round($('#totalScore').val())).toString();
 
     if (filesData != null) {
         jsonData['filesData'] = filesData;
@@ -440,7 +440,7 @@ function getForm_notSerialize(){
 
 function getFormData(type) {
     var jsonData = $("#" + type).serializeJSON();
-    jsonData['score'] = Math.floor($('#totalScore').val());
+    jsonData['score'] = (Math.round($('#totalScore').val())).toString();
 
     $.each(jsonData, function (key, value) {
         if (isNull(value)) {

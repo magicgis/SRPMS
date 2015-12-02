@@ -337,9 +337,9 @@
 													</c:when>
 												</c:choose>
 	                                            <span class="giveSum">
-	                                                <%--<c:if test="${sessionScope.level == '3'}">--%>
+	                                                <c:if test="${sessionScope.level == '3'}">
 	                                                    <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
-	                                                <%--</c:if>--%>
+	                                                </c:if>
 	                                                <label for="totalScore">总分：</label>
 	                                                <input class="score" type="text"
 	                                                       name="score" id="totalScore" value="${project.score}">
@@ -368,9 +368,11 @@
 									<div class="widget-main">
 										<div class="row">
 											<div id="fundToolbar">
-												<a class="btn btn-primary btn-sm addFund">
-													<i class="glyphicon glyphicon-plus"></i> 添加添加金额信息
-												</a>
+												<c:if test="${sessionScope.level == '3'}">
+													<a class="btn btn-primary btn-sm addFund">
+														<i class="glyphicon glyphicon-plus"></i> 添加添加金额信息
+													</a>
+												</c:if>
 											</div>
 											<table id="fundTable"
 											       data-toolbar="#fundToolbar"
