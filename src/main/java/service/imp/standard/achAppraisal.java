@@ -79,7 +79,31 @@ public class achAppraisal extends StandardBase implements StandardCheckInf{
     }
 
     @Override
-    public Map confirmCheck(Map map) {
-        return null;
+    public Map confirmCheck(Map map,double max , double min) {
+        Map validInfo = new HashMap();
+        validInfo.put(IS_VALID, false);
+        List<Map> actors = (List<Map>) map.get("actors");
+        if (map.get("score") != null) {
+            validInfo = superCheck(map,max,min);
+            if (!(boolean)validInfo.get(IS_VALID)){
+                return validInfo;
+            }
+            validInfo.put(IS_VALID,DEFAULT_FLAG);
+            double sum = Double.parseDouble((String) map.get("score"));
+//            文件第三条第2款
+            int actorNum = actors.size();
+            List<Map> chiefActors = getChiefActors(actors, (String) KEY_ROLE.get("chiefActor"));
+            for (Map chiefActor : chiefActors) {
+                double chScore = Double.parseDouble((String) chiefActor.get("score"));
+                Map info = chiefAcrorScoreCheck(actorNum, chScore, sum);
+                if (!(boolean) info.get("flag")) {
+                    validInfo.put(MESSAGE, info.get(MESSAGE));
+                    return validInfo;
+                }
+            }
+        }
+        validInfo.put(IS_VALID, true);
+        validInfo.put(MESSAGE, "确认提交？");
+        return validInfo;
     }
 }

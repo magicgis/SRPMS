@@ -17,7 +17,7 @@ public class StandardBase {
     protected final boolean DEFAULT_FLAG = false;
     final String SRC_ENCODING = "ISO-8859-1";
     final String DES_ENCODING = "utf-8";
-    protected final String[] MY_SCHOOL_NAME = {"湖北中医药大学"};//, "湖北省中医院","中医院"};
+    protected final String[] MY_SCHOOL_NAME = {"湖北中医药大学", "湖北省中医院","中医院"};
     protected final String PARTNER_ID = "9999";
     protected final String STUNDENT_ID = "9998";
     Map validInfo = new HashMap();
@@ -86,7 +86,6 @@ public class StandardBase {
     public String getPageType(Order order, Map map) {
         String type = null;
         Map variableMap;
-
         if (order != null)
             variableMap = order.getVariableMap();
         else {
@@ -94,13 +93,13 @@ public class StandardBase {
         }
         if (map == null) return type;
 //        Map map = getMaxMap(order);
-//        System.out.println("88888888"+variableMap.get("WF_Type"));
         if ("paper".equals(variableMap.get("WF_Type")))
             type = (String) map.get("type");
         else
             type = (String) variableMap.get("WF_Type");
-//        System.out.println("88888888"+variableMap);
-//        System.out.println("88888888"+type);
+        if (type == null || type.trim().equals("")) {
+            type = null;
+        }
         return type;
     }
 
@@ -284,11 +283,11 @@ public class StandardBase {
             map.put(MESSAGE, "负责人分数不应超过70%.");
             return map;
         }
-        if (actorNum <= 6 && (chScore / sum) > 0.6) {
+        else if (actorNum <= 6 && (chScore / sum) > 0.6) {
             map.put(MESSAGE, "负责人分数不应超过60%.");
             return map;
         }
-        if ((chScore / sum) > 0.5) {
+        else if (actorNum >6 &&(chScore / sum) > 0.5) {
             map.put(MESSAGE, "负责人分数不应超过50%.");
             return map;
         }
@@ -296,5 +295,82 @@ public class StandardBase {
         map.put(MESSAGE,"文件未限定");
         return map;
     }
+    public Map superCheck(Map map,double max,double min){
+        Map validInfo = new HashMap();
+        validInfo.put(IS_VALID, false);
+        List<Map> actors = (List<Map>) map.get("actors");
+//        int isAppr = Integer.parseInt((String) map.get("isAppr"));
+        if (map.get("score") != null) {
+            double sum = Double.parseDouble((String) map.get("score"));
+            if (SumCheckPass(sum, actors) < 0) {
+                validInfo.put(MESSAGE, "个人分数分配总和超出总分！");
+                return validInfo;
+            }
+            if (SumCheckPass(sum, actors) >= 1 && SumCheckPass(sum, actors) >= 0) {
+                validInfo.put(MESSAGE, "还有" + SumCheckPass(sum, actors) + "！");
+                return validInfo;
+            }
+            int count = 0;
+            for (Map actor : actors) {
+                if (Double.parseDouble((String) actor.get("score")) != 0) count++;
+            }
+            if (count > max) {
+                validInfo.put(MESSAGE, "本项目至多为" + max + "个人分配分数");
+                return validInfo;
+            }
+//            文件第三条第2款
+//            int actorNum = actors.size();
+//            List<Map> chiefActors = getChiefActors(actors, (String) KEY_ROLE.get("chiefActor"));
+//            for (Map chiefActor : chiefActors) {
+//                double chScore = Double.parseDouble((String) chiefActor.get("score"));
+//                Map info = chiefAcrorScoreCheck(actorNum, chScore, sum);
+//                if (!(boolean) info.get("flag")) {
+//                    validInfo.put(MESSAGE, info.get(MESSAGE));
+//                    return validInfo;
+//                }
+//            }
+        }
+//            int limit = 0;
+//            if (isAppr == 1) {
+////                String rank = (String) map.get("projrank");
+////                if (rank.equals("国家级")) limit = 9;
+////                else if (rank.equals("省部级")) limit = 6;
+////                else if (rank.equals("厅局级")) limit = 5;
+////                else if (rank.equals("校级")) limit = 3;
+////                else limit = 999;
+////                if (count > limit) {
+////                    validInfo.put(MESSAGE, "本项目至多为" + limit + "个人分配分数");
+////                    return validInfo;
+////                }
+//                int actorNum = actors.size();
+//                List<Map> chiefActors = getChiefActors(actors, (String) KEY_ROLE.get("chiefActor"));
+//                for (Map chiefActor : chiefActors) {
+//                    double chScore = Double.parseDouble((String) chiefActor.get("score"));
+//                    Map info = chiefAcrorScoreCheck(actorNum, chScore, sum);
+//                    if (!(boolean) info.get("flag")) {
+//                        validInfo.put(MESSAGE, info.get(MESSAGE));
+//                        return validInfo;
+//                    }
+//                }
+//            } else {
+////                if (map.get("projtype").equals("科研项目"))
+////                    limit = 3;
+////                else
+////                    limit = 5;
+////                if (count > limit) {
+////                    validInfo.put(MESSAGE, "本项目至多为" + limit + "个人分配分数");
+////                    return validInfo;
+////                }
+//                if (count > max) {
+//                    validInfo.put(MESSAGE, "本项目至多为" + limit + "个人分配分数");
+//                    return validInfo;
+//                }
+//            }
+//        }
+        validInfo.put(IS_VALID, true);
+        validInfo.put(MESSAGE, "确认提交？");
+        return validInfo;
+    }
+
 
 }//the end of the class

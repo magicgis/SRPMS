@@ -87,7 +87,6 @@ public class Paper extends StandardBase implements StandardCheckInf {
             return validInfo;
         }
         List<Map> myAbAcotrs = getMyActors(authors);
-
         for (Map myAbActor : myAbAcotrs){
                 int count = 0;
             String unit = (String) myAbActor.get("unit");
@@ -96,14 +95,13 @@ public class Paper extends StandardBase implements StandardCheckInf {
                 if (unit!=null&&(unit.equals(temp.get("unit"))&&staffId.equals(temp.get("staff.id")))) {
                     count++;
                 }  }
-
             if (count>1){
                 validInfo.put(MESSAGE,"人员不能重复填写！");
                 return validInfo;
             }
         }
         String editor = (String) info.get("WF_User");
-        System.out.println(editor);
+//        System.out.println(editor);
         if (myChiefAuth.size()>0){
             boolean flag = false;
             for (Map temp : myChiefAuth){
@@ -212,7 +210,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
     }
 
     @Override
-    public Map confirmCheck(Map map) {
+    public Map confirmCheck(Map map, double max ,double min) {
 //        double finalScore = Double.parseDouble((String) map.get("score"));
         Map validInfo = new HashMap();
         Map tempFirstAuthor, tempChiefAuthor;

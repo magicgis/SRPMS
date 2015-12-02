@@ -19,8 +19,9 @@ public class project extends StandardBase implements StandardCheckInf {
         put("name", "项目名称");
         put("attr", "项目属性");
         put("apprDate", "立项时间");
-        put("projtype", "项目类别");
-        put("projrank", "项目等级");
+//        put("projtype", "项目类别");
+        put("standard.id", "项目类别与项目等级");
+//        put("projrank", "项目等级");
     }};
 
     public project() throws FileNotFoundException {
@@ -44,8 +45,8 @@ public class project extends StandardBase implements StandardCheckInf {
             validInfo.put(MESSAGE, "请填写参与人信息");
             return validInfo;
         }
-        if (chiefActors.size()>1){
-            validInfo.put(MESSAGE,"项目中只能有一个负责人。");
+        if (chiefActors.size() > 1) {
+            validInfo.put(MESSAGE, "项目中只能有一个负责人。");
             return validInfo;
         }
         validInfo.put(IS_VALID, true);
@@ -113,7 +114,9 @@ public class project extends StandardBase implements StandardCheckInf {
                         currentMoney += res;
                 }
             }
-            if (map.get("projrank").equals("横向"))
+//            String s = map.get()
+            if (map.get("projrank").equals("横向")
+                    || map.get("projrank").equals("社会服务项目"))
                 isMoneyProject = true;
 //            计算到账积分
             moneyScore = getMoneyWeight(map, currentMoney, false) * currentMoney;
@@ -129,17 +132,17 @@ public class project extends StandardBase implements StandardCheckInf {
 //            计算结题积分
             if (!isMoneyProject
                     && map.get("realDate") != null
-                    && isVaildTime((String) map.get("realDate"))){
+                    && isVaildTime((String) map.get("realDate"))) {
                 endScore = tableScore2;
                 leftMoneyScore = historyMnoey
-                        *( getMoneyWeight(map,historyMnoey,true)- getMoneyWeight(map,historyMnoey,false));
+                        * (getMoneyWeight(map, historyMnoey, true) - getMoneyWeight(map, historyMnoey, false));
             }
             if (isMoneyProject
                     && map.get("realDate") != null
                     && isVaildTime((String) map.get("realDate"))) {
                 endScore = historyMnoey * tableScore2;
                 leftMoneyScore = historyMnoey
-                        *( getMoneyWeight(map,historyMnoey,true)- getMoneyWeight(map,historyMnoey,false));
+                        * (getMoneyWeight(map, historyMnoey, true) - getMoneyWeight(map, historyMnoey, false));
             }
             moneyScore += leftMoneyScore;
 //            未统计到账分数
@@ -186,7 +189,7 @@ public class project extends StandardBase implements StandardCheckInf {
                 validInfo.put(IS_VALID, true);
                 validInfo.put(MESSAGE, "分数需要分配");
                 validInfo.put("hasSum", true);
-                validInfo.put("sum", calScore + moneyScore);
+                validInfo.put("sum", Math.rint(calScore + moneyScore));
                 return validInfo;
             default:
                 validInfo.put(MESSAGE, "文件未对此情况进行规定。");
@@ -197,54 +200,25 @@ public class project extends StandardBase implements StandardCheckInf {
     }
 
     @Override
-    public Map confirmCheck(Map map) {
+    public Map confirmCheck(Map map, double max, double min) {
         Map validInfo = new HashMap();
         validInfo.put(IS_VALID, false);
         List<Map> actors = (List<Map>) map.get("actors");
-        int isAppr = Integer.parseInt((String) map.get("isAppr"));
         if (map.get("score") != null) {
+            validInfo = superCheck(map,max,min);
+            if (!(boolean)validInfo.get(IS_VALID)){
+                return validInfo;
+            }
+            validInfo.put(IS_VALID,DEFAULT_FLAG);
             double sum = Double.parseDouble((String) map.get("score"));
-            if (SumCheckPass(sum, actors) < 0) {
-                validInfo.put(MESSAGE, "个人分数分配总和超出总分！");
-                return validInfo;
-            }
-            if (SumCheckPass(sum, actors) < 0.01 && SumCheckPass(sum, actors) >= 0) {
-                validInfo.put(MESSAGE, "还有" + SumCheckPass(sum, actors) + "！");
-                return validInfo;
-            }
-            int count = 0;
-            for (Map actor : actors) {
-                if (Double.parseDouble((String) actor.get("score")) != 0) count++;
-            }
-            int limit = 0;
-            if (isAppr == 1) {
-                String rank = (String) map.get("projrank");
-                if (rank.equals("国家级")) limit = 9;
-                else if (rank.equals("省部级")) limit = 6;
-                else if (rank.equals("厅局级")) limit = 5;
-                else if (rank.equals("校级")) limit = 3;
-                else limit = 999;
-                if (count > limit) {
-                    validInfo.put(MESSAGE, "本项目至多为" + limit + "个人分配分数");
-                    return validInfo;
-                }
-                int actorNum = actors.size();
-                List<Map> chiefActors = getChiefActors(actors, (String) KEY_ROLE.get("chiefActor"));
-                for (Map chiefActor : chiefActors) {
-                    double chScore = Double.parseDouble((String) chiefActor.get("score"));
-                    Map info = chiefAcrorScoreCheck(actorNum, chScore, sum);
-                    if (!(boolean) info.get("flag")) {
-                        validInfo.put(MESSAGE, info.get(MESSAGE));
-                        return validInfo;
-                    }
-                }
-            } else {
-                if (map.get("projtype").equals("科研项目"))
-                    limit = 3;
-                else
-                    limit = 5;
-                if (count > limit) {
-                    validInfo.put(MESSAGE, "本项目至多为" + limit + "个人分配分数");
+//            文件第三条第2款
+            int actorNum = actors.size();
+            List<Map> chiefActors = getChiefActors(actors, (String) KEY_ROLE.get("chiefActor"));
+            for (Map chiefActor : chiefActors) {
+                double chScore = Double.parseDouble((String) chiefActor.get("score"));
+                Map info = chiefAcrorScoreCheck(actorNum, chScore, sum);
+                if (!(boolean) info.get("flag")) {
+                    validInfo.put(MESSAGE, info.get(MESSAGE));
                     return validInfo;
                 }
             }
@@ -254,17 +228,17 @@ public class project extends StandardBase implements StandardCheckInf {
         return validInfo;
     }
 
-    private double getMoneyWeight(Map map, double money,boolean finalCal) {
+    private double getMoneyWeight(Map map, double money, boolean finalCal) {
 //          分/万元
         String type = (String) map.get("projtype");
         if (type.equals("自然科学")) {
             if (!finalCal || money <= 60) return 15;
             else return 18;
         } else if (type.equals("社会服务项目")) {
-            if (!finalCal ||money <= 30) return 8;
+            if (!finalCal || money <= 30) return 8;
             else return 10;
         } else {
-            if (!finalCal ||money <= 15) return 20;
+            if (!finalCal || money <= 15) return 20;
             else return 25;
         }
 

@@ -782,7 +782,8 @@
 	});
 	//监听 点击返回
 	$(".back").click(function () {
-		history.go(-1);
+//		history.go(-1);
+		enableAll();
 	});
 	//监听 删除
 	$("#del").click(function () {

@@ -89,7 +89,7 @@ public class book extends StandardBase implements StandardCheckInf {
     }
 
     @Override
-    public Map confirmCheck(Map map) {
+    public Map confirmCheck(Map map,double max ,double min) {
         Map validInfo = new HashMap();
         validInfo.put(IS_VALID,DEFAULT_FLAG);
         validInfo.put(MESSAGE,DEFAULT_MSG);

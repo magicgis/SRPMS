@@ -10,7 +10,19 @@ $(function(){
         $('.saveAdd').show();
         enableditForm()
     }
+
 });
+
+function enableAll() {
+    $.ajax({
+        url: '/api/staff/enable/all',
+        type: 'POST',
+        contentType: 'application/json;charset=UTF-8',
+        success: function(data) {
+
+        }
+    });
+}
 //*********************************************样式显示和具体功能函数********************************
 //保存添加的数据
 function saveAdd() {

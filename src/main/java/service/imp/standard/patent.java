@@ -83,24 +83,31 @@ public class patent extends StandardBase implements StandardCheckInf {
     }
 
     @Override
-    public Map confirmCheck(Map map) {
+    public Map confirmCheck(Map map,double max, double min) {
         Map validInfo = new HashMap();
-        List<Map> actors = getActors(map);
-        double sum = Double.parseDouble((String) map.get("score"));
-//        for (Map actor : actors) {
-//            double temp = Double.parseDouble((String) actor.get("score"));
-//            sum -= temp;
-//        }
-        if (SumCheckPass(sum,actors)<0) {
-            validInfo.put(MESSAGE, "个人分数分配总和超出总分！");
-            return validInfo;
-        }
-        if (SumCheckPass(sum,actors)<0.01&&SumCheckPass(sum,actors)>=0) {
-            validInfo.put(MESSAGE, "还有"+SumCheckPass(sum,actors)+"！");
-            return validInfo;
+        validInfo.put(IS_VALID, false);
+        List<Map> actors = (List<Map>) map.get("actors");
+        if (map.get("score") != null) {
+            validInfo = superCheck(map,max,min);
+            if (!(boolean)validInfo.get(IS_VALID)){
+                return validInfo;
+            }
+            validInfo.put(IS_VALID,DEFAULT_FLAG);
+            double sum = Double.parseDouble((String) map.get("score"));
+//            文件第三条第2款
+            int actorNum = actors.size();
+            List<Map> chiefActors = getChiefActors(actors, (String) KEY_ROLE.get("chiefActor"));
+            for (Map chiefActor : chiefActors) {
+                double chScore = Double.parseDouble((String) chiefActor.get("score"));
+                Map info = chiefAcrorScoreCheck(actorNum, chScore, sum);
+                if (!(boolean) info.get("flag")) {
+                    validInfo.put(MESSAGE, info.get(MESSAGE));
+                    return validInfo;
+                }
+            }
         }
         validInfo.put(IS_VALID, true);
-        validInfo.put(MESSAGE, "是否确认？");
+        validInfo.put(MESSAGE, "确认提交？");
         return validInfo;
     }
 }

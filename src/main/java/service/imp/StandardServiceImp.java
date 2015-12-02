@@ -84,8 +84,6 @@ public class StandardServiceImp extends StandardBase implements StandardService 
             return calFlow;
 //            return calFlow;
         } else {
-//            BigDecimal sumt = st.getValue();
-//            BigDecimal sumt2 = st.getValue2();
             BigDecimal mint = st.getMin() == null ? new BigDecimal(0) : st.getMin();
             BigDecimal maxt = st.getMax() == null ? new BigDecimal(999) : st.getMax();
             BigDecimal sumt = st.getValue() == null ? new BigDecimal(0) : st.getValue();
@@ -98,7 +96,7 @@ public class StandardServiceImp extends StandardBase implements StandardService 
             calFlow = standardCheck.isExtrrmumBand(map, min, max);
             if (!(boolean) calFlow.get(IS_VALID)) return calFlow;
             calFlow = standardCheck.getFinalScore(map, sum, sum2);
-            System.out.println("000000000000"+calFlow);
+//            System.out.println("000000000000"+calFlow);
             return calFlow;
         }
     }
@@ -147,7 +145,27 @@ public class StandardServiceImp extends StandardBase implements StandardService 
         }
 //        validInfo = scoreCalculation(order, map);
 //        if (!(boolean) validInfo.get(IS_VALID)) return validInfo;
-        validInfo = standardCheck.confirmCheck(map);
+        String stIdType = selectId(type);
+//        System.out.println("+++++++++++++="+stIdType);
+        String stId = (String) map.get(stIdType);
+        Standard st = null;
+        if (stId != null)
+            st = standardDao.getById(stId);
+        double sum = 0;
+        double sum2 = 0;
+        double min = 0;
+        double max = 0;
+        if (st != null){
+            BigDecimal mint = st.getMin() == null ? new BigDecimal(0) : st.getMin();
+            BigDecimal maxt = st.getMax() == null ? new BigDecimal(999) : st.getMax();
+            BigDecimal sumt = st.getValue() == null ? new BigDecimal(0) : st.getValue();
+            BigDecimal sumt2 = st.getValue2() == null ? new BigDecimal(0) : st.getValue2();
+            sum = sumt.doubleValue();
+            sum2 = sumt2.doubleValue();
+            min = mint.doubleValue();
+            max = maxt.doubleValue();
+        }
+        validInfo = standardCheck.confirmCheck(map,max,min);
         if (!(boolean) validInfo.get(IS_VALID)) return validInfo;
         validInfo.put(MESSAGE, "已经确认，如需修改请撤销！");
         validInfo.put(IS_VALID, true);
