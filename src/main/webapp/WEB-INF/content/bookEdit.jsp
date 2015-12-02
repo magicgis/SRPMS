@@ -161,7 +161,7 @@
                                                        for="isTrans">是否译著</label>
                                                 <div class="col-sm-8">
                                                     <input type="text" name="isTrans" id="isTrans"
-                                                           class="col-xs-12"/>
+                                                           class="form-control col-xs-12"/>
                                                 </div>
                                             </div>
                                         </div>

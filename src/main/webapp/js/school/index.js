@@ -2,6 +2,14 @@ var level = 'all';
 var objType;
 
 
+$('.enableAll').click(function() {
+    $.ajax({
+        type: 'POST',
+        url: '/api/staff/enable/all',
+        contentType: 'application/json;charset=UTF-8'
+    });
+});
+
 /*申报流程相关开始*/
 function processUrl() {
     return "/api/workflow/order/" + userName + "/" + objType + "/" + level;

@@ -205,6 +205,10 @@
                                                 <button class="btn btn-primary resetPwd">
                                                     <i class="fa fa-lock"></i> 密码重置
                                                 </button>
+
+                                                <button class="btn btn-primary enableAll">
+                                                    <i class="fa fa-lock"></i> 开启所有的
+                                                </button>
                                             </c:when>
                                             <c:when test="${sessionScope.level == '2'}">
                                                 <button class="btn btn-primary editUser">

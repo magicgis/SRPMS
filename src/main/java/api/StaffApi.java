@@ -94,6 +94,16 @@ public class StaffApi {
         }
     }
 
+    @POST
+    @Path("/enable/all")
+    @Produces("text/plain;charset=UTF-8")
+    public void enableStaffAll() {
+        List<Staff> staffList = staffService.getAll();
+        for(Staff staff : staffList) {
+            enableStaff(staff.getId());
+        }
+    }
+
     /**
      * 重置密码，密码为其工号
      *

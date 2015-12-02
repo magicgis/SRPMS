@@ -201,7 +201,6 @@ function editActor(row, index) {
                     return;
                 }
                 subActorInfo(index, 0);
-                $('.removeActor').hide();
                 dialogRef.close();
             }
         }, {
@@ -232,17 +231,6 @@ function editActor(row, index) {
                 restrict: false
             });
             $('.bookTextNumber').show();
-            //是否可编辑
-            if (flag) {//可编辑
-                $("#btn-ok").removeAttr("disabled").show();
-                $("#score").removeAttr("disabled");
-            } else {  //不可编辑
-                //$("#btn-ok").attr("disabled", "disabled").hide();
-                $("#score").attr("disabled", "disabled");
-            }
-            if (row["staff.id"] == "9998" || row["staff.id"] == "9999") {
-                $("#score").attr("disabled", "disabled");
-            }
         }
     });
 }
