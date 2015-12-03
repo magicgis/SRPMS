@@ -12,7 +12,7 @@ $('.enableAll').click(function() {
 
 /*申报流程相关开始*/
 function processUrl() {
-    return "/api/workflow/order/" + userName + "/" + objType + "/" + level + "noPag";
+    return "/api/workflow/order/" + userName + "/" + objType + "/" + level + "/noPag";
 }
 
 function processView() {
