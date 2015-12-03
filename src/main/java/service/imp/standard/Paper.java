@@ -61,13 +61,6 @@ public class Paper extends StandardBase implements StandardCheckInf {
         List<Map> myStaffActors = getMyStaffActors(actors);
         List<Map> myChiefAuth = getChiefActors(myStaffActors, (String) KEY_ROLE.get("chiefAuthor"));
 
-//        String bgPage= (String) info.get("bgPage");
-//        if(bgPage!=null){//&&!bgPage.matches("[0-9]+-[0-9]+")
-//            validInfo.put(MESSAGE,"页码范围应用XXX-XXX格式。");
-//            return validInfo;
-//        }
-//        List<Map> actors = getActors(info);
-//        List<Map> myAbAcotrs =getAbsoluteAuthors(info);
 
         //           作者列表有效性检验
         if (authors == null || authors.size() == 0) {
@@ -116,9 +109,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
                     validInfo.put(MESSAGE, "请由本校通讯作者填写。");
                     return validInfo;
                 }
-            }
-
-            if (myFirstAuth.size() > 0) {
+            } else if (myFirstAuth.size() > 0) {
                 boolean flag = false;
                 for (Map temp : myFirstAuth) {
                     if (editor.equals(temp.get("staff.id"))) {
@@ -131,6 +122,8 @@ public class Paper extends StandardBase implements StandardCheckInf {
                     return validInfo;
                 }
             }
+
+
         }
         validInfo.put(IS_VALID, true);
         validInfo.put(MESSAGE, getMsg("1001"));
