@@ -263,7 +263,10 @@ function replaceMagLevel() {
             valueField: 'id',
             labelField: 'value',
             create: false,
-            options: magTypeList
+            options: magTypeList,
+            onChange: function(result) {
+                $("#magStandardId").val(result);
+            }
         });
     }
 }
