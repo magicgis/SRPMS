@@ -179,7 +179,7 @@ function tableTrans(res) {
     } else {
         respon = res["rows"]
     }
-
+    respon[0]['orderId']=res[0]['id'];
     $.each(respon, function (index, value) {
         /*取出variableMap*/
         var maps = value['variableMap'];

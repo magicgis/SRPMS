@@ -87,42 +87,42 @@ function showForm(){
 //         }
 //     });
 //});
-function viewTable(key1){
-    $('#'+key1).bootstrapTable({
-        columns: [{
-            field:'actor',
-            title:'成员',
-            editable:true,
-            sortable:true,
-            footerFormatter:"totalNameFormatter"
-        },{
-            field:'staId',
-            title:'工号',
-            editable:true,
-            sortable:true
-        },{
-            field:'role',
-            title:'角色',
-            editable:true,
-            sortable:true
-            //footerFormatter:"totalNameFormatter"
-        },{
-            field:'marks',
-            title:'分数',
-            editable:true,
-            sortable:true,
-            footerFormatter:"totalMarksFormatter"
-            //footerFormatter:"totalMarksFormatter"
-        },{
-            field:'operate',
-            title:'操作',
-            sortable:true,
-            formatter:"operateAFormatter",
-            events:"operateAEvents"
-        }],
-        data:actorTemp
-    });
-}
+//function viewTable(key1){
+//    $('#'+key1).bootstrapTable({
+//        columns: [{
+//            field:'actor',
+//            title:'成员',
+//            editable:true,
+//            sortable:true,
+//            footerFormatter:"totalNameFormatter"
+//        },{
+//            field:'staId',
+//            title:'工号',
+//            editable:true,
+//            sortable:true
+//        },{
+//            field:'role',
+//            title:'角色',
+//            editable:true,
+//            sortable:true
+//            //footerFormatter:"totalNameFormatter"
+//        },{
+//            field:'marks',
+//            title:'分数',
+//            editable:true,
+//            sortable:true,
+//            footerFormatter:"totalMarksFormatter"
+//            //footerFormatter:"totalMarksFormatter"
+//        },{
+//            field:'operate',
+//            title:'操作',
+//            sortable:true,
+//            formatter:"operateAFormatter",
+//            events:"operateAEvents"
+//        }],
+//        data:actorTemp
+//    });
+//}
 //$('#info_alert').empty();
 //$('<div class="alert alert-block alert-success" id="success_info"></div>').appendTo('#info_alert');
 //显示总览

@@ -117,7 +117,6 @@ window.jQuery || document.write("<script src='assets/js/jquery1x.min.js'>" + "<"
 <!-- Huploadify -->
 <script src="<c:url value="/plugin/Huploadify/jquery.Huploadify.js"/>"></script>
 <link rel="stylesheet" href="<c:url value="/plugin/Huploadify/Huploadify.css"/>">
-
 <!-- bootstrap-table end -->
 <style>
     .modal-content {

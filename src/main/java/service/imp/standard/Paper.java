@@ -62,7 +62,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
         List<Map> myChiefAuth = getChiefActors(myStaffActors,(String) KEY_ROLE.get("chiefAuthor"));
 
         String bgPage= (String) info.get("bgPage");
-        if(bgPage!=null&&!bgPage.matches("[0-9]+-[0-9]+")){
+        if(bgPage!=null){//&&!bgPage.matches("[0-9]+-[0-9]+")
             validInfo.put(MESSAGE,"页码范围应用XXX-XXX格式。");
             return validInfo;
         }
