@@ -17,5 +17,5 @@ $('#password').bind('keypress', function (e) {
  * @param username,password
  */
 function loginInfos() {
-    $("#loginForm").attr('action', "login").attr('method','post').submit();
+    $("#loginForm").attr('action', "login").attr('method','post').submit()
 }
