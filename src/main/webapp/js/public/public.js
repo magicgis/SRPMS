@@ -181,7 +181,7 @@ function tableTrans(res) {
     }
     $.each(respon, function (index, value) {
         /*取出variableMap*/
-        //respon['orderId']=value['id'];
+        respon[index]['orderId']=value['id'];
         var maps = value['variableMap'];
         /*把string放入*/
         for (var key in maps) {
@@ -204,6 +204,7 @@ function tableTrans(res) {
         }
     });
     if (res["rows"] == undefined || res["rows"] == null) {
+        console.log(respon);
         return respon;
     } else {
         res["rows"] = respon;

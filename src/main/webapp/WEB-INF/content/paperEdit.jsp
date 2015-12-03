@@ -355,6 +355,7 @@
 
 																<div class="col-sm-8">
 																	<input type="text" id="bePage" name="bgPage"
+																		   onkeyup=""
 																	       placeholder="例：23-40"
 																	       class="col-xs-12 mag-input"/>
 																</div>
@@ -782,8 +783,8 @@
 	});
 	//监听 点击返回
 	$(".back").click(function () {
-//		history.go(-1);
-		enableAll();
+		history.go(-1);
+//		enableAll();
 	});
 	//监听 删除
 	$("#del").click(function () {

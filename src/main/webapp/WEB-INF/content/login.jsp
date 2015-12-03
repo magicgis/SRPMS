@@ -63,15 +63,19 @@
                                                     </span>
                                                 </label>
 
-                                                <div class="space"></div>
+                                                <div class="space">
+                                                </div>
                                             </div>
 
-                                            <div class="space"></div>
+                                            <div class="space">
+                                            </div>
+                                            <div id="masg_alert">
 
+                                            </div>
                                             <div class="clearfix">
+
                                                 <i id="loginBtn"
                                                    class="width-35 pull-right btn btn-sm btn-primary">
-                                                    <%--<i class="ace-icon fa fa-key"></i>--%>
                                                     <span class="bigger-110">登录</span>
                                                 </i>
                                             </div>
