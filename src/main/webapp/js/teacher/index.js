@@ -585,13 +585,11 @@ var processStates = {
             $('#ProcessToolbar').show();
             //todo 处理页面跳转
             viewTable.on('click-row.bs.table', function (e, row) {
-               // window.location.href = '/order/' + row['id'];RefuseByDep
-                if(!isNull(row['Status'])){
-                    if(row['Status'].substr(0,4)=="Wait"||row['Status']=='ApprovedByCol'||row['Status']=='RefuseByDep'){
-                        //console.log(row['orderId']);
-                        window.location.href = '/order/' + row['orderId'];
-                    }
-                }else{
+                //window.location.href = '/order/' + row['id'];
+                console.log(objType);
+                if(objType !== 'paper'){
+                    window.location.href = '/order/' + row['orderId'];
+                }else{ // unComplete/
                     window.location.href = '/order/' + row['id'];
                 }
 
