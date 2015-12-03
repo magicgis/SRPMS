@@ -279,11 +279,11 @@ public class StandardBase {
         Map map = new HashMap();
         map.put("flag",false);
         map.put(MESSAGE,DEFAULT_MSG);
-        if (actorNum<=2 &&actorNum <= 3 && (chScore / sum) > 0.7) {
+        if (actorNum >=2 && actorNum <= 3 && (chScore / sum) > 0.7) {
             map.put(MESSAGE, "负责人分数不应超过70%.");
             return map;
         }
-        else if (actorNum <= 6 && (chScore / sum) > 0.6) {
+        else if (actorNum > 3 && actorNum <= 6 && (chScore / sum) > 0.6) {
             map.put(MESSAGE, "负责人分数不应超过60%.");
             return map;
         }
