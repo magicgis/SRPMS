@@ -279,7 +279,7 @@ public class StandardBase {
         Map map = new HashMap();
         map.put("flag",false);
         map.put(MESSAGE,DEFAULT_MSG);
-        if (actorNum <= 3 && (chScore / sum) > 0.7) {
+        if (actorNum<=2 &&actorNum <= 3 && (chScore / sum) > 0.7) {
             map.put(MESSAGE, "负责人分数不应超过70%.");
             return map;
         }
@@ -318,55 +318,7 @@ public class StandardBase {
                 validInfo.put(MESSAGE, "本项目至多为" + max + "个人分配分数");
                 return validInfo;
             }
-//            文件第三条第2款
-//            int actorNum = actors.size();
-//            List<Map> chiefActors = getChiefActors(actors, (String) KEY_ROLE.get("chiefActor"));
-//            for (Map chiefActor : chiefActors) {
-//                double chScore = Double.parseDouble((String) chiefActor.get("score"));
-//                Map info = chiefAcrorScoreCheck(actorNum, chScore, sum);
-//                if (!(boolean) info.get("flag")) {
-//                    validInfo.put(MESSAGE, info.get(MESSAGE));
-//                    return validInfo;
-//                }
-//            }
         }
-//            int limit = 0;
-//            if (isAppr == 1) {
-////                String rank = (String) map.get("projrank");
-////                if (rank.equals("国家级")) limit = 9;
-////                else if (rank.equals("省部级")) limit = 6;
-////                else if (rank.equals("厅局级")) limit = 5;
-////                else if (rank.equals("校级")) limit = 3;
-////                else limit = 999;
-////                if (count > limit) {
-////                    validInfo.put(MESSAGE, "本项目至多为" + limit + "个人分配分数");
-////                    return validInfo;
-////                }
-//                int actorNum = actors.size();
-//                List<Map> chiefActors = getChiefActors(actors, (String) KEY_ROLE.get("chiefActor"));
-//                for (Map chiefActor : chiefActors) {
-//                    double chScore = Double.parseDouble((String) chiefActor.get("score"));
-//                    Map info = chiefAcrorScoreCheck(actorNum, chScore, sum);
-//                    if (!(boolean) info.get("flag")) {
-//                        validInfo.put(MESSAGE, info.get(MESSAGE));
-//                        return validInfo;
-//                    }
-//                }
-//            } else {
-////                if (map.get("projtype").equals("科研项目"))
-////                    limit = 3;
-////                else
-////                    limit = 5;
-////                if (count > limit) {
-////                    validInfo.put(MESSAGE, "本项目至多为" + limit + "个人分配分数");
-////                    return validInfo;
-////                }
-//                if (count > max) {
-//                    validInfo.put(MESSAGE, "本项目至多为" + limit + "个人分配分数");
-//                    return validInfo;
-//                }
-//            }
-//        }
         validInfo.put(IS_VALID, true);
         validInfo.put(MESSAGE, "确认提交？");
         return validInfo;

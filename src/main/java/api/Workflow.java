@@ -132,17 +132,17 @@ public class Workflow {
         /*获取当前order*/
             Order order = engine.getOrder(task.getOrderId());
             /* 使用检验 开始*/
-//            Map re = standardService.confirmChecking(order, args);
-//            if ((boolean) re.get("valid")) {
-//                tasks = engine.execute(taskId, user, (Map) args);
-//            }
-//            else {
-//                return re;
-//            }
+            Map re = standardService.confirmChecking(order, args);
+            if ((boolean) re.get("valid")) {
+                tasks = engine.execute(taskId, user, (Map) args);
+            }
+            else {
+                return re;
+            }
             /* 使用检验 结束*/
 
             /* 不使用检验 开始*/
-            tasks = engine.execute(taskId, user, (Map) args);
+//            tasks = engine.execute(taskId, user, (Map) args);
             /* 不使用检验 结束*/
         }
         else {
