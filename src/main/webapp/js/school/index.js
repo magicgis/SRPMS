@@ -544,8 +544,8 @@ function processView() {
                         title: '科研类型',
                         formatter: "wfTypeTran"
                     }, {
-                        field: 'Main-ActorName',
-                        title: '负责人'
+                        field: 'variableMap.WF_Col',
+                        title: '所属学院'
                     }, {
                         field: 'Status',
                         title: '状态',
@@ -570,7 +570,11 @@ var processStates = {
             $('#ProcessToolbar').show();
             //todo 处理页面跳转
             viewTable.on('click-row.bs.table', function (e, row) {
-                window.location.href = '/order/' + row['id'];
+                if(objType !== 'paper'){
+                    window.location.href = '/order/' + row['orderId'];
+                }else{ // unComplete/
+                    window.location.href = '/order/' + row['id'];
+                }
             });
         },
         leave: function () {

@@ -584,7 +584,7 @@ var processStates = {
             //todo 处理页面跳转
             viewTable.on('click-row.bs.table', function (e, row) {
                 //window.location.href = '/order/' + row['id'];
-                console.log(objType);
+                //console.log(objType);
                 if(objType !== 'paper'){
                     window.location.href = '/order/' + row['orderId'];
                 }else{ // unComplete/
