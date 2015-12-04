@@ -116,7 +116,7 @@ function processView() {
                         field: 'variableMap.WF_0_Submission.name',
                         title: '论文名称'
                     }, {
-                        field: 'variableMap.type',
+                        field: 'variableMap.WF_Latest.type',
                         title: '论文类别',
                         formatter: "typeTran"
                     }, {
@@ -462,8 +462,9 @@ function processView() {
                         title: '科研类型',
                         formatter: "wfTypeTran"
                     }, {
-                        field: 'Main-ActorName',
-                        title: '负责人'
+                        field: 'S-ACTOR',
+                        title: '负责人',
+                        formatter: "mainActorTran"
                     }, {
                         field: 'Status',
                         title: '状态',

@@ -24,26 +24,26 @@ function showTable(){
     $('#changeTable-试box').removeClass('collapsed');
     $('#change-box').addClass('collapsed');
 }
-//状态翻译
-function statusTran(value,row){
-    if(value == 'Blank'){
-        return '待填写';
-    }else if(value == 'Uncomplete'){
-        return '已保存';
-    }else if(value == 'Complete'){
-        return '等待他人确认';
-    }else if(value == 'WaitForSubmit'){
-        return '待统一提交';
-    }else if(value == 'WaitForCol'){
-        return '学院审核中';
-    }else if(value == 'WaitForDep'){
-        return '管理部门审核中';
-    }else if(value == 'RefuseByDep'){
-        return '管理部门驳回，待修改'
-    }else if(value == 'RefuseByCol'){
-        return '学院驳回，待修改'
-    }
-}
+////状态翻译
+//function statusTran(value,row){
+//    if(value == 'Blank'){
+//        return '待填写';
+//    }else if(value == 'Uncomplete'){
+//        return '已保存';
+//    }else if(value == 'Complete'){
+//        return '等待他人确认';
+//    }else if(value == 'WaitForSubmit'){
+//        return '待统一提交';
+//    }else if(value == 'WaitForCol'){
+//        return '学院审核中';
+//    }else if(value == 'WaitForDep'){
+//        return '管理部门审核中';
+//    }else if(value == 'RefuseByDep'){
+//        return '管理部门驳回，待修改'
+//    }else if(value == 'RefuseByCol'){
+//        return '学院驳回，待修改'
+//    }
+//}
 //添加 删除 行动作
 window.operateAAEvents = {
     'click .removeAwardActor': function (e, value, row, index) {

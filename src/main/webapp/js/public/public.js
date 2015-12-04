@@ -289,7 +289,7 @@ function statusTran(value, row) {
         'WaitForCollegeSubmit': '<span class="label label-lg label-danger arrowed-in">待学院统一提交</span>',
         'WaitForDep': '<span class="label label-lg label-info arrowed-in">管理部门审核中</span>',
         'RefuseByDep': '<span class="label label-lg label-danger arrowed-in">管理部门驳回，待学院审核</span>',
-        'RefuseByCol': '<span class="label label-lg label-danger arrowed-in">待填写</span>'
+        'RefuseByCol': '<span class="label label-lg label-danger arrowed-in">学院驳回，待修改</span>'
     };
     if(!isNull(value)){
         var status=termArray[value];
@@ -1194,7 +1194,7 @@ var wfTypeTans = {
     "achAppraisal": "成果鉴定"
 };
 
-function wfTypeTran(value, row) {
+function wfTypeTran(value,row ) {
     if(!isNull(value)){
         return wfTypeTans[value];
     }else{
