@@ -85,7 +85,8 @@ public class Paper extends StandardBase implements StandardCheckInf {
             String unit = (String) myAbActor.get("unit");
             String staffId = (String) myAbActor.get("staff.id");
             for (Map temp : myAbAcotrs) {
-                if (unit != null && (unit.equals(temp.get("unit")) && staffId.equals(temp.get("staff.id")))) {
+                if (unit != null && (unit.equals(temp.get("unit")) && staffId.equals(temp.get("staff.id")))
+                        && !(staffId.equals("9999")||staffId.equals("9998"))) {
                     count++;
                 }
             }
