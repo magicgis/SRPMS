@@ -771,7 +771,6 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pagination: true,
                 sidePagination: "server",
                 pageSize: 15,

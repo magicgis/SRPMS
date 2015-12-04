@@ -494,7 +494,8 @@
             },  {
                 field: 'textNumber',
                 title: '承担字数',
-                sortable: true
+                sortable: true,
+                footerFormatter: "totalWordFormatter"
             }, {
                 field: 'operate',
                 title: '操作',

@@ -349,12 +349,15 @@ function sumWordEntityTran(value, row) {
     return;
 }
 
-function sumWordTran(value, row) {
-    var wordSum = row['variableMap.View.sumWord'];
-    if(!isNull(wordSum)) {
-        return wordSum + '万字';
-    }else if(!isNull(row['sumWord'])) {
-        return row['sumWord']+ '万字';
+function sumWordProcessTran(value, row) {
+    if(value !== null) {
+        return value + '万字';
+    }
+    //else if(row['sumWord'] !== null) {
+    //    return row['sumWord']+ '万字';
+    //}
+    else {
+        return;
     }
 
 }
@@ -377,14 +380,10 @@ function bkAwardEntityTran(value, row) {
 
 // 著作获奖是否翻译
 function bkAwardTran(value, row){
-   // console.log(row);
-    var awarded=row['variableMap.isAward'];
-    if(awarded == 'false') {
+    if(value == 'false') {
         return '未获奖';
-    } else if(awarded == 'true') {
-        return row['variableMap.awarDtype'];
     } else {
-        return '-';
+        return row['variableMap.awardtype'];
     }
 }
 

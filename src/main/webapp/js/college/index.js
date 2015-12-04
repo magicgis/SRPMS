@@ -146,7 +146,8 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -156,19 +157,17 @@ function processView() {
                         field: 'name',
                         title: '著作名称',
                         sortable: true
-                    }
-                    //, {
-                    //    field: 'pubType',
-                    //    title: '出版类型',
-                    //    sortable: true
-                    //}, {
-                    //    field: 'sumWord',
-                    //    title: '著作总字数',
-                    //    sortable: true,
-                    //    formatter: 'sumWordTran'
-                    //}
-                    , {
-                        field: 'isAward',
+                    }, {
+                        field: 'variableMap.View.pubType',
+                        title: '出版类型',
+                        sortable: true
+                    }, {
+                        field: 'variableMap.View.sumWord',
+                        title: '著作总字数',
+                        sortable: true,
+                        formatter: 'sumWordProcessTran'
+                    }, {
+                        field: 'variableMap.isAward',
                         title: '著作获奖情况',
                         sortable: true,
                         formatter: 'bkAwardTran'
@@ -176,13 +175,11 @@ function processView() {
                         field: 'variableMap.Main-ActorName',
                         title: '负责人',
                         sortable: true
-                    }
-                    //, {
-                    //    field: 'publisher',
-                    //    title: '出版社',
-                    //    sortable: true
-                    //}
-                    , {
+                    }, {
+                        field: 'variableMap.View.publisher',
+                        title: '出版社',
+                        sortable: true
+                    }, {
                         field: 'Status',
                         title: '状态',
                         sortable: true,
@@ -697,7 +694,8 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: false,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -715,12 +713,12 @@ function entityView() {
                         field: 'sumWord',
                         title: '著作总字数',
                         sortable: true,
-                        formatter: 'sumWordTran'
+                        formatter: 'sumWordEntityTran'
                     }, {
                         field: 'isAward',
                         title: '著作获奖情况',
                         sortable: true,
-                        formatter: 'bkAwardTran'
+                        formatter: 'bkAwardEntityTran'
                     }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
@@ -728,11 +726,6 @@ function entityView() {
                         field: 'publisher',
                         title: '出版社',
                         sortable: true
-                    }, {
-                        field: 'Status',
-                        title: '状态',
-                        sortable: true,
-                        formatter: 'statusTran'
                     }, {
                         field: 'process',
                         title: '流程状态',

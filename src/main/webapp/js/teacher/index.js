@@ -19,7 +19,6 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 columns: [
@@ -71,7 +70,6 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 columns: [
@@ -118,7 +116,6 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 flat: "true",
@@ -161,13 +158,13 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -178,26 +175,25 @@ function processView() {
                         title: '著作名称',
                         sortable: true
                     }, {
-                        field: 'pubType',
+                        field: 'variableMap.View.pubType',
                         title: '出版类型',
                         sortable: true
-                        //formatter: 'pubTypeTrans'
                     }, {
-                        field: 'sumWord',
+                        field: 'variableMap.View.sumWord',
                         title: '著作总字数',
                         sortable: true,
-                        formatter: 'sumWordTran'
+                        formatter: 'sumWordProcessTran'
                     }, {
-                        field: 'isAward',
+                        field: 'variableMap.isAward',
                         title: '著作获奖情况',
                         sortable: true,
                         formatter: 'bkAwardTran'
                     }, {
-                        field: 'argMap.Main-ActorName',
+                        field: 'variableMap.Main-ActorName',
                         title: '负责人',
                         sortable: true
                     }, {
-                        field: 'publisher',
+                        field: 'variableMap.View.publisher',
                         title: '出版社',
                         sortable: true
                     }, {
@@ -784,14 +780,13 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: false,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -804,18 +799,17 @@ function entityView() {
                     }, {
                         field: 'pubType',
                         title: '出版类型',
-                        sortable: true,
-                        formatter: 'pubTypeTrans'
+                        sortable: true
                     }, {
                         field: 'sumWord',
                         title: '著作总字数',
                         sortable: true,
-                        formatter: 'sumWordTran'
+                        formatter: 'sumWordEntityTran'
                     }, {
                         field: 'isAward',
                         title: '著作获奖情况',
                         sortable: true,
-                        formatter: 'bkAwardTran'
+                        formatter: 'bkAwardEntityTran'
                     }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
@@ -823,11 +817,6 @@ function entityView() {
                         field: 'publisher',
                         title: '出版社',
                         sortable: true
-                    }, {
-                        field: 'Status',
-                        title: '状态',
-                        sortable: true,
-                        formatter: 'statusTran'
                     }, {
                         field: 'process',
                         title: '流程状态',
