@@ -222,7 +222,7 @@ public class SnakerEngineUtils implements Engine {
         }
 
          /*如果存在下一任务参与者*/
-        if (args.containsKey("WF_Actor") && args.containsKey("IsComplete")) {
+        if (args.containsKey("WF_Actor") && args.containsKey("IsComplete") && "Confirm".equals(tasks.get(0).getTaskName())) {
             if (!Boolean.valueOf((String) args.get("IsComplete")))
                 return tasks;
             String[] actorString = args.get("WF_Actor").toString().split(",");
