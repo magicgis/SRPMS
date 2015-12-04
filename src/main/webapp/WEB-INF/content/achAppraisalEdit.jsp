@@ -260,7 +260,9 @@
                                                              </c:if>
                                                             <label for="totalScore">总分：</label>
                                                             <input class="score" type="text"
-                                                                   name="score" id="totalScore" value="${achAppraisal.score}">
+                                                                   name="score" id="totalScore" value="${achAppraisal.score}"
+                                                                   onkeyup="this.value=value.replace(/[^\d]/g,'')"
+                                                                   onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
                                                         </span>
                                                     </div>
                                                     <table id="actorTable"

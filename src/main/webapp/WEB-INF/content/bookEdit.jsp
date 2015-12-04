@@ -179,9 +179,9 @@
 
                                             <div class="form-group col-xs-12 col-sm-6">
                                                 <label class="col-sm-4 control-label no-padding-left"
-                                                       for="awarDtype">所获奖项</label>
+                                                       for="awardtype">所获奖项</label>
                                                 <div class="col-sm-8">
-                                                    <input class="form-control" id="awarDtype"
+                                                    <input class="form-control" id="awardtype"
                                                            type="text" name="awardtype"
                                                            placeholder="请选择"/>
                                                 </div>
@@ -257,7 +257,9 @@
                                                     </c:if>
                                                     <label for="totalScore">总分：</label>
                                                     <input class="score" type="text"
-                                                           name="score" id="totalScore" value="${book.score}">
+                                                           name="score" id="totalScore" value="${book.score}"
+                                                           onkeyup="this.value=value.replace(/[^\d]/g,'')"
+                                                           onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
                                                 </span>
                                             </div>
                                             <table id="actorTable"
@@ -379,7 +381,7 @@
     }
     var all = entity['argMap']; // 获得 成员，单位，附件，负责人等信息
     var isAward=all['isAward'];
-    var awardType=all['awarDtype'];
+    var awardType=all['awardtype'];
     var isTrans=all['isTrans'];
     var dept = entity['dept'];
     var taskId = '${taskId}';  // 获得 task的id
@@ -396,7 +398,7 @@
     if (approvalByDep != "") {
         replyByDep = all[approvalByDep]['replyByDep'];
     }
-    var $awardtype = $('#awarDtype').selectize({ // 初始化 鉴定等级
+    var $awardtype = $('#awardtype').selectize({ // 初始化 鉴定等级
         valueField: 'value',
         labelField: 'value',
         maxItems: 1,

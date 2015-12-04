@@ -386,7 +386,9 @@
 															   class="btn btn-primary btn-sm">计算分数</a>
 															<label for="totalScore">总分：</label>
 															<input class="score" type="text"
-															       name="score" id="totalScore" value="${paper.score}">
+															       name="score" id="totalScore" value="${paper.score}"
+															       onkeyup="this.value=value.replace(/[^\d]/g,'')"
+															       onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
 														</div>
 														<table id="actorTable"
 														       data-toolbar="#actorToolbar"

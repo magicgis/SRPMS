@@ -105,7 +105,7 @@ function Approve() {
         btnOKClass: 'btn-ok',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep', taskId, approveInfo).success(function () {
+                workflow.execute(userName, taskId, approveInfo).success(function () {
                     afterSuccess('审批通过！');
                     window.location.href = '/index/process/book/all';
                 });
@@ -128,7 +128,7 @@ function Refuse() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep', taskId, refuseInfo).success(function () {
+                workflow.execute(userName, taskId, refuseInfo).success(function () {
                     afterSuccess('审批驳回！');
                     window.location.href = '/index/process/book/all';
                 });
