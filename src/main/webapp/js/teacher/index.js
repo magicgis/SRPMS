@@ -650,7 +650,6 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 columns: [
@@ -698,7 +697,6 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 flat: true,
@@ -1221,8 +1219,8 @@ var magStates = {
                 pageList: [20, 30, 50, 'ALL'],
                 toolbar: '#MagToolbar',
                 columns: [{
-                    radio: true
-                    //visible:false
+                    radio: true,
+                    visible:false
                 }, {
                     field: 'id',
                     title: 'id',
@@ -1276,20 +1274,18 @@ var taskStates = {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: '/api/workflow/' + userName + '/confirmTask',
                 pagination: true,
+                showRefresh: true,
                 sidePagination: "client",
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 flat: 'true',
                 columns: [{
-                    radio: true
+                    radio: true,
+                    visible:false
                 }, {
                     field: 'id',
                     title: 'id',
                     visible: false
-                }, {
-                    field: 'variableMap.ActorList',
-                    title: '人员',
-                    formatter: "actorTran"
                 }, {
                     field: 'variableMap.WF_Latest.name',
                     title: '科研名称'
@@ -1298,9 +1294,13 @@ var taskStates = {
                     title: '科研类型',
                     formatter: "wfTypeTran"
                 }, {
+                    field: 'variableMap.WF_Latest.ActorList',
+                    title: '人员',
+                    formatter: "actorTran"
+                }, {
                     field: 'variableMap.Status',
                     title: '状态',
-                    formatter: 'statusTran'
+                    formatter: 'statusTranTask'
                 }]
             });
 

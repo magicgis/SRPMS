@@ -299,6 +299,10 @@ function statusTran(value, row) {
     }
 }
 
+function statusTranTask(value, row) {
+    return '<span class="label label-lg label-danger arrowed-in">待确认</span>';
+}
+
 /**
  * 进度
  * @param arg
