@@ -236,7 +236,7 @@ public class SnakerEngineUtils implements Engine {
             }
             tasks = snakerEngine.query().getActiveTasks(new QueryFilter().setOrderId(orderId));
             for (Task u : tasks) {
-                if (u.getActorIds()[0].equals(actors.get(0))) {
+                if (actors.get(0).equals(u.getActorIds()[0])) {
                     continue;
                 }
                 snakerEngine.task().addTaskActor(u.getId(), actors.get(0));

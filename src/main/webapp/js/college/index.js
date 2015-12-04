@@ -156,30 +156,33 @@ function processView() {
                         field: 'name',
                         title: '著作名称',
                         sortable: true
-                    }, {
-                        field: 'pubType',
-                        title: '出版类型',
-                        sortable: true,
-                        formatter: 'pubTypeTrans'
-                    }, {
-                        field: 'sumWord',
-                        title: '著作总字数',
-                        sortable: true,
-                        formatter: 'sumWordTran'
-                    }, {
+                    }
+                    //, {
+                    //    field: 'pubType',
+                    //    title: '出版类型',
+                    //    sortable: true
+                    //}, {
+                    //    field: 'sumWord',
+                    //    title: '著作总字数',
+                    //    sortable: true,
+                    //    formatter: 'sumWordTran'
+                    //}
+                    , {
                         field: 'isAward',
                         title: '著作获奖情况',
                         sortable: true,
                         formatter: 'bkAwardTran'
                     }, {
-                        field: 'argMap.Main-ActorName',
+                        field: 'variableMap.Main-ActorName',
                         title: '负责人',
                         sortable: true
-                    }, {
-                        field: 'publisher',
-                        title: '出版社',
-                        sortable: true
-                    }, {
+                    }
+                    //, {
+                    //    field: 'publisher',
+                    //    title: '出版社',
+                    //    sortable: true
+                    //}
+                    , {
                         field: 'Status',
                         title: '状态',
                         sortable: true,
@@ -707,8 +710,7 @@ function entityView() {
                     }, {
                         field: 'pubType',
                         title: '出版类型',
-                        sortable: true,
-                        formatter: 'pubTypeTrans'
+                        sortable: true
                     }, {
                         field: 'sumWord',
                         title: '著作总字数',

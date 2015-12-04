@@ -185,7 +185,9 @@
                                                     <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
                                                     <label for="totalScore">总分：</label>
                                                     <input class="score" type="text"
-                                                           name="score" id="totalScore" value="${food.score}">
+                                                           name="score" id="totalScore" value="${food.score}"
+                                                           onkeyup="this.value=value.replace(/[^\d]/g,'')"
+                                                           onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
                                                 </span>
 												</div>
 												<table id="actorTable"

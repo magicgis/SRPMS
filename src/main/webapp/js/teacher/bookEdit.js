@@ -23,7 +23,6 @@ function save() {
     });
 }
 function confirm() {
-    var status = all['Status'];
     var send = new Object();
     send['IsComplete'] = 'true';
     send['Main-Actor'] = Main_Actor;

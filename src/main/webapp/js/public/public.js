@@ -342,11 +342,18 @@ function paperTypeTran(value) {
     }
 }
 
+function sumWordEntityTran(value, row) {
+    if(value !== null){
+        return value + '万字';
+    }
+    return;
+}
+
 function sumWordTran(value, row) {
-    var wordSum=row['variableMap.View.sumWord'];
-    if(!isNull(wordSum)){
+    var wordSum = row['variableMap.View.sumWord'];
+    if(!isNull(wordSum)) {
         return wordSum + '万字';
-    }else if(!isNull(row['sumWord'])){
+    }else if(!isNull(row['sumWord'])) {
         return row['sumWord']+ '万字';
     }
 
@@ -358,6 +365,14 @@ function actorTran(value, row) {
         return value.substring(0, value.length - 1);
     else
         return;
+}
+
+function bkAwardEntityTran(value, row) {
+    if(row['argMap.isAward'] == 'false') {
+        return '未获奖';
+    } else {
+        return row['argMap.awardType']
+    }
 }
 
 // 著作获奖是否翻译
