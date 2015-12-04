@@ -116,7 +116,7 @@ function processView() {
                         field: 'variableMap.WF_0_Submission.name',
                         title: '论文名称'
                     }, {
-                        field: 'variableMap.type',
+                        field: 'variableMap.WF_Latest.type',
                         title: '论文类别',
                         formatter: "typeTran"
                     }, {
@@ -146,7 +146,8 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -157,26 +158,25 @@ function processView() {
                         title: '著作名称',
                         sortable: true
                     }, {
-                        field: 'pubType',
+                        field: 'variableMap.View.pubType',
                         title: '出版类型',
-                        sortable: true,
-                        formatter: 'pubTypeTrans'
+                        sortable: true
                     }, {
-                        field: 'sumWord',
+                        field: 'variableMap.View.sumWord',
                         title: '著作总字数',
                         sortable: true,
-                        formatter: 'sumWordTran'
+                        formatter: 'sumWordProcessTran'
                     }, {
-                        field: 'isAward',
+                        field: 'variableMap.isAward',
                         title: '著作获奖情况',
                         sortable: true,
                         formatter: 'bkAwardTran'
                     }, {
-                        field: 'argMap.Main-ActorName',
+                        field: 'variableMap.Main-ActorName',
                         title: '负责人',
                         sortable: true
                     }, {
-                        field: 'publisher',
+                        field: 'variableMap.View.publisher',
                         title: '出版社',
                         sortable: true
                     }, {
@@ -462,8 +462,9 @@ function processView() {
                         title: '科研类型',
                         formatter: "wfTypeTran"
                     }, {
-                        field: 'Main-ActorName',
-                        title: '负责人'
+                        field: 'S-ACTOR',
+                        title: '负责人',
+                        formatter: "mainActorTran"
                     }, {
                         field: 'Status',
                         title: '状态',
@@ -694,7 +695,8 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: false,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -707,18 +709,17 @@ function entityView() {
                     }, {
                         field: 'pubType',
                         title: '出版类型',
-                        sortable: true,
-                        formatter: 'pubTypeTrans'
+                        sortable: true
                     }, {
                         field: 'sumWord',
                         title: '著作总字数',
                         sortable: true,
-                        formatter: 'sumWordTran'
+                        formatter: 'sumWordEntityTran'
                     }, {
                         field: 'isAward',
                         title: '著作获奖情况',
                         sortable: true,
-                        formatter: 'bkAwardTran'
+                        formatter: 'bkAwardEntityTran'
                     }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
@@ -726,11 +727,6 @@ function entityView() {
                         field: 'publisher',
                         title: '出版社',
                         sortable: true
-                    }, {
-                        field: 'Status',
-                        title: '状态',
-                        sortable: true,
-                        formatter: 'statusTran'
                     }, {
                         field: 'process',
                         title: '流程状态',

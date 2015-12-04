@@ -386,7 +386,9 @@
 															   class="btn btn-primary btn-sm">计算分数</a>
 															<label for="totalScore">总分：</label>
 															<input class="score" type="text"
-															       name="score" id="totalScore" value="${paper.score}">
+															       name="score" id="totalScore" value="${paper.score}"
+															       onkeyup="this.value=value.replace(/[^\d]/g,'')"
+															       onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
 														</div>
 														<table id="actorTable"
 														       data-toolbar="#actorToolbar"
@@ -750,11 +752,11 @@
 
 	} // end if order非空
 	//参与者不能删除上传的附件
-	if(entity['creator']!=userName){//todo 判断是否是参与者
-		$('.delFiles').hide();
-	}else if(entity['creator']==userName){
-		$('.delFiles').show();
-	}
+//	if(entity['creator']!=userName){
+//		$('.delFiles').hide();
+//	}else if(entity['creator']==userName){
+//		$('.delFiles').show();
+//	}
 	//监听 更换论文类型
 	$('#type').change(function () {
 		magOrConfer();

@@ -4,8 +4,8 @@
 $(function () {
 
     init(entity, all, replyByDep, 1);
-});
 
+});
 var flag = true;
 
 function save() {
@@ -21,14 +21,15 @@ function save() {
 }
 
 function confirm() {
-    var status = all['Status'];
     var send = new Object();
-    if(status == 'Uncomplete' || status == 'RefuseByCol'){
-        send['IsComplete'] = 'true';
-        send['Main-Actor'] = Main_Actor;
-        send['Main-ActorName'] = Main_ActorName;
+    if( isMainActor(Main_Actor, userName) ) {
+        send =  getForm_notSerialize();
         send['actors'] = getActorsData();
+        send['units']=getUnitsData();
+        send['IsComplete'] = 'true';
     }
+    send['WF_User'] = userName;
+    send['WF_Task'] = taskId;
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '确认?',

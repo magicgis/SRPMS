@@ -28,6 +28,16 @@ function typeTran(value, row) {
         return;
     }
 }
+function mainActorTran(value, row){
+    console.log(row);
+    var main_Actor=row['WF_Latest']['actors'][0]['staff.name'];
+    if(!isNull(main_Actor)){
+        return main_Actor;
+    }else{
+        return '--';
+    }
+}
+
 /**
  *查看/编辑样式
  *

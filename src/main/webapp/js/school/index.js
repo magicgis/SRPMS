@@ -771,7 +771,6 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pagination: true,
                 sidePagination: "server",
                 pageSize: 15,
@@ -798,14 +797,14 @@ function entityView() {
                         field: 'sumWord',
                         title: '著作总字数',
                         sortable: true,
-                        formatter: 'sumWordTran'
+                        formatter: 'sumWordEntityTran'
                     }, {
                         field: 'isAward',
                         title: '著作获奖情况',
                         sortable: true,
-                        formatter: 'bkAwardTran'
+                        formatter: 'bkAwardEntityTran'
                     }, {
-                        field: 'variableMap.Main-ActorName',
+                        field: 'argMap.Main-ActorName',
                         title: '负责人'
                     }, {
                         field: 'publisher',

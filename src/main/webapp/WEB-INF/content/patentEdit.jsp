@@ -235,7 +235,9 @@
                                                                 </c:if>
                                                                 <label for="totalScore">总分：</label>
                                                                 <input class="score" type="text"
-                                                                       name="score" id="totalScore" value="${project.score}">
+                                                                       name="score" id="totalScore" value="${project.score}"
+                                                                       onkeyup="this.value=value.replace(/[^\d]/g,'')"
+                                                                       onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
                                                             </span>
                                                         </div>
                                                         <table id="actorTable"
@@ -527,16 +529,6 @@
     //监听 添加成员
     $('.addActor').click(function () {
         addActor();
-    });
-    //监听 分配分数
-    $('.getScore').click(function () {
-        saveStep1().success(function(data) {
-
-            saveStep2(data).success(function (res) {
-                getScore('patent');
-            });
-        });
-
     });
 
 </script>

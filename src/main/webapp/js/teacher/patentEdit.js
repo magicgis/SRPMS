@@ -8,10 +8,7 @@ $(function () {
     // 在教师界面的argMap，基本等同于order中的arg，
     // 存在Status,WF_Col,WF_Col_Id等等，基本是前台上一次放什么进去，第二次就能以同样的方式拿到
     // 还需要判断order的状态来 判断是否能算分与分配分数
-
-
     init(entity,all,replyByDep,1);
-
 });
 /*
  * 保存
@@ -33,12 +30,15 @@ function save() {
  *
  * */
 function confirm() {
-    var status = all['Status'];
     var send = new Object();
-    if(status == 'Uncomplete' || status == 'RefuseByCol'){
-        send['IsComplete'] = 'true';
+    if( isMainActor(Main_Actor, userName) ) {
+        send =  getForm_notSerialize();
         send['actors'] = getActorsData();
+        send['units']=getUnitsData();
+        send['IsComplete'] = 'true';
     }
+    send['WF_User'] = userName;
+    send['WF_Task'] = taskId;
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '确认?',

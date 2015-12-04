@@ -239,7 +239,9 @@
 	                                                    <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
 	                                                    <label for="totalScore">总分：</label>
 	                                                    <input class="score" type="text"
-	                                                           name="score" id="totalScore" value="${medicine.score}">
+	                                                           name="score" id="totalScore" value="${medicine.score}"
+	                                                           onkeyup="this.value=value.replace(/[^\d]/g,'')"
+	                                                           onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
 	                                                </span>
 												</div>
 												<table id="actorTable"
@@ -564,15 +566,6 @@
 	//监听 添加成员
 	$('.addActor').click(function () {
 		addActor();
-	});
-	//监听 分配分数
-	$('.getScore').click(function () {
-		saveStep1().success(function(data) {
-
-			saveStep2(data).success(function (res) {
-				getScore('medicine');
-			});
-		});
 	});
 </script>
 <c:choose>

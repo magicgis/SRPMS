@@ -90,6 +90,16 @@ function totalMarksFormatter(data) {
     });
     return '共' + total.toFixed(0) + "分";
 }
+function totalWordFormatter(data) {
+    var total = 0;
+    $.each(data, function (i, row) {
+        if (row.textNumber !== null && row.textNumber !== undefined && row.textNumber !== "") {
+            total += +(row.textNumber.toString().substring(0));
+        }
+    });
+    return '共' + total.toFixed(0) + "万";
+}
+
 /**************************获取表格数据************************/
 function getActorsData() {
     var actorTemp = $("#actorTable").bootstrapTable('getData');

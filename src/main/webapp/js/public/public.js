@@ -204,7 +204,7 @@ function tableTrans(res) {
         }
     });
     if (res["rows"] == undefined || res["rows"] == null) {
-        console.log(respon);
+        //console.log(respon);
         return respon;
     } else {
         res["rows"] = respon;
@@ -289,7 +289,7 @@ function statusTran(value, row) {
         'WaitForCollegeSubmit': '<span class="label label-lg label-danger arrowed-in">待学院统一提交</span>',
         'WaitForDep': '<span class="label label-lg label-info arrowed-in">管理部门审核中</span>',
         'RefuseByDep': '<span class="label label-lg label-danger arrowed-in">管理部门驳回，待学院审核</span>',
-        'RefuseByCol': '<span class="label label-lg label-danger arrowed-in">待填写</span>'
+        'RefuseByCol': '<span class="label label-lg label-danger arrowed-in">学院驳回，待修改</span>'
     };
     if(!isNull(value)){
         var status=termArray[value];
@@ -342,12 +342,22 @@ function paperTypeTran(value) {
     }
 }
 
-function sumWordTran(value, row) {
-    var wordSum=row['variableMap.View.sumWord'];
-    if(!isNull(wordSum)){
-        return wordSum + '万字';
-    }else if(!isNull(row['sumWord'])){
-        return row['sumWord']+ '万字';
+function sumWordEntityTran(value, row) {
+    if(value !== null){
+        return value + '万字';
+    }
+    return;
+}
+
+function sumWordProcessTran(value, row) {
+    if(value !== null) {
+        return value + '万字';
+    }
+    //else if(row['sumWord'] !== null) {
+    //    return row['sumWord']+ '万字';
+    //}
+    else {
+        return;
     }
 
 }
@@ -360,16 +370,20 @@ function actorTran(value, row) {
         return;
 }
 
+function bkAwardEntityTran(value, row) {
+    if(row['argMap.isAward'] == 'false') {
+        return '未获奖';
+    } else {
+        return row['argMap.awardtype']
+    }
+}
+
 // 著作获奖是否翻译
 function bkAwardTran(value, row){
-   // console.log(row);
-    var awarded=row['variableMap.isAward'];
-    if(awarded == 'false') {
+    if(value == 'false') {
         return '未获奖';
-    } else if(awarded == 'true') {
-        return row['variableMap.awarDtype'];
     } else {
-        return '-';
+        return row['variableMap.awardtype'];
     }
 }
 
@@ -1180,7 +1194,7 @@ var wfTypeTans = {
     "achAppraisal": "成果鉴定"
 };
 
-function wfTypeTran(value, row) {
+function wfTypeTran(value,row ) {
     if(!isNull(value)){
         return wfTypeTans[value];
     }else{
@@ -1215,7 +1229,24 @@ function projbelong(value, row){
  */
 function getScore(type) {
     var jsonData = getFormData(type);
-    console.log(jsonData);
+    caculator(jsonData);
+    //console.log(jsonData);
+    //workflow.getScore(jsonData).success(function (data) {
+    //    if (data["valid"] == false) { // 检验不合格
+    //        errorMsg(data["msg"]);
+    //        flag = true;
+    //    } else if (data["hasSum"] == false) { // 后台分配分数
+    //        $("#actorTable").bootstrapTable('load', data["actors"]);
+    //        flag = false;
+    //        errorMsg(data["msg"]);
+    //    } else if (data["hasSum"] == true) {  // 给总分，负责人分配分数
+    //        $("#totalScore").val(Math.floor(data["sum"]));
+    //        errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
+    //        flag = true;
+    //    }
+    //});
+}
+function caculator(jsonData){
     workflow.getScore(jsonData).success(function (data) {
         if (data["valid"] == false) { // 检验不合格
             errorMsg(data["msg"]);

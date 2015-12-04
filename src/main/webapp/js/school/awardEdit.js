@@ -5,6 +5,16 @@ $(function () {
 
     init(entity,all,replyByDep,3);
 });
+//监听 分配分数
+$('.getScore').click(function () {
+    saveStep1().success(function(data) {
+
+        saveStep2(data).success(function (res) {
+            getScore('achAward');
+        });
+    });
+
+});
 /**与项目信息有关的 保存||确认||撤回||删除||提交所有**/
 function save() {
     var Info = getMainActor();
@@ -104,7 +114,7 @@ function Approve() {
         btnOKClass: 'btn-ok',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep',taskId, approveInfo).success(function () {
+                workflow.execute(userName,taskId, approveInfo).success(function () {
                     afterSuccess('审批通过！');
                     window.location.href = '/index/process/achAward/all';
                 });
@@ -130,7 +140,7 @@ function Refuse() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep', taskId, refuseInfo).success(function () {
+                workflow.execute(userName, taskId, refuseInfo).success(function () {
                     afterSuccess('审批驳回！');
                     window.location.href = '/index/process/achAward/all';
                 });
