@@ -4,28 +4,11 @@
 $(function () {
 
     init(entity, all, replyByDep, 1);
-
-    //监听 分配分数
-    $('.getScore').click(function () {
-        var jsonData = getForm_notSerialize();
-
-        workflow.getScore(jsonData).success(function (data) {
-            if (data["valid"] == false) { // 检验不合格
-                errorMsg(data["msg"]);
-                flag = true;
-            } else if (data["hasSum"] == false) { // 后台分配分数
-                $("#actorTable").bootstrapTable('load', data["actors"]);
-                flag = false;
-                errorMsg(data["msg"]);
-            } else if (data["hasSum"] == true) {  // 给总分，负责人分配分数
-                $("#totalScore").val(Math.floor(data["sum"]));
-                errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
-                flag = true;
-            }
-        });
-
-    });
-
+});
+//监听 分配分数
+$('.getScore').click(function () {
+    var jsonData = getForm_notSerialize();
+    caculator(jsonData);
 });
 var flag = true;
 function save() {

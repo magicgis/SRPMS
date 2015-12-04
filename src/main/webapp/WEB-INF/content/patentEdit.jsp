@@ -528,16 +528,6 @@
     $('.addActor').click(function () {
         addActor();
     });
-    //监听 分配分数
-    $('.getScore').click(function () {
-        saveStep1().success(function(data) {
-
-            saveStep2(data).success(function (res) {
-                getScore('patent');
-            });
-        });
-
-    });
 
 </script>
 <c:choose>

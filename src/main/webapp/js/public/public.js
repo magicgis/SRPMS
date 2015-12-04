@@ -204,7 +204,7 @@ function tableTrans(res) {
         }
     });
     if (res["rows"] == undefined || res["rows"] == null) {
-        console.log(respon);
+        //console.log(respon);
         return respon;
     } else {
         res["rows"] = respon;
@@ -1215,7 +1215,24 @@ function projbelong(value, row){
  */
 function getScore(type) {
     var jsonData = getFormData(type);
-    console.log(jsonData);
+    caculator(jsonData);
+    //console.log(jsonData);
+    //workflow.getScore(jsonData).success(function (data) {
+    //    if (data["valid"] == false) { // 检验不合格
+    //        errorMsg(data["msg"]);
+    //        flag = true;
+    //    } else if (data["hasSum"] == false) { // 后台分配分数
+    //        $("#actorTable").bootstrapTable('load', data["actors"]);
+    //        flag = false;
+    //        errorMsg(data["msg"]);
+    //    } else if (data["hasSum"] == true) {  // 给总分，负责人分配分数
+    //        $("#totalScore").val(Math.floor(data["sum"]));
+    //        errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
+    //        flag = true;
+    //    }
+    //});
+}
+function caculator(jsonData){
     workflow.getScore(jsonData).success(function (data) {
         if (data["valid"] == false) { // 检验不合格
             errorMsg(data["msg"]);

@@ -533,13 +533,7 @@
     $(".Refuse").click(function () {
         refuse();
     });
-    $('.getScore').click(function () {
-        saveStep1().success(function(data) {
-            saveStep2(data).success(function (res) {
-                getScore('book');
-            });
-        });
-    });
+
 </script>
 <c:choose>
     <c:when test="${sessionScope.level == '1'}">

@@ -5,6 +5,12 @@ $(function () {
 
     init(entity, all, replyByDep, 1);
 });
+//todo 算分信息
+$('.getScore').click(function () {
+    var jsonData = getForm_notSerialize();
+    caculator(jsonData);
+
+});
 var flag = true;
 function save() {
     var send = new Object();

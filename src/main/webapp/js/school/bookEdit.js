@@ -6,11 +6,16 @@
  * Created by zheng on 2015/10/12.
  */
 $(function () {
-    //init();
-    //unEditTableBook();
     init(entity,all,replyByDep,3);
 });
 /**与著作信息有关的 保存||确认||撤回||删除||提交所有**/
+$('.getScore').click(function () {
+    saveStep1().success(function(data) {
+        saveStep2(data).success(function (res) {
+            getScore('book');
+        });
+    });
+});
 function save() {
     var Info = getMainActor();
     Main_Actor = Info['Main-Actor'];
