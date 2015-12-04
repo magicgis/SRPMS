@@ -4,6 +4,7 @@
 $(function () {
     //init();
     init(entity, all, replyByDep, 1);
+    hideColumnScore();
 });
 //todo 算分信息
 $('.getScore').click(function () {
