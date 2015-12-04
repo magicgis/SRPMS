@@ -649,23 +649,20 @@ function entityView() {
                         title: '名称',
                         sortable: true
                     }, {
-                        field: 'projtype',
+                        field: 'standard.infoMap.projtype',
                         title: '类别',
-                        sortable: true,
-                        formatter: "projtypeTran"
+                        sortable: true
                     }, {
-                        field: 'projrank',
+                        field: 'standard.infoMap.projrank',
                         title: '等级',
-                        sortable: true,
-                        formatter: "rankTran"
+                        sortable: true
                     }, {
-                        field: 'projbelong',
+                        field: 'standard.infoMap.projbelong',
                         title: '评分归属',
-                        sortable: true,
-                        formatter: "projbelong"
+                        sortable: true
                     }, {
                         field: 'realDate',
-                        title: '实际结题时间',
+                        title: '结题时间',
                         sortable: true
                     }, {
                         field: 'argMap.Main-ActorName',
