@@ -371,7 +371,7 @@ function bkAwardEntityTran(value, row) {
     if(row['argMap.isAward'] == 'false') {
         return '未获奖';
     } else {
-        return row['argMap.awardType']
+        return row['argMap.awardtype']
     }
 }
 

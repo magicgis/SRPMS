@@ -805,7 +805,7 @@ function entityView() {
                         sortable: true,
                         formatter: 'bkAwardEntityTran'
                     }, {
-                        field: 'variableMap.Main-ActorName',
+                        field: 'argMap.Main-ActorName',
                         title: '负责人'
                     }, {
                         field: 'publisher',

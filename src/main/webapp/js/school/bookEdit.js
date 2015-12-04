@@ -259,7 +259,7 @@ function saveStep2(data) {
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
     send['isAward']=$('#isAward').val();
-    send['awarDtype']=$('#awarDtype').val();
+    send['awardtype']=$('#awardtype').val();
     send['isTrans']=$('#isTrans').val();
     return $.ajax({
         type: 'put',
