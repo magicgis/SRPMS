@@ -69,7 +69,6 @@ function confirm() {
     if(window.location.href.indexOf('task') < 0) {
         jsonData = getFormData('paper');
     }
-    jsonData['IsComplete'] = 'true';
     jsonData['WF_User'] = userName;
     jsonData['WF_Task'] = $('#WF_Task').val();
     BootstrapDialog.confirm({

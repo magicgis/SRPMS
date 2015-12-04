@@ -17,7 +17,7 @@ function save() {
     //send['Main-ActorName'] = Main_ActorName;
     workflow.execute(userName, taskId, send).success(function () {
         afterSuccess("保存成功！");
-        //window.location.href = '/index/process/book/all';
+        window.location.href = '/index/process/book/all';
     });
 }
 function confirm() {
@@ -47,13 +47,13 @@ function confirm() {
                     if ("valid" in data) {
                         if (data["valid"] == true) {
                             afterSuccess("确认成功！");
-                            //window.location.href = '/index/process/book/all';
+                            window.location.href = '/index/process/book/all';
                         } else {
                             errorMsg(data["msg"]);
                         }
                     } else {
                         afterSuccess("确认成功！");
-                        //window.location.href = '/index/process/book/all';
+                        window.location.href = '/index/process/book/all';
                     }
                 });
             }
