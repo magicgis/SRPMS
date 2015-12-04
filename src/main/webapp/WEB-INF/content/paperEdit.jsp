@@ -486,22 +486,24 @@
 												</div>
 											</c:when>
 											<c:otherwise>
-												<div class="col-md-offset-4 col-md-8">
-													<button class="tabOrdBtn btn btn-success" type="button"
-													        id="Approve">
-														<i class="ace-icon fa fa-check bigger-110"></i>
-														通过
-													</button>
-
-													<button class="tabOrdBtn btn back" type="button">
-														<i class="ace-icon fa fa-reply  bigger-110"></i>
-														返回
-													</button>
-
-													<button class="tabOrdBtn btn btn-danger" type="button" id="Refuse">
-														<i class="ace-icon fa fa-remove bigger-110"></i>
-														驳回
-													</button>
+												<div class="col-md-offset-9 col-md-8">
+													<span class="onApprove">
+                                						<button class="tabOrdBtn btn btn-success btn-sm"
+															type="button" id="Approve">
+															<i class="ace-icon fa fa-check bigger-110"></i>
+																通过
+														</button>
+                                						<button class="tabOrdBtn btn btn-warning btn-sm" id="Refuse"
+															type="button">
+																<i class="ace-icon fa fa-remove bigger-110"></i>
+																驳回
+															</button>
+														<button class="tabOrdBtn btn btn-danger btn-sm back"
+																type="button">
+															<i class="ace-icon fa fa-reply  bigger-110"></i>
+															返回
+														</button>
+                            						</span>
 												</div>
 											</c:otherwise>
 										</c:choose>

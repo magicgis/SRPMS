@@ -534,7 +534,7 @@
     });
     //监听 点击驳回
     $(".Refuse").click(function () {
-        refuse();
+        Refuse();
     });
 
 </script>
