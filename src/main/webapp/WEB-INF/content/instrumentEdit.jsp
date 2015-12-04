@@ -212,7 +212,9 @@
 	                                                    <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
 	                                                    <label for="totalScore">总分：</label>
 	                                                    <input class="score" type="text"
-	                                                           name="score" id="totalScore" value="${instrument.score}">
+	                                                           name="score" id="totalScore" value="${instrument.score}"
+	                                                           onkeyup="this.value=value.replace(/[^\d]/g,'')"
+	                                                           onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
 	                                                </span>
 												</div>
 												<table id="actorTable"
@@ -530,15 +532,7 @@
 	$('.addActor').click(function () {
 		addActor();
 	});
-	//监听 分配分数
-	$('.getScore').click(function () {
-		saveStep1().success(function(data) {
 
-			saveStep2(data).success(function (res) {
-				getScore('instrument');
-			});
-		});
-	});
 </script>
 <c:choose>
 	<c:when test="${sessionScope.level == '1'}">

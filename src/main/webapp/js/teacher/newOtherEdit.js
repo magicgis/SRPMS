@@ -4,8 +4,8 @@
 $(function () {
 
     init(entity, all, replyByDep, 1);
+    //todo 算分信息
 });
-
 function save() {
     var send = new Object();
     send['IsComplete'] = 'false';
@@ -19,6 +19,7 @@ function confirm() {
     var send = new Object();
     send['IsComplete'] = 'true';
     send['actors'] = getActorsData();
+    send =  getForm_notSerialize();
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '确认?',

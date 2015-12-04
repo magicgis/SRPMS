@@ -6,6 +6,15 @@ $(function () {
     init(entity, all, replyByDep, 3);
 
 });
+//监听 分配分数
+$('.getScore').click(function () {
+    saveStep1().success(function(data) {
+
+        saveStep2(data).success(function (res) {
+            getScore('food');
+        });
+    });
+});
 /**与新食品信息有关的 保存||确认||撤回||删除||提交所有**/
 function save() {
     var Info = getMainActor();

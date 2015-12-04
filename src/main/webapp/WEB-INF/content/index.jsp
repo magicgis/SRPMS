@@ -183,15 +183,15 @@
                                             </c:when>
                                         </c:choose>
                                     </div>
-                                    <div id="MagToolbar" style="display: none">
-                                        <c:choose>
-                                            <c:when test="${sessionScope.level == '1'}">
-                                                <button class=" newMag btn btn-primary btn-sm">
-                                                    <i class="ace-icon fa fa-plus bigger-160"></i>添加期刊
-                                                </button>
-                                            </c:when>
-                                        </c:choose>
-                                    </div>
+                                    <%--<div id="MagToolbar" style="display: none">--%>
+                                        <%--<c:choose>--%>
+                                            <%--<c:when test="${sessionScope.level == '1'}">--%>
+                                                <%--<button class=" newMag btn btn-primary btn-sm">--%>
+                                                    <%--<i class="ace-icon fa fa-plus bigger-160"></i>添加期刊--%>
+                                                <%--</button>--%>
+                                            <%--</c:when>--%>
+                                        <%--</c:choose>--%>
+                                    <%--</div>--%>
                                     <div id="UserToolbar" style="display: none;">
                                         <c:choose>
                                             <c:when test="${sessionScope.level == '3'}">

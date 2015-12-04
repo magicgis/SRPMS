@@ -260,7 +260,9 @@
                                                              </c:if>
                                                             <label for="totalScore">总分：</label>
                                                             <input class="score" type="text"
-                                                                   name="score" id="totalScore" value="${achAppraisal.score}">
+                                                                   name="score" id="totalScore" value="${achAppraisal.score}"
+                                                                   onkeyup="this.value=value.replace(/[^\d]/g,'')"
+                                                                   onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
                                                         </span>
                                                     </div>
                                                     <table id="actorTable"
@@ -596,15 +598,7 @@
     $('.addActor').click(function () {
         addActor();
     });
-    //监听 分配分数
-    $('.getScore').click(function () {
-        saveStep1().success(function(data) {
 
-            saveStep2(data).success(function (res) {
-                getScore('achAppraisal');
-            });
-        });
-    });
 
 
 </script>

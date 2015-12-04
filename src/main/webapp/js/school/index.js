@@ -798,12 +798,12 @@ function entityView() {
                         field: 'sumWord',
                         title: '著作总字数',
                         sortable: true,
-                        formatter: 'sumWordTran'
+                        formatter: 'sumWordEntityTran'
                     }, {
                         field: 'isAward',
                         title: '著作获奖情况',
                         sortable: true,
-                        formatter: 'bkAwardTran'
+                        formatter: 'bkAwardEntityTran'
                     }, {
                         field: 'variableMap.Main-ActorName',
                         title: '负责人'

@@ -5,47 +5,24 @@ $(function () {
 
     init(entity, all, replyByDep, 1);
 
-    //监听 分配分数
-    $('.getScore').click(function () {
-        var jsonData = getForm_notSerialize();
-
-        workflow.getScore(jsonData).success(function (data) {
-            if (data["valid"] == false) { // 检验不合格
-                errorMsg(data["msg"]);
-                flag = true;
-            } else if (data["hasSum"] == false) { // 后台分配分数
-                $("#actorTable").bootstrapTable('load', data["actors"]);
-                flag = false;
-                errorMsg(data["msg"]);
-            } else if (data["hasSum"] == true) {  // 给总分，负责人分配分数
-                $("#totalScore").val(Math.floor(data["sum"]));
-                errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
-                flag = true;
-            }
-        });
-
-    });
-
 });
 var flag = true;
 function save() {
     var send = new Object();
-    send['score'] = Math.floor($('#totalScore').val());
+    send['score'] = $('#totalScore').val();
     send['IsComplete'] = 'false';
     send['actors'] = getActorsData();
     send['fund'] = getFundsData();
+    send['units'] = getUnitsData();
     send['Main-Actor'] = Main_Actor;
     send['Main-ActorName'] = Main_ActorName;
-    if($('#attr').val() == '联合项目' || entity['attr'] == "子课题"){
-        send['units'] = getUnitsData();
-    }
+
     workflow.execute(userName, taskId, send).success(function () {
         afterSuccess("保存成功！");
         window.location.href = '/index/process/project/all';
     });
 }
 function confirm() {
-    var status = all['Status'];
     var send = new Object();
     send =  getForm_notSerialize();
     send['IsComplete'] = 'true';
@@ -105,7 +82,6 @@ function addFund() {
             cssClass: 'btn-info',
             autospin: false,
             action: function (dialogRef) {
-                // console.log($("#rank").val());
                 if (!isFull()) {
                     messageModal('请将信息填写完整。');
                     return;
@@ -217,13 +193,13 @@ function editActor(row, index) {
             $("#rank").attr("disabled", "disabled");
             $(".editableModal").show();
             //是否可编辑
-            if (flag) {//可编辑
-                $("#btn-ok").removeAttr("disabled").show();
-                $("#score").removeAttr("disabled");
-            } else {  //不可编辑
-                $("#btn-ok").attr("disabled", "disabled").hide();
-                $("#score").attr("disabled", "disabled");
-            }
+            //if (flag) {//可编辑
+            //    $("#btn-ok").removeAttr("disabled").show();
+            //    $("#score").removeAttr("disabled");
+            //} else {  //不可编辑
+            //    $("#btn-ok").attr("disabled", "disabled").hide();
+            //    $("#score").attr("disabled", "disabled");
+            //}
             if (row["staff.id"] == "9998" || row["staff.id"] == "9999") {
                 $("#score").attr("disabled", "disabled");
             }

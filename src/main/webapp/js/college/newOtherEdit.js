@@ -17,7 +17,7 @@ function Approve(){
     var approveInfo = Object();
     approveInfo["DecByCol"]=true;
     approveInfo["replyByCol"]=$('#reply-box').val();
-    workflow.execute('col',taskId,approveInfo).success(function(){
+    workflow.execute(userName,taskId,approveInfo).success(function(){
         afterSuccess('审核成功！');
     });
 }
@@ -25,7 +25,7 @@ function Refuse(){
     var refuseInfo = Object();
     refuseInfo["DecByCol"]=false;
     refuseInfo["replyByCol"]=$('#reply-box').val();
-    workflow.execute('col',taskId,refuseInfo).success(function(){
+    workflow.execute(userName,taskId,refuseInfo).success(function(){
         afterSuccess('驳回成功！');
     });
 }

@@ -6,11 +6,16 @@
  * Created by zheng on 2015/10/12.
  */
 $(function () {
-    //init();
-    //unEditTableBook();
     init(entity,all,replyByDep,3);
 });
 /**与著作信息有关的 保存||确认||撤回||删除||提交所有**/
+$('.getScore').click(function () {
+    saveStep1().success(function(data) {
+        saveStep2(data).success(function (res) {
+            getScore('book');
+        });
+    });
+});
 function save() {
     var Info = getMainActor();
     Main_Actor = Info['Main-Actor'];
@@ -105,7 +110,7 @@ function Approve() {
         btnOKClass: 'btn-ok',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep', taskId, approveInfo).success(function () {
+                workflow.execute(userName, taskId, approveInfo).success(function () {
                     afterSuccess('审批通过！');
                     window.location.href = '/index/process/book/all';
                 });
@@ -128,7 +133,7 @@ function Refuse() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.execute('dep', taskId, refuseInfo).success(function () {
+                workflow.execute(userName, taskId, refuseInfo).success(function () {
                     afterSuccess('审批驳回！');
                     window.location.href = '/index/process/book/all';
                 });

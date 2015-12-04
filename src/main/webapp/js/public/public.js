@@ -204,7 +204,7 @@ function tableTrans(res) {
         }
     });
     if (res["rows"] == undefined || res["rows"] == null) {
-        console.log(respon);
+        //console.log(respon);
         return respon;
     } else {
         res["rows"] = respon;
@@ -342,11 +342,18 @@ function paperTypeTran(value) {
     }
 }
 
+function sumWordEntityTran(value, row) {
+    if(value !== null){
+        return value + '万字';
+    }
+    return;
+}
+
 function sumWordTran(value, row) {
-    var wordSum=row['variableMap.View.sumWord'];
-    if(!isNull(wordSum)){
+    var wordSum = row['variableMap.View.sumWord'];
+    if(!isNull(wordSum)) {
         return wordSum + '万字';
-    }else if(!isNull(row['sumWord'])){
+    }else if(!isNull(row['sumWord'])) {
         return row['sumWord']+ '万字';
     }
 
@@ -358,6 +365,14 @@ function actorTran(value, row) {
         return value.substring(0, value.length - 1);
     else
         return;
+}
+
+function bkAwardEntityTran(value, row) {
+    if(row['argMap.isAward'] == 'false') {
+        return '未获奖';
+    } else {
+        return row['argMap.awardType']
+    }
 }
 
 // 著作获奖是否翻译
@@ -1215,7 +1230,24 @@ function projbelong(value, row){
  */
 function getScore(type) {
     var jsonData = getFormData(type);
-    console.log(jsonData);
+    caculator(jsonData);
+    //console.log(jsonData);
+    //workflow.getScore(jsonData).success(function (data) {
+    //    if (data["valid"] == false) { // 检验不合格
+    //        errorMsg(data["msg"]);
+    //        flag = true;
+    //    } else if (data["hasSum"] == false) { // 后台分配分数
+    //        $("#actorTable").bootstrapTable('load', data["actors"]);
+    //        flag = false;
+    //        errorMsg(data["msg"]);
+    //    } else if (data["hasSum"] == true) {  // 给总分，负责人分配分数
+    //        $("#totalScore").val(Math.floor(data["sum"]));
+    //        errorMsg("总分为" + data["sum"] + "分，" + data["msg"]);
+    //        flag = true;
+    //    }
+    //});
+}
+function caculator(jsonData){
     workflow.getScore(jsonData).success(function (data) {
         if (data["valid"] == false) { // 检验不合格
             errorMsg(data["msg"]);

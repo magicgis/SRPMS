@@ -5,6 +5,7 @@ $(function () {
 
     init(entity, all, replyByDep, 1);
 });
+
 var flag = true;
 function save() {
     var send = new Object();
@@ -18,6 +19,7 @@ function save() {
 function confirm() {
     var send = new Object();
     send['IsComplete'] = 'true';
+    send =  getForm_notSerialize();
     send['actors'] = getActorsData();
     BootstrapDialog.confirm({
         title: '确认信息',
