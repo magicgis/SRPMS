@@ -6,11 +6,6 @@ $(function () {
     init(entity, all, replyByDep, 1);
 
 });
-//todo 算分信息
-$('.getScore').click(function () {
-    var jsonData = getForm_notSerialize();
-    caculator(jsonData);
-});
 var flag = true;
 
 function save() {
@@ -29,6 +24,7 @@ function confirm() {
     var status = all['Status'];
     var send = new Object();
     if(status == 'Uncomplete' || status == 'RefuseByCol'){
+        send =  getForm_notSerialize();
         send['IsComplete'] = 'true';
         send['Main-Actor'] = Main_Actor;
         send['Main-ActorName'] = Main_ActorName;

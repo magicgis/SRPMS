@@ -6,13 +6,6 @@ $(function() {
     init(entity, all, replyByDep, 1);
 
 });
-
-//todo 算分信息
-$('.getScore').click(function () {
-    var jsonData = getForm_notSerialize();
-    caculator(jsonData);
-});
-
 /*
  * 保存
  *   教师端的保存处理机制和论文大体一样
@@ -35,7 +28,7 @@ function save() {
 function confirm() {
     var status = all['Status'];
     var send = new Object();
-    console.log(status);
+    send =  getForm_notSerialize();
     if(status == 'Uncomplete' || status == 'RefuseByCol'){
         send['IsComplete'] = 'true';
         send['actors'] = getActorsData();

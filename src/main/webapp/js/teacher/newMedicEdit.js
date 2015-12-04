@@ -5,12 +5,6 @@ $(function () {
 
     init(entity,all,replyByDep,1);
 });
-//todo 算分信息
-$('.getScore').click(function () {
-    var jsonData = getForm_notSerialize();
-    caculator(jsonData);
-
-});
 function save() {
     var send = new Object();
     send['IsComplete'] = 'false';
@@ -23,6 +17,7 @@ function save() {
 function confirm() {
     var status = all['Status'];
     var send = new Object();
+    send =  getForm_notSerialize();
     send['IsComplete'] = 'true';
     send['actors'] = getActorsData();
     BootstrapDialog.confirm({

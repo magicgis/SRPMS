@@ -10,11 +10,6 @@ $(function () {
     // 还需要判断order的状态来 判断是否能算分与分配分数
     init(entity,all,replyByDep,1);
 });
-//监听 分配分数//todo 测试专利的算分信息
-$('.getScore').click(function () {
-    var jsonData = getForm_notSerialize();
-    caculator(jsonData);
-});
 /*
  * 保存
  *   教师端的保存处理机制和论文大体一样
