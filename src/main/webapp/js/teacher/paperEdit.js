@@ -65,8 +65,9 @@ function save() {
  */
 function confirm() {
     $('#IsComplete').val(true);
+    var jsonData = new Object();
     if(window.location.href.indexOf('task') < 0) {
-        var jsonData = getFormData('paper');
+        jsonData = getFormData('paper');
     }
     jsonData['WF_User'] = userName;
     jsonData['WF_Task'] = $('#WF_Task').val();
