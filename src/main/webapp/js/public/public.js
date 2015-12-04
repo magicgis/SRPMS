@@ -181,7 +181,8 @@ function tableTrans(res) {
     }
     $.each(respon, function (index, value) {
         /*取出variableMap*/
-        respon[index]['orderId']=value['id'];
+        respon[index]['orderId'] = value['id'];
+        console.log(respon[index]['orderId']);
         var maps = value['variableMap'];
         /*把string放入*/
         for (var key in maps) {
@@ -1174,6 +1175,9 @@ function init(entity,all,replyByDep,level) {
             break;
     }
     console.log('process:', process, 'status:', status, 'level:', level, 'isMain:', isMain, 'statusCode:', statusCode);
+    if(userName !== Main_Actor && window.location.href.indexOf('order') >= 0 && all['Status'] == 'Complete') {
+        $('.confirm').hide();
+    }
 }
 function uneditableForm() {
     $('form input').attr("disabled", "disabled");

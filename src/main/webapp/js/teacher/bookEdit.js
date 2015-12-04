@@ -6,6 +6,7 @@ $(function () {
     init(entity, all, replyByDep, 1);
     hideActorOperate();
     $('.giveSum').hide();
+    $('.save').hide();
 });
 
 var flag = true;
@@ -43,16 +44,21 @@ function confirm() {
              * userName,taskId,status
              */
             if (result) {
-                workflow.execute(userName, taskId, send).success(function (data) {
-                    if ("valid" in data) {
-                        if (data["valid"] == true) {
+                workflow.execute(userName, taskId, send).complete(function (data) {
+                    var statusCode = this.status;
+                    if (statusCode == 200){
+                        if ("valid" in data) {
+                            if (data["valid"] == true) {
+                                afterSuccess("确认成功！");
+                                window.location.href = '/index/process/book/all';
+                            } else {
+                                errorMsg(data["msg"]);
+                            }
+                        } else {
                             afterSuccess("确认成功！");
                             window.location.href = '/index/process/book/all';
-                        } else {
-                            errorMsg(data["msg"]);
                         }
                     } else {
-                        afterSuccess("确认成功！");
                         window.location.href = '/index/process/book/all';
                     }
                 });
