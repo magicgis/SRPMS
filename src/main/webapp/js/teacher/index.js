@@ -74,7 +74,8 @@ function processView() {
                 pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -99,7 +100,7 @@ function processView() {
                     }, {
                         field: 'ActorList',
                         title: '参与者',
-                        sortable: true,
+                        //sortable: true,
                         formatter: "actorTran"
                     }, {
                         field: 'Status',
@@ -121,7 +122,8 @@ function processView() {
                 flat: "true",
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -216,8 +218,8 @@ function processView() {
                 pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
-                        radio: true
-                        //visible:false
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -262,7 +264,6 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-
                 pagination: true,
                 sidePagination: "client",
                 pageSize: 15,
@@ -270,7 +271,8 @@ function processView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -302,13 +304,12 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
-                        radio: true
-                        //visible:false
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -347,13 +348,13 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -385,13 +386,13 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -423,13 +424,13 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -461,13 +462,13 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -499,12 +500,12 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 showColumns: true,
                 showRefresh: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -518,7 +519,8 @@ function processView() {
                         formatter: "wfTypeTran"
                     }, {
                         field: 'ActorList',
-                        title: '参与者'
+                        title: '参与者',
+                        formatter: 'actorTran'
                     }, {
                         field: 'Status',
                         title: '状态',
@@ -654,7 +656,8 @@ function entityView() {
                 pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -702,7 +705,8 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -734,12 +738,12 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -830,14 +834,13 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -879,13 +882,13 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -922,7 +925,6 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pagination: true,
                 sidePagination: "client",
                 pageSize: 15,
@@ -930,7 +932,8 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -958,13 +961,13 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -996,13 +999,13 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -1034,14 +1037,13 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -1073,13 +1075,13 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -1111,13 +1113,12 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pageSize: 15,
                 pageList: [20, 30, 50, 'ALL'],
                 columns: [
                     {
-                        radio: true
-                        //visible:false
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',

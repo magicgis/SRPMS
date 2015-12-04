@@ -16,7 +16,8 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -63,7 +64,8 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -88,7 +90,7 @@ function processView() {
                     }, {
                         field: 'ActorList',
                         title: '参与者',
-                        sortable: true,
+                        //sortable: true,
                         formatter: "actorTran"
                     }, {
                         field: 'Status',
@@ -107,7 +109,8 @@ function processView() {
                 flat: "true",
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -195,8 +198,8 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 columns: [
                     {
-                        radio: true
-                        //visible:false
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -223,7 +226,7 @@ function processView() {
                     }, {
                         field: 'ActorList',
                         title: '参与者',
-                        sortable: true,
+                        //sortable: true,
                         formatter: "actorTran"
                     }, {
                         field: 'Status',
@@ -243,7 +246,8 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -276,8 +280,8 @@ function processView() {
                 toolbar: '#ProcessToolbar',
                 columns: [
                     {
-                        radio: true
-                        //visible:false
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -298,7 +302,7 @@ function processView() {
                     }, {
                         field: 'ActorList',
                         title: '参与者',
-                        sortable: true,
+                        //sortable: true,
                         formatter: "actorTran"
                     }, {
                         field: 'Status',
@@ -318,7 +322,8 @@ function processView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -351,7 +356,8 @@ function processView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -384,7 +390,8 @@ function processView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -417,7 +424,8 @@ function processView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -446,10 +454,12 @@ function processView() {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
                 sidePagination: "server",
+                showRefresh: true,
                 toolbar: '#ProcessToolbar',
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -574,7 +584,8 @@ function entityView() {
                 toolbar: '#EntityToolbar',
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -623,7 +634,8 @@ function entityView() {
                 toolbar: '#EntityToolbar',
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -655,7 +667,8 @@ function entityView() {
                 toolbar: '#EntityToolbar',
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -743,7 +756,8 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -786,7 +800,8 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -829,7 +844,8 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -858,7 +874,8 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -891,7 +908,8 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -924,7 +942,8 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -957,7 +976,8 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -989,8 +1009,8 @@ function entityView() {
                 toolbar: '#EntityToolbar',
                 columns: [
                     {
-                        radio: true
-                        //visible:false
+                        radio: true,
+                        visible: false
                     }, {
                         field: 'id',
                         title: 'id',
@@ -1080,8 +1100,8 @@ var magStates = {
                 sidePagination: "server",
                 toolbar: '#MagToolbar',
                 columns: [{
-                    radio: true
-                    //visible:false
+                    radio: true,
+                    visible: false
                 }, {
                     field: 'id',
                     title: 'id',

@@ -108,7 +108,7 @@ function processView() {
                     }, {
                         field: 'ActorList',
                         title: '参与者',
-                        sortable: true,
+                        //sortable: true,
                         formatter: "actorTran"
                     }, {
                         field: 'Status',
@@ -260,7 +260,7 @@ function processView() {
                     }, {
                         field: 'ActorList',
                         title: '参与者',
-                        sortable: true,
+                        //sortable: true,
                         formatter: "actorTran"
                     }, {
                         field: 'Status',
@@ -346,7 +346,7 @@ function processView() {
                     }, {
                         field: 'ActorList',
                         title: '参与者',
-                        sortable: true,
+                        //sortable: true,
                         formatter: "actorTran"
                     }, {
                         field: 'Status',
@@ -626,7 +626,6 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pagination: true,
                 sidePagination: "server",
                 pageSize: 15,
@@ -687,7 +686,6 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pagination: true,
                 sidePagination: "server",
                 pageSize: 15,
@@ -728,7 +726,6 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pagination: true,
                 sidePagination: "server",
                 pageSize: 15,
@@ -825,7 +822,6 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pagination: true,
                 sidePagination: "server",
                 pageSize: 15,
@@ -876,7 +872,6 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pagination: true,
                 sidePagination: "server",
                 pageSize: 15,
@@ -922,7 +917,6 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pagination: true,
                 sidePagination: "server",
                 pageSize: 15,
@@ -959,7 +953,6 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pagination: true,
                 sidePagination: "server",
                 pageSize: 15,
@@ -1000,7 +993,6 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pagination: true,
                 sidePagination: "server",
                 pageSize: 15,
@@ -1041,7 +1033,6 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pagination: true,
                 sidePagination: "server",
                 pageSize: 15,
@@ -1082,7 +1073,6 @@ function entityView() {
                 showColumns: true,
                 showRefresh: true,
                 search: true,
-
                 pagination: true,
                 sidePagination: "server",
                 pageSize: 15,
@@ -1300,6 +1290,7 @@ function searchView() {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: searchUrl(),
                 sidePagination: "server",
+                flat: true,
                 columns: [
                     {
                         radio: false,
@@ -1628,6 +1619,7 @@ function searchView() {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: searchUrl(),
                 sidePagination: "server",
+                flat: true,
                 columns: [
                     {
                         radio: false,
