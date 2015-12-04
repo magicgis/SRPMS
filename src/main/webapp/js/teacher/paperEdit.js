@@ -65,7 +65,11 @@ function save() {
  */
 function confirm() {
     $('#IsComplete').val(true);
-    var jsonData = getFormData('paper');
+    if(window.location.href.indexOf('task') < 0) {
+        var jsonData = getFormData('paper');
+    }
+    jsonData['WF_User'] = userName;
+    jsonData['WF_Task'] = $('#WF_Task').val();
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '确认?',
@@ -87,7 +91,6 @@ function confirm() {
                             window.location.href = '/index/process/paper/all';
                         } else {
                             errorMsg(data["msg"]);
-                            //flag = true;
                         }
                     } else {
                         afterSuccess("确认成功！");

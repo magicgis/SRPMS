@@ -752,11 +752,11 @@
 
 	} // end if order非空
 	//参与者不能删除上传的附件
-	if(entity['creator']!=userName){//todo 判断是否是参与者
-		$('.delFiles').hide();
-	}else if(entity['creator']==userName){
-		$('.delFiles').show();
-	}
+//	if(entity['creator']!=userName){
+//		$('.delFiles').hide();
+//	}else if(entity['creator']==userName){
+//		$('.delFiles').show();
+//	}
 	//监听 更换论文类型
 	$('#type').change(function () {
 		magOrConfer();

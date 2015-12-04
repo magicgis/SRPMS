@@ -14,8 +14,6 @@ function save() {
     send['actors'] = getActorsData();
     send['fund'] = getFundsData();
     send['units'] = getUnitsData();
-    send['Main-Actor'] = Main_Actor;
-    send['Main-ActorName'] = Main_ActorName;
 
     workflow.execute(userName, taskId, send).success(function () {
         afterSuccess("保存成功！");
@@ -24,11 +22,15 @@ function save() {
 }
 function confirm() {
     var send = new Object();
-    send =  getForm_notSerialize();
-    send['IsComplete'] = 'true';
-    send['Main-Actor'] = Main_Actor;
-    send['Main-ActorName'] = Main_ActorName;
-
+    if( isMainActor(Main_Actor, userName) ) {
+        send =  getForm_notSerialize();
+        send['actors'] = getActorsData();
+        send['fund'] = getFundsData();
+        send['units'] = getUnitsData();
+        send['IsComplete'] = 'true';
+    }
+    send['WF_User'] = userName;
+    send['WF_Task'] = taskId;
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '确认?',
