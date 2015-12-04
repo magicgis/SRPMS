@@ -5,6 +5,11 @@ $(function () {
     //init();
     init(entity, all, replyByDep, 1);
 });
+//todo 算分信息
+$('.getScore').click(function () {
+    var jsonData = getForm_notSerialize();
+    caculator(jsonData);
+});
 var flag = true;
 function save() {
     var send = new Object();
@@ -19,10 +24,13 @@ function save() {
 }
 function confirm() {
     var send = new Object();
-    send['IsComplete'] = 'true';
-    send['Main-Actor'] = Main_Actor;
-    send['Main-ActorName'] = Main_ActorName;
-    send['actors'] = getActorsData();
+    if( isMainActor(Main_Actor, userName) ) {
+        send =  getForm_notSerialize();
+        send['actors'] = getActorsData();
+        send['IsComplete'] = 'true';
+    }
+    send['WF_User'] = userName;
+    send['WF_Task'] = taskId;
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '确认?',

@@ -43,6 +43,7 @@ function confirm() {
              * userName,taskId,status
              */
             if (result) {
+
                 workflow.execute(userName, taskId, send).success(function (data) {
                     if ("valid" in data) {
                         if (data["valid"] == true) {

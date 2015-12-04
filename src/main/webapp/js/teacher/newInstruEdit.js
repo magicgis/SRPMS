@@ -18,9 +18,14 @@ function save() {
 }
 function confirm() {
     var send = new Object();
-    send['IsComplete'] = 'true';
-    send =  getForm_notSerialize();
-    send['actors'] = getActorsData();
+    if( isMainActor(Main_Actor, userName) ) {
+        send =  getForm_notSerialize();
+        send['actors'] = getActorsData();
+        send['units']=getUnitsData();
+        send['IsComplete'] = 'true';
+    }
+    send['WF_User'] = userName;
+    send['WF_Task'] = taskId;
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '确认?',

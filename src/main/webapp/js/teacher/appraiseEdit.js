@@ -26,15 +26,15 @@ function save() {
  *
  * */
 function confirm() {
-    var status = all['Status'];
     var send = new Object();
-    send =  getForm_notSerialize();
-    if(status == 'Uncomplete' || status == 'RefuseByCol'){
-        send['IsComplete'] = 'true';
+    if( isMainActor(Main_Actor, userName) ) {
+        send =  getForm_notSerialize();
         send['actors'] = getActorsData();
-        send['Main-Actor'] = Main_Actor;
-        send['Main-ActorName'] = Main_ActorName;
+        send['units']=getUnitsData();
+        send['IsComplete'] = 'true';
     }
+    send['WF_User'] = userName;
+    send['WF_Task'] = taskId;
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '确认?',
