@@ -94,15 +94,15 @@ public class book extends StandardBase implements StandardCheckInf {
         validInfo.put(IS_VALID,DEFAULT_FLAG);
         validInfo.put(MESSAGE,DEFAULT_MSG);
         List<Map> actors = getActors(map);
-        double sumWord = Double.parseDouble((String) map.get("sumWors"));
-        for (Map actor : actors){
-            double textNumber = Double.parseDouble((String) actor.get("textNumber"));
-            sumWord -= textNumber;
-        }
-        if (sumWord<0){
-            validInfo.put(MESSAGE,"个人字数超出著作总字数。");
-            return validInfo;
-        }
+//        double sumWord = Double.parseDouble((String) map.get("sumWors"));
+//        for (Map actor : actors){
+//            double textNumber = Double.parseDouble((String) actor.get("textNumber"));
+//            sumWord -= textNumber;
+//        }
+//        if (sumWord<0){
+//            validInfo.put(MESSAGE,"个人字数超出著作总字数。");
+//            return validInfo;
+//        }
         validInfo.put(IS_VALID,true);
         validInfo.put(MESSAGE,"是否提交？");
         return validInfo;

@@ -109,7 +109,8 @@ public class Paper extends StandardBase implements StandardCheckInf {
                     validInfo.put(MESSAGE, "请由本校通讯作者填写。");
                     return validInfo;
                 }
-            } else if (myFirstAuth.size() > 0) {
+            }
+            if (myChiefAuth.size() == 0 && myFirstAuth.size() > 0) {
                 boolean flag = false;
                 for (Map temp : myFirstAuth) {
                     if (editor.equals(temp.get("staff.id"))) {

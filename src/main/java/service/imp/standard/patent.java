@@ -87,13 +87,14 @@ public class patent extends StandardBase implements StandardCheckInf {
         Map validInfo = new HashMap();
         validInfo.put(IS_VALID, false);
         List<Map> actors = (List<Map>) map.get("actors");
+        double sum = Double.parseDouble((String) map.get("score"));
         if (map.get("score") != null) {
             validInfo = superCheck(map,max,min);
             if (!(boolean)validInfo.get(IS_VALID)){
                 return validInfo;
             }
             validInfo.put(IS_VALID,DEFAULT_FLAG);
-            double sum = Double.parseDouble((String) map.get("score"));
+
 //            文件第三条第2款
             int actorNum = actors.size();
             List<Map> chiefActors = getChiefActors(actors, (String) KEY_ROLE.get("chiefActor"));
