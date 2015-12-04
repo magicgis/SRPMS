@@ -212,7 +212,10 @@ public class Paper extends StandardBase implements StandardCheckInf {
         Map tempFirstAuthor, tempChiefAuthor;
         double tempMarks;
         List<Map> actors = getActors(map);
+        List<Map> myActors = getMyActors(actors);
+        List<Map> myStaffActors = getMyStaffActors(actors);
 //        List<Map> myAbAcotrs =getAbsoluteAuthors(map);
+        List<Map> myTchFirestAuth = getChiefActors(myStaffActors, (String) KEY_ROLE.get("firstAuthor"));
         List<Map> myFirstAuth = getChiefActors(actors, (String) KEY_ROLE.get("firstAuthor"));
         List<Map> myTchChiefAuth = getChiefActors(actors, (String) KEY_ROLE.get("chiefAuthor"));
         if (!((boolean) isValid(map).get(IS_VALID))) {
@@ -252,8 +255,8 @@ public class Paper extends StandardBase implements StandardCheckInf {
                 return validInfo;
             }
 //        检测第一作者分数必须相同
-            if (myFirstAuth.size() != 0)
-                for (Map firstAuthor : myFirstAuth) {
+            if (myTchFirestAuth.size() != 0)
+                for (Map firstAuthor : myTchFirestAuth) {
 //                    if ((int) firstAuthor.get("score") != tempMarks) {
                     if (Double.parseDouble((String) firstAuthor.get("score")) != tempMarks) {
                         validInfo.put(MESSAGE, getMsg("1024"));
