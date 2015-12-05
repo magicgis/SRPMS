@@ -306,10 +306,10 @@ public class StandardBase {
                 validInfo.put(MESSAGE, "个人分数分配总和超出总分！");
                 return validInfo;
             }
-            if (SumCheckPass(sum, actors) >= 1 && SumCheckPass(sum, actors) >= 0) {
-                validInfo.put(MESSAGE, "还有" + SumCheckPass(sum, actors) + "！");
-                return validInfo;
-            }
+//            if (SumCheckPass(sum, actors) >= 1 && SumCheckPass(sum, actors) >= 0) {
+//                validInfo.put(MESSAGE, "还有" + SumCheckPass(sum, actors) + "！");
+//                return validInfo;
+//            }
             int count = 0;
             for (Map actor : actors) {
                 if (Double.parseDouble((String) actor.get("score")) != 0) count++;
