@@ -204,6 +204,8 @@ public class project extends StandardBase implements StandardCheckInf {
         Map validInfo = new HashMap();
         validInfo.put(IS_VALID, false);
         List<Map> actors = (List<Map>) map.get("actors");
+        List<Map> myTchActor = getMyStaffActors(actors);
+        List<Map> myActor = getMyActors(actors);
         if (map.get("score") != null) {
             validInfo = superCheck(map,max,min);
             if (!(boolean)validInfo.get(IS_VALID)){
@@ -212,7 +214,8 @@ public class project extends StandardBase implements StandardCheckInf {
             validInfo.put(IS_VALID,DEFAULT_FLAG);
             double sum = Double.parseDouble((String) map.get("score"));
 //            文件第三条第2款
-            int actorNum = actors.size();
+
+            int actorNum = actors.size()-myActor.size()+myTchActor.size();
             List<Map> chiefActors = getChiefActors(actors, (String) KEY_ROLE.get("chiefActor"));
             for (Map chiefActor : chiefActors) {
                 double chScore = Double.parseDouble((String) chiefActor.get("score"));
