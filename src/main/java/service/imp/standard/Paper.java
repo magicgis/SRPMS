@@ -60,6 +60,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
         List<Map> myFirstAuth = getChiefActors(myActors, (String) KEY_ROLE.get("firstAuthor"));
         List<Map> myStaffActors = getMyStaffActors(actors);
         List<Map> myChiefAuth = getChiefActors(myStaffActors, (String) KEY_ROLE.get("chiefAuthor"));
+        List<Map> myTchFirstActors = getChiefActors(myStaffActors, (String) KEY_ROLE.get("firstAuthor"));
 
 
         //           作者列表有效性检验
@@ -111,7 +112,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
                     return validInfo;
                 }
             }
-            if (myChiefAuth.size() == 0 && myFirstAuth.size() > 0) {
+            if (myChiefAuth.size() == 0 && myTchFirstActors.size() > 0) {
                 boolean flag = false;
                 for (Map temp : myFirstAuth) {
                     if (editor.equals(temp.get("staff.id"))) {
