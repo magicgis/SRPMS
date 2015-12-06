@@ -183,7 +183,7 @@ public class StandardBase {
             if (id.equals(STUNDENT_ID)) myActorList.add(actor);
             else
                 for (int i = 0; i < MY_SCHOOL_NAME.length; i++) {
-                    if (unit.equals(MY_SCHOOL_NAME[i])) {
+                    if (!id.equals("9999")&&unit.equals(MY_SCHOOL_NAME[i])) {
                         myActorList.add(actor);
                         break;
                     }

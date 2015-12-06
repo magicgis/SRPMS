@@ -169,8 +169,10 @@ public class Paper extends StandardBase implements StandardCheckInf {
         List<Map> chiefAuth = getChiefActors(actors, (String) KEY_ROLE.get("chiefAuthor"));
         if (myTchFirstAuth.size() != 0 || myTchChiefAuth.size() != 0)
             flag = true;
-        double mySchoolChNum = myChiefAuth.size() + myFirstAuth.size();
-        double chNum = chiefAuth.size() + firstAuth.size();
+        double mySchoolChNum =  myTchChiefAuth.size() +  myTchFirstAuth.size();
+        double chNum = chiefAuth.size() + firstAuth.size()-(
+                myChiefAuth.size()-myTchChiefAuth.size()+myFirstAuth.size()-myTchFirstAuth.size()
+                );
         finalScore = tableScore * mySchoolChNum / chNum;
 //      文章的第一作者是我校职工而非学生
         if (flag) {
