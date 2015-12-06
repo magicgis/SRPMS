@@ -217,7 +217,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
 //        List<Map> myAbAcotrs =getAbsoluteAuthors(map);
         List<Map> myTchFirestAuth = getChiefActors(myStaffActors, (String) KEY_ROLE.get("firstAuthor"));
         List<Map> myFirstAuth = getChiefActors(actors, (String) KEY_ROLE.get("firstAuthor"));
-        List<Map> myTchChiefAuth = getChiefActors(actors, (String) KEY_ROLE.get("chiefAuthor"));
+        List<Map> myTchChiefAuth = getChiefActors(myStaffActors, (String) KEY_ROLE.get("chiefAuthor"));
         if (!((boolean) isValid(map).get(IS_VALID))) {
             return isValid(map);
         }
@@ -234,7 +234,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
                 return validInfo;
             }
 //            System.out.println("--------"+SumCheckPass(sum,actors));
-            if (SumCheckPass(sum, actors) > 0.01) {
+            if (SumCheckPass(sum, actors) > 1) {
                 double tSum = SumCheckPass(sum, actors);
                 DecimalFormat df = new DecimalFormat("####0.000");
 //                System.out.println("--------------"+df.format(tSum));
