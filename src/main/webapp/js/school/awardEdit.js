@@ -10,7 +10,7 @@ $('.getScore').click(function () {
     saveStep1().success(function(data) {
 
         saveStep2(data).success(function (res) {
-            getScore('achAward');
+            getScore('award');
         });
     });
 

@@ -157,6 +157,8 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-xs-12" id="msg_alert"></div>
                         </div>
 
                         <div id="awardInfo"
