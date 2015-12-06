@@ -219,7 +219,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
         List<Map> myStaffActors = getMyStaffActors(actors);
 //        List<Map> myAbAcotrs =getAbsoluteAuthors(map);
         List<Map> myTchFirestAuth = getChiefActors(myStaffActors, (String) KEY_ROLE.get("firstAuthor"));
-        List<Map> myFirstAuth = getChiefActors(actors, (String) KEY_ROLE.get("firstAuthor"));
+        List<Map> myFirstAuth = getChiefActors(myActors, (String) KEY_ROLE.get("firstAuthor"));
         List<Map> myTchChiefAuth = getChiefActors(myStaffActors, (String) KEY_ROLE.get("chiefAuthor"));
         if (!((boolean) isValid(map).get(IS_VALID))) {
             return isValid(map);
