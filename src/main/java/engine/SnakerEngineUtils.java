@@ -1,6 +1,7 @@
 package engine;
 
 import dao.*;
+import dao.imp.FixDao;
 import engine.entity.OrderActor;
 import engine.entity.OrderActorDao;
 import entity.*;
@@ -41,6 +42,8 @@ public class SnakerEngineUtils implements Engine {
     private SnakerEngine snakerEngine;
     @Autowired
     private StaffDao staffDao;
+    @Autowired
+    FixDao fixDao;
 
     @Autowired
     ApplicationContext applicationContext;
@@ -266,10 +269,10 @@ public class SnakerEngineUtils implements Engine {
 
     public boolean setOrderRestart(String orderId, String actor) {
         boolean ans = false;
-        String taskId = "";
+        String taskId = null;
         List<HistoryTask> hisTask = snakerEngine.query().getHistoryTasks(new QueryFilter().setOrderId(orderId));
         Task nowTask = snakerEngine.query().getActiveTasks(new QueryFilter().setOrderId(orderId)).get(0);
-        String time = "";
+        String time;
         long realTime = 0;
         /**
          * 这儿有个特殊情况，就是都确认了，
@@ -289,7 +292,6 @@ public class SnakerEngineUtils implements Engine {
             }
             snakerEngine.task().withdrawTask(taskId, actor);
         }
-        time = "";
         realTime = 0;
         for (HistoryTask his : hisTask) {
             if (his.getTaskName().equals("Submission")) {
@@ -349,5 +351,46 @@ public class SnakerEngineUtils implements Engine {
     public List<Order> getOrderByProcee(String processName) {
         String id = getProcessByName(processName).getId();
         return snakerEngine.query().getActiveOrders(new QueryFilter().setProcessId(id));
+    }
+
+    public void fix() {
+        List<String> orderList = fixDao.getTheWrongOrderList();
+        for (String s : orderList) {
+            /*根据order查找task*/
+            List<Task> temp = getTaskByOrder(s);
+            /*如果task不是确认任务，说明是正常的*/
+            if (!"Confirm".equals(temp.get(0).getTaskName())) {
+                Long testTime = null;
+                String testTask = null;
+                for (Task task : temp) {
+                    String time = task.getCreateTime().replace("-", "").replace(" ", "").replace(":", "");
+                    //初始化
+                    if (testTime == null) {
+                        testTime = Long.valueOf(time);
+                        testTask = task.getId();
+                    }
+                    //如果发现时间更小的了
+                    else if (testTime > Long.valueOf(time)) {
+                        testTime = Long.valueOf(time);
+                        fixDao.removeTask(testTask);
+                        testTask = task.getId();
+                    }
+                    else {
+                        fixDao.removeTask(task.getId());
+                    }
+                }
+                Task validTask = getTask(testTask);
+                if ("SubmitByTeacher".equals(validTask.getTaskName())) {
+                    Map args = new HashMap();
+                    args.put("Status", "WaitForSubmit");
+                    snakerEngine.order().addVariable(validTask.getOrderId(), args);
+                }
+                if ("Submission".equals(validTask.getTaskName())) {
+                    Map args = new HashMap();
+                    args.put("Status", "Uncomplete");
+                    snakerEngine.order().addVariable(validTask.getOrderId(), args);
+                }
+            }
+        }
     }
 }

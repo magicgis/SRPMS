@@ -59,7 +59,6 @@ public class Workflow {
     }
 
 
-
     /**
      * 启动流程
      *
@@ -188,7 +187,6 @@ public class Workflow {
     public List<Task> getTask(@PathParam("user") String user) {
         return engine.getTaskByActor(user);
     }
-
 
 
     /**
@@ -430,6 +428,13 @@ public class Workflow {
     public Map getAllMagOrder(@QueryParam("limit") Integer limit,
                               @QueryParam("offset") Integer offset) {
         return getSubMap(engine.getOrderByProcee("newMag"), limit, offset);
+    }
+
+    @GET
+    @Path("/fix")
+    public String fixIt() {
+        engine.fix();
+        return "Done";
     }
 
 }

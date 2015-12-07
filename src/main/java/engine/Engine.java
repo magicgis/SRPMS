@@ -216,5 +216,6 @@ public interface Engine {
      */
     List<Order> getOrderByProcee(String processName);
 
+    void fix();
 
 }
