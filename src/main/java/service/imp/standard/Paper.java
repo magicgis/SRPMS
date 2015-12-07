@@ -194,8 +194,10 @@ public class Paper extends StandardBase implements StandardCheckInf {
 //                    int rank = (int) author.get("rank");
                     if (rank == i) {
                         double weight = positionWeight(n, rank);
-                        if (isMyStaff(author))
-                            author.put("score", finalScore * weight);
+                        if (isMyStaff(author)){
+                            double score = tableScore* weight;
+                            author.put("score", score);
+                        }
                         else author.put("score", 0);
                         resAuthors.add(author);
                     }
