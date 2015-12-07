@@ -1210,11 +1210,11 @@ function wfTypeTran(value,row ) {
     }
 }
 function projtypeTran(value, row){
-    //if(row['standard'] !== null){
+    if(row['standard'] !== null){
         return row['standard']['infoMap']['projtype'];
-    //}else{
-    //    return;
-    //}
+    }else{
+        return '--';
+    }
 }
 function rankTran(value, row){
     if(!isNull(row['standard'])){
