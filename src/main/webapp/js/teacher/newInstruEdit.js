@@ -41,15 +41,20 @@ function confirm() {
              */
             if (result) {
                 workflow.execute(userName, taskId, send).success(function (data) {
-                    if ("valid" in data) {
-                        if (data["valid"] == true) {
+                    var statusCode = this.status;
+                    if (statusCode == 200) {
+                        if ("valid" in data) {
+                            if (data["valid"] == true) {
+                                afterSuccess("确认成功！");
+                                window.location.href = '/index/process/instrument/all';
+                            } else {
+                                errorMsg(data["msg"]);
+                            }
+                        } else {
                             afterSuccess("确认成功！");
                             window.location.href = '/index/process/instrument/all';
-                        } else {
-                            errorMsg(data["msg"]);
                         }
                     } else {
-                        afterSuccess("确认成功！");
                         window.location.href = '/index/process/instrument/all';
                     }
                 });
