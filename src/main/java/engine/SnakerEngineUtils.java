@@ -43,7 +43,7 @@ public class SnakerEngineUtils implements Engine {
     @Autowired
     private StaffDao staffDao;
     @Autowired
-    FixDao fixDao;
+    private FixDao fixDao;
 
     @Autowired
     ApplicationContext applicationContext;

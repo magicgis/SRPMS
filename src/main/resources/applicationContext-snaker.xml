@@ -79,6 +79,7 @@
             <tx:method name="execute" propagation="REQUIRED"/>
             <tx:method name="intercept" propagation="REQUIRED"/>
             <tx:method name="reset*" propagation="REQUIRED"/>
+            <tx:method name="fix" propagation="REQUIRED"/>
             <tx:method name="get*" propagation="REQUIRED" read-only="true"/>
             <tx:method name="find*" propagation="REQUIRED" read-only="true"/>
             <tx:method name="query*" propagation="REQUIRED" read-only="true"/>

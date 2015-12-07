@@ -1,7 +1,5 @@
 package dao.imp;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import java.util.List;
 @Repository
 public class FixDao {
     private SessionFactory sessionFactory;
-    private static final Logger log = LogManager.getLogger(FixDao.class);
 
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
