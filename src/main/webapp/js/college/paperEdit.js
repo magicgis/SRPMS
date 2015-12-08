@@ -3,7 +3,7 @@
  */
 $(function () {
     init();
-
+    uneditableForm();
     $("#upload").hide();
 });
 

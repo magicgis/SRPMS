@@ -29,8 +29,8 @@ function init() {
  * */
 function approve() {
     var req = Object();
-    req["DecByDept"] = true;
-    req["replyByDept"] = $('#reply-box').val();
+    req["DecByDep"] = true;
+    req["replyByDep"] = $('#reply-box').val();
     BootstrapDialog.confirm({
         title: '确认信息',
         message: '你确认通过吗?',
@@ -55,8 +55,8 @@ function approve() {
  * */
 function refuse() {
     var req = Object();
-    req["DecByDept"] = false;
-    req["replyByDept"] = $('#reply-box').val();
+    req["DecByDep"] = false;
+    req["replyByDep"] = $('#reply-box').val();
     BootstrapDialog.confirm({
         title: '警告！',
         message: '你确定要驳回吗?',

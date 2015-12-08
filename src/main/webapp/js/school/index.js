@@ -528,6 +528,7 @@ function processView() {
                 sidePagination: "client",
                 //pageSize: 15,
                 //pageList: [20, 30, 50, 'ALL'],
+                flat: true,
                 columns: [
                     {
                         radio: false,
@@ -750,10 +751,15 @@ function entityView() {
                     }, {
                         field: 'pubDate',
                         title: '发表日期'
-                    }, {
-                        field: 'ActorList',
-                        title: '参与者',
-                        formatter: "actorTran"
+                    }
+                    //, {
+                    //    field: 'ActorList',
+                    //    title: '参与者',
+                    //    formatter: "actorTran"
+                    //}
+                    , {
+                        field: 'dept.value',
+                        title: '所属学院'
                     }, {
                         field: 'operator',
                         align: 'center',
