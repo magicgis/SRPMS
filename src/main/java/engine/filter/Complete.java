@@ -62,11 +62,10 @@ public class Complete implements SnakerInterceptor {
                 }
                 else if ("conferPaper".equals(info.get("type"))) {
 //                    paper.setConfer(conferService.getById((Serializable) info.get("confer.id")));
-                    //todo 这儿情况复杂，可能需要先存储一个会议记录，但是感觉没必要
                 }
                 else if ("newsPaper".equals(info.get("type"))) {
-                    ConferService conferService = (ConferService) StaticFactory.getBean(ConferService.class);
-                    paper.setConfer(conferService.getById((Serializable) info.get("news.id")));
+//                    ConferService conferService = (ConferService) StaticFactory.getBean(ConferService.class);
+//                    paper.setConfer(conferService.getById((Serializable) info.get("news.id")));
                 }
                 id = paperService.add(paper);
                 break;
