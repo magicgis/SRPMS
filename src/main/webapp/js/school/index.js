@@ -38,27 +38,34 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '名称',
                         sortable: true
                     }, {
-                        field: 'type',
+                        field: 'variableMap.View.standard.infoMap.projtype',
                         title: '类别',
                         sortable: true
                     }, {
-                        field: 'rank',
+                        field: 'variableMap.View.standard.infoMap.projrank',
                         title: '等级',
                         sortable: true
                     }, {
-                        field: 'rateUnit',
+                        field: 'variableMap.View.standard.infoMap.projorig',
                         title: '评分来源',
                         sortable: true
                     }, {
-                        field: 'realDate',
+                        field: 'variableMap.View.realDate',
                         title: '实际结题时间',
                         sortable: true
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.Main-ActorName',
+                        title: '负责人',
+                        sortable: true
+                    }, {
+                        field: 'variableMap.WF_Col',
+                        title: '所属学院'
+                    }, {
+                        field: 'variableMap.Status',
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
@@ -83,7 +90,7 @@ function processView() {
                 flat: "true",
                 columns: [
                     {
-                        radio: false,
+                        radio: true,
                         visible: false
                     }, {
                         field: 'id',
@@ -91,33 +98,38 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '专利名称',
                         sortable: true
                     }, {
-                        field: 'standard.infoMap.patenttype',
+                        field: 'variableMap.View.standard.infoMap.patenttype',
                         title: '专利类型',
                         sortable: true
                     }, {
-                        field: 'patentNo',
+                        field: 'variableMap.View.patentNo',
                         title: '专利号',
                         sortable: true
                     }, {
-                        field: 'apprDate',
+                        field: 'variableMap.View.apprDate',
                         title: '获批时间',
                         sortable: true
                     }, {
-                        field: 'ActorList',
-                        title: '参与者',
-                        //sortable: true,
-                        formatter: "actorTran"
+                        field: 'variableMap.Main-ActorName',
+                        title: '负责人'
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.WF_Col',
+                        title: '所属学院'
+                    }, {
+                        field: 'variableMap.Status',
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
-
             });
             break;
         case 'paper':
@@ -133,7 +145,7 @@ function processView() {
                 flat: "true",
                 columns: [
                     {
-                        radio: false,
+                        radio: true,
                         visible: false
                     }, {
                         field: 'id',
@@ -153,6 +165,9 @@ function processView() {
                         field: 'variableMap.WF_0_Submission.ActorList',
                         title: '参与者',
                         formatter: "actorTran"
+                    }, {
+                        field: 'variableMap.WF_Col',
+                        title: '所属学院'
                     }, {
                         field: 'variableMap.Status',
                         title: '状态',
@@ -178,7 +193,7 @@ function processView() {
                 flat: true,
                 columns: [
                     {
-                        radio: false,
+                        radio: true,
                         visible: false
                     }, {
                         field: 'id',
@@ -186,37 +201,39 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '著作名称',
                         sortable: true
                     }, {
-                        field: 'pubType',
+                        field: 'variableMap.View.pubType',
                         title: '出版类型',
-                        sortable: true,
-                        formatter: 'pubTypeTrans'
+                        sortable: true
                     }, {
-                        field: 'sumWord',
+                        field: 'variableMap.View.sumWord',
                         title: '著作总字数',
                         sortable: true,
-                        formatter: 'sumWordTran'
+                        formatter: 'sumWordProcessTran'
                     }, {
-                        field: 'isAward',
+                        field: 'variableMap.isAward',
                         title: '著作获奖情况',
                         sortable: true,
                         formatter: 'bkAwardTran'
                     }, {
-                        field: 'argMap.Main-ActorName',
+                        field: 'variableMap.Main-ActorName',
                         title: '负责人',
                         sortable: true
                     }, {
-                        field: 'publisher',
-                        title: '出版社',
-                        sortable: true
+                        field: 'variableMap.WF_Col',
+                        title: '所属学院'
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.Status',
                         title: '状态',
-                        sortable: true,
                         formatter: 'statusTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -233,7 +250,7 @@ function processView() {
                 flat: "true",
                 columns: [
                     {
-                        radio: false,
+                        radio: true,
                         visible: false
                     }, {
                         field: 'id',
@@ -241,33 +258,40 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '成果鉴定名称',
                         sortable: true
                     }, {
-                        field: 'standard.infoMap.jdprop',
+                        field: 'variableMap.View.standard.infoMap.jdprop',
                         title: '鉴定类别'
                     }, {
-                        field: 'standard.infoMap.jdtype',
+                        field: 'variableMap.View.standard.infoMap.jdtype',
                         title: '鉴定等级'
                     }, {
-                        field: 'certifyUnit',
+                        field: 'variableMap.View.certifyUnit',
                         title: '鉴定单位',
                         sortable: 'true'
                     }, {
-                        field: 'date',
+                        field: 'variableMap.View.date',
                         title: '鉴定日期',
                         sortable: true
                     }, {
-                        field: 'ActorList',
-                        title: '参与者',
-                        //sortable: true,
-                        formatter: "actorTran"
+                        field: 'variableMap.Main-ActorName',
+                        title: '负责人',
+                        sortable: true
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.WF_Col',
+                        title: '所属学院'
+                    }, {
+                        field: 'variableMap.Status',
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
 
             });
@@ -285,7 +309,7 @@ function processView() {
                 flat: true,
                 columns: [
                     {
-                        radio: false,
+                        radio: true,
                         visible: false
                     }, {
                         field: 'id',
@@ -293,29 +317,37 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '成果获奖名称',
                         sortable: true
                     }, {
-                        field: 'standard.infoMap.awdprop',
+                        field: 'variableMap.View.standard.infoMap.awdprop',
                         title: '奖励性质',
                         sortable: true
                     }, {
-                        field: 'standard.infoMap.awdtype',
+                        field: 'variableMap.View.standard.infoMap.awdtype',
                         title: '获奖类别',
                         sortable: true
                     }, {
-                        field: 'argMap.Main-ActorName',
-                        title: '负责人'
-                    }, {
-                        field: 'date',
+                        field: 'variableMap.View.date',
                         title: '获奖时间',
                         sortable: true
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'variableMap.WF_Col',
+                        title: '所属学院'
+                    }, {
+                        field: 'variableMap.Status',
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -332,7 +364,7 @@ function processView() {
                 flat: "true",
                 columns: [
                     {
-                        radio: false,
+                        radio: true,
                         visible: false
                     }, {
                         field: 'id',
@@ -340,27 +372,34 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '成果转化名称',
                         sortable: true
                     }, {
-                        field: 'tranUnit',
+                        field: 'variableMap.View.tranUnit',
                         title: '转让单位',
                         sortable: 'true'
                     }, {
-                        field: 'date',
+                        field: 'variableMap.View.date',
                         title: '转让日期',
                         sortable: true
                     }, {
-                        field: 'ActorList',
-                        title: '参与者',
-                        //sortable: true,
-                        formatter: "actorTran"
+                        field: 'variableMap.Main-ActorName',
+                        title: '负责人',
+                        sortable: true
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.WF_Col',
+                        title: '所属学院'
+                    }, {
+                        field: 'variableMap.Status',
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
 
             });
@@ -378,7 +417,7 @@ function processView() {
                 flat: true,
                 columns: [
                     {
-                        radio: false,
+                        radio: true,
                         visible: false
                     }, {
                         field: 'id',
@@ -386,21 +425,29 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '食品名称',
                         sortable: true
                     }, {
-                        field: 'argMap.Main-ActorName',
+                        field: 'variableMap.Main-ActorName',
                         title: '负责人'
                     }, {
-                        field: 'date',
+                        field: 'variableMap.WF_Col',
+                        title: '所属学院'
+                    }, {
+                        field: 'variableMap.View.date',
                         title: '获批时间',
                         sortable: true
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.Status',
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -417,7 +464,7 @@ function processView() {
                 flat: true,
                 columns: [
                     {
-                        radio: false,
+                        radio: true,
                         visible: false
                     }, {
                         field: 'id',
@@ -425,21 +472,29 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '食品名称',
                         sortable: true
                     }, {
-                        field: 'date',
+                        field: 'variableMap.View.date',
                         title: '获批时间',
                         sortable: true
                     }, {
-                        field: 'argMap.Main-ActorName',
+                        field: 'variableMap.Main-ActorName',
                         title: '负责人'
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.WF_Col',
+                        title: '所属学院'
+                    }, {
+                        field: 'variableMap.Status',
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -456,7 +511,7 @@ function processView() {
                 flat: true,
                 columns: [
                     {
-                        radio: false,
+                        radio: true,
                         visible: false
                     }, {
                         field: 'id',
@@ -464,21 +519,29 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '药品名称',
                         sortable: true
                     }, {
-                        field: 'date',
+                        field: 'variableMap.View.date',
                         title: '获批时间',
                         sortable: true
                     }, {
-                        field: 'argMap.Main-ActorName',
+                        field: 'variableMap.Main-ActorName',
                         title: '负责人'
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.WF_Col',
+                        title: '所属学院'
+                    }, {
+                        field: 'variableMap.Status',
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -495,7 +558,7 @@ function processView() {
                 flat: true,
                 columns: [
                     {
-                        radio: false,
+                        radio: true,
                         visible: false
                     }, {
                         field: 'id',
@@ -503,21 +566,29 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '产品名称',
                         sortable: true
                     }, {
-                        field: 'date',
+                        field: 'variableMap.View.date',
                         title: '获批时间',
                         sortable: true
                     }, {
-                        field: 'argMap.Main-ActorName',
+                        field: 'variableMap.Main-ActorName',
                         title: '负责人'
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.WF_Col',
+                        title: '所属学院'
+                    }, {
+                        field: 'variableMap.Status',
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
