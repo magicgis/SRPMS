@@ -182,7 +182,6 @@ function tableTrans(res) {
     $.each(respon, function (index, value) {
         /*取出variableMap*/
         respon[index]['orderId'] = value['id'];
-        console.log(respon[index]['orderId']);
         var maps = value['variableMap'];
         /*把string放入*/
         for (var key in maps) {
@@ -194,7 +193,6 @@ function tableTrans(res) {
         if (maps['Status'] != null || maps['Status'] != undefined) {
             if (maps['Status'] != 'Blank') {
                 var temp = maps[getSubmission(maps)];
-                /*瞎写都能生效……*/
                 $.each(temp, function (key, value) {
                     respon[index][key] = temp[key];
                 });
@@ -205,7 +203,6 @@ function tableTrans(res) {
         }
     });
     if (res["rows"] == undefined || res["rows"] == null) {
-        //console.log(respon);
         return respon;
     } else {
         res["rows"] = respon;
@@ -1078,16 +1075,13 @@ function init(entity,all,replyByDep,level) {
 
             switch (statusCode){
                 case 211:
-                    console.log('211');
                     reply.append(replyByDep);
                     who.append("管理部门批复");
                     break;
                 case 210:
-                    console.log('210');
                     $('#reply-display').hide();
                     break;
                 case 200:
-                    console.log('200');
                     reply.append(replyByCol);
                     who.append("学院批复");
                     $('#reply-box').hide();
@@ -1106,7 +1100,6 @@ function init(entity,all,replyByDep,level) {
                     //$('.onDel').hide();
                     break;
                 case 311:
-                    console.log('311');
                     $('.getScore').hide();
                     $('#totalScore').attr('disabled', 'disabled');
 
@@ -1118,7 +1111,6 @@ function init(entity,all,replyByDep,level) {
                     who.append("学院批复");
                     break;
                 case 301:
-                    console.log('301');
                     $('.getScore').hide();
                     $('#totalScore').attr('disabled', 'disabled');
 
