@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.*;
 
 import static util.Trans.moveMap;
+import static util.Trans.putMapOnObj;
 
 /**
  * DATE:2015/3/22
@@ -32,6 +33,7 @@ public class Complete implements SnakerInterceptor {
 
         BaseInfoService baseInfoService = (BaseInfoService) StaticFactory.getBean(BaseInfoService.class);
         RelationService relationService = (RelationService) StaticFactory.getBean(RelationService.class);
+        StandardInfoService standardInfoService = (StandardInfoService) StaticFactory.getBean(StandardInfoService.class);
 
         String orderId = execution.getOrder().getId();
         Map<String, Object> args = execution.getOrder().getVariableMap();
@@ -61,11 +63,30 @@ public class Complete implements SnakerInterceptor {
                     paper.setMag(magService.getById((Serializable) ((HashMap) info.get("mag")).get("id")));
                 }
                 else if ("conferPaper".equals(info.get("type"))) {
-//                    paper.setConfer(conferService.getById((Serializable) info.get("confer.id")));
+                    ConferService conferService = (ConferService) StaticFactory.getBean(ConferService.class);
+                    Map cf = (Map) info.get("confer");
+                    Confer confer = new Confer();
+                    putMapOnObj(confer, cf);
+                    try {
+                        confer.setStandard(standardInfoService.getById((Serializable) ((Map) cf.get("standard")).get("id")));
+                    } catch (Exception x) {
+                        x.printStackTrace();
+                    }
+                    conferService.save(confer);
+                    paper.setConfer(confer);
                 }
                 else if ("newsPaper".equals(info.get("type"))) {
-//                    ConferService conferService = (ConferService) StaticFactory.getBean(ConferService.class);
-//                    paper.setConfer(conferService.getById((Serializable) info.get("news.id")));
+                    NewspaperService newspaperService = (NewspaperService) StaticFactory.getBean(NewspaperService.class);
+                    Map np = (Map) info.get("newspaper");
+                    Newspaper newspaper = new Newspaper();
+                    putMapOnObj(newspaper, np);
+                    try {
+                        newspaper.setStandard(standardInfoService.getById((Serializable) ((Map) np.get("standard")).get("id")));
+                    } catch (Exception x) {
+                        x.printStackTrace();
+                    }
+                    newspaperService.save(newspaper);
+                    paper.setNewspaper(newspaper);
                 }
                 id = paperService.add(paper);
                 break;
