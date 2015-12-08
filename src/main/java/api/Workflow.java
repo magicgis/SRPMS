@@ -352,9 +352,8 @@ public class Workflow {
     @Path("/submitByCol")
     @Produces("text/plain;charset=UTF-8")
     public boolean colSubmit(@FormParam("WF_User") String user) {
-        Staff staff = staffService.getById(user);
-        String actorId = staff.getCol().getId();
-        List<Order> list = engine.getAllOrderByActor(actorId);
+        String actorId = staffService.getById(user).getCol().getId();
+        List<Order> list = engine.getOrderByActorAndRole(actorId, 2);
         List<String> colFlag = Arrays.asList("Submission", "Confirm", "SubmitByTeacher", "ApprovalByCol");
         for (Order u : list) {
             List<Task> tasks = engine.getTaskByOrder(u.getId());
@@ -437,5 +436,13 @@ public class Workflow {
         engine.fix();
         return "Done";
     }
+
+    @GET
+    @Path("/removeExtra")
+    public String removeExtra() {
+        engine.removeExtra();
+        return "Done";
+    }
+
 
 }

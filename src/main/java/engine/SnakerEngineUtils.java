@@ -393,4 +393,14 @@ public class SnakerEngineUtils implements Engine {
             }
         }
     }
+
+    @Override
+    public void removeExtra() {
+        List<String> orderList = orderActorDao.getAllOrder();
+        for (String order : orderList) {
+            if (getOrder(order) == null) {
+                orderActorDao.deleteAllOrder(order);
+            }
+        }
+    }
 }

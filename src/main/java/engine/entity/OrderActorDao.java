@@ -131,4 +131,13 @@ public class OrderActorDao {
     public void update(OrderActor orderActor) {
         getCurrentSession().update(orderActor);
     }
+
+    public List<OrderActor> getAll() {
+        return getCurrentSession().createQuery("FROM OrderActor").list();
+    }
+
+    public List<String> getAllOrder() {
+        return getCurrentSession().createQuery("SELECT DISTINCT order FROM OrderActor").list();
+    }
+
 }

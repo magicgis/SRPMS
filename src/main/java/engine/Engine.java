@@ -218,4 +218,6 @@ public interface Engine {
 
     void fix();
 
+    void removeExtra();
+
 }
