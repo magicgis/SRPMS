@@ -221,7 +221,6 @@ public class RelationServiceImp implements RelationService {
             expandRelation.setVirtualEntity((VirtualEntity) dao.getById(re.getEntityId()));
             expandRelation.setRole(re.getRole());
             expandRelation.setScore(re.getScore());
-            expandRelation.setUnit(re.getUnit());
             ans.add(expandRelation);
         }
         return ans;
