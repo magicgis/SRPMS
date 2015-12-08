@@ -1190,8 +1190,9 @@ var wfTypeTans = {
     "instrument": "新器械",
     "food": "新食品",
     "change": "差异",
-    "award": "成果获奖",
-    "achAppraisal": "成果鉴定"
+    "achAward": "成果获奖",
+    "achAppraisal": "成果鉴定",
+    "achTran": "成果转化"
 };
 
 function wfTypeTran(value,row ) {

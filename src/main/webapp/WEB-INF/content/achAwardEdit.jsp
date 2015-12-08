@@ -117,6 +117,82 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div id="awardInfo" class="col-xs-12 widget-container-col ui-sortable">
+                                <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
+                                    <div class="widget-header">
+                                        <h4 class="widget-title">获奖信息</h4>
+                                    </div>
+                                    <div class="widget-body ">
+                                        <div class="widget-main">
+                                            <div class="row">
+                                                <div class="form-group col-xs-12 col-sm-6">
+                                                    <label class="col-sm-4 control-label no-padding-left"
+                                                           for="awdProp">奖励性质</label>
+
+                                                    <div class="col-sm-8">
+                                                        <input id="awdProp" name="awdprop"
+                                                               type="text" class="form-control col-xs-12"
+                                                               placeholder="请选择"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-xs-12 col-sm-6">
+                                                    <label class="col-sm-4 control-label no-padding-left"
+                                                           for="awdType">奖项类别</label>
+
+                                                    <div class="col-sm-8">
+                                                        <input id="awdType" name="standard.id"
+                                                               type="text" class="form-control col-xs-12"
+                                                               placeholder="请选择"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-xs-12 col-sm-6">
+                                                    <label class="col-sm-4 control-label no-padding-left"
+                                                           for="date">获奖时间
+                                                    </label>
+
+                                                    <div class="col-sm-8">
+                                                        <input type="text" id="date" name="date"
+                                                               class="col-xs-12 date-picker"
+                                                               value="${achAward.date}"
+                                                               placeholder="" data-date-format="yyyy-mm-dd"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+	                        <div class="col-xs-12 widget-container-col ui-sortable" id="fileHead">
+		                        <div class="widget-box transparent ui-sortable-handle"
+		                             style="opacity: 1;">
+			                        <div class="widget-header">
+				                        <h4 class="widget-title">附件信息</h4>
+
+				                        <div class="widget-toolbar no-border">
+					                        <c:if test="${sessionScope.level == '3'}">
+						                        <div id="upload">
+						                        </div>
+					                        </c:if>
+				                        </div>
+			                        </div>
+			                        <div class="widget-body">
+				                        <div class="widget-main">
+					                        <div class="dd" id="nestable">
+						                        <ol class="dd-list" id="downFiles"></ol>
+					                        </div>
+				                        </div>
+			                        </div>
+		                        </div>
+	                        </div>
+
+
                         </div>
 
                         <div id="actorInfo" class="col-xs-12 col-md-6 widget-container-col ui-sortable">
@@ -161,81 +237,6 @@
                             <div class="col-xs-12" id="msg_alert"></div>
                         </div>
 
-                        <div id="awardInfo"
-                             class="col-xs-12 col-md-6 widget-container-col ui-sortable">
-                            <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
-                                <div class="widget-header">
-                                    <h4 class="widget-title">获奖信息</h4>
-                                </div>
-                                <div class="widget-body ">
-                                    <div class="widget-main">
-                                        <div class="row">
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="awdProp">奖励性质</label>
-
-                                                <div class="col-sm-8">
-                                                    <input id="awdProp" name="awdprop"
-                                                           type="text" class="form-control col-xs-12"
-                                                           placeholder="请选择"/>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="awdType">奖项类别</label>
-
-                                                <div class="col-sm-8">
-                                                    <input id="awdType" name="standard.id"
-                                                           type="text" class="form-control col-xs-12"
-                                                           placeholder="请选择"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label class="col-sm-4 control-label no-padding-left"
-                                                       for="date">获奖时间
-                                                </label>
-
-                                                <div class="col-sm-8">
-                                                    <input type="text" id="date" name="date"
-                                                           class="col-xs-12 date-picker"
-                                                           value="${achAward.date}"
-                                                           placeholder="" data-date-format="yyyy-mm-dd"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <div class="col-xs-12 widget-container-col ui-sortable" id="fileHead">
-                                                    <div class="widget-box transparent ui-sortable-handle"
-                                                         style="opacity: 1;">
-                                                        <div class="widget-header">
-                                                            <h4 class="widget-title">附件信息</h4>
-
-                                                            <div class="widget-toolbar no-border">
-                                                                <c:if test="${sessionScope.level == '3'}">
-                                                                    <div id="upload">
-                                                                    </div>
-                                                                </c:if>
-                                                            </div>
-                                                        </div>
-                                                        <div class="widget-body">
-                                                            <div class="widget-main">
-                                                                <div class="dd" id="nestable">
-                                                                    <ol class="dd-list" id="downFiles"></ol>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                         <div id="unitInfo" class="col-xs-12 col-md-6 widget-container-col ui-sortable">
                             <div class="widget-box transparent ui-sortable-handle" style="opacity: 1;">
@@ -512,10 +513,10 @@
     $(".del").click(function () {
         delOrder();
     });
-    $(".Approve").click(function () {
+    $(".approve").click(function () {
         Approve();
     });
-    $(".Refuse").click(function () {
+    $(".refuse").click(function () {
         Refuse();
     });
 </script>

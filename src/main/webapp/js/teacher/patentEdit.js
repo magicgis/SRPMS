@@ -53,8 +53,8 @@ function confirm() {
              * userName,taskId,status
              */
             if (result) {
-                workflow.execute(userName, taskId, send).success(function (data) {
-                    var statusCode = this.status;
+                workflow.execute(userName, taskId, send).success(function (data, textStatus, xhr) {
+                    var statusCode =xhr.status;
                     if (statusCode == 200) {
                         if ("valid" in data) {
                             if (data["valid"] == true) {
@@ -67,10 +67,11 @@ function confirm() {
                             afterSuccess("确认成功！");
                             window.location.href = '/index/process/patent/all';
                         }
-                    } else {
+                    } else if(statusCode == 204) {
                         window.location.href = '/index/process/patent/all';
                     }
                 });
+
             }
         }
     });

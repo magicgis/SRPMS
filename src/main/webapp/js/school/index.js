@@ -27,6 +27,7 @@ function processView() {
                 sidePagination: "client",
                 //pageSize: 15,
                 //pageList: [20, 30, 50, 'ALL'],
+                flat: "true",
                 columns: [
                     {
                         radio: false,
@@ -66,8 +67,7 @@ function processView() {
                         align: 'center',
                         title: '操作',
                         formatter: view
-                    }],
-                responseHandler: tableTrans
+                    }]
             });
             break;
         case 'patent':
@@ -80,6 +80,7 @@ function processView() {
                 sidePagination: "client",
                 //pageSize: 15,
                 //pageList: [20, 30, 50, 'ALL'],
+                flat: "true",
                 columns: [
                     {
                         radio: false,
@@ -115,8 +116,8 @@ function processView() {
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
-                    }],
-                responseHandler: tableTrans
+                    }]
+
             });
             break;
         case 'paper':
@@ -216,8 +217,7 @@ function processView() {
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
-                    }],
-                responseHandler: tableTrans
+                    }]
             });
             break;
         case 'achAppraisal':
@@ -230,6 +230,7 @@ function processView() {
                 sidePagination: "client",
                 //pageSize: 15,
                 //pageList: [20, 30, 50, 'ALL'],
+                flat: "true",
                 columns: [
                     {
                         radio: false,
@@ -267,8 +268,7 @@ function processView() {
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
-                    }],
-                responseHandler: tableTrans
+                    }]
 
             });
             break;
@@ -297,6 +297,14 @@ function processView() {
                         title: '成果获奖名称',
                         sortable: true
                     }, {
+                        field: 'standard.infoMap.awdprop',
+                        title: '奖励性质',
+                        sortable: true
+                    }, {
+                        field: 'standard.infoMap.awdtype',
+                        title: '获奖类别',
+                        sortable: true
+                    }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
                     }, {
@@ -308,8 +316,7 @@ function processView() {
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
-                    }],
-                responseHandler: tableTrans
+                    }]
             });
             break;
         case 'achTran':
@@ -322,6 +329,7 @@ function processView() {
                 sidePagination: "client",
                 //pageSize: 15,
                 //pageList: [20, 30, 50, 'ALL'],
+                flat: "true",
                 columns: [
                     {
                         radio: false,
@@ -353,8 +361,7 @@ function processView() {
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
-                    }],
-                responseHandler: tableTrans
+                    }]
 
             });
             break;
@@ -394,8 +401,7 @@ function processView() {
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
-                    }],
-                responseHandler: tableTrans
+                    }]
             });
             break;
         case 'instrument':
@@ -434,8 +440,7 @@ function processView() {
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
-                    }],
-                responseHandler: tableTrans
+                    }]
             });
             break;
         case 'medicine':
@@ -474,8 +479,7 @@ function processView() {
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
-                    }],
-                responseHandler: tableTrans
+                    }]
             });
             break;
         case 'others':
@@ -514,8 +518,7 @@ function processView() {
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
-                    }],
-                responseHandler: tableTrans
+                    }]
             });
             break;
         case 'all':
@@ -538,17 +541,17 @@ function processView() {
                         title: 'id',
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '科研名称'
                     }, {
-                        field: 'WF_Type',
+                        field: 'variableMap.WF_Type',
                         title: '科研类型',
                         formatter: "wfTypeTran"
                     }, {
                         field: 'variableMap.WF_Col',
                         title: '所属学院'
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.Status',
                         title: '状态',
                         formatter: 'statusTran'
                     }, {
@@ -557,8 +560,7 @@ function processView() {
                         title: '操作',
                         width: 75,
                         formatter: view
-                    }],
-                responseHandler: tableTrans
+                    }]
             });
             break;
     }
@@ -571,11 +573,11 @@ var processStates = {
             $('#ProcessToolbar').show();
             //todo 处理页面跳转
             viewTable.on('click-row.bs.table', function (e, row) {
-                if(objType !== 'paper'){
-                    window.location.href = '/order/' + row['orderId'];
-                }else{ // unComplete/
+                //if(objType !== 'paper'){
+                //    window.location.href = '/order/' + row['orderId'];
+                //}else{ // unComplete/
                     window.location.href = '/order/' + row['id'];
-                }
+                //}
             });
         },
         leave: function () {
@@ -669,6 +671,9 @@ function entityView() {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
                     }, {
+                        field: 'dept.value',
+                        title: '所属学院'
+                    }, {
                         field: 'process',
                         title: '流程状态',
                         sortable: true,
@@ -711,13 +716,25 @@ function entityView() {
                         title: '专利类型',
                         sortable: true
                     }, {
+                        field: 'apprDate',
+                        title: '获批时间',
+                        sortable: true
+                    }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
+                    }, {
+                        field: 'dept.value',
+                        title: '所属学院'
                     }, {
                         field: 'process',
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -751,13 +768,7 @@ function entityView() {
                     }, {
                         field: 'pubDate',
                         title: '发表日期'
-                    }
-                    //, {
-                    //    field: 'ActorList',
-                    //    title: '参与者',
-                    //    formatter: "actorTran"
-                    //}
-                    , {
+                    }, {
                         field: 'dept.value',
                         title: '所属学院'
                     }, {
@@ -799,26 +810,30 @@ function entityView() {
                         sortable: true
                     }, {
                         field: 'sumWord',
-                        title: '著作总字数',
+                        title: '总字数',
                         sortable: true,
                         formatter: 'sumWordEntityTran'
                     }, {
                         field: 'isAward',
-                        title: '著作获奖情况',
+                        title: '获奖情况',
                         sortable: true,
                         formatter: 'bkAwardEntityTran'
                     }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
                     }, {
-                        field: 'publisher',
-                        title: '出版社',
-                        sortable: true
+                        field: 'dept.value',
+                        title: '所属学院'
                     }, {
                         field: 'process',
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -853,11 +868,13 @@ function entityView() {
                     }, {
                         field: 'standard.infoMap.jdtype',
                         title: '鉴定等级'
-                    }, {
-                        field: 'certifyUnit',
-                        title: '鉴定单位',
-                        sortable: 'true'
-                    }, {
+                    }
+                    //, {
+                    //    field: 'certifyUnit',
+                    //    title: '鉴定单位',
+                    //    sortable: 'true'
+                    //}
+                    , {
                         field: 'date',
                         title: '鉴定日期',
                         sortable: true
@@ -865,10 +882,18 @@ function entityView() {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
                     }, {
+                        field: 'dept.value',
+                        title: '所属学院'
+                    }, {
                         field: 'process',
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -898,22 +923,33 @@ function entityView() {
                         title: '成果获奖名称',
                         sortable: true
                     }, {
-                        field: 'argMap.Main-ActorName',
-                        title: '负责人'
+                        field: 'standard.infoMap.awdprop',
+                        title: '奖励性质',
+                        sortable: true
+                    }, {
+                        field: 'standard.infoMap.awdtype',
+                        title: '获奖类别',
+                        sortable: true
                     }, {
                         field: 'date',
                         title: '获奖时间',
                         sortable: true
                     }, {
-                        field: 'Status',
-                        title: '状态',
-                        sortable: true,
-                        formatter: 'statusTran'
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'dept.value',
+                        title: '所属学院'
                     }, {
                         field: 'process',
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -943,13 +979,29 @@ function entityView() {
                         title: '成果转化名称',
                         sortable: true
                     }, {
+                        field: 'tranUnit',
+                        title: '转让单位',
+                        sortable: 'true'
+                    }, {
+                        field: 'date',
+                        title: '转让日期',
+                        sortable: true
+                    }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
+                    }, {
+                        field: 'dept.value',
+                        title: '所属学院'
                     }, {
                         field: 'process',
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -986,10 +1038,18 @@ function entityView() {
                         title: '获批时间',
                         sortable: true
                     }, {
+                        field: 'dept.value',
+                        title: '所属学院'
+                    }, {
                         field: 'process',
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -1026,10 +1086,18 @@ function entityView() {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
                     }, {
+                        field: 'dept.value',
+                        title: '所属学院'
+                    }, {
                         field: 'process',
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -1066,10 +1134,18 @@ function entityView() {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
                     }, {
+                        field: 'dept.value',
+                        title: '所属学院'
+                    }, {
                         field: 'process',
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -1106,10 +1182,18 @@ function entityView() {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
                     }, {
+                        field: 'dept.value',
+                        title: '所属学院'
+                    }, {
                         field: 'process',
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -1121,6 +1205,7 @@ function entityView() {
                 showRefresh: true,
                 pageList: [20, 30, 50, 'ALL'],
                 search: true,
+                flat: "true",
                 columns: [
                     {
                         radio: false,
@@ -1149,8 +1234,7 @@ function entityView() {
                         align: 'center',
                         title: '操作',
                         width: 75
-                    }],
-                responseHandler: tableTrans
+                    }]
             });
             break;
     }
@@ -1216,6 +1300,7 @@ function searchView() {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: searchUrl(),
                 sidePagination: "server",
+                flat: "true",
                 columns: [
                     {
                         radio: false,
@@ -1256,7 +1341,8 @@ function searchView() {
                     }, {
                         field: 'operator',
                         align: 'center',
-                        title: '操作'
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -1290,6 +1376,11 @@ function searchView() {
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -1329,8 +1420,7 @@ function searchView() {
                         align: 'center',
                         title: '操作',
                         formatter: view
-                    }],
-                responseHandler: tableTrans
+                    }]
             });
             break;
         case 'book':
@@ -1381,6 +1471,11 @@ function searchView() {
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -1410,6 +1505,11 @@ function searchView() {
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -1437,10 +1537,13 @@ function searchView() {
                         title: '成果名称',
                         sortable: true
                     }, {
-                        field: 'achType',
-                        title: '成果类型',
-                        sortable: true,
-                        formatter: 'typeTran'
+                        field: 'standard.infoMap.awdprop',
+                        title: '奖励性质',
+                        sortable: true
+                    }, {
+                        field: 'standard.infoMap.awdtype',
+                        title: '获奖类别',
+                        sortable: true
                     }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
@@ -1458,6 +1561,11 @@ function searchView() {
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -1487,6 +1595,11 @@ function searchView() {
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -1520,6 +1633,11 @@ function searchView() {
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -1553,6 +1671,11 @@ function searchView() {
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -1586,6 +1709,11 @@ function searchView() {
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -1619,6 +1747,11 @@ function searchView() {
                         title: '流程状态',
                         sortable: true,
                         formatter: 'processTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -1656,8 +1789,7 @@ function searchView() {
                         title: '操作',
                         width: 75,
                         formatter: view
-                    }],
-                responseHandler: tableTrans
+                    }]
             });
             break;
     }
@@ -1753,6 +1885,7 @@ var magStates = {
                 url: '/api/workflow/allMagOrder',
                 sidePagination: "server",
                 toolbar: '#MagToolbar',
+                flat: "true",
                 columns: [{
                     radio: false,
                     visible: false
@@ -1812,7 +1945,7 @@ var userStates = {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: '/api/staff/all',
                 toolbar: '#UserToolbar',
-                flat: "true",
+                flat: true,
                 search: true,
                 showColumns: true,
                 showRefresh: true,

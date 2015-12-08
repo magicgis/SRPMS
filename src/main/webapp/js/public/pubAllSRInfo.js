@@ -46,7 +46,8 @@ function view(index, row, value) {
     {
         return [
             '<a class="edit ml10" href="javascript:void(0)" title="Edit">',
-            '<i class="ace-icon fa fa-pencil bigger-130"></i>查看',
+            '<i class="ace-icon fa fa-pencil bigger-130"></i>' ,
+            //'查看',
             '</a>'
         ].join('');
     }

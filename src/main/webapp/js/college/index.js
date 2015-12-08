@@ -14,9 +14,11 @@ function processView() {
                 url: processUrl(),
                 sidePagination: "server",
                 toolbar: '#ProcessToolbar',
+                showRefresh: true,
+                flat: true,
                 columns: [
                     {
-                        radio: true,
+                        radio: false,
                         visible: false
                     }, {
                         field: 'id',
@@ -24,27 +26,27 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '名称',
                         sortable: true
                     }, {
-                        field: 'type',
+                        field: 'variableMap.View.standard.infoMap.projtype',
                         title: '类别',
                         sortable: true
                     }, {
-                        field: 'rank',
+                        field: 'variableMap.View.standard.infoMap.projrank',
                         title: '等级',
                         sortable: true
                     }, {
-                        field: 'rateUnit',
+                        field: 'variableMap.View.standard.infoMap.projorig',
                         title: '评分来源',
                         sortable: true
                     }, {
-                        field: 'realDate',
+                        field: 'variableMap.View.realDate',
                         title: '实际结题时间',
                         sortable: true
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.Status',
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
@@ -53,8 +55,7 @@ function processView() {
                         align: 'center',
                         title: '操作',
                         formatter: view
-                    }],
-                responseHandler: tableTrans
+                    }]
             });
             break;
         case 'patent':
@@ -62,6 +63,8 @@ function processView() {
                 url: processUrl(),
                 sidePagination: "server",
                 toolbar: '#ProcessToolbar',
+                showRefresh: true,
+                flat: true,
                 columns: [
                     {
                         radio: true,
@@ -72,33 +75,35 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '专利名称',
                         sortable: true
                     }, {
-                        field: 'standard.infoMap.patenttype',
+                        field: 'variableMap.View.standard.infoMap.patenttype',
                         title: '专利类型',
                         sortable: true
                     }, {
-                        field: 'patentNo',
+                        field: 'variableMap.View.patentNo',
                         title: '专利号',
                         sortable: true
                     }, {
-                        field: 'apprDate',
+                        field: 'variableMap.View.apprDate',
                         title: '获批时间',
                         sortable: true
                     }, {
-                        field: 'ActorList',
-                        title: '参与者',
-                        //sortable: true,
-                        formatter: "actorTran"
+                        field: 'variableMap.Main-ActorName',
+                        title: '负责人'
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.Status',
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
-                    }],
-                responseHandler: tableTrans
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
+                    }]
             });
             break;
         case 'paper':
@@ -106,7 +111,8 @@ function processView() {
                 url: processUrl(),
                 sidePagination: "server",
                 toolbar: '#ProcessToolbar',
-                flat: "true",
+                showRefresh: true,
+                flat: true,
                 columns: [
                     {
                         radio: true,
@@ -119,9 +125,9 @@ function processView() {
                         field: 'variableMap.WF_0_Submission.name',
                         title: '论文名称'
                     }, {
-                        field: 'variableMap.WF_Latest.type',
+                        field: 'variableMap.WF_0_Submission.type',
                         title: '论文类别',
-                        formatter: "typeTran"
+                        formatter: "paperTypeTran"
                     }, {
                         field: 'variableMap.WF_0_Submission.pubDate',
                         title: '发表日期'
@@ -145,8 +151,9 @@ function processView() {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
                 sidePagination: "server",
-                flat: true,
                 toolbar: '#ProcessToolbar',
+                showRefresh: true,
+                flat: true,
                 columns: [
                     {
                         radio: true,
@@ -157,7 +164,7 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '著作名称',
                         sortable: true
                     }, {
@@ -178,17 +185,22 @@ function processView() {
                         field: 'variableMap.Main-ActorName',
                         title: '负责人',
                         sortable: true
-                    }, {
-                        field: 'variableMap.View.publisher',
-                        title: '出版社',
-                        sortable: true
-                    }, {
-                        field: 'Status',
+                    }
+                    //, {
+                    //    field: 'variableMap.View.publisher',
+                    //    title: '出版社',
+                    //    sortable: true
+                    //}
+                    , {
+                        field: 'variableMap.Status',
                         title: '状态',
-                        sortable: true,
                         formatter: 'statusTran'
-                    }],
-                responseHandler: tableTrans
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
+                    }]
             });
             break;
         case 'achAppraisal':
@@ -196,6 +208,8 @@ function processView() {
                 url: processUrl(),
                 sidePagination: "server",
                 toolbar: '#ProcessToolbar',
+                showRefresh: true,
+                flat: true,
                 columns: [
                     {
                         radio: true,
@@ -206,35 +220,38 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '成果鉴定名称',
                         sortable: true
                     }, {
-                        field: 'standard.infoMap.jdprop',
-                        title:'鉴定类别'
+                        field: 'variableMap.View.standard.infoMap.jdprop',
+                        title: '鉴定类别'
                     }, {
-                        field: 'standard.infoMap.jdtype',
-                        title:'鉴定等级'
+                        field: 'variableMap.View.standard.infoMap.jdtype',
+                        title: '鉴定等级'
                     }, {
-                        field: 'certifyUnit',
+                        field: 'variableMap.View.certifyUnit',
                         title: '鉴定单位',
                         sortable: 'true'
                     }, {
-                        field: 'date',
+                        field: 'variableMap.View.date',
                         title: '鉴定日期',
                         sortable: true
                     }, {
-                        field: 'ActorList',
-                        title: '参与者',
-                        //sortable: true,
-                        formatter: "actorTran"
+                        field: 'variableMap.Main-ActorName',
+                        title: '负责人',
+                        sortable: true
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.Status',
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
-                    }],
-                responseHandler: tableTrans
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
+                    }]
 
             });
             break;
@@ -242,8 +259,9 @@ function processView() {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
                 sidePagination: "server",
-                flat: true,
                 toolbar: '#ProcessToolbar',
+                showRefresh: true,
+                flat: true,
                 columns: [
                     {
                         radio: true,
@@ -254,23 +272,35 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '成果获奖名称',
                         sortable: true
                     }, {
-                        field: 'argMap.Main-ActorName',
-                        title: '负责人'
+                        field: 'variableMap.View.standard.infoMap.awdprop',
+                        title: '奖励性质',
+                        sortable: true
                     }, {
-                        field: 'date',
+                        field: 'variableMap.View.standard.infoMap.awdtype',
+                        title: '获奖类别',
+                        sortable: true
+                    }, {
+                        field: 'variableMap.View.date',
                         title: '获奖时间',
                         sortable: true
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'variableMap.Status',
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
-                    }],
-                responseHandler: tableTrans
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
+                    }]
             });
             break;
         case 'achTran':
@@ -278,6 +308,8 @@ function processView() {
                 url: processUrl(),
                 sidePagination: "server",
                 toolbar: '#ProcessToolbar',
+                showRefresh: true,
+                flat: true,
                 columns: [
                     {
                         radio: true,
@@ -288,29 +320,32 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '成果转化名称',
                         sortable: true
                     }, {
-                        field: 'tranUnit',
+                        field: 'variableMap.View.tranUnit',
                         title: '转让单位',
                         sortable: 'true'
                     }, {
-                        field: 'date',
+                        field: 'variableMap.View.date',
                         title: '转让日期',
                         sortable: true
                     }, {
-                        field: 'ActorList',
-                        title: '参与者',
-                        //sortable: true,
-                        formatter: "actorTran"
+                        field: 'variableMap.Main-ActorName',
+                        title: '负责人',
+                        sortable: true
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.Status',
                         title: '状态',
                         sortable: true,
                         formatter: 'statusTran'
-                    }],
-                responseHandler: tableTrans
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
+                    }]
 
             });
             break;
@@ -319,6 +354,7 @@ function processView() {
                 url: processUrl(),
                 sidePagination: "server",
                 toolbar: '#ProcessToolbar',
+                showRefresh: true,
                 flat: true,
                 columns: [
                     {
@@ -330,21 +366,26 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '食品名称',
                         sortable: true
                     }, {
-                        field: 'date',
+                        field: 'variableMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'variableMap.View.date',
                         title: '获批时间',
                         sortable: true
                     }, {
-                        field: 'argMap.Main-ActorName',
-                        title: '负责人'
-                    }, {
-                        field: 'process',
-                        title: '流程状态',
+                        field: 'variableMap.Status',
+                        title: '状态',
                         sortable: true,
-                        formatter: 'processTran'
+                        formatter: 'statusTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -353,6 +394,7 @@ function processView() {
                 url: processUrl(),
                 sidePagination: "server",
                 toolbar: '#ProcessToolbar',
+                showRefresh: true,
                 flat: true,
                 columns: [
                     {
@@ -364,21 +406,26 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
-                        title: '医疗器械名称',
+                        field: 'variableMap.name',
+                        title: '食品名称',
                         sortable: true
                     }, {
-                        field: 'date',
+                        field: 'variableMap.View.date',
                         title: '获批时间',
                         sortable: true
                     }, {
-                        field: 'argMap.Main-ActorName',
+                        field: 'variableMap.Main-ActorName',
                         title: '负责人'
                     }, {
-                        field: 'process',
-                        title: '流程状态',
+                        field: 'variableMap.Status',
+                        title: '状态',
                         sortable: true,
-                        formatter: 'processTran'
+                        formatter: 'statusTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -387,6 +434,7 @@ function processView() {
                 url: processUrl(),
                 sidePagination: "server",
                 toolbar: '#ProcessToolbar',
+                showRefresh: true,
                 flat: true,
                 columns: [
                     {
@@ -398,21 +446,26 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '药品名称',
                         sortable: true
                     }, {
-                        field: 'date',
+                        field: 'variableMap.View.date',
                         title: '获批时间',
                         sortable: true
                     }, {
-                        field: 'argMap.Main-ActorName',
+                        field: 'variableMap.Main-ActorName',
                         title: '负责人'
                     }, {
-                        field: 'process',
-                        title: '流程状态',
+                        field: 'variableMap.Status',
+                        title: '状态',
                         sortable: true,
-                        formatter: 'processTran'
+                        formatter: 'statusTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -421,6 +474,7 @@ function processView() {
                 url: processUrl(),
                 sidePagination: "server",
                 toolbar: '#ProcessToolbar',
+                showRefresh: true,
                 flat: true,
                 columns: [
                     {
@@ -432,21 +486,26 @@ function processView() {
                         sortable: true,
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '产品名称',
                         sortable: true
                     }, {
-                        field: 'date',
+                        field: 'variableMap.View.date',
                         title: '获批时间',
                         sortable: true
                     }, {
-                        field: 'argMap.Main-ActorName',
+                        field: 'variableMap.Main-ActorName',
                         title: '负责人'
                     }, {
-                        field: 'process',
-                        title: '流程状态',
+                        field: 'variableMap.Status',
+                        title: '状态',
                         sortable: true,
-                        formatter: 'processTran'
+                        formatter: 'statusTran'
+                    }, {
+                        field: 'operator',
+                        align: 'center',
+                        title: '操作',
+                        formatter: view
                     }]
             });
             break;
@@ -454,8 +513,9 @@ function processView() {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: processUrl(),
                 sidePagination: "server",
-                showRefresh: true,
                 toolbar: '#ProcessToolbar',
+                showRefresh: true,
+                flat: true,
                 columns: [
                     {
                         radio: true,
@@ -465,28 +525,25 @@ function processView() {
                         title: 'id',
                         visible: false
                     }, {
-                        field: 'name',
+                        field: 'variableMap.name',
                         title: '科研名称'
                     }, {
-                        field: 'WF_Type',
+                        field: 'variableMap.WF_Type',
                         title: '科研类型',
                         formatter: "wfTypeTran"
                     }, {
-                        field: 'S-ACTOR',
-                        title: '负责人',
-                        formatter: "mainActorTran"
+                        field: 'variableMap.Main-ActorName',
+                        title: '负责人'
                     }, {
-                        field: 'Status',
+                        field: 'variableMap.Status',
                         title: '状态',
                         formatter: 'statusTran'
                     }, {
                         field: 'operator',
                         align: 'center',
                         title: '操作',
-                        width: 75,
                         formatter: view
-                    }],
-                responseHandler: tableTrans
+                    }]
             });
             break;
     }
@@ -529,11 +586,7 @@ var processStates = {
             $('#ProcessToolbar').show();
             //todo 处理页面跳转
             viewTable.on('click-row.bs.table', function (e, row) {
-                if(objType !== 'paper'){
-                    window.location.href = '/order/' + row['orderId'];
-                }else{ // unComplete/
-                    window.location.href = '/order/' + row['id'];
-                }
+                window.location.href = '/order/' + row['id'];
             });
         },
         leave: function () {
@@ -586,6 +639,8 @@ function entityView() {
                 url: entityUrl(),
                 sidePagination: "server",
                 toolbar: '#EntityToolbar',
+                showRefresh: true,
+                flat: true,
                 columns: [
                     {
                         radio: true,
@@ -634,8 +689,9 @@ function entityView() {
             viewTable.bootstrapTable('destroy').bootstrapTable({
                 url: entityUrl(),
                 sidePagination: "server",
-                flat: true,
                 toolbar: '#EntityToolbar',
+                showRefresh: true,
+                flat: true,
                 columns: [
                     {
                         radio: true,
@@ -669,6 +725,8 @@ function entityView() {
                 url: entityUrl(),
                 sidePagination: "server",
                 toolbar: '#EntityToolbar',
+                showRefresh: true,
+                flat: true,
                 columns: [
                     {
                         radio: true,
@@ -700,8 +758,7 @@ function entityView() {
                         align: 'center',
                         title: '操作',
                         formatter: view
-                    }],
-                responseHandler: tableTrans
+                    }]
             });
             break;
         case 'book':
@@ -709,6 +766,7 @@ function entityView() {
                 url: entityUrl(),
                 sidePagination: "server",
                 toolbar: '#EntityToolbar',
+                showRefresh: true,
                 flat: true,
                 columns: [
                     {
@@ -757,6 +815,7 @@ function entityView() {
                 url: entityUrl(),
                 sidePagination: "server",
                 toolbar: '#EntityToolbar',
+                showRefresh: true,
                 flat: true,
                 columns: [
                     {
@@ -801,6 +860,7 @@ function entityView() {
                 url: entityUrl(),
                 sidePagination: "server",
                 toolbar: '#EntityToolbar',
+                showRefresh: true,
                 flat: true,
                 columns: [
                     {
@@ -845,6 +905,7 @@ function entityView() {
                 url: entityUrl(),
                 sidePagination: "server",
                 toolbar: '#EntityToolbar',
+                showRefresh: true,
                 flat: true,
                 columns: [
                     {
@@ -875,6 +936,7 @@ function entityView() {
                 url: entityUrl(),
                 sidePagination: "server",
                 toolbar: "#EntityToolbar",
+                showRefresh: true,
                 flat: true,
                 columns: [
                     {
@@ -909,6 +971,7 @@ function entityView() {
                 url: entityUrl(),
                 sidePagination: "server",
                 toolbar: "#EntityToolbar",
+                showRefresh: true,
                 flat: true,
                 columns: [
                     {
@@ -943,6 +1006,7 @@ function entityView() {
                 url: entityUrl(),
                 sidePagination: "server",
                 toolbar: "#EntityToolbar",
+                showRefresh: true,
                 flat: true,
                 columns: [
                     {
@@ -977,6 +1041,7 @@ function entityView() {
                 url: entityUrl(),
                 sidePagination: "server",
                 toolbar: "#EntityToolbar",
+                showRefresh: true,
                 flat: true,
                 columns: [
                     {
@@ -1011,6 +1076,8 @@ function entityView() {
                 url: entityUrl(),
                 sidePagination: "server",
                 toolbar: '#EntityToolbar',
+                showRefresh: true,
+                flat: true,
                 columns: [
                     {
                         radio: true,
@@ -1040,8 +1107,7 @@ function entityView() {
                         title: '操作',
                         width: 75,
                         formatter: view
-                    }],
-                responseHandler: tableTrans
+                    }]
             });
             break;
 
@@ -1103,6 +1169,8 @@ var magStates = {
                 url: '/api/workflow/allMagOrder',
                 sidePagination: "server",
                 toolbar: '#MagToolbar',
+                showRefresh: true,
+                flat: true,
                 columns: [{
                     radio: true,
                     visible: false
@@ -1137,8 +1205,7 @@ var magStates = {
                     align: 'center',
                     title: '操作',
                     formatter: view
-                }],
-                responseHandler: tableTranMags
+                }]
             });
 
             viewTable.on('click-row.bs.table', function (e, row) {

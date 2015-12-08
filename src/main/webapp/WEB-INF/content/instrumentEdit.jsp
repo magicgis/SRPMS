@@ -511,11 +511,11 @@
 	});
 	//监听 通过
 	$('.approve').click(function () {
-		approve();
+		Approve();
 	});
 	//监听 驳回
 	$('.refuse').click(function () {
-		refuse();
+		Refuse();
 	});
 	//监听 保存
 	$('.save').click(function () {

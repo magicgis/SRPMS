@@ -11,7 +11,7 @@ $(function () {
 $('.getScore').click(function () {
     saveStep1().success(function(data) {
         saveStep2(data).success(function (res) {
-            getScore('achAppraisal');
+            getScore('appraise');
         });
     });
 });
@@ -198,7 +198,7 @@ function editUnit(row, index) {
 
 
 function saveStep1() {
-    console.log( $('#appraise').serialize());
+    //console.log( $('#appraise').serialize());
     return $.ajax({
         url: '/api/achAppraisal/achAppraisal',
         data: getFormJSON('appraise'),

@@ -255,11 +255,11 @@
                                                     <c:if test="${sessionScope.level == '3'}">
                                                         <a class="tabOrdBtn btn btn-primary btn-sm getScore">计算分数</a>
                                                     </c:if>
-                                                    <label for="totalScore">总分：</label>
-                                                    <input class="score" type="text"
-                                                           name="score" id="totalScore" value="${book.score}"
-                                                           onkeyup="this.value=value.replace(/[^\d]/g,'')"
-                                                           onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                                                    <%--<label for="totalScore">总分：</label>--%>
+                                                    <%--<input class="score" type="text"--%>
+                                                           <%--name="score" id="totalScore" value="${book.score}"--%>
+                                                           <%--onkeyup="this.value=value.replace(/[^\d]/g,'')"--%>
+                                                           <%--onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">--%>
                                                 </span>
                                             </div>
                                             <table id="actorTable"
@@ -388,7 +388,6 @@
     var taskName = '${taskName}';
 
     var pubTyValue=entity['pubType'];
-    fullUpInfoBook(all,entity);//
     //获得批复
     var approvalByCol = getApprovalByCol(all);
     if (approvalByCol != "") {
@@ -439,6 +438,8 @@
     if (filesData == null) {
         filesData = {};
     }
+
+    fullUpInfoBook(all,entity);//
 
     if (!isNull(dept)) {  // 显示 所属部门
         var $dept = $('#dept').selectize();
