@@ -15,7 +15,6 @@ public class StaRef {
     private String type;
     private Integer role;
     private BigDecimal score;
-    private String unit;
     private String entityId;
     private String arg;
     private Staff staff;
@@ -63,16 +62,6 @@ public class StaRef {
     }
 
     @Basic
-    @Column(name = "unit")
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    @Basic
     @Column(name = "entity_id")
     public String getEntityId() {
         return entityId;
@@ -103,7 +92,6 @@ public class StaRef {
         if (type != null ? !type.equals(staRef.type) : staRef.type != null) return false;
         if (role != null ? !role.equals(staRef.role) : staRef.role != null) return false;
         if (score != null ? !score.equals(staRef.score) : staRef.score != null) return false;
-        if (unit != null ? !unit.equals(staRef.unit) : staRef.unit != null) return false;
         if (entityId != null ? !entityId.equals(staRef.entityId) : staRef.entityId != null) return false;
         return !(arg != null ? !arg.equals(staRef.arg) : staRef.arg != null);
 
@@ -115,7 +103,6 @@ public class StaRef {
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (score != null ? score.hashCode() : 0);
-        result = 31 * result + (unit != null ? unit.hashCode() : 0);
         result = 31 * result + (entityId != null ? entityId.hashCode() : 0);
         result = 31 * result + (arg != null ? arg.hashCode() : 0);
         return result;

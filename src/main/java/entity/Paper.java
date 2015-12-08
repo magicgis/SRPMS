@@ -26,7 +26,6 @@ public class Paper implements VirtualEntity {
     private BigDecimal score;
     private Integer numWord;
     private String arg;
-    private String attachment;
     private Mag mag;
     private Confer confer;
     private Newspaper newspaper;
@@ -162,16 +161,6 @@ public class Paper implements VirtualEntity {
         }
     }
 
-    @Basic
-    @Column(name = "attachment")
-    public String getAttachment() {
-        return attachment;
-    }
-
-    public void setAttachment(String attachment) {
-        this.attachment = attachment;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -189,7 +178,6 @@ public class Paper implements VirtualEntity {
         if (score != null ? !score.equals(paper.score) : paper.score != null) return false;
         if (numWord != null ? !numWord.equals(paper.numWord) : paper.numWord != null) return false;
         if (arg != null ? !arg.equals(paper.arg) : paper.arg != null) return false;
-        if (attachment != null ? !attachment.equals(paper.attachment) : paper.attachment != null) return false;
         if (mag != null ? !mag.equals(paper.mag) : paper.mag != null) return false;
         if (confer != null ? !confer.equals(paper.confer) : paper.confer != null) return false;
         if (newspaper != null ? !newspaper.equals(paper.newspaper) : paper.newspaper != null) return false;
@@ -209,7 +197,6 @@ public class Paper implements VirtualEntity {
         result = 31 * result + (score != null ? score.hashCode() : 0);
         result = 31 * result + (numWord != null ? numWord.hashCode() : 0);
         result = 31 * result + (arg != null ? arg.hashCode() : 0);
-        result = 31 * result + (attachment != null ? attachment.hashCode() : 0);
         result = 31 * result + (mag != null ? mag.hashCode() : 0);
         result = 31 * result + (confer != null ? confer.hashCode() : 0);
         result = 31 * result + (newspaper != null ? newspaper.hashCode() : 0);

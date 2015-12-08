@@ -133,11 +133,12 @@ public class Index {
         return "bookEdit";
     }
 
-    @RequestMapping(value = {"book/new"},method = RequestMethod.GET)
-    public String newBook(Model model, HttpServletRequest request,RedirectAttributes redirectAttributes){
+    @RequestMapping(value = {"book/new"}, method = RequestMethod.GET)
+    public String newBook(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         model.addAttribute(new Book());
         return "bookEdit";
     }
+
     @RequestMapping(value = {"patent/new"}, method = RequestMethod.GET)
     public String newPatent(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         model.addAttribute(new Patent());
@@ -389,6 +390,7 @@ public class Index {
                 model.addAttribute(achTran);
                 model.addAttribute("taskId", task.getId());
                 model.addAttribute("taskName", task.getTaskName());
+                return "achTranEdit";
             case "book":
                 Book book = bookService.getById(entityId);
                 book.setArgMap(order.getVariableMap());

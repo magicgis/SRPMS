@@ -1,21 +1,17 @@
 package ve;
 
-import entity.Staff;
+import entity.BaseInfo;
 import entity.VirtualEntity;
 
-import java.math.BigDecimal;
-
 /**
- * Created by guofan on 2015/12/2.
+ * Created by guofan on 2015/12/8.
  */
-public class ExpandRelation {
+public class DeptExpandRelation {
     private String id;
+    private BaseInfo dept;
     private String type;
     private Integer role;
-    private BigDecimal score;
-    private String unit;
     private VirtualEntity virtualEntity;
-    private Staff staff;
 
     public String getId() {
         return id;
@@ -23,6 +19,14 @@ public class ExpandRelation {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public BaseInfo getDept() {
+        return dept;
+    }
+
+    public void setDept(BaseInfo dept) {
+        this.dept = dept;
     }
 
     public String getType() {
@@ -41,35 +45,11 @@ public class ExpandRelation {
         this.role = role;
     }
 
-    public BigDecimal getScore() {
-        return score;
-    }
-
-    public void setScore(BigDecimal score) {
-        this.score = score;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
     public VirtualEntity getVirtualEntity() {
         return virtualEntity;
     }
 
     public void setVirtualEntity(VirtualEntity virtualEntity) {
         this.virtualEntity = virtualEntity;
-    }
-
-    public Staff getStaff() {
-        return staff;
-    }
-
-    public void setStaff(Staff staff) {
-        this.staff = staff;
     }
 }

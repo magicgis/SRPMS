@@ -11,7 +11,6 @@ import util.StaticFactory;
 import java.io.Serializable;
 import java.util.*;
 
-import static util.Trans.getFileData;
 import static util.Trans.moveMap;
 
 /**
@@ -32,8 +31,7 @@ public class Complete implements SnakerInterceptor {
     public void intercept(Execution execution) {
 
         BaseInfoService baseInfoService = (BaseInfoService) StaticFactory.getBean(BaseInfoService.class);
-        StaRefService staRefService = (StaRefService) StaticFactory.getBean(StaRefService.class);
-        DeptRefService deptRefService = (DeptRefService) StaticFactory.getBean(DeptRefService.class);
+        RelationService relationService = (RelationService) StaticFactory.getBean(RelationService.class);
 
         String orderId = execution.getOrder().getId();
         Map<String, Object> args = execution.getOrder().getVariableMap();
@@ -44,16 +42,12 @@ public class Complete implements SnakerInterceptor {
         Serializable id = null;
         Map init;
 
-        BaseInfo dept = null;
-
         String type = (String) args.get("WF_Type");
         switch (type) {
             case "paper":
                 PaperService paperService = (PaperService) StaticFactory.getBean(PaperService.class);
                 Paper paper = new Paper();
                 util.Trans.putMapOnObj(paper, info);
-                //处理附件信息
-                paper.setAttachment(getFileData(info.get("filesData")));
                 //处理部门信息
                 String deptId = (String) ((Map) info.get("dept")).get("id");
                 paper.setDept(baseInfoService.getById(deptId));
@@ -71,72 +65,60 @@ public class Complete implements SnakerInterceptor {
                     //todo 这儿情况复杂，可能需要先存储一个会议记录，但是感觉没必要
                 }
                 else if ("newsPaper".equals(info.get("type"))) {
-//                    paper.setConfer(conferService.getById((Serializable) info.get("news.id")));
-                    //todo 这儿也需要特殊处理，
+                    ConferService conferService = (ConferService) StaticFactory.getBean(ConferService.class);
+                    paper.setConfer(conferService.getById((Serializable) info.get("news.id")));
                 }
                 id = paperService.add(paper);
-                dept = paper.getDept();
                 break;
-
             case "achAppraisal":
                 AchAppraisalService achAppraisalService = (AchAppraisalService) StaticFactory.getBean(AchAppraisalService.class);
                 id = (String) args.get("WF_Entity");
                 AchAppraisal achAppraisal = achAppraisalService.getById(id);
                 init = achAppraisal.getArgMap();
-                //todo 缺少分数
                 moveMap(info, init, Arrays.asList("actors"));
                 achAppraisal.setArgMap(init);
                 achAppraisal.setProcess("9");
                 achAppraisalService.update(achAppraisal);
-                dept = achAppraisal.getDept();
                 break;
             case "achAward":
-                AchAwardService achAwardService = (AchAwardService) StaticFactory.getBean(AchAppraisalService.class);
+                AchAwardService achAwardService = (AchAwardService) StaticFactory.getBean(AchAwardService.class);
                 id = (String) args.get("WF_Entity");
                 AchAward achAward = achAwardService.getById(id);
                 init = achAward.getArgMap();
-                //todo 缺少分数
                 moveMap(info, init, Arrays.asList("actors"));
                 achAward.setArgMap(init);
                 achAward.setProcess("9");
                 achAwardService.update(achAward);
-                dept = achAward.getDept();
                 break;
             case "achTran":
                 AchTranService achTranService = (AchTranService) StaticFactory.getBean(AchTranService.class);
                 id = (String) args.get("WF_Entity");
                 AchTran achTran = achTranService.getById(id);
                 init = achTran.getArgMap();
-                //todo 缺少分数
                 moveMap(info, init, Arrays.asList("actors"));
                 achTran.setArgMap(init);
                 achTran.setProcess("9");
                 achTranService.update(achTran);
-                dept = achTran.getDept();
                 break;
             case "book":
                 BookService bookService = (BookService) StaticFactory.getBean(BookService.class);
                 id = (String) args.get("WF_Entity");
                 Book book = bookService.getById(id);
                 init = book.getArgMap();
-                //todo 这儿需要把分数给补上   patent.setScore();
                 moveMap(info, init, Arrays.asList("actors"));
                 book.setArgMap(init);
                 book.setProcess("9");
                 bookService.update(book);
-                dept = book.getDept();
                 break;
             case "patent":
                 PatentService patentService = (PatentService) StaticFactory.getBean(PatentService.class);
                 id = (String) args.get("WF_Entity");
                 Patent patent = patentService.getById(id);
                 init = patent.getArgMap();
-                //todo 这儿需要把分数给补上   patent.setScore();
                 moveMap(info, init, Arrays.asList("actors"));
                 patent.setArgMap(init);
                 patent.setProcess("9");
                 patentService.update(patent);
-                dept = patent.getDept();
                 break;
             case "project":
                 ProjectService projectService = (ProjectService) StaticFactory.getBean(ProjectService.class);
@@ -148,7 +130,6 @@ public class Complete implements SnakerInterceptor {
                 project.setArgMap(init);
                 project.setProcess("9");
                 projectService.update(project);
-                dept = project.getDept();
                 break;
             case "others":
                 OthersService othersService = (OthersService) StaticFactory.getBean(OthersService.class);
@@ -160,7 +141,6 @@ public class Complete implements SnakerInterceptor {
                 others.setArgMap(init);
                 others.setProcess("9");
                 othersService.update(others);
-                dept = others.getDept();
                 break;
             case "food":
                 FoodService foodService = (FoodService) StaticFactory.getBean(FoodService.class);
@@ -172,7 +152,6 @@ public class Complete implements SnakerInterceptor {
                 food.setArgMap(init);
                 food.setProcess("9");
                 foodService.update(food);
-                dept = food.getDept();
             case "instrument":
                 InstrumentService instrumentService = (InstrumentService) StaticFactory.getBean(InstrumentService.class);
                 id = (String) args.get("WF_Entity");
@@ -183,7 +162,6 @@ public class Complete implements SnakerInterceptor {
                 instrument.setArgMap(init);
                 instrument.setProcess("9");
                 instrumentService.update(instrument);
-                dept = instrument.getDept();
             case "medicine":
                 MedicineService medicineService = (MedicineService) StaticFactory.getBean(MedicineService.class);
                 id = (String) args.get("WF_Entity");
@@ -194,13 +172,11 @@ public class Complete implements SnakerInterceptor {
                 medicine.setArgMap(init);
                 medicine.setProcess("9");
                 medicineService.update(medicine);
-                dept = medicine.getDept();
             default:
                 break;
         }
 
-        staRefService.insertRelation((String) id, type, (ArrayList) info.get("actors"));
-        deptRefService.insertRelation((String) id, type, dept);
+        relationService.insertRelation((String) id, type, (ArrayList) info.get("actors"));
 
         OrderActorDao orderActorDao = (OrderActorDao) util.StaticFactory.getBean(OrderActorDao.class);
         List<OrderActor> x = orderActorDao.getByOrder(orderId);

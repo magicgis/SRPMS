@@ -5,7 +5,9 @@ import entity.User;
 import service.*;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by guofan on 2015/5/8.
@@ -29,7 +31,6 @@ public class Args {
             put("medicine", MedicineService.class);
         }
     };
-
     public static HashMap<String, Class> DAOS = new HashMap<String, Class>() {
         {
             put("achAppraisal", AchAppraisalDao.class);
@@ -45,4 +46,5 @@ public class Args {
             put("medicine", MedicineDao.class);
         }
     };
+    public final static List<String> SPECIAL_STAFF_ID = Arrays.asList("9998", "9999");
 }

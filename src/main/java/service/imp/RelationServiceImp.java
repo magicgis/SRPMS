@@ -1,43 +1,39 @@
 package service.imp;
 
-import VE.ExpandRelation;
-import dao.BaseDao;
-import dao.PaperDao;
-import dao.StaRefDao;
-import dao.StaffDao;
-import entity.StaRef;
-import entity.VirtualEntity;
+import dao.*;
+import entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.AbstractBeanFactory;
 import org.springframework.stereotype.Service;
-import service.StaRefService;
+import service.RelationService;
 import util.Args;
+import ve.DeptExpandRelation;
+import ve.ExpandRelation;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
-public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefService {
+public class RelationServiceImp implements RelationService {
 
     @Autowired
     StaRefDao staRefDao;
     @Autowired
+    DeptRefDao deptRefDao;
+    @Autowired
     StaffDao staffDao;
     @Autowired
-    PaperDao paperDao;
+    BaseInfoDao baseInfoDao;
+
     @Autowired
     AbstractBeanFactory abstractBeanFactory;
 
 
-    private static final Logger log = LogManager.getLogger(StaRefServiceImp.class);
+    private static final Logger log = LogManager.getLogger(RelationServiceImp.class);
 
-    @Override
     public List<StaRef> search(String keyword, String sort, String order) {
         return null;
     }
@@ -115,25 +111,105 @@ public class StaRefServiceImp extends BaseServiceImp<StaRef> implements StaRefSe
 
     @Override
     public void insertRelation(String entity, String type, List<Map> actors) {
+        /*清除库中已有的关系*/
         staRefDao.removeRelation(entity, type);
+        deptRefDao.removeRelation(entity, type);
+        HashMap<String, BigDecimal> userScore = new HashMap<>();
+        HashMap<String, Integer> userRole = new HashMap<>();
+        String mainActor = "";
+        Integer testRole = 99;
+        /*第一遍添加*/
         for (Map actor : actors) {
-            StaRef staRef = new StaRef();
-            staRef.setEntityId(entity);
-            staRef.setType(type);
-            BigDecimal score = BigDecimal.valueOf(Double.valueOf((String) actor.get("score")));
-            if (score.compareTo(BigDecimal.ZERO) == 0) {
+            String staffId = (String) actor.get("staff.id");
+            Integer role = Integer.valueOf(actor.get("rank").toString());
+            BigDecimal score = BigDecimal.valueOf(Double.valueOf(actor.get("score").toString()));
+            if (Args.SPECIAL_STAFF_ID.contains(staffId)) {
                 continue;
             }
-            staRef.setScore(score);
-            staRef.setRole("1".equals(actor.get("rank")) ? 1 : 0);
-            staRef.setStaff(staffDao.getById((String) actor.get("staff.id")));
-            staRef.setUnit((String) actor.get("unit"));
+            if (userScore.containsKey(staffId)) {
+                /*当排位更小*/
+                if (userRole.get(staffId) > role) {
+                    userRole.put(staffId, role);
+                    if (testRole > role) {
+                        testRole = role;
+                        mainActor = staffId;
+                    }
+                }
+                /*当分数更高*/
+                if (userScore.get(staffId).compareTo(score) < 0) {
+                    userScore.put(staffId, score);
+                }
+            }
+            else {
+                userRole.put(staffId, role);
+                userScore.put(staffId, score);
+                if (testRole > role) {
+                    testRole = role;
+                    mainActor = staffId;
+                }
+            }
+        }
+        userRole.put(mainActor, 1);
+        Set<BaseInfo> depts = new HashSet<>();
+        BaseInfo mainDept = new BaseInfo();
+        for (String staffId : userScore.keySet()) {
+            Staff staff = staffDao.getById(staffId);
+            StaRef staRef = new StaRef();
+            staRef.setType(type);
+            staRef.setEntityId(entity);
+            staRef.setScore(userScore.get(staffId));
+            if (userRole.get(staffId) == 1) {
+                staRef.setRole(1);
+                mainDept = staff.getCol();
+            }
+            else {
+                staRef.setRole(0);
+                depts.add(staff.getCol());
+            }
+            staRef.setStaff(staff);
             staRefDao.save(staRef);
         }
+        if (depts.contains(mainDept)) {
+            depts.remove(mainDept);
+        }
+        DeptRef main = new DeptRef();
+        main.setType(type);
+        main.setEntityId(entity);
+        main.setRole(1);
+        main.setDept(mainDept);
+        deptRefDao.save(main);
+
+        Iterator<BaseInfo> it = depts.iterator();
+        while (it.hasNext()) {
+            DeptRef deptRef = new DeptRef();
+            deptRef.setType(type);
+            deptRef.setEntityId(entity);
+            deptRef.setRole(0);
+            deptRef.setDept(it.next());
+            deptRefDao.save(deptRef);
+        }
+
     }
 
     @Override
-    public List<ExpandRelation> getRelation(String staffId, String type, Integer role) {
+    public List<DeptExpandRelation> getDeptRelation(String deptId, String type, Integer role) {
+        List<DeptRef> res = deptRefDao.getByTypeAndRole(deptId, type, role);
+        List<DeptExpandRelation> ans = new LinkedList<>();
+        BaseDao dao = (BaseDao) abstractBeanFactory.getBean(Args.DAOS.get(type));
+        for (DeptRef re : res) {
+            DeptExpandRelation deptExpandRelation = new DeptExpandRelation();
+            deptExpandRelation.setId(re.getId());
+            deptExpandRelation.setDept(re.getDept());
+            deptExpandRelation.setType(re.getType());
+            deptExpandRelation.setVirtualEntity((VirtualEntity) dao.getById(re.getEntityId()));
+            deptExpandRelation.setRole(re.getRole());
+            ans.add(deptExpandRelation);
+        }
+        return ans;
+    }
+
+    @Override
+    public List<ExpandRelation> getTeacherRelation(String staffId, String type, Integer role) {
         List<StaRef> res = staRefDao.getByTypeAndRole(staffId, type, role);
         List<ExpandRelation> ans = new LinkedList<>();
         BaseDao dao = (BaseDao) abstractBeanFactory.getBean(Args.DAOS.get(type));

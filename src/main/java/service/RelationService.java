@@ -1,12 +1,13 @@
 package service;
 
-import VE.ExpandRelation;
+import ve.DeptExpandRelation;
+import ve.ExpandRelation;
 import entity.StaRef;
 
 import java.util.List;
 import java.util.Map;
 
-public interface StaRefService extends BaseService<StaRef> {
+public interface RelationService {
 
     /**
      * 获取某实体所对应的所有相关人
@@ -38,12 +39,13 @@ public interface StaRefService extends BaseService<StaRef> {
      * @param role    角色 可选
      * @return
      */
-    List<ExpandRelation> getRelation(String staffId, String type, Integer role);
+    List<ExpandRelation> getTeacherRelation(String staffId, String type, Integer role);
+
+    List<DeptExpandRelation> getDeptRelation(String deptId, String type, Integer role);
+
     /**
      * todo
-     * 根据表现层数据
-     * 这儿基本没有考虑特殊情况，以后需要添加
-     * 比如学生，比如挂名多个单位
+     * 维护table关系
      *
      * @param entity 实体信息
      * @param type   类型

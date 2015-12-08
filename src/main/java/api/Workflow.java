@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import service.StaffService;
 import service.StandardService;
+import util.Args;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.*;
@@ -112,7 +113,7 @@ public class Workflow {
                 //获取用户id
                 String aId = (String) u.get("staff.id");
                 //避免多次分发任务以及跳过校外人员和学生
-                if (aList.contains(aId) || "9998".equals(aId) || "9999".equals(aId)) {
+                if (aList.contains(aId) || Args.SPECIAL_STAFF_ID.contains(aId)) {
                     continue;
                 }
                 aList.add(aId);
