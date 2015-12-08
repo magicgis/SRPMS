@@ -356,9 +356,7 @@
 									</div>
 								</div>
 							</div>
-
 							<div class="col-xs-12" id="msg_alert"></div>
-
 						</div>
 
 						<div id="fundInfo" class="col-xs-12 widget-container-col ui-sortable">
