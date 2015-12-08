@@ -85,7 +85,7 @@ function confirm() {
              * userName,taskId,status
              */
             if (result) {
-                workflow.execute(userName, taskId, send).success(function (data, textStatus, xhr) {
+                workflow.execute(userName, taskId, jsonData).success(function (data, textStatus, xhr) {
                     var statusCode =xhr.status;
                     if (statusCode == 200) {
                         if ("valid" in data) {

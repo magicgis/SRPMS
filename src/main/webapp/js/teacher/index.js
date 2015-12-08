@@ -52,6 +52,10 @@ function processView() {
                         title: '实际结题时间',
                         sortable: true
                     }, {
+                        field: 'variableMap.Main-ActorName',
+                        title: '负责人',
+                        sortable: true
+                    }, {
                         field: 'variableMap.Status',
                         title: '状态',
                         sortable: true,
@@ -698,7 +702,7 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true,
+                        radio: false,
                         visible: false
                     }, {
                         field: 'id',
@@ -710,24 +714,27 @@ function entityView() {
                         title: '名称',
                         sortable: true
                     }, {
-                        field: 'projtype',
+                        field: 'standard.infoMap.projtype',
                         title: '类别',
-                        sortable: true,
-                        formatter: "projtypeTran"
+                        sortable: true
                     }, {
-                        field: 'projrank',
+                        field: 'standard.infoMap.projrank',
                         title: '等级',
-                        sortable: true,
-                        formatter: "rankTran"
+                        sortable: true
                     }, {
-                        field: 'projbelong',
+                        field: 'standard.infoMap.projbelong',
                         title: '评分归属',
-                        sortable: true,
-                        formatter: "projbelong"
+                        sortable: true
                     }, {
                         field: 'realDate',
-                        title: '实际结题时间',
+                        title: '结题时间',
                         sortable: true
+                    }, {
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'dept.value',
+                        title: '所属学院'
                     }, {
                         field: 'operator',
                         align: 'center',
@@ -748,7 +755,7 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true,
+                        radio: false,
                         visible: false
                     }, {
                         field: 'id',
@@ -764,8 +771,15 @@ function entityView() {
                         title: '专利类型',
                         sortable: true
                     }, {
+                        field: 'apprDate',
+                        title: '获批时间',
+                        sortable: true
+                    }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
+                    }, {
+                        field: 'dept.value',
+                        title: '所属学院'
                     }, {
                         field: 'operator',
                         align: 'center',
@@ -786,7 +800,7 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true,
+                        radio: false,
                         visible: false
                     }, {
                         field: 'id',
@@ -803,13 +817,8 @@ function entityView() {
                         field: 'pubDate',
                         title: '发表日期'
                     }, {
-                        field: 'ActorList',
-                        title: '参与者',
-                        formatter: "actorTran"
-                    }, {
-                        field: 'Status',
-                        title: '状态',
-                        formatter: 'statusTran'
+                        field: 'dept.value',
+                        title: '所属学院'
                     }, {
                         field: 'operator',
                         align: 'center',
@@ -847,21 +856,20 @@ function entityView() {
                         sortable: true
                     }, {
                         field: 'sumWord',
-                        title: '著作总字数',
+                        title: '总字数',
                         sortable: true,
                         formatter: 'sumWordEntityTran'
                     }, {
                         field: 'isAward',
-                        title: '著作获奖情况',
+                        title: '获奖情况',
                         sortable: true,
                         formatter: 'bkAwardEntityTran'
                     }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
                     }, {
-                        field: 'publisher',
-                        title: '出版社',
-                        sortable: true
+                        field: 'dept.value',
+                        title: '所属学院'
                     }, {
                         field: 'operator',
                         align: 'center',
@@ -882,7 +890,7 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true,
+                        radio: false,
                         visible: false
                     }, {
                         field: 'id',
@@ -900,16 +908,15 @@ function entityView() {
                         field: 'standard.infoMap.jdtype',
                         title: '鉴定等级'
                     }, {
-                        field: 'certifyUnit',
-                        title: '鉴定单位',
-                        sortable: 'true'
-                    }, {
                         field: 'date',
                         title: '鉴定日期',
                         sortable: true
                     }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
+                    }, {
+                        field: 'dept.value',
+                        title: '所属学院'
                     }, {
                         field: 'operator',
                         align: 'center',
@@ -930,7 +937,7 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true,
+                        radio: false,
                         visible: false
                     }, {
                         field: 'id',
@@ -950,17 +957,15 @@ function entityView() {
                         title: '获奖类别',
                         sortable: true
                     }, {
-                        field: 'argMap.Main-ActorName',
-                        title: '负责人'
-                    }, {
                         field: 'date',
                         title: '获奖时间',
                         sortable: true
                     }, {
-                        field: 'Status',
-                        title: '状态',
-                        sortable: true,
-                        formatter: 'statusTran'
+                        field: 'argMap.Main-ActorName',
+                        title: '负责人'
+                    }, {
+                        field: 'dept.value',
+                        title: '所属学院'
                     }, {
                         field: 'operator',
                         align: 'center',
@@ -983,7 +988,7 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true,
+                        radio: false,
                         visible: false
                     }, {
                         field: 'id',
@@ -1006,6 +1011,9 @@ function entityView() {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
                     }, {
+                        field: 'dept.value',
+                        title: '所属学院'
+                    }, {
                         field: 'operator',
                         align: 'center',
                         title: '操作',
@@ -1025,7 +1033,7 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true,
+                        radio: false,
                         visible: false
                     }, {
                         field: 'id',
@@ -1043,6 +1051,9 @@ function entityView() {
                         field: 'date',
                         title: '获批时间',
                         sortable: true
+                    }, {
+                        field: 'dept.value',
+                        title: '所属学院'
                     }, {
                         field: 'operator',
                         align: 'center',
@@ -1063,7 +1074,7 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true,
+                        radio: false,
                         visible: false
                     }, {
                         field: 'id',
@@ -1081,6 +1092,9 @@ function entityView() {
                     }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
+                    }, {
+                        field: 'dept.value',
+                        title: '所属学院'
                     }, {
                         field: 'operator',
                         align: 'center',
@@ -1101,7 +1115,7 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true,
+                        radio: false,
                         visible: false
                     }, {
                         field: 'id',
@@ -1119,6 +1133,9 @@ function entityView() {
                     }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
+                    }, {
+                        field: 'dept.value',
+                        title: '所属学院'
                     }, {
                         field: 'operator',
                         align: 'center',
@@ -1139,7 +1156,7 @@ function entityView() {
                 flat: true,
                 columns: [
                     {
-                        radio: true,
+                        radio: false,
                         visible: false
                     }, {
                         field: 'id',
@@ -1157,6 +1174,9 @@ function entityView() {
                     }, {
                         field: 'argMap.Main-ActorName',
                         title: '负责人'
+                    }, {
+                        field: 'dept.value',
+                        title: '所属学院'
                     }, {
                         field: 'operator',
                         align: 'center',

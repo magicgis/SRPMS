@@ -979,7 +979,6 @@ function init(entity,all,replyByDep,level) {
     var process = entity['process'];
     switch (level){
         case 1:
-
             uneditableForm();
             hideUnitOperate();
             $('#totalScore').attr('disabled', 'disabled');
@@ -991,7 +990,8 @@ function init(entity,all,replyByDep,level) {
             var status = all['Status'];
             var isMain = isMainActor(all['Main-Actor'],userName);
             var statusCode = processStatus(status,isMain,level);
-            switch (statusCode){
+            //console.log('statusCode:',statusCode);
+            switch (toString(statusCode)){
                 case '01':
                     console.log('01');
                     $('.save').hide();
@@ -1050,10 +1050,18 @@ function init(entity,all,replyByDep,level) {
 
                     $('.onDel').hide();
                     break;
+               default:
+                    console.log('0');
+                    $('.confirm').hide();
+                    $('.save').hide();
+                    $('#reply').hide();
+                    $('.onDel').hide();
+                    $('.getScore').hide();
+                    hideActorOperate();
+                    break;
             }
             break;
         case 2:
-
             uneditableForm();
             hideActorOperate();
             hideUnitOperate();
@@ -1086,6 +1094,10 @@ function init(entity,all,replyByDep,level) {
                     who.append("学院批复");
                     $('#reply-box').hide();
                     $('.onApprove').hide();
+                    break;
+                default:
+                    console.log('0');
+                    $('#reply').hide();
                     break;
             }
             break;
