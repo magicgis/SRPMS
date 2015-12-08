@@ -13,7 +13,6 @@ public class ExpandRelation {
     private String type;
     private Integer role;
     private BigDecimal score;
-    private String unit;
     private VirtualEntity virtualEntity;
     private Staff staff;
 
@@ -47,14 +46,6 @@ public class ExpandRelation {
 
     public void setScore(BigDecimal score) {
         this.score = score;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
     }
 
     public VirtualEntity getVirtualEntity() {
