@@ -357,38 +357,55 @@ public class SnakerEngineUtils implements Engine {
         List<String> orderList = fixDao.getTheWrongOrderList();
         for (String s : orderList) {
             /*根据order查找task*/
-            List<Task> temp = getTaskByOrder(s);
-            /*如果task不是确认任务，说明是正常的*/
-            if (!"Confirm".equals(temp.get(0).getTaskName())) {
-                Long testTime = null;
-                String testTask = null;
-                for (Task task : temp) {
-                    String time = task.getCreateTime().replace("-", "").replace(" ", "").replace(":", "");
-                    //初始化
-                    if (testTime == null) {
-                        testTime = Long.valueOf(time);
-                        testTask = task.getId();
-                    }
-                    //如果发现时间更小的了
-                    else if (testTime > Long.valueOf(time)) {
-                        testTime = Long.valueOf(time);
-                        fixDao.removeTask(testTask);
-                        testTask = task.getId();
-                    }
-                    else {
-                        fixDao.removeTask(task.getId());
-                    }
+            Order order = getOrder(s);
+            List<Task> tasks = getTaskByOrder(s);
+            String status = (String) order.getVariableMap().get("Status");
+            if (!"Complete".equals(status)) {
+                fix(status, tasks);
+            }
+        }
+    }
+
+    void fix(String status, List<Task> tasks) {
+        String testTaskName;
+        switch (status) {
+            case "Uncomplete":
+                testTaskName = "Submission";
+                break;
+            case "WaitForSubmit":
+                testTaskName = "SubmitByTeacher";
+                break;
+            case "WaitForCol":
+                testTaskName = "ApprovalByCol";
+                break;
+            case "WaitForCollegeSubmit":
+                testTaskName = "SubmitByCol";
+                break;
+            case "WaitForDep":
+                testTaskName = "ApprovalByDep";
+                break;
+        }
+        Long testTime = null;
+        String testTask = null;
+        for (Task task : tasks) {
+            if (!task.getTaskName().equals(testTask)) {
+                fixDao.removeTask(task.getId());
+            }
+            else {
+                String time = task.getCreateTime().replace("-", "").replace(" ", "").replace(":", "");
+                //初始化
+                if (testTime == null) {
+                    testTime = Long.valueOf(time);
+                    testTask = task.getId();
                 }
-                Task validTask = getTask(testTask);
-                if ("SubmitByTeacher".equals(validTask.getTaskName())) {
-                    Map args = new HashMap();
-                    args.put("Status", "WaitForSubmit");
-                    snakerEngine.order().addVariable(validTask.getOrderId(), args);
+                //如果发现时间更小的了
+                else if (testTime > Long.valueOf(time)) {
+                    testTime = Long.valueOf(time);
+                    fixDao.removeTask(testTask);
+                    testTask = task.getId();
                 }
-                if ("Submission".equals(validTask.getTaskName())) {
-                    Map args = new HashMap();
-                    args.put("Status", "Uncomplete");
-                    snakerEngine.order().addVariable(validTask.getOrderId(), args);
+                else {
+                    fixDao.removeTask(task.getId());
                 }
             }
         }
