@@ -991,7 +991,7 @@ function init(entity,all,replyByDep,level) {
             var isMain = isMainActor(all['Main-Actor'],userName);
             var statusCode = processStatus(status,isMain,level);
             //console.log('statusCode:',statusCode);
-            switch (toString(statusCode)){
+            switch (statusCode.toString()) {
                 case '01':
                     console.log('01');
                     $('.save').hide();
