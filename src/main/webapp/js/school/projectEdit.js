@@ -136,7 +136,7 @@ function Refuse() {
         btnOKClass: 'btn-warning',
         callback: function (result) {
             if (result) {
-                workflow.execute(userName, taskId, refuseAwardInfo).success(function () {
+                workflow.execute(userName, taskId, refuseInfo).success(function () {
                     afterSuccess('已驳回至学院！');
                     window.location.href = '/index/process/project/all';
                 });
