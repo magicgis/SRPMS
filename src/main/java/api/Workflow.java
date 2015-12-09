@@ -322,20 +322,12 @@ public class Workflow {
     @Produces("text/plain;charset=UTF-8")
     public boolean teacherSubmit(@FormParam("WF_User") String user) {
         List<Order> list = engine.getMainOrderByActor(user);
-        List<String> teacherFlag = Arrays.asList("Submission", "Confirm");
+//        List<String> teacherFlag = Arrays.asList("Submission", "Confirm");
         for (Order u : list) {
             List<Task> tasks = engine.getTaskByOrder(u.getId());
-            String taskName = tasks.get(0).getTaskName();
-            if (tasks.size() != 1 || teacherFlag.contains(taskName)) {
-                return false;
-            }
-        }
-        Map<String, Object> args = new HashMap<>();
-        args.put("WF_Memo", "Submit By Program");
-        //todo 需要改进
-        for (Order u : list) {
-            List<Task> tasks = engine.getTaskByOrder(u.getId());
-            if (tasks.get(0).getTaskName().equals("SubmitByTeacher")) {
+            if (tasks.size() == 1 && "SubmitByTeacher".equals(tasks.get(0).getTaskName())) {
+                Map<String, Object> args = new HashMap<>();
+                args.put("WF_Memo", "Submit By Program");
                 engine.execute(tasks.get(0).getId(), user, args);
             }
         }
@@ -354,19 +346,12 @@ public class Workflow {
     public boolean colSubmit(@FormParam("WF_User") String user) {
         String actorId = staffService.getById(user).getCol().getId();
         List<Order> list = engine.getOrderByActorAndRole(actorId, 2);
-        List<String> colFlag = Arrays.asList("Submission", "Confirm", "SubmitByTeacher", "ApprovalByCol");
+//        List<String> colFlag = Arrays.asList("Submission", "Confirm", "SubmitByTeacher", "ApprovalByCol");
         for (Order u : list) {
             List<Task> tasks = engine.getTaskByOrder(u.getId());
-            String taskName = tasks.get(0).getTaskName();
-            if (tasks.size() != 1 || colFlag.contains(taskName)) {
-                return false;
-            }
-        }
-        Map<String, Object> args = new HashMap<>();
-        args.put("WF_Memo", "Submit By Program");
-        for (Order u : list) {
-            List<Task> tasks = engine.getTaskByOrder(u.getId());
-            if (tasks.get(0).getTaskName().equals("SubmitByCol")) {
+            if (tasks.size() == 1 && tasks.get(0).getTaskName().equals("SubmitByCol")) {
+                HashMap args = new HashMap();
+                args.put("WF_Memo", "Submit By Program");
                 engine.execute(tasks.get(0).getId(), actorId, args);
             }
         }
