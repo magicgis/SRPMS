@@ -560,7 +560,8 @@ function processView() {
                         visible: false
                     }, {
                         field: 'variableMap.name',
-                        title: '科研名称'
+                        title: '科研名称',
+                        formatter: 'processNameTran'
                     }, {
                         field: 'variableMap.WF_Type',
                         title: '科研类型',

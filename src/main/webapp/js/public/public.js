@@ -1192,6 +1192,14 @@ function uneditableForm() {
     });//select
 }
 
+function processNameTran(value, row) {
+    if(row['variableMap.WF_Type'] == 'paper') {
+        return row['variableMap.WF_0_Submission.name'];
+    } else {
+        return value;
+    }
+}
+
 var wfTypeTans = {
     "book":"著作",
     "project": "项目",
