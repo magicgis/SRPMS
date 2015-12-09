@@ -16,11 +16,17 @@ public class StaffDaoImp extends BaseDaoImp<Staff> implements StaffDao {
             for (String s : keys) {
                 where = where + s + " LIKE " + "'%" + keyword + "%' OR ";
             }
-            hql += " and " + where.substring(0,where.length()-3);
+            hql += " and " + where.substring(0, where.length() - 3);
         }
         if (sort != null) {
             hql = hql + " order by " + sort + " " + order;
         }
+        return this.getCurrentSession().createQuery(hql).list();
+    }
+
+    @Override
+    public List<Staff> getStaffsByPriAndCol(Integer p, String colId) {
+        String hql = "FROM Staff where user.privilege = " + p + " and col.id='" + colId + "'";
         return this.getCurrentSession().createQuery(hql).list();
     }
 }

@@ -38,4 +38,14 @@ public class FixDao {
             x.printStackTrace();
         }
     }
+
+    public List<String> getTheEmptyOrderList() {
+        String hql = "SELECT id FROM Order WHERE id NOT IN (SELECT DISTINCT orderId FROM Task)";
+        return getCurrentSession().createQuery(hql).list();
+    }
+
+    public String getHisTaskActor(String hisTask) {
+        String hql = "SELECT actorId FORM HistoryTaskActor where taskId ='" + hisTask + "'";
+        return (String) getCurrentSession().createQuery(hql).list().get(0);
+    }
 }
