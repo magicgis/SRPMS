@@ -538,8 +538,9 @@ function processView() {
                         formatter: "wfTypeTran"
                     }, {
                         field: 'variableMap.Main-ActorName',
-                        title: '负责人',
-                        formatter: 'allMainActorTran'
+                        title: '负责人'
+                        //,
+                        //formatter: 'allMainActorTran'
                     }, {
                         field: 'variableMap.Status',
                         title: '状态',
