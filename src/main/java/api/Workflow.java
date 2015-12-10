@@ -423,6 +423,13 @@ public class Workflow {
     }
 
     @GET
+    @Path("/fixEmpty")
+    public String fixEmpty() {
+        engine.fixEmpty();
+        return "Done";
+    }
+
+    @GET
     @Path("/removeExtra")
     public String removeExtra() {
         engine.removeExtra();

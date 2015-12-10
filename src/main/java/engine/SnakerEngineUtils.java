@@ -14,6 +14,7 @@ import org.snaker.engine.entity.Order;
 import org.snaker.engine.entity.Process;
 import org.snaker.engine.entity.Task;
 import org.snaker.engine.helper.StreamHelper;
+import org.snaker.engine.model.TaskModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -408,6 +409,87 @@ public class SnakerEngineUtils implements Engine {
                     fixDao.removeTask(task.getId());
                 }
             }
+        }
+    }
+
+    @Override
+    public void fixEmpty() {
+        List<TaskModel> taskModels = snakerEngine.process().getProcessByName("basicProcess_Beta").getModel().getTaskModels();
+        HashMap<String, TaskModel> sm = new HashMap<>();
+        for (TaskModel taskModel : taskModels) {
+            sm.put(taskModel.getName(), taskModel);
+        }
+        List<String> emptyOrders = fixDao.getTheEmptyOrderList();
+        for (String emptyOrder : emptyOrders) {
+            Order order = getOrder(emptyOrder);
+            Map info = order.getVariableMap();
+            String status = (String) info.get("Status");
+            String testTaskName = null;
+            String actor = null;
+            switch (status) {
+                case "Uncomplete":
+                    testTaskName = "Submission";
+                    for (OrderActor orderActor : orderActorDao.getByOrder(emptyOrder)) {
+                        if (orderActor.getRole() == 1) {
+                            actor = orderActor.getActor();
+                        }
+                    }
+                    break;
+                case "WaitForSubmit":
+                    testTaskName = "SubmitByTeacher";
+                    for (OrderActor orderActor : orderActorDao.getByOrder(emptyOrder)) {
+                        if (orderActor.getRole() == 1) {
+                            actor = orderActor.getActor();
+                        }
+                    }
+                    break;
+                case "WaitForCol":
+                    testTaskName = "ApprovalByCol";
+                    actor = staffDao.getStaffsByPriAndCol(2, (String) info.get("WF_Col_Id")).get(0).getId();
+                    break;
+                case "WaitForCollegeSubmit":
+                    testTaskName = "SubmitByCol";
+                    actor = staffDao.getStaffsByPriAndCol(2, (String) info.get("WF_Col_Id")).get(0).getId();
+                    break;
+                case "WaitForDep":
+                    testTaskName = "ApprovalByDep";
+                    actor = staffDao.getStaffsByPriAndCol(2, (String) info.get("WF_Type")).get(0).getId();
+                    break;
+            }
+            TaskModel targetTask = sm.get(testTaskName);
+            System.out.println(status + "-" + testTaskName + "-" + actor);
+//
+//            List<HistoryTask> hisTasks = snakerEngine.query().getHistoryTasks(new QueryFilter().setOrderId(emptyOrder));
+//            Long testTime = null;
+//            String testTask = null;
+//            for (HistoryTask hisTask : hisTasks) {
+//                if (hisTask.getTaskName().equals(testTask)) {
+//                    String time = hisTask.getCreateTime().replace("-", "").replace(" ", "").replace(":", "");
+//                    //初始化
+//                    if (testTime == null) {
+//                        testTime = Long.valueOf(time);
+//                        testTask = hisTask.getId();
+//                    }
+//                    //如果发现时间更大的了
+//                    else if (testTime < Long.valueOf(time)) {
+//                        testTime = Long.valueOf(time);
+//                        testTask = hisTask.getId();
+//                    }
+//                }
+//            }
+//            if (testTask != null) {
+//                String actor = fixDao.getHisTaskActor(testTask);
+////                System.out.println(emptyOrder + "-" + status + " : " + testTask + "-" + actor);
+//            }
+//            else {
+////                System.out.println("错误Order: " + emptyOrder);
+//            }
+
+            snakerEngine.createFreeTask(emptyOrder, actor, info, targetTask);
+
+//            snakerEngine.createFreeTask(emptyOrder,null,null,)
+//                snakerEngine.task().withdrawTask(testTask, actor);
+
         }
     }
 
