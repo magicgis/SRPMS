@@ -3,7 +3,8 @@
  */
 $(function() {
     init();
-
+    $('.delAndBack').hide();
+    $('#paperBtn').hide();
     $("#upload").hide();
 });
 
@@ -17,7 +18,14 @@ function init() {
         var who = $('#reply-display').children('small');
         reply.append(replyByCol);
         who.append("学院批复");
-    } else {
+    }
+    //else if (status == '') {
+    //    console.log('gsdhj');
+    //    $('.onApprove').hide();
+    //    $('#getScore').hide();
+    //    $('#addActor').hide();
+    //}
+    else {
         $('#reply').hide();
         $("#Approve").hide();
         $("#Refuse").hide();

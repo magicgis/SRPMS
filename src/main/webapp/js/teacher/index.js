@@ -568,7 +568,8 @@ function processView() {
                         formatter: "wfTypeTran"
                     }, {
                         field: 'variableMap.Main-ActorName',
-                        title: '负责人'
+                        title: '负责人',
+                        formatter: 'allMainActorTran'
                     }, {
                         field: 'variableMap.Status',
                         title: '状态',
@@ -586,8 +587,10 @@ function processView() {
 
 $('#newPaper').click(function () {
     workflow.startOrder(userName, "basicProcess_Beta", "paper").success(function (data) {
-        window.location.href = "/index/process/paper/all";
-        afterSuccess("新建成功！,请切换到论文查看");
+        if(objType !== 'paper') {
+            window.location.href = "/index/process/paper/all";
+            afterSuccess("新建成功,正在切换到论文查看");
+        }
         viewTable.bootstrapTable("refresh");
     });
 });

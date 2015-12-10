@@ -4,6 +4,7 @@ $(function () {
 
 });
 function init() {
+    $('.onApprove').hide();
     $('#reply-box').hide();
     $('#totalScore').attr('disabled', 'disabled');
     if (status.indexOf('Refuse') >= 0) {

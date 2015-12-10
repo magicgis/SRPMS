@@ -4,6 +4,8 @@
 $(function () {
     init();
     uneditableForm();
+    $('.delAndBack').hide();
+    $('#paperBtn').hide();
     $("#upload").hide();
 });
 

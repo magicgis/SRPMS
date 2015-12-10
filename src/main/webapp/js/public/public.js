@@ -1200,6 +1200,25 @@ function processNameTran(value, row) {
     }
 }
 
+function allMainActorTran(value, row) {
+    if(row['variableMap.WF_Type'] != 'paper') {
+        return value;
+    } else {
+        var MainActor = row['variableMap.WF_0_Submission.S-ACTOR'];
+        var actorList = row['variableMap.WF_Latest.ActorList'];
+        console.log(actorList, MainActor);
+        if(!isNull(actorList)) {
+            actorList = actorList.substring(0, actorList.length-1);
+            /*若actorList的前后顺序不可靠*/
+            //return actorList;
+            /*若actorList的前后顺序可靠*/
+            actorList = actorList.split(',');
+            return actorList[0];
+        }
+    }
+    return;
+}
+
 var wfTypeTans = {
     "book":"著作",
     "project": "项目",
