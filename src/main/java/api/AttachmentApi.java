@@ -1,6 +1,7 @@
 package api;
 
 import entity.Attachment;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,24 +104,31 @@ public class AttachmentApi {
     @GET
     @Path("/output/{arg}")
     @Produces({"application/vnd.ms-excel"})
-    public Response getOutPutFile(@PathParam("arg") String arg) {
+    public Response getOutPutFile(@PathParam("arg") String arg) throws IOException {
         File file = null;
         String fileName = null;
+        HSSFWorkbook wb = null;
         //根据arg，即前台传来的参数，生成不同的文件和文件名
         //最好使用英文名
-        switch (arg) {
-            case "allCol":
-                //do something
-                //生成的文件赋值给file
-                file = null;
-                fileName = "全校总览.xls";
-                break;
-            case "xxgc":
-                //do somethin
-                file = null;
-                fileName = "信息工程学院.xls";
-                break;
-        }
+//        switch (arg) {
+//            case "allCol":
+//                //do something
+//                //生成的文件赋值给file
+//                file = new File(System.getProperty("java.io.tmpdir"),"Research"+".xls");
+//                fileName = "全校总览.xls";
+//                break;
+//            case "xxgc":
+//                //do somethin
+//                file = null;
+//                fileName = "信息工程学院.xls";
+//                break;
+//        }
+        OutputStream out;
+        file = new File(System.getProperty("java.io.tmpdir"),"Research"+".xls");
+        fileName ="Research.xls";
+        out = new FileOutputStream(file);
+        wb.write(out);
+        out.close();
         try {
             fileName = new String(file.getName().getBytes("gbk"), "iso-8859-1");
         } catch (UnsupportedEncodingException e) {
