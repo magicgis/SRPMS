@@ -7,6 +7,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import service.AttachmentService;
+import service.DataDisplay;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.*;
@@ -29,6 +30,8 @@ public class AttachmentApi {
     ServletContext context;
     @Autowired
     AttachmentService attachmentService;
+    @Autowired
+    DataDisplay dataDisplay;
 
     @POST
     @Path("/upload")
@@ -127,6 +130,7 @@ public class AttachmentApi {
         file = new File(System.getProperty("java.io.tmpdir"),"Research"+".xls");
         fileName ="Research.xls";
         out = new FileOutputStream(file);
+        wb = dataDisplay.getColStaff();
         wb.write(out);
         out.close();
         try {
