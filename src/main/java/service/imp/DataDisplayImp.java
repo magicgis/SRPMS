@@ -75,17 +75,37 @@ public class DataDisplayImp implements DataDisplay {
         return utilMaplistToExcel(table, ItemKeys, TITLES);
     }
 
-    @Override
-    public Map<String, Object> getStaffItemScore(String staffId) {
-        return null;
-    }
+
+//    public List<Map> getStaffItemScore(String staffId) {
+//        List<StaRef> list = staRefDao.findByPropertyA("staff",staffId);
+//        List<Map> res = new ArrayList<>();
+//
+//        for (StaRef staff : list){
+//            String type = staff.getType();
+//            type = type.substring(0, 1).toUpperCase() + type.substring(1);
+//            try {
+//                Class<?> entityClass = Class.forName("entity." + type);
+//                entity
+//                Class<?> daoClass = Class.forName("dao.imp." + type+"Dao");
+//                BaseDao dao = (BaseDao)daoClass.newInstance();
+//
+//            } catch (ClassNotFoundException e) {
+//                e.printStackTrace();
+//            } catch (InstantiationException e) {
+//                e.printStackTrace();
+//            } catch (IllegalAccessException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return res;
+//    }
 
     //    @Override
     public HSSFWorkbook getColItem(List<Map<String, Object>> itemList) {
         return null;
     }
 
-    //    @Override
+        @Override
     public Map<String, Object> getStaffScore(String staffId) {
         Map<String, Object> staffScore = new HashMap<>();
         Staff staff = staffDao.getById(staffId);
@@ -109,6 +129,12 @@ public class DataDisplayImp implements DataDisplay {
             staffScore.put(ItemKeys[i], scoreArr[i]);
         }
         return staffScore;
+    }
+
+    @Override
+    public List<Map<String, Object>> getColScoreByAdmin(String adminId) {
+        BaseInfo col = staffDao.getById(adminId).getCol();
+        return getStaffOfCol(col.getId());
     }
 
     //    @Override

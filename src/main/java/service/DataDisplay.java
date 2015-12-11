@@ -14,8 +14,9 @@ public interface DataDisplay {
 //    条目信息明细Excel
 //    public HSSFWorkbook getColItem(List<Map<String,Object>> itemList);
 //      得出个人得分明细
-    public Map<String, Object> getStaffItemScore(String staffId);
+    public Map<String,Object> getStaffScore(String staffId);
 //    得出学院的个人的分明细
+    public List<Map<String, Object>> getColScoreByAdmin(String adminName);
     public List<Map<String, Object>> getColScore(String colName);
 
 }
