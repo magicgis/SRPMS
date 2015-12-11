@@ -299,17 +299,12 @@ public class StandardBase {
         Map validInfo = new HashMap();
         validInfo.put(IS_VALID, false);
         List<Map> actors = (List<Map>) map.get("actors");
-//        int isAppr = Integer.parseInt((String) map.get("isAppr"));
         if (map.get("score") != null) {
             double sum = Double.parseDouble((String) map.get("score"));
             if (SumCheckPass(sum, actors) < 0) {
                 validInfo.put(MESSAGE, "个人分数分配总和超出总分！");
                 return validInfo;
             }
-//            if (SumCheckPass(sum, actors) >= 1 && SumCheckPass(sum, actors) >= 0) {
-//                validInfo.put(MESSAGE, "还有" + SumCheckPass(sum, actors) + "！");
-//                return validInfo;
-//            }
             int count = 0;
             for (Map actor : actors) {
                 if (Double.parseDouble((String) actor.get("score")) != 0) count++;
@@ -323,6 +318,18 @@ public class StandardBase {
         validInfo.put(MESSAGE, "确认提交？");
         return validInfo;
     }
-
-
+    public  Map isChiefActorLarger(List<Map> actors, double chScore){
+        Map info = new HashMap();
+        info.put(IS_VALID, false);
+        for (Map actor : actors){
+            double tempScore = Double.valueOf((String) actor.get("score"));
+            if(tempScore!=0 && tempScore>chScore){
+                info.put(MESSAGE,"成员分数要小于负责人分数！");
+                return info;
+            }
+        }
+        info.put(MESSAGE,"确认提交？");
+        info.put(IS_VALID,true);
+        return info;
+    }
 }//the end of the class

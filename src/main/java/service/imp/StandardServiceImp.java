@@ -31,10 +31,8 @@ public class StandardServiceImp extends StandardBase implements StandardService 
         Map calFlow = new HashMap();
         calFlow.put(IS_VALID, DEFAULT_FLAG);
         calFlow.put(MESSAGE, DEFAULT_MSG);
-        System.out.println("__________"+map);
         String type = getPageType(order, map);
         if (type == null) {
-//            System.out.println("^^^^^"+type);
             validInfo.put(MESSAGE, getMsg("1023"));
             return validInfo;
         }
@@ -58,7 +56,6 @@ public class StandardServiceImp extends StandardBase implements StandardService 
             return validInfo;
         }
 //        检测字段空值
-//        calFlow = paramNullCheck(type, map);
         calFlow = standardCheck.paramNullCheck(map);
         if (!(boolean) calFlow.get(IS_VALID)) return calFlow;
 //        有效性规则检测与 填写者合法性
@@ -67,14 +64,10 @@ public class StandardServiceImp extends StandardBase implements StandardService 
 
 //        获取附表分数与极值
         String stIdType = selectId(type);
-//        System.out.println("+++++++++++++="+stIdType);
         String stId = (String) map.get(stIdType);
-//        System.out.println("+++++++++++++="+map);
-//        System.out.println("+++++++++++++=" + stId);
         Standard st = null;
         if (stId != null)
             st = standardDao.getById(stId);
-//        System.out.println(st.getValue());
         if (st == null) {
             calFlow.put(MESSAGE, "附表中没有相关规定");
             //        极值约束
@@ -82,7 +75,6 @@ public class StandardServiceImp extends StandardBase implements StandardService 
             if (!(boolean) calFlow.get(IS_VALID)) return calFlow;
             calFlow = standardCheck.getFinalScore(map, 0, 0);
             return calFlow;
-//            return calFlow;
         } else {
             BigDecimal mint = st.getMin() == null ? new BigDecimal(0) : st.getMin();
             BigDecimal maxt = st.getMax() == null ? new BigDecimal(999) : st.getMax();
@@ -96,7 +88,6 @@ public class StandardServiceImp extends StandardBase implements StandardService 
             calFlow = standardCheck.isExtrrmumBand(map, min, max);
             if (!(boolean) calFlow.get(IS_VALID)) return calFlow;
             calFlow = standardCheck.getFinalScore(map, sum, sum2);
-//            System.out.println("000000000000"+calFlow);
             return calFlow;
         }
     }

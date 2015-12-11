@@ -87,7 +87,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
             String staffId = (String) myAbActor.get("staff.id");
             for (Map temp : myAbAcotrs) {
                 if (unit != null && (unit.equals(temp.get("unit")) && staffId.equals(temp.get("staff.id")))
-                        && !(staffId.equals("9999")||staffId.equals("9998"))) {
+                        && !(staffId.equals("9999") || staffId.equals("9998"))) {
                     count++;
                 }
             }
@@ -170,11 +170,14 @@ public class Paper extends StandardBase implements StandardCheckInf {
         List<Map> chiefAuth = getChiefActors(actors, (String) KEY_ROLE.get("chiefAuthor"));
         if (myTchFirstAuth.size() != 0 || myTchChiefAuth.size() != 0)
             flag = true;
-        double mySchoolChNum =  myTchChiefAuth.size() +  myTchFirstAuth.size();
-        double chNum = chiefAuth.size() + firstAuth.size()-(
-                myChiefAuth.size()-myTchChiefAuth.size()+myFirstAuth.size()-myTchFirstAuth.size()
-                );
-        finalScore = tableScore * mySchoolChNum / chNum;
+        double mySchoolChNum = myTchChiefAuth.size() + myTchFirstAuth.size();
+        double chNum = chiefAuth.size() + firstAuth.size() - (
+                myChiefAuth.size() - myTchChiefAuth.size() + myFirstAuth.size() - myTchFirstAuth.size()
+        );
+        if (chNum != 0)
+            finalScore = tableScore * mySchoolChNum / chNum;
+        else
+            finalScore = tableScore;
 //      文章的第一作者是我校职工而非学生
         if (flag) {
             validInfo.put(IS_VALID, true);
@@ -194,11 +197,11 @@ public class Paper extends StandardBase implements StandardCheckInf {
 //                    int rank = (int) author.get("rank");
                     if (rank == i) {
                         double weight = positionWeight(n, rank);
-                        if (isMyStaff(author)){
-                            double score = tableScore* weight;
-                            author.put("score", score);
-                        }
-                        else author.put("score", 0);
+                        if (isMyStaff(author)) {
+                            double score = tableScore * weight;
+                            DecimalFormat df = new DecimalFormat("####0.000");
+                            author.put("score", df.format(score));
+                        } else author.put("score", 0);
                         resAuthors.add(author);
                     }
                 }
@@ -227,7 +230,7 @@ public class Paper extends StandardBase implements StandardCheckInf {
             return isValid(map);
         }
         boolean flag = false;
-        if (map.get("score") != null) flag = true;
+        if (map.get("score") != null&&Double.valueOf((String) map.get("score"))!=0) flag = true;
 //       求和检测
         if (flag) {
             validInfo.put(IS_VALID, false);

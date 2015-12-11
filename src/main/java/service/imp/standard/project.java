@@ -214,17 +214,25 @@ public class project extends StandardBase implements StandardCheckInf {
             validInfo.put(IS_VALID,DEFAULT_FLAG);
             double sum = Double.parseDouble((String) map.get("score"));
 //            文件第三条第2款
-
             int actorNum = actors.size()-myActor.size()+myTchActor.size();
             List<Map> chiefActors = getChiefActors(actors, (String) KEY_ROLE.get("chiefActor"));
             for (Map chiefActor : chiefActors) {
                 double chScore = Double.parseDouble((String) chiefActor.get("score"));
+//                负责人分数比例
                 Map info = chiefAcrorScoreCheck(actorNum, chScore, sum);
                 if (!(boolean) info.get("flag")) {
                     validInfo.put(MESSAGE, info.get(MESSAGE));
                     return validInfo;
                 }
+//                负责人分数要大于每一个成员
+                info = super.isChiefActorLarger(actors, chScore);
+                if (!(boolean)info.get(IS_VALID)){
+                    validInfo.put(MESSAGE,info.get(MESSAGE));
+                    return validInfo;
+                }
             }
+
+
         }
         validInfo.put(IS_VALID, true);
         validInfo.put(MESSAGE, "确认提交？");
