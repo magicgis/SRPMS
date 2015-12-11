@@ -225,4 +225,10 @@ public class RelationServiceImp implements RelationService {
         }
         return ans;
     }
+
+    @Override
+    public void removeRelation(String entityId, String type) {
+        staRefDao.removeRelation(entityId, type);
+        deptRefDao.removeRelation(entityId, type);
+    }
 }

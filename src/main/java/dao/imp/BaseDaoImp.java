@@ -115,6 +115,8 @@ public class BaseDaoImp<T> implements BaseDao<T> {
         return res;
     }
 
+
+    //todo
     @Override
     public List<T> getAll(String sort, String order) {
         String hql = "from " + getEntityClass().getName();
@@ -124,6 +126,7 @@ public class BaseDaoImp<T> implements BaseDao<T> {
         return this.getCurrentSession().createQuery(hql).list();
     }
 
+    //todo
     public List<T> getAll(int startRow, int num) {
         log.debug("BaseDAO Get All " + entityClass.getName());
         String hql = "from " + getEntityClass().getName();
@@ -139,11 +142,13 @@ public class BaseDaoImp<T> implements BaseDao<T> {
         return res;
     }
 
+    //todo
     public Long getAllCount() {
         String hql = "select count(*) " + getEntityClass().getName();
         return ((Number) this.getCurrentSession().createQuery(hql).uniqueResult()).longValue();
     }
 
+    //todo
     public List<T> findByPropertyA(String propertyName, Object value) {
         log.debug("BaseDAO Find(A) " + propertyName + " From " + entityClass.getName());
         List<T> res;
@@ -163,6 +168,7 @@ public class BaseDaoImp<T> implements BaseDao<T> {
         return res;
     }
 
+    //todo
     public List<T> findByPropertyF(String propertyName, String value) {
         log.debug("BaseDAO Find(F) " + propertyName + " From " + entityClass.getName());
         List<T> res;
@@ -176,11 +182,13 @@ public class BaseDaoImp<T> implements BaseDao<T> {
         return res;
     }
 
+    //todo
     public List<T> findByMapAcc(HashMap<String, Object> args) {
         String hql = findByMapA(args);
         return this.getCurrentSession().createQuery(hql).list();
     }
 
+    //todo
     public List<T> findByMapAcc(HashMap<String, Object> args, int start, int num) {
         String hql = findByMapA(args);
         Query ans = this.getCurrentSession().createQuery(hql);
@@ -189,11 +197,13 @@ public class BaseDaoImp<T> implements BaseDao<T> {
         return ans.list();
     }
 
+    //todo
     public List<T> findByMapFuz(HashMap<String, Object> args) {
         String hql = findByMapF(args);
         return this.getCurrentSession().createQuery(hql).list();
     }
 
+    //todo
     public List<T> findByMapFuz(HashMap<String, Object> args, int start, int num) {
         String hql = findByMapF(args);
         Query ans = this.getCurrentSession().createQuery(hql);
@@ -202,7 +212,7 @@ public class BaseDaoImp<T> implements BaseDao<T> {
         return ans.list();
     }
 
-    @Override
+    @Override //todo
     public List<T> findByArrayFuz(List<String> keys, String keyword, String sort, String order) {
         log.debug("BaseDAO findByArrayFuz(F) " + keyword + " From " + entityClass.getName());
         String hql = "from " + entityClass.getName();
@@ -221,7 +231,7 @@ public class BaseDaoImp<T> implements BaseDao<T> {
 
     /**
      * 忘记是干嘛的了
-     *
+     * todo
      * @param hql    hql语句
      * @param params 参数
      * @return list
@@ -238,7 +248,7 @@ public class BaseDaoImp<T> implements BaseDao<T> {
 
     /**
      * 生成无条件查找所有对象的语句
-     *
+     * todo
      * @return HQL
      */
     protected String findAllHql() {
@@ -247,7 +257,7 @@ public class BaseDaoImp<T> implements BaseDao<T> {
 
     /**
      * 根据属性名和属性值生成组合<bold>精确</bold>查询语句
-     *
+     * todo
      * @param params key-value
      * @return HQL
      */
@@ -271,7 +281,7 @@ public class BaseDaoImp<T> implements BaseDao<T> {
 
     /**
      * 根据属性名和属性值生成组合<bold>模糊</bold>查询语句
-     *
+     * todo
      * @param params key-value
      * @return HQL
      */
@@ -292,7 +302,7 @@ public class BaseDaoImp<T> implements BaseDao<T> {
 
     /**
      * 执行sql语句
-     *
+     * todo
      * @return list
      */
     protected List<T> executeSql(String hql) {

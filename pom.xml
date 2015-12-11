@@ -89,13 +89,6 @@
             <version>1.4</version>
         </dependency>
 
-        <!--mysql driver-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.33</version>
-        </dependency>
-
         <!--java servlet-->
         <dependency>
             <groupId>javax.servlet</groupId>

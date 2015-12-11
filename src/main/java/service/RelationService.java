@@ -53,5 +53,6 @@ public interface RelationService {
      */
     void insertRelation(String entity, String type, List<Map> actors);
 
+    void removeRelation(String entityId, String type);
 
 }

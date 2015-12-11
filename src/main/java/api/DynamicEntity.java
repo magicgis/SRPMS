@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.RestController;
 import service.BaseInfoService;
 import service.BaseService;
+import service.RelationService;
 import service.StandardInfoService;
 import util.Args;
 
@@ -26,7 +27,7 @@ import static util.Trans.putMapOnObj;
 @Path("/{entity:achAppraisal|achAward|achTran|book|paper|patent|project|others|food|instrument|medicine}")
 public class DynamicEntity {
     @PathParam("entity")
-    String entity;
+    String entityType;
 
     @Autowired
     ApplicationContext webApplicationContext;
@@ -36,6 +37,8 @@ public class DynamicEntity {
     StandardInfoService standardInfoService;
     @Autowired
     BaseInfoService baseInfoService;
+    @Autowired
+    RelationService relationService;
 
     @GET
     @Path("/all")
@@ -45,7 +48,7 @@ public class DynamicEntity {
                       @QueryParam("search") String search,
                       @QueryParam("sort") String sort,
                       @QueryParam("order") String ord) {
-        BaseService baseService = (BaseService) webApplicationContext.getBean(Args.SERVICES.get(entity));
+        BaseService baseService = (BaseService) webApplicationContext.getBean(Args.SERVICES.get(entityType));
         return getSubMap(baseService.search(search, sort, ord), limit, offset);
 
 
@@ -55,7 +58,7 @@ public class DynamicEntity {
     @Path("/all/noPag")
     @Produces("application/json;charset=UTF-8")
     public Object getAll() {
-        BaseService baseService = (BaseService) webApplicationContext.getBean(Args.SERVICES.get(entity));
+        BaseService baseService = (BaseService) webApplicationContext.getBean(Args.SERVICES.get(entityType));
         return baseService.getAll();
     }
 
@@ -68,9 +71,9 @@ public class DynamicEntity {
         for (Object key : args.keySet()) {
             x.put((String) key, args.getFirst(key));
         }
-        BaseService baseService = (BaseService) webApplicationContext.getBean(Args.SERVICES.get(entity));
+        BaseService baseService = (BaseService) webApplicationContext.getBean(Args.SERVICES.get(entityType));
         VirtualEntity entityObject = null;
-        switch (entity) {
+        switch (entityType) {
             case "achAppraisal":
                 if ("".equals(args.getFirst("id"))) {
                     entityObject = new AchAppraisal();
@@ -189,7 +192,7 @@ public class DynamicEntity {
     @Path("/{id}")
     @Consumes("application/json;charset=UTF-8")
     public boolean update(@PathParam("id") String id, HashMap<String, Object> args) {
-        BaseService baseService = (BaseService) webApplicationContext.getBean(Args.SERVICES.get(entity));
+        BaseService baseService = (BaseService) webApplicationContext.getBean(Args.SERVICES.get(entityType));
         VirtualEntity entity = (VirtualEntity) baseService.getById(id);
         entity.setArgMap(args);
         return baseService.update(entity);
@@ -199,12 +202,16 @@ public class DynamicEntity {
     @DELETE
     @Path("/{id}")
     public boolean delete(@PathParam("id") String id) {
-        BaseService baseService = (BaseService) webApplicationContext.getBean(Args.SERVICES.get(entity));
+        BaseService baseService = (BaseService) webApplicationContext.getBean(Args.SERVICES.get(entityType));
         VirtualEntity entity = (VirtualEntity) baseService.getById(id);
-        String orderId = (String) entity.getArgMap().get("WF_OrderId");
-        //todo 这儿还缺少去数据库里清除所有关系ref
-        if (orderId != null) {
-            engine.stopOrder(orderId);
+        try {
+            String orderId = (String) entity.getArgMap().get("WF_OrderId");
+            if (orderId != null) {
+                engine.stopOrder(orderId);
+            }
+            relationService.removeRelation(id, entityType);
+        } catch (Exception x) {
+            x.printStackTrace();
         }
         return baseService.deleteById(entity.getId());
     }
@@ -213,7 +220,7 @@ public class DynamicEntity {
     @Path("/{id}")
     @Produces("application/json;charset=UTF-8")
     public Object getById(@PathParam("id") String id) {
-        BaseService baseService = (BaseService) webApplicationContext.getBean(Args.SERVICES.get(entity));
+        BaseService baseService = (BaseService) webApplicationContext.getBean(Args.SERVICES.get(entityType));
         return baseService.getById(id);
     }
 
