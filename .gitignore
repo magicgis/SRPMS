@@ -1,6 +1,9 @@
 # Maven #
 target/
 
+# Coding #
+.coding-ide/
+
 # Intellij #
 .idea/
 *.iml
