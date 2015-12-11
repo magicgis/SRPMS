@@ -45,6 +45,10 @@ public class SnakerEngineUtils implements Engine {
     private StaffDao staffDao;
     @Autowired
     private FixDao fixDao;
+    @Autowired
+    DeptRefDao deptRefDao;
+    @Autowired
+    StaRefDao staRefDao;
 
     @Autowired
     ApplicationContext applicationContext;
@@ -144,6 +148,8 @@ public class SnakerEngineUtils implements Engine {
             entityId = (String) order.getVariableMap().get("WF_Entity");
             snakerEngine.order().cascadeRemove(orderId);
             orderActorDao.deleteAllOrder(orderId);
+            staRefDao.removeRelation(entityId, type);
+            deptRefDao.removeRelation(entityId, type);
             HashMap args;
             BaseDao baseDao = (BaseDao) applicationContext.getBean(Args.DAOS.get(type));
             VirtualEntity virtualEntity = (VirtualEntity) baseDao.getById(entityId);
