@@ -3,11 +3,9 @@ package api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import service.RelationService;
+import service.UserService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import java.util.List;
 
 /**
@@ -18,6 +16,8 @@ import java.util.List;
 public class EntityApi {
     @Autowired
     RelationService relationService;
+    @Autowired
+    UserService userService;
 
 
     /**
@@ -70,6 +70,15 @@ public class EntityApi {
 //        else {
 //            return deptRefService.getEntity(id, type);
 //        }
-        return  null;
+        return null;
     }
+
+    @GET
+    @Path("/staff/{user}")
+    @Produces("application/json;charset=UTF-8")
+    public List getStaffScoreInfo(@PathParam("user") String userId, @QueryParam("type") String type, @QueryParam("role") Integer role) {
+        return relationService.getTeacherRelation(userId, type, role);
+    }
+
+
 }
